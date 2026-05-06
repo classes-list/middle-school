@@ -200,7 +200,7 @@
 <body>
   <div class="container">
     <div class="sidebar">
-      <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 16px 0;color:#888;font-size:14px;">6th Grade Math</p><button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 16px 0;color:#888;font-size:14px;">6th Grade Math</p>
       <div id="sidebar-content"></div>
       <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; color: #999;">
         Progress: <span id="progress-text">0/16</span>
@@ -990,7 +990,7 @@ function showSyllabus() {
   currentUnit = null;
   document.getElementById('topbar-title').textContent = 'Course Syllabus';
   renderSidebar();
-  document.getElementById('syllabus-btn').classList.add('active');
+  { const _b=document.getElementById('syllabus-btn'); if(_b) _b.classList.add('active'); }
 }
 
 function showLesson(unitId) {
@@ -1561,6 +1561,22 @@ function showRealWorld() {
       </div>
     </div>`;
 }
+
+// Open the syllabus screen if URL hash is #syllabus
+(function() {
+  function checkHash() {
+    if (window.location.hash === '#syllabus' && typeof showSyllabus === 'function') {
+      showSyllabus();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkHash);
+  } else {
+    checkHash();
+  }
+  window.addEventListener('hashchange', checkHash);
+})();
+
 </script>
 </body>
 </html>

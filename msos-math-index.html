@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mary, Star of the Sea — Math Classes &amp; Resources</title>
+  <title>Mary, Star of the Sea &mdash; Math Classes & Resources</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -16,12 +16,7 @@
       justify-content: center;
       padding: 40px 20px;
     }
-    .container {
-      max-width: 1000px;
-      width: 100%;
-      text-align: center;
-      position: relative;
-    }
+    .container { max-width: 1000px; width: 100%; text-align: center; position: relative; }
     .back-index-btn {
       position: fixed;
       top: 20px; left: 20px;
@@ -32,9 +27,7 @@
       transition: all 0.18s; z-index: 10;
     }
     .back-index-btn:hover { background: #1a2a4a; transform: translateX(-2px); box-shadow: 0 5px 14px rgba(37,58,119,0.35); }
-    .logo-wrap {
-      margin-bottom: 30px;
-    }
+    .logo-wrap { margin-bottom: 20px; }
     .logos-row {
       display: flex; gap: 28px; align-items: center; justify-content: center; flex-wrap: wrap;
       margin-bottom: 6px;
@@ -57,27 +50,51 @@
     }
     h1 {
       color: #253a77;
-      font-size: 2.2rem;
-      margin-bottom: 10px;
+      font-size: 2.4rem;
+      margin: 18px 0 8px;
       font-weight: 700;
     }
     .subtitle {
       color: #555;
       font-size: 1.1rem;
-      margin-bottom: 40px;
+      margin-bottom: 8px;
       font-style: italic;
+    }
+    .verse {
+      color: #7a5f00;
+      font-size: 0.95rem;
+      max-width: 640px;
+      margin: 0 auto 36px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .lang-row {
+      display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+      margin: 0 auto 30px;
+      max-width: 720px;
+    }
+    .lang-pill {
+      background: #fff;
+      border: 2px solid #253a77;
+      color: #253a77;
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: inline-flex; align-items: center; gap: 8px;
     }
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 22px;
       margin-top: 30px;
     }
+    .card-wrap { display: flex; flex-direction: column; gap: 10px; }
     .card {
       background: #fff;
       border: 2px solid #253a77;
-      border-radius: 12px;
-      padding: 28px 20px;
+      border-radius: 14px;
+      padding: 30px 22px;
       text-decoration: none;
       color: #253a77;
       transition: all 0.2s ease;
@@ -86,94 +103,159 @@
     }
     .card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 8px 24px rgba(37, 58, 119, 0.2);
+      box-shadow: 0 8px 24px rgba(37, 58, 119, 0.25);
       background: #253a77;
       color: #fff;
     }
-    .card-grade {
-      font-size: 3rem;
-      font-weight: 800;
-      margin-bottom: 8px;
-      line-height: 1;
+    .card:hover .card-theme { color: #FFD100; }
+    .card-grade { font-size: 3rem; font-weight: 800; margin-bottom: 6px; line-height: 1; }
+    .card-label { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+    .card-theme { font-size: 0.9rem; opacity: 0.85; font-style: italic; transition: color 0.2s; }
+    .syllabus-btn-card {
+      display: block; text-align: center;
+      background: #FFD100; color: #1a2a4a;
+      text-decoration: none;
+      padding: 9px 14px; border-radius: 8px;
+      font-weight: 700; font-size: 0.88rem;
+      border: 1.5px solid #d4ad00;
+      transition: all 0.18s;
+      box-shadow: 0 2px 6px rgba(212,173,0,0.25);
     }
-    .card-label {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 6px;
+    .syllabus-btn-card:hover {
+      background: #1a2a4a; color: #FFD100; border-color: #1a2a4a; transform: translateY(-1px);
     }
-    .card-theme {
-      font-size: 0.85rem;
-      opacity: 0.8;
-      font-style: italic;
-    }
-    .info {
-      margin: 30px auto 0;
+    .teacher-card {
+      margin: 36px auto 0;
       max-width: 640px;
       background: #fff;
       border-left: 4px solid #FFD100;
-      padding: 18px 22px;
+      padding: 22px 24px;
       text-align: left;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      color: #444;
-      line-height: 1.6;
+      border-radius: 8px;
+      box-shadow: 0 4px 14px rgba(37,58,119,0.10);
+      display: flex; gap: 22px; align-items: center;
+      flex-wrap: wrap;
     }
-    .info strong { color: #253a77; }
-    footer {
-      margin-top: 40px;
-      font-size: 0.85rem;
-      color: #888;
+    .teacher-photo {
+      flex: 0 0 120px;
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: #1a2a4a;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(37,58,119,0.18);
+      overflow: hidden;
+      position: relative;
     }
+    .teacher-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 50% 25%;
+      display: block;
+    }
+    .teacher-photo .initials {
+      color: #FFD100;
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .teacher-info { flex: 1 1 240px; }
+    .teacher-name { color: #253a77; font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+    .teacher-role { color: #7a5f00; font-size: 0.9rem; font-style: italic; margin-bottom: 10px; }
+    .teacher-meta { font-size: 0.92rem; color: #444; margin-bottom: 14px; line-height: 1.6; }
+    .teacher-meta strong { color: #253a77; }
+    .teacher-meta a { color: #253a77; text-decoration: none; }
+    .teacher-meta a:hover { text-decoration: underline; }
+    .about-btn {
+      display: inline-block;
+      background: #253a77; color: #fff; text-decoration: none;
+      padding: 9px 18px; border-radius: 8px;
+      font-weight: 700; font-size: 0.88rem;
+      transition: all 0.18s;
+      box-shadow: 0 2px 6px rgba(37,58,119,0.25);
+    }
+    .about-btn:hover {
+      background: #1a2a4a; transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37,58,119,0.35);
+    }
+    .about-btn::after { content: " \2197"; font-weight: 600; }
+    footer { margin-top: 40px; font-size: 0.85rem; color: #888; }
     @media (max-width: 600px) {
-      h1 { font-size: 1.6rem; }
+      h1 { font-size: 1.7rem; }
       .card-grade { font-size: 2.4rem; }
+      .teacher-card { flex-direction: column; align-items: flex-start; text-align: left; }
+      .teacher-photo { margin: 0 auto; }
+      .teacher-info { text-align: center; width: 100%; }
     }
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-index-btn" title="Back to Middle School Classes">← All Classes</a>
+  <a href="index.html" class="back-index-btn" title="Back to Middle School Classes">&larr; All Classes</a>
   <div class="container">
     <div class="logo-wrap">
       <div class="logos-row">
         <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
-        <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+        <span class="logo-circle nui" title="Nurture &middot; Unite &middot; Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
       </div>
     </div>
     <h1>Math Classes &amp; Resources</h1>
     <p class="subtitle">Mary, Star of the Sea School &mdash; Interactive lessons, worksheets, and quizzes</p>
+    
+    
 
     <div class="grid">
-      <a class="card" href="msos-math-4.html">
-        <div class="card-grade">4</div>
-        <div class="card-label">4th Grade</div>
-        <div class="card-theme">Discovering the World with Math</div>
-      </a>
-      <a class="card" href="msos-math-5.html">
-        <div class="card-grade">5</div>
-        <div class="card-label">5th Grade</div>
-        <div class="card-theme">Exploring the World with Math</div>
-      </a>
-      <a class="card" href="msos-math-6.html">
-        <div class="card-grade">6</div>
-        <div class="card-label">6th Grade</div>
-        <div class="card-theme">Describing the World with Math</div>
-      </a>
-      <a class="card" href="msos-math-7.html">
-        <div class="card-grade">7</div>
-        <div class="card-label">7th Grade</div>
-        <div class="card-theme">Predicting the World with Math</div>
-      </a>
-      <a class="card" href="msos-math-8.html">
-        <div class="card-grade">8</div>
-        <div class="card-label">8th Grade</div>
-        <div class="card-theme">Engineering the World with Math</div>
-      </a>
+      <div class="card-wrap">
+        <a class="card" href="msos-math-4.html">
+          <div class="card-grade">4</div>
+          <div class="card-label">4th Grade</div>
+          <div class="card-theme">Discovering the World with Math</div>
+        </a>
+      </div>
+      <div class="card-wrap">
+        <a class="card" href="msos-math-5.html">
+          <div class="card-grade">5</div>
+          <div class="card-label">5th Grade</div>
+          <div class="card-theme">Exploring the World with Math</div>
+        </a>
+      </div>
+      <div class="card-wrap">
+        <a class="card" href="msos-math-6.html">
+          <div class="card-grade">6</div>
+          <div class="card-label">6th Grade</div>
+          <div class="card-theme">Describing the World with Math</div>
+        </a>
+        <a class="syllabus-btn-card" href="msos-math-6.html#syllabus">&#128220; Syllabus</a>
+      </div>
+      <div class="card-wrap">
+        <a class="card" href="msos-math-7.html">
+          <div class="card-grade">7</div>
+          <div class="card-label">7th Grade</div>
+          <div class="card-theme">Predicting the World with Math</div>
+        </a>
+        <a class="syllabus-btn-card" href="msos-math-7.html#syllabus">&#128220; Syllabus</a>
+      </div>
+      <div class="card-wrap">
+        <a class="card" href="msos-math-8.html">
+          <div class="card-grade">8</div>
+          <div class="card-label">8th Grade</div>
+          <div class="card-theme">Engineering the World with Math</div>
+        </a>
+        <a class="syllabus-btn-card" href="msos-math-8.html#syllabus">&#128220; Syllabus</a>
+      </div>
     </div>
 
-    <div class="info">
-      <strong>Teacher:</strong> Dr. Peter Park &nbsp;&middot;&nbsp;
-      <strong>Email:</strong> ppark@starofthesea.org &nbsp;&middot;&nbsp;
-      <strong>Phone:</strong> (808) 228-2285
+    <div class="teacher-card">
+      <div class="teacher-photo">
+        <img src="dr-park.jpg" alt="Dr. Peter Park" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="initials" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">PP</div>
+      </div>
+      <div class="teacher-info">
+        <div class="teacher-name">Dr. Peter Park</div>
+        <div class="teacher-role">Middle School Math Teacher</div>
+        <div class="teacher-meta">
+          <strong>Email:</strong> <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a><br>          <strong>Phone:</strong> (808) 228-2285
+        </div>
+        <a class="about-btn" href="https://starofthesea.org/staff/dr-park/" target="_blank" rel="noopener">About Dr. Park</a>
+      </div>
     </div>
 
     <footer>
