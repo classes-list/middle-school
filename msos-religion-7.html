@@ -129,7 +129,6 @@
     <div class="sidebar">
       <h2>Mary, Star of the Sea</h2>
       <p class="subtitle">7th Grade Religion <span class="grade-tag">Gr. 7</span></p>
-      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📜 Syllabus</button>
       <div id="sidebar-content"></div>
       <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
     </div>
@@ -803,7 +802,7 @@ function showHome() {
   currentUnit = null;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('home-screen').classList.add('active');
-  document.getElementById('syllabus-btn').classList.remove('active');
+  { const _b=document.getElementById('syllabus-btn'); if(_b) _b.classList.remove('active'); }
   renderSidebar();
   setTopbar();
 }
@@ -813,7 +812,7 @@ function showLesson(id) {
   const u = UNITS.find(x => x.id === id);
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('lesson-screen').classList.add('active');
-  document.getElementById('syllabus-btn').classList.remove('active');
+  { const _b=document.getElementById('syllabus-btn'); if(_b) _b.classList.remove('active'); }
   const html = `
     <h2>${u.title}</h2>
     <p style="color:#666;font-style:italic;margin-bottom:14px;">${u.theme}</p>
@@ -912,12 +911,28 @@ function showSyllabus() {
   document.getElementById('syllabus-screen').classList.add('active');
   document.getElementById('topbar-title').textContent = 'Course Syllabus';
   renderSidebar();
-  document.getElementById('syllabus-btn').classList.add('active');
+  { const _b=document.getElementById('syllabus-btn'); if(_b) _b.classList.add('active'); }
 }
 
 renderHome();
 renderSidebar();
 updateProgress();
+
+// Open the syllabus screen if URL hash is #syllabus
+(function() {
+  function checkHash() {
+    if (window.location.hash === '#syllabus' && typeof showSyllabus === 'function') {
+      showSyllabus();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkHash);
+  } else {
+    checkHash();
+  }
+  window.addEventListener('hashchange', checkHash);
+})();
+
 </script>
 </body>
 </html>
