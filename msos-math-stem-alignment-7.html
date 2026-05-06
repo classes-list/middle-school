@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Algebra &harr; Life Science Alignment &middot; Mary, Star of the Sea</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+    color: #253a77;
+    padding: 28px 22px;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1280px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+    padding: 28px 32px 36px;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #253a77;
+    padding-bottom: 14px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .titleblock h1 {
+    font-size: 1.55rem; color: #253a77; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .titleblock p {
+    font-size: 0.92rem; color: #555; margin-top: 4px; font-style: italic;
+  }
+  .legend {
+    display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+    font-size: 0.78rem; color: #444;
+  }
+  .legend .swatch {
+    display: inline-block; width: 14px; height: 14px; border-radius: 3px;
+    vertical-align: middle; margin-right: 5px;
+  }
+  .swatch.math { background: #253a77; }
+  .swatch.stem { background: #FFD100; border: 1px solid #d4ad00; }
+  .swatch.key  { background: #fef3c7; border: 1px solid #d4ad00; }
+
+  .grade-panel {
+    margin-top: 22px;
+    border: 1.5px solid #d8dee9;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .grade-header {
+    background: #1a2a4a;
+    color: #fff;
+    padding: 10px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .grade-header h2 { font-size: 1.1rem; font-weight: 800; }
+  .grade-header .sub { font-size: 0.85rem; color: #ffd100; font-style: italic; }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: 90px repeat(4, 1fr);
+    gap: 0;
+    background: #f8fafc;
+  }
+  .row-label {
+    background: #eef2fa;
+    border-right: 1px solid #d8dee9;
+    border-bottom: 1px solid #d8dee9;
+    padding: 12px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #253a77;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .qheader {
+    background: #253a77;
+    color: #fff;
+    padding: 8px 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #d8dee9;
+  }
+  .qheader .qtheme {
+    display: block;
+    font-size: 0.74rem;
+    color: #ffd100;
+    font-weight: 600;
+    font-style: italic;
+    margin-top: 2px;
+  }
+  .qheader .dates {
+    display: block;
+    font-size: 0.7rem;
+    color: #cfd8e8;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .cell {
+    padding: 10px 11px;
+    border-right: 1px solid #d8dee9;
+    border-bottom: 1px solid #d8dee9;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: #2d3748;
+    background: #fff;
+  }
+  .cell ul { list-style: none; padding: 0; margin: 0; }
+  .cell li {
+    padding: 3px 0 3px 0;
+    position: relative;
+    padding-left: 12px;
+  }
+  .cell li::before {
+    content: "•";
+    color: #253a77;
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+  }
+  .cell.math { background: #f0f4fc; border-left: 3px solid #253a77; }
+  .cell.stem { background: #fffbe6; border-left: 3px solid #FFD100; }
+  .cell.arrow {
+    background: #fff;
+    text-align: center;
+    color: #253a77;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-left: none;
+    padding: 4px;
+    line-height: 1;
+  }
+  .cell.stem strong {
+    display: block;
+    color: #92400e;
+    font-size: 0.82rem;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .cell .keystone {
+    background: #fef3c7;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 700;
+  }
+
+  .key-handoffs {
+    background: #fff7ed;
+    border-left: 4px solid #FFD100;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: #444;
+    line-height: 1.55;
+  }
+  .key-handoffs strong { color: #1a2a4a; }
+  .key-handoffs .handoff-list {
+    margin-top: 6px;
+    display: flex; gap: 14px; flex-wrap: wrap;
+  }
+  .key-handoffs .handoff-list span {
+    background: #fff;
+    border: 1px solid #e8c879;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+  }
+
+  .status-banner {
+    background: #ecfdf5;
+    border-left: 4px solid #059669;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 4px;
+    font-size: 0.82rem;
+    color: #065f46;
+  }
+  .status-banner strong { color: #064e3b; }
+
+  footer {
+    margin-top: 26px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #888;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .page { box-shadow: none; padding: 14px 18px; }
+    .grade-panel { page-break-inside: avoid; margin-top: 14px; }
+  }
+  @media (max-width: 900px) {
+    .timeline { grid-template-columns: 70px repeat(4, 1fr); }
+    .cell, .qheader, .row-label { font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="titleblock">
+      <h1>Pre-Algebra &harr; Life Science Alignment</h1>
+      <p>How Pre-Algebra paces with Mr. Eachus' Life Science &middot; SY 2026&ndash;2027</p>
+    </div>
+    <div class="legend">
+      <span><span class="swatch math"></span>Math (lands first)</span>
+      <span><span class="swatch stem"></span>STEM (builds on)</span>
+      <span><span class="swatch key"></span>Keystone topic &mdash; must clear before STEM</span>
+    </div>
+  </header>
+
+  <div class="status-banner">
+    <strong>Current as of SY 2026&ndash;2027:</strong> Every keystone topic in math clears before the STEM unit that depends on it. The grid below shows the actual quarter-by-quarter pacing.
+  </div>
+
+  <!-- ====================== GRADE 7 ====================== -->
+  <div class="grade-panel">
+    <div class="grade-header">
+      <h2>Grade 7 &mdash; Pre-Algebra paired with Life Science</h2>
+      <span class="sub">Theme: Predicting the world with math</span>
+    </div>
+    <div class="timeline">
+      <div class="row-label">&nbsp;</div>
+      <div class="qheader">Q1 <span class="qtheme">Lab Math Refresher &amp; Foundations</span><span class="dates">Aug 5 &ndash; Oct 10</span></div>
+      <div class="qheader">Q2 <span class="qtheme">Tools for Cells</span><span class="dates">Oct 13 &ndash; Dec 18</span></div>
+      <div class="qheader">Q3 <span class="qtheme">Geometry &amp; Inequalities</span><span class="dates">Jan 6 &ndash; Mar 13</span></div>
+      <div class="qheader">Q4 <span class="qtheme">Probability for Genetics</span><span class="dates">Mar 30 &ndash; Jun 3</span></div>
+
+      <div class="row-label">PRE-ALG<br><span style="font-weight:500;font-size:0.7rem">lands first</span></div>
+      <div class="cell math">
+        <ul>
+          <li><span class="keystone">Percent Error</span> w/ accuracy &amp; precision</li>
+          <li><span class="keystone">Sci Notation</span> &mdash; negative exponents</li>
+          <li>Unit Conversions (rate conversions)</li>
+          <li>Proportional Relationships</li>
+          <li>Ratios &amp; Unit Rates; Percents</li>
+        </ul>
+      </div>
+      <div class="cell math">
+        <ul>
+          <li>Rational Number Operations</li>
+          <li>Algebraic Expressions</li>
+          <li>Multi-Step Equations</li>
+          <li><span class="keystone">Rearranging Formulas (D = m/V)</span></li>
+          <li><span class="keystone">Surface Area : Volume Ratio</span> by Dec</li>
+        </ul>
+      </div>
+      <div class="cell math">
+        <ul>
+          <li>Geometric Shapes &amp; Triangles</li>
+          <li>Circles</li>
+          <li>Area of Polygons</li>
+          <li>Surface Area &amp; Volume of 3D Figures</li>
+          <li>Angle Relationships; Inequalities</li>
+        </ul>
+      </div>
+      <div class="cell math">
+        <ul>
+          <li><span class="keystone">Probability</span> early Q4</li>
+          <li><span class="keystone">Genetics &amp; Punnett Squares</span></li>
+          <li>Population Growth Models</li>
+          <li>Pharmacokinetics &mdash; Drug Half-Life</li>
+          <li>Statistics &amp; Sampling, Scale Drawings, Biodiversity, Word Problems</li>
+        </ul>
+      </div>
+
+      <div class="row-label" style="font-size:1.4rem;color:#253a77">&darr;</div>
+      <div class="cell arrow">&darr;</div>
+      <div class="cell arrow">&darr;</div>
+      <div class="cell arrow">&darr;</div>
+      <div class="cell arrow">&darr;</div>
+
+      <div class="row-label">STEM 7<br><span style="font-weight:500;font-size:0.7rem">builds on</span></div>
+      <div class="cell stem">
+        <strong>Unit 1 &mdash; Why STEM</strong>
+        Hawaiian Water Cycle Poster, Water Quality Lab, lab report format.
+        <br><em>Uses:</em> rates, units, percent error.
+      </div>
+      <div class="cell stem">
+        <strong>Unit 2 &mdash; By the Dawn's Early Light</strong>
+        Brain &amp; eye dissection, perception, Mass/Volume/Density review.
+        <br><em>Uses:</em> rational numbers, formula rearrangement.
+      </div>
+      <div class="cell stem">
+        <strong>Unit 3 &mdash; An Invisible Army</strong>
+        Cells, organelles, plant/animal/bacterial cells, viruses, <strong>Osmosis Lab</strong>.
+        <br><em>Uses:</em> SA:V ratio (taught in Q2), geometry, inequalities.
+      </div>
+      <div class="cell stem">
+        <strong>Unit 4 &mdash; Body Systems &amp; Genetics</strong>
+        Body Systems, DNA/RNA, <strong>Punnett Squares</strong>, Rice Babies, Blood Lab.
+        <br><em>Uses:</em> probability (taught early Q4).
+      </div>
+    </div>
+
+    <div class="key-handoffs">
+      <strong>Key handoffs &mdash; Grade 7:</strong> SA:V finishes Dec (before cells unit). Probability and Punnett finish early April (before genetics unit).
+      <div class="handoff-list">
+        <span>Sep &rarr; Sci Notation (small) used in Microscope work</span>
+        <span>Nov &rarr; Rearrange D=m/V used in Brain calcs</span>
+        <span>Dec &rarr; SA:V used in cell-size lessons</span>
+        <span>Apr early &rarr; Punnett used in Rice Babies</span>
+      </div>
+    </div>
+
+  
+
+  <footer>
+    Mary, Star of the Sea School &middot; Middle School Curriculum Alignment &middot; SY 2026&ndash;2027
+    &middot; <a href="msos-math-stem-alignment.html" style="color:#253a77;">View all three grades on one page</a>
+  </footer>
+
+</div>
+</body>
+</html>
