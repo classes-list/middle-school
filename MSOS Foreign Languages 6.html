@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 6th Grade Foreign Languages: Foundations &amp; Sampling</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .essential-q { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .essential-q strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; font-size: 1rem; }
+    .vocab-card .pron { color: #B8860B; font-style: italic; font-size: 0.85rem; display: block; margin-bottom: 4px; }
+    .vocab-card span.def { font-size: 13px; color: #555; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.lang { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-hero .quote { color: #FFD100; font-style: italic; margin-top: 10px; font-size: 0.9rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+    .phrase-table { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0; overflow: hidden; margin: 14px 0; }
+    .phrase-table table { width: 100%; border-collapse: collapse; }
+    .phrase-table th { background: #1B3A8A; color: #fff; padding: 10px 14px; text-align: left; font-size: 0.85rem; }
+    .phrase-table td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; font-size: 0.92rem; }
+    .phrase-table td.target { font-weight: 700; color: #1B3A8A; }
+    .phrase-table td.pron { font-style: italic; color: #B8860B; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">6th Grade Foreign Languages <span class="grade-tag">Gr. 6</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="MSOS Foreign Languages Index.html" class="back-index-btn" title="Back to FL Classes">← All FL</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="../MSOS Logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="../NUI Logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Foundations &amp; Sampling</span>
+        </div>
+        <div class="topbar-right">FL &middot; Grade 6</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Foundations &amp; Sampling</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">A taste of five world languages &mdash; Hawaiian, French, Spanish, Mandarin, and Italian. Build foundations, daily habits with Duolingo &amp; Rosetta Stone, and respect for every culture.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen"></div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">Use this language outside the classroom &mdash; one small step at a time.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const SYLLABUS_HTML = `
+  <div class="syl-hero">
+    <div style="font-size:2.4rem;margin-bottom:8px">🌍</div>
+    <h2>Foreign Languages &mdash; Course Syllabus</h2>
+    <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+    <p class="quote">&ldquo;A different language is a different vision of life.&rdquo; &mdash; Federico Fellini</p>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card" style="flex:1 1 100%">
+      <h3>📋 Course Description</h3>
+      <p>Welcome to Foreign Languages! In 6th grade, students <strong>sample five world languages</strong> &mdash; Hawaiian, French, Spanish, Mandarin, and Italian &mdash; building foundations, study habits, and respect for the cultures behind each language.</p>
+      <p style="margin-top:8px">Hawaiian (ʻŌlelo Hawaiʻi) is given special attention as our home language. Students experience all five languages through structured units, daily app practice, classroom conversation, and cultural exploration.</p>
+      <p style="margin-top:8px"><strong>The 6th grade goal</strong>: light a love of language. By the end of the year, students should have basic greetings and simple phrases in all five languages, plus a sense of which language(s) they want to focus on in 7th grade.</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>👩‍🏫 Teacher</h3>
+      <p><strong>Mrs. Freitas</strong></p>
+      <p style="margin-top:8px;font-size:0.86rem;color:#475569">Communication primarily through Google Classroom and email. Please reach out for any questions about your child&rsquo;s progress.</p>
+    </div>
+    <div class="syl-card">
+      <h3>📱 Tools We Use Daily</h3>
+      <ul>
+        <li><strong>Duolingo</strong> &mdash; daily streaks for vocabulary &amp; grammar.</li>
+        <li><strong>Rosetta Stone</strong> &mdash; immersive listening &amp; speaking practice.</li>
+        <li>Google Classroom for assignments and feedback.</li>
+        <li>Speaking practice in class with partners.</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>🎒 Materials</h3>
+      <ul>
+        <li>Computer (school-issued)</li>
+        <li>Earbuds or headphones (for app listening)</li>
+        <li>Notebook for vocabulary</li>
+        <li>Pencils, colored pencils</li>
+        <li>A folder for handouts</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>🌐 Languages We Sample &mdash; Grade 6</h3>
+    <ul>
+      <li><strong>🌺 Hawaiian (ʻŌlelo Hawaiʻi)</strong> &mdash; the language of our home; values, greetings, &lsquo;ohana, ʻāina.</li>
+      <li><strong>🇫🇷 French</strong> &mdash; Romance language; greetings, family, food, art &amp; cuisine.</li>
+      <li><strong>🇪🇸 Spanish</strong> &mdash; world&rsquo;s second-most-spoken native language; greetings, family, numbers.</li>
+      <li><strong>🇨🇳 Mandarin Chinese</strong> &mdash; world&rsquo;s most-spoken first language; tones, pinyin, greetings, characters.</li>
+      <li><strong>🇮🇹 Italian</strong> &mdash; the language of music, art, and food; greetings, family, foods.</li>
+    </ul>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📊 Grading</h3>
+    <div class="syl-grade-row">
+      <div class="syl-grade-pill"><span>25%</span>Daily Practice<small>Duolingo / Rosetta Stone streaks</small></div>
+      <div class="syl-grade-pill"><span>20%</span>Classwork<small>Participation, in-class activities</small></div>
+      <div class="syl-grade-pill"><span>15%</span>Quizzes<small>Vocabulary, listening, basic grammar</small></div>
+      <div class="syl-grade-pill"><span>20%</span>Speaking<small>Conversation, presentations, pronunciation</small></div>
+      <div class="syl-grade-pill"><span>20%</span>Projects &amp; Culture<small>Cultural posters, recipes, songs</small></div>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>🎯 6th Grade Goals</h3>
+      <ul>
+        <li>Build daily habit of language practice (15 min/day on Duolingo or Rosetta Stone).</li>
+        <li>Learn greetings, basic numbers, family terms, and 20+ phrases in each language.</li>
+        <li>Recognize cultural traditions from each region.</li>
+        <li>Identify 1–2 languages students wish to focus on in 7th grade.</li>
+        <li>Develop respect for ʻŌlelo Hawaiʻi and Hawaiian culture as kamaʻāina (children of the land).</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>🏠 Home Practice</h3>
+      <p><strong>Daily expectation:</strong> at least <strong>15 minutes per day</strong> on Duolingo or Rosetta Stone (your daily practice grade).</p>
+      <p style="margin-top:6px"><strong>Speaking out loud!</strong> Don&rsquo;t just tap &mdash; SAY each phrase aloud to train your mouth and ear.</p>
+      <p style="margin-top:6px">Parents can encourage by asking &ldquo;What&rsquo;s a new word you learned today?&rdquo; at dinner.</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>⏰ Late Work / Make-Up</h3>
+      <p>Daily Duolingo/Rosetta Stone streaks are tracked weekly. If you miss days due to absence or illness, you have <strong>one week</strong> to make up missed minutes.</p>
+      <p style="margin-top:6px">Speaking assessments must be made up within one week of return from absence.</p>
+    </div>
+    <div class="syl-card">
+      <h3>🌺 Cultural Respect</h3>
+      <p>When we learn a language, we also learn about its people. We:</p>
+      <ul>
+        <li>Pronounce words carefully &mdash; especially Hawaiian (the ʻokina and kahakō matter).</li>
+        <li>Honor the cultural roots of each language.</li>
+        <li>Avoid mocking accents or making fun of pronunciation.</li>
+        <li>Celebrate diversity in our class &mdash; many of us speak more than one language at home.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+  </div>
+`;
+
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Hawaiian (ʻŌlelo Hawaiʻi)',
+    icon: '🌺',
+    book: 'Hawaiian / ʻŌlelo Hawaiʻi',
+    timeframe: 'Quarter 1 (year-long emphasis)',
+    desc: 'The language of our home. Greetings, ʻohana, values like aloha and mālama ʻāina, and our place in Hawaiian heritage.',
+    essential: 'How does Hawaiian language carry the values and history of our home?',
+    vocab: [
+      ['Aloha', 'a-LOH-ha', 'Hello, goodbye, love, compassion. The greeting that holds Hawaiian values.'],
+      ['Mahalo', 'ma-HA-lo', 'Thank you (deep gratitude).'],
+      ['ʻOhana', 'oh-HA-na', 'Family — including extended family and chosen family.'],
+      ['ʻĀina', 'EYE-na', 'Land. Hawaiians say "ka ʻāina" — the land — as something we belong TO, not something we own.'],
+      ['Mālama', 'MA-la-ma', 'To care for, protect (used as &ldquo;mālama ʻāina&rdquo; = care for the land).'],
+      ['Pono', 'PO-no', 'Righteous, good, in proper balance.'],
+      ['ʻOkina', 'oh-KI-na', 'The glottal stop ʻ — a real letter in Hawaiian! It changes meaning.'],
+      ['Kahakō', 'ka-ha-KOH', 'The macron — a long-vowel mark like ā ē ī ō ū. Also changes meaning.']
+    ],
+    lessonHTML: `
+      <p>ʻŌlelo Hawaiʻi (the Hawaiian language) is one of two official languages of the State of Hawaiʻi. It nearly disappeared in the 20th century after being banned in schools, but a powerful revival has brought it back. Today, Hawaiian-medium schools, words on every road sign, and kūpuna (elders) are restoring our home language.</p>
+      <h3>Hawaiian Sounds</h3>
+      <p>Hawaiian uses only <strong>13 letters</strong>: 5 vowels (a, e, i, o, u) and 8 consonants (h, k, l, m, n, p, w, ʻ). Each vowel always sounds the same:</p>
+      <ul>
+        <li><strong>a</strong> = &ldquo;ah&rdquo; (as in &ldquo;father&rdquo;)</li>
+        <li><strong>e</strong> = &ldquo;eh&rdquo; (as in &ldquo;bed&rdquo;)</li>
+        <li><strong>i</strong> = &ldquo;ee&rdquo; (as in &ldquo;feet&rdquo;)</li>
+        <li><strong>o</strong> = &ldquo;oh&rdquo; (as in &ldquo;rose&rdquo;)</li>
+        <li><strong>u</strong> = &ldquo;oo&rdquo; (as in &ldquo;moon&rdquo;)</li>
+      </ul>
+      <h3>Two Special Marks</h3>
+      <ul>
+        <li><strong>ʻOkina (ʻ)</strong> &mdash; a glottal stop, like the catch in &ldquo;uh-oh.&rdquo; It&rsquo;s a real letter. <em>kau</em> (to put) vs <em>kaʻu</em> (mine) are different words!</li>
+        <li><strong>Kahakō (ā ē ī ō ū)</strong> &mdash; a long-vowel mark. <em>pau</em> (finished) vs <em>paʻū</em> (skirt).</li>
+      </ul>
+      <h3>Phrases to Practice</h3>
+      <div class="phrase-table"><table>
+        <tr><th>Hawaiian</th><th>Pronunciation</th><th>Meaning</th></tr>
+        <tr><td class="target">Aloha kakahiaka</td><td class="pron">a-LOH-ha ka-ka-HEE-a-ka</td><td>Good morning</td></tr>
+        <tr><td class="target">Aloha ʻauinalā</td><td class="pron">a-LOH-ha a-WEE-na-LAH</td><td>Good afternoon</td></tr>
+        <tr><td class="target">Aloha ahiahi</td><td class="pron">a-LOH-ha a-hee-AH-hee</td><td>Good evening</td></tr>
+        <tr><td class="target">Pehea ʻoe?</td><td class="pron">peh-HAY-a OY</td><td>How are you?</td></tr>
+        <tr><td class="target">Maikaʻi</td><td class="pron">my-KA-ee</td><td>Good / well</td></tr>
+        <tr><td class="target">ʻO wai kou inoa?</td><td class="pron">oh-VYE koh ee-NO-a</td><td>What is your name?</td></tr>
+        <tr><td class="target">ʻO ___ koʻu inoa</td><td class="pron">oh ___ koh-OO ee-NO-a</td><td>My name is ___</td></tr>
+        <tr><td class="target">A hui hou</td><td class="pron">ah-HOO-ee HO</td><td>Until we meet again</td></tr>
+      </table></div>
+      <h3>Hawaiian Values to Learn</h3>
+      <ul>
+        <li><strong>Aloha</strong> &mdash; love, compassion, hospitality.</li>
+        <li><strong>Mālama ʻāina</strong> &mdash; care for the land.</li>
+        <li><strong>ʻOhana</strong> &mdash; family, extended family.</li>
+        <li><strong>Pono</strong> &mdash; right, balance, doing things properly.</li>
+        <li><strong>Lōkahi</strong> &mdash; harmony, working together.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'How many letters does Hawaiian use?', ans: '13 letters: 5 vowels (a, e, i, o, u) and 8 consonants (h, k, l, m, n, p, w, ʻ).' },
+      { q: 'What is the ʻokina, and why is it important?', ans: 'A glottal stop (the catch in &ldquo;uh-oh&rdquo;). It is a real letter in Hawaiian. Words like <em>kau</em> (to put) and <em>kaʻu</em> (mine) are different because of the ʻokina.' },
+      { q: 'Translate: &ldquo;Aloha kakahiaka.&rdquo;', ans: 'Good morning.' },
+      { q: 'Translate: &ldquo;Pehea ʻoe?&rdquo;', ans: 'How are you?' },
+      { q: 'Define mālama ʻāina and explain its importance in Hawaiian culture.', ans: 'Care for the land. It expresses the Hawaiian belief that we belong TO the land &mdash; we don&rsquo;t own it &mdash; and have a responsibility to protect it for future generations.' },
+      { q: 'How would you say &ldquo;My name is&rdquo; in Hawaiian?', ans: '&ldquo;ʻO ___ koʻu inoa.&rdquo;' },
+      { q: 'What does pono mean?', ans: 'Righteous, good, in proper balance &mdash; doing things the right way.' }
+    ],
+    quiz: [
+      { q: 'How many letters does Hawaiian use?', opts: ['8', '13', '21', '26'], ans: 1 },
+      { q: 'The Hawaiian word for "thank you" is:', opts: ['Aloha', 'Mahalo', 'Pono', 'Maikaʻi'], ans: 1 },
+      { q: 'ʻOhana means:', opts: ['House', 'Family', 'Friend', 'Sky'], ans: 1 },
+      { q: 'Mālama ʻāina means:', opts: ['Eat the food', 'Care for the land', 'Sing a song', 'Travel far'], ans: 1 },
+      { q: 'The ʻokina is a:', opts: ['Comma', 'Period', 'Glottal stop (real letter)', 'Hyphen'], ans: 2 },
+      { q: 'Aloha can mean:', opts: ['Only hello', 'Hello, goodbye, and love/compassion', 'Goodbye only', 'Thank you'], ans: 1 },
+      { q: 'In Hawaiian, the vowel "a" sounds like:', opts: ['"a" in cat', '"ah" in father', '"ay" in say', '"o" in go'], ans: 1 },
+      { q: '"Pehea ʻoe?" means:', opts: ['Goodbye', 'How are you?', 'Where are you?', 'My name is'], ans: 1 },
+      { q: 'Hawaiian was nearly lost because:', opts: ['Volcanoes', 'It was banned in schools in the 20th century', 'It is too hard', 'Hawaiians left'], ans: 1 },
+      { q: '"Lōkahi" means:', opts: ['Mountain', 'Harmony / working together', 'Storm', 'Number'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Greet One Person in Hawaiian Today',
+        scenario: 'You meet someone at school or in the community.',
+        steps: [
+          'Choose: aloha kakahiaka (morning), aloha ʻauinalā (afternoon), or aloha ahiahi (evening).',
+          'Greet them slowly and clearly.',
+          'If they are kūpuna (elder), pay extra respect.',
+          'Note how their face lights up &mdash; ʻŌlelo Hawaiʻi opens hearts.'
+        ],
+        reflect: 'How does using a few Hawaiian words honor where we live?'
+      },
+      {
+        title: 'Read Place Names Right',
+        scenario: 'You see Hawaiian place names everywhere.',
+        steps: [
+          'Pick one street, town, or beach (Kāneʻohe, Kailua, Waikīkī).',
+          'Look up its meaning and proper pronunciation.',
+          'Practice saying it correctly &mdash; including the ʻokina and kahakō.',
+          'Teach a friend.'
+        ],
+        reflect: 'Why does pronouncing Hawaiian place names correctly matter?'
+      },
+      {
+        title: 'Practice Mālama ʻĀina',
+        scenario: 'You&rsquo;re at a beach, park, or trail.',
+        steps: [
+          'Pick up 5 pieces of trash that aren&rsquo;t yours.',
+          'Don&rsquo;t take coral, sand, or rocks home.',
+          'Stay on trails so plants can recover.',
+          'Say a quiet mahalo to the ʻāina.'
+        ],
+        reflect: 'How does living mālama ʻāina change how I see the place I live?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — French (Français)',
+    icon: '🇫🇷',
+    book: 'French / Français',
+    timeframe: 'Quarter 1–2',
+    desc: 'A first taste of French &mdash; the language of art, food, fashion, and 29 countries on five continents.',
+    essential: 'Why is French considered one of the most beautiful languages, and how does it open doors around the world?',
+    vocab: [
+      ['Bonjour', 'bohn-ZHOOR', 'Hello / good day'],
+      ['Salut', 'sah-LOO', 'Hi (informal)'],
+      ['Merci', 'mehr-SEE', 'Thank you'],
+      ['Au revoir', 'oh ruh-VWAHR', 'Goodbye'],
+      ['Comment t\'appelles-tu?', 'koh-MAHN tah-PELL too', 'What is your name?'],
+      ['Je m\'appelle', 'zhuh mah-PELL', 'My name is'],
+      ['Famille', 'fah-MEEL', 'Family'],
+      ['L\'amour', 'lah-MOOR', 'Love']
+    ],
+    lessonHTML: `
+      <p>French is spoken by ~300 million people in <strong>29 countries</strong> on five continents (including parts of Africa, Canada, Belgium, Switzerland, and the Caribbean). It&rsquo;s the language of the European Union, the United Nations, and the Olympic Games.</p>
+      <h3>Why French?</h3>
+      <ul>
+        <li>Half of all English vocabulary comes from French (1066 Norman Conquest).</li>
+        <li>French is one of UNESCO&rsquo;s 6 official languages.</li>
+        <li>France is the #1 tourist destination in the world.</li>
+        <li>French art, food, fashion, and philosophy shape global culture.</li>
+      </ul>
+      <h3>French Sounds</h3>
+      <p>French has some sounds that don&rsquo;t exist in English &mdash; the nasal vowels (an, en, on, in) and the famous &ldquo;rolled R&rdquo; from the back of the throat. Don&rsquo;t worry: practice with Rosetta Stone&rsquo;s voice recognition.</p>
+      <h3>Phrases to Practice</h3>
+      <div class="phrase-table"><table>
+        <tr><th>French</th><th>Pronunciation</th><th>English</th></tr>
+        <tr><td class="target">Bonjour!</td><td class="pron">bohn-ZHOOR</td><td>Hello / Good day</td></tr>
+        <tr><td class="target">Salut!</td><td class="pron">sah-LOO</td><td>Hi (informal)</td></tr>
+        <tr><td class="target">Comment ça va?</td><td class="pron">koh-MAHN sah VAH</td><td>How&rsquo;s it going?</td></tr>
+        <tr><td class="target">Très bien, merci.</td><td class="pron">treh BYAN, mehr-SEE</td><td>Very well, thanks.</td></tr>
+        <tr><td class="target">Comment t&rsquo;appelles-tu?</td><td class="pron">koh-MAHN tah-PELL TOO</td><td>What&rsquo;s your name?</td></tr>
+        <tr><td class="target">Je m&rsquo;appelle ___</td><td class="pron">zhuh mah-PELL</td><td>My name is ___</td></tr>
+        <tr><td class="target">S&rsquo;il vous plaît</td><td class="pron">seel voo PLEH</td><td>Please</td></tr>
+        <tr><td class="target">Au revoir!</td><td class="pron">oh ruh-VWAHR</td><td>Goodbye</td></tr>
+      </table></div>
+      <h3>Numbers 1–10</h3>
+      <p>un (1), deux (2), trois (3), quatre (4), cinq (5), six (6), sept (7), huit (8), neuf (9), dix (10).</p>
+      <h3>Cultural Snapshot</h3>
+      <ul>
+        <li><strong>Food:</strong> baguette, croissant, fromage (cheese), crêpe</li>
+        <li><strong>Art:</strong> Mona Lisa lives in Paris; Impressionism (Monet, Renoir) was born in France</li>
+        <li><strong>Music:</strong> Édith Piaf&rsquo;s &ldquo;La Vie en Rose,&rdquo; modern French pop</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'In how many countries is French an official language?', ans: '29 countries on five continents.' },
+      { q: 'How would you say "Hello, my name is Jamie" in French?', ans: 'Bonjour! Je m&rsquo;appelle Jamie.' },
+      { q: 'Translate: "Comment ça va?"', ans: 'How&rsquo;s it going?' },
+      { q: 'What does "merci" mean?', ans: 'Thank you.' },
+      { q: 'Count from 1 to 5 in French.', ans: 'un, deux, trois, quatre, cinq.' },
+      { q: 'Why does English share so much vocabulary with French?', ans: 'The Norman Conquest of 1066 brought French-speaking rulers to England, and ~half of English vocabulary now comes from French roots.' },
+      { q: 'Name two famous French dishes or foods.', ans: 'Examples: baguette, croissant, fromage, crêpe, soufflé, ratatouille, escargot.' }
+    ],
+    quiz: [
+      { q: '"Bonjour" means:', opts: ['Goodbye', 'Hello / good day', 'Thank you', 'Please'], ans: 1 },
+      { q: '"Merci" means:', opts: ['Hello', 'My name', 'Thank you', 'Please'], ans: 2 },
+      { q: '"Au revoir" means:', opts: ['Hello', 'Goodbye', 'Sorry', 'Yes'], ans: 1 },
+      { q: 'In French, "trois" means:', opts: ['One', 'Two', 'Three', 'Four'], ans: 2 },
+      { q: '"Je m&rsquo;appelle" means:', opts: ['My name is', 'I love', 'I&rsquo;m hungry', 'Goodbye'], ans: 0 },
+      { q: 'French is spoken in approximately how many countries?', opts: ['5', '15', '29', '50'], ans: 2 },
+      { q: 'Roughly what % of English vocabulary comes from French?', opts: ['10%', '25%', '~50%', '90%'], ans: 2 },
+      { q: '"S&rsquo;il vous plaît" means:', opts: ['Excuse me', 'Please', 'Sorry', 'Thanks'], ans: 1 },
+      { q: 'The Mona Lisa is in:', opts: ['London', 'Paris (the Louvre)', 'Rome', 'Madrid'], ans: 1 },
+      { q: 'In French, "salut" is:', opts: ['Formal hello', 'Informal hi', 'Goodbye', 'Sorry'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'A Greeting on the Way to School',
+        scenario: 'You bump into a classmate.',
+        steps: [
+          'Try &ldquo;Salut! Comment ça va?&rdquo;',
+          'They might respond &ldquo;Très bien!&rdquo; or just look confused.',
+          'Either way, you spoke French.',
+          'Repeat tomorrow.'
+        ],
+        reflect: 'How does even ONE phrase a day build language fluency over time?'
+      },
+      {
+        title: 'A French Bakery Visit',
+        scenario: 'You and your family go to a French bakery (Hawaii has several).',
+        steps: [
+          'Order a croissant or baguette using French &mdash; &ldquo;Un croissant, s&rsquo;il vous plaît.&rdquo;',
+          'Say &ldquo;Merci&rdquo; when you receive it.',
+          'Notice the spelling on the menu &mdash; how many words you can decode?',
+          'Take a photo of the menu.'
+        ],
+        reflect: 'How does language change a regular outing into an adventure?'
+      },
+      {
+        title: 'Watch a French Cartoon',
+        scenario: 'You want to expose your ear to French.',
+        steps: [
+          'Find a kids&rsquo; show in French (Netflix or YouTube has many).',
+          'Watch with English subtitles for 10 minutes.',
+          'Notice familiar words.',
+          'Repeat one phrase you heard out loud.'
+        ],
+        reflect: 'Why is listening to native speakers the fastest way to train your ear?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — Spanish (Español)',
+    icon: '🇪🇸',
+    book: 'Spanish / Español',
+    timeframe: 'Quarter 2',
+    desc: 'The world&rsquo;s second-most-spoken native language &mdash; with deep roots across the Americas, Spain, and parts of the Pacific.',
+    essential: 'Why is Spanish such a powerful language in the United States and the world today?',
+    vocab: [
+      ['Hola', 'OH-lah', 'Hello'],
+      ['Adiós', 'ah-DYOHS', 'Goodbye'],
+      ['Gracias', 'GRAH-syahs', 'Thank you'],
+      ['Por favor', 'pohr fah-VOHR', 'Please'],
+      ['¿Cómo te llamas?', 'KOH-moh tay YAH-mahs', 'What is your name?'],
+      ['Me llamo', 'meh YAH-moh', 'My name is'],
+      ['Familia', 'fah-MEE-lyah', 'Family'],
+      ['Amigo / Amiga', 'ah-MEE-goh / ah-MEE-gah', 'Friend (m / f)']
+    ],
+    lessonHTML: `
+      <p>Spanish (Español) is spoken by ~500 million native speakers, making it the <strong>second-most-spoken native language in the world</strong> (after Mandarin). It&rsquo;s the official language of 20+ countries across the Americas and Europe.</p>
+      <h3>Why Spanish?</h3>
+      <ul>
+        <li>The U.S. has ~42 million native Spanish speakers &mdash; second only to Mexico.</li>
+        <li>Hawaiʻi has growing Spanish-speaking communities.</li>
+        <li>Spanish is the most-studied second language in U.S. schools.</li>
+        <li>It opens doors to Latin music, food, and Catholic faith traditions.</li>
+      </ul>
+      <h3>Spanish Sounds</h3>
+      <p>Spanish vowels are pure (similar to Hawaiian!). Each vowel always sounds the same: a, e, i, o, u. The rolled &ldquo;rr&rdquo; takes practice. Spanish uses <strong>upside-down question marks</strong> (¿) and exclamation points (¡) at the start of questions/exclamations &mdash; a unique feature.</p>
+      <h3>Phrases to Practice</h3>
+      <div class="phrase-table"><table>
+        <tr><th>Spanish</th><th>Pronunciation</th><th>English</th></tr>
+        <tr><td class="target">¡Hola!</td><td class="pron">OH-lah</td><td>Hello!</td></tr>
+        <tr><td class="target">Buenos días</td><td class="pron">BWEH-nohs DEE-ahs</td><td>Good morning</td></tr>
+        <tr><td class="target">¿Cómo estás?</td><td class="pron">KOH-moh es-TAHS</td><td>How are you?</td></tr>
+        <tr><td class="target">Muy bien, gracias.</td><td class="pron">mwee BYEN, GRAH-syahs</td><td>Very well, thank you.</td></tr>
+        <tr><td class="target">¿Cómo te llamas?</td><td class="pron">KOH-moh tay YAH-mahs</td><td>What&rsquo;s your name?</td></tr>
+        <tr><td class="target">Me llamo ___</td><td class="pron">meh YAH-moh</td><td>My name is ___</td></tr>
+        <tr><td class="target">¡Adiós!</td><td class="pron">ah-DYOHS</td><td>Goodbye!</td></tr>
+        <tr><td class="target">Por favor</td><td class="pron">pohr fah-VOHR</td><td>Please</td></tr>
+      </table></div>
+      <h3>Numbers 1–10</h3>
+      <p>uno (1), dos (2), tres (3), cuatro (4), cinco (5), seis (6), siete (7), ocho (8), nueve (9), diez (10).</p>
+      <h3>Cultural Snapshot</h3>
+      <ul>
+        <li><strong>Food:</strong> tacos, paella, empanadas, churros, pupusas</li>
+        <li><strong>Music:</strong> mariachi, flamenco, reggaeton, Latin jazz</li>
+        <li><strong>Holidays:</strong> Día de los Muertos, Las Posadas, Cinco de Mayo</li>
+        <li><strong>Faith:</strong> Catholic traditions across Latin America</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'About how many native Spanish speakers are there worldwide?', ans: '~500 million.' },
+      { q: 'How would you say "Hello, my name is Sam" in Spanish?', ans: '¡Hola! Me llamo Sam.' },
+      { q: 'Translate: "¿Cómo estás?"', ans: 'How are you?' },
+      { q: 'What is unique about Spanish punctuation?', ans: 'Spanish uses upside-down question marks (¿) and exclamation points (¡) at the START of questions/exclamations &mdash; in addition to the regular ones at the end.' },
+      { q: 'Count from 1 to 5 in Spanish.', ans: 'uno, dos, tres, cuatro, cinco.' },
+      { q: 'How is Spanish growing in the United States?', ans: 'About 42 million U.S. residents are native Spanish speakers (second only to Mexico). Spanish is the most-studied second language in U.S. schools and is heard in many U.S. states daily.' },
+      { q: 'Name two Spanish-speaking holidays or traditions.', ans: 'Examples: Día de los Muertos (Day of the Dead), Las Posadas (Christmas tradition), Cinco de Mayo, Quinceañera.' }
+    ],
+    quiz: [
+      { q: '"Hola" means:', opts: ['Goodbye', 'Hello', 'Thank you', 'Please'], ans: 1 },
+      { q: '"Gracias" means:', opts: ['Hello', 'Goodbye', 'Thank you', 'Please'], ans: 2 },
+      { q: '"Adiós" means:', opts: ['Hello', 'Goodbye', 'Yes', 'No'], ans: 1 },
+      { q: 'In Spanish, "cuatro" is:', opts: ['Two', 'Three', 'Four', 'Five'], ans: 2 },
+      { q: '"Me llamo" means:', opts: ['My name is', 'How are you', 'Goodbye', 'Please'], ans: 0 },
+      { q: 'Approximately how many native Spanish speakers worldwide?', opts: ['100 million', '300 million', '~500 million', '1 billion'], ans: 2 },
+      { q: 'Spanish question marks:', opts: ['Only at the end', 'At BOTH start (¿) and end (?)', 'Are illegal', 'Don&rsquo;t exist'], ans: 1 },
+      { q: '"Por favor" means:', opts: ['Excuse me', 'Please', 'Sorry', 'You&rsquo;re welcome'], ans: 1 },
+      { q: 'Día de los Muertos is:', opts: ['New Year', 'Day of the Dead', 'Christmas', 'Independence Day'], ans: 1 },
+      { q: 'Spanish vowels are similar in purity to which other language we study?', opts: ['Mandarin', 'Hawaiian', 'French', 'Italian'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Hola at the Grocery Store',
+        scenario: 'You&rsquo;re shopping with family.',
+        steps: [
+          'Many Hawaii grocery employees speak Spanish.',
+          'When greeted, try &ldquo;Hola!&rdquo; or &ldquo;Buenos días!&rdquo;',
+          'Say &ldquo;Gracias&rdquo; at checkout.',
+          'Smile &mdash; it&rsquo;s a small bridge.'
+        ],
+        reflect: 'How do small phrases create connection across cultures?'
+      },
+      {
+        title: 'Listen to a Spanish Song',
+        scenario: 'You want to train your ear.',
+        steps: [
+          'Pick a popular song (Bad Bunny, Shakira, classic mariachi).',
+          'Look up the lyrics.',
+          'Listen 3 times following along.',
+          'Pick 5 words you understand.'
+        ],
+        reflect: 'How does music make a language stick faster than worksheets?'
+      },
+      {
+        title: 'Cook a Spanish-Speaking Recipe',
+        scenario: 'You want to taste the culture.',
+        steps: [
+          'Pick something simple: empanadas, quesadilla, arroz con leche.',
+          'Read the recipe in Spanish (Google Translate to verify).',
+          'Cook with family.',
+          'Use Spanish words for ingredients (huevos, leche, harina).'
+        ],
+        reflect: 'How does food teach language through your senses?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Mandarin Chinese (普通话)',
+    icon: '🇨🇳',
+    book: 'Mandarin / 普通话 (Pǔtōnghuà)',
+    timeframe: 'Quarter 3',
+    desc: 'The world&rsquo;s most-spoken first language, with 1 billion+ speakers, tones, and a writing system 3,000 years old.',
+    essential: 'How does Mandarin&rsquo;s tonal system and character writing change how we think about language itself?',
+    vocab: [
+      ['你好', 'Nǐ hǎo (NEE HAOW)', 'Hello'],
+      ['谢谢', 'Xièxie (SHYEH-SHYEH)', 'Thank you'],
+      ['再见', 'Zàijiàn (DZIE-JEN)', 'Goodbye'],
+      ['请', 'Qǐng (CHEENG)', 'Please'],
+      ['你叫什么名字?', 'Nǐ jiào shénme míngzi?', 'What is your name?'],
+      ['我叫', 'Wǒ jiào (WAW JOW)', 'My name is'],
+      ['家', 'Jiā (JYAH)', 'Family / home'],
+      ['朋友', 'Péngyǒu (PUNG-yo)', 'Friend']
+    ],
+    lessonHTML: `
+      <p>Mandarin Chinese is the <strong>most-spoken first language in the world</strong> &mdash; about 1 billion native speakers and 200 million more who speak it as a second language. Its writing system is 3,000+ years old and uses thousands of characters.</p>
+      <h3>Why Mandarin?</h3>
+      <ul>
+        <li>Spoken in Mainland China, Taiwan, Singapore, and Chinese diaspora communities worldwide.</li>
+        <li>Hawaiʻi has a long Chinese heritage &mdash; Chinatown is one of the oldest in the U.S.</li>
+        <li>China is the world&rsquo;s second-largest economy.</li>
+        <li>Reading Chinese characters trains the brain in unique ways.</li>
+      </ul>
+      <h3>The Four Tones</h3>
+      <p>Mandarin is a TONAL language &mdash; the same syllable means DIFFERENT WORDS depending on pitch:</p>
+      <ul>
+        <li><strong>1st tone (mā 妈)</strong> &mdash; high, flat &mdash; means &ldquo;mother&rdquo;</li>
+        <li><strong>2nd tone (má 麻)</strong> &mdash; rising (like asking a question) &mdash; means &ldquo;hemp&rdquo;</li>
+        <li><strong>3rd tone (mǎ 马)</strong> &mdash; falling-then-rising &mdash; means &ldquo;horse&rdquo;</li>
+        <li><strong>4th tone (mà 骂)</strong> &mdash; sharp falling &mdash; means &ldquo;to scold&rdquo;</li>
+      </ul>
+      <p>Same syllable, four meanings. Yes, this means tone matters!</p>
+      <h3>Pinyin</h3>
+      <p>Pinyin is the system that uses ROMAN LETTERS to spell Chinese sounds. We&rsquo;ll use Pinyin for pronunciation while we learn the characters separately.</p>
+      <h3>Phrases to Practice</h3>
+      <div class="phrase-table"><table>
+        <tr><th>Pinyin</th><th>Pronunciation</th><th>Characters</th><th>English</th></tr>
+        <tr><td class="target">Nǐ hǎo</td><td class="pron">NEE HAOW</td><td>你好</td><td>Hello</td></tr>
+        <tr><td class="target">Nǐ hǎo ma?</td><td class="pron">NEE HAOW mah</td><td>你好吗?</td><td>How are you?</td></tr>
+        <tr><td class="target">Wǒ hěn hǎo</td><td class="pron">WAW HEN HAOW</td><td>我很好</td><td>I am very well</td></tr>
+        <tr><td class="target">Xièxie</td><td class="pron">SHYEH-SHYEH</td><td>谢谢</td><td>Thank you</td></tr>
+        <tr><td class="target">Bù kèqi</td><td class="pron">BOO KUH-CHEE</td><td>不客气</td><td>You&rsquo;re welcome</td></tr>
+        <tr><td class="target">Wǒ jiào ___</td><td class="pron">WAW JOW</td><td>我叫</td><td>My name is ___</td></tr>
+        <tr><td class="target">Zàijiàn</td><td class="pron">DZIE-JEN</td><td>再见</td><td>Goodbye</td></tr>
+      </table></div>
+      <h3>Numbers 1–10</h3>
+      <p>一 yī (1), 二 èr (2), 三 sān (3), 四 sì (4), 五 wǔ (5), 六 liù (6), 七 qī (7), 八 bā (8), 九 jiǔ (9), 十 shí (10).</p>
+      <p>Notice: 一 (1) is one stroke, 二 (2) is two strokes, 三 (3) is three strokes!</p>
+      <h3>Cultural Snapshot</h3>
+      <ul>
+        <li><strong>Food:</strong> dumplings (饺子), noodles, dim sum, mooncakes</li>
+        <li><strong>Holidays:</strong> Lunar New Year, Mid-Autumn Festival, Dragon Boat Festival</li>
+        <li><strong>History:</strong> the Great Wall, Confucius, Tang &amp; Han dynasties</li>
+        <li><strong>Hawaiʻi connection:</strong> Honolulu&rsquo;s Chinatown dates to the 1860s</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'About how many native Mandarin speakers are there?', ans: 'About 1 billion native speakers (plus ~200 million second-language speakers).' },
+      { q: 'What is unique about Mandarin compared to most European languages?', ans: 'It is a TONAL language &mdash; the same syllable means different words depending on the pitch (tone). It also uses thousands of characters instead of an alphabet.' },
+      { q: 'How many tones does Mandarin have, and what does each do?', ans: '4 tones: 1st = high flat; 2nd = rising; 3rd = falling-then-rising; 4th = sharp falling. Same syllable with different tones = different words.' },
+      { q: 'What is Pinyin?', ans: 'A system that uses Roman letters (with tone marks) to spell Chinese sounds. It helps non-native speakers learn pronunciation.' },
+      { q: 'How would you write "Hello" in Pinyin and characters?', ans: 'Pinyin: Nǐ hǎo. Characters: 你好.' },
+      { q: 'Why does Hawaiʻi have a special connection to Chinese culture?', ans: 'Chinese immigrants began arriving in Hawaiʻi in the 1860s; Honolulu&rsquo;s Chinatown is one of the oldest in the U.S. Chinese culture is woven into Hawaiian local culture.' },
+      { q: 'What are the characters for "1, 2, 3" in Chinese?', ans: '一 (yī, 1), 二 (èr, 2), 三 (sān, 3) — they look like 1, 2, 3 horizontal lines!' }
+    ],
+    quiz: [
+      { q: 'Mandarin is the world&rsquo;s most-spoken first language, with about:', opts: ['100 million speakers', '500 million speakers', '~1 billion speakers', '5 billion speakers'], ans: 2 },
+      { q: '"Nǐ hǎo" means:', opts: ['Goodbye', 'Hello', 'Thank you', 'Please'], ans: 1 },
+      { q: '"Xièxie" means:', opts: ['Hello', 'Goodbye', 'Thank you', 'Please'], ans: 2 },
+      { q: 'How many tones does Mandarin have?', opts: ['1', '2', '4', '10'], ans: 2 },
+      { q: 'In tonal language, the same syllable can mean different things based on:', opts: ['Volume', 'Pitch / tone', 'Speed', 'Time of day'], ans: 1 },
+      { q: 'Pinyin is:', opts: ['A type of dumpling', 'A romanization system for Chinese sounds', 'A holiday', 'A character'], ans: 1 },
+      { q: 'The Chinese character for "3" looks like:', opts: ['A square', 'Three horizontal lines (三)', 'A circle', 'A triangle'], ans: 1 },
+      { q: '"Zàijiàn" means:', opts: ['Hello', 'Goodbye', 'Yes', 'No'], ans: 1 },
+      { q: 'Honolulu&rsquo;s Chinatown dates to:', opts: ['1980s', '1860s', '1950s', '2000s'], ans: 1 },
+      { q: 'A famous Chinese holiday is:', opts: ['Lunar New Year', 'Easter', 'Halloween', 'Thanksgiving'], ans: 0 }
+    ],
+    rla: [
+      {
+        title: 'Visit Chinatown in Honolulu',
+        scenario: 'You and family head downtown.',
+        steps: [
+          'Walk through Honolulu&rsquo;s Chinatown.',
+          'Try &ldquo;Nǐ hǎo&rdquo; or &ldquo;Xièxie&rdquo; at a shop or restaurant.',
+          'Look at signs &mdash; how many characters can you spot?',
+          'Try a new food: dim sum, mochi, or fresh dumplings.'
+        ],
+        reflect: 'How does Hawaiʻi&rsquo;s Chinese heritage live on today?'
+      },
+      {
+        title: 'Practice Tones in the Mirror',
+        scenario: 'You&rsquo;re studying Mandarin at home.',
+        steps: [
+          'Stand in front of a mirror.',
+          'Practice the 4 tones: mā má mǎ mà.',
+          'Watch how your face changes (3rd tone makes you frown!).',
+          'Repeat 10 times daily until they feel natural.'
+        ],
+        reflect: 'Why does tonal language demand whole-body attention?'
+      },
+      {
+        title: 'Celebrate Lunar New Year',
+        scenario: 'Lunar New Year is in late January / early February.',
+        steps: [
+          'Look up the year&rsquo;s zodiac animal (Rat, Ox, Tiger, etc.).',
+          'Hang red decorations (red is luck).',
+          'Eat dumplings (jiǎozi 饺子) with family.',
+          'Greet elders with &ldquo;Xīnnián kuàilè&rdquo; (Happy New Year)!'
+        ],
+        reflect: 'How does celebrating other cultures&rsquo; holidays make us more global?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — Italian (Italiano)',
+    icon: '🇮🇹',
+    book: 'Italian / Italiano',
+    timeframe: 'Quarter 4',
+    desc: 'The language of music, art, and food &mdash; from opera to pizza, from Michelangelo to your nonna.',
+    essential: 'Why has Italian shaped global music, art, and food more than its country&rsquo;s size suggests?',
+    vocab: [
+      ['Ciao', 'CHOW', 'Hi / Bye (informal)'],
+      ['Buongiorno', 'bwohn-JOR-noh', 'Good day / Hello'],
+      ['Grazie', 'GRAH-tsyeh', 'Thank you'],
+      ['Per favore', 'pehr fah-VOH-reh', 'Please'],
+      ['Come ti chiami?', 'KOH-meh tee KYAH-mee', 'What is your name?'],
+      ['Mi chiamo', 'mee KYAH-moh', 'My name is'],
+      ['Famiglia', 'fah-MEE-lyah', 'Family'],
+      ['Amico / Amica', 'ah-MEE-koh / ah-MEE-kah', 'Friend (m / f)']
+    ],
+    lessonHTML: `
+      <p>Italian (Italiano) is spoken by about 65 million native speakers and is the official language of Italy, San Marino, Switzerland, and Vatican City. It descends directly from Latin and is considered one of the most musical, expressive languages in the world.</p>
+      <h3>Why Italian?</h3>
+      <ul>
+        <li>Italian is the language of <strong>music</strong> &mdash; opera, classical, even modern pop.</li>
+        <li>Italian is the language of <strong>art</strong> &mdash; Renaissance, Michelangelo, Leonardo da Vinci.</li>
+        <li>Italian is the language of <strong>food</strong> &mdash; pizza, pasta, gelato, espresso.</li>
+        <li>The Roman Catholic Church uses Italian as its working language.</li>
+        <li>Italian has shaped English vocabulary &mdash; piano, opera, ciao, pasta, pizza.</li>
+      </ul>
+      <h3>Italian Sounds</h3>
+      <p>Italian is famously easy to pronounce because every letter is sounded out and vowels are clean. Learn the alphabet sounds and you can read most words. The rolled &ldquo;r&rdquo; is the trickiest part for English speakers.</p>
+      <h3>Phrases to Practice</h3>
+      <div class="phrase-table"><table>
+        <tr><th>Italian</th><th>Pronunciation</th><th>English</th></tr>
+        <tr><td class="target">Ciao!</td><td class="pron">CHOW</td><td>Hi / Bye (informal)</td></tr>
+        <tr><td class="target">Buongiorno!</td><td class="pron">bwohn-JOR-noh</td><td>Good day / Hello</td></tr>
+        <tr><td class="target">Buonasera!</td><td class="pron">bwoh-na-SEH-rah</td><td>Good evening</td></tr>
+        <tr><td class="target">Come stai?</td><td class="pron">KOH-meh STYE</td><td>How are you?</td></tr>
+        <tr><td class="target">Bene, grazie.</td><td class="pron">BEH-neh, GRAH-tsyeh</td><td>Well, thanks.</td></tr>
+        <tr><td class="target">Come ti chiami?</td><td class="pron">KOH-meh tee KYAH-mee</td><td>What&rsquo;s your name?</td></tr>
+        <tr><td class="target">Mi chiamo ___</td><td class="pron">mee KYAH-moh</td><td>My name is ___</td></tr>
+        <tr><td class="target">Arrivederci!</td><td class="pron">ah-ree-veh-DEHR-chee</td><td>Goodbye (formal)</td></tr>
+      </table></div>
+      <h3>Numbers 1–10</h3>
+      <p>uno (1), due (2), tre (3), quattro (4), cinque (5), sei (6), sette (7), otto (8), nove (9), dieci (10).</p>
+      <h3>Italian Words You Already Know</h3>
+      <p>You speak more Italian than you think:</p>
+      <ul>
+        <li><strong>Pizza, pasta, spaghetti, lasagna, ravioli</strong> &mdash; food</li>
+        <li><strong>Piano, opera, soprano, bravo, finale</strong> &mdash; music</li>
+        <li><strong>Ciao, paparazzi, mafia</strong> &mdash; everyday</li>
+        <li><strong>Cappuccino, espresso, gelato</strong> &mdash; drinks</li>
+      </ul>
+      <h3>Cultural Snapshot</h3>
+      <ul>
+        <li><strong>Art:</strong> Sistine Chapel, Michelangelo&rsquo;s David, Leonardo&rsquo;s Mona Lisa</li>
+        <li><strong>Music:</strong> Verdi, Vivaldi, Pavarotti, Andrea Bocelli</li>
+        <li><strong>Food:</strong> regional specialties differ city by city &mdash; Naples (pizza), Rome (carbonara), Bologna (lasagna)</li>
+        <li><strong>Faith:</strong> Vatican City &mdash; the heart of the Catholic Church</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Italian descends from which ancient language?', ans: 'Latin (the language of the Roman Empire).' },
+      { q: 'How would you say "Hello, my name is Maria" in Italian?', ans: 'Ciao! Mi chiamo Maria. (or Buongiorno! Mi chiamo Maria.)' },
+      { q: 'List four Italian words English speakers use without translating.', ans: 'Examples: pizza, pasta, ciao, opera, piano, soprano, espresso, cappuccino, paparazzi, bravo, gelato.' },
+      { q: 'Translate: "Come stai?"', ans: 'How are you?' },
+      { q: 'Count from 1 to 5 in Italian.', ans: 'uno, due, tre, quattro, cinque.' },
+      { q: 'Why is Italian called the language of music and art?', ans: 'The Italian Renaissance produced the greatest artists in Western history (Michelangelo, Leonardo, Raphael). Opera was invented in Italy, and Italian remains the standard language of Western classical music (forte, piano, allegro).' },
+      { q: 'Where is Vatican City, and why does it matter?', ans: 'Vatican City is a tiny independent state inside Rome, Italy. It is the headquarters of the Roman Catholic Church and the home of the Pope.' }
+    ],
+    quiz: [
+      { q: '"Ciao" can mean:', opts: ['Only hello', 'Both hello and goodbye (informal)', 'Only goodbye', 'Thank you'], ans: 1 },
+      { q: '"Grazie" means:', opts: ['Hello', 'Goodbye', 'Thank you', 'Please'], ans: 2 },
+      { q: '"Mi chiamo" means:', opts: ['I love', 'My name is', 'I&rsquo;m hungry', 'Hello'], ans: 1 },
+      { q: 'Italian descends from:', opts: ['Greek', 'Latin', 'Spanish', 'Old English'], ans: 1 },
+      { q: 'In Italian, "tre" is:', opts: ['Two', 'Three', 'Four', 'Five'], ans: 1 },
+      { q: 'Vatican City is in:', opts: ['Naples', 'Rome', 'Florence', 'Milan'], ans: 1 },
+      { q: '"Arrivederci" means:', opts: ['Hi', 'Goodbye (formal)', 'Sorry', 'Welcome'], ans: 1 },
+      { q: 'Pizza is most famously associated with which Italian city?', opts: ['Rome', 'Naples', 'Milan', 'Florence'], ans: 1 },
+      { q: 'In music, "piano" originally means:', opts: ['Loud', 'Soft', 'Fast', 'Slow'], ans: 1 },
+      { q: 'Michelangelo painted the:', opts: ['Mona Lisa', 'Sistine Chapel ceiling', 'Eiffel Tower', 'Great Wall'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Order at an Italian Restaurant',
+        scenario: 'Family dinner at an Italian place.',
+        steps: [
+          'Greet the host: &ldquo;Buonasera!&rdquo;',
+          'Try ordering: &ldquo;Una pizza Margherita, per favore.&rdquo;',
+          'Say &ldquo;Grazie&rdquo; when food arrives.',
+          'Say &ldquo;Arrivederci&rdquo; when leaving.'
+        ],
+        reflect: 'How does even a few Italian phrases make a meal feel like a small trip?'
+      },
+      {
+        title: 'Listen to Italian Opera or Pop',
+        scenario: 'You want to immerse your ear.',
+        steps: [
+          'Try Andrea Bocelli (&ldquo;Con te partirò&rdquo;) or Eros Ramazzotti (modern pop).',
+          'Pull up the lyrics in Italian.',
+          'Sing along even if you don&rsquo;t understand.',
+          'Notice familiar words: amore (love), ciao, piano, forte.'
+        ],
+        reflect: 'How is music the easiest way to fall in love with a language?'
+      },
+      {
+        title: 'Make a Simple Italian Recipe',
+        scenario: 'You want to taste Italy at home.',
+        steps: [
+          'Make caprese salad: tomato, mozzarella, basil, olive oil, salt.',
+          'Or simple spaghetti aglio e olio (garlic + oil).',
+          'Use Italian words for ingredients.',
+          'Eat slowly. Italian meals are about presenza (presence).'
+        ],
+        reflect: 'Why do Italians take so long for meals &mdash; and what could we learn?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.book} &middot; ${u.timeframe}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Foundations & Sampling';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const ss = document.getElementById('syllabus-screen');
+  ss.innerHTML = SYLLABUS_HTML;
+  ss.classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <div class="meta-bar">
+      <span class="meta-pill lang">🌐 ${u.book}</span>
+      <span class="meta-pill">📅 ${u.timeframe}</span>
+    </div>
+    <div class="essential-q"><strong>Essential Question:</strong> ${u.essential}</div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span class="pron">${v[1]}</span><span class="def">${v[2]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. Practice pronouncing aloud!</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Très bien! ¡Muy bien! 太好了! Maikaʻi! Bravissimo!' : '📚 Practice on Duolingo or Rosetta Stone and try again.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

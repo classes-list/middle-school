@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 6th Grade Social Studies: Ancient Civilizations</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .essential-q { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .essential-q strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.region { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-hero .quote { color: #FFD100; font-style: italic; margin-top: 10px; font-size: 0.9rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .syl-scale { display: grid; gap: 6px; margin-top: 8px; }
+    .syl-scale-row { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 6px 12px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #1B3A8A; }
+    .syl-scale-num { font-weight: 800; color: #1B3A8A; font-size: 1.1rem; text-align: center; }
+    .syl-scale-text { font-size: 0.86rem; color: #374151; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">6th Grade Social Studies <span class="grade-tag">Gr. 6</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="MSOS Social Studies Index.html" class="back-index-btn" title="Back to Social Studies Classes">← All SS</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="../MSOS Logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="../NUI Logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Ancient Civilizations</span>
+        </div>
+        <div class="topbar-right">Social Studies &middot; Grade 6</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Ancient Civilizations</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">From the cradle of civilization to the wisdom of the East — exploring Egypt, Mesopotamia, Israel, India, and China.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">🏛️</div>
+            <h2>Social Studies &mdash; Course Syllabus</h2>
+            <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+            <p class="quote">&ldquo;I ka wā ma mua, ka wā ma hope.&rdquo; &mdash; The future is found in the past.</p>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Welcome to Social Studies</h3>
+              <p>Welcome to Social Studies! Our focus this school year will be learning and developing our skills as <strong>critical thinkers, readers, writers, speakers, and listeners</strong>. The development and mastery of these important skills is not only important to achieving success in all school subjects, building strong relationships with others, and attaining a flourishing career as an adult.</p>
+              <p style="margin-top:8px">Basically, the quality of life you experience now through adulthood will depend a lot on how well you read, write, and communicate with others.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👩‍🏫 Teacher</h3>
+              <p><strong>Mrs. Harrison</strong></p>
+              <p>📧 <a href="mailto:sharrison@starofthesea.org">sharrison@starofthesea.org</a></p>
+              <p style="margin-top:10px"><strong>Office Hours:</strong> Available during recesses (when not on duty), before, or after school. Please make an appointment.</p>
+              <p style="margin-top:6px;font-size:0.85rem;color:#64748b;font-style:italic">I will respond within 24 hours of an email. I do not respond after 6:30 p.m. unless there is an emergency.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Supplies</h3>
+              <ul>
+                <li>Textbook</li>
+                <li>Pencils</li>
+                <li>Folder paper</li>
+                <li>Markers or crayons (sometimes)</li>
+                <li>Glue</li>
+                <li>Macbook (charged daily)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>🎯 6th Grade Goal &mdash; Building Foundations</h3>
+            <p style="margin-bottom:8px">By the end of 6th grade, students will:</p>
+            <ul>
+              <li>Demonstrate an understanding of early human history, ancient civilizations, and how geography influences culture and settlement.</li>
+              <li>Use maps, timelines, and primary sources to gather information and explain historical events.</li>
+              <li>Begin making connections between past societies and the modern world.</li>
+              <li>Express ideas about history in clear, organized written and oral formats.</li>
+            </ul>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Areas of Concentration &mdash; Grade 6</h3>
+            <p>Ancient Civilizations: <strong>Egypt, Mesopotamia / Sumeria, Israel, India, and China</strong>.</p>
+            <ul style="margin-top:6px">
+              <li><strong>Unit 1</strong> &mdash; Mesopotamia &amp; Sumer (the Cradle of Civilization)</li>
+              <li><strong>Unit 2</strong> &mdash; Ancient Egypt (The Gift of the Nile)</li>
+              <li><strong>Unit 3</strong> &mdash; Ancient Israel (Faith &amp; Identity)</li>
+              <li><strong>Unit 4</strong> &mdash; Ancient India (Indus to Empire)</li>
+              <li><strong>Unit 5</strong> &mdash; Ancient China (Dynasties &amp; Wisdom)</li>
+            </ul>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📊 How will I be graded this year?</h3>
+            <div class="syl-grade-row">
+              <div class="syl-grade-pill"><span>15%</span>AOW<small>Article of the Week (5 pts)</small></div>
+              <div class="syl-grade-pill"><span>30%</span>Classwork<small>Summaries / notes (4 pts)</small></div>
+              <div class="syl-grade-pill"><span>30%</span>Projects<small>Start Q2 (25 pts)</small></div>
+              <div class="syl-grade-pill"><span>15%</span>Quizzes<small>5–10 pts</small></div>
+              <div class="syl-grade-pill"><span>10%</span>Active Learning<small>2 pts/class day</small></div>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>📰 AOW &mdash; Article of the Week (15%)</h3>
+              <p><strong>5 points each.</strong> A weekly writing response students complete on their Google Drive account.</p>
+              <p style="margin-top:6px">A poem, story, or article will be given on <strong>Mondays</strong>. Your response is due on <strong>Fridays</strong>.</p>
+              <p style="margin-top:8px"><strong>Your response should include:</strong></p>
+              <ol style="padding-left:22px;font-size:0.9rem;color:#374151;line-height:1.55">
+                <li>Any part of the article you liked, disliked, or were confused about.</li>
+                <li><strong>WHY</strong> did you like, dislike, or were confused about this part.</li>
+                <li>Length is not as important as the amount of details and explanations you write about.</li>
+              </ol>
+            </div>
+            <div class="syl-card">
+              <h3>📝 Classwork &mdash; Summaries &amp; Notes (30%)</h3>
+              <p><strong>4 points each.</strong> To show me that you understand the information you received in class, you may be asked to write a summary about the material.</p>
+              <p style="margin-top:6px;font-size:0.86rem;color:#475569;font-style:italic">Sometimes, the summaries will be counted as a quiz.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>✍️ Essays</h3>
+              <p>You will be given a grading rubric <em>before</em> the essays are given. When we begin a unit, you will be given an <strong>essential question</strong> for the essay.</p>
+              <p style="margin-top:6px">We will be working on our answers to the essential questions together throughout the unit.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎨 Projects (30%)</h3>
+              <p><strong>25 points each.</strong> Projects start during the <strong>2nd quarter</strong>.</p>
+              <p style="margin-top:6px">Projects follow the same guidelines as the essays &mdash; rubric provided ahead of time, anchored to a unit&rsquo;s essential question.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>📝 Quizzes (15%)</h3>
+              <p><strong>5–10 points each.</strong> Used to check understanding throughout each unit.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🤝 Active Learning (10%)</h3>
+              <p><strong>2 points each class day.</strong> Participation is based on coming to class prepared:</p>
+              <ul style="margin-top:6px">
+                <li>Macbook charged</li>
+                <li>Learning materials prepared</li>
+                <li>Assignments completed</li>
+                <li>Ready for class discussions</li>
+                <li>Being an attentive listener</li>
+                <li>Actively engaged in class</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="border-top-color:#B8860B">
+              <h3>📅 What happens if I turn in an assignment late?</h3>
+              <p>Work not completed and turned in by the assigned date is considered late.</p>
+              <p style="margin-top:6px">If a student is absent on the date work is due, the assignment is due within <strong>a week from absence</strong>.</p>
+              <p style="margin-top:6px">There is <strong>no penalty in your homework grade</strong> for an assignment turned in late, as long as it is turned in. However, there <strong>will be a deduction in your Active Learning grade</strong>.</p>
+              <p style="margin-top:6px">If you do <em>not</em> turn in an assignment, your score will <strong>not</strong> be added into your grade.</p>
+              <p style="margin-top:10px;text-align:center;font-weight:700;color:#1B3A8A;font-size:1rem;background:linear-gradient(90deg,#fffbe6,#fff,#fffbe6);padding:10px;border-radius:8px">A late assignment is better than a missing assignment.</p>
+            </div>
+            <div class="syl-card">
+              <h3>📐 Classwork Grading Scale</h3>
+              <div class="syl-scale">
+                <div class="syl-scale-row"><div class="syl-scale-num">4</div><div class="syl-scale-text">Exceeds expectations</div></div>
+                <div class="syl-scale-row"><div class="syl-scale-num">3</div><div class="syl-scale-text">Meets expectations</div></div>
+                <div class="syl-scale-row"><div class="syl-scale-num">2</div><div class="syl-scale-text">Emerging towards expectations</div></div>
+                <div class="syl-scale-row"><div class="syl-scale-num">1</div><div class="syl-scale-text">Far below expectations / incomplete</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">How ancient lessons connect to your modern life.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Mesopotamia &amp; Sumer',
+    icon: '🏺',
+    region: 'Tigris &amp; Euphrates Rivers (modern Iraq)',
+    timeframe: 'c. 3500 BC – 539 BC',
+    desc: 'The "Cradle of Civilization" — where humans first wrote, built cities, and made laws.',
+    essential: 'How did rivers, writing, and law turn villages into the world&rsquo;s first civilizations?',
+    vocab: [
+      ['Civilization', 'A complex society with cities, government, writing, religion, and specialized jobs.'],
+      ['Cuneiform', 'The earliest known writing system, made of wedge-shaped marks on clay tablets.'],
+      ['Ziggurat', 'A massive stepped tower-temple in Mesopotamian cities.'],
+      ['City-state', 'An independent city that governs itself and its surrounding land (e.g., Ur, Uruk).'],
+      ['Hammurabi&rsquo;s Code', 'One of the world&rsquo;s earliest written law codes, c. 1754 BC, by the Babylonian king.'],
+      ['Fertile Crescent', 'The arc-shaped region of rich farmland from the Persian Gulf to the Mediterranean.']
+    ],
+    lessonHTML: `
+      <p>Around <strong>3500 BC</strong>, in the land between the Tigris and Euphrates rivers (today&rsquo;s Iraq), humans took an enormous leap. They moved from villages to cities, invented writing, organized governments, built grand temples, and wrote down laws. This is why historians call Mesopotamia (meaning &ldquo;land between the rivers&rdquo;) the <strong>Cradle of Civilization</strong>.</p>
+      <h3>Why rivers mattered</h3>
+      <p>The Tigris and Euphrates flooded yearly, leaving rich silt that grew abundant grain. Surplus food meant not everyone had to farm — some could be priests, soldiers, merchants, scribes, or craftsmen. This was the birth of <strong>specialized labor</strong>.</p>
+      <h3>The Sumerians (c. 3500–2000 BC)</h3>
+      <ul>
+        <li>Built the first cities &mdash; <strong>Ur, Uruk, Eridu, Lagash</strong> &mdash; each a self-governing <strong>city-state</strong>.</li>
+        <li>Invented <strong>cuneiform</strong>, the world&rsquo;s first writing.</li>
+        <li>Built towering <strong>ziggurats</strong> as temples to their gods.</li>
+        <li>Created the <strong>wheel</strong>, the <strong>plow</strong>, and our 60-second/60-minute time system.</li>
+      </ul>
+      <h3>Babylon and Hammurabi (c. 1792 BC)</h3>
+      <p>King <strong>Hammurabi</strong> of Babylon united Mesopotamia and wrote one of the earliest known law codes — 282 laws covering everything from theft to family disputes. The famous principle &ldquo;an eye for an eye&rdquo; comes from his code.</p>
+      <h3>Why it matters today</h3>
+      <p>Cuneiform is the ancestor of every modern alphabet. Hammurabi&rsquo;s Code influenced Hebrew law and ultimately Western legal systems. Even how we tell time (60 seconds in a minute) traces back to Sumer.</p>
+    `,
+    worksheet: [
+      { q: 'What does &ldquo;Mesopotamia&rdquo; mean?', ans: '&ldquo;The land between the rivers&rdquo; (the Tigris and Euphrates).' },
+      { q: 'List two reasons rivers were essential to Mesopotamian civilization.', ans: 'They flooded yearly leaving fertile silt; provided water for crops and drinking; allowed transportation and trade.' },
+      { q: 'What was cuneiform, and why was it revolutionary?', ans: 'The earliest writing system, using wedge-shaped marks on clay tablets. It allowed humans to record laws, stories, taxes, and trade — preserving knowledge across generations.' },
+      { q: 'Name three Sumerian inventions still important today.', ans: 'Examples: writing, the wheel, the plow, the 60-minute hour, the arch, the sailboat.' },
+      { q: 'Who was Hammurabi, and what is he most famous for?', ans: 'King of Babylon (c. 1792 BC); famous for his code of 282 laws — one of the earliest written legal systems.' },
+      { q: 'What is a city-state?', ans: 'An independent city that governs itself and the surrounding land (Ur, Uruk, Lagash were Sumerian city-states).' }
+    ],
+    quiz: [
+      { q: 'Mesopotamia means:', opts: ['Land of pyramids', 'Land between the rivers', 'Land of the gods', 'Land of writing'], ans: 1 },
+      { q: 'Which two rivers framed Mesopotamia?', opts: ['Nile and Jordan', 'Tigris and Euphrates', 'Indus and Ganges', 'Yellow and Yangtze'], ans: 1 },
+      { q: 'The first writing system was:', opts: ['Hieroglyphics', 'Cuneiform', 'Latin', 'Phoenician'], ans: 1 },
+      { q: 'Cuneiform was written on:', opts: ['Paper', 'Clay tablets', 'Stone walls', 'Animal skin'], ans: 1 },
+      { q: 'Sumerian temples were called:', opts: ['Pyramids', 'Ziggurats', 'Pagodas', 'Cathedrals'], ans: 1 },
+      { q: 'Hammurabi was king of:', opts: ['Sumer', 'Babylon', 'Assyria', 'Egypt'], ans: 1 },
+      { q: 'Hammurabi&rsquo;s most famous accomplishment:', opts: ['Built pyramids', 'Wrote a code of 282 laws', 'Conquered Egypt', 'Invented the wheel'], ans: 1 },
+      { q: 'A city-state is:', opts: ['A whole country', 'A self-governing city with surrounding land', 'A trade network', 'A type of temple'], ans: 1 },
+      { q: 'Which of these was NOT invented by the Sumerians?', opts: ['The wheel', 'The plow', 'The clock face (60-min hour)', 'The printing press'], ans: 3 },
+      { q: 'Mesopotamia is the &ldquo;Cradle of Civilization&rdquo; mainly because it:', opts: ['Was the largest', 'Had the first cities, writing, and laws', 'Had the most gold', 'Was the first to use bronze only'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Be Your Own Scribe',
+        scenario: 'You want to remember important events from your week.',
+        steps: [
+          'Get clay (Play-Doh works) or just a paper.',
+          'Look up cuneiform symbols online and pick 5–10 to recreate.',
+          'Try writing a sentence about your day in symbols.',
+          'Reflect: how would your life change if writing didn&rsquo;t exist?'
+        ],
+        reflect: 'Writing connects past to present. What modern technology equals cuneiform&rsquo;s impact?'
+      },
+      {
+        title: 'Modern Hammurabi',
+        scenario: 'There&rsquo;s a class disagreement.',
+        steps: [
+          'Like Hammurabi, write down 5 simple class rules first.',
+          'Make sure they&rsquo;re fair AND clear.',
+          'Discuss: are the rules &ldquo;eye for an eye&rdquo; or restorative?',
+          'Practice them for one week — were they fair?'
+        ],
+        reflect: 'How does Hammurabi&rsquo;s legacy show up in our courts today?'
+      },
+      {
+        title: 'Specialization Around You',
+        scenario: 'You order food at a restaurant.',
+        steps: [
+          'Notice: your food was farmed, transported, prepared, and served by different specialists.',
+          'List the specialized jobs that touched your meal today.',
+          'Compare: in Sumer, the surplus from farming meant priests, scribes, soldiers existed.',
+          'In modern life, what surpluses make YOUR life specialized?'
+        ],
+        reflect: 'How is specialization the engine of every civilization?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — Ancient Egypt',
+    icon: '🏜️',
+    region: 'The Nile River (modern Egypt)',
+    timeframe: 'c. 3100 BC – 30 BC',
+    desc: 'The Gift of the Nile — pyramids, pharaohs, hieroglyphs, and the longest-running civilization in history.',
+    essential: 'How did the Nile River shape Egyptian religion, government, and daily life for 3,000 years?',
+    vocab: [
+      ['Pharaoh', 'Egyptian king, considered a god on Earth.'],
+      ['Hieroglyphics', 'Egyptian picture-writing using ~700 symbols.'],
+      ['Pyramid', 'Massive stone tomb for a pharaoh, designed to protect their journey to the afterlife.'],
+      ['Mummy', 'A preserved body, prepared by removing organs and wrapping in linen.'],
+      ['Pharaoh&rsquo;s afterlife', 'Egyptians believed life continued after death; the body and possessions went with you.'],
+      ['Rosetta Stone', 'A 196 BC stone with the same text in three scripts (hieroglyphic, demotic, Greek). Allowed modern scholars to decode hieroglyphics in the 1820s.']
+    ],
+    lessonHTML: `
+      <p>While Mesopotamia rose between two rivers, Egypt rose along just one — the longest river in the world, the <strong>Nile</strong>. Greek historian Herodotus called Egypt the &ldquo;Gift of the Nile,&rdquo; and that&rsquo;s exactly right. Without the Nile, Egypt would be a desert. With it, Egypt was the wealthiest, most stable civilization of its day.</p>
+      <h3>The Nile&rsquo;s gift</h3>
+      <p>Each year, summer rains in Africa flooded the Nile, depositing rich black silt onto the fields. Egyptians could plant crops in the soft, fertile mud. They had three seasons: <em>flooding, planting, harvest</em>. This dependable cycle gave Egyptians something rare — predictable abundance.</p>
+      <h3>The Pharaoh — A God-King</h3>
+      <p>Unlike Mesopotamia&rsquo;s many city-states, Egypt was unified under one ruler: the <strong>pharaoh</strong>. He was considered a living god, an intermediary between the people and the gods. Famous pharaohs include <strong>Khufu</strong> (built the Great Pyramid), <strong>Hatshepsut</strong> (one of few female pharaohs), <strong>Akhenaten</strong> (introduced monotheism briefly), <strong>Tutankhamun</strong> (King Tut), and <strong>Ramses II</strong>.</p>
+      <h3>Pyramids and the Afterlife</h3>
+      <p>Egyptians believed strongly in life after death. Pharaohs were buried in massive <strong>pyramids</strong>, with their bodies preserved as <strong>mummies</strong>. The Great Pyramid of Giza (~2560 BC) was the tallest building on Earth for over 3,800 years.</p>
+      <h3>Hieroglyphics</h3>
+      <p>Egyptians wrote in <strong>hieroglyphics</strong> — picture-writing with ~700 symbols. We could not read them for over 1,500 years until Napoleon&rsquo;s soldiers found the <strong>Rosetta Stone</strong> in 1799, and Jean-François Champollion decoded it in 1822.</p>
+      <h3>Egypt&rsquo;s Long Run</h3>
+      <p>Egyptian civilization lasted for an incredible 3,000+ years — from c. 3100 BC to 30 BC, when Cleopatra (the last pharaoh) and Rome ended its independence.</p>
+    `,
+    worksheet: [
+      { q: 'Who was Herodotus, and what famous phrase did he use to describe Egypt?', ans: 'Greek historian. He called Egypt &ldquo;the Gift of the Nile.&rdquo;' },
+      { q: 'List the three Egyptian seasons.', ans: 'Flooding (Akhet), Planting (Peret), and Harvest (Shemu).' },
+      { q: 'How were pharaohs different from kings in Mesopotamia?', ans: 'Pharaohs were considered living gods, not just political rulers. Egypt was unified under ONE pharaoh, not divided into city-states.' },
+      { q: 'Why did Egyptians build pyramids?', ans: 'As tombs for pharaohs to protect their bodies and possessions for the journey to the afterlife.' },
+      { q: 'What is mummification, and why did Egyptians do it?', ans: 'Preserving the body by removing organs (except the heart) and wrapping in linen. They believed the soul (ka) needed the body for the afterlife.' },
+      { q: 'How were hieroglyphics finally decoded?', ans: 'The Rosetta Stone (1799) had the same text in hieroglyphics, demotic Egyptian, and Greek. Champollion used it to crack the code in 1822.' }
+    ],
+    quiz: [
+      { q: 'Who called Egypt &ldquo;the Gift of the Nile&rdquo;?', opts: ['Herodotus', 'Plato', 'Caesar', 'Aristotle'], ans: 0 },
+      { q: 'The Nile flooded due to:', opts: ['Hurricanes', 'Summer rains in Africa', 'Underground springs', 'Earthquakes'], ans: 1 },
+      { q: 'A pharaoh was considered:', opts: ['Just a politician', 'A living god', 'A priest only', 'A regular king'], ans: 1 },
+      { q: 'Pyramids were used as:', opts: ['Grain stores', 'Tombs for pharaohs', 'Temples for daily worship', 'Forts'], ans: 1 },
+      { q: 'Mummification was performed because Egyptians believed:', opts: ['It was law', 'The body was needed in the afterlife', 'It was decoration', 'To prevent disease only'], ans: 1 },
+      { q: 'Egyptian writing was called:', opts: ['Cuneiform', 'Hieroglyphics', 'Latin', 'Sanskrit'], ans: 1 },
+      { q: 'The Rosetta Stone helped decode hieroglyphics because it had:', opts: ['Pictures of pharaohs', 'The same text in three scripts', 'A treasure map', 'The pharaoh&rsquo;s name'], ans: 1 },
+      { q: 'Approximately how long did Egyptian civilization last?', opts: ['300 years', '1,000 years', '3,000+ years', '300 years'], ans: 2 },
+      { q: 'The Great Pyramid was built for:', opts: ['Hatshepsut', 'Khufu', 'King Tut', 'Cleopatra'], ans: 1 },
+      { q: 'Egypt&rsquo;s last pharaoh was:', opts: ['Cleopatra', 'Ramses II', 'King Tut', 'Khufu'], ans: 0 }
+    ],
+    rla: [
+      {
+        title: 'Discover Hieroglyphics',
+        scenario: 'You want to leave a coded message for a friend.',
+        steps: [
+          'Look up the hieroglyphic alphabet online.',
+          'Spell out a short message using hieroglyphic symbols.',
+          'Have a friend decode it using the same chart.',
+          'Reflect on how the Rosetta Stone was the world&rsquo;s first &ldquo;translation key.&rdquo;'
+        ],
+        reflect: 'How is the Rosetta Stone like Google Translate?'
+      },
+      {
+        title: 'Predictable Abundance',
+        scenario: 'Your family budget depends on a steady paycheck.',
+        steps: [
+          'Like Egyptian seasons (flood, planting, harvest), our finances have cycles.',
+          'Look at one month: when does money come in? When goes out?',
+          'Imagine if floods (income) were unpredictable — how would you prepare?',
+          'List 3 modern systems (savings, insurance) that smooth out unpredictability.'
+        ],
+        reflect: 'How does predictability free people to specialize and create?'
+      },
+      {
+        title: 'Build a Pyramid Project',
+        scenario: 'A family group project needs a leader.',
+        steps: [
+          'Recall that ~100,000 workers built the Great Pyramid over 20 years.',
+          'Identify the &ldquo;pharaoh&rdquo; (project lead), &ldquo;architects,&rdquo; &ldquo;workers,&rdquo; and &ldquo;suppliers.&rdquo;',
+          'Coordinate by assigning specific roles.',
+          'Note: the pharaohs feeding workers from grain stockpiles is supply-chain management.'
+        ],
+        reflect: 'What makes a big project succeed or fail today, vs. 4,500 years ago?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — Ancient Israel',
+    icon: '✡️',
+    region: 'The Levant / Canaan (modern Israel)',
+    timeframe: 'c. 2000 BC – 70 AD',
+    desc: 'A small kingdom whose ideas — one God, written law, and personal morality — shaped much of the world.',
+    essential: 'How did a small group of people develop monotheism and a code of ethics that still shapes the modern world?',
+    vocab: [
+      ['Monotheism', 'Belief in one God. Israel was the first group to systematically build a culture around this belief.'],
+      ['Torah', 'The first five books of the Hebrew Bible (Genesis, Exodus, Leviticus, Numbers, Deuteronomy).'],
+      ['Ten Commandments', 'Moral and religious laws given to Moses on Mount Sinai (~13th century BC).'],
+      ['Diaspora', 'The scattering of the Jewish people outside their ancestral homeland.'],
+      ['Covenant', 'A sacred agreement between God and the Israelites.'],
+      ['Prophet', 'A spokesperson for God who calls the people to faithfulness (Isaiah, Jeremiah, etc.).']
+    ],
+    lessonHTML: `
+      <p>The ancient Israelites began as nomadic herders led by <strong>Abraham</strong> (c. 2000 BC). Unlike their neighbors who worshipped many gods, the Israelites came to believe in only ONE God — a revolutionary idea called <strong>monotheism</strong>.</p>
+      <h3>The Patriarchs and the Covenant</h3>
+      <p>Abraham, Isaac, and Jacob (renamed Israel) form the family from which the people of Israel descend. According to the <strong>Torah</strong>, God made a sacred <strong>covenant</strong> with them: I will be your God; you will be my people; you will live in this land.</p>
+      <h3>Egyptian Slavery and the Exodus</h3>
+      <p>The Israelites lived as slaves in Egypt for centuries. <strong>Moses</strong> led them out of Egypt (the Exodus, ~1300 BC) and received the <strong>Ten Commandments</strong> on Mount Sinai. These weren&rsquo;t just rules; they were a moral framework: don&rsquo;t murder, don&rsquo;t steal, don&rsquo;t bear false witness, honor parents, keep one day holy.</p>
+      <h3>The Kingdom of Israel</h3>
+      <p>Around 1020 BC, Israel became a kingdom. The greatest kings were:</p>
+      <ul>
+        <li><strong>Saul</strong> (the first king)</li>
+        <li><strong>David</strong> (united Israel, made Jerusalem the capital, wrote many Psalms)</li>
+        <li><strong>Solomon</strong> (built the First Temple in Jerusalem)</li>
+      </ul>
+      <h3>Exile and Return</h3>
+      <p>The kingdom was conquered by Babylon in 586 BC; the Temple was destroyed and many Jews were exiled. They returned 70 years later under Persian rule. The Romans destroyed the Second Temple in 70 AD, beginning the long <strong>diaspora</strong>.</p>
+      <h3>Why It Matters</h3>
+      <p>Israel&rsquo;s ideas — one universal God, written moral law, the dignity of every person — became the foundation of <strong>Judaism, Christianity, and Islam</strong> (the three Abrahamic faiths) and shaped Western law and ethics for thousands of years.</p>
+    `,
+    worksheet: [
+      { q: 'Define monotheism and explain why it was revolutionary.', ans: 'Belief in one God. Most ancient peoples worshipped many gods (polytheism). The Israelites&rsquo; commitment to a single, universal God was a radical change in how people thought about religion and morality.' },
+      { q: 'Who is considered the &ldquo;father&rdquo; of the Israelite people, and what is the covenant?', ans: 'Abraham. The covenant is the sacred agreement: God said He would be their God and give them a land; they would worship Him and live by His commandments.' },
+      { q: 'What was the Exodus, and who led it?', ans: 'The escape of the Israelites from slavery in Egypt; led by Moses (~1300 BC).' },
+      { q: 'List three of the Ten Commandments.', ans: 'Examples: Have no other gods; do not take God&rsquo;s name in vain; keep the Sabbath holy; honor your parents; do not murder; do not commit adultery; do not steal; do not lie; do not covet.' },
+      { q: 'Name two of the great kings of Israel.', ans: 'Any two of: Saul, David, Solomon.' },
+      { q: 'What is the &ldquo;diaspora,&rdquo; and what caused it?', ans: 'The scattering of Jewish people outside their homeland. Caused by Roman destruction of the Second Temple in 70 AD (and earlier by the Babylonian conquest in 586 BC).' }
+    ],
+    quiz: [
+      { q: 'Belief in one God is called:', opts: ['Polytheism', 'Monotheism', 'Pantheism', 'Animism'], ans: 1 },
+      { q: 'Abraham is considered the father of:', opts: ['Egypt', 'The Israelites', 'Babylon', 'India'], ans: 1 },
+      { q: 'The Israelites were enslaved in:', opts: ['Persia', 'Egypt', 'Babylon', 'Rome'], ans: 1 },
+      { q: 'Moses led the Israelites out in an event called the:', opts: ['Diaspora', 'Exodus', 'Exile', 'Revolution'], ans: 1 },
+      { q: 'The Ten Commandments were given on:', opts: ['Mount Olympus', 'Mount Sinai', 'Mount Tabor', 'Mount Carmel'], ans: 1 },
+      { q: 'Who built the First Temple in Jerusalem?', opts: ['David', 'Solomon', 'Saul', 'Moses'], ans: 1 },
+      { q: 'The First Temple was destroyed by:', opts: ['Egypt', 'Babylon (586 BC)', 'Persia', 'Rome'], ans: 1 },
+      { q: 'The three Abrahamic faiths are:', opts: ['Judaism, Hinduism, Buddhism', 'Judaism, Christianity, Islam', 'Christianity, Buddhism, Confucianism', 'Hinduism, Christianity, Sikhism'], ans: 1 },
+      { q: 'The Torah is:', opts: ['A king&rsquo;s name', 'The first 5 books of the Hebrew Bible', 'A type of building', 'A holiday'], ans: 1 },
+      { q: 'The Second Temple was destroyed in 70 AD by:', opts: ['Babylon', 'Persia', 'Rome', 'Egypt'], ans: 2 }
+    ],
+    rla: [
+      {
+        title: 'Personal Code of Honor',
+        scenario: 'You want to live with more integrity.',
+        steps: [
+          'Like the Ten Commandments, write 5–10 rules YOU want to live by.',
+          'Make some about how you treat others (don&rsquo;t lie, gossip).',
+          'Make some about how you treat yourself (rest, exercise).',
+          'Post them where you&rsquo;ll see daily. Review weekly.'
+        ],
+        reflect: 'How does writing down your values change daily decisions?'
+      },
+      {
+        title: 'Sabbath Practice',
+        scenario: 'You feel constantly busy and burned out.',
+        steps: [
+          'Recall the 4th Commandment: keep one day holy / set apart.',
+          'Pick ONE day per week. Do no school work, no gaming. Rest, family, prayer, nature.',
+          'Notice how your other 6 days improve when you have a true rest day.',
+          'This is the original work-life balance, 3,000 years old.'
+        ],
+        reflect: 'Why is rest both spiritually and scientifically important?'
+      },
+      {
+        title: 'Lessons of the Diaspora',
+        scenario: 'A friend or family member is far from their homeland.',
+        steps: [
+          'Recall: the Jewish people maintained their identity for 2,000 years without a homeland.',
+          'How? Books (Torah), holidays, language, food, family.',
+          'Ask the person what traditions keep them connected to where they&rsquo;re from.',
+          'Notice the mix of old + new that creates a strong identity.'
+        ],
+        reflect: 'How do communities preserve their values while adapting to new places?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Ancient India',
+    icon: '🕉️',
+    region: 'The Indus &amp; Ganges Rivers (modern India / Pakistan)',
+    timeframe: 'c. 2500 BC – 320 AD',
+    desc: 'Birthplace of Hinduism, Buddhism, the number zero, and ideas of nonviolence that still shape the world.',
+    essential: 'How did the geography of the Indian subcontinent shape religion, society, and ideas that still influence billions today?',
+    vocab: [
+      ['Indus Valley Civilization', 'A sophisticated Bronze-Age society (c. 2500–1900 BC) at sites like Harappa and Mohenjo-Daro.'],
+      ['Hinduism', 'The world&rsquo;s third-largest religion; emphasizes dharma (duty), karma (action and consequence), and reincarnation.'],
+      ['Buddhism', 'Founded by Siddhartha Gautama (the Buddha) around 500 BC; emphasizes the Four Noble Truths and the Eightfold Path.'],
+      ['Caste System', 'A rigid social hierarchy in ancient Indian society, traditionally with four main varnas plus the Dalits.'],
+      ['Karma', 'The idea that your actions in this life determine your future (in this or the next life).'],
+      ['Ashoka', 'Mauryan emperor (304–232 BC) who converted to Buddhism and ruled by ahimsa (nonviolence).']
+    ],
+    lessonHTML: `
+      <p>India&rsquo;s ancient civilization began around the <strong>Indus River</strong> (in modern Pakistan), spread to the <strong>Ganges River</strong>, and gave the world some of its most enduring religions and ideas.</p>
+      <h3>The Indus Valley Civilization (c. 2500–1900 BC)</h3>
+      <p>Cities like <strong>Harappa</strong> and <strong>Mohenjo-Daro</strong> were astonishingly advanced — featuring grid-pattern streets, indoor plumbing, public baths, and sophisticated drainage systems that put many later civilizations to shame. Their writing has not yet been deciphered.</p>
+      <h3>The Vedic Period &amp; Hinduism</h3>
+      <p>Around 1500 BC, the <strong>Aryans</strong> migrated into India. From their religious texts (the <strong>Vedas</strong>) developed <strong>Hinduism</strong>:</p>
+      <ul>
+        <li><strong>Dharma</strong> &mdash; your duty in life</li>
+        <li><strong>Karma</strong> &mdash; actions have consequences</li>
+        <li><strong>Reincarnation</strong> &mdash; the soul is reborn many times</li>
+        <li>Many gods, all aspects of one ultimate reality (Brahman)</li>
+      </ul>
+      <h3>The Caste System</h3>
+      <p>Society was divided into rigid groups: <em>Brahmins</em> (priests), <em>Kshatriyas</em> (warriors/rulers), <em>Vaishyas</em> (merchants/farmers), <em>Shudras</em> (laborers), and the &ldquo;untouchables&rdquo; (Dalits) outside the system. Modern India has banned caste discrimination, but its effects linger.</p>
+      <h3>The Birth of Buddhism (~500 BC)</h3>
+      <p><strong>Siddhartha Gautama</strong>, a prince, left his palace to confront human suffering. After years of meditation, he became the <strong>Buddha</strong> (&ldquo;Enlightened One&rdquo;) and taught:</p>
+      <ul>
+        <li><strong>Four Noble Truths</strong> &mdash; Life has suffering. Suffering comes from craving. Suffering can end. The path is the Eightfold Path.</li>
+        <li><strong>The Eightfold Path</strong> &mdash; right view, intention, speech, action, livelihood, effort, mindfulness, concentration.</li>
+      </ul>
+      <h3>Emperor Ashoka (3rd century BC)</h3>
+      <p>The Mauryan emperor <strong>Ashoka</strong>, after a brutal war, was so horrified by the suffering he caused that he converted to Buddhism and ruled by <em>ahimsa</em> (nonviolence). He sent missionaries across Asia, spreading Buddhism throughout the continent.</p>
+      <h3>Why It Matters</h3>
+      <p>India invented our number system (including <strong>zero</strong>), gave the world Hinduism (1+ billion adherents) and Buddhism (~500 million), and inspired modern movements like Gandhi&rsquo;s nonviolence, which inspired Martin Luther King Jr.</p>
+    `,
+    worksheet: [
+      { q: 'Name the two major rivers of ancient India.', ans: 'The Indus and the Ganges.' },
+      { q: 'List two impressive features of Indus Valley cities.', ans: 'Examples: grid-pattern streets, indoor plumbing, public baths, sophisticated drainage, standardized weights.' },
+      { q: 'What are dharma and karma?', ans: 'Dharma = your duty in life; Karma = your actions and their consequences (in this or next life).' },
+      { q: 'Who founded Buddhism, and what was his original name?', ans: 'Siddhartha Gautama (later called the Buddha, &ldquo;the Enlightened One&rdquo;).' },
+      { q: 'Summarize the Four Noble Truths.', ans: '1) Life has suffering. 2) Suffering comes from craving/attachment. 3) Suffering can end. 4) The way is the Eightfold Path.' },
+      { q: 'Who was Ashoka, and why is he important?', ans: 'Mauryan emperor (3rd century BC) who converted to Buddhism after a brutal war and ruled by nonviolence (ahimsa). He spread Buddhism across Asia.' }
+    ],
+    quiz: [
+      { q: 'The Indus Valley Civilization was based around the:', opts: ['Tigris', 'Nile', 'Indus', 'Yangtze'], ans: 2 },
+      { q: 'Which Indus Valley city is most famous?', opts: ['Babylon', 'Mohenjo-Daro', 'Memphis', 'Athens'], ans: 1 },
+      { q: 'Hinduism teaches that the soul is reborn — this is called:', opts: ['Karma', 'Reincarnation', 'Dharma', 'Brahman'], ans: 1 },
+      { q: 'Karma means:', opts: ['God', 'Actions and their consequences', 'A type of food', 'A holy book'], ans: 1 },
+      { q: 'The four main varnas of the caste system are: Brahmins, Kshatriyas, Vaishyas, and:', opts: ['Pharaohs', 'Shudras', 'Christians', 'Romans'], ans: 1 },
+      { q: 'The Buddha was originally:', opts: ['A farmer', 'A prince', 'A merchant', 'A scribe'], ans: 1 },
+      { q: 'The Four Noble Truths begin with:', opts: ['God exists', 'Life has suffering', 'All people are equal', 'Earth is round'], ans: 1 },
+      { q: 'India invented which mathematical concept?', opts: ['Algebra', 'Zero', 'Pi', 'Calculus'], ans: 1 },
+      { q: 'Emperor Ashoka spread which religion?', opts: ['Hinduism', 'Buddhism', 'Christianity', 'Islam'], ans: 1 },
+      { q: 'Ashoka&rsquo;s ruling principle was:', opts: ['Conquest', 'Ahimsa (nonviolence)', 'Wealth', 'Pleasure'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Mindfulness Practice',
+        scenario: 'You feel overwhelmed by school stress.',
+        steps: [
+          'Try a Buddhist meditation: sit quietly for 5 minutes.',
+          'Notice your breath. Don&rsquo;t fight your thoughts; let them pass like clouds.',
+          'When you focus, you&rsquo;re practicing the 7th step of the Eightfold Path: Right Mindfulness.',
+          'Do this daily for one week. Note any change in stress.'
+        ],
+        reflect: 'How does ancient wisdom address modern problems?'
+      },
+      {
+        title: 'Counting With Zero',
+        scenario: 'You write the number 105.',
+        steps: [
+          'Without zero, this number couldn&rsquo;t exist as a placeholder!',
+          'Try writing 1,000,000 in Roman numerals. (Hint: it&rsquo;s impossible without invention).',
+          'India gave us zero — the most important number you&rsquo;ll ever use.',
+          'Notice how every modern computer relies on this gift from ancient India.'
+        ],
+        reflect: 'How does math reflect culture and history?'
+      },
+      {
+        title: 'Nonviolent Conflict',
+        scenario: 'A classmate keeps annoying you.',
+        steps: [
+          'Recall ahimsa: nonviolence inspired Ashoka, then Gandhi, then MLK.',
+          'Don&rsquo;t escalate. Use words: &ldquo;Please stop, this isn&rsquo;t okay.&rdquo;',
+          'If they continue, walk away or seek help — never fight.',
+          'Reflect: how is nonviolence often more powerful than retaliation?'
+        ],
+        reflect: 'Why have so many great leaders chosen nonviolence?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — Ancient China',
+    icon: '🐉',
+    region: 'The Yellow &amp; Yangtze Rivers (modern China)',
+    timeframe: 'c. 1600 BC – 220 AD',
+    desc: 'Dynasties, the Great Wall, the Silk Road, and the wisdom of Confucius — the longest continuous civilization.',
+    essential: 'How did China&rsquo;s isolation, philosophies, and inventions shape the world&rsquo;s longest-running civilization?',
+    vocab: [
+      ['Dynasty', 'A series of rulers from the same family.'],
+      ['Mandate of Heaven', 'The Chinese belief that the gods give the right to rule to a just emperor; an unjust emperor loses it.'],
+      ['Confucianism', 'Philosophy of Confucius (551–479 BC) emphasizing virtue, family, and social harmony.'],
+      ['Daoism (Taoism)', 'Philosophy of Laozi emphasizing balance with nature (the Dao = &ldquo;the Way&rdquo;).'],
+      ['Silk Road', 'A network of overland trade routes connecting China to the Mediterranean (~130 BC – 1453 AD).'],
+      ['Great Wall', 'A series of defensive walls begun in the 7th century BC; expanded under the Qin and Ming dynasties.']
+    ],
+    lessonHTML: `
+      <p>Ancient China is the world&rsquo;s <strong>longest continuous civilization</strong> — over 4,000 years from the legendary Xia dynasty to today. China was geographically isolated by mountains (Himalayas), desert (Gobi), and ocean — which let it develop its own unique culture.</p>
+      <h3>The Major Dynasties</h3>
+      <ul>
+        <li><strong>Shang (c. 1600–1046 BC)</strong> &mdash; First confirmed dynasty. Bronze, oracle bones, early Chinese writing.</li>
+        <li><strong>Zhou (1046–256 BC)</strong> &mdash; Longest dynasty. Mandate of Heaven introduced. Confucius and Laozi lived during this time.</li>
+        <li><strong>Qin (221–206 BC)</strong> &mdash; First emperor unified China. Standardized writing, weights, measures. Began the Great Wall.</li>
+        <li><strong>Han (206 BC – 220 AD)</strong> &mdash; Golden age. Invented paper. Silk Road opened. Confucianism became state ideology.</li>
+      </ul>
+      <h3>Confucius (551–479 BC)</h3>
+      <p>The most influential teacher in Chinese history. Confucius taught:</p>
+      <ul>
+        <li>Respect for elders and ancestors</li>
+        <li>Five key relationships (ruler/subject, parent/child, husband/wife, elder/younger sibling, friend/friend)</li>
+        <li>Education and self-cultivation are the path to virtue</li>
+        <li>The &ldquo;Golden Rule&rdquo;: do not do to others what you would not want done to you</li>
+      </ul>
+      <h3>Daoism</h3>
+      <p>Around the same time as Confucius, <strong>Laozi</strong> founded Daoism — a philosophy emphasizing balance, simplicity, and harmony with nature (<em>the Dao</em> = &ldquo;the Way&rdquo;). Yin-yang symbol comes from this tradition.</p>
+      <h3>The Great Wall and the Silk Road</h3>
+      <p>The first emperor of Qin began the <strong>Great Wall</strong> to defend against northern raiders. Under the Han dynasty, the <strong>Silk Road</strong> connected China to the Mediterranean — silk, paper, and gunpowder traveled west; horses, glass, and ideas traveled east.</p>
+      <h3>Chinese Inventions That Changed the World</h3>
+      <ul>
+        <li>Paper (Han dynasty, ~100 AD)</li>
+        <li>Printing (~700 AD)</li>
+        <li>Gunpowder (~9th century)</li>
+        <li>The compass</li>
+        <li>Silk weaving (kept secret for 3,000 years)</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'What is a dynasty?', ans: 'A series of rulers from the same family.' },
+      { q: 'Explain the Mandate of Heaven.', ans: 'The Chinese belief that gods give the right to rule to a just emperor; if an emperor becomes unjust or fails to govern well, he loses the Mandate and can be overthrown.' },
+      { q: 'List two contributions of the Han dynasty.', ans: 'Examples: invention of paper, opening of the Silk Road, Confucianism as state ideology, golden age of arts.' },
+      { q: 'Summarize Confucius&rsquo;s &ldquo;Golden Rule.&rdquo;', ans: '&ldquo;Do not do to others what you would not want done to you.&rdquo; (Similar to the Christian &ldquo;Do unto others...&rdquo;)' },
+      { q: 'How does Daoism differ from Confucianism?', ans: 'Confucianism emphasizes social order, education, and virtue; Daoism emphasizes balance with nature, simplicity, and harmony with the Dao (&ldquo;the Way&rdquo;).' },
+      { q: 'List four Chinese inventions that changed the world.', ans: 'Examples: paper, printing, gunpowder, the compass, silk, porcelain.' }
+    ],
+    quiz: [
+      { q: 'A dynasty is:', opts: ['A type of building', 'A series of rulers from the same family', 'A religion', 'A festival'], ans: 1 },
+      { q: 'The first confirmed Chinese dynasty was:', opts: ['Shang', 'Han', 'Tang', 'Ming'], ans: 0 },
+      { q: 'The Mandate of Heaven means:', opts: ['Heaven is up', 'A just ruler has divine approval; an unjust one loses it', 'Heaven owns China', 'The emperor goes to heaven'], ans: 1 },
+      { q: 'Confucius lived approximately:', opts: ['100 BC', '500 BC', '500 AD', '1500 AD'], ans: 1 },
+      { q: 'Daoism emphasizes:', opts: ['Wealth', 'Balance with nature', 'War', 'Cities'], ans: 1 },
+      { q: 'The Great Wall was originally built to defend against:', opts: ['Mongols / northern raiders', 'Romans', 'Indians', 'Japanese'], ans: 0 },
+      { q: 'The Silk Road was a:', opts: ['Type of clothing', 'Trade route', 'Imperial palace', 'Religious ceremony'], ans: 1 },
+      { q: 'Paper was invented during the:', opts: ['Shang dynasty', 'Han dynasty', 'Tang dynasty', 'Ming dynasty'], ans: 1 },
+      { q: 'Which is NOT a Chinese invention?', opts: ['Gunpowder', 'Compass', 'Paper', 'The wheel'], ans: 3 },
+      { q: 'Confucius&rsquo;s most important teaching emphasized:', opts: ['Personal wealth', 'Respect for elders, family, and virtue', 'War', 'Conquest'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'The Five Relationships in Your Life',
+        scenario: 'You want better relationships at home and school.',
+        steps: [
+          'Recall Confucius&rsquo;s 5 relationships: parent/child, ruler/subject, husband/wife, elder/younger sibling, friend/friend.',
+          'For each relationship in YOUR life, write what each person owes the other.',
+          'Pick ONE relationship to improve this week — maybe by listening more.',
+          'Notice: when one relationship improves, others often do too.'
+        ],
+        reflect: 'How does Confucius say a stable society begins at home?'
+      },
+      {
+        title: 'Yin-Yang in Your Day',
+        scenario: 'You feel out of balance — too much of one thing.',
+        steps: [
+          'Recall Daoism: balance is the source of wellness (yin/yang).',
+          'List 3 things you do TOO much (screen, junk food, sports).',
+          'List 3 things you do TOO LITTLE (sleep, family, prayer).',
+          'Try one small swap for one week.'
+        ],
+        reflect: 'How does ancient Chinese wisdom predict modern wellness research?'
+      },
+      {
+        title: 'Inventions That Travel',
+        scenario: 'You think about all the things you use today.',
+        steps: [
+          'Trace 5 items you use (paper, magnetic compass apps, fireworks, silk shirts).',
+          'Most originated in China, traveled along the Silk Road, and reached Europe ~500–1500 AD.',
+          'Now imagine: what modern invention will reach future civilizations?',
+          'Write a letter from the Silk Road perspective to a future student.'
+        ],
+        reflect: 'How does global trade spread ideas faster than armies?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.region} &middot; ${u.timeframe}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Ancient Civilizations';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <div class="meta-bar">
+      <span class="meta-pill region">📍 ${u.region}</span>
+      <span class="meta-pill">📅 ${u.timeframe}</span>
+    </div>
+    <div class="essential-q"><strong>Essential Question:</strong> ${u.essential}</div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. You may use your textbook and notes.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Great work — you&rsquo;re thinking like a historian!' : '📚 Review the lesson and try again. Every historian re-reads sources.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

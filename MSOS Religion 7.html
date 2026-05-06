@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 7th Grade Religion: The Story of Jesus</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    /* ── SYLLABUS PAGE (STS-style) ── */
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-unit-row { background: #f8fafc; border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; border-left: 4px solid #1B3A8A; }
+    .syl-unit-row strong { font-size: 0.95rem; color: #1B3A8A; }
+    .syl-unit-row span { font-size: 0.85rem; color: #4a5568; display: block; margin-top: 4px; line-height: 1.5; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 90px; }
+    .syl-grade-pill span { display: block; font-size: 1.2rem; font-weight: 800; color: #1B3A8A; }
+    .syl-verse { font-style: italic; color: #7a5f00; padding: 10px 14px; background: #fffbe6; border-radius: 8px; border-left: 4px solid #FFD100; }
+    .syl-blessing { margin-top: 14px; text-align: center; font-weight: 700; color: #1B3A8A; font-size: 1.05rem; padding: 10px; background: linear-gradient(90deg, #fffbe6, #fff, #fffbe6); border-radius: 8px; }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .scripture-box { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .scripture-box strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .chapter-list { background: #f8f9fa; border-radius: 8px; padding: 16px 22px; margin: 14px 0; }
+    .chapter-list h4 { color: #1B3A8A; margin-bottom: 8px; }
+    .chapter-list ol { margin-left: 22px; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: white; max-width: 760px; width: 100%; max-height: 88vh; overflow-y: auto; border-radius: 12px; padding: 28px 32px; position: relative; border-top: 6px solid #FFD100; }
+    .modal h2 { color: #1B3A8A; margin-bottom: 6px; }
+    .modal .verse { color: #7a5f00; font-style: italic; margin: 10px 0 18px; }
+    .modal h3 { color: #1B3A8A; margin-top: 16px; margin-bottom: 6px; }
+    .modal ul { margin-left: 22px; }
+    .modal li { margin-bottom: 4px; line-height: 1.5; }
+    .modal-close { position: absolute; top: 14px; right: 18px; background: #1B3A8A; color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px; font-weight: bold; }
+    .modal-close:hover { background: #162E70; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">7th Grade Religion <span class="grade-tag">Gr. 7</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📜 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="MSOS Religion Index.html" class="back-index-btn" title="Back to Religion Classes">← All Religion</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="MSOS Logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="NUI Logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">The Story of Jesus — New Testament</span>
+        </div>
+        <div class="topbar-right">Blest Are We &middot; Grade 7</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">The Story of Jesus</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">From the Incarnation to Pentecost — meeting the person of Jesus and learning to live as His disciples.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">📜</div>
+            <h2>Religion — Course Syllabus</h2>
+            <p>Mary, Star of the Sea School &middot; SY 2025-2026</p>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p>This course is based on the ministry of catechesis for religious education and faith formation: <strong>believe, worship, live, and pray</strong>. Students learn the doctrine of the Catholic Church and establish a common language of faith, engage in understanding the sacramental life of the Catholic Church, focus attention on the moral teachings of the Church, and experience a wide variety of prayers. Students will develop a deeper understanding of faith and greater love for God.</p>
+              <p style="margin-top:8px"><strong>Schoolwide Learning Expectation (SLE):</strong> MSOS students will become active Christians who respect others, make good choices, value prayer, and practice the teachings of the Catholic Church.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👩‍🏫 Teacher</h3>
+              <p><strong>Mrs. Corazon Aczon</strong></p>
+              <p>📧 <a href="mailto:caczon@starofthesea.org">caczon@starofthesea.org</a></p>
+              <div class="syl-verse" style="margin-top:10px">&ldquo;They that hope in the Lord will renew their strength, they will soar on eagle&rsquo;s wings; they will run and not grow weary, walk and not grow faint.&rdquo;<br>&mdash; Isaiah 40:31</div>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Classroom Materials</h3>
+              <ul>
+                <li><em>Blest Are We</em> textbook</li>
+                <li>Holy Bible &middot; usccb.org</li>
+                <li>Computer / device</li>
+                <li>Composition notebook</li>
+                <li>Pencils, pens, agenda</li>
+                <li>Colored pencils, highlighters</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Course Outline &mdash; Grade 7: The Story of Jesus <span style="font-weight:500;color:#888;font-size:0.85rem">(New Testament)</span></h3>
+            <div class="syl-unit-row"><strong>⭐ Unit 1 &mdash; The Mystery of the Incarnation</strong><span>Annunciation, Christmas, Holy Family, Baptism of the Lord &middot; Luke 1-2, Matthew 1-3</span></div>
+            <div class="syl-unit-row"><strong>🌾 Unit 2 &mdash; The Meaning of the Kingdom</strong><span>Sermon on the Mount, Beatitudes, parables, miracles, the Lord&rsquo;s Prayer &middot; Matthew 5-7</span></div>
+            <div class="syl-unit-row"><strong>✝️ Unit 3 &mdash; The Christian Life</strong><span>The seven sacraments, the virtues, prayer, Works of Mercy &middot; CCC 1113-1532</span></div>
+            <div class="syl-unit-row"><strong>✝️ Unit 4 &mdash; The Paschal Mystery</strong><span>Last Supper, Passion, Death, Resurrection, Ascension &middot; John 13-21</span></div>
+            <div class="syl-unit-row"><strong>🔥 Unit 5 &mdash; The Good News</strong><span>Pentecost, Peter, Paul, the early Church &middot; Acts of the Apostles</span></div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>📊 Evaluation / Assessment</h3>
+              <div class="syl-grade-row">
+                <div class="syl-grade-pill"><span>20%</span>Tests &amp; Quizzes</div>
+                <div class="syl-grade-pill"><span>30%</span>Quarterly Tests</div>
+                <div class="syl-grade-pill"><span>30%</span>Participation / Recitation</div>
+                <div class="syl-grade-pill"><span>10%</span>Homework</div>
+                <div class="syl-grade-pill"><span>10%</span>Projects</div>
+              </div>
+              <p style="margin-top:10px;font-size:0.83rem">Total: <strong>100%</strong></p>
+            </div>
+            <div class="syl-card">
+              <h3>📝 Student Absence</h3>
+              <p>Students are responsible for turning in homework, assignments, and projects, and arranging with the teacher a specific time to make up any quizzes or tests missed due to absence.</p>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>🙏 How We Nurture Our Faith in Religion Class</h3>
+            <ul style="columns:2;column-gap:30px">
+              <li>Praying and singing hymns</li>
+              <li>Reading Scripture and memorizing Bible verses</li>
+              <li>Praying from the Book of Psalms</li>
+              <li>Writing &ldquo;Dear God&rdquo; journal entries</li>
+              <li>Reflecting on the Readings and Gospel of the Day</li>
+              <li>Discussing activities from the <em>Blest Are We</em> textbook</li>
+              <li>Role-playing Bible stories (e.g., the Christmas story)</li>
+              <li>Learning about the Lives of Saints as models of faith</li>
+              <li>Praying the Rosary, Stations of the Cross, and other devotions</li>
+              <li>Integrating Religion and Art by illustrating Bible verses</li>
+              <li>Participating in the Sacraments and Liturgical Year as church ministers (lectors, choir, altar servers)</li>
+            </ul>
+          </div>
+
+          <div class="syl-blessing">✝️ GOD BLESS YOU! ✝️</div>
+
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">How Jesus&rsquo; story becomes <em>your</em> story — practical ways to live the Gospel this week.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — The Mystery of the Incarnation',
+    icon: '⭐',
+    theme: 'God Becomes Man',
+    desc: 'God so loved the world that He sent His only Son. We meet Mary, Joseph, and the Christ-child — and the wonder of God becoming one of us.',
+    chapters: [
+      'The Annunciation and the Visitation (Luke 1)',
+      'The Birth of Jesus (Luke 2 / Matthew 1-2)',
+      'The Holy Family in Nazareth (Luke 2:39-52)',
+      'The Baptism of the Lord (Matthew 3 / Mark 1)',
+      'The Hidden Life and the Public Ministry begins'
+    ],
+    scripture: { ref: 'John 1:14', text: 'And the Word became flesh and made his dwelling among us, and we saw his glory, the glory as of the Father&rsquo;s only Son, full of grace and truth.' },
+    vocab: [
+      ['Incarnation', 'The mystery that the Son of God became truly human while remaining truly God.'],
+      ['Annunciation', 'The angel Gabriel&rsquo;s announcement to Mary that she would bear the Son of God.'],
+      ['Theotokos', 'Greek for &ldquo;God-bearer&rdquo; — Mary, Mother of God.'],
+      ['Hypostatic Union', 'The union of divine and human natures in the one Person of Christ.'],
+      ['Emmanuel', 'A name meaning &ldquo;God with us.&rdquo;']
+    ],
+    lessonHTML: `
+      <p>The Christian faith stands or falls on a single sentence: <strong>the Word became flesh</strong>. The Creator of the universe entered His own creation as a baby. This is the <strong>Incarnation</strong> — and it changes everything about how we understand God, ourselves, and the world.</p>
+      <h3>Mary&rsquo;s &ldquo;Yes&rdquo;</h3>
+      <p>God respected human freedom so deeply that He waited for a young woman&rsquo;s consent. Mary&rsquo;s &ldquo;<em>fiat</em>&rdquo; — &ldquo;Let it be done unto me according to your word&rdquo; (Luke 1:38) — opened the way for salvation. We honor Mary not as a goddess but as the perfect first disciple.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>Jesus is fully God and fully human</strong> — not half and half, not a mixture, but truly both.</li>
+        <li><strong>The Holy Family is a model</strong> of love, work, prayer, and obedience.</li>
+        <li><strong>The Baptism of Jesus</strong> reveals the Trinity: Father&rsquo;s voice, Son in the water, Spirit as a dove.</li>
+        <li><strong>God&rsquo;s plan unfolds in real history</strong> — real Bethlehem, real Mary, real Jesus.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Which angel announced the birth of Jesus to Mary?', ans: 'The angel Gabriel.' },
+      { q: 'What is the Incarnation?', ans: 'The mystery that the eternal Son of God became human in Jesus Christ.' },
+      { q: 'In what town was Jesus born?', ans: 'Bethlehem.' },
+      { q: 'Who were the first people told of Jesus&rsquo; birth, and by whom?', ans: 'Shepherds, told by angels.' },
+      { q: 'What is &ldquo;Theotokos&rdquo;?', ans: 'A Greek title for Mary meaning &ldquo;God-bearer&rdquo; or Mother of God.' },
+      { q: 'In what village did Jesus grow up?', ans: 'Nazareth.' },
+      { q: 'What was Joseph&rsquo;s trade?', ans: 'Carpenter.' },
+      { q: 'What three Persons appear at the Baptism of the Lord?', ans: 'Father (voice from heaven), Son (Jesus), and Holy Spirit (dove).' }
+    ],
+    quiz: [
+      { q: 'The Word became flesh is found in:', opts: ['Genesis 1', 'John 1', 'Romans 1', 'Acts 1'], ans: 1 },
+      { q: 'Mary&rsquo;s &ldquo;Yes&rdquo; to God is called her:', opts: ['Magnificat', 'Fiat', 'Stigmata', 'Hail'], ans: 1 },
+      { q: 'Which Gospel begins with the genealogy of Jesus?', opts: ['Matthew', 'Mark', 'Luke', 'John'], ans: 0 },
+      { q: 'Who visited Mary before the birth of Jesus?', opts: ['Magi', 'Shepherds', 'Elizabeth', 'Pilate'], ans: 2 },
+      { q: '&ldquo;Emmanuel&rdquo; means:', opts: ['God saves', 'God with us', 'Anointed One', 'Light of the world'], ans: 1 },
+      { q: 'Jesus&rsquo; foster father was:', opts: ['Zacharias', 'Joseph', 'Simon', 'Joachim'], ans: 1 },
+      { q: 'The Magi presented:', opts: ['Bread, wine, oil', 'Gold, frankincense, and myrrh', 'Silver, food, water', 'A scroll'], ans: 1 },
+      { q: 'Jesus was baptized by:', opts: ['Peter', 'Joseph', 'John the Baptist', 'Paul'], ans: 2 },
+      { q: 'At Jesus&rsquo; baptism the Holy Spirit appeared as a:', opts: ['Flame', 'Wind', 'Dove', 'Cloud'], ans: 2 },
+      { q: 'Jesus is:', opts: ['Only God', 'Only human', 'Half God, half man', 'Fully God and fully human'], ans: 3 }
+    ],
+    rla: [
+      {
+        title: 'Saying Your Own &ldquo;Fiat&rdquo;',
+        scenario: 'You feel called to do something good — sign up to serve, apologize to someone, or stop a habit — but it feels uncomfortable.',
+        steps: [
+          'Slow down and pray: &ldquo;Mary, help me say yes like you did.&rdquo;',
+          'Make it concrete — write down the &ldquo;yes&rdquo; you will live this week.',
+          'Tell one trusted person, so accountability strengthens your courage.',
+          'Take the first small step today, even before you feel ready.'
+        ],
+        reflect: 'Where does God seem to be inviting your &ldquo;yes&rdquo; right now?'
+      },
+      {
+        title: 'A Holy Family at Home',
+        scenario: 'Your family has been arguing more than usual lately.',
+        steps: [
+          'Remember Nazareth: a quiet home where Jesus, Mary, and Joseph grew in love.',
+          'Pray a brief prayer for each family member by name tonight.',
+          'Do one chore <em>before</em> being asked, with a smile.',
+          'Apologize first the next time there&rsquo;s tension — even if you weren&rsquo;t mostly wrong.'
+        ],
+        reflect: 'How might my home become a little more like the Holy Family this week?'
+      },
+      {
+        title: 'Christ in the Stranger',
+        scenario: 'You see a new student at school or someone alone at recess.',
+        steps: [
+          'Recall &ldquo;Emmanuel&rdquo; — God comes to be with us.',
+          'Walk over with a smile and a name: &ldquo;Hi, I&rsquo;m ___.&rdquo;',
+          'Ask one real question and listen.',
+          'Pray a quick prayer of gratitude for this new face Christ has placed before you.'
+        ],
+        reflect: 'How does seeing Christ in others change the way I move through the school day?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — The Meaning of the Kingdom',
+    icon: '🌾',
+    theme: 'Sermon, Beatitudes, Parables, and Miracles',
+    desc: 'Jesus preaches the Kingdom of God, calls disciples, teaches in parables, and works miracles — showing what the world looks like when God reigns.',
+    chapters: [
+      'The Call of the Disciples (Mark 1:14-20)',
+      'The Sermon on the Mount and the Beatitudes (Matthew 5-7)',
+      'Parables of the Kingdom (Matthew 13)',
+      'Miracles: Signs of the Kingdom (selected Gospels)',
+      'The Lord&rsquo;s Prayer (Matthew 6:9-13)'
+    ],
+    scripture: { ref: 'Matthew 5:3', text: 'Blessed are the poor in spirit, for theirs is the kingdom of heaven.' },
+    vocab: [
+      ['Kingdom of God', 'God&rsquo;s reign of justice, peace, and love — beginning now and fulfilled in heaven.'],
+      ['Beatitude', 'A &ldquo;blessing&rdquo; statement from Jesus describing the values of the Kingdom.'],
+      ['Parable', 'A short story Jesus told that teaches a deep truth about God.'],
+      ['Miracle', 'A sign of God&rsquo;s power that points to His love and the coming Kingdom.'],
+      ['Disciple', 'A follower and learner of Jesus.']
+    ],
+    lessonHTML: `
+      <p>Jesus did not start a country, an army, or a school of philosophy. He announced a <strong>Kingdom</strong> — a way of living where God reigns in the heart. The first sermon He gives in Matthew is His &ldquo;manifesto&rdquo;: the <strong>Sermon on the Mount</strong>, beginning with the <strong>Beatitudes</strong>.</p>
+      <h3>The Beatitudes turn the world upside-down</h3>
+      <p>The world says: blessed are the rich, the powerful, the popular. Jesus says: blessed are the <em>poor in spirit</em>, the <em>meek</em>, the <em>merciful</em>, the <em>peacemakers</em>. The Kingdom is for those who depend on God.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>Parables</strong> use familiar things (seeds, sheep, coins) to reveal the unfamiliar — God Himself.</li>
+        <li><strong>Miracles</strong> are not magic; they are <em>signs</em> that the Kingdom is breaking in.</li>
+        <li><strong>The Our Father</strong> is the perfect prayer because Jesus Himself taught it.</li>
+        <li><strong>Following Jesus is concrete</strong>: love enemies, forgive, give, pray, fast, trust.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Where did Jesus give His most famous sermon?', ans: 'On a mountain — the Sermon on the Mount (Matthew 5-7).' },
+      { q: 'How many Beatitudes are there?', ans: 'Eight (Matthew 5:3-10).' },
+      { q: 'Name two of the twelve Apostles.', ans: 'Any two of: Peter, Andrew, James, John, Philip, Bartholomew, Matthew, Thomas, James (son of Alphaeus), Thaddeus, Simon, Judas Iscariot (replaced by Matthias).' },
+      { q: 'What is a parable?', ans: 'A short story Jesus told to teach a truth about God and His Kingdom.' },
+      { q: 'Give one example of a miracle of Jesus.', ans: 'Examples: feeding the 5,000, walking on water, healing the blind, raising Lazarus, calming the storm.' },
+      { q: 'What prayer did Jesus teach His disciples?', ans: 'The Lord&rsquo;s Prayer (the &ldquo;Our Father&rdquo;).' },
+      { q: 'Complete: &ldquo;Blessed are the peacemakers, for they shall be _____.&rdquo;', ans: 'called children of God.' },
+      { q: 'In your own words, what is the Kingdom of God?', ans: 'Open answer — students should describe God&rsquo;s reign of love, justice, and peace, beginning now and completed in heaven.' }
+    ],
+    quiz: [
+      { q: 'The first words of Jesus&rsquo; preaching are:', opts: ['&ldquo;Repent, the Kingdom is at hand&rdquo;', '&ldquo;Follow me&rdquo;', '&ldquo;Peace be with you&rdquo;', '&ldquo;Behold&rdquo;'], ans: 0 },
+      { q: 'The Beatitudes begin with:', opts: ['&ldquo;Cursed are...&rdquo;', '&ldquo;Blessed are...&rdquo;', '&ldquo;Woe to...&rdquo;', '&ldquo;Listen, O Israel&rdquo;'], ans: 1 },
+      { q: 'How many Apostles did Jesus choose?', opts: ['7', '10', '12', '70'], ans: 2 },
+      { q: 'The parable of the lost sheep is found mainly in:', opts: ['Matthew', 'Mark', 'Luke', 'John'], ans: 2 },
+      { q: 'Jesus walked on:', opts: ['Fire', 'The Red Sea', 'Water', 'Mountains'], ans: 2 },
+      { q: 'How many people did Jesus feed with five loaves and two fish?', opts: ['500', '1,000', '5,000', '10,000'], ans: 2 },
+      { q: 'The &ldquo;Our Father&rdquo; is taught in:', opts: ['Genesis', 'Matthew 6 / Luke 11', 'Acts 2', 'Revelation'], ans: 1 },
+      { q: 'Jesus&rsquo; greatest commandment is to love:', opts: ['Yourself', 'God and neighbor', 'Country', 'Family only'], ans: 1 },
+      { q: 'A miracle is a:', opts: ['Trick', 'Sign of God&rsquo;s power', 'Coincidence', 'Magic spell'], ans: 1 },
+      { q: 'The Kingdom of God begins:', opts: ['Only after death', 'Now, in our hearts', 'Only in heaven', 'Only in the Bible'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Living a Beatitude This Week',
+        scenario: 'You want to actually live the Beatitudes, not just memorize them.',
+        steps: [
+          'Pick one Beatitude that challenges you most (e.g., &ldquo;Blessed are the merciful&rdquo;).',
+          'Write it on a sticky note where you&rsquo;ll see it daily.',
+          'Each day, do one concrete action that fits — show mercy, make peace, or comfort someone.',
+          'On Sunday, journal what changed.'
+        ],
+        reflect: 'Which Beatitude is hardest for me right now? Why?'
+      },
+      {
+        title: 'Praying the Our Father Slowly',
+        scenario: 'You pray the Our Father quickly without thinking about it.',
+        steps: [
+          'Set a timer for 3 minutes.',
+          'Pray the Our Father one phrase at a time.',
+          'After each phrase, pause and ask: &ldquo;What is God saying to me here?&rdquo;',
+          'End by thanking God for one specific gift today.'
+        ],
+        reflect: 'Which phrase of the Our Father struck me most strongly today?'
+      },
+      {
+        title: 'Forgiving Like Jesus',
+        scenario: 'Someone hurt you, and the resentment is sticking around.',
+        steps: [
+          'Recall Jesus&rsquo; parable of the unforgiving servant (Mt 18:21-35).',
+          'Write down what happened — keep it private.',
+          'Pray for the person by name once a day for one week.',
+          'When ready, tell them in person or in a note that you forgive them.'
+        ],
+        reflect: 'How does forgiving someone free <em>me</em>, not just them?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — The Christian Life',
+    icon: '✝️',
+    theme: 'Discipleship, Virtues, Sacraments',
+    desc: 'Jesus calls us to live as His disciples — through the virtues, prayer, the sacraments, and works of mercy.',
+    chapters: [
+      'The Virtues (Theological and Cardinal)',
+      'The Sacraments of Initiation',
+      'The Sacraments of Healing and Service',
+      'Prayer: Personal, Liturgical, and Devotional',
+      'Works of Mercy (Corporal &amp; Spiritual)'
+    ],
+    scripture: { ref: 'John 13:34-35', text: 'I give you a new commandment: love one another. As I have loved you, so you also should love one another.' },
+    vocab: [
+      ['Sacrament', 'An efficacious sign of grace, instituted by Christ and entrusted to the Church.'],
+      ['Theological virtues', 'Faith, Hope, and Love — gifts from God.'],
+      ['Cardinal virtues', 'Prudence, Justice, Fortitude, and Temperance — &ldquo;hinge&rdquo; virtues.'],
+      ['Grace', 'God&rsquo;s free gift of His own life and love.'],
+      ['Works of Mercy', 'Concrete actions of compassion (feeding the hungry, comforting the sorrowful, etc.).']
+    ],
+    lessonHTML: `
+      <p>Becoming a Christian is not a one-time event — it is a way of life. Jesus gave us <strong>seven sacraments</strong> as channels of His grace, the <strong>virtues</strong> as patterns of action, and <strong>prayer</strong> as the breath of the soul.</p>
+      <h3>The Seven Sacraments</h3>
+      <ol>
+        <li><strong>Baptism</strong> — washes away original sin, makes us children of God.</li>
+        <li><strong>Confirmation</strong> — strengthens us with the gifts of the Holy Spirit.</li>
+        <li><strong>Eucharist</strong> — Body, Blood, Soul, and Divinity of Jesus, our food for the journey.</li>
+        <li><strong>Reconciliation (Confession)</strong> — God&rsquo;s forgiveness through the priest.</li>
+        <li><strong>Anointing of the Sick</strong> — healing, peace, and grace in serious illness.</li>
+        <li><strong>Holy Orders</strong> — bishops, priests, and deacons ordained for service.</li>
+        <li><strong>Matrimony</strong> — the holy bond of husband and wife mirroring Christ and the Church.</li>
+      </ol>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>Virtues</strong> are habits of the heart — they grow with practice.</li>
+        <li><strong>Prayer</strong> includes adoration, contrition, thanksgiving, and supplication (ACTS).</li>
+        <li><strong>The Works of Mercy</strong> turn faith into action — feeding the hungry, visiting the sick, instructing the ignorant, forgiving offenses.</li>
+        <li><strong>Conscience</strong> is our inner voice — but it must be <em>formed</em> by Scripture, the Church, and prayer.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'How many sacraments are there?', ans: 'Seven.' },
+      { q: 'List the three theological virtues.', ans: 'Faith, Hope, and Love (Charity).' },
+      { q: 'List the four cardinal virtues.', ans: 'Prudence, Justice, Fortitude, and Temperance.' },
+      { q: 'Name two corporal works of mercy.', ans: 'Any two of: feed the hungry, give drink to the thirsty, clothe the naked, shelter the homeless, visit the sick, visit the imprisoned, bury the dead.' },
+      { q: 'Name two spiritual works of mercy.', ans: 'Any two of: instruct the ignorant, counsel the doubtful, admonish sinners, bear wrongs patiently, forgive offenses, comfort the sorrowful, pray for the living and the dead.' },
+      { q: 'What is grace?', ans: 'God&rsquo;s free gift of His own life and love.' },
+      { q: 'What does ACTS stand for in prayer?', ans: 'Adoration, Contrition, Thanksgiving, Supplication.' },
+      { q: 'Why do we need a properly formed conscience?', ans: 'To make right moral decisions in line with God&rsquo;s truth, not just personal feelings.' }
+    ],
+    quiz: [
+      { q: 'The Sacraments of Initiation are:', opts: ['Baptism, Confirmation, Eucharist', 'Confession, Anointing, Eucharist', 'Holy Orders, Matrimony, Baptism', 'Reconciliation, Confirmation, Marriage'], ans: 0 },
+      { q: 'Which sacrament forgives mortal sin after Baptism?', opts: ['Confirmation', 'Reconciliation', 'Eucharist', 'Anointing'], ans: 1 },
+      { q: 'In the Eucharist, the bread and wine become:', opts: ['A symbol of Jesus', 'The Body and Blood of Christ', 'A memorial only', 'A blessed snack'], ans: 1 },
+      { q: 'The theological virtues are:', opts: ['Wisdom, Prudence, Justice', 'Faith, Hope, Love', 'Joy, Peace, Patience', 'Fortitude, Mercy, Honor'], ans: 1 },
+      { q: 'The cardinal virtue of self-control is called:', opts: ['Prudence', 'Fortitude', 'Temperance', 'Justice'], ans: 2 },
+      { q: '&ldquo;Visit the imprisoned&rdquo; is a:', opts: ['Spiritual work of mercy', 'Corporal work of mercy', 'Sacrament', 'Beatitude'], ans: 1 },
+      { q: '&ldquo;Forgive offenses&rdquo; is a:', opts: ['Spiritual work of mercy', 'Corporal work of mercy', 'Sacrament', 'Cardinal virtue'], ans: 0 },
+      { q: 'Conscience is best described as:', opts: ['Personal feelings', 'Inner voice formed by truth', 'A magic compass', 'Whatever feels right'], ans: 1 },
+      { q: 'Grace is:', opts: ['Earned by good deeds', 'God&rsquo;s free gift', 'A reward', 'A prayer'], ans: 1 },
+      { q: 'Marriage between a baptized man and woman is a:', opts: ['Contract only', 'Sacrament', 'Personal choice unrelated to faith', 'Optional ritual'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Going to Confession',
+        scenario: 'You haven&rsquo;t been to Reconciliation in a while and feel hesitant.',
+        steps: [
+          'Set a date — pick a Saturday confession time at MSOS or your parish.',
+          'Examine your conscience using the Ten Commandments or the Beatitudes.',
+          'Go in, breathe, and tell the priest it&rsquo;s been a while — he is glad you are there.',
+          'Afterward, do your penance and thank Jesus for His mercy.'
+        ],
+        reflect: 'Why is it actually freeing — not scary — to confess our sins?'
+      },
+      {
+        title: 'Practicing One Virtue This Month',
+        scenario: 'You want to grow, but &ldquo;become a saint&rdquo; feels overwhelming.',
+        steps: [
+          'Pick ONE virtue you need most (patience, courage, honesty, generosity).',
+          'Each morning, ask the Holy Spirit to grow that virtue in you today.',
+          'At lunch, evaluate: did I practice it once already? If not, I will at the next chance.',
+          'At night, thank God for one moment when the virtue showed up.'
+        ],
+        reflect: 'Virtues are built like muscles. Which one is weakest for me — and how do I begin to train it?'
+      },
+      {
+        title: 'A Concrete Work of Mercy',
+        scenario: 'You want to serve, but don&rsquo;t know where to start.',
+        steps: [
+          'Pick ONE corporal work (feed the hungry) and ONE spiritual work (comfort the sorrowful) for the week.',
+          'Help with a meal at home, donate canned goods, or volunteer at a food drive.',
+          'Reach out to a friend going through a hard time — text, call, or sit with them.',
+          'Write a note in your journal: &ldquo;Today I served Christ in...&rdquo;'
+        ],
+        reflect: 'Where did I meet Christ this week through serving someone else?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — The Paschal Mystery',
+    icon: '✝️',
+    theme: 'Passion, Death, Resurrection, Ascension',
+    desc: 'The heart of our faith: Jesus suffers, dies, rises, and ascends — defeating sin and death and opening heaven for us.',
+    chapters: [
+      'The Last Supper (John 13-17 / Synoptics)',
+      'The Agony and Arrest (Matthew 26)',
+      'The Passion and Crucifixion (Mark 15 / John 19)',
+      'The Resurrection (Luke 24 / John 20)',
+      'The Ascension and the Promise of the Spirit (Acts 1)'
+    ],
+    scripture: { ref: 'John 3:16', text: 'For God so loved the world that he gave his only Son, so that everyone who believes in him might not perish but might have eternal life.' },
+    vocab: [
+      ['Paschal Mystery', 'The Passion, Death, Resurrection, and Ascension of Jesus — the work of our salvation.'],
+      ['Eucharist', 'The sacrament instituted at the Last Supper; the source and summit of the Christian life.'],
+      ['Crucifixion', 'Jesus&rsquo; death on the Cross.'],
+      ['Resurrection', 'Jesus&rsquo; rising from the dead on the third day.'],
+      ['Salvation', 'Being saved from sin and death and given eternal life with God.']
+    ],
+    lessonHTML: `
+      <p>Holy Week is the most important week of the year. In it, we walk with Jesus through the <strong>Paschal Mystery</strong>: His Passion, Death, Resurrection, and Ascension. This is not a sad story with a twist ending — it is the very heart of God&rsquo;s love.</p>
+      <h3>The Last Supper and the Cross</h3>
+      <p>On the night before He died, Jesus took bread and wine and gave us the <strong>Eucharist</strong>: His own Body and Blood. The next day He carried His Cross to Calvary and died for our sins. Three days later, the tomb was empty.</p>
+      <h3>Why this matters</h3>
+      <ul>
+        <li><strong>Sin is real, but Christ has conquered it.</strong></li>
+        <li><strong>Death is real, but Christ has destroyed its power.</strong></li>
+        <li><strong>Heaven is open</strong> because Jesus ascended &ldquo;to prepare a place&rdquo; for us (John 14:2).</li>
+        <li><strong>Every Mass</strong> makes the Paschal Mystery present here and now.</li>
+      </ul>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>The Stations of the Cross</strong> walk us through 14 moments of Christ&rsquo;s Passion.</li>
+        <li><strong>The Easter Triduum</strong> (Holy Thursday, Good Friday, Easter Vigil) is one continuous liturgy in three parts.</li>
+        <li><strong>Christ truly rose bodily</strong> — He ate fish, was touched by Thomas, walked with disciples on Emmaus.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'What sacrament was instituted at the Last Supper?', ans: 'The Eucharist (and Holy Orders).' },
+      { q: 'In which garden did Jesus pray before His arrest?', ans: 'The Garden of Gethsemane.' },
+      { q: 'Who betrayed Jesus?', ans: 'Judas Iscariot.' },
+      { q: 'Who denied Jesus three times?', ans: 'Peter.' },
+      { q: 'On what hill was Jesus crucified?', ans: 'Calvary (Golgotha).' },
+      { q: 'On what day did Jesus rise from the dead?', ans: 'The third day (Easter Sunday).' },
+      { q: 'What are the three days of the Easter Triduum?', ans: 'Holy Thursday, Good Friday, and the Easter Vigil leading into Easter Sunday.' },
+      { q: 'Memory verse: &ldquo;For God so loved the world that he _____.&rdquo;', ans: 'gave his only Son.' }
+    ],
+    quiz: [
+      { q: 'The Paschal Mystery includes:', opts: ['Birth, baptism, sermon', 'Passion, death, resurrection, ascension', 'Creation, fall, exile', 'Annunciation, nativity, presentation'], ans: 1 },
+      { q: 'The Eucharist was instituted at:', opts: ['The wedding at Cana', 'The Last Supper', 'Pentecost', 'The Sermon on the Mount'], ans: 1 },
+      { q: 'Jesus prayed in the garden of:', opts: ['Eden', 'Gethsemane', 'Calvary', 'Bethany'], ans: 1 },
+      { q: 'Jesus was crowned with:', opts: ['Gold', 'Olive leaves', 'Thorns', 'Laurel'], ans: 2 },
+      { q: '&ldquo;Father, forgive them...&rdquo; was said:', opts: ['At the Last Supper', 'On the Cross', 'At the Transfiguration', 'After the Resurrection'], ans: 1 },
+      { q: 'How many Stations of the Cross are there?', opts: ['7', '10', '12', '14'], ans: 3 },
+      { q: 'The first witnesses of the Resurrection were:', opts: ['The Apostles', 'The women at the tomb', 'Pilate', 'The angels alone'], ans: 1 },
+      { q: 'Doubting Thomas believed when:', opts: ['He saw Jesus from far away', 'Jesus showed him His wounds', 'He heard a voice', 'He read the Scriptures'], ans: 1 },
+      { q: 'Jesus ascended to heaven from the:', opts: ['Mount of Olives', 'Mount Sinai', 'Mount Tabor', 'Mount Carmel'], ans: 0 },
+      { q: 'The Resurrection means:', opts: ['Jesus&rsquo; spirit returned', 'Jesus rose bodily from the dead', 'A symbolic story', 'A vision only'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Going Deeper into Mass',
+        scenario: 'Mass sometimes feels routine.',
+        steps: [
+          'Before Mass, recall: this is the Paschal Mystery made present, not a re-enactment.',
+          'Listen actively at the Consecration — that is Calvary made present.',
+          'When you receive Communion, slow down and pray: &ldquo;Jesus, thank you.&rdquo;',
+          'After Mass, take 60 seconds of silence to thank God before talking.'
+        ],
+        reflect: 'What changes when I really believe the Eucharist is Jesus?'
+      },
+      {
+        title: 'Walking the Stations of the Cross',
+        scenario: 'It&rsquo;s Lent, or you are carrying a personal cross.',
+        steps: [
+          'Find a Stations of the Cross booklet or use one online.',
+          'Walk through all 14 stations slowly, reflecting on each.',
+          'At each station, name one cross in your own life.',
+          'End at Station 14 with the prayer: &ldquo;Jesus, you have walked this for me.&rdquo;'
+        ],
+        reflect: 'How does Jesus carrying His Cross help me carry mine?'
+      },
+      {
+        title: 'Living Easter Joy',
+        scenario: 'Easter is over, but you want the joy to last.',
+        steps: [
+          'Greet someone with &ldquo;Happy Easter!&rdquo; even during the Easter season (50 days!).',
+          'Sing a hymn (even quietly) when you feel discouraged.',
+          'Visit a sick or grieving friend — bring resurrection hope.',
+          'Pray the Regina Caeli during Eastertide.'
+        ],
+        reflect: 'Easter is real. How does that change how I face hard things?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — The Good News',
+    icon: '🔥',
+    theme: 'Pentecost, the Apostles, the Mission',
+    desc: 'The Holy Spirit comes upon the Apostles at Pentecost and the Church goes out to proclaim the Gospel to all nations — a mission Jesus also gives us.',
+    chapters: [
+      'Pentecost: The Birthday of the Church (Acts 2)',
+      'Peter and the Early Church (Acts 1-12)',
+      'The Conversion of Paul (Acts 9)',
+      'The Mission to the Gentiles (Acts 13-28)',
+      'The New Testament Letters (Romans, Corinthians, etc.)'
+    ],
+    scripture: { ref: 'Matthew 28:19-20', text: 'Go, therefore, and make disciples of all nations, baptizing them in the name of the Father, and of the Son, and of the holy Spirit, teaching them to observe all that I have commanded you. And behold, I am with you always, until the end of the age.' },
+    vocab: [
+      ['Pentecost', 'The day the Holy Spirit descended on the Apostles, fifty days after Easter.'],
+      ['Apostle', 'One of the twelve men chosen by Jesus and sent out to preach the Gospel.'],
+      ['Evangelization', 'Sharing the Good News of Jesus Christ.'],
+      ['Gospel', 'The &ldquo;Good News&rdquo; of Jesus&rsquo; life, death, and resurrection.'],
+      ['Epistle', 'A letter — many books of the New Testament are letters from Paul, Peter, James, and John.']
+    ],
+    lessonHTML: `
+      <p>Jesus did not leave His friends as orphans. Fifty days after Easter, on the feast of <strong>Pentecost</strong>, the Holy Spirit came down with the sound of a mighty wind and tongues of fire. The Apostles, who had been hiding, walked out and preached — and the <strong>Church was born</strong>.</p>
+      <h3>The Mission Goes Out</h3>
+      <p>Peter, the first pope, leads the early community. <strong>Saul of Tarsus</strong>, a fierce persecutor, meets the risen Jesus on the road to Damascus and becomes <strong>Paul the Apostle</strong> — the great missionary who carries the Gospel to the Gentiles (non-Jews).</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>The Holy Spirit is the soul of the Church</strong>, guiding, comforting, and sanctifying.</li>
+        <li><strong>The Acts of the Apostles</strong> shows ordinary people doing extraordinary things by the Spirit&rsquo;s power.</li>
+        <li><strong>The Gospel is for everyone</strong> — Jew and Gentile, slave and free, all peoples.</li>
+        <li><strong>We are sent.</strong> Every Christian is called to evangelize — by word and by life.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'How many days after Easter did the Holy Spirit come?', ans: 'Fifty (Pentecost).' },
+      { q: 'What signs accompanied the Holy Spirit at Pentecost?', ans: 'A mighty wind and tongues of fire.' },
+      { q: 'Who was the first pope?', ans: 'St. Peter.' },
+      { q: 'What was Saul&rsquo;s name after his conversion?', ans: 'Paul.' },
+      { q: 'On what road did Saul meet the risen Christ?', ans: 'The road to Damascus.' },
+      { q: 'Name two New Testament letters of Paul.', ans: 'Examples: Romans, 1 &amp; 2 Corinthians, Galatians, Ephesians, Philippians, Colossians, 1 &amp; 2 Thessalonians, Philemon, etc.' },
+      { q: 'What does &ldquo;Gospel&rdquo; mean?', ans: '&ldquo;Good News.&rdquo;' },
+      { q: 'In your own words: how can a 7th grader evangelize?', ans: 'Open answer — by living a joyful Christian life, sharing faith with friends and family, serving the poor, and being honest about Jesus when asked.' }
+    ],
+    quiz: [
+      { q: 'Pentecost happens how many days after Easter?', opts: ['7', '40', '50', '100'], ans: 2 },
+      { q: 'The Holy Spirit came at Pentecost as:', opts: ['A dove', 'Wind and tongues of fire', 'A bright cloud', 'A burning bush'], ans: 1 },
+      { q: 'The first pope was:', opts: ['Paul', 'Peter', 'James', 'John'], ans: 1 },
+      { q: 'Paul was originally named:', opts: ['Stephen', 'Barnabas', 'Saul', 'Silas'], ans: 2 },
+      { q: 'Paul met the risen Jesus on the road to:', opts: ['Jerusalem', 'Bethlehem', 'Damascus', 'Rome'], ans: 2 },
+      { q: 'The book that tells the story of the early Church is:', opts: ['Genesis', 'The Acts of the Apostles', 'Revelation', 'Hebrews'], ans: 1 },
+      { q: '&ldquo;Gospel&rdquo; means:', opts: ['Law', 'Good News', 'Letter', 'Sermon'], ans: 1 },
+      { q: 'A letter in the New Testament is also called an:', opts: ['Acts', 'Epistle', 'Apocalypse', 'Encyclical'], ans: 1 },
+      { q: 'The first martyr (after Christ) was:', opts: ['Stephen', 'Andrew', 'Mary', 'Lazarus'], ans: 0 },
+      { q: 'The Great Commission is:', opts: ['&ldquo;Build a temple&rdquo;', '&ldquo;Go and make disciples of all nations&rdquo;', '&ldquo;Stay in Jerusalem&rdquo;', '&ldquo;Write the Bible&rdquo;'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Asking for the Holy Spirit',
+        scenario: 'You feel timid about your faith.',
+        steps: [
+          'Pray a simple prayer: &ldquo;Come, Holy Spirit.&rdquo;',
+          'Name one situation this week where you need courage (speaking truth, defending a friend, going to Mass with family).',
+          'Take the action — knowing the same Spirit who filled the Apostles fills you.',
+          'Thank the Spirit afterward, even if it didn&rsquo;t go perfectly.'
+        ],
+        reflect: 'Where do I need the Holy Spirit&rsquo;s courage right now?'
+      },
+      {
+        title: 'Sharing the Good News',
+        scenario: 'A friend asks why you go to church.',
+        steps: [
+          'Don&rsquo;t panic. Give a true, short answer: &ldquo;Because I believe Jesus rose from the dead and is real.&rdquo;',
+          'If they ask more, share one specific way Jesus has helped <em>you</em>.',
+          'Invite them to a youth event or Mass &mdash; never push.',
+          'Pray for them by name that night.'
+        ],
+        reflect: 'Evangelization is not winning an argument. What does it look like instead?'
+      },
+      {
+        title: 'Being a Missionary at Home',
+        scenario: 'You don&rsquo;t need to travel to evangelize.',
+        steps: [
+          'Pick one family member to pray for daily for one month.',
+          'Look for one chance to serve them concretely.',
+          'Speak well of God when His name comes up — never roll your eyes.',
+          'Live the joy of the Gospel — that itself preaches.'
+        ],
+        reflect: 'St. Francis is said to have taught: &ldquo;Preach always; use words when necessary.&rdquo; What does my <em>life</em> preach?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.theme}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'The Story of Jesus — New Testament';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <p style="color:#666;font-style:italic;margin-bottom:14px;">${u.theme}</p>
+    <div class="scripture-box"><strong>${u.scripture.ref}</strong> &mdash; &ldquo;${u.scripture.text}&rdquo;</div>
+    <div class="chapter-list"><h4>📖 Chapters from <em>Blest Are We</em></h4><ol>${u.chapters.map(c => `<li>${c}</li>`).join('')}</ol></div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. You may consult <em>Blest Are We</em> and the Bible.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Well done — keep walking with Christ!' : '📖 Review the lesson and try again. The Lord blesses every effort.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

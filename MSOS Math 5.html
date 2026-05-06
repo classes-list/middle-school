@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 5th Grade Math Tutorial</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100;  width: 250px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 15px; font-weight: bold; }
+    .sidebar-item { padding: 10px; margin: 5px 0; background: #111d35; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar { border-bottom: 4px solid #FFD100;  background: #1B3A8A; color: white; padding: 15px 30px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .topbar-right { display: flex; gap: 20px; align-items: center; font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 30px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .unit-card { background: white; border-radius: 8px; padding: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(56,189,248,0.2); }
+    .unit-card-header { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 15px; }
+    .unit-card-icon { font-size: 32px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+    .unit-card-cc { font-size: 12px; color: #666; }
+    .unit-card-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.4; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { background: #f0f0f0; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 20px 0 10px 0; color: #1B3A8A; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.6; }
+    .lesson-content ul, .lesson-content ol { margin-left: 20px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 8px; }
+    .btn { display: inline-block; padding: 10px 20px; background: #1B3A8A; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px; }
+    .btn:hover { background: #162E70; }
+    .btn-secondary { background: #6b7280; }
+    .btn-secondary:hover { background: #4b5563; }
+    .btn-ixl { display: inline-block; padding: 10px 15px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ixl:hover { background: #2563eb; }
+    .btn-yt { display: inline-block; padding: 10px 15px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-yt:hover { background: #dc2626; }
+    .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-phet:hover { background: #6d28d9; }
+    .resource-card { background: #f3f4f6; border-radius: 8px; padding: 15px; margin: 20px 0; }
+    .resource-card h3 { margin-bottom: 10px; color: #1B3A8A; font-size: 14px; }
+    .resource-btns { display: flex; flex-wrap: wrap; }
+    .problem { background: white; padding: 15px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 4px; }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; font-family: 'Courier New', monospace; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .quiz-question { background: white; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #1B3A8A; }
+    .quiz-question h4 { margin-bottom: 10px; color: #1B3A8A; }
+    .quiz-question label { display: block; margin: 8px 0; cursor: pointer; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 15px 0; }
+    .result-card h3 { color: #059669; margin-bottom: 10px; }
+    .nav-buttons { display: flex; gap: 10px; margin: 20px 0; }
+    .back-btn { background: #6b7280; }
+    .back-btn:hover { background: #4b5563; }
+
+    .handout-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    .handout-card h3 { margin: 0 0 8px; color: #B8860B; font-size: 1.2rem; }
+    .handout-science { font-size: 0.9rem; color: #666; margin-bottom: 12px; }
+    .handout-mission { background: #f8f9ff; border-radius: 6px; padding: 12px; margin-bottom: 16px; font-style: italic; color: #334; }
+    .handout-steps { margin: 0 0 16px; padding-left: 0; list-style: none; counter-reset: step-counter; }
+    .handout-steps li { counter-increment: step-counter; padding: 8px 12px 8px 44px; margin-bottom: 6px; background: #f0f4ff; border-radius: 6px; position: relative; font-size: 0.92rem; line-height: 1.5; }
+    .handout-steps li::before { content: counter(step-counter); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 0.78rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .handout-deliverable { background: #fffbe6; border: 1px solid #f5d000; border-radius: 6px; padding: 12px; margin-bottom: 16px; }
+    .handout-deliverable strong { display: block; margin-bottom: 4px; color: #7a5f00; }
+    .handout-reflect { background: #fffbea; border: 1px solid #68d391; border-radius: 6px; padding: 12px; }
+    .handout-reflect strong { display: block; margin-bottom: 4px; color: #276749; }
+    .handout-reflect ol { margin: 0; padding-left: 20px; }
+    .handout-reflect li { margin-bottom: 6px; font-size: 0.9rem; }
+    code { background: #e8edf5; padding: 1px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.88em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 16px 0;color:#888;font-size:14px;">5th Grade Math Topics</p>
+      <div id="sidebar-content"></div>
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; color: #999;">
+        Progress: <span id="progress-text">0/18</span>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="MSOS Math Index.html" class="back-index-btn" title="Back to Math Classes">← All Math</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="MSOS Logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="NUI Logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Exploring the World with Math</span>
+        </div>
+        <div class="topbar-right">Math · Grade 5</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn back-btn" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showHome()">← Back</button>
+            <button class="btn" onclick="showHandout()">🌍 Real-World Math</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Check Answers</button>
+            <button class="btn" onclick="showQuiz()">Quiz →</button>
+          </div>
+        </div>
+        <div id="handout-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">🌍 Real-World Math</h2>
+          <div id="handout-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn back-btn" onclick="showWorksheet()">← Back to Worksheet</button>
+          <h2 style="margin: 20px 0;">📝 Quick Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showWorksheet()">← Back</button>
+            <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+          </div>
+        </div>
+        <div id="certificate-screen" class="screen">
+          <div style="text-align: center; padding: 40px;">
+            <h2 style="color: #1B3A8A; margin: 20px 0;">🎉 Unit Completed!</h2>
+            <div id="cert-content"></div>
+            <button class="btn" onclick="showHome()" style="margin-top: 20px;">Return to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+const UNITS = [
+  { id:'place-value', title:'Place Value & Rounding', icon:'🔢', cc:'5.NBT.1-4', desc:'Understand place value in decimals and whole numbers; round to any place.', ixlUrl:'https://www.ixl.com/math/grade-5/place-values', ytSearch:'khan academy 5th grade place value decimals rounding' },
+  { id:'add-subtract', title:'Addition & Subtraction', icon:'➕', cc:'5.NBT.5', desc:'Fluently add and subtract multi-digit whole numbers using the standard algorithm.', ixlUrl:'https://www.ixl.com/math/grade-5/add-and-subtract-whole-numbers', ytSearch:'khan academy 5th grade addition subtraction multi-digit' },
+  { id:'mult-div', title:'Multiplication & Division', icon:'✖️', cc:'5.NBT.5-6', desc:'Multiply multi-digit whole numbers and divide with up to 4-digit dividends.', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-by-2-digit-numbers', ytSearch:'khan academy 5th grade multi-digit multiplication long division', phetUrl:'https://phet.colorado.edu/en/simulations/arithmetic' },
+  { id:'order-ops', title:'Order of Operations', icon:'📋', cc:'5.OA.1', desc:'Use parentheses, brackets, and the order of operations (PEMDAS) to evaluate expressions.', ixlUrl:'https://www.ixl.com/math/grade-5/evaluate-numerical-expressions', ytSearch:'khan academy 5th grade order of operations PEMDAS' },
+  { id:'frac-add-sub', title:'Fractions — Add/Subtract', icon:'➗', cc:'5.NF.1-2', desc:'Add and subtract fractions with unlike denominators using common denominators.', ixlUrl:'https://www.ixl.com/math/grade-5/add-and-subtract-fractions-with-unlike-denominators', ytSearch:'khan academy 5th grade add subtract fractions unlike denominators', phetUrl:'https://phet.colorado.edu/en/simulations/build-a-fraction' },
+  { id:'frac-mult-div', title:'Fractions — Multiply/Divide', icon:'🥧', cc:'5.NF.3-7', desc:'Multiply fractions by fractions and divide unit fractions by whole numbers.', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-two-fractions-using-models', ytSearch:'khan academy 5th grade multiplying dividing fractions', phetUrl:'https://phet.colorado.edu/en/simulations/fractions-intro' },
+  { id:'frac-convert', title:'Fractions — Converting', icon:'🔁', cc:'5.NF.3', desc:'Convert between improper fractions and mixed numbers; simplify fractions.', ixlUrl:'https://www.ixl.com/math/grade-5/convert-between-improper-fractions-and-mixed-numbers', ytSearch:'khan academy 5th grade improper fractions mixed numbers converting', phetUrl:'https://phet.colorado.edu/en/simulations/fraction-matcher' },
+  { id:'frac-vs-dec', title:'Fractions vs Decimals', icon:'🔀', cc:'5.NF/5.NBT', desc:'Convert fractions to decimals and decimals to fractions; compare forms.', ixlUrl:'https://www.ixl.com/math/grade-5/convert-fractions-to-decimals', ytSearch:'khan academy 5th grade fractions decimals converting', phetUrl:'https://phet.colorado.edu/en/simulations/fractions-intro' },
+  { id:'dec-add-sub', title:'Decimals — Add/Subtract', icon:'💯', cc:'5.NBT.7', desc:'Add and subtract decimals to the hundredths using concrete models and strategies.', ixlUrl:'https://www.ixl.com/math/grade-5/add-and-subtract-decimal-numbers', ytSearch:'khan academy 5th grade add subtract decimals' },
+  { id:'dec-mult', title:'Decimals — Multiplication', icon:'✖️', cc:'5.NBT.7', desc:'Multiply decimals to the hundredths and understand the placement of the decimal point.', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-decimals', ytSearch:'khan academy 5th grade multiply decimals', phetUrl:'https://phet.colorado.edu/en/simulations/area-model-decimals' },
+  { id:'dec-div', title:'Decimals — Division', icon:'➗', cc:'5.NBT.7', desc:'Divide decimals to the hundredths using models, place value, and properties of operations.', ixlUrl:'https://www.ixl.com/math/grade-5/divide-decimals', ytSearch:'khan academy 5th grade divide decimals' },
+  { id:'measurement', title:'Measurement', icon:'📏', cc:'5.MD.1', desc:'Convert among different-sized measurement units (in/ft/yd, mm/cm/m/km, oz/lb, mL/L).', ixlUrl:'https://www.ixl.com/math/grade-5/convert-mixed-customary-units', ytSearch:'khan academy 5th grade measurement conversion customary metric' },
+  { id:'geometry', title:'Geometry', icon:'🔷', cc:'5.G.1-4', desc:'Classify 2D figures in a hierarchy; graph points on the coordinate plane.', ixlUrl:'https://www.ixl.com/math/grade-5/classify-quadrilaterals', ytSearch:'khan academy 5th grade geometry quadrilaterals classification', phetUrl:'https://phet.colorado.edu/en/simulations/area-builder' },
+  { id:'factoring', title:'Factoring', icon:'🧮', cc:'5.OA / prep for 6.NS.4', desc:'Find factors and multiples of whole numbers; identify prime and composite numbers.', ixlUrl:'https://www.ixl.com/math/grade-5/prime-and-composite-numbers', ytSearch:'khan academy prime composite factors multiples 5th grade' },
+  { id:'exponents', title:'Exponents', icon:'🔬', cc:'5.NBT.2', desc:'Use whole-number exponents to denote powers of 10; explain patterns in zeros.', ixlUrl:'https://www.ixl.com/math/grade-5/understanding-exponents', ytSearch:'khan academy 5th grade powers of 10 exponents' },
+  { id:'data-graphing', title:'Data & Graphing', icon:'📊', cc:'5.MD.2', desc:'Make line plots to display a data set of measurements in fractions of a unit; read and create graphs.', ixlUrl:'https://www.ixl.com/math/grade-5/create-line-plots', ytSearch:'khan academy 5th grade line plots data graphing', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability' },
+  { id:'integers', title:'Integers', icon:'➕➖', cc:'prep for 6.NS.5-6', desc:'Understand positive and negative numbers on the number line; compare integers in real-world contexts.', ixlUrl:'https://www.ixl.com/math/grade-5/understanding-integers', ytSearch:'khan academy integers introduction negative numbers 5th grade', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-integers' },
+  { id:'algebra', title:'Algebra', icon:'🔣', cc:'5.OA.2-3', desc:'Write and interpret numerical expressions; generate and analyze patterns with two rules.', ixlUrl:'https://www.ixl.com/math/grade-5/write-variable-expressions', ytSearch:'khan academy 5th grade algebra introduction expressions patterns', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' }
+];
+
+const LESSONS = {
+  'place-value': `<h2>Place Value & Rounding</h2>
+<p>In our number system, each digit's value depends on its <strong>place</strong>. Moving one place to the left makes a digit's value <strong>10 times greater</strong>; moving one place to the right makes it <strong>1/10 as large</strong>.</p>
+<p><strong>Place value chart (example 3,428.675):</strong></p>
+<ul>
+  <li>3 — thousands (3,000)</li>
+  <li>4 — hundreds (400)</li>
+  <li>2 — tens (20)</li>
+  <li>8 — ones (8)</li>
+  <li>6 — tenths (0.6)</li>
+  <li>7 — hundredths (0.07)</li>
+  <li>5 — thousandths (0.005)</li>
+</ul>
+<p><strong>Rounding rule:</strong> Look at the digit to the <em>right</em> of the rounding place. If it's 5 or more, round up; if it's 4 or less, round down.</p>
+<p><strong>Example:</strong> Round 7.486 to the tenths place → look at 8 (in hundredths) → round up → <strong>7.5</strong>.</p>`,
+
+  'add-subtract': `<h2>Addition & Subtraction</h2>
+<p>The <strong>standard algorithm</strong> lines up numbers by place value. Always align the ones, tens, hundreds, etc.</p>
+<p><strong>Addition example:</strong></p>
+<pre>  2,487
++ 3,659
+-------
+  6,146</pre>
+<p><strong>Subtraction with regrouping:</strong> When you cannot subtract, <em>borrow</em> 10 from the next place.</p>
+<pre>  5,002
+-   348
+-------
+  4,654</pre>
+<p><strong>Check your work:</strong> Addition and subtraction are inverse operations. If 4,654 + 348 = 5,002, your subtraction is correct!</p>`,
+
+  'mult-div': `<h2>Multiplication & Division</h2>
+<p><strong>Multi-digit multiplication</strong> uses the standard algorithm or the area model. Multiply each place value, then add partial products.</p>
+<p><strong>Example:</strong> 243 × 27</p>
+<pre>   243
+ ×  27
+------
+  1701   (243 × 7)
+  4860   (243 × 20)
+------
+  6561</pre>
+<p><strong>Long division</strong> uses the steps: Divide, Multiply, Subtract, Bring down — sometimes remembered as <em>"Dad, Mom, Sister, Brother"</em>.</p>
+<p><strong>Example:</strong> 846 ÷ 6 = 141</p>
+<ul>
+  <li>6 into 8 → 1, remainder 2</li>
+  <li>Bring down 4 → 24 ÷ 6 = 4</li>
+  <li>Bring down 6 → 6 ÷ 6 = 1</li>
+  <li>Answer: 141</li>
+</ul>`,
+
+  'order-ops': `<h2>Order of Operations</h2>
+<p>When an expression has multiple operations, we follow a strict order — <strong>PEMDAS</strong>:</p>
+<ol>
+  <li><strong>P</strong>arentheses (or brackets)</li>
+  <li><strong>E</strong>xponents</li>
+  <li><strong>M</strong>ultiplication and <strong>D</strong>ivision (left to right)</li>
+  <li><strong>A</strong>ddition and <strong>S</strong>ubtraction (left to right)</li>
+</ol>
+<p><em>Please Excuse My Dear Aunt Sally</em></p>
+<p><strong>Example:</strong> 3 + 4 × (2 + 5)²</p>
+<ul>
+  <li>Parentheses: 2 + 5 = 7 → 3 + 4 × 7²</li>
+  <li>Exponents: 7² = 49 → 3 + 4 × 49</li>
+  <li>Multiplication: 4 × 49 = 196 → 3 + 196</li>
+  <li>Addition: 3 + 196 = <strong>199</strong></li>
+</ul>`,
+
+  'frac-add-sub': `<h2>Fractions — Add/Subtract</h2>
+<p>To add or subtract fractions with <strong>unlike denominators</strong>, first find a <strong>common denominator</strong> (usually the LCM of the denominators), then add or subtract the numerators only.</p>
+<p><strong>Example:</strong> 1/3 + 1/4</p>
+<ul>
+  <li>LCD of 3 and 4 is 12</li>
+  <li>1/3 = 4/12, 1/4 = 3/12</li>
+  <li>4/12 + 3/12 = <strong>7/12</strong></li>
+</ul>
+<p><strong>Mixed numbers:</strong> Add/subtract whole parts and fraction parts separately. Borrow from the whole if needed.</p>
+<p><strong>Example:</strong> 3 1/4 − 1 3/4 = 2 5/4 − 1 3/4 = <strong>1 2/4 = 1 1/2</strong></p>`,
+
+  'frac-mult-div': `<h2>Fractions — Multiply/Divide</h2>
+<p><strong>Multiplying fractions:</strong> Multiply numerators and multiply denominators. No common denominator needed!</p>
+<p><strong>Example:</strong> 2/3 × 3/5 = (2×3)/(3×5) = 6/15 = <strong>2/5</strong></p>
+<p><strong>Dividing fractions:</strong> <em>Keep, Change, Flip</em> — keep the first fraction, change division to multiplication, flip the second fraction (use the reciprocal).</p>
+<p><strong>Example:</strong> 1/2 ÷ 1/4 = 1/2 × 4/1 = 4/2 = <strong>2</strong></p>
+<p><strong>Unit fractions ÷ whole numbers:</strong> 1/5 ÷ 3 = 1/5 × 1/3 = <strong>1/15</strong>. This means sharing 1/5 equally among 3 people.</p>`,
+
+  'frac-convert': `<h2>Fractions — Converting</h2>
+<p>An <strong>improper fraction</strong> has a numerator ≥ denominator (e.g., 7/4). A <strong>mixed number</strong> combines a whole number and a fraction (e.g., 1 3/4).</p>
+<p><strong>Improper → Mixed:</strong> Divide the numerator by the denominator. The quotient is the whole, the remainder is the new numerator.</p>
+<p><strong>Example:</strong> 17/5 → 17 ÷ 5 = 3 remainder 2 → <strong>3 2/5</strong></p>
+<p><strong>Mixed → Improper:</strong> Multiply whole by denominator, add numerator. Keep denominator.</p>
+<p><strong>Example:</strong> 4 2/3 → (4 × 3) + 2 = 14 → <strong>14/3</strong></p>
+<p><strong>Simplifying:</strong> Divide numerator and denominator by their GCF. 8/12 → GCF is 4 → <strong>2/3</strong>.</p>`,
+
+  'frac-vs-dec': `<h2>Fractions vs Decimals</h2>
+<p>Fractions and decimals are two ways to represent the same value — a part of a whole.</p>
+<p><strong>Fraction → Decimal:</strong> Divide the numerator by the denominator.</p>
+<ul>
+  <li>3/4 → 3 ÷ 4 = <strong>0.75</strong></li>
+  <li>1/8 → 1 ÷ 8 = <strong>0.125</strong></li>
+  <li>1/3 → 1 ÷ 3 = <strong>0.333…</strong> (repeating)</li>
+</ul>
+<p><strong>Decimal → Fraction:</strong> Use place value. 0.6 = 6/10 = 3/5. 0.25 = 25/100 = 1/4.</p>
+<p><strong>Common conversions to memorize:</strong> 1/2 = 0.5, 1/4 = 0.25, 3/4 = 0.75, 1/5 = 0.2, 1/10 = 0.1.</p>`,
+
+  'dec-add-sub': `<h2>Decimals — Add/Subtract</h2>
+<p>The key rule: <strong>line up the decimal points</strong>. Add zeros as placeholders if one number has fewer decimal places.</p>
+<p><strong>Example:</strong> 12.5 + 3.47</p>
+<pre>  12.50
++  3.47
+-------
+  15.97</pre>
+<p><strong>Subtraction example:</strong> 8.2 − 4.365</p>
+<pre>  8.200
+- 4.365
+-------
+  3.835</pre>
+<p><strong>Estimate first:</strong> 12.5 ≈ 13, 3.47 ≈ 3, so the answer should be near 16. This helps catch mistakes!</p>`,
+
+  'dec-mult': `<h2>Decimals — Multiplication</h2>
+<p>Multiply decimals like whole numbers, then <strong>count the total decimal places</strong> in both factors and place the decimal in your answer.</p>
+<p><strong>Example:</strong> 0.3 × 0.4</p>
+<ul>
+  <li>Multiply: 3 × 4 = 12</li>
+  <li>Decimal places: 1 + 1 = 2</li>
+  <li>Answer: <strong>0.12</strong></li>
+</ul>
+<p><strong>Example:</strong> 2.5 × 1.4</p>
+<ul>
+  <li>Multiply: 25 × 14 = 350</li>
+  <li>Decimal places: 1 + 1 = 2</li>
+  <li>Answer: <strong>3.50</strong> (or 3.5)</li>
+</ul>
+<p><strong>Check with estimation:</strong> 2.5 ≈ 3, 1.4 ≈ 1, so ≈ 3. Our answer 3.5 makes sense!</p>`,
+
+  'dec-div': `<h2>Decimals — Division</h2>
+<p><strong>Dividing a decimal by a whole number:</strong> Place the decimal point in the quotient directly above the decimal point in the dividend, then divide normally.</p>
+<p><strong>Example:</strong> 7.2 ÷ 4 = <strong>1.8</strong></p>
+<p><strong>Dividing by a decimal:</strong> Move the decimal point in the <em>divisor</em> to make it a whole number. Move the decimal in the <em>dividend</em> the same number of places.</p>
+<p><strong>Example:</strong> 6.4 ÷ 0.8 → 64 ÷ 8 = <strong>8</strong></p>
+<p><strong>Example:</strong> 3.75 ÷ 0.25 → 375 ÷ 25 = <strong>15</strong></p>
+<p><strong>Remember:</strong> If you're unsure where the decimal goes, estimate first!</p>`,
+
+  'measurement': `<h2>Measurement</h2>
+<p>Converting between units uses <strong>multiplication</strong> (going to smaller units) or <strong>division</strong> (going to larger units).</p>
+<p><strong>Customary Length:</strong></p>
+<ul>
+  <li>1 foot = 12 inches</li>
+  <li>1 yard = 3 feet = 36 inches</li>
+  <li>1 mile = 5,280 feet</li>
+</ul>
+<p><strong>Metric Length</strong> (uses powers of 10):</p>
+<ul>
+  <li>1 km = 1,000 m</li>
+  <li>1 m = 100 cm = 1,000 mm</li>
+</ul>
+<p><strong>Example:</strong> 4 ft = ? in → 4 × 12 = <strong>48 inches</strong></p>
+<p><strong>Example:</strong> 2,500 m = ? km → 2,500 ÷ 1,000 = <strong>2.5 km</strong></p>
+<p><strong>Capacity:</strong> 1 gal = 4 qt = 8 pt = 16 cups. <strong>Weight:</strong> 1 lb = 16 oz, 1 ton = 2,000 lb.</p>`,
+
+  'geometry': `<h2>Geometry</h2>
+<p>Shapes are classified by their <strong>attributes</strong> (properties): number of sides, angles, parallel lines, etc.</p>
+<p><strong>Quadrilateral hierarchy:</strong></p>
+<ul>
+  <li><strong>Quadrilateral</strong> — any 4-sided polygon</li>
+  <li><strong>Trapezoid</strong> — at least one pair of parallel sides</li>
+  <li><strong>Parallelogram</strong> — two pairs of parallel sides</li>
+  <li><strong>Rectangle</strong> — parallelogram with 4 right angles</li>
+  <li><strong>Rhombus</strong> — parallelogram with 4 equal sides</li>
+  <li><strong>Square</strong> — both rectangle AND rhombus (4 right angles + 4 equal sides)</li>
+</ul>
+<p><strong>Coordinate plane:</strong> Points are written as (x, y). The first number is horizontal (right/left), the second is vertical (up/down). (3, 5) means 3 right, 5 up from the origin (0,0).</p>`,
+
+  'factoring': `<h2>Factoring</h2>
+<p>A <strong>factor</strong> is a number that divides evenly into another number. A <strong>multiple</strong> is the product of a number and any whole number.</p>
+<p><strong>Example:</strong> Factors of 12 are 1, 2, 3, 4, 6, 12. Multiples of 3 are 3, 6, 9, 12, 15, 18…</p>
+<p><strong>Prime numbers</strong> have exactly two factors (1 and itself): 2, 3, 5, 7, 11, 13, 17, 19, 23…</p>
+<p><strong>Composite numbers</strong> have more than two factors: 4, 6, 8, 9, 10, 12…</p>
+<p><strong>Note:</strong> The number 1 is <em>neither</em> prime nor composite.</p>
+<p><strong>Prime factorization</strong> breaks a number into a product of primes. Example: 24 = 2 × 2 × 2 × 3 = 2³ × 3.</p>`,
+
+  'exponents': `<h2>Exponents</h2>
+<p>An <strong>exponent</strong> tells you how many times to multiply a base by itself.</p>
+<p><strong>Example:</strong> 10³ = 10 × 10 × 10 = 1,000</p>
+<p><strong>Powers of 10 pattern:</strong></p>
+<ul>
+  <li>10¹ = 10 (1 zero)</li>
+  <li>10² = 100 (2 zeros)</li>
+  <li>10³ = 1,000 (3 zeros)</li>
+  <li>10⁴ = 10,000 (4 zeros)</li>
+  <li>10⁶ = 1,000,000 (6 zeros)</li>
+</ul>
+<p>The exponent equals the number of zeros! This is why multiplying by powers of 10 just shifts the decimal point.</p>
+<p><strong>Example:</strong> 4.5 × 10³ = 4,500 (decimal moves 3 places right).</p>
+<p><strong>Example:</strong> 7 × 10² = 700. 3.2 × 10⁴ = 32,000.</p>`,
+
+  'data-graphing': `<h2>Data & Graphing</h2>
+<p>Data is collected and displayed in many ways: <strong>bar graphs, line plots, line graphs, and picture graphs</strong>.</p>
+<p><strong>Line plots with fractions:</strong> Measurements are plotted above a number line marked in fractions (like 1/8, 1/4, 1/2).</p>
+<p><strong>Example:</strong> Eight students measured pencil lengths: 6 1/2, 6 3/4, 7, 6 1/2, 7 1/4, 6 3/4, 7, 6 1/2 inches. Plot an X above each measurement on a number line scaled in 1/4 inches.</p>
+<p><strong>Reading graphs:</strong> Always check the <em>title</em>, <em>axis labels</em>, and <em>scale</em>.</p>
+<p><strong>Mean (average):</strong> Add all values and divide by how many there are.</p>
+<p><strong>Example:</strong> Mean of 5, 7, 3, 9 = (5+7+3+9) ÷ 4 = 24 ÷ 4 = <strong>6</strong>.</p>`,
+
+  'integers': `<h2>Integers</h2>
+<p><strong>Integers</strong> are whole numbers and their opposites: …, −3, −2, −1, 0, 1, 2, 3, …</p>
+<p>Negative numbers appear everywhere in the real world:</p>
+<ul>
+  <li>Temperature below zero: −10°F</li>
+  <li>Elevations below sea level: Dead Sea is −430 m</li>
+  <li>Debt or money owed: owing $15 is −$15</li>
+  <li>Floors below ground: B1, B2</li>
+</ul>
+<p><strong>The number line:</strong> Negatives are to the left of zero, positives to the right. <strong>−5 is less than −2</strong> (further left), even though 5 > 2 for positives!</p>
+<p><strong>Opposites:</strong> +7 and −7 are the same distance from zero. Their sum is 0.</p>
+<p><strong>Absolute value</strong> means distance from zero: |−8| = 8, |3| = 3.</p>`,
+
+  'algebra': `<h2>Algebra</h2>
+<p><strong>Algebra</strong> uses letters (variables) to stand for unknown numbers.</p>
+<p><strong>Example:</strong> If a movie ticket is $12 and you buy <em>n</em> tickets, the total cost is <strong>12n</strong> dollars.</p>
+<p><strong>Writing expressions from words:</strong></p>
+<ul>
+  <li>"5 more than a number" → n + 5</li>
+  <li>"twice a number" → 2n</li>
+  <li>"a number divided by 3" → n ÷ 3 or n/3</li>
+  <li>"7 less than a number" → n − 7</li>
+</ul>
+<p><strong>Evaluating expressions:</strong> Substitute the value for the variable.</p>
+<p><strong>Example:</strong> Evaluate 3x + 4 when x = 5 → 3(5) + 4 = 15 + 4 = <strong>19</strong></p>
+<p><strong>Patterns with two rules:</strong> Given rules "add 3" for x and "add 6" for y, starting at (0, 0): (0,0), (3,6), (6,12), (9,18)… Graph these and you'll see a straight line!</p>`
+};
+
+const WORKSHEETS = {
+  'place-value': [
+    { q: 'What is the value of the 7 in 3,470,521?', answer: '70,000 (seventy thousand)' },
+    { q: 'Round 48,672 to the nearest thousand.', answer: '49,000' },
+    { q: 'Round 4.278 to the nearest tenth.', answer: '4.3' },
+    { q: 'Write the number twenty-three and forty-seven hundredths as a decimal.', answer: '23.47' },
+    { q: 'What is 10 times greater than 4.6?', answer: '46' },
+    { q: 'What is 1/10 of 350?', answer: '35' },
+    { q: 'Round 0.843 to the nearest hundredth.', answer: '0.84' },
+    { q: 'Compare: 0.7 ___ 0.70', answer: '= (they are equal)' },
+    { q: 'What digit is in the thousandths place in 5.6784?', answer: '8' },
+    { q: 'Order from least to greatest: 0.8, 0.08, 0.81, 0.18', answer: '0.08, 0.18, 0.8, 0.81' }
+  ],
+  'add-subtract': [
+    { q: '4,582 + 3,176 = ?', answer: '7,758' },
+    { q: '9,040 − 2,875 = ?', answer: '6,165' },
+    { q: '12,450 + 8,962 = ?', answer: '21,412' },
+    { q: '30,000 − 14,756 = ?', answer: '15,244' },
+    { q: 'Ben has 2,450 marbles. He gives away 687 and buys 1,200 more. How many does he have?', answer: '2,963 marbles' },
+    { q: '7,500 − 3,499 = ?', answer: '4,001' },
+    { q: '58,362 + 9,847 = ?', answer: '68,209' },
+    { q: '100,000 − 47,863 = ?', answer: '52,137' },
+    { q: 'Sum of 1,245 and 3,678 and 892?', answer: '5,815' },
+    { q: 'A library has 12,480 books. 3,675 are borrowed. How many remain?', answer: '8,805 books' }
+  ],
+  'mult-div': [
+    { q: '245 × 13 = ?', answer: '3,185' },
+    { q: '67 × 28 = ?', answer: '1,876' },
+    { q: '1,248 ÷ 6 = ?', answer: '208' },
+    { q: '956 ÷ 4 = ?', answer: '239' },
+    { q: '312 × 45 = ?', answer: '14,040' },
+    { q: '3,276 ÷ 7 = ?', answer: '468' },
+    { q: 'A box holds 24 crayons. How many crayons are in 35 boxes?', answer: '840 crayons' },
+    { q: 'Split $5,040 equally among 8 classrooms. How much does each get?', answer: '$630' },
+    { q: '503 × 19 = ?', answer: '9,557' },
+    { q: '8,440 ÷ 5 = ?', answer: '1,688' }
+  ],
+  'order-ops': [
+    { q: 'Evaluate: 3 + 4 × 2', answer: '11' },
+    { q: 'Evaluate: (3 + 4) × 2', answer: '14' },
+    { q: 'Evaluate: 20 − 3 × 2 + 5', answer: '19' },
+    { q: 'Evaluate: 6 + 8 ÷ 2 − 1', answer: '9' },
+    { q: 'Evaluate: 2 × (6 + 3)²', answer: '162' },
+    { q: 'Evaluate: 100 − (4 + 6) × 5', answer: '50' },
+    { q: 'Evaluate: 15 + [2 × (3 + 1)]', answer: '23' },
+    { q: 'Evaluate: 36 ÷ 6 + 2 × 3', answer: '12' },
+    { q: 'Evaluate: 4² + 3 × 2', answer: '22' },
+    { q: 'Evaluate: (8 − 3) × (2 + 4)', answer: '30' }
+  ],
+  'frac-add-sub': [
+    { q: '1/2 + 1/3 = ?', answer: '5/6' },
+    { q: '3/4 − 1/8 = ?', answer: '5/8' },
+    { q: '2/5 + 1/10 = ?', answer: '1/2 (or 5/10)' },
+    { q: '5/6 − 1/4 = ?', answer: '7/12' },
+    { q: '1 1/2 + 2 1/3 = ?', answer: '3 5/6' },
+    { q: '3 1/4 − 1 3/4 = ?', answer: '1 1/2' },
+    { q: '7/8 − 3/4 = ?', answer: '1/8' },
+    { q: '2/3 + 3/5 = ?', answer: '1 4/15 (or 19/15)' },
+    { q: '4 1/6 − 2 5/6 = ?', answer: '1 1/3' },
+    { q: 'Maya ate 3/8 of a pizza. Her brother ate 1/4. How much is left?', answer: '3/8 of the pizza' }
+  ],
+  'frac-mult-div': [
+    { q: '2/3 × 4/5 = ?', answer: '8/15' },
+    { q: '1/2 × 3/4 = ?', answer: '3/8' },
+    { q: '5 × 2/3 = ?', answer: '10/3 or 3 1/3' },
+    { q: '1/4 ÷ 2 = ?', answer: '1/8' },
+    { q: '6 ÷ 1/3 = ?', answer: '18' },
+    { q: '3/4 × 2/9 = ?', answer: '1/6 (or 6/36)' },
+    { q: '2 1/2 × 1 1/3 = ?', answer: '10/3 or 3 1/3' },
+    { q: 'A recipe needs 2/3 cup of flour. How much for half the recipe?', answer: '1/3 cup' },
+    { q: '1/5 ÷ 3 = ?', answer: '1/15' },
+    { q: 'If a ribbon is 4 ft long and you cut pieces of 1/2 ft, how many pieces?', answer: '8 pieces' }
+  ],
+  'frac-convert': [
+    { q: 'Convert 13/4 to a mixed number.', answer: '3 1/4' },
+    { q: 'Convert 4 2/5 to an improper fraction.', answer: '22/5' },
+    { q: 'Simplify 8/12.', answer: '2/3' },
+    { q: 'Simplify 15/25.', answer: '3/5' },
+    { q: 'Convert 17/3 to a mixed number.', answer: '5 2/3' },
+    { q: 'Convert 6 3/8 to an improper fraction.', answer: '51/8' },
+    { q: 'Simplify 18/24.', answer: '3/4' },
+    { q: 'Convert 29/6 to a mixed number.', answer: '4 5/6' },
+    { q: 'Convert 3 7/10 to an improper fraction.', answer: '37/10' },
+    { q: 'Simplify 20/30.', answer: '2/3' }
+  ],
+  'frac-vs-dec': [
+    { q: 'Convert 3/4 to a decimal.', answer: '0.75' },
+    { q: 'Convert 0.6 to a fraction in simplest form.', answer: '3/5' },
+    { q: 'Convert 7/10 to a decimal.', answer: '0.7' },
+    { q: 'Convert 0.125 to a fraction in simplest form.', answer: '1/8' },
+    { q: 'Convert 1/5 to a decimal.', answer: '0.2' },
+    { q: 'Convert 0.85 to a fraction in simplest form.', answer: '17/20' },
+    { q: 'Convert 9/20 to a decimal.', answer: '0.45' },
+    { q: 'Which is greater: 0.6 or 3/5?', answer: 'Equal (both = 0.6)' },
+    { q: 'Convert 2 1/4 to a decimal.', answer: '2.25' },
+    { q: 'Convert 0.04 to a fraction in simplest form.', answer: '1/25' }
+  ],
+  'dec-add-sub': [
+    { q: '3.4 + 2.78 = ?', answer: '6.18' },
+    { q: '12.5 − 4.37 = ?', answer: '8.13' },
+    { q: '0.9 + 0.08 = ?', answer: '0.98' },
+    { q: '25.6 − 13.45 = ?', answer: '12.15' },
+    { q: '7.25 + 3.8 + 1.6 = ?', answer: '12.65' },
+    { q: '100 − 27.5 = ?', answer: '72.5' },
+    { q: 'Lily had $20.00 and spent $13.47. How much is left?', answer: '$6.53' },
+    { q: '0.457 + 0.083 = ?', answer: '0.540' },
+    { q: '9.2 − 0.876 = ?', answer: '8.324' },
+    { q: '15.05 + 4.99 = ?', answer: '20.04' }
+  ],
+  'dec-mult': [
+    { q: '0.5 × 0.6 = ?', answer: '0.30 or 0.3' },
+    { q: '2.4 × 3 = ?', answer: '7.2' },
+    { q: '1.2 × 1.5 = ?', answer: '1.80 or 1.8' },
+    { q: '0.07 × 4 = ?', answer: '0.28' },
+    { q: '3.5 × 2.1 = ?', answer: '7.35' },
+    { q: '0.25 × 0.4 = ?', answer: '0.100 or 0.1' },
+    { q: '12.3 × 0.6 = ?', answer: '7.38' },
+    { q: '0.9 × 0.9 = ?', answer: '0.81' },
+    { q: 'A shirt costs $14.50. What do 6 shirts cost?', answer: '$87.00' },
+    { q: '4.56 × 10 = ?', answer: '45.6' }
+  ],
+  'dec-div': [
+    { q: '8.4 ÷ 4 = ?', answer: '2.1' },
+    { q: '7.2 ÷ 0.8 = ?', answer: '9' },
+    { q: '12.5 ÷ 5 = ?', answer: '2.5' },
+    { q: '0.96 ÷ 0.3 = ?', answer: '3.2' },
+    { q: '45 ÷ 1.5 = ?', answer: '30' },
+    { q: '6.3 ÷ 0.9 = ?', answer: '7' },
+    { q: '$18.75 split among 5 kids. Each gets?', answer: '$3.75' },
+    { q: '10.5 ÷ 2.5 = ?', answer: '4.2' },
+    { q: '0.84 ÷ 4 = ?', answer: '0.21' },
+    { q: '2.4 ÷ 0.06 = ?', answer: '40' }
+  ],
+  'measurement': [
+    { q: '5 feet = ___ inches', answer: '60 inches' },
+    { q: '4,000 meters = ___ kilometers', answer: '4 km' },
+    { q: '3 pounds = ___ ounces', answer: '48 oz' },
+    { q: '1 gallon = ___ cups', answer: '16 cups' },
+    { q: '250 cm = ___ m', answer: '2.5 m' },
+    { q: '6 yards = ___ feet', answer: '18 ft' },
+    { q: '5,500 grams = ___ kilograms', answer: '5.5 kg' },
+    { q: '3 quarts = ___ pints', answer: '6 pints' },
+    { q: 'A bottle holds 1.5 liters. How many mL?', answer: '1,500 mL' },
+    { q: '2 miles = ___ feet', answer: '10,560 feet' }
+  ],
+  'geometry': [
+    { q: 'What is a quadrilateral with exactly 4 equal sides but no right angles?', answer: 'Rhombus' },
+    { q: 'Is a square also a rectangle?', answer: 'Yes — a square has all the properties of a rectangle plus equal sides' },
+    { q: 'Plot the point (4, 3). How far right and up from origin?', answer: '4 right, 3 up' },
+    { q: 'Name the quadrilateral with exactly one pair of parallel sides.', answer: 'Trapezoid' },
+    { q: 'What are the coordinates of the origin?', answer: '(0, 0)' },
+    { q: 'A parallelogram with 4 right angles is a ___.', answer: 'Rectangle' },
+    { q: 'True or false: All rectangles are squares.', answer: 'False — only squares with all equal sides are squares' },
+    { q: 'What shape has 4 congruent sides and 4 right angles?', answer: 'Square' },
+    { q: 'Starting at (2, 1), move 3 right and 4 up. New coordinates?', answer: '(5, 5)' },
+    { q: 'Name the attribute shared by all parallelograms.', answer: 'Two pairs of parallel sides' }
+  ],
+  'factoring': [
+    { q: 'List all factors of 24.', answer: '1, 2, 3, 4, 6, 8, 12, 24' },
+    { q: 'List the first 5 multiples of 7.', answer: '7, 14, 21, 28, 35' },
+    { q: 'Is 17 prime or composite?', answer: 'Prime' },
+    { q: 'Is 21 prime or composite?', answer: 'Composite (3 × 7)' },
+    { q: 'Find the prime factorization of 36.', answer: '2² × 3² (or 2 × 2 × 3 × 3)' },
+    { q: 'Find the GCF of 12 and 18.', answer: '6' },
+    { q: 'Find the LCM of 4 and 6.', answer: '12' },
+    { q: 'Is 1 prime, composite, or neither?', answer: 'Neither' },
+    { q: 'List all factors of 30.', answer: '1, 2, 3, 5, 6, 10, 15, 30' },
+    { q: 'Find the prime factorization of 50.', answer: '2 × 5² (or 2 × 5 × 5)' }
+  ],
+  'exponents': [
+    { q: 'Evaluate 10⁴.', answer: '10,000' },
+    { q: 'Evaluate 2³.', answer: '8' },
+    { q: 'Evaluate 5².', answer: '25' },
+    { q: 'Write 1,000,000 as a power of 10.', answer: '10⁶' },
+    { q: 'Calculate 3.5 × 10³.', answer: '3,500' },
+    { q: 'Calculate 7 × 10⁵.', answer: '700,000' },
+    { q: 'Evaluate 3⁴.', answer: '81' },
+    { q: 'Write 10 × 10 × 10 × 10 × 10 in exponent form.', answer: '10⁵' },
+    { q: 'Evaluate 10⁰.', answer: '1 (any nonzero base to the 0 power = 1)' },
+    { q: 'Calculate 2.8 × 10².', answer: '280' }
+  ],
+  'data-graphing': [
+    { q: 'Find the mean of 4, 6, 8, 10, 12.', answer: '8' },
+    { q: 'Find the median of 3, 7, 5, 9, 11.', answer: '7' },
+    { q: 'Find the mode of 2, 5, 5, 7, 9, 5, 3.', answer: '5' },
+    { q: 'Find the range of 3, 8, 12, 5, 15.', answer: '12 (15 − 3)' },
+    { q: 'Six plants grew: 1/2, 3/4, 1/2, 1, 3/4, 1/2 inches. What was the most common growth?', answer: '1/2 inch' },
+    { q: 'Mean of 10, 20, 30, 40?', answer: '25' },
+    { q: 'If a bar graph shows 15 apples and 9 oranges, how many more apples than oranges?', answer: '6 more apples' },
+    { q: 'Find the mean of 2.5, 3.5, 4.5, 5.5.', answer: '4' },
+    { q: 'On a line plot, 5 X\'s above 1/4 means what?', answer: '5 items measured 1/4 (of a unit)' },
+    { q: 'Range of 24, 18, 31, 27, 22?', answer: '13' }
+  ],
+  'integers': [
+    { q: 'Order from least to greatest: −5, 3, −1, 0, 4, −8', answer: '−8, −5, −1, 0, 3, 4' },
+    { q: 'What is the opposite of −12?', answer: '+12 (or 12)' },
+    { q: 'Find |−9|.', answer: '9' },
+    { q: 'Which is greater: −3 or −7?', answer: '−3' },
+    { q: 'The temperature was 5°F and dropped 12 degrees. New temperature?', answer: '−7°F' },
+    { q: 'Find |15|.', answer: '15' },
+    { q: 'What integer represents "a loss of $20"?', answer: '−20' },
+    { q: 'Name the integer 6 units to the left of 2.', answer: '−4' },
+    { q: 'True or false: 0 is a positive integer.', answer: 'False (0 is neither positive nor negative)' },
+    { q: 'Which number has greater absolute value: −15 or 12?', answer: '−15 (|−15| = 15 > 12)' }
+  ],
+  'algebra': [
+    { q: 'Write an expression: "8 more than a number n"', answer: 'n + 8' },
+    { q: 'Write an expression: "3 times a number x"', answer: '3x' },
+    { q: 'Evaluate 5x + 2 when x = 4.', answer: '22' },
+    { q: 'Evaluate 2(y − 3) when y = 7.', answer: '8' },
+    { q: 'Write an expression: "a number divided by 5, plus 2"', answer: 'n/5 + 2' },
+    { q: 'Evaluate 3a + 4b when a = 2 and b = 5.', answer: '26' },
+    { q: 'Continue the pattern (add 4): 3, 7, 11, 15, ___', answer: '19' },
+    { q: 'Write an expression for the perimeter of a square with side s.', answer: '4s' },
+    { q: 'Evaluate x² + x when x = 3.', answer: '12' },
+    { q: 'Two rules: x: add 2, y: add 4, starting at (0, 0). Next 3 ordered pairs?', answer: '(2, 4), (4, 8), (6, 12)' }
+  ]
+};
+
+const QUIZZES = {
+  'place-value': [
+    { q: 'What is the value of the 3 in 3,250,000?', opts: ['3 million', '3 hundred thousand', '3 thousand', '3 hundred'], ans: 0 },
+    { q: 'Round 6.837 to the nearest tenth.', opts: ['6.8', '6.9', '7.0', '6.84'], ans: 0 },
+    { q: 'Which is 10 times greater than 45?', opts: ['4.5', '450', '55', '4,500'], ans: 1 },
+    { q: 'Which decimal equals seven tenths?', opts: ['0.07', '7.0', '0.7', '0.007'], ans: 2 },
+    { q: 'Round 23,487 to the nearest hundred.', opts: ['23,500', '23,400', '24,000', '23,490'], ans: 0 }
+  ],
+  'add-subtract': [
+    { q: '7,425 + 1,898 = ?', opts: ['9,323', '9,223', '9,313', '8,323'], ans: 0 },
+    { q: '10,000 − 3,456 = ?', opts: ['6,544', '7,544', '6,454', '6,644'], ans: 0 },
+    { q: '4,875 + 3,248 = ?', opts: ['8,023', '8,123', '8,113', '8,023'], ans: 1 },
+    { q: '5,000 − 1,234 = ?', opts: ['3,766', '4,766', '3,866', '3,776'], ans: 0 },
+    { q: 'Which shows estimation? 4,823 + 5,189 ≈ ___', opts: ['9,000', '10,000', '11,000', '8,000'], ans: 1 }
+  ],
+  'mult-div': [
+    { q: '148 × 6 = ?', opts: ['888', '878', '848', '898'], ans: 0 },
+    { q: '432 ÷ 3 = ?', opts: ['144', '134', '154', '114'], ans: 0 },
+    { q: '25 × 16 = ?', opts: ['400', '425', '380', '450'], ans: 0 },
+    { q: '960 ÷ 4 = ?', opts: ['240', '220', '230', '260'], ans: 0 },
+    { q: 'Which is 12 × 25?', opts: ['300', '275', '325', '350'], ans: 0 }
+  ],
+  'order-ops': [
+    { q: 'Evaluate: 2 + 3 × 4', opts: ['20', '14', '10', '24'], ans: 1 },
+    { q: 'Evaluate: (6 + 2) × 3', opts: ['12', '24', '18', '20'], ans: 1 },
+    { q: 'What does PEMDAS stand for first?', opts: ['Parentheses', 'Exponents', 'Multiplication', 'Addition'], ans: 0 },
+    { q: 'Evaluate: 4 + 6 ÷ 2', opts: ['5', '7', '8', '10'], ans: 1 },
+    { q: 'Evaluate: 10 − 2 × 3 + 1', opts: ['5', '25', '23', '-1'], ans: 0 }
+  ],
+  'frac-add-sub': [
+    { q: '1/4 + 1/2 = ?', opts: ['3/4', '2/6', '1/6', '2/8'], ans: 0 },
+    { q: '5/6 − 1/3 = ?', opts: ['1/2', '4/3', '3/6', '1/3'], ans: 0 },
+    { q: 'What is the LCD of 1/3 and 1/5?', opts: ['15', '8', '10', '3'], ans: 0 },
+    { q: '2 1/4 + 1 1/2 = ?', opts: ['3 3/4', '3 2/6', '4', '3 1/4'], ans: 0 },
+    { q: '7/8 − 1/4 = ?', opts: ['5/8', '6/8', '3/4', '1/2'], ans: 0 }
+  ],
+  'frac-mult-div': [
+    { q: '1/2 × 1/3 = ?', opts: ['1/6', '2/6', '1/5', '2/3'], ans: 0 },
+    { q: '2/3 × 3/4 = ?', opts: ['1/2', '5/7', '2/4', '6/12'], ans: 0 },
+    { q: '4 ÷ 1/2 = ?', opts: ['8', '2', '1/8', '6'], ans: 0 },
+    { q: 'What does "keep, change, flip" describe?', opts: ['Dividing fractions', 'Adding fractions', 'Subtracting', 'Rounding'], ans: 0 },
+    { q: '1/3 × 6 = ?', opts: ['2', '3', '1/18', '6/3'], ans: 0 }
+  ],
+  'frac-convert': [
+    { q: 'Convert 9/4 to a mixed number.', opts: ['2 1/4', '2 1/2', '1 1/4', '2 1/3'], ans: 0 },
+    { q: 'Convert 3 2/5 to improper.', opts: ['17/5', '15/5', '13/5', '23/5'], ans: 0 },
+    { q: 'Simplify 6/8.', opts: ['3/4', '2/4', '1/2', '2/3'], ans: 0 },
+    { q: 'Simplify 10/15.', opts: ['2/3', '1/2', '3/5', '5/8'], ans: 0 },
+    { q: 'Convert 11/2 to mixed.', opts: ['5 1/2', '4 1/2', '6', '5 2/2'], ans: 0 }
+  ],
+  'frac-vs-dec': [
+    { q: '1/2 as a decimal?', opts: ['0.5', '0.2', '0.12', '1.2'], ans: 0 },
+    { q: '0.4 as a fraction in simplest form?', opts: ['2/5', '4/10', '1/4', '4/5'], ans: 0 },
+    { q: '3/4 as a decimal?', opts: ['0.75', '0.34', '0.43', '0.7'], ans: 0 },
+    { q: '0.25 as a fraction?', opts: ['1/4', '2/5', '1/5', '1/25'], ans: 0 },
+    { q: 'Which is equal? 1/5 and ___', opts: ['0.2', '0.15', '0.5', '0.05'], ans: 0 }
+  ],
+  'dec-add-sub': [
+    { q: '4.5 + 2.75 = ?', opts: ['7.25', '6.25', '7.75', '7.2'], ans: 0 },
+    { q: '8 − 3.6 = ?', opts: ['4.4', '5.4', '4.6', '4'], ans: 0 },
+    { q: '0.5 + 0.05 = ?', opts: ['0.55', '0.10', '0.1', '1'], ans: 0 },
+    { q: '12.4 − 5.85 = ?', opts: ['6.55', '7.55', '6.45', '6.65'], ans: 0 },
+    { q: '$15.00 − $7.83 = ?', opts: ['$7.17', '$8.17', '$7.27', '$6.83'], ans: 0 }
+  ],
+  'dec-mult': [
+    { q: '0.2 × 0.3 = ?', opts: ['0.06', '0.6', '0.5', '0.16'], ans: 0 },
+    { q: '1.5 × 4 = ?', opts: ['6', '5', '6.5', '7'], ans: 0 },
+    { q: '2.5 × 0.4 = ?', opts: ['1', '10', '0.1', '1.5'], ans: 0 },
+    { q: '0.9 × 0.9 = ?', opts: ['0.81', '0.18', '8.1', '1.8'], ans: 0 },
+    { q: '5.6 × 10 = ?', opts: ['56', '5.60', '0.56', '560'], ans: 0 }
+  ],
+  'dec-div': [
+    { q: '6.4 ÷ 2 = ?', opts: ['3.2', '2.3', '4.2', '3.4'], ans: 0 },
+    { q: '9 ÷ 0.3 = ?', opts: ['30', '3', '0.3', '27'], ans: 0 },
+    { q: '0.5 ÷ 5 = ?', opts: ['0.1', '1', '0.01', '0.5'], ans: 0 },
+    { q: '12.6 ÷ 0.2 = ?', opts: ['63', '6.3', '0.63', '6'], ans: 0 },
+    { q: '$20 ÷ 4 = ?', opts: ['$5', '$5.00', '$4', '$4.50'], ans: 0 }
+  ],
+  'measurement': [
+    { q: '48 inches = ___ feet', opts: ['4', '3', '5', '6'], ans: 0 },
+    { q: '3 km = ___ m', opts: ['3,000', '300', '30', '30,000'], ans: 0 },
+    { q: '2 lb = ___ oz', opts: ['32', '16', '24', '48'], ans: 0 },
+    { q: '1 gallon = ___ quarts', opts: ['4', '2', '8', '16'], ans: 0 },
+    { q: '7 feet = ___ inches', opts: ['84', '72', '91', '70'], ans: 0 }
+  ],
+  'geometry': [
+    { q: 'Which is always a parallelogram?', opts: ['Rectangle', 'Trapezoid', 'Kite', 'Pentagon'], ans: 0 },
+    { q: 'A square is also a ___.', opts: ['Rhombus', 'Trapezoid', 'Hexagon', 'Triangle'], ans: 0 },
+    { q: 'The origin of the coordinate plane is?', opts: ['(0, 0)', '(1, 1)', '(0, 1)', '(1, 0)'], ans: 0 },
+    { q: 'Shape with 5 sides?', opts: ['Pentagon', 'Hexagon', 'Octagon', 'Quadrilateral'], ans: 0 },
+    { q: 'Coordinate (3, 5) means:', opts: ['3 right, 5 up', '5 right, 3 up', '3 up, 5 right', '5 up, 3 left'], ans: 0 }
+  ],
+  'factoring': [
+    { q: 'Which is prime?', opts: ['13', '15', '21', '25'], ans: 0 },
+    { q: 'Which is composite?', opts: ['9', '7', '11', '13'], ans: 0 },
+    { q: 'GCF of 12 and 18?', opts: ['6', '2', '3', '12'], ans: 0 },
+    { q: 'LCM of 3 and 4?', opts: ['12', '6', '7', '24'], ans: 0 },
+    { q: 'Prime factorization of 20?', opts: ['2² × 5', '4 × 5', '2 × 10', '2³ × 5'], ans: 0 }
+  ],
+  'exponents': [
+    { q: 'What is 10³?', opts: ['1,000', '100', '30', '10,000'], ans: 0 },
+    { q: 'What is 2⁴?', opts: ['16', '8', '32', '24'], ans: 0 },
+    { q: 'What is 5²?', opts: ['25', '10', '15', '50'], ans: 0 },
+    { q: '10⁶ = ?', opts: ['1,000,000', '100,000', '60', '10,000'], ans: 0 },
+    { q: '4.2 × 10² = ?', opts: ['420', '42', '4,200', '4.2'], ans: 0 }
+  ],
+  'data-graphing': [
+    { q: 'Mean of 2, 4, 6, 8?', opts: ['5', '4', '6', '20'], ans: 0 },
+    { q: 'Mode of 3, 5, 3, 7, 3?', opts: ['3', '5', '7', '4'], ans: 0 },
+    { q: 'Median of 1, 3, 5, 7, 9?', opts: ['5', '3', '4', '7'], ans: 0 },
+    { q: 'Range of 10, 15, 8, 22?', opts: ['14', '22', '8', '55'], ans: 0 },
+    { q: 'A line plot displays data using?', opts: ['X marks on a number line', 'Bars', 'Slices', 'Lines'], ans: 0 }
+  ],
+  'integers': [
+    { q: 'Which is greatest?', opts: ['−2', '−10', '−15', '−100'], ans: 0 },
+    { q: '|−6| = ?', opts: ['6', '−6', '0', '12'], ans: 0 },
+    { q: 'Opposite of −8?', opts: ['8', '−8', '0', '18'], ans: 0 },
+    { q: 'What integer represents "5 below zero"?', opts: ['−5', '5', '0', '-50'], ans: 0 },
+    { q: 'Which is less: −4 or −7?', opts: ['−7', '−4', 'Equal', 'Cannot tell'], ans: 0 }
+  ],
+  'algebra': [
+    { q: 'Evaluate 3x when x = 5.', opts: ['15', '8', '35', '53'], ans: 0 },
+    { q: 'Which expression represents "7 less than n"?', opts: ['n − 7', '7 − n', '7n', 'n/7'], ans: 0 },
+    { q: 'Evaluate 2y + 1 when y = 6.', opts: ['13', '12', '8', '26'], ans: 0 },
+    { q: 'Next term in pattern: 5, 10, 15, 20, ___', opts: ['25', '30', '21', '24'], ans: 0 },
+    { q: 'Which is the perimeter of a square with side s?', opts: ['4s', 's²', '2s', '4 + s'], ans: 0 }
+  ]
+};
+
+const HANDOUTS_5 = {
+  'place-value': {
+    title: `Building Big Numbers with Place Value`,
+    science: `🌌 Real-World Math — Astronomy & Distances`,
+    mission: `Place value lets us write and understand <em>huge</em> numbers — like the distance from Earth to the Sun (about 93,000,000 miles) or the number of stars in our galaxy (about 100,000,000,000). In this handout you'll build a place-value chart for some incredible real numbers, then practice rounding them.`,
+    steps: [
+      `Draw a place-value chart with columns from <em>hundred billions</em> down to <em>thousandths</em>.`,
+      `Place these numbers in your chart: Distance to Moon = 238,900 miles; Distance to Sun = 93,000,000 miles; Diameter of a human hair = 0.004 inches.`,
+      `For each number, circle the digit in the given place: moon distance — ten-thousands place; sun distance — millions place; hair diameter — thousandths place.`,
+      `Round each number to the nearest convenient place. Moon distance to nearest 10,000 mi. Sun distance to nearest million. Hair diameter to nearest hundredth.`,
+      `Write each rounded number in words — spelling out the name of the large or small place value.`
+    ],
+    deliverable: `A neat place-value chart with each number placed, the correct digit circled, and the rounded value written below.`,
+    reflect: [
+      `Why is rounding useful when talking about very large distances like the distance to the Sun?`,
+      `Which place value is easiest for you to visualize — millions, thousands, or thousandths? Why?`
+    ]
+  },
+  'add-subtract': {
+    title: `Classroom Budget Tracker`,
+    science: `💵 Real-World Math — Money Management`,
+    mission: `Every classroom has a budget for supplies. You'll imagine your class has $2,500 for the year and track purchases and donations using addition and subtraction.`,
+    steps: [
+      `Make a table with 3 columns: Item, Amount +/−, Running Total. Start with $2,500.`,
+      `Subtract these expenses: notebooks $345, markers $127, science kits $856, field trip bus $642.`,
+      `Add these donations: parent fund-raiser +$1,280, school grant +$500.`,
+      `Calculate the running total after each entry. Check your work by adding all + entries and all − entries separately.`,
+      `Find the ending balance. Should the class spend more on supplies, save it, or donate to another class?`
+    ],
+    deliverable: `A completed budget table with correct running totals and your recommendation for the remaining money.`,
+    reflect: [
+      `Why is keeping a running total helpful when managing money?`,
+      `How can you check if your final balance is correct without redoing every step?`
+    ]
+  },
+  'mult-div': {
+    title: `Stadium Seating Planner`,
+    science: `🏟️ Real-World Math — Event Planning`,
+    mission: `You're helping plan a school concert. The auditorium has rows of seats. Use multiplication and division to figure out how many people can attend and how to arrange seating.`,
+    steps: [
+      `An auditorium has 28 rows of 36 seats each. Multiply to find total seats.`,
+      `If each family buys 4 tickets, how many families can attend? Divide.`,
+      `If ticket price is $12, and every seat is sold, how much money does the school earn? Multiply.`,
+      `The school wants 15% of seats reserved for teachers. Estimate 10% (divide by 10), then add half of that for 15%.`,
+      `If extra guests arrive and 3 folding chairs go in each aisle (4 aisles), how many more people can be seated?`
+    ],
+    deliverable: `A planner sheet showing total seats, families that can attend, ticket revenue, teacher reservations, and extra seating.`,
+    reflect: [
+      `When is it faster to multiply than to add repeatedly?`,
+      `Why does dividing help solve "sharing equally" problems?`
+    ]
+  },
+  'order-ops': {
+    title: `Mystery Expression Decoder`,
+    science: `🔎 Real-World Math — Logic & Puzzles`,
+    mission: `Computers follow the order of operations exactly. A small mistake in PEMDAS can give a wildly wrong answer. Decode 6 "mystery" expressions and write a rule for each.`,
+    steps: [
+      `Copy these 6 expressions: (a) 5 + 2 × 4, (b) (5 + 2) × 4, (c) 20 − 6 ÷ 2, (d) (20 − 6) ÷ 2, (e) 3² + 4 × 2, (f) 2 × (3² − 1).`,
+      `For each one, write the steps you'd do in order, labeling the PEMDAS step you used.`,
+      `Calculate the final answer for each expression.`,
+      `Compare (a) vs (b) and (c) vs (d). What role do parentheses play?`,
+      `Write your own expression that uses parentheses, exponents, and at least one × and one + operation. Challenge a friend to solve it.`
+    ],
+    deliverable: `A decoder sheet with all 6 expressions solved, PEMDAS steps labeled, and your own challenge expression.`,
+    reflect: [
+      `Why do mathematicians need a standard order of operations?`,
+      `Which step of PEMDAS is easiest to forget? How will you remember it?`
+    ]
+  },
+  'frac-add-sub': {
+    title: `Recipe Remix`,
+    science: `🍪 Real-World Math — Cooking & Baking`,
+    mission: `Recipes use fractions all the time. You'll combine two cookie recipes and find the total amount of each ingredient needed.`,
+    steps: [
+      `Recipe A: 1 1/2 cups flour, 3/4 cup sugar, 1/3 cup butter. Recipe B: 2 1/4 cups flour, 1/2 cup sugar, 2/3 cup butter.`,
+      `Add the flour amounts. Find a common denominator first!`,
+      `Add the sugar amounts.`,
+      `Add the butter amounts.`,
+      `If you only want to make half of Recipe B, subtract half of each of its ingredient amounts from the combined totals.`
+    ],
+    deliverable: `A recipe remix sheet showing combined totals and the half-recipe totals, with your arithmetic shown.`,
+    reflect: [
+      `Why are recipes often written with fractions rather than decimals?`,
+      `Why do you need a common denominator to add or subtract fractions?`
+    ]
+  },
+  'frac-mult-div': {
+    title: `Pizza Party Planner`,
+    science: `🍕 Real-World Math — Fair Sharing`,
+    mission: `You have several pizzas to share at a party. Use fraction multiplication and division to figure out who gets how much.`,
+    steps: [
+      `Start with 3 pizzas cut into 8 slices each. Total slices?`,
+      `If 12 people come, how many slices does each person get? Divide.`,
+      `If 2/3 of the guests are kids and each kid eats 1/2 the amount of an adult, how many slices does a kid get?`,
+      `You have 1/4 of a pizza left. You want to share it among 3 siblings. What fraction of the whole pizza does each sibling get? (1/4 ÷ 3)`,
+      `Each guest also gets a 1/3-cup soda. If you have 4 liters of soda and a cup is 1/4 liter, how many 1/3-cup servings can you make?`
+    ],
+    deliverable: `A party planning sheet with slice totals per guest and a short paragraph explaining how you solved the fair-share problems.`,
+    reflect: [
+      `Why does dividing by a fraction give a larger answer than the original?`,
+      `How does "keep, change, flip" work for 1/4 ÷ 3?`
+    ]
+  },
+  'frac-convert': {
+    title: `Measuring Tape Detective`,
+    science: `📏 Real-World Math — Construction & Design`,
+    mission: `A carpenter's tape measure uses fractions (1/16, 1/8, 1/4, 1/2 inch). You'll practice converting between improper fractions, mixed numbers, and simplified forms as if you were measuring wood for a project.`,
+    steps: [
+      `You need 5 boards each 17/4 inches long. Convert 17/4 to a mixed number.`,
+      `Another 6 boards are 3 5/8 inches long. Convert 3 5/8 to improper.`,
+      `A leftover piece is 24/16 in. Simplify to the lowest terms.`,
+      `Compare: Is 11/8 longer or shorter than 1 1/3? Convert both and explain.`,
+      `Add all 5 boards from step 1 together. What is the total length as a mixed number and as a decimal?`
+    ],
+    deliverable: `A measurement log showing all conversions, comparisons, and the total length in two forms.`,
+    reflect: [
+      `Why might a carpenter prefer mixed numbers over improper fractions on a plan?`,
+      `When is simplifying a fraction most useful?`
+    ]
+  },
+  'frac-vs-dec': {
+    title: `Two Ways to Say the Same Thing`,
+    science: `🔄 Real-World Math — Sports & Statistics`,
+    mission: `Sports stats use both fractions AND decimals — batting averages (.325), free-throw percentages, etc. You'll practice converting between the two forms.`,
+    steps: [
+      `Make a table: Fraction | Decimal | Percent. Fill in these values: 1/2, 1/4, 3/4, 1/5, 3/5, 7/10, 9/20.`,
+      `Convert each fraction to a decimal by dividing numerator by denominator.`,
+      `Multiply each decimal by 100 to get the percent.`,
+      `Now in reverse — convert these decimals to fractions in simplest form: 0.8, 0.45, 0.125, 0.72.`,
+      `A basketball player made 18 out of 25 free throws. Write this as a fraction, decimal, and percent.`
+    ],
+    deliverable: `A completed conversion table plus the basketball stat in all three forms.`,
+    reflect: [
+      `When is a decimal form more useful than a fraction?`,
+      `Why can some fractions (like 1/3) only be written as a repeating decimal?`
+    ]
+  },
+  'dec-add-sub': {
+    title: `Receipt Detective`,
+    science: `🧾 Real-World Math — Money & Shopping`,
+    mission: `You'll build a realistic grocery receipt, calculate the total, handle sales tax, and figure out change.`,
+    steps: [
+      `List 6 items with prices to the hundredths: e.g., Bread $3.49, Milk $4.25, Eggs $3.89, Cheese $5.99, Apples $2.67, Cereal $4.50.`,
+      `Add all prices carefully — line up decimal points!`,
+      `Add 8% sales tax by multiplying the subtotal by 0.08, then adding it to the subtotal.`,
+      `You pay with $40.00. Subtract the total to find your change.`,
+      `Estimate first! Round each item to the nearest dollar and add. How close is your estimate to the actual total?`
+    ],
+    deliverable: `A formatted receipt with subtotal, tax, total, and change. Include your estimate and compare it to the actual total.`,
+    reflect: [
+      `Why is lining up decimal points so important when adding money?`,
+      `How can estimating first help you catch arithmetic mistakes?`
+    ]
+  },
+  'dec-mult': {
+    title: `Gas Mileage Math`,
+    science: `⛽ Real-World Math — Travel & Fuel`,
+    mission: `Cars measure fuel efficiency in miles per gallon (MPG). Use decimal multiplication to plan a road trip.`,
+    steps: [
+      `A car gets 28.5 miles per gallon. The gas tank holds 12.4 gallons. How many miles on a full tank? (Multiply!)`,
+      `Gas costs $3.85 per gallon. What does it cost to fill an empty 12.4-gallon tank?`,
+      `If you drive 450 miles, and the car gets 28.5 MPG, how many gallons do you use? (Divide 450 ÷ 28.5 — approximate to the nearest tenth.)`,
+      `How much does those gallons cost at $3.85/gal?`,
+      `Estimate first: 28.5 ≈ 30, 12.4 ≈ 12. Does your actual answer make sense compared to your estimate?`
+    ],
+    deliverable: `A trip-planning sheet showing MPG math, fuel cost, and an estimate check.`,
+    reflect: [
+      `Where do the decimal points go when you multiply 3.85 × 12.4? Walk through the count.`,
+      `How could a family save money on gas by understanding MPG?`
+    ]
+  },
+  'dec-div': {
+    title: `Unit Price Shopper`,
+    science: `🛒 Real-World Math — Smart Shopping`,
+    mission: `The "unit price" (price per unit) helps you decide which item is the best deal. Use decimal division to compare products.`,
+    steps: [
+      `Pick 4 products and pretend sizes: Cereal — 18 oz for $4.32. Soap — 12 bars for $9.48. Juice — 64 oz for $5.12. Chips — 7.5 oz for $3.75.`,
+      `Find the unit price for each: divide total price by size (e.g., 4.32 ÷ 18 = $0.24/oz).`,
+      `Rank them from cheapest per unit to most expensive per unit.`,
+      `Sometimes the "bigger" package isn't always cheaper per unit. Create a made-up example where a smaller package is actually a better deal per unit.`,
+      `If the cereal store has a "buy 2 get 1 free" sale, what's the new per-ounce price? (Divide total ounces by total cost.)`
+    ],
+    deliverable: `A shopping comparison sheet listing items, unit prices, rankings, and your "smaller is cheaper" counter-example.`,
+    reflect: [
+      `Why is unit price often a better measure than total price when comparing products?`,
+      `How does dividing by a decimal like 7.5 change the problem versus dividing by a whole number?`
+    ]
+  },
+  'measurement': {
+    title: `Metric Measurement Lab`,
+    science: `🔬 Real-World Math — Science Lab Preparation`,
+    mission: `Scientists use the metric system because it's based on powers of 10 — converting is just moving the decimal! Practice customary and metric conversions using real measurements.`,
+    steps: [
+      `Measure 5 items around your home in cm. Record each.`,
+      `Convert each to mm (multiply by 10) and to m (divide by 100).`,
+      `Pick 3 containers and estimate their capacity in mL and L. 1 L = 1,000 mL.`,
+      `Weigh 3 items in grams. Convert each to kilograms (divide by 1,000).`,
+      `Convert your height from inches → feet (÷12), then inches → cm (multiply by 2.54). Which system feels more natural?`
+    ],
+    deliverable: `A lab notebook-style chart with all measurements and their conversions in at least two units.`,
+    reflect: [
+      `Why is the metric system easier for conversions than the customary system?`,
+      `Why do scientists worldwide use the metric system?`
+    ]
+  },
+  'geometry': {
+    title: `Quadrilateral Zoo`,
+    science: `🏛️ Real-World Math — Architecture & Design`,
+    mission: `Architects use quadrilaterals everywhere — windows, tiles, floor plans. You'll sort shapes and plot a simple floor plan on a coordinate grid.`,
+    steps: [
+      `Draw or print 6 quadrilaterals: square, rectangle, rhombus, parallelogram (non-rectangle), trapezoid, kite.`,
+      `Create a sorting chart. Use checkboxes for: has 4 equal sides, has 4 right angles, has 2 pairs of parallel sides, has 1 pair of parallel sides, has perpendicular diagonals.`,
+      `On graph paper, set up coordinates (0–10 on both axes). Plot a square room with corners at (1,1), (5,1), (5,5), (1,5).`,
+      `Add a rectangular door at (2,1) to (3,1). A window at (4,5) to (5,5).`,
+      `Describe the floor plan in words, naming shapes and coordinates used.`
+    ],
+    deliverable: `Your sorting chart and labeled coordinate floor plan.`,
+    reflect: [
+      `Can a square be called a rectangle? Why or why not?`,
+      `Why is the coordinate plane useful for architecture?`
+    ]
+  },
+  'factoring': {
+    title: `Prime Number Explorer`,
+    science: `🔢 Real-World Math — Cryptography`,
+    mission: `Prime numbers are the "atoms" of multiplication — every number breaks into unique prime factors. Modern internet security relies on prime numbers! Explore primes up to 50.`,
+    steps: [
+      `Write numbers 1–50 in a 5×10 grid.`,
+      `Cross out all multiples of 2 (except 2), then 3 (except 3), then 5, then 7. This is the <em>Sieve of Eratosthenes</em>!`,
+      `Circle all numbers that remain — these are the primes up to 50. How many do you find?`,
+      `For each of these 5 composite numbers, find the prime factorization: 18, 24, 36, 45, 50.`,
+      `Find the GCF of 24 and 36 using their prime factorizations. Find the LCM of 6 and 8 the same way.`
+    ],
+    deliverable: `Your Sieve of Eratosthenes grid, a list of primes to 50, and all 5 prime factorizations plus GCF/LCM calculations.`,
+    reflect: [
+      `Why isn't 1 considered prime?`,
+      `Why are primes sometimes called the "building blocks" of the whole numbers?`
+    ]
+  },
+  'exponents': {
+    title: `Powers of 10 Tour`,
+    science: `🌌 Real-World Math — Scale of the Universe`,
+    mission: `Powers of 10 describe everything from the size of atoms (10⁻⁹ m) to the distance to stars (10¹⁶ m). Map real-world objects onto a powers-of-10 scale.`,
+    steps: [
+      `Make a table with columns: Power of 10, Standard Form, Real-world Example.`,
+      `Fill in 10¹ through 10⁹ with standard form (10, 100, 1,000, …, 1,000,000,000).`,
+      `Match each to a real example: 10¹ = height of a basketball player in feet; 10⁴ = number of students in a large school; 10⁶ = population of a small country; 10⁹ = number of seconds in 32 years.`,
+      `Evaluate 2.5 × 10³ and 7 × 10⁵ — write in standard form.`,
+      `Evaluate 3² , 4³ , and 5² by multiplying by hand.`
+    ],
+    deliverable: `A "powers of 10" scale chart with examples and all calculations shown.`,
+    reflect: [
+      `Why does the exponent tell you how many zeros are in a power of 10?`,
+      `Why is scientific notation (exponent form) helpful for very large numbers?`
+    ]
+  },
+  'data-graphing': {
+    title: `Backyard Data Scientist`,
+    science: `📊 Real-World Math — Statistics`,
+    mission: `Collect data about something you can observe — pencil lengths, daily temperatures, or how long a song is. Display it in a line plot.`,
+    steps: [
+      `Pick something to measure: pencil lengths in your pencil case to the nearest 1/4 inch.`,
+      `Record at least 10 measurements.`,
+      `Build a line plot: draw a number line in 1/4 inch increments; place an X above each value.`,
+      `Calculate the mean, median, mode, and range of your data.`,
+      `If you added 2 more pencils each 8 inches long, how would the mean change? Recalculate.`
+    ],
+    deliverable: `Your line plot with a neat data table and all four statistics (mean, median, mode, range).`,
+    reflect: [
+      `Which measure (mean, median, mode) best represents the "typical" pencil length?`,
+      `How could outliers (very long or short pencils) affect your mean?`
+    ]
+  },
+  'integers': {
+    title: `Elevator Integer Lab`,
+    science: `🏢 Real-World Math — Temperature & Elevation`,
+    mission: `Integers describe floors in a building (above and below ground), temperatures, and heights above/below sea level. Practice with real negative-number situations.`,
+    steps: [
+      `Imagine a building with floors from basement 3 (B3 = −3) up to floor 10. Draw a vertical number line.`,
+      `An elevator starts at floor 5, goes down 8 floors. Where is it now? (5 − 8 = −3 = B3.)`,
+      `A plane at 30,000 ft descends to 12,000 ft. Change?`,
+      `Record 5 temperatures (real or made up) that include negative values. Plot them on a number line.`,
+      `Which is colder: −5°F or −12°F? Order these from coldest to warmest: −5, 12, 0, −12, 3, −20.`
+    ],
+    deliverable: `Your vertical number line with elevator/plane calculations, and your temperature comparisons sorted least to greatest.`,
+    reflect: [
+      `Why is −10 considered less than −5, even though 10 > 5?`,
+      `What does absolute value tell you about a negative number?`
+    ]
+  },
+  'algebra': {
+    title: `Function Machine Builder`,
+    science: `⚙️ Real-World Math — Patterns & Predictions`,
+    mission: `Algebra is about finding rules and patterns. You'll build a "function machine" that takes an input and produces an output using a rule.`,
+    steps: [
+      `Pick a rule: "multiply by 3 then add 2" (output = 3x + 2).`,
+      `Make a table of inputs 0, 1, 2, 3, 4, 5. Calculate each output.`,
+      `On graph paper, plot each (input, output) as a coordinate point. Connect them. What do you notice?`,
+      `Now try 2 rules together — x rule: "add 1"; y rule: "add 3". Starting at (0, 0), generate 5 ordered pairs and plot them.`,
+      `Write a word-problem expression: "Each friend brings 3 cookies, and mom adds 5 extra. If n friends come, how many cookies?" → 3n + 5.`
+    ],
+    deliverable: `Your function table, graph of points, and word-problem expression.`,
+    reflect: [
+      `Why do algebraic rules show up as straight lines on a graph?`,
+      `How do variables help solve problems where the number isn't known yet?`
+    ]
+  }
+};
+
+const ANSWER_KEYS_5 = {
+  'place-value': 'Place_Value_Astronomy.xlsx',
+  'add-subtract': 'Classroom_Budget_Tracker.xlsx',
+  'mult-div': 'Stadium_Seating_Planner.xlsx',
+  'order-ops': 'Order_of_Operations_Decoder.xlsx',
+  'frac-add-sub': 'Recipe_Remix_Fractions.xlsx',
+  'frac-mult-div': 'Pizza_Party_Planner.xlsx',
+  'frac-convert': 'Measuring_Tape_Detective.xlsx',
+  'frac-vs-dec': 'Fractions_vs_Decimals.xlsx',
+  'dec-add-sub': 'Receipt_Detective.xlsx',
+  'dec-mult': 'Gas_Mileage_Math.xlsx',
+  'dec-div': 'Unit_Price_Shopper.xlsx',
+  'measurement': 'Metric_Measurement_Lab.xlsx',
+  'geometry': 'Quadrilateral_Zoo.xlsx',
+  'factoring': 'Prime_Number_Explorer.xlsx',
+  'exponents': 'Powers_of_10_Tour.xlsx',
+  'data-graphing': 'Backyard_Data_Scientist.xlsx',
+  'integers': 'Elevator_Integer_Lab.xlsx',
+  'algebra': 'Function_Machine_Builder.xlsx'
+};
+
+let completedUnits = {};
+let currentUnit = null;
+
+function resourceCardHTML(unit) {
+  const ixlBtn = unit.ixlUrl ? `<a class="btn-ixl" href="${unit.ixlUrl}" target="_blank">📘 IXL Practice</a>` : '';
+  const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
+  const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${ixlBtn}${phetBtn}${ytBtn}</div></div>`;
+}
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(unit => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(unit.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${unit.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${unit.title}${completedUnits[unit.id]?' ✅':''}</div>
+          <div class="unit-card-cc">${unit.cc}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${unit.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        ${unit.ixlUrl?'<div class="pill">📘 IXL</div>':''}
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">▶️ YouTube</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar-content');
+  sidebar.innerHTML = '';
+  UNITS.forEach((unit, idx) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === unit.id ? ' active' : '');
+    item.textContent = `${idx + 1}. ${unit.title}${completedUnits[unit.id]?' ✅':''}`;
+    item.onclick = () => showLesson(unit.id);
+    sidebar.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  document.getElementById('topbar-title').textContent = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Exploring the World with Math';
+}
+
+function showHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  currentUnit = null;
+  renderHome();
+  renderSidebar();
+  setTopbar();
+}
+
+function showLesson(unitId) {
+  currentUnit = unitId;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  const unit = UNITS.find(u => u.id === unitId);
+  document.getElementById('lesson-content').innerHTML = LESSONS[unitId] + resourceCardHTML(unit);
+  renderSidebar();
+  setTopbar();
+}
+
+function showWorksheet() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><textarea id="ans-${idx}" placeholder="Your answer..."></textarea></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function checkWorksheet() {
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    const userAns = document.getElementById(`ans-${idx}`).value;
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><div class="answer-key"><strong>Answer:</strong> ${p.answer}</div><p><strong>Your answer:</strong> ${userAns || '(no answer)'}</p></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function showQuiz() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  const quiz = QUIZZES[currentUnit];
+  let html = '';
+  quiz.forEach((q, idx) => {
+    html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${q.q}</p>`;
+    q.opts.forEach((opt, optIdx) => {
+      html += `<label><input type="radio" name="q${idx}" value="${optIdx}"> ${opt}</label>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function submitQuiz() {
+  const quiz = QUIZZES[currentUnit];
+  let score = 0;
+  quiz.forEach((q, idx) => {
+    const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+    if (selected && parseInt(selected.value) === q.ans) score++;
+  });
+  const percent = Math.round((score / quiz.length) * 100);
+  completedUnits[currentUnit] = true;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('certificate-screen').classList.add('active');
+  document.getElementById('cert-content').innerHTML = `<p style="font-size: 24px; margin: 20px;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p><p>Congratulations on completing this unit!</p>`;
+  renderSidebar();
+  updateProgress();
+}
+
+function updateProgress() {
+  const completed = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${completed}/${UNITS.length}`;
+}
+
+function showHandout() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('handout-screen').classList.add('active');
+  const h = HANDOUTS_5[currentUnit];
+  if (!h) {
+    document.getElementById('handout-content').innerHTML = '<p>No handout available for this unit.</p>';
+    return;
+  }
+  const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
+  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  const akFile = ANSWER_KEYS_5[currentUnit];
+  const answerKeyHtml = akFile ? `
+      <div style="background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:14px;margin:14px 0;">
+        <strong style="color:#1B3A8A;">📗 Answer Key (for self-check):</strong>
+        <a href="AnswerKeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
+        <div style="font-size:0.9rem;color:#555;margin-top:6px;">Completed workbook with all formulas, charts, and real-world data. Open in Excel or upload to Google Sheets (<em>File → Import → Upload</em>) to compare with your own work after you finish.</div>
+      </div>` : '';
+  document.getElementById('handout-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${h.title}</h3>
+      <div class="handout-science">${h.science}</div>
+      <div class="handout-mission">${h.mission}</div>
+      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <ol class="handout-steps">${stepsHtml}</ol>
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>
+      ${answerKeyHtml}
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>
+    </div>`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderSidebar();
+});
+  </script>
+</body>
+</html>

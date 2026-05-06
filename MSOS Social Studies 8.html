@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 8th Grade Social Studies: Westward Expansion to Human Rights</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .essential-q { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .essential-q strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.region { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-hero .quote { color: #FFD100; font-style: italic; margin-top: 10px; font-size: 0.9rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .syl-scale { display: grid; gap: 6px; margin-top: 8px; }
+    .syl-scale-row { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 6px 12px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #1B3A8A; }
+    .syl-scale-num { font-weight: 800; color: #1B3A8A; font-size: 1.1rem; text-align: center; }
+    .syl-scale-text { font-size: 0.86rem; color: #374151; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">8th Grade Social Studies <span class="grade-tag">Gr. 8</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="MSOS Social Studies Index.html" class="back-index-btn" title="Back to Social Studies Classes">← All SS</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="../MSOS Logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="../NUI Logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Westward Expansion to Human Rights</span>
+        </div>
+        <div class="topbar-right">Social Studies &middot; Grade 8</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Westward Expansion to Human Rights</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">From the steam engine to the smartphone — how the U.S. became a global power and faced its hardest moral tests.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">🗽</div>
+            <h2>Social Studies &mdash; Course Syllabus</h2>
+            <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+            <p class="quote">&ldquo;I ka wā ma mua, ka wā ma hope.&rdquo; &mdash; The future is found in the past.</p>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Welcome to Social Studies</h3>
+              <p>Welcome to Social Studies! Our focus this school year will be learning and developing our skills as <strong>critical thinkers, readers, writers, speakers, and listeners</strong>. The development and mastery of these important skills is not only important to achieving success in all school subjects, building strong relationships with others, and attaining a flourishing career as an adult.</p>
+              <p style="margin-top:8px">Basically, the quality of life you experience now through adulthood will depend a lot on how well you read, write, and communicate with others.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👩‍🏫 Teacher</h3>
+              <p><strong>Mrs. Harrison</strong></p>
+              <p>📧 <a href="mailto:sharrison@starofthesea.org">sharrison@starofthesea.org</a></p>
+              <p style="margin-top:10px"><strong>Office Hours:</strong> Available during recesses (when not on duty), before, or after school. Please make an appointment.</p>
+              <p style="margin-top:6px;font-size:0.85rem;color:#64748b;font-style:italic">I will respond within 24 hours of an email. I do not respond after 6:30 p.m. unless there is an emergency.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Supplies</h3>
+              <ul>
+                <li>Textbook</li>
+                <li>Pencils</li>
+                <li>Folder paper</li>
+                <li>Markers or crayons (sometimes)</li>
+                <li>Glue</li>
+                <li>Macbook (charged daily)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>🎯 8th Grade Goal &mdash; Critical Citizenship</h3>
+            <p style="margin-bottom:8px">By the end of 8th grade, students will:</p>
+            <ul>
+              <li>Demonstrate a deep understanding of U.S. history from the Westward Expansion to modern day human rights.</li>
+              <li>Analyze how historical events, laws, and movements shape government, rights, and responsibilities in a democratic society.</li>
+              <li>Synthesize information from multiple sources to form and defend reasoned arguments about historical and civic issues.</li>
+              <li>Apply historical thinking skills to current events, recognizing patterns, causes, and consequences.</li>
+            </ul>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Areas of Concentration &mdash; Grade 8</h3>
+            <p>Westward expansion to Industrial Revolution to WWI to WWII; Korean Conflict; Vietnam War; to Human Rights.</p>
+            <ul style="margin-top:6px">
+              <li><strong>Unit 1</strong> &mdash; Industrial Revolution &amp; Urban America</li>
+              <li><strong>Unit 2</strong> &mdash; World War I (1914–1918)</li>
+              <li><strong>Unit 3</strong> &mdash; World War II (1939–1945)</li>
+              <li><strong>Unit 4</strong> &mdash; Cold War: Korea &amp; Vietnam</li>
+              <li><strong>Unit 5</strong> &mdash; Civil Rights &amp; Modern Human Rights</li>
+            </ul>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📊 How will I be graded this year?</h3>
+            <div class="syl-grade-row">
+              <div class="syl-grade-pill"><span>15%</span>AOW<small>Article of the Week (5 pts)</small></div>
+              <div class="syl-grade-pill"><span>30%</span>Classwork<small>Summaries / notes (4 pts)</small></div>
+              <div class="syl-grade-pill"><span>30%</span>Projects<small>Start Q2 (25 pts)</small></div>
+              <div class="syl-grade-pill"><span>15%</span>Quizzes<small>5–10 pts</small></div>
+              <div class="syl-grade-pill"><span>10%</span>Active Learning<small>2 pts/class day</small></div>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>📰 AOW &mdash; Article of the Week (15%)</h3>
+              <p><strong>5 points each.</strong> A weekly writing response students complete on their Google Drive account.</p>
+              <p style="margin-top:6px">A poem, story, or article will be given on <strong>Mondays</strong>. Your response is due on <strong>Fridays</strong>.</p>
+              <p style="margin-top:8px"><strong>Your response should include:</strong></p>
+              <ol style="padding-left:22px;font-size:0.9rem;color:#374151;line-height:1.55">
+                <li>Any part of the article you liked, disliked, or were confused about.</li>
+                <li><strong>WHY</strong> did you like, dislike, or were confused about this part.</li>
+                <li>Length is not as important as the amount of details and explanations you write about.</li>
+              </ol>
+            </div>
+            <div class="syl-card">
+              <h3>📝 Classwork &mdash; Summaries &amp; Notes (30%)</h3>
+              <p><strong>4 points each.</strong> To show me that you understand the information you received in class, you may be asked to write a summary about the material.</p>
+              <p style="margin-top:6px;font-size:0.86rem;color:#475569;font-style:italic">Sometimes, the summaries will be counted as a quiz.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>✍️ Essays</h3>
+              <p>You will be given a grading rubric <em>before</em> the essays are given. When we begin a unit, you will be given an <strong>essential question</strong> for the essay.</p>
+              <p style="margin-top:6px">We will be working on our answers to the essential questions together throughout the unit.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎨 Projects (30%)</h3>
+              <p><strong>25 points each.</strong> Projects start during the <strong>2nd quarter</strong>.</p>
+              <p style="margin-top:6px">Projects follow the same guidelines as the essays &mdash; rubric provided ahead of time, anchored to a unit&rsquo;s essential question.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>📝 Quizzes (15%)</h3>
+              <p><strong>5–10 points each.</strong> Used to check understanding throughout each unit.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🤝 Active Learning (10%)</h3>
+              <p><strong>2 points each class day.</strong> Participation is based on coming to class prepared:</p>
+              <ul style="margin-top:6px">
+                <li>Macbook charged</li>
+                <li>Learning materials prepared</li>
+                <li>Assignments completed</li>
+                <li>Ready for class discussions</li>
+                <li>Being an attentive listener</li>
+                <li>Actively engaged in class</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="border-top-color:#B8860B">
+              <h3>📅 What happens if I turn in an assignment late?</h3>
+              <p>Work not completed and turned in by the assigned date is considered late.</p>
+              <p style="margin-top:6px">If a student is absent on the date work is due, the assignment is due within <strong>a week from absence</strong>.</p>
+              <p style="margin-top:6px">There is <strong>no penalty in your homework grade</strong> for an assignment turned in late, as long as it is turned in. However, there <strong>will be a deduction in your Active Learning grade</strong>.</p>
+              <p style="margin-top:6px">If you do <em>not</em> turn in an assignment, your score will <strong>not</strong> be added into your grade.</p>
+              <p style="margin-top:10px;text-align:center;font-weight:700;color:#1B3A8A;font-size:1rem;background:linear-gradient(90deg,#fffbe6,#fff,#fffbe6);padding:10px;border-radius:8px">A late assignment is better than a missing assignment.</p>
+            </div>
+            <div class="syl-card">
+              <h3>📐 Classwork Grading Scale</h3>
+              <div class="syl-scale">
+                <div class="syl-scale-row"><div class="syl-scale-num">4</div><div class="syl-scale-text">Exceeds expectations</div></div>
+                <div class="syl-scale-row"><div class="syl-scale-num">3</div><div class="syl-scale-text">Meets expectations</div></div>
+                <div class="syl-scale-row"><div class="syl-scale-num">2</div><div class="syl-scale-text">Emerging towards expectations</div></div>
+                <div class="syl-scale-row"><div class="syl-scale-num">1</div><div class="syl-scale-text">Far below expectations / incomplete</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">Connections between modern U.S. history and your civic life today.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Industrial Revolution &amp; Urban America',
+    icon: '⚙️',
+    region: 'United States',
+    timeframe: '1865 – 1914',
+    desc: 'Steel, steam, and skyscrapers — how the U.S. transformed from a farming nation into the world&rsquo;s largest industrial economy.',
+    essential: 'How did industrialization change the way Americans worked, lived, and saw their place in the world?',
+    vocab: [
+      ['Industrial Revolution', 'Period of rapid mechanization and factory production; in the U.S., roughly 1865–1914.'],
+      ['Robber Baron / Captain of Industry', 'Powerful businessman like Carnegie, Rockefeller, J.P. Morgan, Vanderbilt; viewed positively or negatively.'],
+      ['Monopoly', 'A single company that controls an entire industry, eliminating competition.'],
+      ['Labor Union', 'A worker organization that bargains collectively for wages and conditions.'],
+      ['Immigration', 'From ~1880–1924, ~25 million immigrants entered the U.S., mostly through Ellis Island.'],
+      ['Progressive Era', 'Reform movement (~1890–1920) that addressed industrial abuses, corruption, child labor, and women&rsquo;s rights.']
+    ],
+    lessonHTML: `
+      <p>Between 1865 (end of Civil War) and 1914 (start of WWI), the United States transformed completely. A nation of farmers became the world&rsquo;s largest industrial economy — making more steel, oil, and machinery than any other country.</p>
+      <h3>The New Inventions</h3>
+      <ul>
+        <li><strong>Bessemer process (1856)</strong> &mdash; cheap, strong steel for rails and skyscrapers</li>
+        <li><strong>Transcontinental Railroad (1869)</strong> &mdash; coast-to-coast travel by train</li>
+        <li><strong>Telephone (1876)</strong> &mdash; Alexander Graham Bell</li>
+        <li><strong>Light bulb (1879)</strong> &mdash; Thomas Edison; electric power changed life forever</li>
+        <li><strong>Automobile (1903)</strong> &mdash; Henry Ford&rsquo;s assembly line made cars affordable</li>
+        <li><strong>Powered flight (1903)</strong> &mdash; Wright Brothers at Kitty Hawk</li>
+      </ul>
+      <h3>The Industrialists</h3>
+      <p>Some called them &ldquo;Captains of Industry&rdquo; for building America. Others called them &ldquo;Robber Barons&rdquo; for ruthless business tactics:</p>
+      <ul>
+        <li><strong>Andrew Carnegie</strong> &mdash; steel; gave away $350 million in libraries and education</li>
+        <li><strong>John D. Rockefeller</strong> &mdash; oil (Standard Oil monopoly)</li>
+        <li><strong>J.P. Morgan</strong> &mdash; banking and finance</li>
+        <li><strong>Cornelius Vanderbilt</strong> &mdash; railroads</li>
+      </ul>
+      <h3>The Cost: Workers and Cities</h3>
+      <p>Factory workers toiled 12+ hours per day, 6 days a week, for low wages in dangerous conditions. Children worked in mines and mills. Cities exploded in size — by 1900 New York had 3.4 million people, with overcrowded tenements and poor sanitation.</p>
+      <h3>Immigration: A Nation of Newcomers</h3>
+      <p>From 1880 to 1924, about 25 million immigrants entered the U.S. — mostly Italians, Eastern Europeans, Irish, and Chinese. <strong>Ellis Island</strong> (NY) processed European arrivals; <strong>Angel Island</strong> (SF) processed Asian arrivals (often with discrimination).</p>
+      <h3>The Progressive Response</h3>
+      <p>Reformers fought back:</p>
+      <ul>
+        <li><strong>Jane Addams</strong> &mdash; opened Hull House to help immigrants</li>
+        <li><strong>Ida B. Wells</strong> &mdash; journalist who exposed lynching</li>
+        <li><strong>Upton Sinclair</strong> &mdash; <em>The Jungle</em> (1906) exposed meatpacking horrors → led to Pure Food and Drug Act</li>
+        <li><strong>Theodore Roosevelt</strong> &mdash; trust-buster president; broke up monopolies</li>
+        <li><strong>Women&rsquo;s Suffrage</strong> &mdash; 19th Amendment (1920) gave women the right to vote</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'List four major inventions of the late 1800s and their inventors.', ans: 'Examples: telephone (Bell, 1876), light bulb (Edison, 1879), automobile/assembly line (Ford, 1903), powered flight (Wright Brothers, 1903), Bessemer steel process.' },
+      { q: 'What is the difference between a "Captain of Industry" and a "Robber Baron"?', ans: 'Both refer to the same powerful industrialists (Carnegie, Rockefeller, Morgan, Vanderbilt). &ldquo;Captain of Industry&rdquo; emphasizes their building of America; &ldquo;Robber Baron&rdquo; emphasizes their ruthless tactics. Same person, different perspective.' },
+      { q: 'Roughly how many immigrants entered the U.S. between 1880 and 1924, and where were the main entry points?', ans: '~25 million immigrants. Ellis Island (New York) for European arrivals; Angel Island (San Francisco) for Asian arrivals.' },
+      { q: 'Name three reform leaders of the Progressive Era and what they fought for.', ans: 'Jane Addams (Hull House for immigrants), Ida B. Wells (anti-lynching journalism), Upton Sinclair (food safety reform), Theodore Roosevelt (trust-busting).' },
+      { q: 'What was the 19th Amendment, and when was it passed?', ans: 'Gave women the right to vote, passed in 1920 after decades of suffrage activism.' },
+      { q: 'Describe two problems with industrial-era factory life.', ans: 'Examples: long hours (12+ per day), low wages, dangerous conditions, child labor, no sick leave or pensions, polluted living conditions.' }
+    ],
+    quiz: [
+      { q: 'The Transcontinental Railroad was completed in:', opts: ['1865', '1869', '1876', '1903'], ans: 1 },
+      { q: 'Thomas Edison invented the:', opts: ['Telephone', 'Light bulb', 'Automobile', 'Airplane'], ans: 1 },
+      { q: 'Henry Ford&rsquo;s biggest contribution was:', opts: ['Inventing the car', 'The assembly line making cars affordable', 'Inventing the airplane', 'Founding GM'], ans: 1 },
+      { q: 'A "monopoly" means:', opts: ['Two competitors', 'One company controlling an industry', 'Government factory', 'A board game'], ans: 1 },
+      { q: 'John D. Rockefeller built a monopoly in:', opts: ['Steel', 'Oil', 'Railroads', 'Banking'], ans: 1 },
+      { q: 'European immigrants arriving in NYC processed at:', opts: ['Angel Island', 'Ellis Island', 'Liberty Island', 'Staten Island'], ans: 1 },
+      { q: 'Upton Sinclair&rsquo;s book "The Jungle" exposed problems in:', opts: ['Steel mills', 'Meatpacking', 'Schools', 'Banks'], ans: 1 },
+      { q: 'The 19th Amendment (1920) gave the right to vote to:', opts: ['African Americans', 'Women', '18-year-olds', 'Native Americans'], ans: 1 },
+      { q: 'Andrew Carnegie made his fortune in:', opts: ['Oil', 'Steel', 'Railroads', 'Banking'], ans: 1 },
+      { q: 'A labor union exists to:', opts: ['Run factories', 'Bargain collectively for workers', 'Tax workers', 'Sell products'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Trace Your Family&rsquo;s Immigration Story',
+        scenario: 'Most American families have an immigration story.',
+        steps: [
+          'Ask family: when did our family come to America?',
+          'Did anyone come through Ellis Island or Angel Island?',
+          'What was their original country, language, work?',
+          'Use Ancestry.com or FamilySearch (free) to find ship manifests.'
+        ],
+        reflect: 'How does YOUR family story fit into the bigger American story?'
+      },
+      {
+        title: 'Modern Monopoly Watch',
+        scenario: 'You use Google, Amazon, or Apple every day.',
+        steps: [
+          'Recall: Standard Oil was broken up because it was too big.',
+          'Today, look up &ldquo;Big Tech antitrust 2024.&rdquo;',
+          'Compare: how is Apple&rsquo;s App Store like Standard Oil?',
+          'Decide: do you think the government should break up Big Tech?'
+        ],
+        reflect: 'How do the same questions from 1900 apply to 2026?'
+      },
+      {
+        title: 'Vote Like a Suffragist',
+        scenario: 'You&rsquo;ll vote in 2 to 6 years.',
+        steps: [
+          'Recall: women fought for 70 years before getting the vote in 1920.',
+          'Find out: at what age can you register in your state?',
+          'Pre-register if your state allows.',
+          'Make a plan to vote in your first election.'
+        ],
+        reflect: 'What would the suffragists say to a young person who shrugs off voting?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — World War I (1914–1918)',
+    icon: '⚔️',
+    region: 'Europe / Global',
+    timeframe: '1914 – 1918',
+    desc: 'The "war to end all wars" — when an empire&rsquo;s assassination dragged the whole world into the first global mechanized war.',
+    essential: 'How did a regional crisis become a global war, and why did the &ldquo;peace&rdquo; that ended it lead to an even greater war?',
+    vocab: [
+      ['Allied Powers', 'WWI: France, Britain, Russia, Italy (after 1915), and the U.S. (after 1917).'],
+      ['Central Powers', 'WWI: Germany, Austria-Hungary, Ottoman Empire, Bulgaria.'],
+      ['Trench Warfare', 'Soldiers dug long ditches and fought from them; led to massive casualties for tiny gains.'],
+      ['Treaty of Versailles', '1919 peace treaty; punished Germany severely, planted seeds for WWII.'],
+      ['League of Nations', 'First international peacekeeping organization; failed when major powers (incl. US) didn&rsquo;t join fully.'],
+      ['Lusitania', 'British passenger ship sunk by German U-boat in 1915 with 128 Americans aboard; helped pull U.S. into the war.']
+    ],
+    lessonHTML: `
+      <p>By 1914, Europe was a powder keg. Six powers had built massive armies, formed competing alliances, and built up empires. All it took was one spark.</p>
+      <h3>The MAIN Causes</h3>
+      <ul>
+        <li><strong>M</strong>ilitarism &mdash; arms races; everyone had huge armies</li>
+        <li><strong>A</strong>lliances &mdash; if one fights, all fight</li>
+        <li><strong>I</strong>mperialism &mdash; competition for colonies</li>
+        <li><strong>N</strong>ationalism &mdash; pride in one&rsquo;s nation; ethnic groups demanding independence</li>
+      </ul>
+      <h3>The Spark: Sarajevo, June 28, 1914</h3>
+      <p>A Serbian nationalist named <strong>Gavrilo Princip</strong> assassinated Archduke <strong>Franz Ferdinand</strong>, heir to the Austro-Hungarian throne. Within five weeks, alliances pulled all of Europe into war.</p>
+      <h3>The Two Sides</h3>
+      <ul>
+        <li><strong>Allied Powers:</strong> France, Britain, Russia (left in 1917 due to revolution), Italy (joined 1915), U.S. (joined 1917)</li>
+        <li><strong>Central Powers:</strong> Germany, Austria-Hungary, Ottoman Empire, Bulgaria</li>
+      </ul>
+      <h3>A New Kind of War</h3>
+      <p>WWI was the first <strong>industrial war</strong>. New technology made killing easier and made armies bog down:</p>
+      <ul>
+        <li><strong>Machine guns</strong> &mdash; could fire 600 rounds/minute</li>
+        <li><strong>Trench warfare</strong> &mdash; 25,000 miles of muddy ditches across France &amp; Belgium</li>
+        <li><strong>Poison gas</strong> &mdash; mustard gas, chlorine; banned after the war</li>
+        <li><strong>Tanks</strong> and <strong>airplanes</strong> &mdash; first used in combat</li>
+        <li><strong>Submarines (U-boats)</strong> &mdash; sank ships including the <em>Lusitania</em> (1915)</li>
+      </ul>
+      <h3>The U.S. Enters (1917)</h3>
+      <p>President Woodrow Wilson tried to stay neutral but eventually entered after:</p>
+      <ul>
+        <li>Continued German submarine attacks on U.S. ships</li>
+        <li>The <strong>Zimmermann Telegram</strong> &mdash; Germany asked Mexico to attack the U.S.</li>
+      </ul>
+      <p>Fresh American troops helped the Allies win in 1918.</p>
+      <h3>The Peace That Wasn&rsquo;t</h3>
+      <p>The <strong>Treaty of Versailles (1919)</strong> punished Germany severely:</p>
+      <ul>
+        <li>Lost colonies and territory</li>
+        <li>Limited army size</li>
+        <li>Huge reparations ($33 billion)</li>
+        <li>Forced acceptance of full war guilt</li>
+      </ul>
+      <p>Germans felt humiliated. Hyperinflation and economic collapse followed. Within 14 years, an angry corporal named Adolf Hitler would use this resentment to take power.</p>
+      <h3>The Cost</h3>
+      <p>~17 million dead (military and civilian). Three empires (Russian, Austro-Hungarian, Ottoman) collapsed. America emerged as the world&rsquo;s leading power.</p>
+    `,
+    worksheet: [
+      { q: 'What does the acronym MAIN stand for as causes of WWI?', ans: 'Militarism, Alliances, Imperialism, Nationalism.' },
+      { q: 'Whose assassination directly triggered WWI?', ans: 'Archduke Franz Ferdinand of Austria-Hungary, killed in Sarajevo on June 28, 1914 by Gavrilo Princip.' },
+      { q: 'List two new technologies that changed warfare in WWI.', ans: 'Examples: machine guns, trench warfare, poison gas, tanks, airplanes, submarines (U-boats).' },
+      { q: 'Why did the U.S. enter WWI in 1917?', ans: 'Continued German U-boat attacks on civilian/American ships (including the Lusitania); plus the Zimmermann Telegram in which Germany asked Mexico to attack the U.S.' },
+      { q: 'Name two harsh terms the Treaty of Versailles imposed on Germany.', ans: 'Examples: lost territory and colonies, army limited to 100,000 troops, reparations of $33 billion, forced to accept full war guilt.' },
+      { q: 'How many people died in WWI (approximately)?', ans: '~17 million (about 9 million military + 8 million civilians).' }
+    ],
+    quiz: [
+      { q: 'WWI began in:', opts: ['1900', '1914', '1918', '1939'], ans: 1 },
+      { q: 'WWI was triggered by the assassination of:', opts: ['Lincoln', 'Franz Ferdinand', 'Tsar Nicholas', 'Hitler'], ans: 1 },
+      { q: 'The MAIN causes of WWI include all EXCEPT:', opts: ['Militarism', 'Alliances', 'Mass communication', 'Nationalism'], ans: 2 },
+      { q: 'The Allies in WWI were:', opts: ['Germany &amp; Austria-Hungary', 'France, Britain, Russia, eventually U.S.', 'U.S. and Japan only', 'Italy and Germany'], ans: 1 },
+      { q: 'A defining feature of WWI was:', opts: ['Air war only', 'Trench warfare', 'Naval battles only', 'Cyber war'], ans: 1 },
+      { q: 'The Lusitania was:', opts: ['A WWI battle', 'A British passenger ship sunk by Germany', 'A treaty', 'A general'], ans: 1 },
+      { q: 'The Zimmermann Telegram was Germany asking:', opts: ['Russia for peace', 'Mexico to attack the U.S.', 'Britain to surrender', 'Japan to retreat'], ans: 1 },
+      { q: 'The Treaty of Versailles (1919):', opts: ['Helped Germany recover', 'Punished Germany severely', 'Created the U.N.', 'Started WWI'], ans: 1 },
+      { q: 'Approximately how many people died in WWI?', opts: ['1 million', '5 million', '17 million', '50 million'], ans: 2 },
+      { q: 'WWI is sometimes called:', opts: ['The Great Depression', 'The War to End All Wars', 'The Hundred Years&rsquo; War', 'The Cold War'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Read a WWI Soldier&rsquo;s Letter',
+        scenario: 'You want to feel WWI more directly.',
+        steps: [
+          'Search online for &ldquo;WWI soldier letters home&rdquo; or &ldquo;Library of Congress WWI letters.&rdquo;',
+          'Read 1–2 letters slowly.',
+          'Notice: 18- and 19-year-olds in unimaginable conditions.',
+          'Write what you would have wanted to say to one of them.'
+        ],
+        reflect: 'How does primary-source reading change your understanding of war?'
+      },
+      {
+        title: 'Visit a Local Memorial',
+        scenario: 'Most cities have a WWI memorial.',
+        steps: [
+          'Find your city&rsquo;s WWI memorial (often on Main Street, near a courthouse).',
+          'Look at the names — local young men from your community.',
+          'Calculate: how old were they when they died?',
+          'Take a photo and share with family.'
+        ],
+        reflect: 'Why do communities still memorialize a war fought 100+ years ago?'
+      },
+      {
+        title: 'Spot Modern Nationalism',
+        scenario: 'You hear leaders speak about &ldquo;our country first.&rdquo;',
+        steps: [
+          'Recall: nationalism was a major cause of WWI.',
+          'Note: love of country (patriotism) is good. Belief that your country is superior to others = nationalism.',
+          'Watch a current news cycle. Note where leaders cross from patriotism to nationalism.',
+          'Discuss with family: where&rsquo;s the line?'
+        ],
+        reflect: 'How can we love our country without letting it become an excuse for harming others?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — World War II (1939–1945)',
+    icon: '🪖',
+    region: 'Europe, Pacific, North Africa, Atlantic',
+    timeframe: '1939 – 1945',
+    desc: 'The deadliest war in human history — fought on every continent — and the moment America became a superpower.',
+    essential: 'How did the world rise from total war and the Holocaust to build a more cooperative international order?',
+    vocab: [
+      ['Axis Powers', 'Germany, Italy, Japan.'],
+      ['Allied Powers', 'United States, Britain, USSR (Soviet Union), France, China, plus many others.'],
+      ['Holocaust', 'The Nazi systematic murder of 6 million Jews and millions of others (Roma, disabled, gay people, political prisoners).'],
+      ['D-Day', 'June 6, 1944 — Allied invasion of Normandy, France; the largest amphibious invasion in history.'],
+      ['Pearl Harbor', 'Dec 7, 1941 — Japanese attack on U.S. naval base in Hawaii that brought the U.S. into the war.'],
+      ['United Nations', 'Founded 1945 to prevent future world wars; replaced the failed League of Nations.']
+    ],
+    lessonHTML: `
+      <p>WWII was the largest, deadliest war in human history. About <strong>70–85 million people died</strong> &mdash; 3% of the world&rsquo;s population. It transformed maps, economies, and the way humans understood themselves.</p>
+      <h3>The Rise of Dictators</h3>
+      <p>The 1930s saw three aggressive regimes:</p>
+      <ul>
+        <li><strong>Nazi Germany</strong> &mdash; Adolf Hitler took power in 1933, blaming Germany&rsquo;s problems on Jews and communists. His ideology was racist, antisemitic, and totalitarian.</li>
+        <li><strong>Fascist Italy</strong> &mdash; Benito Mussolini ruled from 1922.</li>
+        <li><strong>Imperial Japan</strong> &mdash; military leaders sought to conquer Asia.</li>
+      </ul>
+      <h3>The War in Europe (1939–1945)</h3>
+      <ul>
+        <li><strong>Sept 1, 1939</strong> &mdash; Germany invades Poland; Britain &amp; France declare war.</li>
+        <li><strong>1940</strong> &mdash; France falls in 6 weeks. Britain stands alone (&ldquo;Battle of Britain&rdquo;).</li>
+        <li><strong>1941</strong> &mdash; Germany invades USSR. Hitler now fights on TWO fronts.</li>
+        <li><strong>1942–43</strong> &mdash; Stalingrad: Soviets crush German army; turning point in Europe.</li>
+        <li><strong>June 6, 1944 (D-Day)</strong> &mdash; Allies land at Normandy; ~156,000 Allied troops storm the beaches.</li>
+        <li><strong>May 8, 1945 (V-E Day)</strong> &mdash; Germany surrenders.</li>
+      </ul>
+      <h3>The War in the Pacific</h3>
+      <ul>
+        <li><strong>Dec 7, 1941</strong> &mdash; Japan attacks Pearl Harbor; ~2,400 Americans killed.</li>
+        <li><strong>1942–45</strong> &mdash; Island-hopping campaign; brutal battles at Midway, Guadalcanal, Iwo Jima, Okinawa.</li>
+        <li><strong>Aug 6 &amp; 9, 1945</strong> &mdash; U.S. drops atomic bombs on Hiroshima and Nagasaki.</li>
+        <li><strong>Sept 2, 1945 (V-J Day)</strong> &mdash; Japan surrenders.</li>
+      </ul>
+      <h3>The Holocaust</h3>
+      <p>The greatest moral horror of the 20th century. The Nazis systematically murdered <strong>6 million Jews</strong> in death camps like Auschwitz, plus millions of Roma, disabled people, gay people, and political prisoners. The world said <strong>&ldquo;Never Again.&rdquo;</strong></p>
+      <h3>The Home Front</h3>
+      <ul>
+        <li>Women filled factory jobs (&ldquo;Rosie the Riveter&rdquo;)</li>
+        <li>Rationing of food, gas, rubber</li>
+        <li>Japanese American internment (~120,000 forced into camps) &mdash; a U.S. injustice we apologized for in 1988</li>
+        <li>Tuskegee Airmen and Navajo Code Talkers showed courage despite discrimination</li>
+      </ul>
+      <h3>After the War</h3>
+      <ul>
+        <li><strong>United Nations</strong> founded (1945)</li>
+        <li><strong>Marshall Plan</strong> rebuilt Europe ($13 billion)</li>
+        <li><strong>Universal Declaration of Human Rights (1948)</strong> &mdash; first global human rights statement</li>
+        <li>USA &amp; USSR emerged as two superpowers, beginning the Cold War</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'List the Axis and Allied powers of WWII.', ans: 'Axis: Germany, Italy, Japan. Allies: United States, Britain, Soviet Union, France, China (and many others).' },
+      { q: 'When and where did WWII begin?', ans: 'September 1, 1939 — Germany invaded Poland; Britain and France declared war 2 days later.' },
+      { q: 'Why was D-Day (June 6, 1944) so important?', ans: 'It was the largest amphibious invasion in history (~156,000 Allied troops). It opened a Western front in Europe and was the beginning of the end for Nazi Germany.' },
+      { q: 'What was the Holocaust?', ans: 'The systematic Nazi murder of 6 million Jews, plus millions of Roma, disabled people, gay people, and political prisoners — in death camps like Auschwitz.' },
+      { q: 'Why did the U.S. enter WWII?', ans: 'After Japan attacked Pearl Harbor on December 7, 1941, killing ~2,400 Americans. Congress declared war the next day.' },
+      { q: 'List two ways WWII transformed America at home.', ans: 'Examples: women entering factories (&ldquo;Rosie the Riveter&rdquo;); rationing of food/gas/rubber; Japanese American internment; massive industrial production.' },
+      { q: 'What two things were created after WWII to prevent another global war?', ans: 'The United Nations (1945) and the Universal Declaration of Human Rights (1948).' }
+    ],
+    quiz: [
+      { q: 'WWII began with the German invasion of:', opts: ['France', 'Poland', 'Russia', 'Britain'], ans: 1 },
+      { q: 'The leader of Nazi Germany was:', opts: ['Mussolini', 'Hitler', 'Stalin', 'Hirohito'], ans: 1 },
+      { q: 'The U.S. entered WWII after:', opts: ['Pearl Harbor', 'D-Day', 'Hitler&rsquo;s rise', 'Stalingrad'], ans: 0 },
+      { q: 'Pearl Harbor occurred on:', opts: ['Dec 7, 1941', 'June 6, 1944', 'Aug 6, 1945', 'Sept 1, 1939'], ans: 0 },
+      { q: 'D-Day was the Allied invasion of:', opts: ['Italy', 'Normandy, France', 'Japan', 'Africa'], ans: 1 },
+      { q: 'How many Jews were killed in the Holocaust?', opts: ['600,000', '6 million', '60 million', '600'], ans: 1 },
+      { q: '"Never Again" became the world&rsquo;s response to:', opts: ['Pearl Harbor', 'The Holocaust', 'D-Day', 'Hiroshima'], ans: 1 },
+      { q: 'The U.S. dropped atomic bombs on:', opts: ['Tokyo and Osaka', 'Hiroshima and Nagasaki', 'Berlin and Munich', 'Dresden and Hamburg'], ans: 1 },
+      { q: 'Total WWII deaths were approximately:', opts: ['1–2 million', '17 million', '70–85 million', '500 million'], ans: 2 },
+      { q: 'After WWII, the United Nations was founded in:', opts: ['1939', '1941', '1945', '1950'], ans: 2 }
+    ],
+    rla: [
+      {
+        title: 'Find a WWII Veteran or Family Story',
+        scenario: 'Many families have a WWII connection.',
+        steps: [
+          'Ask family: did anyone serve in WWII or live during it?',
+          'Look up your community&rsquo;s WWII roll of honor.',
+          'If a veteran is alive, interview them (record permission first).',
+          'Visit your nearest WWII museum or memorial.'
+        ],
+        reflect: 'WWII veterans are nearly all gone. Why is preserving their stories urgent?'
+      },
+      {
+        title: 'Visit Pearl Harbor (or Equivalent)',
+        scenario: 'You live in Hawai&lsquo;i — Pearl Harbor is here.',
+        steps: [
+          'Visit the USS Arizona Memorial — book free tickets in advance.',
+          'See the names of 1,177 sailors who died on the Arizona alone.',
+          'Visit the Battleship Missouri (where Japan surrendered in 1945).',
+          'Notice: WWII begins and ends within a few miles of each other in Hawai&lsquo;i.'
+        ],
+        reflect: 'How does standing at a real place change history from a textbook lesson?'
+      },
+      {
+        title: 'Recognize "Never Again" Today',
+        scenario: 'You hear about a current human rights crisis.',
+        steps: [
+          'Recall: the world said &ldquo;Never Again&rdquo; about the Holocaust.',
+          'Identify a current concern (genocide, refugee crisis, mass injustice).',
+          'Research what one organization is doing about it.',
+          'Take ONE action: donate, write a letter, share information accurately.'
+        ],
+        reflect: 'How does &ldquo;Never Again&rdquo; require active citizens, not just passive memory?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Cold War: Korea &amp; Vietnam',
+    icon: '🌐',
+    region: 'Global / Korea / Vietnam',
+    timeframe: '1945 – 1991',
+    desc: 'A 46-year standoff between the U.S. and the Soviet Union — fought through proxy wars in Korea and Vietnam, the space race, and the threat of nuclear annihilation.',
+    essential: 'How did two superpowers reshape the world without ever directly fighting each other — and how did smaller nations pay the cost?',
+    vocab: [
+      ['Cold War', '1945–1991 standoff between the U.S. (capitalist democracy) and USSR (communist dictatorship). Fought through proxies, espionage, and arms races.'],
+      ['Containment', 'U.S. policy of preventing the spread of communism (rather than directly attacking the USSR).'],
+      ['Iron Curtain', 'Winston Churchill&rsquo;s 1946 phrase for the dividing line between democratic Western Europe and communist Eastern Europe.'],
+      ['Cuban Missile Crisis', 'Oct 1962 — closest the world came to nuclear war; resolved by JFK and Khrushchev.'],
+      ['Domino Theory', 'U.S. fear that if one country fell to communism, neighbors would too — used to justify Vietnam.'],
+      ['Détente', '1970s era of reduced Cold War tensions and arms talks.']
+    ],
+    lessonHTML: `
+      <p>Within two years of WWII ending, two former allies became enemies. The United States and the Soviet Union didn&rsquo;t fight each other directly &mdash; if they had, nuclear weapons could have ended human civilization. Instead, they fought through <strong>proxy wars, espionage, and an arms race</strong>.</p>
+      <h3>Two Worlds</h3>
+      <ul>
+        <li><strong>The Free World (West)</strong> &mdash; led by U.S.; capitalism, democracy, free press</li>
+        <li><strong>The Communist Bloc (East)</strong> &mdash; led by USSR; state-owned economy, one-party rule, censored press</li>
+      </ul>
+      <p>By 1949 the &ldquo;<strong>Iron Curtain</strong>&rdquo; divided Europe.</p>
+      <h3>Korean War (1950–1953)</h3>
+      <p>Communist North Korea (backed by USSR &amp; China) invaded democratic South Korea. The U.S. and U.N. forces pushed back. China entered. The war ended with the same dividing line as before (the 38th parallel). Today Korea is still divided.</p>
+      <ul>
+        <li>~36,000 Americans killed; ~3 million Korean and Chinese deaths</li>
+        <li>First test of UN collective security</li>
+      </ul>
+      <h3>Cuban Missile Crisis (October 1962)</h3>
+      <p>The Soviet Union secretly placed nuclear missiles in Cuba — 90 miles from Florida. President Kennedy ordered a naval blockade. For 13 days the world held its breath. Soviet leader Khrushchev backed down. Closest call to nuclear war in history.</p>
+      <h3>Vietnam War (1955–1975, U.S. heavily involved 1964–1973)</h3>
+      <p>The U.S. tried to prevent communist North Vietnam from taking over South Vietnam. Reasons:</p>
+      <ul>
+        <li><strong>Domino Theory</strong> &mdash; if Vietnam falls, all Southeast Asia falls</li>
+        <li>Decades of French colonial rule had collapsed</li>
+        <li>Cold War politics</li>
+      </ul>
+      <p>The war was deeply unpopular at home. <strong>~58,000 Americans died; ~2 million Vietnamese died.</strong> The U.S. withdrew in 1973 and South Vietnam fell in 1975.</p>
+      <h3>The Space Race</h3>
+      <ul>
+        <li><strong>1957</strong> &mdash; USSR launches Sputnik; America panics</li>
+        <li><strong>1961</strong> &mdash; Yuri Gagarin (USSR) is first human in space</li>
+        <li><strong>1969</strong> &mdash; Neil Armstrong (USA) is first to walk on the Moon</li>
+      </ul>
+      <h3>The End of the Cold War (1989–1991)</h3>
+      <ul>
+        <li>Mikhail Gorbachev introduces reforms</li>
+        <li><strong>Berlin Wall falls (Nov 9, 1989)</strong></li>
+        <li>USSR dissolves on December 25, 1991</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'What was the &ldquo;Cold War,&rdquo; and why was it &ldquo;cold&rdquo;?', ans: 'A 1945–1991 standoff between the U.S. and the USSR. It was &ldquo;cold&rdquo; because the two never fought each other directly — they fought through proxies, espionage, and arms races, partly to avoid nuclear war.' },
+      { q: 'What was &ldquo;containment,&rdquo; and who proposed it?', ans: 'U.S. policy of preventing the spread of communism, proposed by diplomat George Kennan in 1946. Rather than attacking the USSR, the U.S. would block its expansion.' },
+      { q: 'What was the Iron Curtain?', ans: 'Winston Churchill&rsquo;s 1946 phrase for the dividing line between democratic Western Europe and communist Eastern Europe (controlled by USSR).' },
+      { q: 'Describe the Cuban Missile Crisis.', ans: 'In October 1962, the USSR secretly placed nuclear missiles in Cuba, 90 miles from the U.S. President Kennedy ordered a naval blockade. After 13 tense days, Khrushchev removed the missiles. The closest the world has come to nuclear war.' },
+      { q: 'Explain the Domino Theory and how it applied to Vietnam.', ans: 'The fear that if one country in a region fell to communism, neighbors would fall too — like dominoes. This was used to justify U.S. involvement in Vietnam to prevent the &ldquo;dominos&rdquo; of Southeast Asia from falling.' },
+      { q: 'When did the Berlin Wall fall and what did it symbolize?', ans: 'November 9, 1989 — symbolized the end of the Cold War. Within 2 years, the USSR itself collapsed (Dec 25, 1991).' }
+    ],
+    quiz: [
+      { q: 'The Cold War was between:', opts: ['U.S. and Britain', 'U.S. and USSR', 'U.S. and China', 'Russia and China'], ans: 1 },
+      { q: 'The Iron Curtain divided:', opts: ['Korea', 'Europe (West vs. East)', 'America', 'Africa'], ans: 1 },
+      { q: 'The Korean War ended with:', opts: ['Korean unification', 'Korea still divided at the 38th parallel', 'A communist victory', 'A U.S. victory'], ans: 1 },
+      { q: 'The Cuban Missile Crisis happened in:', opts: ['1959', '1962', '1969', '1973'], ans: 1 },
+      { q: 'During the Cuban Missile Crisis the U.S. president was:', opts: ['Eisenhower', 'Kennedy', 'Johnson', 'Nixon'], ans: 1 },
+      { q: 'The Domino Theory was used to justify war in:', opts: ['Korea', 'Vietnam', 'Cuba', 'Iraq'], ans: 1 },
+      { q: 'How many Americans died in the Vietnam War?', opts: ['10,000', '~58,000', '500,000', '2 million'], ans: 1 },
+      { q: 'In 1969, the first human to walk on the Moon was:', opts: ['Yuri Gagarin', 'Neil Armstrong', 'Buzz Aldrin', 'John Glenn'], ans: 1 },
+      { q: 'The Berlin Wall fell in:', opts: ['1969', '1979', '1989', '1991'], ans: 2 },
+      { q: 'The USSR officially dissolved in:', opts: ['1989', '1991', '1995', '2000'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Visit a Vietnam Memorial',
+        scenario: 'Most U.S. cities have one.',
+        steps: [
+          'Find your nearest Vietnam War memorial.',
+          'Bring paper and pencil to do a name-rubbing if names are listed.',
+          'Notice ages — most were 18–22.',
+          'Take that rubbing home and place it where you&rsquo;ll remember.'
+        ],
+        reflect: 'Why is naming individuals more powerful than statistics?'
+      },
+      {
+        title: 'Two Cold War Sources',
+        scenario: 'You read one side&rsquo;s account of the Cold War.',
+        steps: [
+          'Find a U.S. perspective (e.g., a Cold War-era textbook, news article).',
+          'Find a Russian/Soviet perspective.',
+          'List 3 things they agree on and 3 they disagree on.',
+          'Decide: what would a balanced account include?'
+        ],
+        reflect: 'How does perspective shape what we call &ldquo;the truth&rdquo; about history?'
+      },
+      {
+        title: 'Talk to a Cold War Adult',
+        scenario: 'Older relatives lived through the Cold War.',
+        steps: [
+          'Ask: did you do duck-and-cover drills in school? Did you know about the Cuban Missile Crisis?',
+          'Did you watch the Moon landing live in 1969?',
+          'What did you feel when the Berlin Wall fell?',
+          'Listen — don&rsquo;t interrupt to fact-check.'
+        ],
+        reflect: 'How does living history feel different from reading it?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — Civil Rights &amp; Modern Human Rights',
+    icon: '✊',
+    region: 'United States &amp; Global',
+    timeframe: '1954 – Present',
+    desc: 'How ordinary Americans changed the law of the land — and how the fight for human dignity continues today.',
+    essential: 'How does democracy actually advance — and what does it ask of each citizen?',
+    vocab: [
+      ['Brown v. Board of Education', '1954 Supreme Court case that ruled school segregation unconstitutional.'],
+      ['Civil Rights Act (1964)', 'Outlawed discrimination based on race, color, religion, sex, or national origin.'],
+      ['Voting Rights Act (1965)', 'Banned racial discrimination in voting; outlawed literacy tests, etc.'],
+      ['Nonviolent resistance', 'Strategy used by Gandhi and MLK — protest without violence; powerful moral force.'],
+      ['Suffrage', 'The right to vote.'],
+      ['Universal Declaration of Human Rights', 'UN-adopted 1948 statement of basic rights for ALL people.']
+    ],
+    lessonHTML: `
+      <p>The middle of the 20th century saw one of America&rsquo;s greatest moral transformations: the systematic dismantling of legal racial segregation. It happened because of <strong>ordinary Americans</strong> &mdash; ministers, students, mothers, lawyers, and children &mdash; who refused to accept injustice.</p>
+      <h3>The Roots</h3>
+      <p>After the Civil War, the 13th, 14th, and 15th Amendments ended slavery and gave African Americans citizenship and voting rights. But Southern states quickly reimposed white supremacy through:</p>
+      <ul>
+        <li><strong>Jim Crow laws</strong> &mdash; legal segregation of restaurants, schools, restrooms, drinking fountains</li>
+        <li><strong>Poll taxes &amp; literacy tests</strong> &mdash; designed to keep Black voters out</li>
+        <li><strong>Lynching</strong> &mdash; vigilante murder used as terror</li>
+      </ul>
+      <h3>The Legal Battle: Brown v. Board (1954)</h3>
+      <p>The NAACP, led by lawyer <strong>Thurgood Marshall</strong>, argued that &ldquo;separate but equal&rdquo; schools violated the Constitution. The Supreme Court agreed unanimously. Schools across the South began to integrate &mdash; though slowly and against fierce resistance.</p>
+      <h3>The Movement</h3>
+      <ul>
+        <li><strong>Rosa Parks</strong> (1955) &mdash; refused to give up her bus seat in Montgomery; sparked a 381-day bus boycott</li>
+        <li><strong>Little Rock Nine</strong> (1957) &mdash; Black students integrate Central High School with federal troops</li>
+        <li><strong>Sit-ins</strong> (1960) &mdash; college students integrate lunch counters across the South</li>
+        <li><strong>Freedom Riders</strong> (1961) &mdash; Black and white volunteers ride buses through the South to test integration</li>
+        <li><strong>March on Washington</strong> (Aug 28, 1963) &mdash; ~250,000 people; MLK&rsquo;s &ldquo;I Have a Dream&rdquo; speech</li>
+        <li><strong>Selma to Montgomery March</strong> (1965) &mdash; voting rights march; &ldquo;Bloody Sunday&rdquo; on the Edmund Pettus Bridge</li>
+      </ul>
+      <h3>The Laws</h3>
+      <ul>
+        <li><strong>Civil Rights Act (1964)</strong> &mdash; outlawed segregation in public places &amp; employment discrimination</li>
+        <li><strong>Voting Rights Act (1965)</strong> &mdash; banned literacy tests and other barriers to Black voting</li>
+        <li><strong>Fair Housing Act (1968)</strong> &mdash; banned housing discrimination</li>
+      </ul>
+      <h3>Beyond Race</h3>
+      <p>The Civil Rights Movement inspired others:</p>
+      <ul>
+        <li><strong>Cesar Chavez &amp; Dolores Huerta</strong> &mdash; United Farm Workers, Mexican-American rights</li>
+        <li><strong>American Indian Movement</strong> &mdash; tribal sovereignty</li>
+        <li><strong>Disability Rights Movement</strong> &mdash; led to the Americans with Disabilities Act (1990)</li>
+        <li><strong>Women&rsquo;s Rights Movement</strong> &mdash; equal pay, education, ending workplace discrimination</li>
+      </ul>
+      <h3>Global Human Rights</h3>
+      <p>The <strong>Universal Declaration of Human Rights (1948)</strong> remains the world&rsquo;s most translated document. It declares: <em>all human beings are born free and equal in dignity and rights.</em></p>
+      <h3>The Work Continues</h3>
+      <p>Modern struggles include economic inequality, immigration justice, criminal justice reform, climate justice, and protecting democracy itself. Each generation must claim and defend rights anew.</p>
+    `,
+    worksheet: [
+      { q: 'What did the Supreme Court rule in Brown v. Board of Education (1954)?', ans: 'That &ldquo;separate but equal&rdquo; school segregation was unconstitutional. Schools must be integrated.' },
+      { q: 'What was the Montgomery Bus Boycott, and how did it end?', ans: 'Triggered when Rosa Parks refused to give up her bus seat (Dec 1955). African Americans boycotted buses for 381 days. Ended when the Supreme Court ruled bus segregation unconstitutional.' },
+      { q: 'What was the most important point of Martin Luther King Jr.&rsquo;s "I Have a Dream" speech?', ans: 'That his children should one day be judged not by the color of their skin but by the content of their character — his vision of an integrated, equal America.' },
+      { q: 'List two laws passed during the Civil Rights Movement and what they did.', ans: 'Civil Rights Act of 1964 (outlawed segregation in public places &amp; employment discrimination); Voting Rights Act of 1965 (banned literacy tests and other barriers to Black voting); Fair Housing Act of 1968 (banned housing discrimination).' },
+      { q: 'What is "nonviolent resistance," and why was it powerful?', ans: 'Protesting without using violence (sit-ins, marches, boycotts). It exposed the injustice of segregation by contrasting peaceful protesters with violent reactions, winning moral and public sympathy.' },
+      { q: 'What is the Universal Declaration of Human Rights?', ans: 'A 1948 UN document declaring that all humans are born free and equal in dignity and rights — the world&rsquo;s most translated document.' }
+    ],
+    quiz: [
+      { q: 'Brown v. Board (1954) addressed segregation in:', opts: ['Restaurants', 'Schools', 'Buses', 'Restrooms'], ans: 1 },
+      { q: 'Rosa Parks refused to give up her seat on a bus in:', opts: ['Atlanta', 'Montgomery', 'Selma', 'Birmingham'], ans: 1 },
+      { q: 'The Civil Rights Movement&rsquo;s most famous leader was:', opts: ['Malcolm X', 'Martin Luther King Jr.', 'Thurgood Marshall', 'Rosa Parks'], ans: 1 },
+      { q: 'The 1963 March on Washington featured what speech?', opts: ['Gettysburg Address', '"I Have a Dream"', 'State of the Union', 'Inaugural Address'], ans: 1 },
+      { q: 'The Civil Rights Act passed in:', opts: ['1954', '1964', '1968', '1990'], ans: 1 },
+      { q: 'The Voting Rights Act passed in:', opts: ['1955', '1965', '1972', '1990'], ans: 1 },
+      { q: 'Cesar Chavez fought for:', opts: ['Civil Rights', 'Farm Workers', 'Disability Rights', 'Women&rsquo;s Suffrage'], ans: 1 },
+      { q: 'The Americans with Disabilities Act was passed in:', opts: ['1964', '1980', '1990', '2010'], ans: 2 },
+      { q: 'The Universal Declaration of Human Rights was adopted in:', opts: ['1945', '1948', '1965', '1989'], ans: 1 },
+      { q: '"Nonviolent resistance" was inspired by:', opts: ['Stalin', 'Gandhi', 'Hitler', 'Mussolini'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Read MLK&rsquo;s "Letter from Birmingham Jail"',
+        scenario: 'You want to understand civil rights from a primary source.',
+        steps: [
+          'Search online for the full text (it&rsquo;s about 7,000 words).',
+          'Read it slowly. King wrote it in jail in 1963.',
+          'Find his definition of "just" vs. "unjust" laws.',
+          'Discuss with family: which laws today might fail his test?'
+        ],
+        reflect: 'How does this letter change your understanding of MLK from "speech-giver" to deep thinker?'
+      },
+      {
+        title: 'Identify a Local Justice Issue',
+        scenario: 'Every community has issues that need attention.',
+        steps: [
+          'Read your local news for one week.',
+          'Identify ONE issue that affects rights or fairness.',
+          'Find one organization working on it.',
+          'Take ONE action: attend a meeting, write a letter, volunteer an hour.'
+        ],
+        reflect: 'Civil rights weren&rsquo;t won by famous people alone. Why does &ldquo;ordinary citizen&rdquo; matter?'
+      },
+      {
+        title: 'Live the Dream Today',
+        scenario: 'You want MLK&rsquo;s dream to be more than a quote.',
+        steps: [
+          'Find ONE person you might typically overlook (different background, age, ability).',
+          'Have a real conversation, not small talk. Ask about their story.',
+          'Reflect: did you see them differently after?',
+          'Repeat with one new person each week.'
+        ],
+        reflect: 'How does &ldquo;the content of their character&rdquo; show up in everyday encounters?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.region} &middot; ${u.timeframe}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Westward Expansion to Human Rights';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <div class="meta-bar">
+      <span class="meta-pill region">📍 ${u.region}</span>
+      <span class="meta-pill">📅 ${u.timeframe}</span>
+    </div>
+    <div class="essential-q"><strong>Essential Question:</strong> ${u.essential}</div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. You may use your textbook and notes.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Excellent — you&rsquo;re thinking like a citizen!' : '📚 Review the lesson and try again. Every great citizen is also a great learner.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 6th Grade Religion: Faith in Action</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    /* ── SYLLABUS PAGE (STS-style) ── */
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-unit-row { background: #f8fafc; border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; border-left: 4px solid #1B3A8A; }
+    .syl-unit-row strong { font-size: 0.95rem; color: #1B3A8A; }
+    .syl-unit-row span { font-size: 0.85rem; color: #4a5568; display: block; margin-top: 4px; line-height: 1.5; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 90px; }
+    .syl-grade-pill span { display: block; font-size: 1.2rem; font-weight: 800; color: #1B3A8A; }
+    .syl-verse { font-style: italic; color: #7a5f00; padding: 10px 14px; background: #fffbe6; border-radius: 8px; border-left: 4px solid #FFD100; }
+    .syl-blessing { margin-top: 14px; text-align: center; font-weight: 700; color: #1B3A8A; font-size: 1.05rem; padding: 10px; background: linear-gradient(90deg, #fffbe6, #fff, #fffbe6); border-radius: 8px; }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .scripture-box { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .scripture-box strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .chapter-list { background: #f8f9fa; border-radius: 8px; padding: 16px 22px; margin: 14px 0; }
+    .chapter-list h4 { color: #1B3A8A; margin-bottom: 8px; }
+    .chapter-list ol { margin-left: 22px; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: white; max-width: 760px; width: 100%; max-height: 88vh; overflow-y: auto; border-radius: 12px; padding: 28px 32px; position: relative; border-top: 6px solid #FFD100; }
+    .modal h2 { color: #1B3A8A; margin-bottom: 6px; }
+    .modal .verse { color: #7a5f00; font-style: italic; margin: 10px 0 18px; }
+    .modal h3 { color: #1B3A8A; margin-top: 16px; margin-bottom: 6px; }
+    .modal ul { margin-left: 22px; }
+    .modal li { margin-bottom: 4px; line-height: 1.5; }
+    .modal-close { position: absolute; top: 14px; right: 18px; background: #1B3A8A; color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px; font-weight: bold; }
+    .modal-close:hover { background: #162E70; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">6th Grade Religion <span class="grade-tag">Gr. 6</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📜 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="MSOS Religion Index.html" class="back-index-btn" title="Back to Religion Classes">← All Religion</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="MSOS Logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="NUI Logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Faith in Action — Old Testament</span>
+        </div>
+        <div class="topbar-right">Blest Are We &middot; Grade 6</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Faith in Action</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">A journey through the Old Testament — how God called His people, saved them, and prepared the world for the Messiah.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">📜</div>
+            <h2>Religion — Course Syllabus</h2>
+            <p>Mary, Star of the Sea School &middot; SY 2025-2026</p>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p>This course is based on the ministry of catechesis for religious education and faith formation: <strong>believe, worship, live, and pray</strong>. Students learn the doctrine of the Catholic Church and establish a common language of faith, engage in understanding the sacramental life of the Catholic Church, focus attention on the moral teachings of the Church, and experience a wide variety of prayers. Students will develop a deeper understanding of faith and greater love for God.</p>
+              <p style="margin-top:8px"><strong>Schoolwide Learning Expectation (SLE):</strong> MSOS students will become active Christians who respect others, make good choices, value prayer, and practice the teachings of the Catholic Church.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👩‍🏫 Teacher</h3>
+              <p><strong>Mrs. Corazon Aczon</strong></p>
+              <p>📧 <a href="mailto:caczon@starofthesea.org">caczon@starofthesea.org</a></p>
+              <div class="syl-verse" style="margin-top:10px">&ldquo;They that hope in the Lord will renew their strength, they will soar on eagle&rsquo;s wings; they will run and not grow weary, walk and not grow faint.&rdquo;<br>&mdash; Isaiah 40:31</div>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Classroom Materials</h3>
+              <ul>
+                <li><em>Blest Are We</em> textbook</li>
+                <li>Holy Bible &middot; usccb.org</li>
+                <li>Computer / device</li>
+                <li>Composition notebook</li>
+                <li>Pencils, pens, agenda</li>
+                <li>Colored pencils, highlighters</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Course Outline &mdash; Grade 6: Faith in Action <span style="font-weight:500;color:#888;font-size:0.85rem">(Old Testament)</span></h3>
+            <div class="syl-unit-row"><strong>📜 Unit 1 &mdash; We Answer God&rsquo;s Call</strong><span>Creation, Adam &amp; Eve, Noah, Abraham, Isaac, Jacob, and Joseph &middot; Genesis 1-50</span></div>
+            <div class="syl-unit-row"><strong>🔥 Unit 2 &mdash; God Saves and Delivers Us</strong><span>Moses, the Exodus, the Ten Commandments, the desert journey &middot; Exodus, Numbers</span></div>
+            <div class="syl-unit-row"><strong>👑 Unit 3 &mdash; God Invites Us Into His Kingdom</strong><span>Judges, Saul, David, Solomon, the Psalms and Wisdom literature &middot; 1-2 Samuel, 1 Kings</span></div>
+            <div class="syl-unit-row"><strong>🔥 Unit 4 &mdash; God Reminds Us to Do His Will</strong><span>The major and minor prophets &middot; Isaiah, Jeremiah, Ezekiel, Daniel</span></div>
+            <div class="syl-unit-row"><strong>🕊️ Unit 5 &mdash; God Promises Us Everlasting Life</strong><span>Return from exile, the Maccabees, the hope of the Messiah</span></div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>📊 Evaluation / Assessment</h3>
+              <div class="syl-grade-row">
+                <div class="syl-grade-pill"><span>20%</span>Tests &amp; Quizzes</div>
+                <div class="syl-grade-pill"><span>30%</span>Quarterly Tests</div>
+                <div class="syl-grade-pill"><span>30%</span>Participation / Recitation</div>
+                <div class="syl-grade-pill"><span>10%</span>Homework</div>
+                <div class="syl-grade-pill"><span>10%</span>Projects</div>
+              </div>
+              <p style="margin-top:10px;font-size:0.83rem">Total: <strong>100%</strong></p>
+            </div>
+            <div class="syl-card">
+              <h3>📝 Student Absence</h3>
+              <p>Students are responsible for turning in homework, assignments, and projects, and arranging with the teacher a specific time to make up any quizzes or tests missed due to absence.</p>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>🙏 How We Nurture Our Faith in Religion Class</h3>
+            <ul style="columns:2;column-gap:30px">
+              <li>Praying and singing hymns</li>
+              <li>Reading Scripture and memorizing Bible verses</li>
+              <li>Praying from the Book of Psalms</li>
+              <li>Writing &ldquo;Dear God&rdquo; journal entries</li>
+              <li>Reflecting on the Readings and Gospel of the Day</li>
+              <li>Discussing activities from the <em>Blest Are We</em> textbook</li>
+              <li>Role-playing Bible stories (e.g., the Christmas story)</li>
+              <li>Learning about the Lives of Saints as models of faith</li>
+              <li>Praying the Rosary, Stations of the Cross, and other devotions</li>
+              <li>Integrating Religion and Art by illustrating Bible verses</li>
+              <li>Participating in the Sacraments and Liturgical Year as church ministers (lectors, choir, altar servers)</li>
+            </ul>
+          </div>
+
+          <div class="syl-blessing">✝️ GOD BLESS YOU! ✝️</div>
+
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">Faith is not just for Sunday — here is how this unit&rsquo;s lessons connect to your daily life.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — We Answer God&rsquo;s Call',
+    icon: '📜',
+    theme: 'Creation, Covenant, and the Patriarchs',
+    desc: 'God created a good world and called Abraham, Isaac, and Jacob to be His people. We are invited to answer that same call today.',
+    chapters: [
+      'God Creates the World (Genesis 1-2)',
+      'The Fall and the Promise (Genesis 3-4)',
+      'Noah and the Covenant (Genesis 6-9)',
+      'Abraham, Father of Faith (Genesis 12-22)',
+      'Isaac, Jacob, and Joseph (Genesis 25-50)'
+    ],
+    scripture: { ref: 'Genesis 1:27', text: 'God created mankind in his image; in the image of God he created them; male and female he created them.' },
+    vocab: [
+      ['Covenant', 'A sacred promise between God and His people.'],
+      ['Patriarch', 'A father-leader of the family of faith — Abraham, Isaac, Jacob.'],
+      ['Original Sin', 'The first sin of Adam and Eve, which broke humanity&rsquo;s friendship with God.'],
+      ['Creation', 'Everything God made, called good and very good.'],
+      ['Faith', 'Trust in God and the assent of the mind and heart to all He has revealed.']
+    ],
+    lessonHTML: `
+      <p>The Old Testament begins not with rules but with a relationship. God speaks the world into being, places humanity in a garden of trust, and — even after that trust is broken — keeps reaching out. Unit 1 traces five great moments of God calling humanity back to Himself: <strong>Creation, the Fall, Noah, Abraham, and the family of patriarchs</strong>. Each story is an invitation we still receive today: God calls; we answer.</p>
+      <h3>Why this unit matters</h3>
+      <p>Genesis is the book of beginnings. It teaches us <em>where we come from</em>, <em>why the world is broken</em>, and <em>how God&rsquo;s plan to save us begins</em>. The patriarchs are not perfect people — they doubt, lie, and fail — yet God works through them. This is the same God who works through us.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>God is the Creator of all things, visible and invisible.</strong> The two creation accounts (Gen 1 and Gen 2) emphasize God&rsquo;s power and His personal love.</li>
+        <li><strong>Human beings are made in the image of God</strong> — we have intellect, free will, and an immortal soul.</li>
+        <li><strong>Sin entered the world through human choice</strong>, but God immediately promised a Savior (Gen 3:15, the &ldquo;protoevangelium&rdquo;).</li>
+        <li><strong>God makes covenants</strong> — with Noah (the rainbow), with Abraham (descendants and a land), and ultimately with all of us in Jesus Christ.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'In Genesis 1, on what day did God create human beings?', ans: 'The 6th day.' },
+      { q: 'What is a <em>covenant</em>? Use the textbook definition.', ans: 'A sacred promise between God and His people.' },
+      { q: 'Name the three patriarchs.', ans: 'Abraham, Isaac, and Jacob.' },
+      { q: 'What sign did God give Noah after the flood?', ans: 'The rainbow.' },
+      { q: 'Why is Abraham called the &ldquo;father of faith&rdquo;?', ans: 'Because he trusted God and obeyed His call to leave his land, even when he did not know where he was going.' },
+      { q: 'In your own words, what does it mean to be made in the image of God?', ans: 'Open answer — students should mention: intellect (we can think), free will (we can choose), love, and an immortal soul.' },
+      { q: 'How many children of Jacob (Israel) became the twelve tribes of Israel?', ans: 'Twelve.' },
+      { q: 'Memory verse: complete &ldquo;God created mankind in his _____.&rdquo;', ans: 'image' }
+    ],
+    quiz: [
+      { q: 'Which book of the Bible begins with the story of Creation?', opts: ['Exodus', 'Genesis', 'Psalms', 'Matthew'], ans: 1 },
+      { q: 'On which day did God rest?', opts: ['1st', '5th', '6th', '7th'], ans: 3 },
+      { q: 'What is the first sin called?', opts: ['Mortal sin', 'Original Sin', 'Venial sin', 'Schism'], ans: 1 },
+      { q: 'God&rsquo;s sign of His covenant with Noah was a:', opts: ['Star', 'Dove', 'Rainbow', 'Burning bush'], ans: 2 },
+      { q: 'God called Abraham to leave his country and go to:', opts: ['Egypt', 'Canaan', 'Babylon', 'Rome'], ans: 1 },
+      { q: 'What does &ldquo;patriarch&rdquo; mean?', opts: ['King', 'Father-leader', 'Prophet', 'Priest'], ans: 1 },
+      { q: 'Who was Abraham&rsquo;s son of the promise?', opts: ['Ishmael', 'Jacob', 'Isaac', 'Joseph'], ans: 2 },
+      { q: 'Jacob&rsquo;s other name is:', opts: ['Israel', 'Esau', 'Adam', 'Moses'], ans: 0 },
+      { q: 'Joseph was sold into slavery in:', opts: ['Babylon', 'Egypt', 'Assyria', 'Persia'], ans: 1 },
+      { q: 'Being made in the image of God means we have:', opts: ['Wings', 'Intellect, free will, and a soul', 'Magic powers', 'Perfect memory'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Saying Yes When God Calls',
+        scenario: 'Your friend group is leaving someone out at lunch. You feel a quiet nudge to invite that person to sit with you, even though it feels awkward.',
+        steps: [
+          'Pause and recognize that quiet nudge — that is often how God calls.',
+          'Like Abraham, choose to step out even without knowing what will happen.',
+          'Walk over and invite the person warmly.',
+          'Reflect afterward on how you felt — courage usually grows once we say yes.'
+        ],
+        reflect: 'When in the past week did you sense God asking you to do something? Did you answer the call?'
+      },
+      {
+        title: 'Caring for Creation',
+        scenario: 'Your family is doing yard work or cleaning your room. You see paper, plastic, and food scraps mixed in the trash.',
+        steps: [
+          'Remember Genesis 1: God called creation good and asked us to care for it.',
+          'Sort recyclables from trash, and start a compost or scraps bin if possible.',
+          'Use a refillable water bottle and reusable lunch bag for one week.',
+          'Pray a short thank-you to God for one part of creation each morning.'
+        ],
+        reflect: 'How can your daily choices reflect that the earth is a gift entrusted to us?'
+      },
+      {
+        title: 'Forgiving Like Joseph',
+        scenario: 'A sibling or friend did something hurtful and has come back to apologize.',
+        steps: [
+          'Recall Joseph forgiving his brothers in Genesis 50 — even after years of pain.',
+          'Listen fully to the apology without interrupting.',
+          'Tell them honestly what hurt you, but offer forgiveness.',
+          'Pray that night for the person who hurt you.'
+        ],
+        reflect: 'Why is forgiveness a sign that we trust God&rsquo;s plan, like Joseph did?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — God Saves and Delivers Us',
+    icon: '🔥',
+    theme: 'Moses, the Exodus, and the Law',
+    desc: 'God hears the cry of His people in Egypt and rescues them through Moses. He gives them the Ten Commandments and leads them to the Promised Land.',
+    chapters: [
+      'Moses and the Burning Bush (Exodus 3)',
+      'The Ten Plagues and Passover (Exodus 7-12)',
+      'Crossing the Red Sea (Exodus 14)',
+      'The Ten Commandments (Exodus 20)',
+      'Forty Years in the Desert and the Promised Land (Numbers / Joshua 1-6)'
+    ],
+    scripture: { ref: 'Exodus 20:2', text: 'I am the LORD your God, who brought you out of the land of Egypt, out of the house of slavery.' },
+    vocab: [
+      ['Exodus', 'The journey of the Israelites out of slavery in Egypt.'],
+      ['Passover', 'The night the angel of death &ldquo;passed over&rdquo; the houses marked with the blood of the lamb.'],
+      ['Decalogue', 'Another name for the Ten Commandments — the &ldquo;ten words&rdquo; of God.'],
+      ['Manna', 'The bread from heaven God provided in the desert.'],
+      ['Tabernacle', 'The portable tent of meeting where God&rsquo;s presence dwelt with Israel.']
+    ],
+    lessonHTML: `
+      <p>Unit 2 is the story of <strong>liberation</strong>. God&rsquo;s people are slaves in Egypt for hundreds of years; God hears their cry and acts. He sends Moses, defeats Pharaoh through ten plagues, parts the Red Sea, and forms a holy people at Mount Sinai by giving them the <strong>Ten Commandments</strong>.</p>
+      <h3>From slavery to freedom</h3>
+      <p>The Passover lamb whose blood saved Israel is a powerful foreshadowing of <strong>Jesus Christ, the Lamb of God</strong>, whose blood saves us from sin. Every time we celebrate Mass, we are remembering a new Exodus.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>God reveals His name:</strong> &ldquo;I AM WHO I AM&rdquo; (YHWH) — He is the eternal, faithful one.</li>
+        <li><strong>The Ten Commandments</strong> are God&rsquo;s gift, not a burden — they show us the path to true freedom.</li>
+        <li><strong>The desert is a place of testing and trust.</strong> God feeds His people manna and water from the rock; He still feeds us today in the Eucharist.</li>
+        <li><strong>The Promised Land</strong> is real geography but also a sign of heaven — our true home with God.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Where did Moses see the burning bush?', ans: 'On Mount Horeb (Sinai).' },
+      { q: 'What is God&rsquo;s name as revealed to Moses?', ans: '&ldquo;I AM WHO I AM&rdquo; (YHWH).' },
+      { q: 'How many plagues did God send on Egypt?', ans: 'Ten.' },
+      { q: 'What was the last plague?', ans: 'The death of the firstborn.' },
+      { q: 'List the first three commandments in your own words.', ans: '1) Worship only the one true God. 2) Do not use God&rsquo;s name disrespectfully. 3) Keep the Lord&rsquo;s Day holy.' },
+      { q: 'What food did God send from heaven during the desert journey?', ans: 'Manna.' },
+      { q: 'How many years did Israel wander in the desert?', ans: 'Forty.' },
+      { q: 'Who led the Israelites into the Promised Land after Moses?', ans: 'Joshua.' }
+    ],
+    quiz: [
+      { q: 'Moses was raised in the household of:', opts: ['A shepherd', 'Pharaoh', 'A priest', 'A prophet'], ans: 1 },
+      { q: 'God spoke to Moses from a:', opts: ['Cloud', 'Burning bush', 'Whirlwind', 'Star'], ans: 1 },
+      { q: 'The Passover commemorates:', opts: ['Creation', 'God passing over the houses of Israel', 'The crossing of the Jordan', 'Jacob&rsquo;s ladder'], ans: 1 },
+      { q: 'God parted which body of water?', opts: ['The Jordan River', 'The Sea of Galilee', 'The Red Sea', 'The Mediterranean'], ans: 2 },
+      { q: 'On which mountain did Moses receive the Ten Commandments?', opts: ['Tabor', 'Sinai', 'Carmel', 'Zion'], ans: 1 },
+      { q: 'How many commandments are there?', opts: ['7', '10', '12', '40'], ans: 1 },
+      { q: 'Manna was:', opts: ['A fruit', 'Bread from heaven', 'A tent', 'A song'], ans: 1 },
+      { q: '&ldquo;Honor your father and your mother&rdquo; is which commandment?', opts: ['3rd', '4th', '5th', '7th'], ans: 1 },
+      { q: 'The Israelites wandered in the desert for:', opts: ['10 years', '20 years', '40 years', '70 years'], ans: 2 },
+      { q: 'Who led Israel into the Promised Land?', opts: ['Aaron', 'Joshua', 'Caleb', 'Samuel'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Crossing Your Own Red Sea',
+        scenario: 'You are facing something scary — a big test, moving to a new school, or a hard conversation.',
+        steps: [
+          'Name the &ldquo;Egypt&rdquo; you want to leave (fear, a habit, an unhealthy friendship).',
+          'Recall that God parted the Red Sea — He goes ahead of you.',
+          'Take one concrete step today (study 20 minutes, write the apology, ask the question).',
+          'Thank God for going with you, even when the path looks impossible.'
+        ],
+        reflect: 'What &ldquo;Red Sea&rdquo; might God be asking you to cross this month?'
+      },
+      {
+        title: 'Living the Ten Commandments at School',
+        scenario: 'You see a classmate copying answers on a quiz.',
+        steps: [
+          'Recall the 7th and 8th commandments: do not steal, do not bear false witness.',
+          'Quietly do not show your paper. Do not shame anyone publicly.',
+          'After class, encourage your classmate to ask the teacher for help next time.',
+          'If cheating continues, talk privately with a trusted adult.'
+        ],
+        reflect: 'How do the Commandments protect both me and the people around me?'
+      },
+      {
+        title: 'Trusting God in the Desert',
+        scenario: 'Things are not going your way — you didn&rsquo;t make the team, a friend moved away, or family stress is heavy.',
+        steps: [
+          'Remember the Israelites: God fed them manna one day at a time.',
+          'Write down one small thing God has given you <em>today</em>.',
+          'Pray a short prayer: &ldquo;Lord, give me my daily bread.&rdquo;',
+          'Help someone else who is also struggling — even a kind word counts.'
+        ],
+        reflect: 'How does God provide &ldquo;manna&rdquo; — just enough — for what I need today?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — God Invites Us Into His Kingdom',
+    icon: '👑',
+    theme: 'Judges, Kings, and Wisdom',
+    desc: 'After settling in the Promised Land, Israel asks for a king. We meet Saul, David, and Solomon — and learn what true kingship under God looks like.',
+    chapters: [
+      'The Time of the Judges (Book of Judges)',
+      'Samuel and the First King (1 Samuel 1-10)',
+      'David, the Shepherd-King (1 Samuel 16 - 2 Samuel 7)',
+      'Solomon and the Temple (1 Kings 1-11)',
+      'Wisdom Literature: Psalms, Proverbs, Job (selections)'
+    ],
+    scripture: { ref: 'Psalm 23:1', text: 'The LORD is my shepherd; there is nothing I lack.' },
+    vocab: [
+      ['Judge', 'A leader raised up by God to deliver Israel from enemies before the time of kings.'],
+      ['Anoint', 'To pour holy oil on someone, setting them apart for God&rsquo;s service.'],
+      ['Psalm', 'A sacred song-prayer, many written by King David.'],
+      ['Wisdom', 'The gift of knowing how to live in the way God desires.'],
+      ['Temple', 'The holy house in Jerusalem built by Solomon, where God&rsquo;s presence dwelt.']
+    ],
+    lessonHTML: `
+      <p>Unit 3 explores the question: <em>Who is really our king?</em> Israel had judges (like Deborah, Gideon, and Samson), but the people demanded a human king like the surrounding nations. God allowed it — and used it to teach a deeper truth: <strong>God Himself is the true King</strong>, and the best human kings are those who serve Him.</p>
+      <h3>Three kings, three lessons</h3>
+      <p><strong>Saul</strong> begins humble but loses his way through disobedience. <strong>David</strong> sins gravely but repents — he becomes the model of the &ldquo;king after God&rsquo;s own heart.&rdquo; <strong>Solomon</strong> begins with the gift of wisdom and builds the Temple, but ends his life pulled away by foreign wives and false gods. Each story is a mirror for our own lives.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>True kingship serves God</strong>; selfish leadership leads to ruin.</li>
+        <li><strong>The Psalms</strong> are the prayer book of the Bible — Jesus Himself prayed them.</li>
+        <li><strong>Wisdom is a gift</strong> we ask God for, not something we invent on our own.</li>
+        <li><strong>David&rsquo;s line points to Jesus</strong>, the eternal &ldquo;Son of David&rdquo; whose Kingdom never ends.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who anointed Saul as the first king of Israel?', ans: 'The prophet Samuel.' },
+      { q: 'Which giant did young David defeat?', ans: 'Goliath, the Philistine.' },
+      { q: 'What did Solomon ask God for when given any wish?', ans: 'Wisdom (an understanding heart).' },
+      { q: 'What great building did Solomon construct in Jerusalem?', ans: 'The Temple.' },
+      { q: 'Who wrote many of the Psalms?', ans: 'King David.' },
+      { q: 'Name two judges who led Israel.', ans: 'Any two of: Deborah, Gideon, Samson, Samuel, Othniel, Ehud.' },
+      { q: 'What is the meaning of the word &ldquo;Christ&rdquo; / &ldquo;Messiah&rdquo;?', ans: '&ldquo;Anointed One.&rdquo;' },
+      { q: 'Memory verse: &ldquo;The LORD is my _________.&rdquo; (Psalm 23)', ans: 'shepherd' }
+    ],
+    quiz: [
+      { q: 'Before kings, Israel was led by:', opts: ['Pharaohs', 'Judges', 'Senators', 'Generals'], ans: 1 },
+      { q: 'Saul was the _____ king of Israel.', opts: ['1st', '2nd', '3rd', '4th'], ans: 0 },
+      { q: 'David defeated Goliath using:', opts: ['A sword', 'A spear', 'A sling and a stone', 'A bow'], ans: 2 },
+      { q: 'David was originally a:', opts: ['Soldier', 'Carpenter', 'Shepherd', 'Priest'], ans: 2 },
+      { q: 'When David sinned, the prophet who confronted him was:', opts: ['Elijah', 'Nathan', 'Isaiah', 'Samuel'], ans: 1 },
+      { q: 'Solomon was famous for his:', opts: ['Strength', 'Wisdom', 'Speed', 'Wealth alone'], ans: 1 },
+      { q: 'The Temple was built in:', opts: ['Bethlehem', 'Nazareth', 'Jerusalem', 'Jericho'], ans: 2 },
+      { q: 'The book of Psalms is mainly:', opts: ['Laws', 'Prayer-songs', 'Letters', 'Genealogies'], ans: 1 },
+      { q: '&ldquo;Messiah&rdquo; means:', opts: ['Teacher', 'Anointed One', 'Servant', 'Father'], ans: 1 },
+      { q: 'Which Psalm begins &ldquo;The LORD is my shepherd&rdquo;?', opts: ['Psalm 1', 'Psalm 23', 'Psalm 51', 'Psalm 100'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Leading Like David, Not Saul',
+        scenario: 'You&rsquo;re placed in charge of a group project or a younger sibling.',
+        steps: [
+          'Pray briefly for wisdom — the way Solomon did.',
+          'Listen to everyone in the group before deciding.',
+          'Take responsibility when something goes wrong instead of blaming others (David&rsquo;s repentance, Saul&rsquo;s excuses).',
+          'Thank each person for their contribution at the end.'
+        ],
+        reflect: 'How is being a Christian leader different from being &ldquo;the boss&rdquo;?'
+      },
+      {
+        title: 'Praying the Psalms with Your Feelings',
+        scenario: 'You feel anxious, sad, angry, or grateful — but you don&rsquo;t know what to pray.',
+        steps: [
+          'Open the Book of Psalms (try Psalm 23 for peace, Psalm 51 for sorrow over sin, Psalm 100 for joy).',
+          'Read it slowly out loud.',
+          'Replace the &ldquo;I&rdquo; with your own name where it fits.',
+          'Sit quietly for one minute and let God respond.'
+        ],
+        reflect: 'Why is it freeing to know that even great saints prayed when they were upset?'
+      },
+      {
+        title: 'Asking God for Wisdom',
+        scenario: 'You have a hard decision — about a friendship, an activity to drop, or how to handle a conflict.',
+        steps: [
+          'Remember Solomon: wisdom is something you ask for.',
+          'Write the question clearly on paper.',
+          'List who could give you good counsel (parent, priest, trusted teacher).',
+          'Pray, then talk with one of those people before deciding.'
+        ],
+        reflect: 'When was the last time you asked God for wisdom <em>before</em> deciding instead of after?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — God Reminds Us to Do His Will',
+    icon: '🔥',
+    theme: 'The Prophets',
+    desc: 'When Israel forgets God, He sends prophets to call them back. Isaiah, Jeremiah, Ezekiel, Daniel, and others speak God&rsquo;s word with courage.',
+    chapters: [
+      'What Is a Prophet? (Introduction)',
+      'Isaiah and the Suffering Servant (Isaiah 6, 53)',
+      'Jeremiah and the New Covenant (Jeremiah 1, 31)',
+      'Ezekiel and the Valley of Dry Bones (Ezekiel 37)',
+      'Daniel and the Lions&rsquo; Den (Daniel 6)'
+    ],
+    scripture: { ref: 'Isaiah 6:8', text: 'Then I heard the voice of the Lord saying: Whom shall I send? Who will go for us? &ldquo;Here I am,&rdquo; I said; &ldquo;send me!&rdquo;' },
+    vocab: [
+      ['Prophet', 'A person sent by God to speak His message.'],
+      ['Idolatry', 'Worshipping anything other than the one true God.'],
+      ['Repentance', 'Turning away from sin and back toward God.'],
+      ['Exile', 'The forced removal of God&rsquo;s people to Babylon (587 BC).'],
+      ['Messianic prophecy', 'A prediction in the Old Testament that points to Jesus Christ.']
+    ],
+    lessonHTML: `
+      <p>A prophet is not mainly someone who predicts the future — a prophet is someone who <strong>speaks God&rsquo;s word</strong>. When Israel turns to false gods, lives unjustly, or oppresses the poor, God raises up prophets to call them back. Many of them suffer for telling the truth.</p>
+      <h3>Major and Minor Prophets</h3>
+      <p>The &ldquo;major&rdquo; prophets (Isaiah, Jeremiah, Ezekiel, Daniel) are called major because their books are longer, not because they are more important. The twelve &ldquo;minor&rdquo; prophets (Hosea, Amos, Micah, Jonah, etc.) wrote shorter but equally powerful messages.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>God always sends a warning before judgment</strong>, because He is merciful.</li>
+        <li><strong>The prophets defended the poor, the orphan, and the widow.</strong> Justice and worship go together.</li>
+        <li><strong>Many prophecies point directly to Jesus</strong> — Isaiah 7:14 (Emmanuel), Isaiah 53 (Suffering Servant), Micah 5:2 (Bethlehem).</li>
+        <li><strong>We are also called to be prophets</strong> through Baptism — to speak truth in love.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'What is the main job of a prophet?', ans: 'To speak God&rsquo;s word and call people back to Him.' },
+      { q: 'Name two major prophets.', ans: 'Any two of: Isaiah, Jeremiah, Ezekiel, Daniel.' },
+      { q: 'Where did Daniel get thrown — and survive?', ans: 'In the lions&rsquo; den.' },
+      { q: 'What did Isaiah say to God when called? (Isaiah 6:8)', ans: '&ldquo;Here I am; send me!&rdquo;' },
+      { q: 'What was the &ldquo;Exile&rdquo;?', ans: 'The Babylonian captivity, when Judah was taken away from the Promised Land (587 BC).' },
+      { q: 'Why is Isaiah 53 called the &ldquo;Suffering Servant&rdquo; passage?', ans: 'Because it describes a servant who suffers for the sins of the people — fulfilled in Jesus.' },
+      { q: 'What did Ezekiel see in the valley?', ans: 'A valley of dry bones that came back to life.' },
+      { q: 'In what town does Micah say the Messiah will be born?', ans: 'Bethlehem (Micah 5:2).' }
+    ],
+    quiz: [
+      { q: 'A prophet is someone who:', opts: ['Tells fortunes', 'Speaks God&rsquo;s word', 'Builds temples', 'Leads armies'], ans: 1 },
+      { q: 'Isaiah 7:14 prophesies a child called:', opts: ['David', 'Emmanuel', 'Cyrus', 'John'], ans: 1 },
+      { q: 'The Suffering Servant passage is in:', opts: ['Isaiah 6', 'Isaiah 53', 'Jeremiah 1', 'Daniel 6'], ans: 1 },
+      { q: 'Jeremiah promised God would write His law on:', opts: ['Stone', 'Hearts', 'Scrolls', 'Doorposts'], ans: 1 },
+      { q: 'Ezekiel&rsquo;s vision of dry bones means:', opts: ['Israel will fight', 'God can bring His people back to life', 'The exile will last forever', 'A famine is coming'], ans: 1 },
+      { q: 'Daniel was thrown into the lions&rsquo; den because he:', opts: ['Stole', 'Prayed to God', 'Lied', 'Refused to fight'], ans: 1 },
+      { q: 'Micah prophesied the Messiah would be born in:', opts: ['Jerusalem', 'Nazareth', 'Bethlehem', 'Hebron'], ans: 2 },
+      { q: 'The Babylonian Exile lasted about:', opts: ['7 years', '40 years', '70 years', '400 years'], ans: 2 },
+      { q: 'Jonah was sent to preach to:', opts: ['Egypt', 'Babylon', 'Nineveh', 'Rome'], ans: 2 },
+      { q: 'Through Baptism, we share in Jesus&rsquo; mission as priest, prophet, and:', opts: ['Judge', 'King', 'Teacher', 'Soldier'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Speaking the Truth in Love',
+        scenario: 'A friend is spreading a rumor about another classmate that you know is false.',
+        steps: [
+          'Pray quickly for courage — like Jeremiah, who was young and afraid.',
+          'Pull your friend aside privately, not in front of others.',
+          'Calmly say: &ldquo;That&rsquo;s not true, and it&rsquo;s hurting them.&rdquo;',
+          'Be willing to lose a little &ldquo;cool&rdquo; to do the right thing.'
+        ],
+        reflect: 'A prophet is not popular but is faithful. When was the last time you chose faithful over popular?'
+      },
+      {
+        title: 'Standing Up for the Poor and Forgotten',
+        scenario: 'You notice the same student always eats alone or seems to have no school supplies.',
+        steps: [
+          'Recall the prophets&rsquo; consistent call: care for the orphan, widow, and poor.',
+          'Sit with the student or share supplies without making it a big deal.',
+          'Mention it (kindly and privately) to a teacher or counselor.',
+          'Make it a regular habit, not a one-time act.'
+        ],
+        reflect: 'How does treating one person differently change the whole feel of your school?'
+      },
+      {
+        title: 'Praying When You Are Afraid',
+        scenario: 'You have a fear (illness in the family, a test, a tryout, a difficult home situation).',
+        steps: [
+          'Remember Daniel praying three times a day — even with lions outside.',
+          'Set a phone alarm for one quick prayer time today.',
+          'Pray a simple prayer: &ldquo;Jesus, I trust in you.&rdquo;',
+          'Tell one trusted adult what you are facing.'
+        ],
+        reflect: 'How does prayer change <em>me</em>, even when the situation outside doesn&rsquo;t change yet?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — God Promises Us Everlasting Life',
+    icon: '🕊️',
+    theme: 'Hope, the Maccabees, and the Coming of the Messiah',
+    desc: 'In the centuries before Jesus, God&rsquo;s people hold on to hope. The Maccabees fight for faith, and the Old Testament closes with longing for the Savior.',
+    chapters: [
+      'Return from Exile and Rebuilding (Ezra, Nehemiah)',
+      'The Maccabees: Faithful in Persecution (1 &amp; 2 Maccabees)',
+      'Wisdom and Hope (Sirach, Wisdom)',
+      'The Promise of Resurrection (Daniel 12, 2 Maccabees 7)',
+      'Preparing for the Messiah (between the Testaments)'
+    ],
+    scripture: { ref: 'Daniel 12:2', text: 'Many of those who sleep in the dust of the earth shall awake; some to everlasting life, others to reproach and everlasting disgrace.' },
+    vocab: [
+      ['Resurrection', 'The rising from the dead to everlasting life.'],
+      ['Martyr', 'Someone who dies rather than deny their faith.'],
+      ['Hanukkah', 'The Jewish &ldquo;Feast of Dedication&rdquo; commemorating the Maccabees rededicating the Temple.'],
+      ['Messiah', 'The promised Savior — &ldquo;Anointed One&rdquo; — fulfilled in Jesus Christ.'],
+      ['Hope', 'The theological virtue of trusting in God&rsquo;s promise of eternal life.']
+    ],
+    lessonHTML: `
+      <p>The Old Testament does not end with a victory parade. It ends with God&rsquo;s people scattered, ruled by foreign powers, and waiting. But this is not despair — it is <strong>hope</strong>. Daniel, 2 Maccabees, and the Wisdom books all begin to teach clearly what was hinted at before: <strong>death is not the end</strong>. God will raise the faithful to everlasting life.</p>
+      <h3>The Maccabees</h3>
+      <p>When a foreign king tries to force Jews to worship Greek gods and eat forbidden food, a family called the <strong>Maccabees</strong> resists. A mother and her seven sons (2 Maccabees 7) die rather than deny God — and as they die, they speak openly of resurrection. They are some of the first martyrs.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>God&rsquo;s promises are not just for this life.</strong> Eternal life with God is the goal.</li>
+        <li><strong>Faithfulness sometimes costs everything</strong> — but is never wasted.</li>
+        <li><strong>The whole Old Testament aches for a Savior.</strong> &ldquo;The Word became flesh&rdquo; (John 1:14) is the answer.</li>
+        <li><strong>Hope is not optimism.</strong> It is grounded in God&rsquo;s character and the resurrection.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who led the people back from exile to rebuild Jerusalem?', ans: 'Zerubbabel, Ezra, and Nehemiah.' },
+      { q: 'What does the word &ldquo;martyr&rdquo; mean?', ans: 'A witness — someone who gives their life rather than deny the faith.' },
+      { q: 'What feast celebrates the Maccabees rededicating the Temple?', ans: 'Hanukkah (the Feast of Dedication).' },
+      { q: 'In 2 Maccabees 7, how many sons of the holy mother were martyred?', ans: 'Seven.' },
+      { q: 'Daniel 12:2 teaches what about death?', ans: 'That those who sleep in the dust will awake — some to everlasting life.' },
+      { q: 'Which virtue helps us trust God&rsquo;s promise of heaven?', ans: 'Hope.' },
+      { q: 'About how many years passed between the last Old Testament prophet and the birth of Christ?', ans: 'Roughly 400 years.' },
+      { q: 'Memory verse: complete &ldquo;Many of those who sleep in the dust... shall ____.&rdquo;', ans: 'awake' }
+    ],
+    quiz: [
+      { q: 'After exile, the Temple in Jerusalem was rebuilt under:', opts: ['Joshua', 'Zerubbabel', 'David', 'Solomon'], ans: 1 },
+      { q: 'A martyr is someone who:', opts: ['Predicts the future', 'Dies rather than deny their faith', 'Builds churches', 'Writes Scripture'], ans: 1 },
+      { q: 'The Maccabees fought against:', opts: ['Egypt', 'Rome', 'A Greek (Seleucid) king', 'Babylon'], ans: 2 },
+      { q: 'Hanukkah celebrates:', opts: ['Creation', 'The Exodus', 'The rededication of the Temple', 'King David'], ans: 2 },
+      { q: 'In 2 Maccabees 7, the holy mother loses how many sons?', opts: ['3', '5', '7', '12'], ans: 2 },
+      { q: 'Daniel 12 clearly teaches:', opts: ['Reincarnation', 'Resurrection of the dead', 'Eternal sleep', 'Nothing about the afterlife'], ans: 1 },
+      { q: 'The virtue of hope is grounded in:', opts: ['Optimism', 'God&rsquo;s promises', 'Good luck', 'Hard work alone'], ans: 1 },
+      { q: 'The Messiah&rsquo;s name &ldquo;Jesus&rdquo; means:', opts: ['Light', 'Servant', 'God saves', 'Teacher'], ans: 2 },
+      { q: 'Between the Old and New Testaments, God&rsquo;s people were mostly:', opts: ['Ruling the world', 'Waiting and longing for the Messiah', 'Building empires', 'Forgetting God'], ans: 1 },
+      { q: 'The fulfillment of the Old Testament is:', opts: ['Moses', 'David', 'Jesus Christ', 'Daniel'], ans: 2 }
+    ],
+    rla: [
+      {
+        title: 'Holding On to Hope',
+        scenario: 'A loved one is sick or has died. The world feels heavy.',
+        steps: [
+          'Light a candle and pray Daniel 12:2 slowly.',
+          'Write a short note to the person — even if they have passed away — telling them you trust in the resurrection.',
+          'Pray for them at Mass or in adoration.',
+          'Talk to a trusted adult or priest if the grief feels too big.'
+        ],
+        reflect: 'How is Christian hope different from just &ldquo;thinking positive&rdquo;?'
+      },
+      {
+        title: 'Standing Firm Like the Maccabees',
+        scenario: 'You are pressured to do something wrong (cheat, gossip, look at things online you shouldn&rsquo;t) just to fit in.',
+        steps: [
+          'Recall the seven brothers in 2 Maccabees 7 — faithful even in death.',
+          'Have a clear sentence ready: &ldquo;No, I&rsquo;m good — I don&rsquo;t do that.&rdquo;',
+          'Walk away or change the topic.',
+          'Tell a parent or counselor if the pressure keeps coming.'
+        ],
+        reflect: 'What &ldquo;small Maccabee moments&rdquo; happen in your week?'
+      },
+      {
+        title: 'Living for Eternity Today',
+        scenario: 'You catch yourself focusing only on grades, social media likes, or possessions.',
+        steps: [
+          'Pause and ask: will this matter in 100 years? In eternity?',
+          'Spend 5 minutes today on something with eternal value: prayer, kindness, helping at home.',
+          'Limit screen time tonight by 30 minutes and use it for spiritual reading or family conversation.',
+          'Thank God for one eternal gift He has given you.'
+        ],
+        reflect: 'When everlasting life is real to me, what changes <em>this week</em>?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.theme}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Faith in Action — Old Testament';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <p style="color:#666;font-style:italic;margin-bottom:14px;">${u.theme}</p>
+    <div class="scripture-box"><strong>${u.scripture.ref}</strong> &mdash; &ldquo;${u.scripture.text}&rdquo;</div>
+    <div class="chapter-list"><h4>📖 Chapters from <em>Blest Are We</em></h4><ol>${u.chapters.map(c => `<li>${c}</li>`).join('')}</ol></div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. You may consult <em>Blest Are We</em> and the Bible.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Great work — you have shown faith in action!' : '📖 Review the lesson and try again. God blesses every effort.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

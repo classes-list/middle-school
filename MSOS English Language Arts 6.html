@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 6th Grade ELA: Community &amp; Family</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .essential-q { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .essential-q strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.book { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-hero .quote { color: #FFD100; font-style: italic; margin-top: 10px; font-size: 0.9rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .scale-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px,1fr)); gap: 6px; margin-top: 8px; }
+    .scale-cell { background: #f8fafc; border-radius: 6px; padding: 8px 10px; text-align: center; border-left: 3px solid #1B3A8A; }
+    .scale-cell strong { color: #1B3A8A; font-size: 0.95rem; display: block; }
+    .scale-cell span { font-size: 0.74rem; color: #64748b; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">6th Grade ELA <span class="grade-tag">Gr. 6</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="MSOS English Language Arts Index.html" class="back-index-btn" title="Back to ELA Classes">← All ELA</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="../MSOS Logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="../NUI Logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Community &amp; Family</span>
+        </div>
+        <div class="topbar-right">ELA &middot; Grade 6</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Community &amp; Family</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">Anchored by three powerful novels &mdash; learning to read closely, write thoughtfully, and discuss with care.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen"></div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">How this unit&rsquo;s lessons connect to your daily life.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const SYLLABUS_HTML = `
+  <div class="syl-hero">
+    <div style="font-size:2.4rem;margin-bottom:8px">📚</div>
+    <h2>English Language Arts &mdash; Course Syllabus</h2>
+    <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+    <p class="quote">Empowered to succeed and guided by faith.</p>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card" style="flex:1 1 100%">
+      <h3>📋 Course Description</h3>
+      <p>Welcome to English Language Arts (ELA)! In this course, we&rsquo;ll strengthen our <strong>reading, writing, speaking, listening, and thinking</strong> skills. We&rsquo;ll read stories by diverse authors, create our own written pieces, and engage in thoughtful discussions. ELA is a space to explore ideas, ask questions, and grow as critical and creative thinkers.</p>
+      <p style="margin-top:8px">Please bring: pencils, a composition notebook, your computer, and a dedicated ELA binder. We will use Google Classroom and other edtech programs to support learning.</p>
+      <p style="margin-top:8px">I am excited to learn and grow with you in this special place where we are empowered to succeed and guided by faith. I hope we can establish and fortify a strong connection between home and school, making this a stellar year!</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>👩‍🏫 Teacher</h3>
+      <p><strong>Mrs. Lacey Vasquez</strong></p>
+      <p style="margin-top:8px;font-size:0.86rem;color:#475569">Communication primarily through Google Classroom and email. Please reach out for any questions about your child&rsquo;s progress.</p>
+    </div>
+    <div class="syl-card">
+      <h3>🎒 Materials</h3>
+      <ul>
+        <li>Pencils</li>
+        <li>Composition notebook</li>
+        <li>Computer (school-issued)</li>
+        <li>Dedicated ELA binder</li>
+        <li>Google Classroom + edtech access</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>🎯 6th Grade Goal &mdash; Building the Foundation</h3>
+    <p>Lays the foundation &mdash; students <strong>learn how to think philosophically and begin writing analytically with guidance</strong>. Theme: <strong>community and family</strong>.</p>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📖 Novels &amp; Readings &mdash; Grade 6 (Community/Family)</h3>
+    <ul>
+      <li><em>Lemonade War</em> by Jacqueline Davies</li>
+      <li><em>Number the Stars</em> by Lois Lowry</li>
+      <li><em>The Watsons Go to Birmingham &mdash; 1963</em> by Christopher Paul Curtis</li>
+    </ul>
+    <p style="margin-top:8px;font-size:0.86rem;font-style:italic;color:#475569">Great literature gives the reader opportunities to experience the human condition across decades and centuries. Great literature also has a compelling theme that is expressed through literary devices. We may substitute novels with short stories that have equal literary merit.</p>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>✍️ Types of Writing</h3>
+      <p>At all grade levels, we will have at least one <strong>multistage writing assignment in each quarter</strong>:</p>
+      <ul>
+        <li>Literary analysis</li>
+        <li>Expository</li>
+        <li>Persuasive</li>
+        <li>Argumentative</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>🎤 Types of Speeches</h3>
+      <ul>
+        <li>Storytelling</li>
+        <li>Poetry Reading</li>
+        <li>Dramatic Interpretation</li>
+        <li>Research Presentations</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>💬 Discussion Formats</h3>
+      <ul>
+        <li><strong>Socratic Seminar</strong> (summative assessment)</li>
+        <li>p4C discussion circle</li>
+        <li>Peer-to-peer</li>
+        <li>Table talks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📊 Grade Categories</h3>
+    <div class="syl-grade-row">
+      <div class="syl-grade-pill"><span>15%</span>Homework<small>At-home practice</small></div>
+      <div class="syl-grade-pill"><span>20%</span>Classwork<small>Daily participation, engagement, seatwork</small></div>
+      <div class="syl-grade-pill"><span>10%</span>Quizzes<small>Short formative assessments</small></div>
+      <div class="syl-grade-pill"><span>15%</span>Tests<small>Summative assessments</small></div>
+      <div class="syl-grade-pill"><span>15%</span>Portfolio<small>Student-maintained digital file</small></div>
+      <div class="syl-grade-pill"><span>25%</span>Projects &amp; Essays<small>Multistage</small></div>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📐 Grade Scale</h3>
+    <div class="scale-grid">
+      <div class="scale-cell"><strong>A+</strong><span>100–97%</span></div>
+      <div class="scale-cell"><strong>A</strong><span>96–93%</span></div>
+      <div class="scale-cell"><strong>A−</strong><span>92–90%</span></div>
+      <div class="scale-cell"><strong>B+</strong><span>89–87%</span></div>
+      <div class="scale-cell"><strong>B</strong><span>86–83%</span></div>
+      <div class="scale-cell"><strong>B−</strong><span>82–80%</span></div>
+      <div class="scale-cell"><strong>C+</strong><span>79–77%</span></div>
+      <div class="scale-cell"><strong>C</strong><span>76–73%</span></div>
+      <div class="scale-cell"><strong>C−</strong><span>72–70%</span></div>
+      <div class="scale-cell"><strong>D+</strong><span>69–67%</span></div>
+      <div class="scale-cell"><strong>D</strong><span>66–63%</span></div>
+      <div class="scale-cell"><strong>D−</strong><span>62–60%</span></div>
+      <div class="scale-cell" style="border-left-color:#b91c1c"><strong style="color:#b91c1c">F</strong><span>59–0%</span></div>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card" style="border-top-color:#B8860B">
+      <h3>⏰ No &ldquo;Late Work&rdquo; Policy</h3>
+      <p>Students must turn in their assignments <strong>on the day it is due, at the time it is due</strong>. If you believe your circumstance or situation may be an exception, please contact me through email <em>before</em> the assignment is due.</p>
+      <p style="margin-top:8px;background:#fef3c7;padding:10px 14px;border-radius:6px;border-left:4px solid #FFD100;font-weight:600;color:#7a5f00">All late assignments will be subject to a 10% penalty. All late work must be submitted by the next <u>school</u> (not class) day.</p>
+      <p style="margin-top:8px"><strong>For work missed due to an absence:</strong> Students are responsible for finding out what work they may have missed due to an absence.</p>
+    </div>
+    <div class="syl-card">
+      <h3>📝 Assessments</h3>
+      <ul>
+        <li>STAR Standardized testing</li>
+        <li>Timed essays</li>
+        <li>Socratic Seminar</li>
+        <li>Speeches</li>
+        <li>Multistage projects</li>
+      </ul>
+      <h3 style="margin-top:14px;font-size:0.95rem">📚 Homework &amp; Study Expectations</h3>
+      <p>Students typically have <strong>60–80 minutes</strong> of homework each day. However, students are expected to use their built-in &ldquo;flex time&rdquo; to complete homework assignments and other work.</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>📏 Classroom Rules &amp; Course Expectations</h3>
+      <ul>
+        <li>Stay in your seats</li>
+        <li>Practice safety</li>
+        <li><strong>Use computers and internet for class purposes only</strong></li>
+        <li>Be clean, tidy, and organized</li>
+        <li>Be timely</li>
+        <li>Be responsible</li>
+        <li>Know all your assignments and due dates</li>
+        <li>Be prepared</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>💡 Tips from the Teacher</h3>
+      <ul>
+        <li><strong>Google Classroom:</strong> Every student has a login. Ask for their username and password so you can see assignments and feedback.</li>
+        <li><strong>PE Uniforms:</strong> Leave one set in the classroom cubby &mdash; just in case.</li>
+        <li><strong>Regular Uniforms:</strong> Keep a spare polo in the cubby; recess can be sweaty.</li>
+        <li><strong>&ldquo;Read with a Stutter&rdquo;:</strong> Re-read! If we finished reading a book, story, or passage, we read it again, and again, and again. Once is not enough.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+  </div>
+`;
+
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Foundations of Reading &amp; Discussion',
+    icon: '📖',
+    book: 'Skills foundation',
+    timeframe: 'Quarter 1 launch',
+    desc: 'Learn how to read closely, &ldquo;Read with a Stutter,&rdquo; and discuss with care &mdash; in p4C circles, table talks, and Socratic Seminars.',
+    essential: 'How do good readers, writers, and listeners build a community of thinkers?',
+    vocab: [
+      ['Theme', 'A central idea or message about life that the author wants the reader to understand.'],
+      ['Literary Device', 'A tool a writer uses (metaphor, simile, foreshadowing, etc.) to make meaning.'],
+      ['p4C', 'Philosophy for Children &mdash; a discussion format where students sit in a circle and ask each other questions.'],
+      ['Socratic Seminar', 'A structured discussion where students lead inquiry into a text.'],
+      ['Annotation', 'Marking a text with notes &mdash; underlines, questions, and thoughts &mdash; so you read more deeply.'],
+      ['Read with a Stutter', 'A re-reading habit: once is not enough. Re-read passages, stories, and chapters to see what you missed.']
+    ],
+    lessonHTML: `
+      <p>Welcome to ELA! Before we dive into novels, we sharpen the tools we&rsquo;ll use all year: <strong>active reading, careful writing, and respectful discussion</strong>.</p>
+      <h3>How Good Readers Read</h3>
+      <ul>
+        <li><strong>Annotate</strong> &mdash; underline important lines; star confusing parts; write your reactions in the margin.</li>
+        <li><strong>Ask questions</strong> &mdash; What does the author <em>want</em> me to feel here? Why this word, not another?</li>
+        <li><strong>&ldquo;Read with a Stutter&rdquo;</strong> &mdash; once is not enough. Great readers re-read.</li>
+      </ul>
+      <h3>Discussion Formats We&rsquo;ll Use</h3>
+      <ul>
+        <li><strong>Table talks</strong> &mdash; quick, casual sharing with table partners.</li>
+        <li><strong>Peer-to-peer</strong> &mdash; structured talking in pairs.</li>
+        <li><strong>p4C discussion circle</strong> &mdash; everyone sits in a circle; one student starts with a question; the conversation flows.</li>
+        <li><strong>Socratic Seminar</strong> &mdash; a graded discussion where students lead inquiry into a text.</li>
+      </ul>
+      <h3>Sentence Stems for Strong Discussion</h3>
+      <ul>
+        <li>&ldquo;I noticed&hellip; because&hellip;&rdquo;</li>
+        <li>&ldquo;I&rsquo;d like to add to what _____ said&hellip;&rdquo;</li>
+        <li>&ldquo;I respectfully disagree because&hellip;&rdquo;</li>
+        <li>&ldquo;What do you mean by&hellip;?&rdquo;</li>
+      </ul>
+      <h3>What We&rsquo;re Aiming For</h3>
+      <p>By the end of 6th grade you should be able to think philosophically about big ideas, write an analytical paragraph with a clear main idea and evidence, and lead a respectful conversation in a discussion circle.</p>
+    `,
+    worksheet: [
+      { q: 'In one sentence, define <em>theme</em>.', ans: 'A central idea or message about life that the author wants the reader to take from the text.' },
+      { q: 'List three ways to actively annotate a text.', ans: 'Examples: underline important lines, write questions in the margin, star confusing parts, circle unfamiliar words, summarize a paragraph in the margin.' },
+      { q: 'Explain &ldquo;Read with a Stutter&rdquo; in your own words.', ans: 'It&rsquo;s the habit of re-reading texts. Even after finishing a passage, story, or book, good readers go back and read it again to catch what they missed the first time.' },
+      { q: 'What is the main difference between a Socratic Seminar and a casual table talk?', ans: 'A Socratic Seminar is a graded, formal discussion where students lead inquiry into a text. Table talk is a quick, informal sharing with classmates at your table.' },
+      { q: 'Write a sentence stem you could use to politely disagree in a discussion.', ans: 'Examples: &ldquo;I respectfully disagree because&hellip;&rdquo; or &ldquo;I see it a little differently &mdash; I think&hellip;&rdquo;' },
+      { q: 'Why does Mrs. Vasquez want students to re-read?', ans: 'Once is not enough. Re-reading reveals details, themes, and meanings missed on the first read &mdash; great literature deepens with each return.' }
+    ],
+    quiz: [
+      { q: 'A theme is best described as:', opts: ['A character&rsquo;s name', 'A central idea or message of the text', 'The setting', 'The plot summary'], ans: 1 },
+      { q: '&ldquo;Read with a Stutter&rdquo; means:', opts: ['Read aloud', 'Re-read repeatedly', 'Read fast', 'Read with your eyes closed'], ans: 1 },
+      { q: 'Which is NOT a discussion format we use in ELA?', opts: ['Socratic Seminar', 'p4C circle', 'Group lecture', 'Table talks'], ans: 2 },
+      { q: 'Annotation means:', opts: ['Erasing your notes', 'Marking a text with notes and questions', 'Reading silently', 'Skimming the headings'], ans: 1 },
+      { q: 'A summative assessment in ELA might be:', opts: ['A daily homework', 'A Socratic Seminar', 'A pop quiz', 'A bell ringer'], ans: 1 },
+      { q: 'p4C stands for:', opts: ['Philosophy for Children', 'Practice for Class', 'Pencils for Carry', 'Plans for Curriculum'], ans: 0 },
+      { q: 'A literary device is:', opts: ['A type of pencil', 'A tool a writer uses to make meaning', 'A study app', 'A textbook'], ans: 1 },
+      { q: 'A good question stem to add to someone&rsquo;s point is:', opts: ['&ldquo;I&rsquo;d like to add to what they said&hellip;&rdquo;', '&ldquo;You&rsquo;re wrong.&rdquo;', '&ldquo;That&rsquo;s boring.&rdquo;', '&ldquo;Stop talking.&rdquo;'], ans: 0 },
+      { q: 'Which is the FIRST thing to do when starting a new chapter?', opts: ['Skip to the end', 'Read the chapter title and look for clues', 'Watch a movie version', 'Throw the book down'], ans: 1 },
+      { q: 'In a Socratic Seminar, who leads the discussion?', opts: ['The teacher only', 'The students', 'A guest speaker', 'No one — it&rsquo;s silent'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Annotate Something You Read',
+        scenario: 'You&rsquo;re reading a book or article on your own.',
+        steps: [
+          'Have a pencil (or sticky notes for library books).',
+          'Underline a sentence that surprises you.',
+          'Write a question in the margin where you&rsquo;re confused.',
+          'After you finish, re-read just your annotated parts &mdash; what do you notice?'
+        ],
+        reflect: 'How does annotation change reading from passive to active?'
+      },
+      {
+        title: 'Run a Family Table Talk',
+        scenario: 'At dinner you want a real conversation.',
+        steps: [
+          'Pick a question: &ldquo;What was the best part of your day, and why?&rdquo;',
+          'Use a sentence stem: &ldquo;I&rsquo;d like to add to what Mom said&hellip;&rdquo;',
+          'Ask one follow-up question per person.',
+          'Listen more than you speak.'
+        ],
+        reflect: 'How does using ELA discussion habits make family time richer?'
+      },
+      {
+        title: 'Re-read a Favorite',
+        scenario: 'You have a book you read once and loved.',
+        steps: [
+          'Pull it back off the shelf.',
+          'Re-read just the first chapter slowly &mdash; with a pencil.',
+          'Find ONE thing you didn&rsquo;t notice before.',
+          'Tell a friend or parent what you found.'
+        ],
+        reflect: 'Why do English teachers say &ldquo;great literature deepens with each return&rdquo;?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — The Lemonade War',
+    icon: '🍋',
+    book: '<em>The Lemonade War</em> by Jacqueline Davies',
+    timeframe: 'Quarter 1',
+    desc: 'A battle between siblings Evan and Jessie reveals what family means &mdash; and how words can wound or heal.',
+    essential: 'How do conflicts between people who love each other start &mdash; and how can they end?',
+    vocab: [
+      ['Protagonist', 'The main character &mdash; the person whose story the book follows.'],
+      ['Antagonist', 'The character or force working against the protagonist (sometimes another person we love!).'],
+      ['Conflict', 'A struggle between two forces. Internal = inside one character; external = between characters or with the world.'],
+      ['Characterization', 'How an author shows what a character is like &mdash; through actions, words, thoughts, and other characters&rsquo; reactions.'],
+      ['Sibling rivalry', 'Competition between brothers and sisters; often masks deeper feelings of love or jealousy.'],
+      ['Resolution', 'How a story ends &mdash; how the conflict is settled (or not).']
+    ],
+    lessonHTML: `
+      <p><em>The Lemonade War</em> by Jacqueline Davies tells the story of two siblings &mdash; <strong>Evan</strong> (the older brother who loves people) and <strong>Jessie</strong> (the younger, brilliant sister who skipped a grade). When Jessie is placed in Evan&rsquo;s 5th grade class, all summer they feud over who can sell more lemonade.</p>
+      <h3>Why This Book Matters</h3>
+      <p>This isn&rsquo;t really about lemonade. It&rsquo;s about <strong>misunderstanding the people closest to us</strong>. Evan feels stupid because Jessie skipped a grade; Jessie feels lonely because Evan won&rsquo;t talk to her. Their war is fought with marketing and money &mdash; but what they&rsquo;re really fighting for is each other&rsquo;s love and respect.</p>
+      <h3>Skills We Practice</h3>
+      <ul>
+        <li><strong>Characterization</strong> &mdash; what does each chapter tell us about Evan and Jessie?</li>
+        <li><strong>Internal vs. external conflict</strong> &mdash; what&rsquo;s the war OUTSIDE? what&rsquo;s the war INSIDE?</li>
+        <li><strong>Annotating dialogue</strong> &mdash; mark moments where what a character says doesn&rsquo;t match what they FEEL.</li>
+        <li><strong>Predicting</strong> &mdash; how will this resolve?</li>
+      </ul>
+      <h3>Discussion Questions to Watch For</h3>
+      <ul>
+        <li>Is Evan a bad brother? Is Jessie a bad sister? Or are they both hurt children?</li>
+        <li>Where does the war ACTUALLY end &mdash; in numbers, or in words?</li>
+        <li>What is family, when family hurts you?</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who are the two protagonists, and how are they related?', ans: 'Evan and Jessie. They are siblings &mdash; Evan is the older brother; Jessie is the younger sister who skipped a grade.' },
+      { q: 'Define internal conflict and give an example from <em>The Lemonade War</em>.', ans: 'Internal conflict is a struggle inside a character. Example: Evan struggles with feeling stupid compared to Jessie; Jessie struggles with loneliness and not understanding social cues.' },
+      { q: 'What does the &ldquo;war&rdquo; in the title really represent?', ans: 'A misunderstanding between two siblings who love each other but feel hurt and jealous. The lemonade is just the surface; the real conflict is emotional.' },
+      { q: 'Find ONE example of characterization for Evan that uses his ACTIONS (not what someone says about him).', ans: 'Open answer. Example: Evan plays basketball and is good with people but struggles with reading &mdash; we see this when he&rsquo;s described running the lemonade stand.' },
+      { q: 'How is Jessie&rsquo;s strength also her weakness?', ans: 'Jessie is brilliant academically but struggles to read social cues. Her smartness makes her excellent at math/marketing but slow to recognize her brother&rsquo;s feelings.' },
+      { q: 'How does the book end, and was it satisfying?', ans: 'Open answer. The siblings ultimately reconnect after a destructive escalation; readers usually feel it&rsquo;s satisfying because it shows that family love survives big mistakes.' }
+    ],
+    quiz: [
+      { q: 'The author of <em>The Lemonade War</em> is:', opts: ['Lois Lowry', 'Jacqueline Davies', 'Christopher Paul Curtis', 'John Steinbeck'], ans: 1 },
+      { q: 'Evan and Jessie are:', opts: ['Best friends', 'Cousins', 'Siblings', 'Classmates only'], ans: 2 },
+      { q: 'The original spark for their conflict is:', opts: ['A pet', 'Jessie skipping a grade into Evan&rsquo;s class', 'A teacher', 'A bully'], ans: 1 },
+      { q: 'A protagonist is:', opts: ['The villain', 'The main character', 'The narrator only', 'The setting'], ans: 1 },
+      { q: 'Internal conflict is:', opts: ['A fight outside', 'A struggle inside the character', 'A character vs. nature', 'A character vs. society'], ans: 1 },
+      { q: 'Characterization can be shown by:', opts: ['Only direct description', 'Actions, words, thoughts, and others&rsquo; reactions', 'Title page only', 'Cover art'], ans: 1 },
+      { q: 'Evan struggles with what subject?', opts: ['Math', 'Reading', 'Recess', 'Lunch'], ans: 1 },
+      { q: 'Jessie struggles with:', opts: ['Math', 'Reading social cues', 'Sports', 'Lemonade'], ans: 1 },
+      { q: 'The lemonade war is REALLY about:', opts: ['Money', 'Sibling love and misunderstanding', 'Getting rich', 'Beating other kids'], ans: 1 },
+      { q: 'A satisfying resolution to a sibling conflict usually involves:', opts: ['One winner', 'Both apologizing and reconnecting', 'Silent treatment', 'Parent punishment'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Decode a Sibling/Friend Conflict',
+        scenario: 'You&rsquo;re mad at a sibling or close friend.',
+        steps: [
+          'Like Evan and Jessie, ask: what&rsquo;s the OUTSIDE conflict (what we&rsquo;re &ldquo;fighting&rdquo; about)?',
+          'Then ask: what&rsquo;s the INSIDE conflict (what feeling underneath)?',
+          'Write the inside one in your journal.',
+          'When calmer, share that feeling with the person, not the surface complaint.'
+        ],
+        reflect: 'How does naming the real feeling change the conversation?'
+      },
+      {
+        title: 'Characterize a Real Person',
+        scenario: 'You want to understand a family member better.',
+        steps: [
+          'Pick one family member. List 3 of their actions.',
+          'List 3 things they often say.',
+          'List 3 things they probably feel (but don&rsquo;t say).',
+          'Notice: action + words + feelings = a fuller picture (just like in books).'
+        ],
+        reflect: 'How does literary thinking help us understand real people?'
+      },
+      {
+        title: 'Run a Lemonade Stand (Math + ELA)',
+        scenario: 'You want to earn some money.',
+        steps: [
+          'Set up like Jessie: cost per cup, target profit, sales pitch.',
+          'Set up like Evan: build community &mdash; greet customers, smile, remember names.',
+          'After a day, count earnings AND count smiles.',
+          'Reflect on what was harder &mdash; the math or the people skills?'
+        ],
+        reflect: 'Which sibling&rsquo;s strength matters more in the real world?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — Number the Stars',
+    icon: '⭐',
+    book: '<em>Number the Stars</em> by Lois Lowry',
+    timeframe: 'Quarter 2',
+    desc: 'A young Danish girl helps her best friend escape the Nazis. A story about courage, friendship, and what we owe each other.',
+    essential: 'What does it mean to be brave when being brave is dangerous?',
+    vocab: [
+      ['Setting', 'When and where a story takes place. Setting often shapes the conflict.'],
+      ['Foreshadowing', 'Hints the author drops about what&rsquo;s coming.'],
+      ['Symbol', 'An object that stands for something bigger (the Star of David necklace, the casket of resistance papers).'],
+      ['Resistance', 'In WWII, ordinary citizens who secretly fought the Nazi occupation.'],
+      ['Holocaust', 'The Nazi systematic murder of 6 million Jews and millions of others (1933–1945).'],
+      ['Allegory', 'A story where characters and events stand for big ideas (here: courage, friendship, evil).']
+    ],
+    lessonHTML: `
+      <p><em>Number the Stars</em> by Lois Lowry won the 1990 Newbery Medal. It&rsquo;s based on the true story of Denmark&rsquo;s remarkable rescue of nearly all its Jewish citizens during the Holocaust.</p>
+      <h3>The Story</h3>
+      <p>Set in <strong>Copenhagen, Denmark, 1943</strong>. Ten-year-old <strong>Annemarie Johansen</strong> and her best friend <strong>Ellen Rosen</strong> face the terror of Nazi occupation. When the Nazis begin rounding up Danish Jews, Annemarie&rsquo;s family hides Ellen and risks their lives to help her family escape to Sweden.</p>
+      <h3>Why This Book Matters</h3>
+      <ul>
+        <li>A child&rsquo;s perspective makes WWII real and human-scale.</li>
+        <li>It&rsquo;s about the choices ordinary people make &mdash; some choose courage, some choose fear.</li>
+        <li>Real history: in October 1943, the Danish Resistance smuggled <strong>~7,200 Jews</strong> across the sea to neutral Sweden in a single week.</li>
+      </ul>
+      <h3>Literary Skills</h3>
+      <ul>
+        <li><strong>Setting analysis</strong> &mdash; how does occupied Denmark shape every scene?</li>
+        <li><strong>Foreshadowing</strong> &mdash; what hints does Lowry drop early about danger?</li>
+        <li><strong>Symbolism</strong> &mdash; the Star of David necklace; the funeral procession; the handkerchief.</li>
+        <li><strong>Theme tracking</strong> &mdash; courage, friendship, loyalty, family.</li>
+      </ul>
+      <h3>Hard Discussion Questions</h3>
+      <ul>
+        <li>Annemarie is afraid. Is she still brave?</li>
+        <li>What is the difference between a hero and a regular person who does heroic things?</li>
+        <li>Why does Ellen&rsquo;s family give up their home and go into hiding rather than fight?</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Where and when is <em>Number the Stars</em> set?', ans: 'Copenhagen, Denmark, in 1943 &mdash; during Nazi German occupation in WWII.' },
+      { q: 'Who are the two main young characters, and how are they connected?', ans: 'Annemarie Johansen (Christian Dane) and Ellen Rosen (Jewish Dane). They are best friends and live in the same building.' },
+      { q: 'What is the Holocaust?', ans: 'The Nazi systematic murder of 6 million Jews and millions of others between 1933–1945.' },
+      { q: 'Define foreshadowing and give an example.', ans: 'Hints the author drops about what&rsquo;s coming. Example: early scenes of Nazi soldiers on the corner foreshadow real danger later.' },
+      { q: 'What does Ellen&rsquo;s Star of David necklace symbolize, and what happens to it?', ans: 'It symbolizes Ellen&rsquo;s Jewish identity. Annemarie hides it in her hand when soldiers arrive &mdash; protecting Ellen&rsquo;s identity at the risk of her own.' },
+      { q: 'Why is the Danish Resistance important historically?', ans: 'Danish citizens organized to smuggle ~7,200 Jews to safety in Sweden &mdash; nearly all of Denmark&rsquo;s Jewish population &mdash; making Denmark unique among occupied nations.' }
+    ],
+    quiz: [
+      { q: '<em>Number the Stars</em> takes place in:', opts: ['1943 Denmark', '1865 America', '2001 New York', '1500 Spain'], ans: 0 },
+      { q: 'Annemarie is from:', opts: ['Germany', 'Denmark', 'France', 'Norway'], ans: 1 },
+      { q: 'Ellen Rosen is:', opts: ['Annemarie&rsquo;s sister', 'Annemarie&rsquo;s Jewish best friend', 'A teacher', 'A Nazi soldier'], ans: 1 },
+      { q: 'Lois Lowry won what award for this book?', opts: ['Pulitzer', 'Newbery Medal', 'Caldecott', 'National Book Award'], ans: 1 },
+      { q: 'A symbol in literature is:', opts: ['A typo', 'An object that stands for a bigger idea', 'A fancy word', 'A heading'], ans: 1 },
+      { q: 'Foreshadowing is:', opts: ['A bright object', 'Hints about what&rsquo;s coming', 'The setting', 'A flashback'], ans: 1 },
+      { q: 'About how many Danish Jews were saved by the Danish Resistance?', opts: ['~700', '~7,200', '~70,000', '~700,000'], ans: 1 },
+      { q: 'Annemarie&rsquo;s acts of bravery happen even though she:', opts: ['Has no fear', 'Is afraid', 'Is grown up', 'Has Nazi help'], ans: 1 },
+      { q: 'The Holocaust killed approximately how many Jews?', opts: ['600,000', '6 million', '60 million', '600 million'], ans: 1 },
+      { q: 'A central theme of the book is:', opts: ['Wealth', 'Quiet courage of ordinary people', 'Sibling rivalry', 'Sports'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Talk to a Holocaust Survivor or Witness',
+        scenario: 'You want history to feel real.',
+        steps: [
+          'Look up USC Shoah Foundation or similar oral history archives.',
+          'Watch ONE 10-minute survivor testimony.',
+          'Write down one moment that struck you.',
+          'Discuss: how does hearing one voice change a statistic into a story?'
+        ],
+        reflect: 'How does literature like <em>Number the Stars</em> prepare us to listen to real stories?'
+      },
+      {
+        title: 'Be a "Resister" in Small Ways',
+        scenario: 'You see someone being treated unfairly at school.',
+        steps: [
+          'Like Annemarie, you don&rsquo;t need to be fearless &mdash; just willing.',
+          'Speak up: &ldquo;Hey, that&rsquo;s not okay,&rdquo; or sit with the person who&rsquo;s alone.',
+          'Tell a trusted adult if it continues.',
+          'Write about what you did in a journal &mdash; small acts add up.'
+        ],
+        reflect: 'How are everyday acts of courage practice for the bigger ones we hope never come?'
+      },
+      {
+        title: 'Honor a Hero in Your Family',
+        scenario: 'Many families have stories of past hardship.',
+        steps: [
+          'Ask a grandparent: did anyone in our family live through war, persecution, or moving for safety?',
+          'Take notes (with permission, record).',
+          'Find one specific moment of courage they describe.',
+          'Tell their story to a younger family member.'
+        ],
+        reflect: 'How does naming heroes in your family change how you see your story?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — The Watsons Go to Birmingham — 1963',
+    icon: '🚗',
+    book: '<em>The Watsons Go to Birmingham &mdash; 1963</em> by Christopher Paul Curtis',
+    timeframe: 'Quarter 3',
+    desc: 'A funny, loving, deeply American family road-trips into history &mdash; and into one of the worst moments of the Civil Rights era.',
+    essential: 'How can humor live alongside tragedy &mdash; and how does family hold us together through both?',
+    vocab: [
+      ['First-person narrator', 'A story told by an &ldquo;I&rdquo; voice, in this case ten-year-old Kenny Watson.'],
+      ['Voice', 'The narrator&rsquo;s personality on the page &mdash; how the words feel.'],
+      ['Tone', 'The author&rsquo;s attitude toward the subject (often a mix in this book: funny + serious).'],
+      ['Civil Rights Movement', '1950s–60s American struggle to end legal racial segregation.'],
+      ['16th Street Baptist Church bombing', 'On Sept 15, 1963 in Birmingham, AL, white supremacists bombed a Black church, killing four girls.'],
+      ['Coming-of-age', 'A story about a young person growing up &mdash; learning truths that change them.']
+    ],
+    lessonHTML: `
+      <p><em>The Watsons Go to Birmingham &mdash; 1963</em> by Christopher Paul Curtis won a 1996 Newbery Honor. It&rsquo;s told from the perspective of <strong>Kenny Watson</strong>, a 10-year-old African American boy living in Flint, Michigan.</p>
+      <h3>The Story</h3>
+      <p>The Watsons are a loving, funny family &mdash; Dad, Momma, older brother Byron (in trouble), Kenny, and little sister Joetta. When Byron&rsquo;s behavior gets too wild, the family decides to drive south to Birmingham, Alabama to spend time with Grandma Sands. There, the family witnesses the <strong>16th Street Baptist Church bombing</strong> on September 15, 1963 &mdash; one of the most horrific moments of the Civil Rights era.</p>
+      <h3>What Makes This Book Special</h3>
+      <ul>
+        <li>It&rsquo;s LAUGH-OUT-LOUD funny in the first half. Kenny&rsquo;s voice is warm and hilarious.</li>
+        <li>Then it turns suddenly heartbreaking &mdash; teaching us that real life has both.</li>
+        <li>It honors Black family love and humor as fully as it honors Black suffering.</li>
+        <li>It humanizes the Civil Rights era through one family&rsquo;s experience.</li>
+      </ul>
+      <h3>Literary Skills</h3>
+      <ul>
+        <li><strong>Voice</strong> &mdash; what makes Kenny&rsquo;s narration unique?</li>
+        <li><strong>Tone shift</strong> &mdash; track where the book changes from funny to serious.</li>
+        <li><strong>Historical fiction</strong> &mdash; how the author weaves real events into a story.</li>
+        <li><strong>Theme</strong> &mdash; family love, growing up, racism, hope.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who narrates the book, and how old is he?', ans: 'Kenny Watson, age 10 &mdash; a first-person narrator.' },
+      { q: 'Where does the Watson family start, and where do they travel to?', ans: 'They start in Flint, Michigan and travel to Birmingham, Alabama to visit Grandma Sands.' },
+      { q: 'What real historical event do the Watsons experience near the end?', ans: 'The 16th Street Baptist Church bombing on September 15, 1963 &mdash; an act of white-supremacist terrorism that killed four young girls.' },
+      { q: 'Define <em>tone</em> and give an example of how it shifts in the book.', ans: 'Tone is the author&rsquo;s attitude toward the subject. The Watsons begins with a humorous, light tone and shifts to serious and heartbreaking after the bombing.' },
+      { q: 'Why is humor important in a book about a tragic event?', ans: 'It humanizes the family and shows the joy of Black family life &mdash; not just suffering. It also makes the tragedy land harder because we love these people first.' },
+      { q: 'How does Byron change over the course of the novel?', ans: 'Byron starts as a troubled, rebellious older brother. Witnessing the bombing and Kenny&rsquo;s pain afterward matures him &mdash; he becomes more caring and protective.' }
+    ],
+    quiz: [
+      { q: 'The author of <em>The Watsons Go to Birmingham &mdash; 1963</em> is:', opts: ['Lois Lowry', 'Christopher Paul Curtis', 'Jacqueline Davies', 'Mildred Taylor'], ans: 1 },
+      { q: 'Who narrates the book?', opts: ['Byron', 'Kenny', 'Momma', 'Grandma Sands'], ans: 1 },
+      { q: 'The Watson family lives in:', opts: ['Birmingham, AL', 'Flint, MI', 'Chicago, IL', 'Detroit, MI'], ans: 1 },
+      { q: 'They travel south to visit:', opts: ['An aunt', 'Grandma Sands', 'A cousin', 'A teacher'], ans: 1 },
+      { q: 'The bombing they witness took place at:', opts: ['16th Street Baptist Church', 'A school', 'A hotel', 'A grocery store'], ans: 0 },
+      { q: 'The bombing happened on:', opts: ['Sept 15, 1963', 'Dec 7, 1941', 'July 4, 1963', 'Aug 28, 1963'], ans: 0 },
+      { q: 'The bombing killed how many girls?', opts: ['1', '2', '4', '10'], ans: 2 },
+      { q: 'A first-person narrator uses what pronoun?', opts: ['He', 'She', 'I', 'They'], ans: 2 },
+      { q: 'The book&rsquo;s tone:', opts: ['Stays serious throughout', 'Stays funny throughout', 'Shifts from funny to serious', 'Has no tone'], ans: 2 },
+      { q: 'Byron is best described as:', opts: ['The youngest', 'The troubled older brother', 'A neighbor', 'A teacher'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Visit a Civil Rights Site',
+        scenario: 'Many cities have a Civil Rights memorial.',
+        steps: [
+          'Search: &ldquo;Civil Rights memorial near me.&rdquo;',
+          'Find the closest historic marker, museum, or church.',
+          'Visit, read every plaque carefully, and take notes.',
+          'Tell your family one specific person whose name you remember.'
+        ],
+        reflect: 'How does standing in a real place change the history?'
+      },
+      {
+        title: 'Listen to Your Grandparents&rsquo; Generation',
+        scenario: 'You want to understand history through people.',
+        steps: [
+          'Ask grandparents: &ldquo;What was happening in 1963 for you?&rdquo;',
+          'Listen without interrupting. Take notes.',
+          'Compare their experience to Kenny&rsquo;s family.',
+          'Notice: every family lived through these events differently.'
+        ],
+        reflect: 'How do family stories make textbook history feel real?'
+      },
+      {
+        title: 'Use Voice in Your Writing',
+        scenario: 'You&rsquo;re writing an essay or journal.',
+        steps: [
+          'Read a Kenny chapter aloud. Notice the &ldquo;voice&rdquo; &mdash; the words, rhythm, humor.',
+          'Now write a paragraph about your day in YOUR voice. Don&rsquo;t fake-formal it.',
+          'Read it aloud. Does it sound like YOU?',
+          'Compare with classmates. Notice that everyone&rsquo;s voice is different.'
+        ],
+        reflect: 'Why is voice the most important thing in great writing?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — Writing &amp; Speaking Showcase',
+    icon: '🎤',
+    book: 'Synthesis &amp; Portfolio',
+    timeframe: 'Quarter 4',
+    desc: 'Bring it all together &mdash; multistage writing, speeches (Storytelling, Poetry, Dramatic Interpretation, Research), and your end-of-year Portfolio.',
+    essential: 'How do I show what I&rsquo;ve learned this year through my own voice?',
+    vocab: [
+      ['Multistage writing', 'A writing project that goes through brainstorming, drafting, revising, and editing.'],
+      ['Literary analysis', 'Writing that examines HOW a text creates meaning (theme, character, devices).'],
+      ['Expository writing', 'Writing that explains a topic clearly and informatively.'],
+      ['Persuasive writing', 'Writing that tries to convince a reader to agree with an opinion.'],
+      ['Argumentative writing', 'Writing that uses evidence to defend a position against counterarguments.'],
+      ['Portfolio', 'A digital file where you collect your best work to show growth.']
+    ],
+    lessonHTML: `
+      <p>Quarter 4 brings everything together. We&rsquo;ll polish a major writing piece, deliver a real speech, and curate a <strong>Portfolio</strong> &mdash; a digital file of your best work from the year.</p>
+      <h3>Multistage Writing Process</h3>
+      <ol>
+        <li><strong>Brainstorm</strong> &mdash; gather ideas without judgment.</li>
+        <li><strong>Outline</strong> &mdash; organize ideas into a structure.</li>
+        <li><strong>Draft</strong> &mdash; write the first version freely.</li>
+        <li><strong>Revise</strong> &mdash; cut, reorder, deepen the IDEAS.</li>
+        <li><strong>Edit</strong> &mdash; fix grammar, punctuation, spelling.</li>
+        <li><strong>Publish</strong> &mdash; share with an audience.</li>
+      </ol>
+      <h3>Speech Types</h3>
+      <ul>
+        <li><strong>Storytelling</strong> &mdash; tell a personal or family story with dramatic timing.</li>
+        <li><strong>Poetry Reading</strong> &mdash; perform a poem out loud with feeling.</li>
+        <li><strong>Dramatic Interpretation</strong> &mdash; read a scene with multiple voices and emotion.</li>
+        <li><strong>Research Presentation</strong> &mdash; share findings on a topic with visuals and citations.</li>
+      </ul>
+      <h3>Tips for a Strong Speech</h3>
+      <ul>
+        <li>Slow down. Pause for emphasis.</li>
+        <li>Make eye contact &mdash; pick three friendly faces.</li>
+        <li>Practice 5 times before you present.</li>
+        <li>Breathe. The audience wants you to succeed.</li>
+      </ul>
+      <h3>Building Your Portfolio</h3>
+      <p>Your Portfolio is a digital folder showcasing your best work this year. Include:</p>
+      <ul>
+        <li>Your strongest essay</li>
+        <li>A creative writing piece you love</li>
+        <li>A speech transcript or recording</li>
+        <li>A reflection: how have you grown as a reader, writer, speaker?</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'List the six stages of multistage writing.', ans: 'Brainstorm, Outline, Draft, Revise, Edit, Publish.' },
+      { q: 'What is the difference between revising and editing?', ans: 'Revising changes IDEAS &mdash; reorganizing, deepening, cutting weak parts. Editing fixes mechanics &mdash; grammar, spelling, punctuation. Always revise BEFORE editing.' },
+      { q: 'List the four types of writing required at all grade levels.', ans: 'Literary analysis, expository, persuasive, and argumentative.' },
+      { q: 'List the four types of speeches we may give in ELA.', ans: 'Storytelling, Poetry Reading, Dramatic Interpretation, Research Presentations.' },
+      { q: 'Why is a Portfolio important?', ans: 'It shows your GROWTH over the year, not just one final test. It collects your best work and your reflection so you can see how far you&rsquo;ve come.' },
+      { q: 'Write down two tips for delivering a strong speech.', ans: 'Examples: slow down, make eye contact, pause for emphasis, practice 5+ times, breathe deeply, project your voice, look up from your notes.' }
+    ],
+    quiz: [
+      { q: 'The first step of multistage writing is:', opts: ['Edit', 'Brainstorm', 'Publish', 'Test'], ans: 1 },
+      { q: 'Revising means changing:', opts: ['Spelling only', 'Ideas', 'The font', 'Nothing'], ans: 1 },
+      { q: 'Editing means fixing:', opts: ['Ideas', 'Grammar / spelling / punctuation', 'The whole topic', 'The author'], ans: 1 },
+      { q: 'Which is NOT a type of writing assignment in this course?', opts: ['Literary analysis', 'Expository', 'Argumentative', 'Recipe'], ans: 3 },
+      { q: 'Which is NOT a type of speech?', opts: ['Storytelling', 'Poetry Reading', 'Cooking demo', 'Dramatic Interpretation'], ans: 2 },
+      { q: 'A Portfolio is best described as:', opts: ['A test', 'A digital file of your best work', 'A textbook', 'A laptop'], ans: 1 },
+      { q: 'A literary analysis essay focuses on:', opts: ['How a text creates meaning', 'Selling a product', 'Personal feelings only', 'Recipes'], ans: 0 },
+      { q: 'Persuasive writing tries to:', opts: ['Inform only', 'Convince the reader', 'Tell a joke', 'Just describe'], ans: 1 },
+      { q: 'A good speech tip is to:', opts: ['Read fast', 'Slow down and make eye contact', 'Stare at the floor', 'Mumble'], ans: 1 },
+      { q: 'In a Socratic Seminar, your job is to:', opts: ['Stay silent', 'Lead inquiry into the text with questions and evidence', 'Answer the teacher only', 'Watch the clock'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Build a Personal Portfolio Folder',
+        scenario: 'You want to track your own growth.',
+        steps: [
+          'Create a Google Drive folder titled &ldquo;ELA Portfolio.&rdquo;',
+          'Save your favorite essay this year.',
+          'Save your favorite creative piece.',
+          'Add a 1-page reflection: what was hardest? What did you learn?'
+        ],
+        reflect: 'How does seeing your own growth on paper change how you see yourself as a learner?'
+      },
+      {
+        title: 'Give a 1-Minute Speech',
+        scenario: 'You have a family dinner or gathering.',
+        steps: [
+          'Pick a topic: &ldquo;A book that changed me this year.&rdquo;',
+          'Practice the speech 3 times with a mirror.',
+          'Stand up at dinner and give it &mdash; ONE minute, eye contact, slow.',
+          'Notice how it feels to share your thinking out loud.'
+        ],
+        reflect: 'Why is public speaking a life skill, not just a school skill?'
+      },
+      {
+        title: 'Write a Letter to Future You',
+        scenario: 'You finished 6th grade ELA.',
+        steps: [
+          'Open a doc &ldquo;Letter to 7th-grade me.&rdquo;',
+          'Tell your future self 3 things you learned this year.',
+          'Tell yourself one thing you want to keep doing as a reader.',
+          'Save it. Open it next September.'
+        ],
+        reflect: 'How does writing to yourself across time make growth visible?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.book} &middot; ${u.timeframe}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Community & Family';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const ss = document.getElementById('syllabus-screen');
+  ss.innerHTML = SYLLABUS_HTML;
+  ss.classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <div class="meta-bar">
+      <span class="meta-pill book">📖 ${u.book}</span>
+      <span class="meta-pill">📅 ${u.timeframe}</span>
+    </div>
+    <div class="essential-q"><strong>Essential Question:</strong> ${u.essential}</div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. You may use your novel and your notes.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Excellent — you&rsquo;re thinking like a reader!' : '📖 Re-read the chapter (&ldquo;read with a stutter&rdquo;) and try again.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>
