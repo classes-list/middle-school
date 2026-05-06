@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 8th Grade Foreign Languages: Authentic Communication</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .essential-q { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .essential-q strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; font-size: 1rem; }
+    .vocab-card .pron { color: #B8860B; font-style: italic; font-size: 0.85rem; display: block; margin-bottom: 4px; }
+    .vocab-card span.def { font-size: 13px; color: #555; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.lang { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-hero .quote { color: #FFD100; font-style: italic; margin-top: 10px; font-size: 0.9rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+    .phrase-table { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0; overflow: hidden; margin: 14px 0; }
+    .phrase-table table { width: 100%; border-collapse: collapse; }
+    .phrase-table th { background: #1B3A8A; color: #fff; padding: 10px 14px; text-align: left; font-size: 0.85rem; }
+    .phrase-table td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; font-size: 0.92rem; }
+    .phrase-table td.target { font-weight: 700; color: #1B3A8A; }
+    .phrase-table td.pron { font-style: italic; color: #B8860B; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">8th Grade Foreign Languages <span class="grade-tag">Gr. 8</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-foreign-languages-index.html" class="back-index-btn" title="Back to FL Classes">← All FL</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Authentic Communication</span>
+        </div>
+        <div class="topbar-right">FL &middot; Grade 8</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Authentic Communication</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">Real conversation, authentic media, cultural depth, and a capstone presentation. Three years of language work culminate here.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen"></div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">Take your language skills into real life as you head to high school.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const SYLLABUS_HTML = `
+  <div class="syl-hero">
+    <div style="font-size:2.4rem;margin-bottom:8px">🌍</div>
+    <h2>Foreign Languages &mdash; Course Syllabus</h2>
+    <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+    <p class="quote">&ldquo;A different language is a different vision of life.&rdquo; &mdash; Federico Fellini</p>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card" style="flex:1 1 100%">
+      <h3>📋 Course Description</h3>
+      <p>In 8th grade, students reach <strong>authentic communication</strong>. After three years of practice, students can hold sustained conversations, understand authentic media (songs, films, news), and present cultural depth in their target language(s). This year culminates in a <strong>capstone presentation</strong>.</p>
+      <p style="margin-top:8px">Hawaiian (ʻŌlelo Hawaiʻi) reaches its most cultural depth: oli (chants), mele (songs), and oral traditions. Students choose at least one Romance language and Mandarin to demonstrate competency in the capstone.</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>👩‍🏫 Teacher</h3>
+      <p><strong>Mrs. Freitas</strong></p>
+      <p style="margin-top:8px;font-size:0.86rem;color:#475569">Communication primarily through Google Classroom and email.</p>
+    </div>
+    <div class="syl-card">
+      <h3>📱 Tools</h3>
+      <ul>
+        <li><strong>Duolingo</strong> &mdash; level 4–5 in chosen language</li>
+        <li><strong>Rosetta Stone</strong> &mdash; advanced units</li>
+        <li>Authentic media: news, films, podcasts</li>
+        <li>Pen pal exchanges (where possible)</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>🎒 Materials</h3>
+      <ul>
+        <li>Computer + earbuds</li>
+        <li>Vocabulary notebook (3 years cumulative)</li>
+        <li>Materials for capstone project</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>🎯 8th Grade Goals</h3>
+    <ul>
+      <li>Hold a sustained 5+ minute conversation in at least one language.</li>
+      <li>Understand authentic media (a song, news clip, or film) at conversational speed.</li>
+      <li>Present a cultural research project on a Spanish-, French-, Italian-, Mandarin-, or Hawaiian-speaking culture.</li>
+      <li>Read aloud a Hawaiian oli or mele with proper pronunciation, ʻokina, kahakō, and honor for the meaning.</li>
+      <li>Choose &amp; defend a high-school language path (continue all five? specialize in one?).</li>
+    </ul>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📊 Grading</h3>
+    <div class="syl-grade-row">
+      <div class="syl-grade-pill"><span>15%</span>Daily Practice<small>Duolingo / Rosetta Stone</small></div>
+      <div class="syl-grade-pill"><span>20%</span>Classwork<small>Conversation, peer work</small></div>
+      <div class="syl-grade-pill"><span>15%</span>Quizzes &amp; Tests<small>Listening, reading</small></div>
+      <div class="syl-grade-pill"><span>25%</span>Speaking &amp; Conversation<small>Sustained dialogue</small></div>
+      <div class="syl-grade-pill"><span>25%</span>Capstone Project<small>Final cultural &amp; language presentation</small></div>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>🏠 Home Practice</h3>
+      <p><strong>Daily expectation:</strong> 20 minutes per day &mdash; with at least 5 minutes of OUT-LOUD speaking.</p>
+      <p style="margin-top:6px"><strong>Authentic media:</strong> watch one show or listen to one song per week in your target language.</p>
+    </div>
+    <div class="syl-card">
+      <h3>🌺 Heritage Connection</h3>
+      <p>8th graders are encouraged to connect with their family heritage:</p>
+      <ul>
+        <li>If you have Hawaiian roots, dive deeper into ʻŌlelo Hawaiʻi.</li>
+        <li>If you have other heritage, ask your kūpuna (elders) about words they remember.</li>
+        <li>Share your discoveries with the class.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+  </div>
+`;
+
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Hawaiian: Oli, Mele &amp; Oral Tradition',
+    icon: '🌺',
+    book: 'Hawaiian / ʻŌlelo Hawaiʻi',
+    timeframe: 'Year-long emphasis',
+    desc: 'Reach the heart of Hawaiian language &mdash; oli (chants), mele (songs), and the oral tradition that carried Hawaiian wisdom for centuries.',
+    essential: 'How does Hawaiian language carry meaning that English translation can&rsquo;t fully capture?',
+    vocab: [
+      ['Oli', 'OH-lee', 'Chant (sacred or ceremonial)'],
+      ['Mele', 'MAY-leh', 'Song'],
+      ['Hula', 'HOO-la', 'Hawaiian dance &mdash; storytelling through movement'],
+      ['Kumu', 'KOO-moo', 'Teacher / source'],
+      ['Hālau', 'HAH-lau', 'A school of hula'],
+      ['Aloha ʻāina', 'a-LOH-ha EYE-na', 'Love for the land &mdash; a deeply political and spiritual concept'],
+      ['Pule', 'POO-leh', 'Prayer'],
+      ['ʻOhana nui', 'oh-HA-na NOO-ee', 'Big extended family / community as family'],
+      ['Mōʻī', 'MOH-ee', 'King / sovereign'],
+      ['Hoʻolauleʻa', 'ho-oh-low-LEH-ah', 'Celebration / festival']
+    ],
+    lessonHTML: `
+      <p>By 8th grade, you&rsquo;ve practiced Hawaiian for two years. Now we enter the most powerful aspect of ʻŌlelo Hawaiʻi: <strong>oral tradition</strong>. Hawaiians had no written language until the 1820s. EVERYTHING &mdash; history, science, religion, family lineage &mdash; was passed down through chants, songs, and storytelling.</p>
+      <h3>Oli vs. Mele</h3>
+      <ul>
+        <li><strong>Oli</strong> &mdash; a chant. Often sacred. Can be a prayer (oli pule), a request to enter (oli komo), a greeting, a memorial.</li>
+        <li><strong>Mele</strong> &mdash; a song. Includes love songs, family songs, and sacred songs.</li>
+      </ul>
+      <p>Both are accompanied by hula &mdash; not entertainment, but <em>storytelling through movement</em>.</p>
+      <h3>Common Oli to Know</h3>
+      <ul>
+        <li><strong>E hō mai</strong> &mdash; a famous oli asking for the wisdom and inspiration that comes from above.</li>
+        <li><strong>Oli aloha</strong> &mdash; a greeting chant.</li>
+        <li><strong>Oli komo</strong> &mdash; a chant requesting permission to enter (a school, a sacred place).</li>
+      </ul>
+      <h3>The Hawaiian Renaissance</h3>
+      <p>In the 1970s, Hawaiian language and culture nearly went extinct. A new generation began the &ldquo;Hawaiian Renaissance&rdquo; &mdash; reviving hula, ʻolelo, sailing canoes (the Hōkūleʻa voyage), and traditional values. Today, ʻŌlelo Hawaiʻi is taught in schools, used in court, and heard on every street corner.</p>
+      <h3>Hawaiian Concept: Kapu Aloha</h3>
+      <p>A modern Hawaiian movement uses <strong>kapu aloha</strong> &mdash; a sacred commitment to nonviolence and discipline rooted in Hawaiian values. It&rsquo;s how Hawaiian protectors of Mauna Kea conducted themselves &mdash; with discipline, prayer, and unwavering aloha, even under pressure.</p>
+      <h3>Speaking with Aloha</h3>
+      <p>The deeper you go into ʻŌlelo Hawaiʻi, the more you understand: this language doesn&rsquo;t just describe the world &mdash; it shapes a relationship with it. Speaking Hawaiian means accepting responsibility for the place we live.</p>
+    `,
+    worksheet: [
+      { q: 'In one sentence, distinguish oli from mele.', ans: 'Oli is a chant (often sacred); mele is a song. Both are accompanied by hula, which is storytelling through movement.' },
+      { q: 'How was Hawaiian history passed down before writing existed?', ans: 'Through oral tradition &mdash; specifically through oli (chants), mele (songs), and storytelling. Kūpuna (elders) memorized and passed knowledge across generations.' },
+      { q: 'What is the Hawaiian Renaissance?', ans: 'A 1970s revival of Hawaiian language, hula, voyaging canoes (Hōkūleʻa), and cultural traditions that had been suppressed. It led to ʻŌlelo Hawaiʻi&rsquo;s recognition as an official state language.' },
+      { q: 'Define kapu aloha.', ans: 'A modern Hawaiian principle of sacred nonviolence and disciplined aloha &mdash; standing firm with calm dignity, even under pressure.' },
+      { q: 'Translate: hālau hula.', ans: 'A school of hula.' },
+      { q: 'What is "E hō mai"?', ans: 'A famous Hawaiian oli (chant) asking for wisdom and inspiration that comes from above.' },
+      { q: 'Why is hula called "storytelling through movement"?', ans: 'Each gesture, foot pattern, and movement in hula represents specific words or images from a chant or song. Hula doesn&rsquo;t just dance to music &mdash; it BECOMES the music.' }
+    ],
+    quiz: [
+      { q: 'An oli is:', opts: ['A song', 'A chant (often sacred)', 'A meal', 'A type of canoe'], ans: 1 },
+      { q: 'A mele is:', opts: ['A chant', 'A song', 'A prayer', 'A cup'], ans: 1 },
+      { q: 'Hula is:', opts: ['Just entertainment', 'Storytelling through movement', 'A type of music', 'A formal dinner'], ans: 1 },
+      { q: 'Hawaiian had no written language until:', opts: ['1500', '1820s', '1900', 'Today'], ans: 1 },
+      { q: 'A hālau is:', opts: ['A house', 'A school of hula', 'A canoe', 'A garden'], ans: 1 },
+      { q: 'The Hawaiian Renaissance happened in the:', opts: ['1900s', '1970s', '2000s', '2020s'], ans: 1 },
+      { q: 'Hōkūleʻa is:', opts: ['A goddess', 'A famous voyaging canoe', 'A type of dance', 'A school'], ans: 1 },
+      { q: 'Kapu aloha is:', opts: ['A type of food', 'Sacred nonviolence rooted in aloha', 'A Hawaiian word for war', 'A surfing technique'], ans: 1 },
+      { q: 'Pule means:', opts: ['Song', 'Prayer', 'Family', 'Celebration'], ans: 1 },
+      { q: 'Aloha ʻāina is:', opts: ['Love for food', 'Love for the land', 'Love for music', 'Love for sleep'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Learn an Oli',
+        scenario: 'You want to memorize one Hawaiian chant.',
+        steps: [
+          'Find &ldquo;E hō mai&rdquo; on YouTube (kūpuna versions).',
+          'Listen 5 times. Don&rsquo;t try to translate yet.',
+          'Watch the words on screen. Practice slowly.',
+          'Recite it before your day begins. Reflect.'
+        ],
+        reflect: 'How does memorizing an oli connect you to Hawaiian heritage?'
+      },
+      {
+        title: 'Visit a Hālau or Cultural Practitioner',
+        scenario: 'You want firsthand learning.',
+        steps: [
+          'Look up local hālau hula or Hawaiian cultural events.',
+          'Attend a public performance or workshop.',
+          'Watch with respect &mdash; the dance is sacred.',
+          'Mahalo the kumu afterward in Hawaiian.'
+        ],
+        reflect: 'Why is being IN Hawaiian space different from reading about it?'
+      },
+      {
+        title: 'Speak Hawaiian to a Kūpuna',
+        scenario: 'You meet a Hawaiian elder.',
+        steps: [
+          'Greet them respectfully: &ldquo;Aloha kakahiaka, kūpuna.&rdquo;',
+          'Ask about their experience with ʻŌlelo Hawaiʻi growing up.',
+          'Listen &mdash; do not interrupt.',
+          'Mahalo nui loa for their time and story.'
+        ],
+        reflect: 'How is an elder&rsquo;s story a primary source of Hawaiian language?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — French: Sustained Conversation &amp; Authentic Media',
+    icon: '🇫🇷',
+    book: 'French / Français',
+    timeframe: 'Quarter 1–2',
+    desc: 'Hold real conversations. Listen to French news. Read short articles. Watch a French film with subtitles &mdash; then without.',
+    essential: 'When can I say I really &ldquo;speak&rdquo; a language?',
+    vocab: [
+      ['Le journal', 'luh zhoor-NAHL', 'The newspaper / news'],
+      ['La chanson', 'lah shahn-SOHN', 'The song'],
+      ['Le film', 'luh feelm', 'The film'],
+      ['Comprendre', 'kohn-PRAHN-druh', 'To understand'],
+      ['Parler couramment', 'pahr-LAY koor-ah-MAHN', 'To speak fluently'],
+      ['Que penses-tu de...?', 'kuh PAHNS-too duh', 'What do you think of...?'],
+      ['À mon avis', 'ah mohn ah-VEE', 'In my opinion'],
+      ['D\'accord!', 'dah-KOHR', 'Agreed!'],
+      ['Pas du tout', 'pah doo TOO', 'Not at all'],
+      ['Bien sûr!', 'byan SOOR', 'Of course!']
+    ],
+    lessonHTML: `
+      <p>You&rsquo;ve learned greetings (6th grade) and verbs (7th grade). Now you SPEAK. The 8th-grade French goal: hold a real, 5-minute conversation about something that matters &mdash; and understand French media at a comfortable speed.</p>
+      <h3>Sustained Conversation Skills</h3>
+      <ul>
+        <li><strong>Open-ended questions:</strong> &ldquo;Que penses-tu de...?&rdquo;</li>
+        <li><strong>Express opinion:</strong> &ldquo;À mon avis...&rdquo;, &ldquo;Je pense que...&rdquo;</li>
+        <li><strong>Agree:</strong> &ldquo;D&rsquo;accord! Tout à fait!&rdquo;</li>
+        <li><strong>Disagree politely:</strong> &ldquo;Je ne suis pas d&rsquo;accord, parce que...&rdquo;</li>
+        <li><strong>Buy time:</strong> &ldquo;Euh... laisse-moi réfléchir...&rdquo;</li>
+      </ul>
+      <h3>Listening to French Media</h3>
+      <ul>
+        <li><strong>News for kids:</strong> RFI&rsquo;s &ldquo;Le journal en français facile&rdquo; (slow news)</li>
+        <li><strong>Music:</strong> French pop, hip-hop (Stromae, Aya Nakamura), classic chanson (Édith Piaf)</li>
+        <li><strong>Film:</strong> &ldquo;Amélie,&rdquo; &ldquo;Les Choristes,&rdquo; &ldquo;Belleville Rendez-Vous&rdquo;</li>
+        <li><strong>Podcasts:</strong> Coffee Break French, InnerFrench</li>
+      </ul>
+      <h3>The Magic of Subtitles</h3>
+      <ol>
+        <li>First watch: French audio + English subtitles.</li>
+        <li>Second watch: French audio + French subtitles.</li>
+        <li>Third watch: French audio + NO subtitles.</li>
+      </ol>
+      <p>By the third watch, you&rsquo;ll catch ~70% of the dialogue.</p>
+      <h3>Cultural Depth: Modern France</h3>
+      <ul>
+        <li>French elections, healthcare, schools (very different from US)</li>
+        <li>French laïcité (secularism in public life)</li>
+        <li>Greetings: in France, you greet with kisses on the cheek (la bise)</li>
+        <li>Strikes (la grève) are part of normal civic life</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Translate: "Que penses-tu de la musique?"', ans: 'What do you think of (the) music?' },
+      { q: 'How would you politely disagree in French?', ans: '"Je ne suis pas d&rsquo;accord, parce que..." (I disagree, because...)' },
+      { q: 'List three ways to expose yourself to authentic French.', ans: 'Examples: French music, films with subtitles, news for kids (RFI Journal en français facile), podcasts (Coffee Break French), French YouTube.' },
+      { q: 'Describe the 3-watch method for films.', ans: '1st watch: French audio + English subtitles. 2nd watch: French audio + French subtitles. 3rd watch: French audio, no subtitles.' },
+      { q: 'What is "la bise"?', ans: 'The French custom of greeting with kisses on the cheek (typically 2-4 depending on region).' },
+      { q: 'What is laïcité?', ans: 'French secularism &mdash; the principle that public life and government are kept separate from religion. Unique in its strictness compared to most countries.' },
+      { q: 'Translate: "À mon avis, le film est excellent."', ans: 'In my opinion, the film is excellent.' }
+    ],
+    quiz: [
+      { q: '"À mon avis" means:', opts: ['I am sorry', 'In my opinion', 'I love', 'Goodbye'], ans: 1 },
+      { q: '"D&rsquo;accord!" means:', opts: ['I disagree', 'Agreed!', 'Goodbye', 'I am sorry'], ans: 1 },
+      { q: 'A way to expose yourself to authentic French is:', opts: ['Only worksheets', 'Music, films, podcasts, news', 'Reading textbooks only', 'Avoid native speakers'], ans: 1 },
+      { q: 'In the 3-watch method, the FIRST watch uses:', opts: ['No subtitles', 'French audio + English subtitles', 'English audio + French subtitles', 'No audio'], ans: 1 },
+      { q: 'La bise is:', opts: ['A type of bread', 'French greeting with kisses on the cheek', 'A holiday', 'A song'], ans: 1 },
+      { q: 'Laïcité is:', opts: ['A type of cheese', 'French secularism', 'A holiday', 'A music style'], ans: 1 },
+      { q: 'Stromae is:', opts: ['A French politician', 'A French/Belgian musician', 'A French city', 'A type of dance'], ans: 1 },
+      { q: '"Pas du tout" means:', opts: ['Of course', 'Not at all', 'Maybe', 'Always'], ans: 1 },
+      { q: 'A famous French film for learners is:', opts: ['Avengers', 'Amélie', 'Star Wars', 'Frozen'], ans: 1 },
+      { q: 'Sustained conversation requires:', opts: ['Just memorized phrases', 'Open-ended questions, opinions, polite disagreement', 'Yelling louder', 'Avoiding the topic'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'A 5-Minute French Conversation',
+        scenario: 'You meet a French speaker (or a teacher).',
+        steps: [
+          'Open with: &ldquo;Bonjour! Comment ça va?&rdquo;',
+          'Ask an open question: &ldquo;Que penses-tu de...?&rdquo;',
+          'Use opinion phrases: &ldquo;À mon avis...&rdquo;',
+          'Stretch the conversation 5 minutes &mdash; longer than ever.'
+        ],
+        reflect: 'How does sustained conversation differ from memorized phrases?'
+      },
+      {
+        title: 'Watch a French Film 3 Times',
+        scenario: 'You commit to one weekend.',
+        steps: [
+          'Pick &ldquo;Amélie&rdquo; or &ldquo;Les Choristes.&rdquo;',
+          'Watch 1: French audio + English subs.',
+          'Watch 2: French audio + French subs (1 day later).',
+          'Watch 3: French audio + no subs (1 week later). Note ~70% comprehension.'
+        ],
+        reflect: 'What changed between watches?'
+      },
+      {
+        title: 'Read One French News Article',
+        scenario: 'You want real-world French.',
+        steps: [
+          'Visit Le Monde (mondejunior for kids) or RFI&rsquo;s slow news.',
+          'Pick a short article.',
+          'Read aloud, then translate.',
+          'Note 5 new words. Add to vocabulary notebook.'
+        ],
+        reflect: 'How is reading authentic news different from textbook French?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — Spanish: Real Conversation &amp; Latin Music',
+    icon: '🇪🇸',
+    book: 'Spanish / Español',
+    timeframe: 'Quarter 2',
+    desc: 'Use Spanish in real settings &mdash; conversations, music, films. Master past and future tenses. Explore Latin American art and faith.',
+    essential: 'How does Spanish open doors in Hawaiʻi and across the Americas?',
+    vocab: [
+      ['Hablo español', 'AH-bloh es-pah-NYOL', 'I speak Spanish'],
+      ['¿Puedes ayudarme?', 'PWE-des ah-yoo-DAR-may', 'Can you help me?'],
+      ['Me gusta', 'meh GOOS-tah', 'I like'],
+      ['Quisiera', 'kee-SYEH-rah', 'I would like (polite)'],
+      ['Por supuesto', 'pohr soo-PWES-toh', 'Of course'],
+      ['¡Qué bueno!', 'keh BWEH-noh', 'How great!'],
+      ['Disculpe', 'dees-KOOL-peh', 'Excuse me (polite)'],
+      ['Hace mucho tiempo', 'AH-seh MOO-cho TYEM-poh', 'A long time ago'],
+      ['Mañana', 'mah-NYAH-nah', 'Tomorrow / morning'],
+      ['Ayer', 'ah-YEHR', 'Yesterday']
+    ],
+    lessonHTML: `
+      <p>You can already greet, conjugate ser/estar, and describe family. Now in 8th grade you USE Spanish &mdash; real conversation, opinions, and listening to Latin music to absorb the culture.</p>
+      <h3>Past, Present, Future</h3>
+      <p>Spanish, like English, has multiple tenses. The most common past tense (preterite) examples:</p>
+      <ul>
+        <li><strong>hablé</strong> &mdash; I spoke</li>
+        <li><strong>hablaste</strong> &mdash; you spoke</li>
+        <li><strong>habló</strong> &mdash; he/she spoke</li>
+        <li><strong>comí</strong> &mdash; I ate</li>
+        <li><strong>fui</strong> &mdash; I went / I was (irregular)</li>
+      </ul>
+      <p>The future tense is often expressed with <strong>ir + a + infinitive</strong>: &ldquo;Voy a estudiar.&rdquo; (I&rsquo;m going to study.)</p>
+      <h3>Real-Life Conversation Topics</h3>
+      <ul>
+        <li>Ordering food at a restaurant.</li>
+        <li>Asking for directions.</li>
+        <li>Talking about weekends and holidays.</li>
+        <li>Sharing music recommendations.</li>
+        <li>Discussing favorite books, films, or sports.</li>
+      </ul>
+      <h3>Latin Music as Language Teacher</h3>
+      <p>Spanish music is everywhere now &mdash; reggaeton, Latin pop, salsa, mariachi. Pick artists like:</p>
+      <ul>
+        <li><strong>Bad Bunny</strong> (Puerto Rico) &mdash; reggaeton, Latin trap</li>
+        <li><strong>Shakira</strong> (Colombia) &mdash; Latin pop</li>
+        <li><strong>Juan Luis Guerra</strong> (Dominican Republic) &mdash; merengue, bachata</li>
+        <li><strong>Buena Vista Social Club</strong> (Cuba) &mdash; classic Cuban music</li>
+        <li><strong>Vicente Fernández</strong> (Mexico) &mdash; mariachi legend</li>
+      </ul>
+      <h3>Latin American Faith &amp; Holidays</h3>
+      <ul>
+        <li><strong>Día de los Muertos</strong> (Day of the Dead) &mdash; Mexican holiday honoring ancestors with altars and marigolds.</li>
+        <li><strong>Las Posadas</strong> &mdash; nine days of Christmas processions in Latin America.</li>
+        <li><strong>Quinceañera</strong> &mdash; coming-of-age celebration for 15-year-old girls.</li>
+        <li><strong>Catholic faith</strong> &mdash; Latin America has the largest Catholic population in the world.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Conjugate hablar (to speak) in the past tense for "I" and "we."', ans: 'Yo hablé. Nosotros hablamos.' },
+      { q: 'How would you say "I&rsquo;m going to eat" using ir + a + infinitive?', ans: 'Voy a comer.' },
+      { q: 'Translate: "I would like a glass of water, please."', ans: 'Quisiera un vaso de agua, por favor.' },
+      { q: 'Name two Spanish-speaking music artists and where they&rsquo;re from.', ans: 'Examples: Bad Bunny (Puerto Rico), Shakira (Colombia), Juan Luis Guerra (Dominican Republic), Vicente Fernández (Mexico).' },
+      { q: 'What is Día de los Muertos?', ans: 'Day of the Dead &mdash; a Mexican holiday (Nov 1-2) honoring deceased loved ones with altars (ofrendas), marigolds, sugar skulls, and feasting at gravesites.' },
+      { q: 'What is a quinceañera?', ans: 'A coming-of-age celebration for a 15-year-old girl in Latin American Catholic culture &mdash; a major birthday with religious and family ceremony.' },
+      { q: 'Translate: "Ayer fui al cine."', ans: 'Yesterday I went to the movies. (the cinema)' }
+    ],
+    quiz: [
+      { q: '"Hablé" means:', opts: ['I speak', 'I spoke', 'I will speak', 'You speak'], ans: 1 },
+      { q: '"Voy a comer" means:', opts: ['I am eating', 'I am going to eat', 'I ate', 'I have eaten'], ans: 1 },
+      { q: 'A polite "I would like" is:', opts: ['Quiero', 'Quisiera', 'Quería', 'Quisiste'], ans: 1 },
+      { q: 'Bad Bunny is from:', opts: ['Mexico', 'Puerto Rico', 'Spain', 'Cuba'], ans: 1 },
+      { q: 'Shakira is from:', opts: ['Mexico', 'Colombia', 'Argentina', 'Spain'], ans: 1 },
+      { q: 'Día de los Muertos is in:', opts: ['March', 'July', 'November (1–2)', 'December'], ans: 2 },
+      { q: 'A quinceañera celebrates:', opts: ['A wedding', 'A 15-year-old girl&rsquo;s coming-of-age', 'A funeral', 'A graduation'], ans: 1 },
+      { q: 'Las Posadas is a tradition in:', opts: ['Easter', 'Christmas (9 days)', 'Halloween', 'New Year'], ans: 1 },
+      { q: 'Latin America has the largest population of:', opts: ['Buddhists', 'Catholics', 'Hindus', 'Atheists'], ans: 1 },
+      { q: '"Hace mucho tiempo" means:', opts: ['Right now', 'A long time ago', 'Tomorrow', 'In a hurry'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Order in Spanish',
+        scenario: 'Family dinner at a Mexican restaurant.',
+        steps: [
+          'Order entirely in Spanish: &ldquo;Quisiera un taco al pastor, por favor.&rdquo;',
+          'Use polite forms: &ldquo;¿Puede traerme...?&rdquo;',
+          'Say &ldquo;Disculpe&rdquo; (excuse me) when needed.',
+          'End with &ldquo;Gracias, todo estuvo delicioso.&rdquo;'
+        ],
+        reflect: 'How does using a language change a routine outing?'
+      },
+      {
+        title: 'A Spanish Music Playlist',
+        scenario: 'You want fluency through repetition.',
+        steps: [
+          'Make a playlist of 10 Spanish songs.',
+          'Listen 30 minutes a day for 2 weeks.',
+          'Pull up lyrics. Sing along.',
+          'After 2 weeks, you&rsquo;ll catch 50%+ of phrases.'
+        ],
+        reflect: 'Why is music the most underrated language teacher?'
+      },
+      {
+        title: 'Watch a Latin Film',
+        scenario: 'Coco, Encanto, El Laberinto del Fauno.',
+        steps: [
+          'Watch with Spanish audio + Spanish subs.',
+          'Note 10 cultural details (food, holidays, faith).',
+          'Discuss with family afterward.',
+          'Pick one tradition you want to learn more about.'
+        ],
+        reflect: 'How does film teach culture as much as language?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Mandarin: Reading, Writing &amp; Modern China',
+    icon: '🇨🇳',
+    book: 'Mandarin / 普通话',
+    timeframe: 'Quarter 3',
+    desc: 'Read short paragraphs, write sentences in characters, and explore both ancient wisdom and modern China.',
+    essential: 'What does it mean to read a language with a 3,000-year-old writing system?',
+    vocab: [
+      ['朋友', 'péngyǒu', 'Friend'],
+      ['学校', 'xuéxiào', 'School'],
+      ['喜欢', 'xǐhuān', 'To like'],
+      ['想', 'xiǎng', 'To want / to think'],
+      ['可以', 'kěyǐ', 'Can / may'],
+      ['什么', 'shénme', 'What'],
+      ['为什么', 'wèishénme', 'Why'],
+      ['哪里', 'nǎlǐ', 'Where'],
+      ['现在', 'xiànzài', 'Now'],
+      ['以后', 'yǐhòu', 'Later / after']
+    ],
+    lessonHTML: `
+      <p>By 8th grade, you know the four tones, ~100 characters, and basic sentences. Now we read short paragraphs and write our own &mdash; with characters &mdash; and connect to modern Chinese culture.</p>
+      <h3>Reading Short Texts</h3>
+      <p>Try this dialogue:</p>
+      <div class="phrase-table"><table>
+        <tr><th>Mandarin</th><th>English</th></tr>
+        <tr><td class="target">A: 你好! 你是哪国人?</td><td>A: Hello! What country are you from?</td></tr>
+        <tr><td class="target">B: 我是美国人. 你呢?</td><td>B: I&rsquo;m American. And you?</td></tr>
+        <tr><td class="target">A: 我是中国人. 你会说中文吗?</td><td>A: I&rsquo;m Chinese. Can you speak Mandarin?</td></tr>
+        <tr><td class="target">B: 我会一点儿. 我学习了三年.</td><td>B: A little. I&rsquo;ve studied for three years.</td></tr>
+        <tr><td class="target">A: 太好了!</td><td>A: That&rsquo;s great!</td></tr>
+      </table></div>
+      <h3>Question Words</h3>
+      <ul>
+        <li>什么 (shénme) &mdash; what</li>
+        <li>谁 (shuí) &mdash; who</li>
+        <li>哪里 (nǎlǐ) &mdash; where</li>
+        <li>什么时候 (shénme shíhou) &mdash; when</li>
+        <li>为什么 (wèishénme) &mdash; why</li>
+        <li>怎么 (zěnme) &mdash; how</li>
+      </ul>
+      <h3>Modern China</h3>
+      <ul>
+        <li><strong>Population</strong> &mdash; ~1.4 billion (most populous nation; close behind India)</li>
+        <li><strong>Economy</strong> &mdash; world&rsquo;s second-largest</li>
+        <li><strong>Cities</strong> &mdash; Beijing (capital), Shanghai (financial), Hong Kong, Shenzhen, Chengdu</li>
+        <li><strong>Tech</strong> &mdash; WeChat, Weibo, BYD, Huawei, Alibaba</li>
+        <li><strong>Pop culture</strong> &mdash; C-pop, Chinese cinema, mobile gaming</li>
+      </ul>
+      <h3>Ancient Wisdom in Modern Times</h3>
+      <p>Confucianism, Taoism, and Buddhism all shape modern Chinese life. Phrases people still quote:</p>
+      <ul>
+        <li><strong>己所不欲，勿施于人</strong> (Confucius) &mdash; &ldquo;Do not do to others what you do not want done to you&rdquo;</li>
+        <li><strong>千里之行，始于足下</strong> (Laozi) &mdash; &ldquo;A journey of 1,000 miles begins with a single step&rdquo;</li>
+      </ul>
+      <h3>Chinese in Hawaiʻi</h3>
+      <p>Chinese immigrants have shaped Hawaii since the 1850s. Words like &ldquo;chop suey&rdquo; (Cantonese), &ldquo;loaded with kau-kau&rdquo; (food), and &ldquo;da kine&rdquo; reflect this heritage. Honolulu&rsquo;s Chinatown is one of America&rsquo;s oldest.</p>
+    `,
+    worksheet: [
+      { q: 'Translate: 你是哪国人?', ans: 'What country are you from? (Lit: You are which country&rsquo;s person?)' },
+      { q: 'Use 什么时候 (shénme shíhou) in a sentence.', ans: 'Example: 你什么时候来? = When are you coming?' },
+      { q: 'About how many people live in China today?', ans: '~1.4 billion (China is the most or second-most populous nation, depending on year, with India).' },
+      { q: 'Quote Confucius&rsquo;s famous phrase about reciprocity, in Chinese.', ans: '己所不欲，勿施于人 (jǐ suǒ bù yù, wù shī yú rén) — "Do not do to others what you do not want done to you."' },
+      { q: 'Translate Laozi: 千里之行，始于足下', ans: '"A journey of 1,000 miles begins with a single step."' },
+      { q: 'List two ways Chinese culture has influenced modern Hawaiʻi.', ans: 'Examples: language (chop suey, kau-kau, loaded), food (manapua, dim sum), Chinatown in Honolulu, Lunar New Year, Chinese-Hawaiian families and traditions.' },
+      { q: 'Conjugate 喜欢 (xǐhuān, "to like") in this sentence: "I like to read books."', ans: '我喜欢看书 (wǒ xǐhuān kàn shū).' }
+    ],
+    quiz: [
+      { q: '什么 means:', opts: ['Where', 'When', 'What', 'Who'], ans: 2 },
+      { q: '为什么 means:', opts: ['What', 'Why', 'How', 'Where'], ans: 1 },
+      { q: 'Which Chinese philosopher said "Do not do to others what you do not want done to you"?', opts: ['Buddha', 'Confucius', 'Laozi', 'Mao'], ans: 1 },
+      { q: 'About how many people live in China?', opts: ['100 million', '1 million', '~1.4 billion', '14 billion'], ans: 2 },
+      { q: 'The capital of China is:', opts: ['Shanghai', 'Beijing', 'Hong Kong', 'Tokyo'], ans: 1 },
+      { q: 'Honolulu&rsquo;s Chinatown dates back to the:', opts: ['1850s', '1920s', '1980s', '2000s'], ans: 0 },
+      { q: '"喜欢" (xǐhuān) means:', opts: ['To eat', 'To like', 'To go', 'To see'], ans: 1 },
+      { q: 'WeChat is:', opts: ['A type of food', 'A Chinese super-app', 'A holiday', 'A dance'], ans: 1 },
+      { q: 'Laozi&rsquo;s "journey of a thousand miles" quote teaches:', opts: ['Travel is bad', 'Big things start with small steps', 'Stay home', 'Run fast'], ans: 1 },
+      { q: '现在 (xiànzài) means:', opts: ['Yesterday', 'Now', 'Tomorrow', 'Later'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Read a Chinese Comic / Manhua',
+        scenario: 'You want fun reading practice.',
+        steps: [
+          'Find a beginner manhua online or printed.',
+          'Read for 15 minutes, looking up only 5 words.',
+          'Note characters that repeat &mdash; those are common words.',
+          'Re-read tomorrow. Notice how easier it gets.'
+        ],
+        reflect: 'How does authentic context teach better than vocabulary lists?'
+      },
+      {
+        title: 'A Chinese Tea Ceremony',
+        scenario: 'You want to taste Chinese culture.',
+        steps: [
+          'Buy good loose-leaf tea (oolong, jasmine).',
+          'Heat water to 175–195°F (not boiling).',
+          'Pour into a small cup. Sit. Sip slowly.',
+          'No phones. Just tea, breath, presence.'
+        ],
+        reflect: 'How does a tea ceremony embody Chinese values of patience and presence?'
+      },
+      {
+        title: 'Watch a Chinese Film',
+        scenario: 'Wuxia (martial arts) or modern drama.',
+        steps: [
+          'Try &ldquo;Crouching Tiger, Hidden Dragon&rdquo; or modern Chinese cinema on Netflix.',
+          'Watch with Chinese audio + English subs first.',
+          'Then re-watch with Chinese subs.',
+          'Note 10 phrases you understood without help.'
+        ],
+        reflect: 'How does film carry culture across continents?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — Capstone: My Language Journey',
+    icon: '🎓',
+    book: 'Synthesis / Capstone',
+    timeframe: 'Quarter 4',
+    desc: 'A final, multi-language presentation. Reflect on your 3-year journey. Demonstrate competency. Plan your high-school language path.',
+    essential: 'Who am I as a language learner &mdash; and where do I go from here?',
+    vocab: [
+      ['Capstone', '', 'A final, culminating project that brings together your learning.'],
+      ['Bilingual', '', 'Able to use two languages.'],
+      ['Multilingual', '', 'Able to use multiple languages.'],
+      ['Heritage language', '', 'A language tied to your family&rsquo;s background.'],
+      ['Fluency', '', 'Comfortable, flowing use of a language &mdash; on a spectrum, not yes/no.'],
+      ['Language journey', '', 'The lifelong path of learning languages.']
+    ],
+    lessonHTML: `
+      <p>This is your CAPSTONE. After three years of language study, you demonstrate what you&rsquo;ve learned and chart your path forward.</p>
+      <h3>The Capstone Project (4 parts)</h3>
+      <ol>
+        <li><strong>Personal Language Reflection</strong> &mdash; 2-page essay. What languages did you connect with? Which surprised you? What did you learn about yourself?</li>
+        <li><strong>Cultural Research</strong> &mdash; pick one country/culture from any of the 5 languages. Create a 5-minute presentation in English with phrases in the target language sprinkled throughout.</li>
+        <li><strong>Live Conversation Demo</strong> &mdash; a 5-minute conversation with Mrs. Freitas or a fluent partner in your strongest language. Ordinary topics (family, school, weekend, opinion).</li>
+        <li><strong>Performance Piece</strong> &mdash; recite a Hawaiian oli, sing a Spanish song, perform a French poem, share a Chinese proverb, or read an Italian passage. Your choice.</li>
+      </ol>
+      <h3>What Capstone Tests</h3>
+      <ul>
+        <li><strong>Speaking</strong> &mdash; can you sustain conversation?</li>
+        <li><strong>Listening</strong> &mdash; can you understand a native speaker at moderate speed?</li>
+        <li><strong>Reading</strong> &mdash; can you decode short authentic texts?</li>
+        <li><strong>Cultural literacy</strong> &mdash; do you understand the people behind the language?</li>
+      </ul>
+      <h3>Planning High School</h3>
+      <p>Most high schools offer 2-3 languages. Decide:</p>
+      <ul>
+        <li>Will I CONTINUE my favorite language all 4 years (becoming truly fluent)?</li>
+        <li>Will I add a NEW language in high school?</li>
+        <li>Will I use Duolingo / Rosetta Stone independently in addition?</li>
+        <li>Will I plan a foreign exchange or study abroad?</li>
+      </ul>
+      <h3>The Bilingual Brain</h3>
+      <p>Research shows bilingual brains:</p>
+      <ul>
+        <li>Have stronger executive function (decision-making, focus).</li>
+        <li>Delay onset of dementia by 4-5 years on average.</li>
+        <li>Are more creative and empathetic.</li>
+        <li>Have access to twice as many books, films, and people.</li>
+      </ul>
+      <p>Speaking another language isn&rsquo;t just a school subject &mdash; it&rsquo;s a lifelong gift to yourself.</p>
+      <h3>A Final Word from Mrs. Freitas</h3>
+      <p>You started 6th grade tasting five languages. You&rsquo;re leaving 8th grade able to converse in at least one, with deep cultural knowledge of the others. You&rsquo;ve trained your ear to hear differently, your tongue to move differently, your mind to see the world from new angles.</p>
+      <p>Mahalo. Merci. Gracias. 谢谢. Grazie. Carry these gifts with you.</p>
+    `,
+    worksheet: [
+      { q: 'List the 4 parts of the Capstone Project.', ans: '1) Personal Language Reflection (essay); 2) Cultural Research (5-min presentation); 3) Live Conversation Demo (5 min); 4) Performance Piece (oli, song, poem, proverb, or passage).' },
+      { q: 'List 4 skills the Capstone tests.', ans: 'Speaking (sustained conversation), listening (understanding native speakers), reading (authentic texts), cultural literacy (understanding the people).' },
+      { q: 'Define "heritage language."', ans: 'A language tied to your family&rsquo;s background &mdash; even if you don&rsquo;t speak it fluently yet, it&rsquo;s part of your identity.' },
+      { q: 'List 3 documented benefits of being bilingual or multilingual.', ans: 'Examples: stronger executive function (decision-making, focus); delays dementia onset by 4-5 years; more creativity and empathy; access to more books, films, and people.' },
+      { q: 'How many languages do most high schools offer?', ans: 'Usually 2-3 languages, depending on the school.' },
+      { q: 'In your own words, what does it mean to be on a "language journey"?', ans: 'The lifelong path of learning languages &mdash; not a single class but a lifetime of growth.' },
+      { q: 'Translate "thank you" into all 5 languages.', ans: 'Mahalo (Hawaiian), Merci (French), Gracias (Spanish), 谢谢 / Xièxie (Mandarin), Grazie (Italian).' }
+    ],
+    quiz: [
+      { q: 'A "capstone" is:', opts: ['A type of hat', 'A final culminating project', 'A pop quiz', 'A textbook'], ans: 1 },
+      { q: 'A "heritage language" is:', opts: ['A language no one speaks', 'A language tied to your family&rsquo;s background', 'A new language', 'An ancient language'], ans: 1 },
+      { q: 'Bilingual brains have stronger:', opts: ['Eyesight only', 'Executive function and decision-making', 'Athletic ability', 'Hearing'], ans: 1 },
+      { q: 'Bilingualism delays dementia by approximately:', opts: ['4-5 years on average', '20 years', 'No effect', 'Causes dementia'], ans: 0 },
+      { q: '"Mahalo" is in:', opts: ['Spanish', 'Hawaiian', 'French', 'Italian'], ans: 1 },
+      { q: '"Grazie" is in:', opts: ['Spanish', 'Italian', 'French', 'Mandarin'], ans: 1 },
+      { q: 'Most high schools offer:', opts: ['No languages', '2-3 languages', '20+ languages', 'Only English'], ans: 1 },
+      { q: 'Multilingual people generally have:', opts: ['Fewer career options', 'Access to more books, films, and people', 'Worse memory', 'Confused thinking'], ans: 1 },
+      { q: 'Fluency is best described as:', opts: ['Yes / no', 'A spectrum &mdash; comfortable, flowing use', 'Native only', 'Speed alone'], ans: 1 },
+      { q: 'The capstone Performance Piece can be:', opts: ['Only a poem', 'Oli, song, poem, proverb, or passage', 'A math problem', 'A drawing'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Plan Your Capstone Now',
+        scenario: 'It&rsquo;s the start of Q4.',
+        steps: [
+          'Pick a strong language for your conversation demo.',
+          'Pick a culture for your research project.',
+          'Pick a performance piece (oli, song, poem, proverb).',
+          'Set 3 weekly check-ins with Mrs. Freitas.'
+        ],
+        reflect: 'How does planning early reduce anxiety later?'
+      },
+      {
+        title: 'Connect with a Heritage Speaker',
+        scenario: 'Your family or community has speakers.',
+        steps: [
+          'Ask: who in our family speaks another language?',
+          'Spend 30 minutes asking them about it.',
+          'Record (with permission) some phrases.',
+          'Use them in your Capstone &mdash; with credit to the speaker.'
+        ],
+        reflect: 'How does honoring heritage make your project richer?'
+      },
+      {
+        title: 'Set Your High-School Plan',
+        scenario: 'Summer is coming. High school awaits.',
+        steps: [
+          'Research the language offerings at your high school.',
+          'Decide: continue your strongest language? Start new? Both?',
+          'Set a weekly Duolingo / Rosetta Stone goal during summer.',
+          'Tell a parent your plan so they can support it.'
+        ],
+        reflect: 'How does planning ahead turn good intentions into real growth?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.book} &middot; ${u.timeframe}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Authentic Communication';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const ss = document.getElementById('syllabus-screen');
+  ss.innerHTML = SYLLABUS_HTML;
+  ss.classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <div class="meta-bar">
+      <span class="meta-pill lang">🌐 ${u.book}</span>
+      <span class="meta-pill">📅 ${u.timeframe}</span>
+    </div>
+    <div class="essential-q"><strong>Essential Question:</strong> ${u.essential}</div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span class="pron">${v[1]}</span><span class="def">${v[2]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. Practice pronouncing aloud!</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Très bien! ¡Muy bien! 太好了! Maikaʻi! Bravissimo!' : '📚 Practice on Duolingo or Rosetta Stone and try again.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

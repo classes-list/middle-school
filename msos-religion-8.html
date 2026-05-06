@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 8th Grade Religion: The Story of Our Church</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    /* ── SYLLABUS PAGE (STS-style) ── */
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-unit-row { background: #f8fafc; border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; border-left: 4px solid #1B3A8A; }
+    .syl-unit-row strong { font-size: 0.95rem; color: #1B3A8A; }
+    .syl-unit-row span { font-size: 0.85rem; color: #4a5568; display: block; margin-top: 4px; line-height: 1.5; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 90px; }
+    .syl-grade-pill span { display: block; font-size: 1.2rem; font-weight: 800; color: #1B3A8A; }
+    .syl-verse { font-style: italic; color: #7a5f00; padding: 10px 14px; background: #fffbe6; border-radius: 8px; border-left: 4px solid #FFD100; }
+    .syl-blessing { margin-top: 14px; text-align: center; font-weight: 700; color: #1B3A8A; font-size: 1.05rem; padding: 10px; background: linear-gradient(90deg, #fffbe6, #fff, #fffbe6); border-radius: 8px; }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .scripture-box { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .scripture-box strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .chapter-list { background: #f8f9fa; border-radius: 8px; padding: 16px 22px; margin: 14px 0; }
+    .chapter-list h4 { color: #1B3A8A; margin-bottom: 8px; }
+    .chapter-list ol { margin-left: 22px; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.active { display: flex; }
+    .modal { background: white; max-width: 760px; width: 100%; max-height: 88vh; overflow-y: auto; border-radius: 12px; padding: 28px 32px; position: relative; border-top: 6px solid #FFD100; }
+    .modal h2 { color: #1B3A8A; margin-bottom: 6px; }
+    .modal .verse { color: #7a5f00; font-style: italic; margin: 10px 0 18px; }
+    .modal h3 { color: #1B3A8A; margin-top: 16px; margin-bottom: 6px; }
+    .modal ul { margin-left: 22px; }
+    .modal li { margin-bottom: 4px; line-height: 1.5; }
+    .modal-close { position: absolute; top: 14px; right: 18px; background: #1B3A8A; color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 16px; font-weight: bold; }
+    .modal-close:hover { background: #162E70; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">8th Grade Religion <span class="grade-tag">Gr. 8</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📜 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-religion-index.html" class="back-index-btn" title="Back to Religion Classes">← All Religion</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">The Story of Our Church</span>
+        </div>
+        <div class="topbar-right">Blest Are We &middot; Grade 8</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">The Story of Our Church</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">From the Apostles to today — how the Church grew, suffered, reformed, and continues to bring Christ to the world.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">📜</div>
+            <h2>Religion — Course Syllabus</h2>
+            <p>Mary, Star of the Sea School &middot; SY 2025-2026</p>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p>This course is based on the ministry of catechesis for religious education and faith formation: <strong>believe, worship, live, and pray</strong>. Students learn the doctrine of the Catholic Church and establish a common language of faith, engage in understanding the sacramental life of the Catholic Church, focus attention on the moral teachings of the Church, and experience a wide variety of prayers. Students will develop a deeper understanding of faith and greater love for God.</p>
+              <p style="margin-top:8px"><strong>Schoolwide Learning Expectation (SLE):</strong> MSOS students will become active Christians who respect others, make good choices, value prayer, and practice the teachings of the Catholic Church.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👩‍🏫 Teacher</h3>
+              <p><strong>Mrs. Corazon Aczon</strong></p>
+              <p>📧 <a href="mailto:caczon@starofthesea.org">caczon@starofthesea.org</a></p>
+              <div class="syl-verse" style="margin-top:10px">&ldquo;They that hope in the Lord will renew their strength, they will soar on eagle&rsquo;s wings; they will run and not grow weary, walk and not grow faint.&rdquo;<br>&mdash; Isaiah 40:31</div>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Classroom Materials</h3>
+              <ul>
+                <li><em>Blest Are We</em> textbook</li>
+                <li>Holy Bible &middot; usccb.org</li>
+                <li>Computer / device</li>
+                <li>Composition notebook</li>
+                <li>Pencils, pens, agenda</li>
+                <li>Colored pencils, highlighters</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Course Outline &mdash; Grade 8: The Story of Our Church <span style="font-weight:500;color:#888;font-size:0.85rem">(Church History)</span></h3>
+            <div class="syl-unit-row"><strong>⛪ Unit 1 &mdash; The Marks of the Church</strong><span>One, Holy, Catholic, Apostolic &middot; Early Church, persecutions, Church Fathers, Council of Nicaea</span></div>
+            <div class="syl-unit-row"><strong>🏰 Unit 2 &mdash; The Growth of Christendom</strong><span>St. Benedict and monasticism &middot; missionaries to Europe &middot; Charlemagne &middot; Great Schism (1054)</span></div>
+            <div class="syl-unit-row"><strong>⛪ Unit 3 &mdash; The Age of Faith and Beauty</strong><span>Gothic cathedrals &middot; Sts. Francis, Dominic, Aquinas &middot; universities &middot; Crusades and pilgrimage</span></div>
+            <div class="syl-unit-row"><strong>📖 Unit 4 &mdash; Reason, Rebellion, and Reform</strong><span>Reformation &middot; Council of Trent &middot; Counter-Reformation saints (Ignatius, Teresa, John of the Cross)</span></div>
+            <div class="syl-unit-row"><strong>🌱 Unit 5 &mdash; Returning to the Roots of Christianity</strong><span>Vatican II &middot; Catholic Social Teaching &middot; modern saints &middot; the universal call to holiness</span></div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>📊 Evaluation / Assessment</h3>
+              <div class="syl-grade-row">
+                <div class="syl-grade-pill"><span>20%</span>Tests &amp; Quizzes</div>
+                <div class="syl-grade-pill"><span>30%</span>Quarterly Tests</div>
+                <div class="syl-grade-pill"><span>30%</span>Participation / Recitation</div>
+                <div class="syl-grade-pill"><span>10%</span>Homework</div>
+                <div class="syl-grade-pill"><span>10%</span>Projects</div>
+              </div>
+              <p style="margin-top:10px;font-size:0.83rem">Total: <strong>100%</strong></p>
+            </div>
+            <div class="syl-card">
+              <h3>📝 Student Absence</h3>
+              <p>Students are responsible for turning in homework, assignments, and projects, and arranging with the teacher a specific time to make up any quizzes or tests missed due to absence.</p>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>🙏 How We Nurture Our Faith in Religion Class</h3>
+            <ul style="columns:2;column-gap:30px">
+              <li>Praying and singing hymns</li>
+              <li>Reading Scripture and memorizing Bible verses</li>
+              <li>Praying from the Book of Psalms</li>
+              <li>Writing &ldquo;Dear God&rdquo; journal entries</li>
+              <li>Reflecting on the Readings and Gospel of the Day</li>
+              <li>Discussing activities from the <em>Blest Are We</em> textbook</li>
+              <li>Role-playing Bible stories (e.g., the Christmas story)</li>
+              <li>Learning about the Lives of Saints as models of faith</li>
+              <li>Praying the Rosary, Stations of the Cross, and other devotions</li>
+              <li>Integrating Religion and Art by illustrating Bible verses</li>
+              <li>Participating in the Sacraments and Liturgical Year as church ministers (lectors, choir, altar servers)</li>
+            </ul>
+          </div>
+
+          <div class="syl-blessing">✝️ GOD BLESS YOU! ✝️</div>
+
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">Church history is your story too — practical ways to live as a Catholic today.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — The Marks of the Church',
+    icon: '⛪',
+    theme: 'One, Holy, Catholic, Apostolic',
+    desc: 'The Church Jesus founded has four marks: One, Holy, Catholic, and Apostolic. Meet the early Christians, the martyrs, and the first Church Fathers.',
+    chapters: [
+      'The Four Marks of the Church (CCC 811-870)',
+      'The Early Church and Apostolic Succession',
+      'Persecutions and the Age of Martyrs (Roman Empire, 64-313)',
+      'The Edict of Milan and Constantine (313 AD)',
+      'The Church Fathers (Athanasius, Augustine, Jerome, Ambrose)'
+    ],
+    scripture: { ref: 'Matthew 16:18', text: 'And so I say to you, you are Peter, and upon this rock I will build my church, and the gates of the netherworld shall not prevail against it.' },
+    vocab: [
+      ['Mark', 'A defining sign or characteristic of the true Church.'],
+      ['Apostolic Succession', 'The unbroken line of bishops from the Apostles to today, transmitting authority and faith.'],
+      ['Martyr', 'One who dies as a witness to faith in Christ.'],
+      ['Catacomb', 'Underground burial places where early Christians worshipped during persecution.'],
+      ['Catechumen', 'A person preparing for Baptism.']
+    ],
+    lessonHTML: `
+      <p>Every Sunday at Mass we profess: &ldquo;I believe in <strong>one, holy, catholic, and apostolic</strong> Church.&rdquo; These are the four <strong>Marks</strong> Jesus stamped on His Church.</p>
+      <ul>
+        <li><strong>ONE</strong> &mdash; one Lord, one faith, one Baptism (Eph 4:5).</li>
+        <li><strong>HOLY</strong> &mdash; not because every member is perfect, but because Christ Himself is her head and the Spirit dwells in her.</li>
+        <li><strong>CATHOLIC</strong> &mdash; meaning &ldquo;universal&rdquo; &mdash; for all people, in every time and place.</li>
+        <li><strong>APOSTOLIC</strong> &mdash; founded on the Apostles, with bishops in unbroken succession to them.</li>
+      </ul>
+      <h3>Surviving the Roman Empire</h3>
+      <p>For nearly 300 years, Christians faced persecution &mdash; from Nero (64 AD) through Diocletian (303 AD). They prayed in the <strong>catacombs</strong>, suffered as <strong>martyrs</strong> (Peter, Paul, Ignatius, Polycarp, Perpetua and Felicity, Lawrence, Agnes), and refused to worship the emperor as god. Then, in <strong>313 AD</strong>, Emperor <strong>Constantine</strong> issued the <strong>Edict of Milan</strong>, granting religious freedom.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>The blood of martyrs is the seed of Christians</strong> (Tertullian).</li>
+        <li><strong>The Church Fathers</strong> defended doctrine, wrote Scripture commentaries, and shaped Christian thought.</li>
+        <li><strong>The Council of Nicaea (325)</strong> formulated the creed that we still pray.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'List the four marks of the Church.', ans: 'One, Holy, Catholic, and Apostolic.' },
+      { q: 'What does &ldquo;catholic&rdquo; mean?', ans: '&ldquo;Universal&rdquo; — for all people in all times and places.' },
+      { q: 'What is apostolic succession?', ans: 'The unbroken line of bishops going back to the Apostles, transmitting authority and faith.' },
+      { q: 'Where did Christians often pray during the Roman persecutions?', ans: 'In the catacombs (underground burial chambers).' },
+      { q: 'Who issued the Edict of Milan, and in what year?', ans: 'Emperor Constantine, in 313 AD.' },
+      { q: 'Name two Church Fathers.', ans: 'Examples: Augustine, Jerome, Ambrose, Athanasius, Gregory of Nazianzus, John Chrysostom, Basil.' },
+      { q: 'What council in 325 AD produced the Creed?', ans: 'The Council of Nicaea (the Nicene Creed).' },
+      { q: 'Memory verse: &ldquo;You are Peter, and upon this rock I will build my _____.&rdquo;', ans: 'church' }
+    ],
+    quiz: [
+      { q: 'How many marks of the Church are there?', opts: ['2', '3', '4', '5'], ans: 2 },
+      { q: '&ldquo;Catholic&rdquo; means:', opts: ['Roman', 'Universal', 'Ancient', 'Holy'], ans: 1 },
+      { q: 'The Church is &ldquo;apostolic&rdquo; because she is:', opts: ['Old', 'Founded on the Apostles', 'Latin-speaking', 'Located in Rome'], ans: 1 },
+      { q: 'Christians often hid and prayed in:', opts: ['Castles', 'Catacombs', 'Caves only', 'Synagogues'], ans: 1 },
+      { q: 'The Edict of Milan was issued in:', opts: ['33 AD', '313 AD', '787 AD', '1054 AD'], ans: 1 },
+      { q: 'The Edict of Milan granted Christians:', opts: ['Power over Rome', 'Religious freedom', 'A new pope', 'A new Bible'], ans: 1 },
+      { q: 'St. Augustine wrote:', opts: ['The Bible', 'The Confessions and City of God', 'The Summa Theologica', 'The Imitation of Christ'], ans: 1 },
+      { q: 'The Council that gave us the Creed met in:', opts: ['Jerusalem', 'Nicaea', 'Constantinople', 'Trent'], ans: 1 },
+      { q: 'St. Jerome translated the Bible into:', opts: ['Greek', 'Latin (the Vulgate)', 'English', 'Aramaic'], ans: 1 },
+      { q: 'Tertullian said: &ldquo;The blood of martyrs is the _____ of Christians.&rdquo;', opts: ['end', 'seed', 'sword', 'song'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Praying the Creed With Meaning',
+        scenario: 'You say the Creed at Mass without thinking about it.',
+        steps: [
+          'Print or open the Nicene Creed.',
+          'Read it slowly, marking phrases you don&rsquo;t fully understand.',
+          'Look up one phrase in the Catechism (online ccc.usccb.org).',
+          'Next Sunday, pray the Creed with that one phrase in mind.'
+        ],
+        reflect: 'The Creed is what Christians have died for. What do <em>I</em> believe most deeply?'
+      },
+      {
+        title: 'Modern-Day &ldquo;Roman Empire&rdquo;',
+        scenario: 'You feel pressure to hide that you&rsquo;re Catholic at school or online.',
+        steps: [
+          'Remember the early Christians &mdash; in much greater danger, they didn&rsquo;t hide.',
+          'Make a small visible sign of faith (a cross necklace, a saint medal, a daily morning prayer).',
+          'When asked, give a calm honest answer: &ldquo;Yes, I&rsquo;m Catholic. It matters to me.&rdquo;',
+          'Pray for the people who pressure you, not against them.'
+        ],
+        reflect: 'Where is being Catholic costly for me? Where is it easy?'
+      },
+      {
+        title: 'Reading a Church Father',
+        scenario: 'You&rsquo;ve never read anything written by a Christian over 100 years ago.',
+        steps: [
+          'Pick one Church Father (Augustine&rsquo;s Confessions Book 1, or Athanasius On the Incarnation).',
+          'Read 5-10 minutes, slowly.',
+          'Write down one sentence that struck you.',
+          'Share it with a parent or in your journal.'
+        ],
+        reflect: 'How is it powerful to know my faith was already mature 1,700 years ago?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — The Growth of Christendom',
+    icon: '🏰',
+    theme: 'Monasticism, Missions, the Early Middle Ages',
+    desc: 'After the fall of Rome, monks and missionaries kept the faith alive and spread the Gospel across Europe. The Church and culture become deeply woven together.',
+    chapters: [
+      'St. Benedict and Monasticism (480-547)',
+      'The Conversion of Europe (St. Patrick, St. Boniface, Sts. Cyril and Methodius)',
+      'Charlemagne and the Holy Roman Empire',
+      'The Great Schism of 1054 (East-West)',
+      'Pilgrimage, Saints, and Daily Christian Life'
+    ],
+    scripture: { ref: 'Matthew 28:19', text: 'Go, therefore, and make disciples of all nations.' },
+    vocab: [
+      ['Monasticism', 'The way of life of monks and nuns, marked by prayer, work, and community.'],
+      ['Rule of St. Benedict', 'A guide for monastic life: &ldquo;Ora et labora&rdquo; (pray and work).'],
+      ['Missionary', 'One sent to bring the Gospel to a new people.'],
+      ['Schism', 'A break in the unity of the Church.'],
+      ['Holy Roman Empire', 'The Christian empire established by the crowning of Charlemagne in 800 AD.']
+    ],
+    lessonHTML: `
+      <p>When the Western Roman Empire fell (476 AD), it could have been the end of Christian civilization. Instead, two forces saved and spread the faith: <strong>monasteries</strong> and <strong>missionaries</strong>.</p>
+      <h3>Monasteries: Schools of Prayer</h3>
+      <p><strong>St. Benedict</strong> (480-547) wrote a Rule that organized monastic life around prayer (the Liturgy of the Hours), work, and study. Benedictine monasteries became centers of:</p>
+      <ul>
+        <li>Hospitality (welcoming travelers and the poor)</li>
+        <li>Education and the copying of manuscripts (preserving Scripture and classical learning)</li>
+        <li>Agriculture, medicine, and brewing</li>
+        <li>Daily liturgy</li>
+      </ul>
+      <h3>Missionaries: The Gospel Goes North</h3>
+      <ul>
+        <li><strong>St. Patrick</strong> brought the faith to Ireland (5th century).</li>
+        <li><strong>St. Augustine of Canterbury</strong> evangelized England (597).</li>
+        <li><strong>St. Boniface</strong> chopped down sacred pagan oaks in Germany.</li>
+        <li><strong>Sts. Cyril and Methodius</strong> created the Slavic alphabet so Slavs could read Scripture.</li>
+      </ul>
+      <h3>The Great Schism (1054)</h3>
+      <p>In 1054, the Church split between the <strong>Roman Catholic</strong> West and the <strong>Eastern Orthodox</strong> East. This wound is still not fully healed.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>The Church preserved learning</strong> when civilization itself was crumbling.</li>
+        <li><strong>The Christian missionary spirit</strong> respected and sometimes adopted local cultures.</li>
+        <li><strong>Christendom</strong> was a society where faith shaped art, law, and daily life.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who wrote the Rule that shaped Western monasticism?', ans: 'St. Benedict of Nursia.' },
+      { q: 'What is the Benedictine motto?', ans: '&ldquo;Ora et labora&rdquo; (pray and work).' },
+      { q: 'Who is the patron saint of Ireland?', ans: 'St. Patrick.' },
+      { q: 'In what year was Charlemagne crowned emperor?', ans: '800 AD.' },
+      { q: 'What was the Great Schism, and in what year?', ans: 'The 1054 split between the Roman Catholic Church (West) and the Eastern Orthodox Church (East).' },
+      { q: 'Name two things monasteries contributed to society.', ans: 'Examples: hospitality, manuscript copying, education, agriculture, medicine, beer/wine making.' },
+      { q: 'What is a missionary?', ans: 'A person sent to bring the Gospel to others, especially those who do not yet know Christ.' },
+      { q: 'Who created the Slavic alphabet?', ans: 'Sts. Cyril and Methodius.' }
+    ],
+    quiz: [
+      { q: 'St. Benedict is famous for:', opts: ['Founding the papacy', 'Writing his Rule for monks', 'Translating the Bible', 'Building Rome'], ans: 1 },
+      { q: '&ldquo;Ora et labora&rdquo; means:', opts: ['Faith and reason', 'Pray and work', 'Eat and rest', 'Read and write'], ans: 1 },
+      { q: 'St. Patrick brought the Gospel to:', opts: ['England', 'Ireland', 'Germany', 'Russia'], ans: 1 },
+      { q: 'Charlemagne was crowned emperor in:', opts: ['476', '800', '1054', '1492'], ans: 1 },
+      { q: 'The Great Schism happened in:', opts: ['313', '787', '1054', '1517'], ans: 2 },
+      { q: 'After the Schism, the Eastern Church became:', opts: ['Protestant', 'Eastern Orthodox', 'Anglican', 'Coptic only'], ans: 1 },
+      { q: 'Monasteries copied manuscripts to:', opts: ['Sell them for money', 'Preserve Scripture and learning', 'Hide them', 'Use as decoration'], ans: 1 },
+      { q: 'Sts. Cyril and Methodius are honored as:', opts: ['Apostles to the Slavs', 'Apostles to Africa', 'Apostles to Ireland', 'Apostles to Asia'], ans: 0 },
+      { q: 'St. Boniface is known for:', opts: ['Building cathedrals', 'Evangelizing Germany', 'Writing the Rule', 'Crowning kings'], ans: 1 },
+      { q: 'Christendom refers to:', opts: ['A country', 'A society shaped by Christian faith', 'A cathedral', 'A monastery'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Living a Mini Rule of Life',
+        scenario: 'Your days feel scattered and you want more peace.',
+        steps: [
+          'Like the Benedictines, set 3 short prayer times: morning offering, grace before lunch, examen at night.',
+          'Pick a daily &ldquo;work&rdquo; rule: 30 minutes of focused study with no phone.',
+          'Add one act of hospitality each day (welcome a sibling, help a classmate).',
+          'Stick to it for 7 days and see what changes.'
+        ],
+        reflect: 'How does a small rule of life turn ordinary days into prayer?'
+      },
+      {
+        title: 'Praying for Christian Unity',
+        scenario: 'You learn that Christianity is divided.',
+        steps: [
+          'Pray daily &ldquo;that they may all be one&rdquo; (John 17:21).',
+          'Visit (with permission) an Orthodox or Protestant church to learn about it respectfully.',
+          'Read about a saint shared by both East and West (e.g., Mary, John Chrysostom).',
+          'Speak respectfully of other Christians, even when disagreeing.'
+        ],
+        reflect: 'What does Jesus&rsquo; prayer for unity ask of me, even today?'
+      },
+      {
+        title: 'Being a Missionary in Your School',
+        scenario: 'You don&rsquo;t need to travel to evangelize.',
+        steps: [
+          'Identify one classmate who might never have met a Christian who lives the faith.',
+          'Be their friend &mdash; with no agenda except real friendship.',
+          'When asked, share simply and humbly.',
+          'Pray for them by name regularly.'
+        ],
+        reflect: 'Like St. Boniface and St. Patrick, what would courage look like for me?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — The Age of Faith and Beauty',
+    icon: '⛪',
+    theme: 'Cathedrals, Saints, Universities',
+    desc: 'In the High Middle Ages, faith built towering cathedrals, started universities, and produced great saints like Francis, Dominic, and Aquinas.',
+    chapters: [
+      'Romanesque and Gothic Cathedrals',
+      'St. Francis of Assisi and the Franciscans',
+      'St. Dominic and the Dominicans',
+      'St. Thomas Aquinas and the Universities',
+      'The Crusades and Pilgrimages'
+    ],
+    scripture: { ref: 'Psalm 27:4', text: 'One thing I ask of the LORD; this I seek: To dwell in the LORD&rsquo;s house all the days of my life, To gaze on the LORD&rsquo;s beauty, to visit his temple.' },
+    vocab: [
+      ['Cathedral', 'The principal church of a diocese, where the bishop&rsquo;s &ldquo;cathedra&rdquo; (chair) is located.'],
+      ['Mendicant', 'A &ldquo;begging&rdquo; friar (Franciscan, Dominican) who lives among the people, not in a cloister.'],
+      ['Scholasticism', 'Medieval method of joining faith and reason in theology, perfected by St. Thomas Aquinas.'],
+      ['Pilgrimage', 'A journey to a holy place undertaken as an act of devotion.'],
+      ['Crusade', 'A military expedition to recover the Holy Land in the 11th-13th centuries.']
+    ],
+    lessonHTML: `
+      <p>The High Middle Ages (about 1000-1300) was an age of breathtaking <strong>faith and beauty</strong>. Stone <strong>cathedrals</strong> rose hundreds of feet into the air. Two new forms of religious life appeared: the <strong>Franciscans</strong> (poor, joyful, preaching) and the <strong>Dominicans</strong> (preaching truth, study, teaching). Universities were born from cathedral schools.</p>
+      <h3>Two Saints Who Changed Everything</h3>
+      <p><strong>St. Francis of Assisi</strong> (1182-1226) gave away his rich clothes to embrace &ldquo;Lady Poverty.&rdquo; He preached to birds, kissed lepers, received the stigmata, and reminded the Church of the simple Gospel.</p>
+      <p><strong>St. Dominic</strong> (1170-1221) founded the Order of Preachers to combat heresy through study and preaching. His followers wore the white habit and prayed the rosary &mdash; a devotion the Dominicans helped spread widely.</p>
+      <h3>St. Thomas Aquinas</h3>
+      <p>The Dominican <strong>St. Thomas Aquinas</strong> (1225-1274) wrote the <em>Summa Theologica</em>, showing that faith and reason are not enemies but partners. He is the patron saint of students.</p>
+      <h3>Cathedrals: Sermons in Stone</h3>
+      <p>Romanesque churches (rounded arches) gave way to <strong>Gothic</strong> cathedrals (pointed arches, flying buttresses, stained glass). Notre-Dame in Paris, Chartres, Cologne &mdash; these were &ldquo;Bibles for the eyes&rdquo; for people who could not read.</p>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>Beauty is a path to God.</strong> The Church built and commissioned art so people could glimpse heaven.</li>
+        <li><strong>Faith and reason are friends</strong> (Aquinas).</li>
+        <li><strong>The Crusades</strong> were complicated &mdash; with both genuine faith and serious failures.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'What is a cathedral?', ans: 'The principal church of a diocese, where the bishop&rsquo;s chair (cathedra) is located.' },
+      { q: 'Who founded the Franciscans?', ans: 'St. Francis of Assisi.' },
+      { q: 'Who founded the Dominicans?', ans: 'St. Dominic de Guzman.' },
+      { q: 'What is St. Thomas Aquinas&rsquo; most famous work?', ans: 'The Summa Theologica.' },
+      { q: 'Name two architectural features of Gothic cathedrals.', ans: 'Pointed arches, flying buttresses, stained-glass windows, ribbed vaults, tall spires.' },
+      { q: 'Name two pilgrim destinations in medieval Europe.', ans: 'Examples: Jerusalem, Rome, Santiago de Compostela, Canterbury.' },
+      { q: 'What was the Crusades&rsquo; original goal?', ans: 'To recover the Holy Land (especially Jerusalem) for Christian pilgrimage.' },
+      { q: 'Memory verse: complete &ldquo;To gaze on the LORD&rsquo;s _____, to visit his temple.&rdquo;', ans: 'beauty' }
+    ],
+    quiz: [
+      { q: 'Gothic cathedrals are known for:', opts: ['Round arches', 'Pointed arches and flying buttresses', 'Domes', 'Wooden walls'], ans: 1 },
+      { q: 'St. Francis is associated with:', opts: ['Wealth', 'Poverty and peace', 'Crusades', 'Universities'], ans: 1 },
+      { q: 'St. Dominic founded the:', opts: ['Benedictines', 'Order of Preachers', 'Jesuits', 'Carmelites'], ans: 1 },
+      { q: 'St. Thomas Aquinas wrote the:', opts: ['Confessions', 'Summa Theologica', 'Imitation of Christ', 'City of God'], ans: 1 },
+      { q: 'Aquinas taught that faith and reason are:', opts: ['Enemies', 'Partners', 'Identical', 'Unrelated'], ans: 1 },
+      { q: 'The first European universities grew from:', opts: ['Royal palaces', 'Cathedral schools', 'Monasteries', 'Marketplaces'], ans: 1 },
+      { q: 'The rosary was popularized especially by:', opts: ['Benedictines', 'Dominicans', 'Jesuits', 'Carthusians'], ans: 1 },
+      { q: 'A pilgrimage is:', opts: ['A vacation', 'A journey to a holy place', 'A monastic vow', 'A type of prayer book'], ans: 1 },
+      { q: 'Notre-Dame, Chartres, and Cologne are:', opts: ['Monasteries', 'Universities', 'Gothic cathedrals', 'Towns'], ans: 2 },
+      { q: 'St. Francis received what miraculous gift?', opts: ['Stigmata', 'Levitation', 'Bilocation', 'Tongues'], ans: 0 }
+    ],
+    rla: [
+      {
+        title: 'Visiting a Church With New Eyes',
+        scenario: 'You go to Mass each week but don&rsquo;t really look around.',
+        steps: [
+          'Arrive 5 minutes early.',
+          'Walk slowly through the church before Mass &mdash; notice the stained glass, statues, and stations.',
+          'Pick one saint or symbol and quietly ask: &ldquo;Why is this here?&rdquo;',
+          'After Mass, look up the answer.'
+        ],
+        reflect: 'What is the church teaching me through its art and architecture?'
+      },
+      {
+        title: 'A Day With St. Francis',
+        scenario: 'You feel weighed down by stuff &mdash; gadgets, clothes, social media.',
+        steps: [
+          'Go phone-free for 4 hours.',
+          'Donate 5 things from your room you don&rsquo;t need.',
+          'Spend 10 minutes outside thanking God for creation (Brother Sun, Sister Moon).',
+          'Greet someone you&rsquo;d normally ignore.'
+        ],
+        reflect: 'How does owning less help me love more?'
+      },
+      {
+        title: 'Thinking Like Aquinas',
+        scenario: 'A friend says faith is &ldquo;just feelings, not facts.&rdquo;',
+        steps: [
+          'Calmly say: &ldquo;Actually, faith and reason fit together.&rdquo;',
+          'Share one reason you find Christianity reasonable (the Resurrection, the moral law in our hearts, the existence of beauty).',
+          'Don&rsquo;t pretend to know everything &mdash; say &ldquo;Let me look that up&rdquo; honestly.',
+          'Read a short article from a Catholic source (e.g., Word on Fire, Catholic Answers).'
+        ],
+        reflect: 'How can I love God with my <em>mind</em> and not just my heart?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Reason, Rebellion, and Reform',
+    icon: '📖',
+    theme: 'Reformation and Counter-Reformation',
+    desc: 'In the 1500s the Church faced rebellion (Luther, Calvin, Henry VIII) and responded with renewal &mdash; the Council of Trent and great Counter-Reformation saints.',
+    chapters: [
+      'The Late Medieval Church and the Need for Reform',
+      'Martin Luther and the Reformation (1517)',
+      'Henry VIII and the Church of England',
+      'The Council of Trent (1545-1563)',
+      'Counter-Reformation Saints (Ignatius, Teresa, John of the Cross, Charles Borromeo)'
+    ],
+    scripture: { ref: 'Revelation 21:5', text: 'Behold, I make all things new.' },
+    vocab: [
+      ['Reformation', 'The 16th-century movement led by Martin Luther and others that broke with the Catholic Church.'],
+      ['Indulgence', 'A remission of temporal punishment for sins; abuses surrounding indulgences sparked Luther&rsquo;s protest.'],
+      ['Council of Trent', 'The 19th ecumenical council (1545-1563) that defined Catholic doctrine and renewed the Church.'],
+      ['Counter-Reformation', 'The Catholic Church&rsquo;s renewal in response to the Reformation.'],
+      ['Society of Jesus', 'The religious order founded by St. Ignatius of Loyola &mdash; the Jesuits.']
+    ],
+    lessonHTML: `
+      <p>By 1500, the Church desperately needed reform. Some clergy were corrupt, indulgences were sold, and many Christians felt disconnected from the Gospel. In 1517, a German monk named <strong>Martin Luther</strong> nailed his <em>95 Theses</em> to the door of the Wittenberg church, beginning the <strong>Reformation</strong> &mdash; which split Western Christianity.</p>
+      <h3>What the Reformers Wanted</h3>
+      <ul>
+        <li>End the abuse of indulgences.</li>
+        <li>Make Scripture available in the language of the people.</li>
+        <li>Emphasize personal faith and grace.</li>
+      </ul>
+      <p>But over time, reformers also rejected core Catholic teachings: the seven sacraments, the authority of the pope, devotion to Mary, purgatory, and the Eucharist as the true Body and Blood of Christ.</p>
+      <h3>The Catholic Response: Renewal, Not Just Defense</h3>
+      <p>The Church responded with the <strong>Council of Trent</strong> (1545-1563), which:</p>
+      <ul>
+        <li>Defined Catholic doctrine clearly (the seven sacraments, the canon of Scripture, justification).</li>
+        <li>Reformed clergy training (founded seminaries).</li>
+        <li>Standardized the liturgy and the catechism.</li>
+      </ul>
+      <h3>Saints of the Counter-Reformation</h3>
+      <ul>
+        <li><strong>St. Ignatius of Loyola</strong> &mdash; founded the Jesuits, wrote the Spiritual Exercises.</li>
+        <li><strong>St. Teresa of &Aacute;vila</strong> and <strong>St. John of the Cross</strong> &mdash; reformed the Carmelites, deepened mystical prayer.</li>
+        <li><strong>St. Charles Borromeo</strong> &mdash; model bishop of the renewed Church.</li>
+        <li><strong>St. Francis Xavier</strong> &mdash; missionary to Asia.</li>
+      </ul>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li>Real reform always begins with personal holiness.</li>
+        <li>Christian unity is a wound; we are called to pray and work for it.</li>
+        <li>The Church is always in need of being renewed (<em>Ecclesia semper reformanda</em>).</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'In what year did Martin Luther post his 95 Theses?', ans: '1517.' },
+      { q: 'What practice especially angered Luther?', ans: 'The abuse of indulgences, especially their sale.' },
+      { q: 'Who broke from Rome to form the Church of England?', ans: 'King Henry VIII.' },
+      { q: 'What council was the Church&rsquo;s major response to the Reformation?', ans: 'The Council of Trent (1545-1563).' },
+      { q: 'Who founded the Jesuits?', ans: 'St. Ignatius of Loyola.' },
+      { q: 'Name two Counter-Reformation saints.', ans: 'Examples: Ignatius of Loyola, Teresa of &Aacute;vila, John of the Cross, Charles Borromeo, Francis Xavier, Philip Neri.' },
+      { q: 'What is &ldquo;Ecclesia semper reformanda&rdquo;?', ans: 'Latin for &ldquo;the Church is always to be reformed&rdquo; &mdash; the call to ongoing renewal.' },
+      { q: 'List two things the Council of Trent did.', ans: 'Examples: defined doctrine (sacraments, canon of Scripture, justification), reformed clergy by founding seminaries, standardized liturgy, issued a catechism.' }
+    ],
+    quiz: [
+      { q: 'The Reformation began in:', opts: ['1054', '1517', '1545', '1789'], ans: 1 },
+      { q: 'Martin Luther was a:', opts: ['Priest', 'Monk', 'King', 'Bishop'], ans: 1 },
+      { q: 'Henry VIII broke from Rome over:', opts: ['Indulgences', 'Annulment of his marriage', 'Translation of Scripture', 'Doctrine of grace'], ans: 1 },
+      { q: 'The Council of Trent met from:', opts: ['1054-1056', '1517-1530', '1545-1563', '1962-1965'], ans: 2 },
+      { q: 'The Jesuits were founded by:', opts: ['St. Francis', 'St. Ignatius of Loyola', 'St. Dominic', 'St. Thomas More'], ans: 1 },
+      { q: 'St. Teresa of &Aacute;vila reformed the:', opts: ['Benedictines', 'Carmelites', 'Franciscans', 'Augustinians'], ans: 1 },
+      { q: 'St. Francis Xavier is famous as a missionary to:', opts: ['Africa', 'Asia', 'America', 'Russia'], ans: 1 },
+      { q: 'Trent emphasized that justification comes through:', opts: ['Faith alone', 'Works alone', 'Grace through faith working in love', 'Personal feelings'], ans: 2 },
+      { q: 'The Spiritual Exercises were written by:', opts: ['St. Teresa', 'St. Ignatius', 'St. John of the Cross', 'St. Philip Neri'], ans: 1 },
+      { q: '&ldquo;Ecclesia semper reformanda&rdquo; means:', opts: ['The Church will end', 'The Church is always to be reformed', 'The Church is perfect', 'The Church divides'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Reform Begins With Me',
+        scenario: 'You see flaws in your school, parish, or family.',
+        steps: [
+          'Before complaining, ask: where do I need reform?',
+          'Pick one habit to change this week (gossip, screen time, prayer).',
+          'Ask the Holy Spirit&rsquo;s help each morning.',
+          'Speak about issues with charity, not bitterness.'
+        ],
+        reflect: 'St. Teresa said: &ldquo;If you want to fix the world, start with yourself.&rdquo; What does that mean for me?'
+      },
+      {
+        title: 'Praying With Other Christians',
+        scenario: 'You have a Protestant friend who loves Jesus.',
+        steps: [
+          'Affirm what you share: love of Jesus, the Bible, prayer, basic morality.',
+          'Pray together when possible (e.g., the Lord&rsquo;s Prayer).',
+          'Don&rsquo;t hide differences, but discuss them respectfully.',
+          'Pray for full unity in the truth.'
+        ],
+        reflect: 'How do I disagree without being divisive?'
+      },
+      {
+        title: 'The Examen Like St. Ignatius',
+        scenario: 'You want a daily prayer practice that fits in 10 minutes.',
+        steps: [
+          'Pause &mdash; become aware of God&rsquo;s presence.',
+          'Give thanks for one specific gift today.',
+          'Review the day &mdash; where did I love? Where did I fail?',
+          'Ask for forgiveness, then pray about tomorrow.'
+        ],
+        reflect: 'How does the Examen change my awareness of God in ordinary days?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — Returning to the Roots of Christianity',
+    icon: '🌱',
+    theme: 'Vatican II and the Modern Church',
+    desc: 'In the modern era the Church confronts new challenges and renews itself at Vatican II. Catholic Social Teaching, modern saints, and the call to holiness today.',
+    chapters: [
+      'The Church in the Modern World (19th-20th centuries)',
+      'The Second Vatican Council (1962-1965)',
+      'Catholic Social Teaching (Rerum Novarum and beyond)',
+      'Modern Saints (Th&eacute;r&egrave;se of Lisieux, Maximilian Kolbe, Teresa of Calcutta, John Paul II)',
+      'The Universal Call to Holiness (Lumen Gentium 5)'
+    ],
+    scripture: { ref: 'Hebrews 13:8', text: 'Jesus Christ is the same yesterday, today, and forever.' },
+    vocab: [
+      ['Vatican II', 'The 21st ecumenical council (1962-1965), called by Pope John XXIII for renewal.'],
+      ['Aggiornamento', 'Italian for &ldquo;bringing up to date&rdquo; &mdash; a key word of Vatican II.'],
+      ['Catholic Social Teaching (CST)', 'The Church&rsquo;s body of teaching on justice, the dignity of work, the poor, and the common good.'],
+      ['Subsidiarity', 'A CST principle: decisions should be made at the most local level possible.'],
+      ['Universal Call to Holiness', 'Vatican II&rsquo;s teaching that all the baptized &mdash; not only priests and religious &mdash; are called to be saints.']
+    ],
+    lessonHTML: `
+      <p>The 19th and 20th centuries brought industrial revolutions, world wars, the rise of communism and consumerism, and rapid social change. The Church responded with renewed missions, modern saints, and one of the most important councils in her history: <strong>Vatican II</strong>.</p>
+      <h3>Vatican II (1962-1965)</h3>
+      <p>Called by Pope <strong>St. John XXIII</strong> to throw open the windows of the Church and let the Holy Spirit blow through, Vatican II:</p>
+      <ul>
+        <li>Allowed the Mass in the language of the people (vernacular).</li>
+        <li>Affirmed religious freedom (<em>Dignitatis Humanae</em>).</li>
+        <li>Renewed Scripture study (<em>Dei Verbum</em>).</li>
+        <li>Emphasized the <strong>universal call to holiness</strong> (<em>Lumen Gentium</em> 5).</li>
+        <li>Encouraged ecumenism and dialogue with other religions.</li>
+      </ul>
+      <h3>Catholic Social Teaching</h3>
+      <p>Beginning with Pope Leo XIII&rsquo;s encyclical <em>Rerum Novarum</em> (1891), the Church developed teaching on:</p>
+      <ul>
+        <li>The dignity of every human person from conception to natural death.</li>
+        <li>Solidarity with the poor (preferential option for the poor).</li>
+        <li>The dignity of work and rights of workers.</li>
+        <li>Care for creation (<em>Laudato Si&rsquo;</em>).</li>
+        <li>The common good and subsidiarity.</li>
+      </ul>
+      <h3>Modern Saints</h3>
+      <ul>
+        <li><strong>St. Th&eacute;r&egrave;se of Lisieux</strong> &mdash; the &ldquo;Little Way&rdquo; of small things done with great love.</li>
+        <li><strong>St. Maximilian Kolbe</strong> &mdash; gave his life for another prisoner at Auschwitz.</li>
+        <li><strong>St. Teresa of Calcutta</strong> &mdash; served the poorest of the poor.</li>
+        <li><strong>St. John Paul II</strong> &mdash; helped end communism in Eastern Europe, championed human dignity, traveled the world.</li>
+      </ul>
+      <h3>Key ideas from <em>Blest Are We</em></h3>
+      <ul>
+        <li><strong>Holiness is for everyone</strong> &mdash; including 8th graders.</li>
+        <li><strong>The Gospel speaks to every age</strong>, including ours.</li>
+        <li><strong>The Church is the same Jesus founded</strong>, even as her language and methods change.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'When was the Second Vatican Council held?', ans: '1962-1965.' },
+      { q: 'Who called Vatican II?', ans: 'Pope St. John XXIII.' },
+      { q: 'What does &ldquo;aggiornamento&rdquo; mean?', ans: 'Italian for &ldquo;bringing up to date&rdquo; &mdash; a major aim of Vatican II.' },
+      { q: 'Name two changes brought by Vatican II.', ans: 'Examples: Mass in the vernacular, religious freedom, renewed biblical studies, universal call to holiness, ecumenism.' },
+      { q: 'What is the encyclical that began modern Catholic Social Teaching, and who wrote it?', ans: '<em>Rerum Novarum</em> (1891) by Pope Leo XIII.' },
+      { q: 'What is the &ldquo;Little Way&rdquo;?', ans: 'St. Th&eacute;r&egrave;se of Lisieux&rsquo;s spirituality of doing small ordinary things with great love.' },
+      { q: 'Who was the &ldquo;Saint of Auschwitz&rdquo;?', ans: 'St. Maximilian Kolbe.' },
+      { q: 'Memory verse: complete &ldquo;Jesus Christ is the same _____, today, and forever.&rdquo;', ans: 'yesterday' }
+    ],
+    quiz: [
+      { q: 'Vatican II met from:', opts: ['1545-1563', '1869-1870', '1962-1965', '2000-2005'], ans: 2 },
+      { q: 'Vatican II was called by:', opts: ['Pius XII', 'John XXIII', 'Paul VI', 'Benedict XVI'], ans: 1 },
+      { q: 'Aggiornamento means:', opts: ['New doctrine', 'Bringing up to date', 'Latin only', 'Reform of Trent'], ans: 1 },
+      { q: 'Lumen Gentium 5 teaches the:', opts: ['Liturgical year', 'Universal call to holiness', 'Marian doctrines', 'Just war theory'], ans: 1 },
+      { q: 'Rerum Novarum (1891) was written by:', opts: ['Leo XIII', 'Pius IX', 'John Paul II', 'Francis'], ans: 0 },
+      { q: 'Rerum Novarum addressed:', opts: ['The dignity of workers and just wages', 'The Marian dogmas', 'Liturgical reform', 'The use of Latin'], ans: 0 },
+      { q: 'St. Th&eacute;r&egrave;se taught the:', opts: ['Big Way', 'Little Way', 'Mystical Way', 'Royal Road'], ans: 1 },
+      { q: 'St. Maximilian Kolbe died at:', opts: ['Dachau', 'Auschwitz', 'Buchenwald', 'Treblinka'], ans: 1 },
+      { q: 'St. Teresa of Calcutta served especially the:', opts: ['Wealthy', 'Poorest of the poor', 'Politicians', 'Educated elite'], ans: 1 },
+      { q: 'Catholic Social Teaching teaches that every person:', opts: ['Earns dignity by work', 'Has dignity from conception to natural death', 'Has dignity only as a citizen', 'Must agree with the Church to have rights'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'The Little Way at School',
+        scenario: 'You feel like you can&rsquo;t do anything &ldquo;great&rdquo; for God.',
+        steps: [
+          'Pick a small task you usually rush (homework, dishes, walking a sibling).',
+          'Do it slowly and carefully, offering it to Jesus.',
+          'Smile at someone you don&rsquo;t usually notice.',
+          'At night, thank God for the small things.'
+        ],
+        reflect: 'St. Th&eacute;r&egrave;se became a Doctor of the Church without leaving her convent. What does that say about ordinary life?'
+      },
+      {
+        title: 'Living Catholic Social Teaching',
+        scenario: 'You hear about injustice and feel powerless.',
+        steps: [
+          'Pick ONE issue that moves you (homelessness, the unborn, refugees, racism, the environment).',
+          'Learn about it from a Catholic source.',
+          'Volunteer locally even one hour this month.',
+          'Pray daily for those affected by it.'
+        ],
+        reflect: 'How is faith without action like a body without breath (James 2:17)?'
+      },
+      {
+        title: 'Becoming a Saint Now',
+        scenario: 'You think saints are people from a long time ago.',
+        steps: [
+          'Pick a saint born in the last 100 years.',
+          'Read a short biography or watch a 10-minute video.',
+          'Ask: what one thing would they do in my life today?',
+          'Do that thing this week.'
+        ],
+        reflect: 'Vatican II says <em>everyone</em> is called to holiness. What is the next step in my path?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.theme}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'The Story of Our Church';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <p style="color:#666;font-style:italic;margin-bottom:14px;">${u.theme}</p>
+    <div class="scripture-box"><strong>${u.scripture.ref}</strong> &mdash; &ldquo;${u.scripture.text}&rdquo;</div>
+    <div class="chapter-list"><h4>📖 Chapters from <em>Blest Are We</em></h4><ol>${u.chapters.map(c => `<li>${c}</li>`).join('')}</ol></div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. You may consult <em>Blest Are We</em> and the Bible.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Outstanding — you know the story of your Church!' : '📖 Review the lesson and try again. The Church has been teaching for 2,000 years; we&rsquo;re patient.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

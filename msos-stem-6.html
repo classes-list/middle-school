@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 6th Grade STEM: Earth &amp; Space Science</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .inquiry-box { background: #eff6ff; border-left: 5px solid #1B3A8A; padding: 14px 18px; border-radius: 6px; margin: 14px 0; color: #1e3a8a; }
+    .inquiry-box strong { color: #1B3A8A; }
+    .inquiry-box .q { margin: 6px 0; padding-left: 10px; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .chapter-list { background: #f8f9fa; border-radius: 8px; padding: 16px 22px; margin: 14px 0; }
+    .chapter-list h4 { color: #1B3A8A; margin-bottom: 8px; }
+    .chapter-list ol, .chapter-list ul { margin-left: 22px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.date { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    /* ── SYLLABUS PAGE (STS-style) ── */
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-unit-row { background: #f8fafc; border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; border-left: 4px solid #1B3A8A; }
+    .syl-unit-row strong { font-size: 0.95rem; color: #1B3A8A; }
+    .syl-unit-row span { font-size: 0.85rem; color: #4a5568; display: block; margin-top: 4px; line-height: 1.5; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 90px; }
+    .syl-grade-pill span { display: block; font-size: 1.2rem; font-weight: 800; color: #1B3A8A; }
+    /* — Detailed unit syllabus blocks — */
+    .syl-unit-detail { background: #f8fafc; border-left: 4px solid #1B3A8A; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+    .syl-unit-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .syl-unit-emoji { font-size: 1.6rem; flex-shrink: 0; }
+    .syl-unit-head strong { font-size: 1rem; color: #1B3A8A; display: block; }
+    .syl-unit-dates { display: block; font-size: 0.82rem; color: #B8860B; font-weight: 600; margin-top: 2px; }
+    .syl-myp-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .myp-pill { background: #eef2fa; color: #1B3A8A; font-size: 0.78rem; padding: 4px 10px; border-radius: 12px; }
+    .myp-pill b { font-weight: 700; }
+    .syl-inquiry-block { background: #fff; border-left: 3px solid #FFD100; padding: 10px 14px; margin: 10px 0; border-radius: 6px; }
+    .syl-inquiry-block p { font-size: 0.86rem; line-height: 1.55; color: #374151; margin: 4px 0; }
+    .syl-inquiry-block p em { color: #7a5f00; font-weight: 600; font-style: normal; }
+    .syl-inquiry-block p.iq { padding-left: 14px; }
+    .syl-kud { display: grid; gap: 6px; margin: 10px 0; padding: 10px 14px; background: #fff; border-radius: 6px; border: 1px solid #e2e8f0; }
+    .syl-kud > div { font-size: 0.86rem; line-height: 1.55; color: #374151; }
+    .syl-kud b { color: #1B3A8A; }
+    .syl-assessments { background: #fffbe6; border: 1px solid #fde68a; border-radius: 6px; padding: 10px 14px; margin-top: 10px; }
+    .syl-assessments b { color: #7a5f00; }
+    .syl-assessments ul { margin: 4px 0 0 22px; }
+    .syl-assessments li { font-size: 0.86rem; color: #4a3a00; }
+    .syl-crit-grid { display: grid; gap: 8px; }
+    .syl-crit { display: grid; grid-template-columns: 50px 1fr auto; gap: 14px; align-items: center; background: #f1f5f9; border-radius: 8px; padding: 10px 14px; }
+    .crit-letter { width: 40px; height: 40px; background: #1B3A8A; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; }
+    .syl-crit strong { display: block; font-size: 0.92rem; color: #1B3A8A; }
+    .syl-crit span { display: block; font-size: 0.82rem; color: #4a5568; margin-top: 2px; line-height: 1.4; }
+    .crit-score { font-weight: 700; color: #B8860B; font-size: 0.85rem; white-space: nowrap; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">6th Grade STEM <span class="grade-tag">Gr. 6</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/4</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-stem-index.html" class="back-index-btn" title="Back to STEM Classes">← All STEM</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Earth &amp; Space Science</span>
+        </div>
+        <div class="topbar-right">STEM &middot; Grade 6</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Earth &amp; Space Science</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">From the Big Bang to climate change — exploring the Universe, our planet, and our role as stewards of God&rsquo;s creation.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">🌍</div>
+            <h2>STEM &mdash; Course Syllabus</h2>
+            <p>Grade 6: Earth &amp; Space Science &middot; SY 2025-2026</p>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p style="margin-top:8px">6th Grade STEM is an introduction to <strong>Earth and Space Science</strong>. It is designed to unite our world view as citizens of the planet, nurture our understanding of how the Earth&rsquo;s systems are interrelated and inspire the next generation of scientists and engineers.</p>
+              <p style="margin-top:8px">The year begins with a short introduction to the Scientific Method and the Engineering Design Process as well as the principal tools and techniques of a scientist and engineer. Then it&rsquo;s time to leave this planet we call home and explore the wonders of the Universe. We will return to the &ldquo;Big Bang&rdquo; and discover the universe&rsquo;s beginnings. After the Winter Break, we will be going back in deep time, 4.5 billion years ago to discover how the Earth was made and learn the key events that shaped our world. After Spring Break, we will conclude the year with an investigation of two pressing global issues, climate change and the low-energy future.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👨‍🔬 Teacher</h3>
+              <p><strong>Mr. Dave Eachus</strong></p>
+              <p>📍 Innovations Lab (C-17)</p>
+              <p>📧 <a href="mailto:deachus@starofthesea.org">deachus@starofthesea.org</a></p>
+              <p>📞 (808) 734-0208 x 2221</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Classroom &amp; Lab Materials</h3>
+              <ul>
+                <li>Composition notebook (lab journal)</li>
+                <li>Pencils, pens, colored pencils</li>
+                <li>Lab safety goggles</li>
+                <li>Computer / device for simulations</li>
+                <li>Calculator</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Scope &amp; Sequence &mdash; Grade 6: Earth &amp; Space Science</h3>
+            <p style="font-size:0.88rem;color:#64748b;margin-bottom:12px;font-style:italic">2025–2026, August&ndash;June. All unit dates are projected and may be subject to change.</p>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🔬</span><div><strong>Unit 1 &mdash; Why STEM</strong><span class="syl-unit-dates">5 Aug – 30 Aug</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Systems</span>
+              <span class="myp-pill"><b>Related:</b> Patterns, Form, Function</span>
+              <span class="myp-pill"><b>Global Context:</b> Science and Technical Innovation</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> The Scientific Method and the Engineering Design Process allow us to investigate the form and function of patterns observed in natural systems or designs.</p>
+              <p class="iq"><b>Factual:</b> How do scientists and engineers use the Scientific Method and the Engineering Design Process?</p>
+              <p class="iq"><b>Conceptual:</b> How does experimental science and engineering expand our body of knowledge?</p>
+              <p class="iq"><b>Debatable:</b> Can the Scientific Method or the Engineering Design Process be used to answer any question or solve any problem?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Scientific Method, Engineering Design Process, Extinction Level Events</div>
+              <div><b>Understand:</b> How the Scientific Method is used to answer questions. The linkage between ELE&rsquo;s and mass extinctions.</div>
+              <div><b>Do:</b> Lab Safety, Scientific Method/Engineering Design Process, variables and hypothesis formulation, Lab report format.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>ELE Poster (Crit. A/D)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🌌</span><div><strong>Unit 2 &mdash; Our Universe</strong><span class="syl-unit-dates">2 Sep – 18 Dec</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Change</span>
+              <span class="myp-pill"><b>Related:</b> Models, Interaction, Movement</span>
+              <span class="myp-pill"><b>Global Context:</b> Science and Technical Innovation</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> Models allow scientists to understand the movements and interactions that change our Universe.</p>
+              <p class="iq"><b>Factual:</b> What forces govern our Universe?</p>
+              <p class="iq"><b>Conceptual:</b> How was our Universe created?</p>
+              <p class="iq"><b>Debatable:</b> How old is our Universe?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Structure and states of matter, types of objects in the universe, how we use models to help us understand our Universe.</div>
+              <div><b>Understand:</b> How the Universe was formed and that it is still expanding, formation of stars, importance of gravity, scale of the Universe.</div>
+              <div><b>Do:</b> Mass Lab, Volume Lab, Density Lab, Alien in Me, Great Pluto Debate.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Density Lab (Crit. B/C)</li><li>Great Pluto Debate (Crit. A/D)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🌍</span><div><strong>Unit 3 &mdash; How the Earth was Made</strong><span class="syl-unit-dates">6 Jan – 13 Mar</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Systems</span>
+              <span class="myp-pill"><b>Related:</b> Evidence, Environment</span>
+              <span class="myp-pill"><b>Global Context:</b> Orientation in Space and Time</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> Evidence allows us to see that the interplay of geologic, environmental, and biological systems created our Earth.</p>
+              <p class="iq"><b>Factual:</b> Where is the evidence of the 4.5 billion year development of the Earth?</p>
+              <p class="iq"><b>Conceptual:</b> How do we know the age of our Earth?</p>
+              <p class="iq"><b>Debatable:</b> What are the key events that resulted in our world being what it is today?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> 25 key events in the 4.5 billion year history of our Earth.</div>
+              <div><b>Understand:</b> How the key events shaped our Earth into what we see today.</div>
+              <div><b>Do:</b> Explore the evidence in the rock, investigate how our Earth changed over the past 4.5 billion years, and understand what fossils tell us about life in the deep past. Rock Lab, Fossil Lab.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Ages of the Earth Presentation (Crit. A/D)</li><li>The Great Oxygenation Lab (Crit. B/C)</li><li>Earth Timeline Project (Crit. A/D)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🌡️</span><div><strong>Unit 4 &mdash; Climate Change and the Low-Energy Future</strong><span class="syl-unit-dates">30 Mar – 3 Jun</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Change</span>
+              <span class="myp-pill"><b>Related:</b> Balance, Energy, Consequences</span>
+              <span class="myp-pill"><b>Global Context:</b> Globalization and Sustainability</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> Exploring mankind&rsquo;s use of energy and its link to our climate will reveal a delicate balance of forces that are changing and will have significant consequences for the sustainability of life on our planet.</p>
+              <p class="iq"><b>Factual:</b> What factors affect climate?</p>
+              <p class="iq"><b>Conceptual:</b> How is mankind&rsquo;s use of energy changing climate factors? How will a low-energy future affect our ability to deal with climate change?</p>
+              <p class="iq"><b>Debatable:</b> Is human activity having a significant impact on climate change?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> The evidence behind Climate Change and the Low Energy future.</div>
+              <div><b>Understand:</b> How the factors affecting climate change are linked to energy usage.</div>
+              <div><b>Do:</b> Identify the difference between weather and climate, explore the factors that are causing Earth&rsquo;s climate to change, investigate the impact of those changes on our Earth, identify where the energy comes from and how it is used, explore trends in energy use growth and its implications for the future, investigate the nexus created by the changing climate and the potential to run out of energy in the near future.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Critical Lab Skills Test (Crit. B/C)</li><li>Sources of Energy Presentation (Crit. A/D)</li><li>Baseball Project (Crit. A/D)</li></ul>
+            </div>
+          </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📊 STEM Assessment Criteria</h3>
+            <p style="font-size:0.88rem;color:#374151;margin-bottom:10px">Each criterion is scored on an MYP-style scale of <strong>0&ndash;8</strong>. Student activities are assessed against the criteria below; end-of-quarter letter grades reflect overall progress.</p>
+            <div class="syl-crit-grid">
+              <div class="syl-crit"><div class="crit-letter">A</div><div><strong>Knowing &amp; Understanding</strong><span>Recall and apply scientific knowledge; explain phenomena.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">B</div><div><strong>Inquiring &amp; Designing</strong><span>1st half of the Experimental / Design Cycle: question, plan, hypothesize, design.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">C</div><div><strong>Processing &amp; Evaluating</strong><span>2nd half of the Experimental / Design Cycle: collect, analyze, draw conclusions.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">D</div><div><strong>Reflecting on the Impacts of Science / Engineering</strong><span>Consider ethical, environmental, and social implications of science and engineering decisions.</span></div><div class="crit-score">0&ndash;8</div></div>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>🕒 Learning Support &amp; Communication</h3>
+              <ul>
+                <li>Parents with questions or concerns may directly contact the instructor.</li>
+                <li>Students are encouraged to use Flex Time or lunch recess to obtain additional learning support.</li>
+                <li>The <strong>Innovations Lab</strong> is open every <strong>Wednesday afternoon (except Mini-days) until 4&nbsp;pm</strong> for any student needing help or to finish lab work.</li>
+                <li>Students and/or parents should email Mr. Eachus to make arrangements for additional learning opportunities.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">Where this unit&rsquo;s science meets your daily life and the world around you.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Why STEM',
+    icon: '🔬',
+    theme: 'Scientific Method &amp; Engineering Design Process',
+    dates: '5 Aug – 30 Aug',
+    keyConcept: 'Systems',
+    relatedConcepts: 'Patterns, Form, Function',
+    globalContext: 'Science and Technical Innovation',
+    desc: 'Meet the scientific method and the engineering design process — the two great tools that scientists and engineers use to investigate and build the world.',
+    inquiry: {
+      statement: 'The Scientific Method and the Engineering Design Process allow us to investigate the form and function of patterns observed in natural systems or designs.',
+      factual: 'How do scientists and engineers use the Scientific Method and the Engineering Design Process?',
+      conceptual: 'How does experimental science and engineering expand our body of knowledge?',
+      debatable: 'Can the Scientific Method or the Engineering Design Process be used to answer any question or solve any problem?'
+    },
+    content: {
+      know: 'Scientific Method, Engineering Design Process, Extinction Level Events (ELE).',
+      understand: 'How the Scientific Method is used to answer questions; the linkage between ELEs and mass extinctions.',
+      doIt: 'Lab Safety; Scientific Method / Engineering Design Process; variables and hypothesis formulation; lab report format.'
+    },
+    assessments: ['ELE Poster (Crit. A/D)'],
+    vocab: [
+      ['Hypothesis', 'A testable prediction about how a variable will behave.'],
+      ['Variable', 'A factor in an experiment that can change. Independent = changed, Dependent = measured, Controlled = kept the same.'],
+      ['Engineering Design Process', 'Identify problem → Research → Brainstorm → Design → Build → Test → Improve.'],
+      ['Extinction Level Event (ELE)', 'A catastrophic event (asteroid, supervolcano, etc.) that wipes out a large fraction of life on Earth.'],
+      ['Lab Safety', 'Rules that protect people, equipment, and the environment in the science lab.']
+    ],
+    lessonHTML: `
+      <p>STEM stands for <strong>Science, Technology, Engineering, and Math</strong>. In 6th grade we use two great procedures to investigate and build the world: the <strong>Scientific Method</strong> (which scientists use to <em>understand</em>) and the <strong>Engineering Design Process</strong> (which engineers use to <em>solve problems</em>). They&rsquo;re different tools for different jobs — but both rely on careful observation and honest data.</p>
+      <h3>The Scientific Method</h3>
+      <ol>
+        <li><strong>Question</strong> &mdash; What do I want to find out?</li>
+        <li><strong>Background research</strong> &mdash; What do we already know?</li>
+        <li><strong>Hypothesis</strong> &mdash; A testable prediction (often &ldquo;If &hellip; then &hellip;&rdquo;).</li>
+        <li><strong>Experiment</strong> &mdash; Test it with controlled variables.</li>
+        <li><strong>Analyze results</strong> &mdash; What does the data show?</li>
+        <li><strong>Conclusion</strong> &mdash; Was the hypothesis supported? Share findings.</li>
+      </ol>
+      <h3>The Engineering Design Process</h3>
+      <p>Identify the problem → research → brainstorm solutions → design → <strong>build</strong> → test → improve and iterate. Real engineers expect their first design to fail; failure is how you learn.</p>
+      <h3>Extinction Level Events (ELE)</h3>
+      <p>An ELE is a catastrophic event &mdash; like the asteroid that ended the age of the dinosaurs &mdash; that wipes out a huge fraction of life on Earth. Studying ELEs uses both science (what happened?) and engineering (how would we detect or deflect a future asteroid?).</p>
+    `,
+    worksheet: [
+      { q: 'Write the six steps of the Scientific Method in order.', ans: '1) Question, 2) Background research, 3) Hypothesis, 4) Experiment, 5) Analyze results, 6) Conclusion.' },
+      { q: 'What is the difference between an <em>independent</em> and a <em>dependent</em> variable?', ans: 'Independent = the one you change on purpose. Dependent = the one you measure. Controlled = kept the same.' },
+      { q: 'Write a testable hypothesis for: "Does music affect how fast plants grow?"', ans: 'Sample: If plants are exposed to classical music for 4 hours daily, then they will grow taller than plants kept in silence over 4 weeks.' },
+      { q: 'List two key lab-safety rules.', ans: 'Examples: Wear safety goggles whenever chemicals or glass are in use. Tie back long hair. No food/drink in the lab. Know where eyewash and fire extinguisher are.' },
+      { q: 'What is an Extinction Level Event? Give one example.', ans: 'A catastrophic event that wipes out a large fraction of life on Earth. Example: the Cretaceous-Paleogene asteroid impact ~66 million years ago that ended the dinosaurs.' },
+      { q: 'Name the seven steps of the Engineering Design Process.', ans: 'Identify the problem, research, brainstorm, design, build, test, improve.' }
+    ],
+    quiz: [
+      { q: 'What is a hypothesis?', opts: ['A guess', 'A testable prediction', 'A conclusion', 'A measurement'], ans: 1 },
+      { q: 'In an experiment, the variable you change on purpose is the:', opts: ['Dependent variable', 'Independent variable', 'Controlled variable', 'Constant'], ans: 1 },
+      { q: 'Who primarily uses the Engineering Design Process?', opts: ['Scientists', 'Engineers', 'Doctors', 'Lawyers'], ans: 1 },
+      { q: 'What does ELE stand for?', opts: ['Earth Life Event', 'Extinction Level Event', 'Equal Light Energy', 'Educational Lab Exercise'], ans: 1 },
+      { q: 'The asteroid that killed the dinosaurs was about how many millions of years ago?', opts: ['6 million', '66 million', '660 million', '6,600 million'], ans: 1 },
+      { q: 'A good lab report includes:', opts: ['Only the conclusion', 'Hypothesis, procedure, data, and conclusion', 'Just the data', 'A drawing only'], ans: 1 },
+      { q: 'Which of these is NOT a lab safety practice?', opts: ['Wearing goggles', 'Tying back long hair', 'Tasting unknown chemicals to identify them', 'Knowing where the fire extinguisher is'], ans: 2 },
+      { q: 'In the Engineering Design Process, what comes after "test"?', opts: ['Brainstorm', 'Build', 'Improve', 'Identify the problem'], ans: 2 },
+      { q: 'A controlled variable is one that is:', opts: ['Changed each trial', 'Measured each trial', 'Kept the same each trial', 'Ignored'], ans: 2 },
+      { q: 'STEM stands for:', opts: ['Science, Technology, Education, Math', 'Science, Technology, Engineering, Math', 'Study, Test, Experiment, Measure', 'Space, Time, Energy, Matter'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Solving a Real Problem at Home',
+        scenario: 'Your bedroom keeps getting too hot in the afternoon.',
+        steps: [
+          'Use the Engineering Design Process: identify the problem (too hot when?).',
+          'Research: do other rooms get this hot? What time of day? Is it sunny?',
+          'Brainstorm solutions (closing blinds, opening window, fan, plant outside the window).',
+          'Try ONE solution for one week, measure with a thermometer, then improve.'
+        ],
+        reflect: 'Why is it powerful to think like an engineer in everyday life?'
+      },
+      {
+        title: 'Designing a Fair Experiment',
+        scenario: 'You want to know if a particular brand of paper towel really is "more absorbent."',
+        steps: [
+          'Write a hypothesis: "If brand X has more cellulose fibers, then it will absorb more water than brand Y."',
+          'Identify variables: independent = brand; dependent = water absorbed (g); controlled = same size piece, same volume of water, same time.',
+          'Run 5 trials of each brand. Average the results.',
+          'Decide which brand wins, and explain WHY in a sentence with evidence.'
+        ],
+        reflect: 'Why are 5 trials better than 1 trial?'
+      },
+      {
+        title: 'Asteroid Defense — Engineer Edition',
+        scenario: 'NASA is studying ways to deflect asteroids that could hit Earth.',
+        steps: [
+          'Research the 2022 NASA DART mission (Double Asteroid Redirection Test).',
+          'List 3 different methods scientists have proposed to deflect an asteroid.',
+          'Pick the one you think is best and explain why using the Engineering Design Process.',
+          'Discuss: which steps in the design process happen before launch? Which after?'
+        ],
+        reflect: 'What does it mean that an engineering "failure" is often the most useful data?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — Our Universe',
+    icon: '🌌',
+    theme: 'Big Bang, matter, gravity, and the cosmos',
+    dates: '2 Sep – 18 Dec',
+    keyConcept: 'Change',
+    relatedConcepts: 'Models, Interaction, Movement',
+    globalContext: 'Science and Technical Innovation',
+    desc: 'Travel back 13.8 billion years to the beginning, then zoom out from atoms to galaxies. Investigate matter, density, gravity, and the scale of the cosmos.',
+    inquiry: {
+      statement: 'Models allow scientists to understand the movements and interactions that change our Universe.',
+      factual: 'What forces govern our Universe?',
+      conceptual: 'How was our Universe created?',
+      debatable: 'How old is our Universe?'
+    },
+    content: {
+      know: 'Structure and states of matter; types of objects in the universe; how scientists use models to understand the Universe.',
+      understand: 'How the Universe was formed and that it is still expanding; star formation; the importance of gravity; the scale of the Universe.',
+      doIt: 'Mass Lab, Volume Lab, Density Lab, "Alien in Me" exercise, Great Pluto Debate.'
+    },
+    assessments: ['Density Lab (Crit. B/C)', 'Great Pluto Debate (Crit. A/D)'],
+    vocab: [
+      ['Big Bang', 'The current best scientific model: ~13.8 billion years ago, all space, time, matter, and energy began expanding from an extremely hot, dense state.'],
+      ['Mass', 'The amount of matter in an object (grams).'],
+      ['Volume', 'The amount of space an object takes up (cm³ or mL).'],
+      ['Density', 'Mass divided by volume (g/cm³). Determines whether something floats.'],
+      ['Gravity', 'The attractive force between objects with mass — what holds you, the planets, and galaxies in place.'],
+      ['Light-year', 'The distance light travels in one year (~9.5 trillion km). A unit of distance, not time.']
+    ],
+    lessonHTML: `
+      <p>Once you understand the tools (Unit 1), it&rsquo;s time to <strong>leave the planet</strong>. Unit 2 traces the universe from its beginning all the way to the present.</p>
+      <h3>The Big Bang and the expanding Universe</h3>
+      <p>The current best model says the Universe is <strong>about 13.8 billion years old</strong>. It began as an extraordinarily hot, dense state, and has been <em>expanding</em> ever since. We see evidence in the cosmic microwave background and the redshift of distant galaxies (Edwin Hubble, 1929).</p>
+      <h3>Matter: mass, volume, density</h3>
+      <p>Everything in the universe is made of <strong>matter</strong>. We can describe a piece of matter by its <strong>mass</strong> (how much), <strong>volume</strong> (how much space), and <strong>density</strong> (how packed it is).</p>
+      <p style="font-family:'Courier New',monospace;background:#f0f3fa;padding:12px;border-radius:6px;display:inline-block;">density = mass &divide; volume &nbsp;&nbsp;(D = m / V)</p>
+      <h3>Gravity rules everything</h3>
+      <p><strong>Gravity</strong> is the universal attractive force between any two objects with mass. It made the stars by pulling hydrogen together, holds you to Earth, and keeps the Moon orbiting us. The more mass, the stronger the pull.</p>
+      <h3>The scale of the Universe</h3>
+      <ul>
+        <li>Sun-Earth distance: ~150 million km (1 AU)</li>
+        <li>Light from the Sun takes ~8 minutes to reach Earth</li>
+        <li>The nearest star (Proxima Centauri) is ~4.2 light-years away</li>
+        <li>Our galaxy (Milky Way) is ~100,000 light-years across</li>
+        <li>The observable Universe is ~93 billion light-years across</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'How old is the Universe (according to the Big Bang model)?', ans: '~13.8 billion years.' },
+      { q: 'A rock has mass 60 g and volume 20 cm³. What is its density?', ans: 'D = 60 / 20 = 3 g/cm³.' },
+      { q: 'Will an object with density 0.8 g/cm³ float or sink in water (density 1.0 g/cm³)?', ans: 'Float — it is less dense than water.' },
+      { q: 'What is a light-year a unit of?', ans: 'Distance — the distance light travels in one year (~9.5 trillion km).' },
+      { q: 'Name three forces or factors that make stars form.', ans: 'Gravity pulling hydrogen gas together; high pressure; high temperature triggering nuclear fusion.' },
+      { q: 'List three reasons astronomers in 2006 reclassified Pluto as a "dwarf planet."', ans: '1) Pluto orbits the Sun; 2) Pluto is round (massive enough); 3) Pluto has NOT cleared its orbital neighborhood — the third criterion that distinguishes planets from dwarf planets.' },
+      { q: 'Memorize: D = ____ ÷ ____', ans: 'mass ÷ volume' }
+    ],
+    quiz: [
+      { q: 'According to the Big Bang model, the Universe is about:', opts: ['6,000 years old', '4.5 billion years old', '13.8 billion years old', '93 billion years old'], ans: 2 },
+      { q: 'Density is calculated as:', opts: ['mass × volume', 'mass + volume', 'mass ÷ volume', 'volume ÷ mass'], ans: 2 },
+      { q: 'An object with density less than water&rsquo;s 1.0 g/cm³ will:', opts: ['Sink', 'Float', 'Dissolve', 'Explode'], ans: 1 },
+      { q: 'A light-year measures:', opts: ['Time', 'Distance', 'Brightness', 'Mass'], ans: 1 },
+      { q: 'Gravity depends on:', opts: ['Color and shape', 'Mass and distance', 'Temperature only', 'Density only'], ans: 1 },
+      { q: 'Stars are powered by:', opts: ['Combustion of wood', 'Solar panels', 'Nuclear fusion', 'Friction'], ans: 2 },
+      { q: 'The Sun is at the center of our:', opts: ['Universe', 'Solar System', 'Galaxy', 'Milky Way'], ans: 1 },
+      { q: 'Why was Pluto reclassified as a dwarf planet?', opts: ['It moved away', 'It does not orbit the Sun', 'It has not cleared its orbital neighborhood', 'It is too old'], ans: 2 },
+      { q: 'Light from our Sun takes about how long to reach Earth?', opts: ['1 second', '8 minutes', '8 hours', '8 days'], ans: 1 },
+      { q: 'Edwin Hubble in 1929 discovered that distant galaxies are:', opts: ['Static', 'Moving away from us (Universe is expanding)', 'Moving toward us', 'Disappearing'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Density at the Grocery Store',
+        scenario: 'You wonder which canned soda is heaviest for its size.',
+        steps: [
+          'Predict: which is denser, regular cola or diet cola? (Hint: regular has dissolved sugar.)',
+          'Find a sink or large container; weigh both cans, then drop them in.',
+          'Observe which floats and which sinks. Connect that to density.',
+          'Look up the actual mass and volume online to confirm — diet cola < 1.0 g/cm³ floats; regular > 1.0 g/cm³ sinks.'
+        ],
+        reflect: 'How does density help engineers design ships, life jackets, and submarines?'
+      },
+      {
+        title: 'Stargazing Math',
+        scenario: 'You see a bright star in the sky tonight.',
+        steps: [
+          'Look up its distance in light-years (e.g., Sirius ~8.6 light-years).',
+          'That means the light hitting your eye <em>tonight</em> left the star ~8.6 years ago.',
+          'Stargazing is literally looking back in time! Note one thing you were doing 8.6 years ago.',
+          'Optional: try the Stellarium app to identify what you&rsquo;re looking at.'
+        ],
+        reflect: 'How does it feel to know you are seeing the past every night you look up?'
+      },
+      {
+        title: 'Gravity in Everyday Life',
+        scenario: 'You drop something fragile and it falls.',
+        steps: [
+          'Note: gravity acts on every object equally — feather and bowling ball fall at the same rate in vacuum.',
+          'Try Galileo&rsquo;s thought experiment by dropping a book and a flat sheet of paper. Which falls faster? Why?',
+          'Crumple the paper into a tight ball. Drop both again. What changed?',
+          'Conclusion: in air, friction matters; in vacuum, gravity wins.'
+        ],
+        reflect: 'How do astronauts on the Moon prove this? (Watch the Apollo 15 hammer-and-feather drop.)'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — How the Earth Was Made',
+    icon: '🌍',
+    theme: '4.5 billion years of geology, life, and change',
+    dates: '6 Jan – 13 Mar',
+    keyConcept: 'Systems',
+    relatedConcepts: 'Evidence, Environment',
+    globalContext: 'Orientation in Space and Time',
+    desc: 'Travel back 4.5 billion years and follow the 25 key events that shaped our planet — from molten rock to oxygen breathing life and modern continents.',
+    inquiry: {
+      statement: 'Evidence allows us to see that the interplay of geologic, environmental, and biological systems created our Earth.',
+      factual: 'Where is the evidence of the 4.5 billion year development of the Earth?',
+      conceptual: 'How do we know the age of our Earth?',
+      debatable: 'What are the key events that resulted in our world being what it is today?'
+    },
+    content: {
+      know: '25 key events in the 4.5-billion-year history of Earth.',
+      understand: 'How those key events shaped the Earth we see today.',
+      doIt: 'Explore evidence in rocks; investigate Earth&rsquo;s changes over 4.5 billion years; understand what fossils tell us. Rock Lab and Fossil Lab.'
+    },
+    assessments: ['Ages of the Earth Presentation (Crit. A/D)', 'The Great Oxygenation Lab (Crit. B/C)', 'Earth Timeline Project (Crit. A/D)'],
+    vocab: [
+      ['Geologic Time Scale', 'The official scientific calendar of Earth&rsquo;s history, divided into eons, eras, periods, and epochs.'],
+      ['Igneous rock', 'Rock formed from cooled magma or lava (e.g., basalt, granite). Hawaii&rsquo;s islands are mostly igneous.'],
+      ['Sedimentary rock', 'Rock formed from compressed layers of sediment, often containing fossils (e.g., sandstone, limestone).'],
+      ['Metamorphic rock', 'Rock changed by heat and pressure (e.g., marble, slate).'],
+      ['Fossil', 'Preserved evidence of ancient life (bones, shells, footprints, leaf imprints).'],
+      ['Great Oxygenation Event', '~2.4 billion years ago, photosynthetic cyanobacteria filled Earth&rsquo;s atmosphere with oxygen — making complex life possible.']
+    ],
+    lessonHTML: `
+      <p>Earth is <strong>4.54 billion years old</strong> &mdash; a number we know thanks to radiometric dating of meteorites and ancient zircon crystals. In Unit 3 we walk Earth&rsquo;s timeline backwards.</p>
+      <h3>Big milestones (a few of the 25)</h3>
+      <ul>
+        <li><strong>4.54 BYA (billion years ago)</strong> &mdash; Earth forms from the disk around the Sun.</li>
+        <li><strong>4.5 BYA</strong> &mdash; A Mars-sized body collides with Earth, ejecting debris that becomes the Moon.</li>
+        <li><strong>3.8 BYA</strong> &mdash; Earliest evidence of life (single-celled).</li>
+        <li><strong>2.4 BYA</strong> &mdash; The <strong>Great Oxygenation Event</strong>: cyanobacteria fill the air with O₂.</li>
+        <li><strong>540 MYA (million years ago)</strong> &mdash; The Cambrian Explosion: complex life diversifies rapidly.</li>
+        <li><strong>252 MYA</strong> &mdash; Permian extinction: ~96% of marine species die.</li>
+        <li><strong>66 MYA</strong> &mdash; Asteroid impact ends the dinosaurs.</li>
+        <li><strong>~6 MYA</strong> &mdash; Hominids (early human ancestors) appear in Africa.</li>
+        <li><strong>~300,000 years ago</strong> &mdash; <em>Homo sapiens</em> appear.</li>
+      </ul>
+      <h3>The Three Rock Types</h3>
+      <p>Geologists read Earth&rsquo;s history in <strong>rocks</strong> — the planet&rsquo;s memory. <em>Igneous</em> = cooled lava, <em>sedimentary</em> = compressed layers (and the only kind containing fossils), <em>metamorphic</em> = changed by heat &amp; pressure. The <strong>rock cycle</strong> shows how each transforms into the others over millions of years.</p>
+      <h3>How fossils tell stories</h3>
+      <p>Fossils show what lived here, when, and even what the environment was like. The deeper the rock layer (usually), the older the fossil &mdash; this is the <strong>Law of Superposition</strong>.</p>
+    `,
+    worksheet: [
+      { q: 'How old is the Earth?', ans: '~4.54 billion years.' },
+      { q: 'What event made the Moon, according to the leading theory?', ans: 'A Mars-sized body collided with Earth ~4.5 BYA, ejecting debris that coalesced into the Moon (Giant Impact Hypothesis).' },
+      { q: 'List the three rock types.', ans: 'Igneous, sedimentary, metamorphic.' },
+      { q: 'Which rock type contains most fossils, and why?', ans: 'Sedimentary, because layers form gently enough to preserve organic remains.' },
+      { q: 'What was the Great Oxygenation Event, and why does it matter?', ans: '~2.4 BYA, cyanobacteria filled the atmosphere with oxygen via photosynthesis. This eventually made complex (aerobic) life possible.' },
+      { q: 'What does the Law of Superposition state?', ans: 'In undisturbed rock layers, the older layers are below and younger layers are on top.' },
+      { q: 'How long ago did the dinosaurs go extinct?', ans: '~66 million years ago, due to a massive asteroid impact.' }
+    ],
+    quiz: [
+      { q: 'Earth is approximately how old?', opts: ['6,000 years', '4.5 million years', '4.5 billion years', '13.8 billion years'], ans: 2 },
+      { q: 'The Moon was likely formed by:', opts: ['Volcano eruption', 'A Mars-sized impact on early Earth', 'Capturing a passing asteroid', 'Earth fission'], ans: 1 },
+      { q: 'Photosynthesis filled the atmosphere with oxygen during the:', opts: ['Cambrian Explosion', 'Great Oxygenation Event', 'Permian extinction', 'Holocene'], ans: 1 },
+      { q: 'Which rock forms from cooled magma or lava?', opts: ['Sedimentary', 'Metamorphic', 'Igneous', 'Volcanic only'], ans: 2 },
+      { q: 'Hawaii&rsquo;s islands are made primarily of:', opts: ['Sedimentary rock', 'Igneous rock (basalt)', 'Metamorphic rock', 'Sand'], ans: 1 },
+      { q: 'Most fossils are found in:', opts: ['Igneous rock', 'Sedimentary rock', 'Metamorphic rock', 'Soil only'], ans: 1 },
+      { q: 'The Law of Superposition says:', opts: ['Rocks always go down', 'Older layers are usually deeper than younger ones', 'All rocks are the same age', 'Fossils are random'], ans: 1 },
+      { q: 'The Cambrian Explosion was:', opts: ['Volcanic eruption', 'Sudden diversification of complex life ~540 MYA', 'Mass extinction', 'Asteroid impact'], ans: 1 },
+      { q: 'The most recent mass extinction (the dinosaurs) was about:', opts: ['6,000 years ago', '6 MYA', '66 MYA', '660 MYA'], ans: 2 },
+      { q: 'Modern Homo sapiens appeared approximately:', opts: ['1 million years ago', '300,000 years ago', '10,000 years ago', '2,000 years ago'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'A Hawai&lsquo;i Walk Through Deep Time',
+        scenario: 'You take a trip to a Hawaiian beach or hike.',
+        steps: [
+          'Identify the rocks underfoot. On most Hawaiian islands they are igneous (basalt) — cooled lava.',
+          'Look for layers (sedimentary) or polished re-crystallized rock (metamorphic).',
+          'Estimate ages: youngest islands are SE (Big Island ~0.5 MYA), oldest are NW (Kauaʻi ~5 MYA).',
+          'Take photos and label them with rock type when you get home.'
+        ],
+        reflect: 'How does the age difference between islands fit with plate tectonics?'
+      },
+      {
+        title: 'Reading Sedimentary Layers',
+        scenario: 'You see a road cut or cliff with visible horizontal stripes.',
+        steps: [
+          'Apply the Law of Superposition: the oldest layer is at the BOTTOM, newest at TOP.',
+          'Notice color changes — they often mean changing climate or environment.',
+          'Look for fossils or shell fragments at certain layers — those are time markers.',
+          'Snap a photo and identify three layers from oldest to youngest.'
+        ],
+        reflect: 'What does it feel like to read &ldquo;Earth&rsquo;s diary&rdquo; in a single cliff?'
+      },
+      {
+        title: 'Counting Down to a Mass Extinction',
+        scenario: 'Scientists track Near Earth Objects (NEOs).',
+        steps: [
+          'Visit NASA&rsquo;s Center for Near Earth Object Studies (CNEOS).',
+          'Look up the next 5 close approaches to Earth.',
+          'Discuss with a partner: what would the world need to do to deflect a real threat?',
+          'Connect this to Unit 1: this is engineering at a planetary scale.'
+        ],
+        reflect: 'How do scientists balance honest risk assessment with avoiding panic?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Climate Change &amp; the Low-Energy Future',
+    icon: '🌡️',
+    theme: 'Energy, climate, and our planet&rsquo;s future',
+    dates: '30 Mar – 3 Jun',
+    keyConcept: 'Change',
+    relatedConcepts: 'Balance, Energy, Consequences',
+    globalContext: 'Globalization and Sustainability',
+    desc: 'Examine the science of weather vs. climate, the evidence for climate change, and how energy choices today shape the world we&rsquo;ll inherit tomorrow.',
+    inquiry: {
+      statement: 'Exploring mankind&rsquo;s use of energy and its link to our climate will reveal a delicate balance of forces that are changing and will have significant consequences for the sustainability of life on our planet.',
+      factual: 'What factors affect climate?',
+      conceptual: 'How is mankind&rsquo;s use of energy changing climate factors? How will a low-energy future affect our ability to deal with climate change?',
+      debatable: 'Is human activity having a significant impact on climate change?'
+    },
+    content: {
+      know: 'The evidence behind climate change and the low-energy future.',
+      understand: 'How factors affecting climate change are linked to energy usage.',
+      doIt: 'Distinguish weather from climate; explore factors driving climate change; investigate impacts on Earth; identify energy sources and how they are used; explore trends in energy use; investigate the climate–energy nexus.'
+    },
+    assessments: ['Critical Lab Skills Test (Crit. B/C)', 'Sources of Energy Presentation (Crit. A/D)', 'Baseball Project (Crit. A/D)'],
+    vocab: [
+      ['Weather', 'Short-term atmospheric conditions (today, this week).'],
+      ['Climate', 'Long-term average of weather over decades.'],
+      ['Greenhouse effect', 'Process where atmospheric gases (CO₂, methane, water vapor) trap heat near Earth&rsquo;s surface.'],
+      ['Fossil fuels', 'Coal, oil, and natural gas — formed from ancient organisms; release CO₂ when burned.'],
+      ['Renewable energy', 'Energy from sources that replenish quickly: solar, wind, hydro, geothermal.'],
+      ['Carbon footprint', 'The total CO₂-equivalent emissions caused by your activities.']
+    ],
+    lessonHTML: `
+      <p>Earth has always experienced climate change &mdash; ice ages, warm periods, mass extinctions. But today, the change is happening <strong>much faster than at any time in geological history</strong>, and the cause is human energy use.</p>
+      <h3>Weather vs. Climate</h3>
+      <p>If your friend says &ldquo;it was cold today, so global warming isn&rsquo;t real&rdquo; &mdash; they&rsquo;re mixing up weather (short-term) and climate (long-term). One snowstorm doesn&rsquo;t define climate any more than one warm day does.</p>
+      <h3>The Greenhouse Effect</h3>
+      <p>Sunlight enters our atmosphere and warms the surface. The Earth radiates heat back as infrared. Greenhouse gases (CO₂, methane, water vapor) trap some of that heat — like a blanket. <em>Without</em> the greenhouse effect, Earth would be ~33 °C colder. With <em>too much</em> of it, the planet warms beyond what life is adapted to.</p>
+      <h3>The Carbon Story</h3>
+      <p>Atmospheric CO₂ has risen from ~280 ppm in 1850 to ~420+ ppm today &mdash; the highest in at least 800,000 years (we know from ice cores). The cause: humans burning <strong>fossil fuels</strong> (coal, oil, natural gas).</p>
+      <h3>Sources of Energy</h3>
+      <ul>
+        <li><strong>Non-renewable:</strong> coal, oil, natural gas, nuclear (uranium)</li>
+        <li><strong>Renewable:</strong> solar, wind, hydro, geothermal, biomass</li>
+        <li>Hawai&lsquo;i goal: <strong>100 % renewable electricity by 2045</strong></li>
+      </ul>
+      <h3>The Low-Energy Future</h3>
+      <p>Even with renewables, total global energy demand is rising. The challenge is meeting human needs while reducing emissions and waste.</p>
+    `,
+    worksheet: [
+      { q: 'In one sentence, give the difference between weather and climate.', ans: 'Weather is short-term (today, this week); climate is the long-term average pattern over decades.' },
+      { q: 'What is the greenhouse effect?', ans: 'Atmospheric gases like CO₂, methane, and water vapor trap heat near Earth&rsquo;s surface, keeping the planet warm.' },
+      { q: 'List two greenhouse gases.', ans: 'Examples: CO₂ (carbon dioxide), CH₄ (methane), H₂O (water vapor), N₂O (nitrous oxide).' },
+      { q: 'Atmospheric CO₂ has risen from approximately ___ ppm in 1850 to ___ ppm today.', ans: '~280 ppm in 1850 → 420+ ppm today.' },
+      { q: 'Name three renewable energy sources.', ans: 'Examples: solar, wind, hydro, geothermal, biomass, tidal.' },
+      { q: 'Hawai&lsquo;i&rsquo;s renewable electricity goal:', ans: '100% renewable electricity by 2045.' },
+      { q: 'What is your "carbon footprint"?', ans: 'The total amount of greenhouse gas emissions (in CO₂-equivalent) caused by your activities.' }
+    ],
+    quiz: [
+      { q: 'Weather differs from climate because:', opts: ['Climate is for one day', 'Weather is for one day; climate is the long-term average', 'They are the same thing', 'Climate is only in summer'], ans: 1 },
+      { q: 'Which is NOT a greenhouse gas?', opts: ['CO₂', 'Methane', 'Oxygen (O₂)', 'Water vapor'], ans: 2 },
+      { q: 'Atmospheric CO₂ today (~420+ ppm) is highest in at least:', opts: ['100 years', '10,000 years', '800,000 years', '4.5 billion years'], ans: 2 },
+      { q: 'Which of these is NOT a fossil fuel?', opts: ['Coal', 'Oil', 'Natural gas', 'Solar'], ans: 3 },
+      { q: 'Which is a renewable energy source?', opts: ['Coal', 'Oil', 'Wind', 'Natural gas'], ans: 2 },
+      { q: 'Hawai&lsquo;i has set a goal of 100% renewable electricity by:', opts: ['2030', '2045', '2050', '2100'], ans: 1 },
+      { q: 'Burning fossil fuels mainly releases:', opts: ['Helium', 'Carbon dioxide', 'Argon', 'Pure water'], ans: 1 },
+      { q: 'Without the greenhouse effect, Earth would be:', opts: ['Hotter', 'About the same', 'Much colder (~33°C colder)', 'Without atmosphere'], ans: 2 },
+      { q: 'A "carbon footprint" measures:', opts: ['Shoe size', 'Total greenhouse-gas emissions caused by your activities', 'Coal in your house', 'Distance walked per day'], ans: 1 },
+      { q: 'Ice cores let scientists measure ancient atmosphere because:', opts: ['Ice is magic', 'Tiny air bubbles are trapped each year', 'Ice tastes different', 'Ice changes color'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Audit Your Family&rsquo;s Energy Use',
+        scenario: 'Your family wants to lower the electric bill.',
+        steps: [
+          'Walk around for 5 minutes and list every device that uses electricity.',
+          'Find your monthly kWh from a recent bill (or HECO online).',
+          'Identify the top 3 energy hogs (often: AC, dryer, water heater).',
+          'Pick ONE change to try for one month (LED bulbs, shorter showers, line-drying clothes) and measure savings.'
+        ],
+        reflect: 'How does small individual action connect to a larger climate solution?'
+      },
+      {
+        title: 'Renewable Energy in Hawai&lsquo;i',
+        scenario: 'Hawai&lsquo;i wants 100% renewable electricity by 2045.',
+        steps: [
+          'Look up the current Hawaii Electric renewable mix online.',
+          'List the four largest renewable sources used today.',
+          'Identify one challenge (storage? cost? site?).',
+          'Propose one solution that combines science + engineering.'
+        ],
+        reflect: 'What role can students play in the energy transition?'
+      },
+      {
+        title: 'Climate-Resilient Hawai&lsquo;i',
+        scenario: 'Sea level around Hawai&lsquo;i is rising; some shorelines are already eroding.',
+        steps: [
+          'Find a coastal area near you on a sea-level-rise map (Hawaii Climate Adaptation Portal).',
+          'Note what would change if sea level rose 1m.',
+          'List 3 actions Hawai&lsquo;i can take (managed retreat, sea walls, restored reefs).',
+          'Choose the action you think is most just AND effective. Defend your choice.'
+        ],
+        reflect: 'How do scientists, engineers, and citizens work together on climate adaptation?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.theme} &middot; ${u.dates}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Earth & Space Science';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <p style="color:#666;font-style:italic;margin-bottom:6px;">${u.theme}</p>
+    <div class="meta-bar">
+      <span class="meta-pill date">📅 ${u.dates}</span>
+      <span class="meta-pill">Key Concept: ${u.keyConcept}</span>
+      <span class="meta-pill">Related: ${u.relatedConcepts}</span>
+      <span class="meta-pill">Global Context: ${u.globalContext}</span>
+    </div>
+    <div class="inquiry-box">
+      <p><strong>Inquiry statement:</strong> ${u.inquiry.statement}</p>
+      <p class="q"><strong>Factual:</strong> ${u.inquiry.factual}</p>
+      <p class="q"><strong>Conceptual:</strong> ${u.inquiry.conceptual}</p>
+      <p class="q"><strong>Debatable:</strong> ${u.inquiry.debatable}</p>
+    </div>
+    <div class="chapter-list">
+      <h4>📖 Content Goals</h4>
+      <ul>
+        <li><strong>Know:</strong> ${u.content.know}</li>
+        <li><strong>Understand:</strong> ${u.content.understand}</li>
+        <li><strong>Do:</strong> ${u.content.doIt}</li>
+      </ul>
+    </div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+    <div class="chapter-list">
+      <h4>🎯 Summative Assessments</h4>
+      <ul>${u.assessments.map(a => `<li>${a}</li>`).join('')}</ul>
+    </div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. Use your science journal and references as needed.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Excellent — you&rsquo;re thinking like a scientist!' : '🔬 Review the lesson and try again. Every scientist runs trials more than once.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

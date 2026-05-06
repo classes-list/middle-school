@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 7th Grade STEM: Life Science</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .inquiry-box { background: #eff6ff; border-left: 5px solid #1B3A8A; padding: 14px 18px; border-radius: 6px; margin: 14px 0; color: #1e3a8a; }
+    .inquiry-box strong { color: #1B3A8A; }
+    .inquiry-box .q { margin: 6px 0; padding-left: 10px; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .chapter-list { background: #f8f9fa; border-radius: 8px; padding: 16px 22px; margin: 14px 0; }
+    .chapter-list h4 { color: #1B3A8A; margin-bottom: 8px; }
+    .chapter-list ol, .chapter-list ul { margin-left: 22px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.date { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-unit-row { background: #f8fafc; border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; border-left: 4px solid #1B3A8A; }
+    .syl-unit-row strong { font-size: 0.95rem; color: #1B3A8A; }
+    .syl-unit-row span { font-size: 0.85rem; color: #4a5568; display: block; margin-top: 4px; line-height: 1.5; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 90px; }
+    .syl-grade-pill span { display: block; font-size: 1.2rem; font-weight: 800; color: #1B3A8A; }
+    /* — Detailed unit syllabus blocks — */
+    .syl-unit-detail { background: #f8fafc; border-left: 4px solid #1B3A8A; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+    .syl-unit-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .syl-unit-emoji { font-size: 1.6rem; flex-shrink: 0; }
+    .syl-unit-head strong { font-size: 1rem; color: #1B3A8A; display: block; }
+    .syl-unit-dates { display: block; font-size: 0.82rem; color: #B8860B; font-weight: 600; margin-top: 2px; }
+    .syl-myp-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .myp-pill { background: #eef2fa; color: #1B3A8A; font-size: 0.78rem; padding: 4px 10px; border-radius: 12px; }
+    .myp-pill b { font-weight: 700; }
+    .syl-inquiry-block { background: #fff; border-left: 3px solid #FFD100; padding: 10px 14px; margin: 10px 0; border-radius: 6px; }
+    .syl-inquiry-block p { font-size: 0.86rem; line-height: 1.55; color: #374151; margin: 4px 0; }
+    .syl-inquiry-block p em { color: #7a5f00; font-weight: 600; font-style: normal; }
+    .syl-inquiry-block p.iq { padding-left: 14px; }
+    .syl-kud { display: grid; gap: 6px; margin: 10px 0; padding: 10px 14px; background: #fff; border-radius: 6px; border: 1px solid #e2e8f0; }
+    .syl-kud > div { font-size: 0.86rem; line-height: 1.55; color: #374151; }
+    .syl-kud b { color: #1B3A8A; }
+    .syl-assessments { background: #fffbe6; border: 1px solid #fde68a; border-radius: 6px; padding: 10px 14px; margin-top: 10px; }
+    .syl-assessments b { color: #7a5f00; }
+    .syl-assessments ul { margin: 4px 0 0 22px; }
+    .syl-assessments li { font-size: 0.86rem; color: #4a3a00; }
+    .syl-crit-grid { display: grid; gap: 8px; }
+    .syl-crit { display: grid; grid-template-columns: 50px 1fr auto; gap: 14px; align-items: center; background: #f1f5f9; border-radius: 8px; padding: 10px 14px; }
+    .crit-letter { width: 40px; height: 40px; background: #1B3A8A; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; }
+    .syl-crit strong { display: block; font-size: 0.92rem; color: #1B3A8A; }
+    .syl-crit span { display: block; font-size: 0.82rem; color: #4a5568; margin-top: 2px; line-height: 1.4; }
+    .crit-score { font-weight: 700; color: #B8860B; font-size: 0.85rem; white-space: nowrap; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">7th Grade STEM <span class="grade-tag">Gr. 7</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/4</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-stem-index.html" class="back-index-btn" title="Back to STEM Classes">← All STEM</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Life Science</span>
+        </div>
+        <div class="topbar-right">STEM &middot; Grade 7</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Life Science</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">From the brain to bacteria to genetics — exploring the wonderful, interconnected systems of living things.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">🧬</div>
+            <h2>STEM &mdash; Course Syllabus</h2>
+            <p>Grade 7: Life Science &middot; SY 2025-2026</p>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p style="margin-top:8px">7th Grade STEM is designed to develop scientifically literate, inquisitive students with a solid understanding of <strong>basic life science concepts</strong> and inquiry skills. It is focused on ways to unite our world view as citizens of the planet, nurture our understanding of how the biological systems are interrelated and inspire the next generation of scientists and engineers.</p>
+              <p style="margin-top:8px">The year begins with a short review of the scientific method and the engineering design process as well as the principal tools and techniques used by scientists and engineers. Then we launch into a study of how we perceive the world. We will investigate how our senses interface with our brain, how the brain works, grows, and learns. Each student will conduct a dissection of an organ to gain first-hand knowledge of dissection skills. After Winter Break, our students will learn about the form and functions of cells, focusing on the role of bacteria and viruses in our world. This unit culminates in a formal debate about whether viruses are alive. Following Spring Break, the year continues with a study of human body systems, heredity, and genetics and ends with an examination of human reproduction and life in the womb.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👨‍🔬 Teacher</h3>
+              <p><strong>Mr. Dave Eachus</strong></p>
+              <p>📍 Innovations Lab (C-17)</p>
+              <p>📧 <a href="mailto:deachus@starofthesea.org">deachus@starofthesea.org</a></p>
+              <p>📞 (808) 734-0208 x 2221</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Classroom &amp; Lab Materials</h3>
+              <ul>
+                <li>Composition notebook (lab journal)</li>
+                <li>Pencils, pens, colored pencils</li>
+                <li>Lab safety goggles</li>
+                <li>Computer / device for simulations</li>
+                <li>Calculator</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Scope &amp; Sequence &mdash; Grade 7: Life Science</h3>
+            <p style="font-size:0.88rem;color:#64748b;margin-bottom:12px;font-style:italic">2025–2026, August&ndash;June. All unit dates are projected and may be subject to change.</p>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🔬</span><div><strong>Unit 1 &mdash; Why STEM?</strong><span class="syl-unit-dates">5 Aug – 30 Aug</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Systems</span>
+              <span class="myp-pill"><b>Related:</b> Patterns, Form, Function</span>
+              <span class="myp-pill"><b>Global Context:</b> Science and Technical Innovation</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> The Scientific Method and the Engineering Design Process allow us to investigate the form and function of patterns observed in natural systems or designs.</p>
+              <p class="iq"><b>Factual:</b> How do scientists and engineers use the Scientific Method and the Engineering Design Process?</p>
+              <p class="iq"><b>Conceptual:</b> How does experimental science and engineering expand our body of knowledge?</p>
+              <p class="iq"><b>Debatable:</b> Can the Scientific Method or the Engineering Design Process be used to answer any question or solve any problem?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Scientific Method, Engineering Design Process, Human Water Cycle</div>
+              <div><b>Understand:</b> How the Scientific Method is used to answer questions. The linkage between the natural water cycle and the human water cycle.</div>
+              <div><b>Do:</b> Lab Safety, Scientific Method/Engineering Design Process, variables and hypothesis formulation, Lab report format, Water Quality Lab.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Hawaiian Water Cycle Poster (Crit. A/D)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🧠</span><div><strong>Unit 2 &mdash; By the Dawn&rsquo;s Early Light</strong><span class="syl-unit-dates">2 Sep – 18 Dec</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Perspective</span>
+              <span class="myp-pill"><b>Related:</b> Evidence and Patterns</span>
+              <span class="myp-pill"><b>Global Context:</b> Identities and Relationships</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> A personal perspective is formed from learning based on evidence, facts, observations, and ideas.</p>
+              <p class="iq"><b>Factual:</b> How does your brain make sense of the world?</p>
+              <p class="iq"><b>Conceptual:</b> How does evidence shift perspective?</p>
+              <p class="iq"><b>Debatable:</b> How does your perspective relate to your values (perception of right or wrong)?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Anatomy and physiology of the human brain and eye.</div>
+              <div><b>Understand:</b> The uniqueness of each of our brains, responses by the brain differ between individuals, learning is an important brain function, and there are factors that affect learning, the ability of the brain to learn is not fixed.</div>
+              <div><b>Do:</b> Dissection skills, designing, conducting, and communicating the results of a scientific investigation, collecting, interpreting, and analyzing data. Labs: Mass, Volume, Density, Learning/Memory Brain Investigation.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Technology and Perception Essay (Crit. A/D)</li><li>Brain Memory/Learning Inquiry (Crit. B/C)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🦠</span><div><strong>Unit 3 &mdash; An Invisible Army</strong><span class="syl-unit-dates">6 Jan – 13 Mar</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Relationships</span>
+              <span class="myp-pill"><b>Related:</b> Function and Models</span>
+              <span class="myp-pill"><b>Global Context:</b> Scientific and Technical Innovation</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> Examining the relationships between organisms allows us to model their functions to better understand how they interact.</p>
+              <p class="iq"><b>Factual:</b> What are the differences between plant, animal, and bacterial cells?</p>
+              <p class="iq"><b>Conceptual:</b> How do bacteria affect humans and the environment?</p>
+              <p class="iq"><b>Debatable:</b> Who is most likely to survive: humanity or bacteria?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Cell organelles and functions, the differences among plant, animal, and bacterial cells, the differences between bacteria and viruses.</div>
+              <div><b>Understand:</b> The process of osmosis, bacteria are both beneficial and harmful.</div>
+              <div><b>Do:</b> Microscope skills, designing, conducting, and communicating the results of a scientific investigation, research skills. Labs: Respiration/Combustion Lab, Osmosis Investigation.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Cell Analogy Poster (Crit. A/D)</li><li>Osmosis Lab (Crit. B/C)</li><li>Virus Debate (Crit. A/D)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🧬</span><div><strong>Unit 4 &mdash; Body Systems, Genetics &amp; Reproduction</strong><span class="syl-unit-dates">30 Mar – 3 Jun</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Change</span>
+              <span class="myp-pill"><b>Related:</b> Interaction and Transformation</span>
+              <span class="myp-pill"><b>Global Context:</b> Orientation in Space and Time</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> Observing changes in interactions allows scientists to detect and understand the transformations in living organisms.</p>
+              <p class="iq"><b>Factual:</b> What is DNA and how does it work?</p>
+              <p class="iq"><b>Conceptual:</b> How does genetics relate to evolution?</p>
+              <p class="iq"><b>Debatable:</b> Does evolution discount the existence or workings of God?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Human Body Systems, Mendel&rsquo;s Laws of Heredity, DNA/RNA transcription, Protein synthesis, evidence of evolution.</div>
+              <div><b>Understand:</b> How the human body systems function to support each other. How genetics is the underpinning of the evolution of life on Earth.</div>
+              <div><b>Do:</b> Body Systems, Blood Lab, Rice Babies, Punnett Squares, Sesame Street Genetics.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Rice Babies (Crit. A/D)</li><li>Blood Lab (Crit. B/C)</li><li>Sesame Street Genetics (Crit. A/D)</li></ul>
+            </div>
+          </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📊 STEM Assessment Criteria</h3>
+            <p style="font-size:0.88rem;color:#374151;margin-bottom:10px">Each criterion is scored on an MYP-style scale of <strong>0&ndash;8</strong>. Student activities are assessed against the criteria below; end-of-quarter letter grades reflect overall progress.</p>
+            <div class="syl-crit-grid">
+              <div class="syl-crit"><div class="crit-letter">A</div><div><strong>Knowing &amp; Understanding</strong><span>Recall and apply scientific knowledge; explain phenomena.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">B</div><div><strong>Inquiring &amp; Designing</strong><span>1st half of the Experimental / Design Cycle: question, plan, hypothesize, design.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">C</div><div><strong>Processing &amp; Evaluating</strong><span>2nd half of the Experimental / Design Cycle: collect, analyze, draw conclusions.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">D</div><div><strong>Reflecting on the Impacts of Science / Engineering</strong><span>Consider ethical, environmental, and social implications of science and engineering decisions.</span></div><div class="crit-score">0&ndash;8</div></div>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>🕒 Learning Support &amp; Communication</h3>
+              <ul>
+                <li>Parents with questions or concerns may directly contact the instructor.</li>
+                <li>Students are encouraged to use study hall or lunch recess to obtain additional learning support.</li>
+                <li>The <strong>Innovations Lab</strong> is open every <strong>Wednesday afternoon (except Mini-days) until 4&nbsp;pm</strong> for any student needing help or to finish lab work.</li>
+                <li>Students and/or parents should email Mr. Eachus to make arrangements for additional learning opportunities.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">Where this unit&rsquo;s science meets your daily life and the world around you.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Why STEM?',
+    icon: '🔬',
+    theme: 'Scientific Method &amp; the Water Cycle',
+    dates: '5 Aug – 30 Aug',
+    keyConcept: 'Systems',
+    relatedConcepts: 'Patterns, Form, Function',
+    globalContext: 'Science and Technical Innovation',
+    desc: 'Refresh your science toolkit and apply it to one of the most important systems in Hawai&lsquo;i — the water cycle.',
+    inquiry: {
+      statement: 'The Scientific Method and the Engineering Design Process allow us to investigate the form and function of patterns observed in natural systems or designs.',
+      factual: 'How do scientists and engineers use the Scientific Method and the Engineering Design Process?',
+      conceptual: 'How does experimental science and engineering expand our body of knowledge?',
+      debatable: 'Can the Scientific Method or the Engineering Design Process be used to answer any question or solve any problem?'
+    },
+    content: {
+      know: 'Scientific Method, Engineering Design Process, Human Water Cycle.',
+      understand: 'How the Scientific Method is used to answer questions; the linkage between the natural water cycle and the human water cycle.',
+      doIt: 'Lab safety; Scientific Method / Engineering Design Process; variables and hypothesis formulation; lab report format; Water Quality Lab.'
+    },
+    assessments: ['Hawaiian Water Cycle Poster (Crit. A/D)'],
+    vocab: [
+      ['Scientific Method', 'A six-step process scientists use to investigate questions and test hypotheses.'],
+      ['Engineering Design Process', 'A cycle engineers use to identify a problem, design, build, test, and improve solutions.'],
+      ['Hypothesis', 'A testable prediction (often "If &hellip; then &hellip;").'],
+      ['Variable', 'A factor that can change. Independent = changed; Dependent = measured; Controlled = kept the same.'],
+      ['Water Cycle', 'The continuous movement of water on, above, and below Earth&rsquo;s surface (evaporation → condensation → precipitation → collection).'],
+      ['Aquifer', 'An underground layer of rock that holds groundwater &mdash; Hawaii&rsquo;s primary fresh-water source.']
+    ],
+    lessonHTML: `
+      <p>STEM science begins with two essential workflows: the <strong>Scientific Method</strong> (to <em>understand</em>) and the <strong>Engineering Design Process</strong> (to <em>solve problems</em>). Now in 7th grade we sharpen those tools and apply them to a question that affects every Hawaiian: <strong>where does our water come from, and how do we keep it clean?</strong></p>
+      <h3>The Natural Water Cycle</h3>
+      <ol>
+        <li><strong>Evaporation</strong> &mdash; Sun warms ocean and lakes; water vapor rises.</li>
+        <li><strong>Condensation</strong> &mdash; Vapor cools, forms clouds.</li>
+        <li><strong>Precipitation</strong> &mdash; Rain or snow falls.</li>
+        <li><strong>Collection</strong> &mdash; Water gathers in oceans, lakes, rivers, and underground aquifers.</li>
+      </ol>
+      <h3>Hawai&lsquo;i&rsquo;s Water — A Special Case</h3>
+      <p>Most of Hawaii&rsquo;s drinking water comes from underground <strong>aquifers</strong>. Rain falls on the volcanic slopes, percolates through porous basalt, and is naturally filtered as it travels down. The Honolulu Board of Water Supply estimates today&rsquo;s drinking water fell as rain <em>25–50 years ago</em>.</p>
+      <h3>The Human Water Cycle</h3>
+      <p>People modify the natural cycle by pumping water from aquifers, treating it, distributing it, using it, and eventually returning treated wastewater. Pollution, salt-water intrusion, and over-pumping all threaten this system.</p>
+    `,
+    worksheet: [
+      { q: 'Name and order the four main steps of the natural water cycle.', ans: 'Evaporation → Condensation → Precipitation → Collection (with Transpiration sometimes included).' },
+      { q: 'What is an aquifer?', ans: 'An underground layer of permeable rock that stores and transmits groundwater.' },
+      { q: 'Why does drinking water in Honolulu sometimes taste so good?', ans: 'It&rsquo;s naturally filtered through volcanic basalt rock as it travels down through the aquifer for decades.' },
+      { q: 'Write a hypothesis for: "Does temperature affect how fast water evaporates?"', ans: 'Sample: If water is heated to a higher temperature, then it will evaporate more quickly than water at room temperature.' },
+      { q: 'List two ways the human water cycle interacts with the natural cycle.', ans: 'Examples: Pumping groundwater, treating wastewater, irrigation, runoff from urban areas, dam reservoirs, desalination.' },
+      { q: 'Name two threats to Hawai&lsquo;i&rsquo;s aquifers.', ans: 'Examples: salt-water intrusion (over-pumping), agricultural pollution, drought, sea-level rise, fuel leaks (e.g., Red Hill).' }
+    ],
+    quiz: [
+      { q: 'The first step of the natural water cycle is:', opts: ['Precipitation', 'Evaporation', 'Collection', 'Condensation'], ans: 1 },
+      { q: 'Most of Honolulu&rsquo;s drinking water comes from:', opts: ['The ocean', 'Mountain rivers', 'Underground aquifers', 'Rainwater barrels'], ans: 2 },
+      { q: 'Hawai&lsquo;i&rsquo;s rain percolates through what kind of rock?', opts: ['Granite', 'Sandstone', 'Volcanic basalt', 'Marble'], ans: 2 },
+      { q: 'A testable prediction is called a:', opts: ['Theory', 'Law', 'Hypothesis', 'Question'], ans: 2 },
+      { q: 'In an experiment, the variable measured is the:', opts: ['Independent variable', 'Dependent variable', 'Controlled variable', 'Constant'], ans: 1 },
+      { q: 'When water vapor cools and forms clouds, this is called:', opts: ['Evaporation', 'Condensation', 'Precipitation', 'Sublimation'], ans: 1 },
+      { q: '"If…then…" statements are typically used to write:', opts: ['Conclusions', 'Hypotheses', 'Variables', 'Controls'], ans: 1 },
+      { q: 'Salt-water intrusion happens when:', opts: ['Salt is added to fresh water', 'Aquifers are over-pumped and salt water moves in', 'Rain becomes salty', 'Volcanoes erupt'], ans: 1 },
+      { q: 'Lab safety in 7th grade STEM means:', opts: ['Wearing goggles', 'Tying back long hair', 'Knowing where eyewash is', 'All of the above'], ans: 3 },
+      { q: 'How long ago might today&rsquo;s aquifer drinking water have fallen as rain?', opts: ['1 month', '1 year', '25–50 years', '500 years'], ans: 2 }
+    ],
+    rla: [
+      {
+        title: 'A Home Water Audit',
+        scenario: 'Hawai&lsquo;i&rsquo;s aquifers are precious. Your family wants to use less water.',
+        steps: [
+          'Track every faucet/shower use for one day in your science journal.',
+          'Estimate gallons (typical shower ≈ 2.1 gpm).',
+          'Identify the top 3 uses, and propose ONE change you can try this week.',
+          'Re-measure next week. Did it work?'
+        ],
+        reflect: 'Why does a Hawaii water audit matter differently than one on the mainland?'
+      },
+      {
+        title: 'Investigating Local Water Quality',
+        scenario: 'You want to test the water in your neighborhood stream or beach.',
+        steps: [
+          'Collect a sample (with permission) in a clean container.',
+          'Use simple test strips for pH, chlorine, or nitrate (kits at hardware stores).',
+          'Record results in a lab notebook.',
+          'Compare with EPA safe-drinking-water levels and discuss what could cause any problems.'
+        ],
+        reflect: 'How do citizens, scientists, and the Board of Water Supply work together to keep water safe?'
+      },
+      {
+        title: 'Water in the News',
+        scenario: 'You hear about a water issue in Hawai&lsquo;i (Red Hill, drought, etc.).',
+        steps: [
+          'Read 2 different news sources on the issue.',
+          'Identify what is FACT, what is OPINION, and what is OPEN QUESTION.',
+          'Sketch a diagram showing how the issue connects to the natural water cycle.',
+          'Write 1 question you would ask a scientist about it.'
+        ],
+        reflect: 'How does science literacy help you be a better citizen?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — By the Dawn&rsquo;s Early Light',
+    icon: '🧠',
+    theme: 'The brain, the eye, and how we perceive the world',
+    dates: '2 Sep – 18 Dec',
+    keyConcept: 'Perspective',
+    relatedConcepts: 'Evidence and Patterns',
+    globalContext: 'Identities and Relationships',
+    desc: 'Investigate the most complex object in the known universe — your brain. How do you see, think, learn, and remember?',
+    inquiry: {
+      statement: 'A personal perspective is formed from learning based on evidence, facts, observations, and ideas.',
+      factual: 'How does your brain make sense of the world?',
+      conceptual: 'How does evidence shift perspective?',
+      debatable: 'How does your perspective relate to your values (perception of right or wrong)?'
+    },
+    content: {
+      know: 'Anatomy and physiology of the human brain and eye.',
+      understand: 'The uniqueness of each of our brains; responses by the brain differ between individuals; learning is an important brain function; factors that affect learning; the brain&rsquo;s ability to learn is not fixed.',
+      doIt: 'Dissection skills; designing, conducting, and communicating the results of a scientific investigation; collecting, interpreting, and analyzing data. Labs: Mass, Volume, Density; Learning/Memory Brain Investigation.'
+    },
+    assessments: ['Technology and Perception Essay (Crit. A/D)', 'Brain Memory/Learning Inquiry (Crit. B/C)'],
+    vocab: [
+      ['Cerebrum', 'The largest part of the brain; controls thinking, voluntary movement, language, and senses.'],
+      ['Cerebellum', 'The "little brain" at the back; coordinates balance and fine motor movement.'],
+      ['Brain stem', 'Controls automatic functions: breathing, heart rate, sleep.'],
+      ['Neuron', 'A nerve cell that sends electrochemical signals.'],
+      ['Synapse', 'The gap between neurons where signals pass via neurotransmitters.'],
+      ['Neuroplasticity', 'The brain&rsquo;s lifelong ability to form new neural connections — you can grow your brain by learning.']
+    ],
+    lessonHTML: `
+      <p>Your brain weighs ~1.4 kg (3 lb) but uses ~20% of your daily energy. It contains about <strong>86 billion neurons</strong>, each with thousands of connections. It is, by far, the most complex structure we know about in the universe.</p>
+      <h3>Major brain regions</h3>
+      <ul>
+        <li><strong>Cerebrum</strong> &mdash; thinking, sensing, voluntary movement, language. Divided into 4 lobes (frontal, parietal, temporal, occipital).</li>
+        <li><strong>Cerebellum</strong> &mdash; balance, fine motor coordination.</li>
+        <li><strong>Brain stem</strong> &mdash; vital functions (breathing, heart rate).</li>
+      </ul>
+      <h3>How vision works</h3>
+      <ol>
+        <li>Light enters through the <strong>cornea</strong> &amp; <strong>pupil</strong>.</li>
+        <li>The <strong>lens</strong> focuses it onto the <strong>retina</strong>.</li>
+        <li>Photoreceptors (rods &amp; cones) convert light to electrical signals.</li>
+        <li>The <strong>optic nerve</strong> sends signals to the <strong>occipital lobe</strong>.</li>
+        <li>The brain interprets and constructs your perception of "seeing."</li>
+      </ol>
+      <h3>Neuroplasticity — Your Brain Can Grow</h3>
+      <p>Decades of research show the brain rewires itself with each new skill. You are not born with a "fixed" intelligence. Practice, sleep, exercise, and good nutrition all measurably grow brain capacity.</p>
+    `,
+    worksheet: [
+      { q: 'How many neurons does the human brain have, approximately?', ans: 'About 86 billion.' },
+      { q: 'Which lobe of the cerebrum processes vision?', ans: 'The occipital lobe.' },
+      { q: 'What is the function of the cerebellum?', ans: 'Balance and fine motor coordination.' },
+      { q: 'Trace the path of light from outside to "seeing" in the brain.', ans: 'Cornea → pupil → lens → retina (rods/cones) → optic nerve → occipital lobe.' },
+      { q: 'What does "neuroplasticity" mean?', ans: 'The brain&rsquo;s ability to form and reorganize neural connections, especially in response to learning or experience.' },
+      { q: 'Name three things you can do that have been shown to help the brain learn better.', ans: 'Examples: get 8–10 hours of sleep, exercise daily, eat protein and omega-3s, practice spaced repetition, limit screens before bed.' }
+    ],
+    quiz: [
+      { q: 'About how many neurons are in the human brain?', opts: ['86 thousand', '86 million', '86 billion', '86 trillion'], ans: 2 },
+      { q: 'Which part of the brain controls breathing and heart rate?', opts: ['Cerebrum', 'Cerebellum', 'Brain stem', 'Hippocampus'], ans: 2 },
+      { q: 'Vision is processed in the:', opts: ['Frontal lobe', 'Parietal lobe', 'Occipital lobe', 'Temporal lobe'], ans: 2 },
+      { q: 'The retina contains light-sensitive cells called:', opts: ['Pixels', 'Rods and cones', 'Lenses', 'Neurons only'], ans: 1 },
+      { q: 'Neurons communicate across a gap called the:', opts: ['Cleft', 'Synapse', 'Axon', 'Dendrite'], ans: 1 },
+      { q: 'Neuroplasticity means the brain:', opts: ['Is plastic', 'Cannot change after age 10', 'Can rewire itself with learning throughout life', 'Becomes harder with age'], ans: 2 },
+      { q: 'The lens of the eye does what?', opts: ['Detects color', 'Focuses light onto the retina', 'Sends signals to the brain', 'Produces tears'], ans: 1 },
+      { q: 'The cerebrum is divided into how many major lobes?', opts: ['2', '3', '4', '5'], ans: 2 },
+      { q: 'Sleep is important for memory because:', opts: ['It lets neurons rest', 'The brain consolidates and prunes memories during sleep', 'It uses less energy', 'It saves time'], ans: 1 },
+      { q: 'What % of your daily energy does your brain use?', opts: ['~2%', '~10%', '~20%', '~50%'], ans: 2 }
+    ],
+    rla: [
+      {
+        title: 'Train Your Memory Like a Scientist',
+        scenario: 'You have a big test next week.',
+        steps: [
+          'Use SPACED REPETITION: review notes 24h, 3 days, 1 week after class.',
+          'Sleep 8–10 hours the night before — that&rsquo;s when memories consolidate.',
+          'Switch off screens 30 minutes before bed (blue light reduces melatonin).',
+          'Test yourself by closing the book and writing what you remember (active recall).'
+        ],
+        reflect: 'Which study habit is hardest for you, and what tiny step can you take to improve?'
+      },
+      {
+        title: 'Your Eyes vs. a Camera',
+        scenario: 'You take a photo and the colors look different than what you saw.',
+        steps: [
+          'Notice: the camera captures light objectively. Your brain interprets light.',
+          'Look up "color constancy" — your brain corrects color based on context.',
+          'Try the famous "blue/black or white/gold dress" online — explain why two people see different colors.',
+          'Conclude: vision is constructed, not just received.'
+        ],
+        reflect: 'How does this affect arguments where two people insist they "saw" different things?'
+      },
+      {
+        title: 'A Phone-Free Hour for the Brain',
+        scenario: 'Constant notifications fragment attention.',
+        steps: [
+          'For one hour today, put your phone in another room.',
+          'Notice each time you reach for it (this is a habit loop).',
+          'Use that hour for deep reading, exercise, or talking with someone face-to-face.',
+          'Reflect: did you feel more relaxed or anxious?'
+        ],
+        reflect: 'How does training your brain to focus connect to the science of neuroplasticity?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — An Invisible Army',
+    icon: '🦠',
+    theme: 'Cells, bacteria, and viruses',
+    dates: '6 Jan – 13 Mar',
+    keyConcept: 'Relationships',
+    relatedConcepts: 'Function and Models',
+    globalContext: 'Scientific and Technical Innovation',
+    desc: 'Use microscopes to explore the smallest units of life — and meet the bacteria and viruses that share our world (and our bodies).',
+    inquiry: {
+      statement: 'Examining the relationships between organisms allows us to model their functions to better understand how they interact.',
+      factual: 'What are the differences between plant, animal, and bacterial cells?',
+      conceptual: 'How do bacteria affect humans and the environment?',
+      debatable: 'Who is most likely to survive: humanity or bacteria?'
+    },
+    content: {
+      know: 'Cell organelles and their functions; differences among plant, animal, and bacterial cells; differences between bacteria and viruses.',
+      understand: 'The process of osmosis; bacteria are both beneficial and harmful.',
+      doIt: 'Microscope skills; designing, conducting, and communicating the results of a scientific investigation; research skills. Labs: Respiration/Combustion Lab, Osmosis Investigation.'
+    },
+    assessments: ['Cell Analogy Poster (Crit. A/D)', 'Osmosis Lab (Crit. B/C)', 'Virus Debate (Crit. A/D)'],
+    vocab: [
+      ['Cell', 'The basic unit of all living things.'],
+      ['Organelle', 'A specialized part of a cell with a specific function (mitochondrion, ribosome, etc.).'],
+      ['Nucleus', 'The cell&rsquo;s "control center" — contains DNA. Found in animal and plant cells; absent in bacteria.'],
+      ['Mitochondrion', 'The "powerhouse" — converts food into usable energy (ATP).'],
+      ['Osmosis', 'The diffusion of water across a semipermeable membrane from low to high solute concentration.'],
+      ['Virus', 'A non-cellular infectious agent — a strand of DNA/RNA in a protein coat. Cannot reproduce without a host cell.']
+    ],
+    lessonHTML: `
+      <p>All living things are made of <strong>cells</strong>. Some organisms (you) have trillions; others (bacteria) are just one. The smallest unit of life can be viewed under a microscope &mdash; and that view changed biology forever.</p>
+      <h3>Three Cell Types</h3>
+      <ul>
+        <li><strong>Animal cells</strong> have a nucleus, mitochondria, ribosomes, no cell wall, no chloroplasts.</li>
+        <li><strong>Plant cells</strong> add a cell wall, chloroplasts (for photosynthesis), and a large vacuole.</li>
+        <li><strong>Bacterial cells</strong> have NO nucleus &mdash; their DNA floats free. They&rsquo;re much smaller and much older.</li>
+      </ul>
+      <h3>Are Viruses Alive?</h3>
+      <p>This is the great Unit 3 debate. Viruses can&rsquo;t reproduce on their own; they don&rsquo;t have cells; they don&rsquo;t metabolize food. But they evolve and adapt. They behave alive when inside a host. Scientists are still divided.</p>
+      <h3>Bacteria — friends and foes</h3>
+      <ul>
+        <li><strong>Helpful</strong>: gut bacteria digesting food; nitrogen-fixing bacteria feeding plants; yogurt and cheese making.</li>
+        <li><strong>Harmful</strong>: <em>Strep</em>, <em>Salmonella</em>, <em>E. coli</em> O157:H7, MRSA.</li>
+      </ul>
+      <h3>Osmosis — Why Salt Kills Cells</h3>
+      <p>Water always moves through a semipermeable membrane from <em>low</em> solute concentration to <em>high</em> solute concentration. Salt outside a cell pulls water out — that&rsquo;s why salty foods preserve meat (kills bacteria) and why you should drink water on long flights.</p>
+    `,
+    worksheet: [
+      { q: 'Name three organelles found only in plant cells (not animal cells).', ans: 'Cell wall, chloroplasts, large central vacuole.' },
+      { q: 'Where is the DNA in a bacterial cell?', ans: 'Floating free in the cytoplasm — bacteria have no nucleus.' },
+      { q: 'What is the function of the mitochondrion?', ans: 'Converts food (glucose) into usable energy (ATP) through cellular respiration.' },
+      { q: 'In one sentence, define osmosis.', ans: 'The movement of water across a semipermeable membrane from low solute concentration to high solute concentration.' },
+      { q: 'List two reasons some scientists say viruses are NOT alive.', ans: 'Examples: Viruses don&rsquo;t metabolize, don&rsquo;t reproduce on their own (need a host), aren&rsquo;t cells, don&rsquo;t respond to stimuli outside a host.' },
+      { q: 'Give one example of helpful bacteria and one example of harmful bacteria.', ans: 'Helpful: gut microbes (digestion), <em>Lactobacillus</em> (yogurt), <em>Rhizobium</em> (nitrogen fixing). Harmful: <em>Streptococcus</em>, <em>E. coli</em> O157:H7, MRSA.' }
+    ],
+    quiz: [
+      { q: 'The basic unit of all living things is the:', opts: ['Atom', 'Molecule', 'Cell', 'Organ'], ans: 2 },
+      { q: 'The "powerhouse" of the cell is the:', opts: ['Nucleus', 'Ribosome', 'Mitochondrion', 'Vacuole'], ans: 2 },
+      { q: 'Plant cells differ from animal cells because plant cells have:', opts: ['No nucleus', 'A cell wall and chloroplasts', 'Smaller size', 'No mitochondria'], ans: 1 },
+      { q: 'Bacterial cells lack a:', opts: ['Cell membrane', 'Nucleus', 'DNA', 'Cytoplasm'], ans: 1 },
+      { q: 'Osmosis specifically refers to the movement of:', opts: ['Salt', 'Sugar', 'Water', 'Oxygen'], ans: 2 },
+      { q: 'A semipermeable membrane lets some substances pass but not others. True or false?', opts: ['True', 'False', 'Only in plants', 'Only in summer'], ans: 0 },
+      { q: 'Viruses reproduce by:', opts: ['Cell division', 'Hijacking a host cell', 'Photosynthesis', 'Eating other viruses'], ans: 1 },
+      { q: 'Which is NOT a reason some say viruses aren&rsquo;t alive?', opts: ['They&rsquo;re not made of cells', 'They can&rsquo;t reproduce alone', 'They don&rsquo;t metabolize', 'They don&rsquo;t evolve'], ans: 3 },
+      { q: 'Yogurt is made by which type of organism?', opts: ['Virus', 'Fungus', 'Helpful bacteria', 'Plant'], ans: 2 },
+      { q: 'When salt is added to slug, it dies because:', opts: ['Salt is poison', 'Osmosis pulls water OUT of its cells', 'Salt blocks oxygen', 'Salt is too cold'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Wash Your Hands Like a Scientist',
+        scenario: 'You&rsquo;re about to eat lunch.',
+        steps: [
+          'Recall that bacteria multiply every 20 minutes in warm wet conditions.',
+          'Wash hands for 20 SECONDS with warm soapy water (sing "Happy Birthday" twice).',
+          'Use a paper towel to turn off the faucet (handle is contaminated again).',
+          'Notice: your hands look the same — but bacterial counts have dropped 99%.'
+        ],
+        reflect: 'How is hand-washing one of the most powerful science-based public-health tools?'
+      },
+      {
+        title: 'A Probiotic Experiment at Home',
+        scenario: 'You&rsquo;ve been told yogurt has "live cultures."',
+        steps: [
+          'Read the yogurt label — note "live and active cultures" + the bacteria names.',
+          'Look up <em>Lactobacillus</em> and what it does in your gut.',
+          'Eat a small portion of plain yogurt daily for one week.',
+          'Notice if you feel different (better digestion?). Discuss why personal anecdotes are NOT proof.'
+        ],
+        reflect: 'How does this connect to the inquiry question "Do bacteria help or harm humans?"'
+      },
+      {
+        title: 'Why You Wilt When Dehydrated',
+        scenario: 'You feel sluggish on a hot day.',
+        steps: [
+          'Recall: cells need water to maintain volume (osmotic pressure).',
+          'When dehydrated, cells lose water → tissues lose firmness → you feel weak.',
+          'Drink ~250 mL water and wait 20 minutes.',
+          'Compare your alertness before vs. after.'
+        ],
+        reflect: 'Why do plants wilt without water — and how is it the same biology?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Body Systems, Genetics &amp; Reproduction',
+    icon: '🧬',
+    theme: 'Human body systems, DNA, heredity, evolution',
+    dates: '30 Mar – 3 Jun',
+    keyConcept: 'Change',
+    relatedConcepts: 'Interaction and Transformation',
+    globalContext: 'Orientation in Space and Time',
+    desc: 'Explore how your body systems work together — and how the genetic code passed down from your parents shapes who you are.',
+    inquiry: {
+      statement: 'Observing changes in interactions allows scientists to detect and understand the transformations in living organisms.',
+      factual: 'What is DNA and how does it work?',
+      conceptual: 'How does genetics relate to evolution?',
+      debatable: 'Does evolution discount the existence or workings of God?'
+    },
+    content: {
+      know: 'Human body systems; Mendel&rsquo;s Laws of Heredity; DNA/RNA transcription; protein synthesis; evidence of evolution.',
+      understand: 'How human body systems function to support each other; how genetics is the underpinning of the evolution of life on Earth.',
+      doIt: 'Body Systems, Blood Lab, Rice Babies, Punnett Squares, Sesame Street Genetics.'
+    },
+    assessments: ['Rice Babies (Crit. A/D)', 'Blood Lab (Crit. B/C)', 'Sesame Street Genetics (Crit. A/D)'],
+    vocab: [
+      ['DNA', 'Deoxyribonucleic acid — the molecule that stores genetic instructions in every cell.'],
+      ['Gene', 'A segment of DNA that codes for a specific trait or protein.'],
+      ['Allele', 'A variant of a gene (e.g., the gene for eye color has alleles for blue, brown, etc.).'],
+      ['Genotype', 'The genetic makeup (e.g., Bb).'],
+      ['Phenotype', 'The observable trait (e.g., brown eyes).'],
+      ['Punnett Square', 'A diagram used to predict the probability of inheritance from two parents.']
+    ],
+    lessonHTML: `
+      <p>Your body is made of <strong>11 major systems</strong> working together — circulatory, respiratory, digestive, nervous, muscular, skeletal, integumentary, endocrine, lymphatic, urinary, and reproductive. Every cell in every system carries the same set of instructions: <strong>your DNA</strong>.</p>
+      <h3>DNA — Life&rsquo;s Code</h3>
+      <p>DNA is a double helix made of four bases: <strong>A, T, C, G</strong>. The order of these bases spells out instructions for making proteins, which build everything in you. Your DNA, if stretched out, would reach the Sun and back many times.</p>
+      <h3>Mendel&rsquo;s Laws of Heredity</h3>
+      <p>Gregor Mendel (1822–1884), an Austrian monk, discovered the basic laws of inheritance by studying pea plants. Two important rules:</p>
+      <ol>
+        <li><strong>Law of Segregation:</strong> Each parent gives one allele per gene to each offspring.</li>
+        <li><strong>Law of Dominance:</strong> Some alleles are dominant (shown if present), others are recessive (only shown if both alleles are recessive).</li>
+      </ol>
+      <h3>Punnett Squares</h3>
+      <p>A simple grid shows the probability of offspring traits. For example, if both parents are Bb (heterozygous brown eyes), there&rsquo;s a 25% chance their child has bb (blue eyes).</p>
+      <h3>Evolution and Faith</h3>
+      <p>The scientific evidence for evolution (fossils, DNA, observation of natural selection) is strong. The Catholic Church teaches that evolution and faith in God are <em>not</em> in conflict — God can create through processes including evolution (Pope John Paul II, 1996).</p>
+    `,
+    worksheet: [
+      { q: 'How many major body systems does the human body have?', ans: '11 (circulatory, respiratory, digestive, nervous, muscular, skeletal, integumentary, endocrine, lymphatic, urinary, reproductive).' },
+      { q: 'What are the four bases of DNA?', ans: 'A (adenine), T (thymine), C (cytosine), G (guanine).' },
+      { q: 'What is the difference between genotype and phenotype?', ans: 'Genotype = the genetic code (e.g., Bb); Phenotype = the visible trait (e.g., brown eyes).' },
+      { q: 'In a cross between Bb x Bb, what % of offspring will have bb?', ans: '25% (1 out of 4 in a Punnett square).' },
+      { q: 'Who discovered the basic laws of inheritance, and using what plants?', ans: 'Gregor Mendel, using pea plants.' },
+      { q: 'What did Pope John Paul II say in 1996 about evolution?', ans: 'That evolution is "more than just a hypothesis" and is compatible with Catholic faith — God can create through evolutionary processes.' }
+    ],
+    quiz: [
+      { q: 'How many major body systems are there?', opts: ['7', '9', '11', '13'], ans: 2 },
+      { q: 'DNA bases are:', opts: ['A, B, C, D', 'A, T, C, G', '1, 2, 3, 4', 'X, Y, Z, W'], ans: 1 },
+      { q: 'A gene is:', opts: ['A whole organism', 'A segment of DNA coding for a trait', 'A type of cell', 'A virus'], ans: 1 },
+      { q: 'Genotype refers to:', opts: ['The visible trait', 'The genetic makeup (e.g., Bb)', 'A type of plant', 'A diagram'], ans: 1 },
+      { q: 'Bb × Bb gives what % bb (recessive)?', opts: ['0%', '25%', '50%', '75%'], ans: 1 },
+      { q: 'Mendel studied which organism?', opts: ['Mice', 'Pea plants', 'Bacteria', 'Fruit flies'], ans: 1 },
+      { q: 'Which is NOT a body system?', opts: ['Circulatory', 'Respiratory', 'Photosynthetic', 'Digestive'], ans: 2 },
+      { q: 'Who is the "father of genetics"?', opts: ['Charles Darwin', 'Gregor Mendel', 'Louis Pasteur', 'Albert Einstein'], ans: 1 },
+      { q: 'The Catholic Church&rsquo;s position on evolution is that it:', opts: ['Contradicts faith', 'Is compatible with faith in God', 'Is forbidden to teach', 'Replaces the Bible'], ans: 1 },
+      { q: 'A Punnett square is used to:', opts: ['Measure cells', 'Predict probabilities of offspring traits', 'Identify diseases', 'Diagram body systems'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Your Family Genetic Tree',
+        scenario: 'You wonder which family member you got each trait from.',
+        steps: [
+          'Make a chart with you, parents, grandparents — list eye color, hair color, dimples, attached/free earlobes.',
+          'Use Punnett squares to figure out which traits are dominant in your family.',
+          'Identify any "surprise" traits that skipped a generation (recessive returning!).',
+          'Discuss with family — many love this kind of inquiry.'
+        ],
+        reflect: 'How does seeing the patterns in your family connect you to the science of genetics?'
+      },
+      {
+        title: 'How Your Heart Rate Tells a Story',
+        scenario: 'You want to learn about your cardiovascular system.',
+        steps: [
+          'Take resting heart rate (sit still 2 min, then count beats for 60 seconds).',
+          'Do 30 jumping jacks. Take heart rate again.',
+          'Wait 1 minute, take it again. Wait another minute, take it again.',
+          'Plot the recovery curve. Faster recovery = better cardiovascular fitness.'
+        ],
+        reflect: 'How does this connect the circulatory system to fitness and health?'
+      },
+      {
+        title: 'Faith &amp; Science Conversation',
+        scenario: 'A friend says faith and science are "incompatible."',
+        steps: [
+          'Quote Pope John Paul II (1996): "Evolution is more than a hypothesis."',
+          'Note: Galileo (astronomy), Mendel (genetics), Lemaître (Big Bang theory!) were all believers.',
+          'Suggest: science describes the "how"; faith addresses the "why."',
+          'Listen carefully to your friend — this is a perspective question, not just a fact question.'
+        ],
+        reflect: 'How does Unit 4 demonstrate that good science and strong faith can deepen each other?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.theme} &middot; ${u.dates}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Life Science';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <p style="color:#666;font-style:italic;margin-bottom:6px;">${u.theme}</p>
+    <div class="meta-bar">
+      <span class="meta-pill date">📅 ${u.dates}</span>
+      <span class="meta-pill">Key Concept: ${u.keyConcept}</span>
+      <span class="meta-pill">Related: ${u.relatedConcepts}</span>
+      <span class="meta-pill">Global Context: ${u.globalContext}</span>
+    </div>
+    <div class="inquiry-box">
+      <p><strong>Inquiry statement:</strong> ${u.inquiry.statement}</p>
+      <p class="q"><strong>Factual:</strong> ${u.inquiry.factual}</p>
+      <p class="q"><strong>Conceptual:</strong> ${u.inquiry.conceptual}</p>
+      <p class="q"><strong>Debatable:</strong> ${u.inquiry.debatable}</p>
+    </div>
+    <div class="chapter-list">
+      <h4>📖 Content Goals</h4>
+      <ul>
+        <li><strong>Know:</strong> ${u.content.know}</li>
+        <li><strong>Understand:</strong> ${u.content.understand}</li>
+        <li><strong>Do:</strong> ${u.content.doIt}</li>
+      </ul>
+    </div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+    <div class="chapter-list">
+      <h4>🎯 Summative Assessments</h4>
+      <ul>${u.assessments.map(a => `<li>${a}</li>`).join('')}</ul>
+    </div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. Use your science journal and references as needed.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Excellent — you&rsquo;re thinking like a scientist!' : '🔬 Review the lesson and try again. Every scientist runs trials more than once.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

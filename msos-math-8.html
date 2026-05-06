@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 8th Grade Math Tutorial</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100;  width: 250px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 15px; font-weight: bold; }
+    .sidebar-item { padding: 10px; margin: 5px 0; background: #111d35; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    .sidebar-item:hover { background: #34d399; }
+    .sidebar-item.active { background: #34d399; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    /* Syllabus page (STS-style) */
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .syl-quarter { background: #f8fafc; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; border-left: 4px solid #1B3A8A; }
+    .syl-quarter h4 { font-size: 0.95rem; color: #1B3A8A; margin-bottom: 6px; }
+    .syl-quarter ul { margin: 4px 0 0 22px; }
+    .syl-quarter li { font-size: 0.88rem; color: #374151; margin-bottom: 3px; }
+    .syl-mission { background: linear-gradient(90deg, #fffbe6, #fff, #fffbe6); border-radius: 8px; padding: 12px 16px; text-align: center; font-weight: 700; color: #1B3A8A; margin-top: 8px; font-size: 0.92rem; }
+    .syl-mission .nui { color: #B8860B; display: block; font-size: 0.82rem; font-weight: 600; margin-top: 4px; letter-spacing: 0.04em; }
+
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar { border-bottom: 4px solid #FFD100;  background: #34d399; color: white; padding: 15px 30px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .topbar-right { display: flex; gap: 20px; align-items: center; font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 30px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .unit-card { background: white; border-radius: 8px; padding: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(52,211,153,0.2); }
+    .unit-card-header { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 15px; }
+    .unit-card-icon { font-size: 32px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+    .unit-card-cc { font-size: 12px; color: #666; }
+    .unit-card-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.4; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { background: #f0f0f0; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 20px 0 10px 0; color: #34d399; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.6; }
+    .lesson-content ul, .lesson-content ol { margin-left: 20px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 8px; }
+    .btn { display: inline-block; padding: 10px 20px; background: #34d399; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px; }
+    .btn:hover { background: #10b981; }
+    .btn-secondary { background: #6b7280; }
+    .btn-secondary:hover { background: #4b5563; }
+    .btn-ka { display: inline-block; padding: 10px 15px; background: #16a34a; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ka:hover { background: #16a34a; }
+    .btn-ixl { display: inline-block; padding: 10px 15px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ixl:hover { background: #2563eb; }
+    .btn-yt { display: inline-block; padding: 10px 15px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-yt:hover { background: #dc2626; }
+    .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-phet:hover { background: #6d28d9; }
+    .resource-card { background: #f3f4f6; border-radius: 8px; padding: 15px; margin: 20px 0; }
+    .resource-card h3 { margin-bottom: 10px; color: #34d399; font-size: 14px; }
+    .resource-btns { display: flex; flex-wrap: wrap; }
+    .problem { background: white; padding: 15px; margin: 12px 0; border-left: 4px solid #34d399; border-radius: 4px; }
+    .problem h4 { margin-bottom: 8px; color: #34d399; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; font-family: 'Courier New', monospace; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .quiz-question { background: white; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #34d399; }
+    .quiz-question h4 { margin-bottom: 10px; color: #34d399; }
+    .quiz-question label { display: block; margin: 8px 0; cursor: pointer; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 15px 0; }
+    .result-card h3 { color: #059669; margin-bottom: 10px; }
+    .nav-buttons { display: flex; gap: 10px; margin: 20px 0; }
+    .back-btn { background: #6b7280; }
+    .back-btn:hover { background: #4b5563; }
+  
+      .handout-card {
+        background: #fff;
+        border-left: 5px solid #ea580c;
+        border-radius: 10px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      }
+      .handout-card h3 {
+        margin: 0 0 8px;
+        color: #ea580c;
+        font-size: 1.2rem;
+      }
+      .handout-science {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 12px;
+      }
+      .handout-mission {
+        background: #f8f9ff;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 16px;
+        font-style: italic;
+        color: #334;
+      }
+      .handout-steps {
+        margin: 0 0 16px;
+        padding-left: 0;
+        list-style: none;
+        counter-reset: step-counter;
+      }
+      .handout-steps li {
+        counter-increment: step-counter;
+        padding: 8px 12px 8px 44px;
+        margin-bottom: 6px;
+        background: #f0f4ff;
+        border-radius: 6px;
+        position: relative;
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+      .handout-steps li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        width: 22px;
+        height: 22px;
+        background: #ea580c;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 0.78rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .handout-deliverable {
+        background: #fffbe6;
+        border: 1px solid #f5d000;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 16px;
+      }
+      .handout-deliverable strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #7a5f00;
+      }
+      .handout-reflect {
+        background: #fffbea;
+        border: 1px solid #68d391;
+        border-radius: 6px;
+        padding: 12px;
+      }
+      .handout-reflect strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #276749;
+      }
+      .handout-reflect ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .handout-reflect li {
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+      }
+      code {
+        background: #e8edf5;
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.88em;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 16px 0;color:#888;font-size:14px;">8th Grade Math</p><button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; color: #999;">
+        Progress: <span id="progress-text">0/15</span>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-math-index.html" class="back-index-btn" title="Back to Math Classes">← All Math</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Engineering the World with Math</span>
+        </div>
+        <div class="topbar-right">Math · Grade 8</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+                    <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">📊</div>
+            <h2>Introduction to Algebra &mdash; Course Syllabus</h2>
+            <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+            <div class="syl-mission">EMPOWERED TO SUCCEED &mdash; GUIDED BY FAITH</div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p>It will be my pleasure to be working with you and your child this school year. I take a very deliberate approach with algorithms that are easy to follow. Your child and I will work together to prepare for the following year. We will use a variety of methods to accomplish this: small group, big group, individual study, math games, lecture notes, and projects.</p>
+              <p style="margin-top:8px"><strong>Textbook:</strong> Glencoe Math Algebra 1</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👨‍🏫 Teacher</h3>
+              <p><strong>Mr. Peter Park</strong></p>
+              <p>📧 <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a></p>
+              <p>📞 (808) 228-2288 &nbsp;<em style="font-size:0.83rem;color:#64748b">(text is best)</em></p>
+              <p style="margin-top:8px;font-size:0.86rem;color:#4a5568">Parents may email me or leave a message with the school. I respond within 24 hours.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Materials</h3>
+              <ul>
+                <li>Composition notebook</li>
+                <li>Pencils, erasers, highlighters</li>
+                <li>Notebook paper</li>
+                <li>Calculator</li>
+                <li>Folder for handouts</li>
+                <li>Textbook (Glencoe Math Algebra 1)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📊 Grading Policy</h3>
+            <div class="syl-grade-row">
+              <div class="syl-grade-pill"><span>20%</span>Participation<small>Composition books, notes, in-class behavior, supplies</small></div>
+              <div class="syl-grade-pill"><span>25%</span>Tests<small>Q&amp;A, written essay (1 per chapter, 20 pts)</small></div>
+              <div class="syl-grade-pill"><span>30%</span>Homework<small>Assignments, classwork, class prep, projects</small></div>
+              <div class="syl-grade-pill"><span>25%</span>Quizzes<small>2 per chapter, 5 pts each</small></div>
+            </div>
+            <p style="margin-top:12px;font-size:0.86rem"><strong>Make-ups:</strong> Students who score below 80% on tests may make corrections / retest to improve their grade.</p>
+            <p style="margin-top:6px;font-size:0.86rem"><strong>Late work:</strong> Homework is due the next class meeting. Late work earns a maximum of 50% credit; if not turned in after two class meetings, the grade is a zero.</p>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Course Outline by Quarter &mdash; Introduction to Algebra</h3>
+            <p style="font-size:0.85rem;color:#64748b;font-style:italic;margin-bottom:10px">Chapters from Glencoe Math Algebra 1.</p>
+            <div class="syl-quarter"><h4>Q1</h4><ul><li>1 — Expressions, Equations, and Functions</li><li>2 — Linear Equations</li><li>3 — Linear Functions</li></ul></div>
+          <div class="syl-quarter"><h4>Q2</h4><ul><li>4 — Equations of Linear Functions</li><li>5 — Linear Inequalities</li><li>6 — Systems of Equations</li></ul></div>
+          <div class="syl-quarter"><h4>Q3</h4><ul><li>7 — Exponents</li><li>8 — Quadratic Expressions</li><li>9 — Quadratic Functions</li></ul></div>
+          <div class="syl-quarter"><h4>Q4</h4><ul><li>10 — Radical Functions and Geometry</li><li>11 — Rational Functions</li><li>12 — Statistics and Probability</li></ul></div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>💬 Student &amp; Parent Communication</h3>
+              <p><strong>Beehively</strong> is the platform where students and parents can regularly check grade progress and receive notifications of missing or incomplete assignments.</p>
+              <p style="margin-top:6px">Parents are contacted by email up to 2 times if their child is receiving a deficiency, plus standard email notifications. Students are always informed of any grade that is a C or lower and ultimately are responsible for their grades.</p>
+              <p style="margin-top:6px">Student work is updated regularly.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎯 Middle School Math Goal</h3>
+              <p>From 6th through 8th grade, we focus on more than just numbers &mdash; we work to build strong math skills, boost confidence, and develop critical problem-solving abilities that students can apply in every subject and in everyday life. Our approach combines hands-on activities, real-world applications, and a supportive learning environment where students feel encouraged to take risks, ask questions, and think creatively.</p>
+              <p style="margin-top:6px">By the time they graduate, our students are not only ready for Algebra and beyond, but they also possess the perseverance, analytical thinking, and resourcefulness they need to thrive in high school and in life.</p>
+            </div>
+          </div>
+
+          <div class="nav-buttons" style="margin-top:18px;">
+            <button class="btn back-btn" onclick="showHome()">← Back to Topics</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn back-btn" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showHome()">← Back</button>
+            <button class="btn" onclick="showHandout()">🔬 Science Connection</button>
+            <button class="btn" id="realworld-btn" onclick="showRealWorld()">🎨 Real-World Project</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Check Answers</button>
+            <button class="btn" onclick="showQuiz()">Quiz →</button>
+          </div>
+        </div>
+        <div id="handout-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">🔬 Science Connection</h2>
+          <div id="handout-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="realworld-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">🎨 Real-World Project</h2>
+          <div id="realworld-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn back-btn" onclick="showWorksheet()">← Back to Worksheet</button>
+          <h2 style="margin: 20px 0;">📝 Quick Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showWorksheet()">← Back</button>
+            <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+          </div>
+        </div>
+        <div id="exam-screen" class="screen">
+          <h2 style="margin: 20px 0;">📊 Unit Exam</h2>
+          <div id="exam-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showHome()">← Home</button>
+            <button class="btn" onclick="submitExam()">Submit Exam</button>
+          </div>
+        </div>
+        <div id="certificate-screen" class="screen">
+          <div style="text-align: center; padding: 40px;">
+            <h2 style="color: #34d399; margin: 20px 0;">🎉 Unit Completed!</h2>
+            <div id="cert-content"></div>
+            <button class="btn" onclick="showHome()" style="margin-top: 20px;">Return to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+const UNITS = [
+  { id:'real-numbers', title:'Real Numbers', icon:'🔢', cc:'8.NS.1-2', desc:'Distinguish rational from irrational numbers and approximate square roots.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ixlUrl:'https://www.ixl.com/math/grade-8/classify-numbers', ytSearch:'khan academy 8th grade rational irrational numbers square roots' },
+  { id:'exponents', title:'Exponents', icon:'✴️', cc:'8.EE.1-2', desc:'Apply laws of exponents and evaluate expressions with integer exponents.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ixlUrl:'https://www.ixl.com/math/grade-8/multiplication-with-exponents', ytSearch:'khan academy 8th grade laws of exponents' },
+  { id:'scientific-notation', title:'Scientific Notation', icon:'🔬', cc:'8.EE.3-4', desc:'Write very large and small numbers in scientific notation and compute with them.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ixlUrl:'https://www.ixl.com/math/grade-8/convert-between-standard-and-scientific-notation', ytSearch:'khan academy 8th grade scientific notation' },
+  { id:'percent-error', title:'Percent Error', icon:'⚠️', cc:'8.NS + Science', desc:'In real labs, scientists report percent error alongside their measurements. Use percent error |measured − actual| ÷ actual × 100% with rational, decimal, and scientific-notation values, and connect it to significant figures and accuracy in experimental design.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ixlUrl:'https://www.ixl.com/math/grade-8/percent-of-change', ytSearch:'percent error formula 8th grade science significant figures' },
+  { id:'unit-conversions', title:'Unit Conversions (KHDUdcm)', icon:'📏', cc:'8.EE + Physical Science', desc:'Convert between metric units using the KHDUdcm staircase — Kilo, Hecto, Deca, Unit, deci, centi, milli.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-factors-and-multiples', ixlUrl:'https://www.ixl.com/math/grade-8/convert-between-metric-units', ytSearch:'metric unit conversions KHDUdcm staircase kilo hecto deca unit deci centi milli' },
+  { id:'slope', title:'Slope & Rate of Change', icon:'📈', cc:'8.EE.5-6', desc:'Calculate slope from graphs, tables, and equations; interpret rate of change.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ixlUrl:'https://www.ixl.com/math/grade-8/find-the-slope-of-a-graph', ytSearch:'khan academy 8th grade slope rate of change', phetUrl:'https://phet.colorado.edu/en/simulations/graphing-slope-intercept' },
+  { id:'linear-equations', title:'Linear Equations', icon:'⚖️', cc:'8.EE.7', desc:'Solve linear equations with variables on both sides and special solutions.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ixlUrl:'https://www.ixl.com/math/grade-8/solve-linear-equations', ytSearch:'khan academy 8th grade linear equations', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer-two-variables' },
+  { id:'systems', title:'Systems of Equations', icon:'🔀', cc:'8.EE.8', desc:'Solve systems by graphing, substitution, and elimination.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-systems-topic', ixlUrl:'https://www.ixl.com/math/grade-8/solve-a-system-of-equations-by-graphing', ytSearch:'khan academy 8th grade systems of equations', phetUrl:'https://phet.colorado.edu/en/simulations/graphing-lines' },
+  { id:'physics-equations', title:'Physics Equations: Motion', icon:'🚀', cc:'8.EE + Physical Science', desc:'Apply equations to solve projectile motion and circular motion problems — height, time, speed, and orbital period.', kaUrl:'https://www.khanacademy.org/science/physics/one-dimensional-motion', ixlUrl:'https://www.ixl.com/math/grade-8/solve-linear-equations', ytSearch:'khan academy projectile motion equations physics circular motion', phetUrl:'https://phet.colorado.edu/en/simulations/projectile-motion' },
+  { id:'functions', title:'Functions', icon:'🔁', cc:'8.F.1-3', desc:'Understand functions, identify linear vs. nonlinear, and use function notation.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ixlUrl:'https://www.ixl.com/math/grade-8/identify-functions', ytSearch:'khan academy 8th grade functions', phetUrl:'https://phet.colorado.edu/en/simulations/function-builder' },
+  { id:'linear-functions', title:'Linear Functions', icon:'📉', cc:'8.F.4-5', desc:'Graph and write linear functions in slope-intercept form; analyze rate of change.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ixlUrl:'https://www.ixl.com/math/grade-8/slope-intercept-form-graph-an-equation', ytSearch:'khan academy 8th grade linear functions slope intercept form', phetUrl:'https://phet.colorado.edu/en/simulations/graphing-slope-intercept' },
+  { id:'transformations', title:'Transformations', icon:'🔄', cc:'8.G.1-4', desc:'Perform translations, reflections, rotations, and dilations on the coordinate plane.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-geometry', ixlUrl:'https://www.ixl.com/math/grade-8/translations-graph-the-image', ytSearch:'khan academy 8th grade transformations translations reflections rotations' },
+  { id:'angle-relationships', title:'Angle Relationships', icon:'📐', cc:'8.G.5', desc:'Use parallel lines, transversals, and triangle angle sum to find missing angles.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-geometry', ixlUrl:'https://www.ixl.com/math/grade-8/transversals-of-parallel-lines-find-an-angle-measure', ytSearch:'khan academy 8th grade angle relationships parallel lines transversals' },
+  { id:'pythagorean', title:'Pythagorean Theorem & Trigonometry', icon:'📐', cc:'8.G.6-8 + Trig Preview', desc:'Prove and apply the Pythagorean theorem, find distance on the coordinate plane, and use SOH-CAH-TOA to find missing sides and angles in right triangles.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-geometry', ixlUrl:'https://www.ixl.com/math/grade-8/pythagorean-theorem-find-the-missing-leg-or-hypotenuse', ytSearch:'khan academy 8th grade pythagorean theorem trigonometry SOH CAH TOA' },
+  { id:'volume', title:'Volume', icon:'🧊', cc:'8.G.9', desc:'Find volume of cylinders, cones, and spheres using formulas.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-geometry', ixlUrl:'https://www.ixl.com/math/grade-8/volume-of-cylinders', ytSearch:'khan academy 8th grade volume cylinders cones spheres', phetUrl:'https://phet.colorado.edu/en/simulations/density' },
+  { id:'scatter-plots', title:'Scatter Plots', icon:'📊', cc:'8.SP.1-3', desc:'Construct scatter plots, identify associations, and draw lines of best fit.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-data', ixlUrl:'https://www.ixl.com/math/grade-8/scatter-plots', ytSearch:'khan academy 8th grade scatter plots line of best fit', phetUrl:'https://phet.colorado.edu/en/simulations/least-squares-regression' },
+  { id:'two-way-tables', title:'Two-Way Tables', icon:'📋', cc:'8.SP.4', desc:'Construct and interpret two-way frequency tables for categorical data.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-data', ixlUrl:'https://www.ixl.com/math/grade-8/interpret-two-way-frequency-tables', ytSearch:'khan academy 8th grade two-way frequency tables' },
+  { id:'word-problems', title:'Word Problems', icon:'📝', cc:'mixed', desc:'Solve multi-step real-world problems across all 8th grade math domains.', kaUrl:null, ixlUrl:'https://www.ixl.com/math/grade-8/multi-step-word-problems', ytSearch:'khan academy 8th grade word problems' },
+  { id:'waves', title:'Waves — Frequency & Wavelength', icon:'〰️', cc:'8.EE + Physical Science', desc:'Sound and light are waves described by v = fλ. Use this equation to solve for wave speed, frequency, or wavelength, and explore the electromagnetic spectrum using scientific notation.', kaUrl:'https://www.khanacademy.org/science/physics/mechanical-waves-and-sound', ixlUrl:'https://www.ixl.com/math/grade-8/scientific-notation', ytSearch:'wave speed frequency wavelength equation 8th grade physical science v=flambda', phetUrl:'https://phet.colorado.edu/en/simulations/wave-on-a-string' },
+  { id:'electricity', title:'Electricity & Circuits', icon:'⚡', cc:'8.EE + Physical Science', desc:"Ohm's Law (V = IR) and power (P = IV) are linear equations in physics form. Solve for voltage, current, resistance, and power. Build series and parallel circuit calculators.", kaUrl:'https://www.khanacademy.org/science/ap-physics-1/ap-circuits-topic', ixlUrl:'https://www.ixl.com/math/grade-8/solve-linear-equations', ytSearch:"ohm's law V=IR electricity circuits 8th grade algebra physical science", phetUrl:'https://phet.colorado.edu/en/simulations/circuit-construction-kit-dc' },
+  { id:'optics', title:"Optics & Snell's Law", icon:'🔭', cc:"8.G + Physical Science Trig Preview", desc:"Light bends when it crosses from one material to another. Snell's Law (n₁sinθ₁ = n₂sinθ₂) uses trigonometry you've already learned — apply SOH-CAH-TOA to optics and discover how lenses work.", kaUrl:'https://www.khanacademy.org/science/ap-physics-1/geometric-optics', ixlUrl:'https://www.ixl.com/math/grade-8/trigonometric-ratios', ytSearch:"snell's law refraction optics trigonometry 8th grade physical science", phetUrl:'https://phet.colorado.edu/en/simulations/bending-light' },
+  { id:'keplers-laws', title:"Kepler's Laws & Orbital Mechanics", icon:'🪐', cc:'8.EE + Physical Science', desc:"Kepler's Third Law states T² ∝ r³ — orbital period squared is proportional to orbital radius cubed. Use proportional reasoning and exponent rules with real planetary data to predict orbital periods.", kaUrl:'https://www.khanacademy.org/science/physics/centripetal-force-and-gravitation', ixlUrl:'https://www.ixl.com/math/grade-8/cube-roots', ytSearch:"kepler's third law T squared r cubed proportional reasoning 8th grade physics", phetUrl:'https://phet.colorado.edu/en/simulations/gravity-and-orbits' }
+];
+
+const LESSONS = {
+  'real-numbers': `<h2>Real Numbers</h2><p><strong>Rational numbers</strong> can be written as fractions. <strong>Irrational numbers</strong> cannot.</p><h3>Rational Numbers</h3><ul><li>Integers: ..., -2, -1, 0, 1, 2, ...</li><li>Fractions: 1/2, 3/4, −2/3</li><li>Terminating decimals: 0.5, 0.125</li><li>Repeating decimals: 0.333..., 0.666...</li></ul><h3>Irrational Numbers</h3><ul><li>Non-repeating, non-terminating decimals</li><li>π ≈ 3.14159265...</li><li>e ≈ 2.71828...</li><li>√2 ≈ 1.414...</li></ul><h3>Square Roots</h3><p>√9 = 3 (perfect square). √10 ≈ 3.162 (approximation)</p><h3>Real Numbers</h3><p>Set of all rational and irrational numbers. Fills entire number line.</p>`,
+  'exponents': `<h2>Exponents & Laws of Exponents</h2><p>An exponent shows repeated multiplication: 2³ = 2 × 2 × 2 = 8</p><h3>Laws of Exponents</h3><ul><li><strong>Product rule:</strong> aᵐ × aⁿ = aᵐ⁺ⁿ</li><li><strong>Quotient rule:</strong> aᵐ ÷ aⁿ = aᵐ⁻ⁿ</li><li><strong>Power rule:</strong> (aᵐ)ⁿ = aᵐⁿ</li><li><strong>Product to power:</strong> (ab)ⁿ = aⁿbⁿ</li></ul><h3>Negative & Zero Exponents</h3><ul><li>a⁰ = 1 (any non-zero number)</li><li>a⁻ⁿ = 1/aⁿ (reciprocal)</li><li>2⁻² = 1/4</li></ul><h3>Examples</h3><p>2² × 2³ = 2⁵ = 32</p><p>3⁵ ÷ 3² = 3³ = 27</p><p>(2²)³ = 2⁶ = 64</p>`,
+  'scientific-notation': `<h2>Scientific Notation</h2><p><strong>Scientific notation</strong> writes numbers as a × 10ⁿ where 1 ≤ a < 10</p><h3>Converting to Scientific Notation</h3><p>4,500,000 = 4.5 × 10⁶ (moved decimal 6 places left)</p><p>0.000075 = 7.5 × 10⁻⁵ (moved decimal 5 places right)</p><h3>Converting from Scientific Notation</h3><p>3.2 × 10⁴ = 32,000</p><p>8.1 × 10⁻³ = 0.0081</p><h3>Computing with Scientific Notation</h3><p>(2 × 10⁵) × (3 × 10²) = 6 × 10⁷</p><p>(8 × 10⁶) ÷ (2 × 10³) = 4 × 10³</p><h3>Applications</h3><p>Very large: distances in space. Very small: atomic sizes.</p>`,
+  'percent-error': `<h2>Percent Error &mdash; Reporting Real-World Measurements</h2><p>In real science, every measurement comes with a number that says how trustworthy it is. The simplest such number is <strong>percent error</strong> &mdash; the ratio of |measured &minus; actual| to actual, expressed as a percent. By 8th grade you have all the tools to compute it for any measurement, including ones in scientific notation, with rational and irrational values, and across multiple units. This is the math that connects your lab notebook to the way professional scientists report their data.</p><h3>The Formula</h3><p style="text-align:center;padding:10px;background:#f0f4ff;border-radius:8px;font-size:1.05em;"><strong>Percent Error = |measured &minus; actual| &divide; actual &times; 100%</strong></p><h3>Why the Absolute Value?</h3><p>An error is bad whether you went too high or too low &mdash; we just want to know how far off. Without the absolute value bars, two students with errors of +5% and &minus;5% would &ldquo;average&rdquo; to zero error, which would falsely suggest perfect accuracy. The absolute value forces every error to count.</p><h3>Worked Example 1 &mdash; Speed of Light</h3><p>The accepted speed of light is c = 3.00 &times; 10&sup8; m/s. A clever 8th-grade experiment using mirrors and a high-speed camera measures c = 2.94 &times; 10&sup8; m/s. Percent error?</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|2.94 &times; 10&sup8; &minus; 3.00 &times; 10&sup8;| &divide; (3.00 &times; 10&sup8;) &times; 100%<br>= 0.06 &times; 10&sup8; &divide; (3.00 &times; 10&sup8;) &times; 100%<br>= 0.06 &divide; 3.00 &times; 100%<br>= <strong>2.0%</strong></p><p>Notice the 10&sup8; cancels &mdash; one of the powers of percent error: the units and powers of ten always divide out, so you end up with a clean number.</p><h3>Worked Example 2 &mdash; Avogadro&apos;s Number</h3><p>The accepted Avogadro&apos;s number is 6.022 &times; 10&sup2;&sup3;. A historical Millikan-style oil drop estimate gave 6.65 &times; 10&sup2;&sup3;. Percent error?</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|6.65 &minus; 6.022| &divide; 6.022 &times; 100%<br>= 0.628 &divide; 6.022 &times; 100% &asymp; <strong>10.4%</strong></p><h3>Worked Example 3 &mdash; Pythagorean Construction</h3><p>You measure a triangle with legs 3.0 cm and 4.0 cm. The hypotenuse should be exactly 5.00 cm by the Pythagorean theorem. You measure it as 5.2 cm.</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|5.2 &minus; 5.0| &divide; 5.0 &times; 100% = 0.2 &divide; 5.0 &times; 100% = <strong>4.0%</strong></p><h3>Worked Example 4 &mdash; Density of an Unknown</h3><p>A student measures the mass of a metal cube as 27.5 g and the volume as 10.0 mL, computing density = 2.75 g/mL. The accepted density of aluminum is 2.70 g/mL. Percent error?</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|2.75 &minus; 2.70| &divide; 2.70 &times; 100% &asymp; <strong>1.85%</strong></p><p>That is well within experimental tolerance &mdash; the cube is almost certainly aluminum.</p><h3>Significant Figures and Percent Error</h3><p>The number of <strong>significant figures</strong> in your answer should match the precision of the data. A measurement of 5.0 cm (2 sig figs) and an actual value of 5.00 cm (3 sig figs) means your error is limited by the less precise number. Reporting 4.000% would be false precision &mdash; report it as 4.0% (2 sig figs).</p><h3>Connection to Percent Change</h3><p>You learned percent change in 7th grade as |new &minus; old| &divide; old &times; 100%. Percent error is identical in form &mdash; just relabel <em>old</em> as <em>actual</em> and <em>new</em> as <em>measured</em>. The math is one and the same.</p><h3>Application &mdash; Engineering Tolerances</h3><p>Engineers specify a manufacturing <em>tolerance</em> &mdash; the maximum acceptable percent error in a part. A bolt for an aerospace fastener might have tolerance &plusmn;0.1%; a piece of structural steel might allow &plusmn;5%. Percent error tells the inspector whether a part is within tolerance.</p><h3>When Percent Error Doesn&apos;t Apply</h3><ul><li>If the actual value is <strong>zero</strong> (you cannot divide by zero) &mdash; report absolute error in the original units instead.</li><li>If you do not know the &ldquo;actual&rdquo; value &mdash; quote a range or a mean &plusmn; standard deviation instead.</li><li>If you are comparing two equally-good measurements &mdash; use <em>percent difference</em>: |a &minus; b| &divide; ((a + b) &divide; 2) &times; 100%.</li></ul><h3>Tolerance Table for Different Fields</h3><table style="border-collapse:collapse;width:100%;font-size:0.95em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">Application</th><th style="padding:7px 10px;">Typical Acceptable %Error</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Aerospace fastener</td><td style="padding:6px 10px;">&plusmn;0.01%</td></tr><tr><td style="padding:6px 10px;">Pharmaceutical dose</td><td style="padding:6px 10px;">&plusmn;1%</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Construction beam</td><td style="padding:6px 10px;">&plusmn;3&ndash;5%</td></tr><tr><td style="padding:6px 10px;">High-school physics lab</td><td style="padding:6px 10px;">&plusmn;5%</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Middle-school estimate</td><td style="padding:6px 10px;">&plusmn;10%</td></tr></table>`,
+  'unit-conversions': `<h2>Unit Conversions — KHDUdcm</h2><p>The metric system is built on powers of 10, which makes converting between units a matter of moving a decimal point. The <strong>KHDUdcm staircase</strong> shows all the prefixes in order:</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">K</th><th style="padding:7px 10px;">H</th><th style="padding:7px 10px;">D</th><th style="padding:7px 10px;">U</th><th style="padding:7px 10px;">d</th><th style="padding:7px 10px;">c</th><th style="padding:7px 10px;">m</th></tr><tr style="text-align:center;background:#f2f2f2;"><td style="padding:6px 10px;">Kilo</td><td style="padding:6px 10px;">Hecto</td><td style="padding:6px 10px;">Deca</td><td style="padding:6px 10px;font-weight:bold;">Unit</td><td style="padding:6px 10px;">deci</td><td style="padding:6px 10px;">centi</td><td style="padding:6px 10px;">milli</td></tr><tr style="text-align:center;"><td style="padding:6px 10px;">×1000</td><td style="padding:6px 10px;">×100</td><td style="padding:6px 10px;">×10</td><td style="padding:6px 10px;font-weight:bold;">×1</td><td style="padding:6px 10px;">×0.1</td><td style="padding:6px 10px;">×0.01</td><td style="padding:6px 10px;">×0.001</td></tr><tr style="text-align:center;background:#f2f2f2;"><td style="padding:6px 10px;">10³</td><td style="padding:6px 10px;">10²</td><td style="padding:6px 10px;">10¹</td><td style="padding:6px 10px;font-weight:bold;">10⁰</td><td style="padding:6px 10px;">10⁻¹</td><td style="padding:6px 10px;">10⁻²</td><td style="padding:6px 10px;">10⁻³</td></tr></table><p>The <strong>Unit</strong> column is your base unit — meter (m), gram (g), liter (L), or second (s).</p><p>Memory: <em>"<strong>K</strong>ing <strong>H</strong>enry <strong>D</strong>oesn't <strong>U</strong>sually <strong>d</strong>rink <strong>c</strong>hocolate <strong>m</strong>ilk"</em></p><h3>The One Rule: Count Steps, Move Decimal</h3><ul><li>Moving <strong>right</strong> on the chart (larger to smaller unit) → multiply by 10 per step → decimal moves <strong>right</strong></li><li>Moving <strong>left</strong> on the chart (smaller to larger unit) → divide by 10 per step → decimal moves <strong>left</strong></li></ul><h3>Examples — Length (base unit = meter)</h3><ul><li><strong>3.5 km → m:</strong> K to U = 3 steps right → 3.5 × 1000 = <strong>3500 m</strong></li><li><strong>250 cm → m:</strong> c to U = 2 steps left → 250 ÷ 100 = <strong>2.5 m</strong></li><li><strong>45 mm → cm:</strong> m to c = 1 step left → 45 ÷ 10 = <strong>4.5 cm</strong></li><li><strong>0.8 km → cm:</strong> K to c = 5 steps right → 0.8 × 100,000 = <strong>80,000 cm</strong></li></ul><h3>Examples — Mass (base unit = gram)</h3><ul><li><strong>2.8 kg → g:</strong> K to U = 3 steps right → 2800 g</li><li><strong>500 mg → g:</strong> m to U = 3 steps left → 0.5 g</li><li><strong>1.2 kg → mg:</strong> K to m = 6 steps right → 1,200,000 mg</li></ul><h3>Connection to Scientific Notation</h3><p>Each step on the KHDUdcm chart is one power of 10 — the same relationship you used in scientific notation. Converting 3.5 km to meters is the same as multiplying 3.5 × 10³ = 3500. The skills stack directly.</p><h3>Converting Between Systems (US ↔ Metric)</h3><p>Some useful benchmarks to memorize:</p><ul><li>1 inch = 2.54 cm</li><li>1 mile ≈ 1.609 km</li><li>1 pound ≈ 0.454 kg</li><li>1 gallon ≈ 3.785 L</li></ul><h3>The Factor-Label Method (Dimensional Analysis)</h3><p>The KHDUdcm staircase is fast for metric conversions, but science classes use a more powerful tool that also works for <em>any</em> conversion — metric to imperial, rates to rates, even chained conversions in chemistry. It is called the <strong>factor-label method</strong> (also called <em>dimensional analysis</em>).</p><h4>The big idea</h4><p>Multiply by fractions equal to <strong>1</strong> — built from a unit equality — so units <strong>cancel</strong> on the way to the answer. Anything you multiply by 1 stays the same value, so the math is always honest.</p><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>1 km = 1000 m</strong> &nbsp; → &nbsp; <strong>1 = 1000 m / 1 km</strong> &nbsp; or &nbsp; <strong>1 = 1 km / 1000 m</strong></p><h4>Step-by-step recipe</h4><ol><li>Write the starting value with its unit.</li><li>Multiply by a "1" fraction whose <em>top</em> has the unit you want, <em>bottom</em> has the unit you want to get rid of.</li><li>Cancel the matching units (cross them out diagonally).</li><li>Multiply the numbers; carry the surviving unit.</li></ol><h4>Worked example — single step</h4><p>Convert <strong>2.5 km</strong> to meters:</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">2.5 km × (1000 m / 1 km) = 2500 m</p><p>"km" cancels (one on top, one on bottom). The "m" survives. Numbers: 2.5 × 1000 = 2500.</p><h4>Worked example — chained (rate)</h4><p>Convert <strong>72 km/h</strong> to m/s. Use TWO unit equalities at once:</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">72 km/h × (1000 m / 1 km) × (1 h / 3600 s) = 72 × 1000 / 3600 m/s = 20 m/s</p><p>"km" cancels and "h" cancels — leaving m/s. This is exactly the same answer as ÷ 3.6, but the work shows <em>why</em>.</p><h4>Worked example — three-step (medicine)</h4><p>A child weighs <strong>30 kg</strong> and the prescription is <strong>5 mg per kg</strong>. How many <strong>grams</strong> total?</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">30 kg × (5 mg / 1 kg) × (1 g / 1000 mg) = 150/1000 g = 0.15 g</p><p>"kg" cancels with "kg", "mg" cancels with "mg". "g" survives.</p><h4>Why this is useful in science</h4><ul><li>It works for <strong>any</strong> conversion — not just powers of ten.</li><li>It catches errors: if your units do not cancel, you set up the fraction upside-down.</li><li>It is the same method used in chemistry (mole conversions), physics (unit checks), and medicine (dose calculations).</li><li>It pairs with KHDUdcm: use the staircase for quick metric jumps, factor-label for everything else.</li></ul>`,
+  'slope': `<h2>Slope & Rate of Change</h2><p><strong>Slope</strong> measures steepness of a line.</p><h3>Slope Formula</h3><p>m = (y₂ - y₁) / (x₂ - x₁)</p><h3>Finding Slope from Points</h3><p>Points (2, 3) and (5, 9)</p><p>m = (9 - 3) / (5 - 2) = 6 / 3 = 2</p><h3>Interpreting Slope</h3><ul><li>Positive slope: line goes up</li><li>Negative slope: line goes down</li><li>Zero slope: horizontal line</li><li>Undefined slope: vertical line</li></ul><h3>Rate of Change</h3><p>Slope represents rate: 2 means y increases 2 units per 1 unit increase in x</p><h3>Real-World Uses</h3><p>Speed (miles per hour), cost per item, temperature change.</p>`,
+  'linear-equations': `<h2>Linear Equations</h2><p>Equations that form straight lines when graphed.</p><h3>Standard Form</h3><p>Ax + By = C</p><h3>Slope-Intercept Form</h3><p>y = mx + b where m is slope, b is y-intercept</p><h3>Solving Equations</h3><p>2x + 5 = 13</p><ol><li>Subtract 5: 2x = 8</li><li>Divide by 2: x = 4</li></ol><h3>Special Cases</h3><p>No solution: 2x + 1 = 2x + 3 (never true)</p><p>Infinite solutions: 2x + 1 = 2x + 1 (always true)</p><h3>Applications</h3><p>Cost equations, distance problems, financial planning.</p>`,
+  'systems': `<h2>Systems of Equations</h2><p>Two or more equations solved together. Solutions satisfy all equations.</p><h3>Graphing Method</h3><p>Graph both lines. Solution is intersection point.</p><h3>Substitution Method</h3><p>y = 2x and x + y = 6</p><ol><li>Substitute: x + 2x = 6 → 3x = 6</li><li>Solve: x = 2, then y = 4</li></ol><h3>Elimination Method</h3><p>2x + y = 5 and x - y = 1</p><ol><li>Add equations: 3x = 6</li><li>Solve: x = 2, then y = 1</li></ol><h3>Solution Types</h3><ul><li>One solution: lines intersect</li><li>No solution: parallel lines</li><li>Infinite solutions: same line</li></ul>`,
+  'physics-equations': `<h2>Physics Equations: Motion</h2><p>Physics equations are just algebra in disguise — they have variables, constants, and unknown values you solve for. The skills you learned rearranging equations apply directly here.</p><hr style="margin:16px 0;border-color:#ccc;"><h2>Part 1 — Falling Objects (Vertical Distance)</h2><p>When an object is <strong>dropped from rest</strong> (not thrown), gravity accelerates it downward at <strong>g = 9.8 m/s²</strong>. The vertical distance it falls in time t is:</p><p style="font-size:1.15em;text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;"><strong>V<sub>d</sub> = ½ g t²</strong></p><ul><li><strong>V<sub>d</sub></strong> = vertical distance fallen (m)</li><li><strong>g</strong> = 9.8 m/s² (use 10 for clean numbers)</li><li><strong>t</strong> = time in seconds</li></ul><h3>Solving for Vertical Distance</h3><p>Object dropped from a bridge. How far does it fall in 3 seconds?</p><p>V<sub>d</sub> = ½ × 10 × 3² = 5 × 9 = <strong>45 m</strong></p><h3>Solving for Time</h3><p>Rearrange V<sub>d</sub> = ½gt² to isolate t:</p><ol><li>Multiply both sides by 2: &nbsp; 2V<sub>d</sub> = gt²</li><li>Divide both sides by g: &nbsp; t² = 2V<sub>d</sub>/g</li><li>Take the square root: &nbsp; <strong>t = √(2V<sub>d</sub> / g)</strong></li></ol><p style="font-size:1.1em;text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;"><strong>t = √(2V<sub>d</sub> / g)</strong></p><h3>Example: A ball falls 80 m. How long did it take?</h3><p>t = √(2 × 80 / 10) = √16 = <strong>4 seconds</strong></p><h3>Example: A coin is dropped from 45 m. How long to hit the ground?</h3><p>t = √(2 × 45 / 10) = √9 = <strong>3 seconds</strong></p><h3>Key Algebra Step</h3><p>Notice that solving for t requires taking a <strong>square root</strong> — the inverse of squaring. This connects back to your work with irrational numbers and square roots earlier this year.</p><hr style="margin:16px 0;border-color:#ccc;"><h2>Part 2 — Circular Motion</h2><p>An object moving in a circle at constant speed travels the circumference each full revolution:</p><p style="font-size:1.1em;text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>v = 2πr / T</strong></p><ul><li><strong>v</strong> = speed (m/s)</li><li><strong>r</strong> = radius of circle (m)</li><li><strong>T</strong> = period — time for one full revolution (s)</li></ul><h3>Rearranging for any variable</h3><ul><li>Solve for T: <strong>T = 2πr / v</strong></li><li>Solve for r: <strong>r = vT / 2π</strong></li></ul><h3>Example: Earth orbiting the Sun</h3><p>r = 1.5 × 10¹¹ m, T = 3.15 × 10⁷ s (1 year)</p><p>v = 2π(1.5×10¹¹) / (3.15×10⁷) ≈ <strong>29,900 m/s ≈ 30 km/s</strong></p><h3>Centripetal Acceleration</h3><p>Any object in circular motion accelerates toward the center:</p><p style="text-align:center;"><strong>a = v² / r</strong></p><p>Car on a curve: v = 20 m/s, r = 50 m → a = 400/50 = <strong>8 m/s²</strong></p><h3>Key Connection to Algebra</h3><p>Both falling-object and circular motion equations are just equations with multiple variables. Solving for an unknown uses the same steps as solving any linear equation: isolate the variable by applying inverse operations.</p><hr style="margin:16px 0;border-color:#ccc;"><h2>Part 3 — Linear Motion</h2><p>When an object moves at <strong>constant speed</strong> in a straight line, three quantities are always related:</p><p style="font-size:1.15em;text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;"><strong>d = v · t</strong></p><ul><li><strong>d</strong> = distance (m, km, miles…)</li><li><strong>v</strong> = speed (m/s, km/h, mph…)</li><li><strong>t</strong> = time (s, h, min…)</li></ul><h3>Rearranging for any variable</h3><ul><li>Solve for speed: <strong>v = d / t</strong></li><li>Solve for time: <strong>t = d / v</strong></li></ul><p>These are the same algebraic moves — divide both sides by the known quantity.</p><h3>Examples</h3><ul><li>Car travels at 60 km/h for 2.5 h → d = 60 × 2.5 = <strong>150 km</strong></li><li>Train covers 300 km at 75 km/h → t = 300 ÷ 75 = <strong>4 hours</strong></li><li>Cyclist covers 45 km in 1.5 h → v = 45 ÷ 1.5 = <strong>30 km/h</strong></li></ul><h3>Connection to Slope</h3><p>On a distance–time graph, speed is the <strong>slope</strong>. A steeper line means faster speed. This is the same "rise over run" you studied in Slope & Rate of Change — physics and math are describing the same thing.</p><hr style="margin:16px 0;border-color:#ccc;"><h2>Part 4 — Force & Newton's Laws</h2><p>Force is what causes objects to speed up, slow down, or change direction. Newton's Second Law connects force, mass, and acceleration:</p><p style="font-size:1.15em;text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;"><strong>F = m · a</strong></p><ul><li><strong>F</strong> = force in Newtons (N) — 1 N = 1 kg·m/s²</li><li><strong>m</strong> = mass in kilograms (kg)</li><li><strong>a</strong> = acceleration in m/s²</li></ul><h3>Rearranging for any variable</h3><ul><li>Solve for acceleration: <strong>a = F / m</strong></li><li>Solve for mass: <strong>m = F / a</strong></li></ul><h3>Examples</h3><ul><li>Car (1200 kg) accelerates at 3 m/s² → F = 1200 × 3 = <strong>3600 N</strong></li><li>500 N force on a 50 kg box → a = 500 ÷ 50 = <strong>10 m/s²</strong></li><li>200 N force causes 4 m/s² acceleration → m = 200 ÷ 4 = <strong>50 kg</strong></li></ul><h3>Newton's Three Laws (Summary)</h3><table style="border-collapse:collapse;width:100%;font-size:0.93em;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Law</th><th style="padding:6px 10px;">What it says</th><th style="padding:6px 10px;">Everyday example</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;"><strong>1st — Inertia</strong></td><td style="padding:6px 10px;">Objects keep doing what they're doing unless a force acts on them</td><td style="padding:6px 10px;">You lurch forward when a car brakes suddenly</td></tr><tr><td style="padding:6px 10px;"><strong>2nd — F = ma</strong></td><td style="padding:6px 10px;">Greater force → greater acceleration; greater mass → less acceleration</td><td style="padding:6px 10px;">Pushing a heavy cart vs. a light cart with the same effort</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;"><strong>3rd — Action/Reaction</strong></td><td style="padding:6px 10px;">Every force has an equal and opposite force</td><td style="padding:6px 10px;">A rocket pushes gas down; gas pushes rocket up</td></tr></table><h3>Combining with Linear Motion</h3><p>Acceleration from F = ma feeds directly into motion. If a 10 kg cart is pushed with 30 N, its acceleration is a = 30/10 = 3 m/s². After 4 seconds: d = v·t requires knowing v, which grows as a·t = 3×4 = 12 m/s. These equations chain together — that's how engineers model moving vehicles.</p>`,
+  'functions': `<h2>Functions</h2><p>A <strong>function</strong> assigns exactly one output for each input.</p><h3>Function Notation</h3><p>f(x) = 2x + 3. If x = 5, then f(5) = 13</p><h3>Identifying Functions</h3><p>Test: each input has only one output. Use vertical line test on graphs.</p><h3>Domain & Range</h3><ul><li><strong>Domain:</strong> all possible inputs</li><li><strong>Range:</strong> all possible outputs</li></ul><h3>Linear vs. Nonlinear</h3><ul><li>Linear: y = 2x + 1 (straight line)</li><li>Nonlinear: y = x² (parabola)</li></ul><h3>Operations with Functions</h3><p>f(x) + g(x), f(x) - g(x), f(x) × g(x)</p>`,
+  'linear-functions': `<h2>Linear Functions</h2><p>Functions that form straight lines: f(x) = mx + b</p><h3>Writing Linear Functions</h3><p>Slope 3, y-intercept -2: f(x) = 3x - 2</p><h3>Using Two Points</h3><p>Points (1, 5) and (3, 11)</p><ol><li>Find slope: m = (11-5)/(3-1) = 3</li><li>Find b: 5 = 3(1) + b → b = 2</li><li>Function: f(x) = 3x + 2</li></ol><h3>Graphing</h3><p>Start at y-intercept (0, b). Use slope to find other points.</p><h3>Rates of Change</h3><p>Slope tells how fast output changes relative to input.</p>`,
+  'transformations': `<h2>Transformations</h2><p>Moving, flipping, or resizing figures on coordinate plane.</p><h3>Translations</h3><p>Shift figure without rotating. (x, y) → (x+h, y+k)</p><p>Point (2, 3) right 4, up 2: (6, 5)</p><h3>Reflections</h3><p>Flip across axis or line.</p><ul><li>Across x-axis: (x, y) → (x, -y)</li><li>Across y-axis: (x, y) → (-x, y)</li><li>Across y=x: (x, y) → (y, x)</li></ul><h3>Rotations</h3><p>Turn around point (usually origin) by angle.</p><p>90° counterclockwise: (x, y) → (-y, x)</p><h3>Dilations</h3><p>Enlarge or shrink. (x, y) → (kx, ky)</p><p>Scale factor 2: doubles all distances</p>`,
+  'angle-relationships': `<h2>Angle Relationships</h2><h3>Parallel Lines & Transversals</h3><p>When line crosses two parallel lines:</p><ul><li>Corresponding angles: equal</li><li>Alternate interior angles: equal</li><li>Alternate exterior angles: equal</li><li>Co-interior angles: sum to 180°</li></ul><h3>Triangle Angle Sum</h3><p>All angles in triangle sum to 180°</p><h3>Exterior Angle Theorem</h3><p>Exterior angle equals sum of remote interior angles</p><h3>Finding Missing Angles</h3><p>Use properties and relationships to solve.</p>`,
+  'pythagorean': `<h2>Pythagorean Theorem</h2><p><strong>a² + b² = c²</strong> where c is hypotenuse (longest side)</p><h3>Applying the Theorem</h3><p>Right triangle legs 3 and 4. Hypotenuse?</p><p>3² + 4² = c² → 9 + 16 = 25 → c = 5</p><h3>Finding Missing Sides</h3><p>If c = 13, a = 5, find b:</p><p>5² + b² = 13² → 25 + b² = 169 → b² = 144 → b = 12</p><h3>Converse Theorem</h3><p>If a² + b² = c², then triangle is right triangle.</p><h3>Distance Formula</h3><p>Distance between (x₁, y₁) and (x₂, y₂):</p><p>d = √[(x₂-x₁)² + (y₂-y₁)²]</p><hr style="margin:18px 0;border-color:#ccc;"><h2>Introduction to Trigonometry</h2><p>Trigonometry uses the <strong>angles</strong> of a right triangle to find missing sides — a step beyond the Pythagorean theorem, which only uses the sides.</p><h3>Labeling the Triangle</h3><p>Pick an angle θ (not the right angle). Then name the three sides relative to θ:</p><ul><li><strong>Opposite</strong> — the side across from θ</li><li><strong>Adjacent</strong> — the side next to θ (not the hypotenuse)</li><li><strong>Hypotenuse</strong> — always the longest side, across from the 90° angle</li></ul><h3>SOH-CAH-TOA</h3><p>Three ratios connect each angle to two sides:</p><ul><li><strong>sin θ = Opposite / Hypotenuse</strong> &nbsp;(SOH)</li><li><strong>cos θ = Adjacent / Hypotenuse</strong> &nbsp;(CAH)</li><li><strong>tan θ = Opposite / Adjacent</strong> &nbsp;(TOA)</li></ul><p>Memory trick: <em>"Some Old Hippo Caught A Hippopotamus Trying On Apples"</em></p><h3>Finding a Missing Side</h3><p>A ramp makes a 30° angle with the ground. The hypotenuse is 10 m. How high does it rise?</p><p>We want: Opposite. We know: angle (30°) and Hypotenuse (10).</p><p>Use <strong>sin</strong>: sin 30° = Opposite / 10 → Opposite = 10 × sin 30° = 10 × 0.5 = <strong>5 m</strong></p><h3>Finding a Missing Angle</h3><p>A ladder leans against a wall. The base is 4 m from the wall; the ladder is 9 m long.</p><p>We know: Adjacent (4) and Hypotenuse (9). Use <strong>cos</strong>: cos θ = 4/9 → θ = cos⁻¹(4/9) ≈ <strong>63.6°</strong></p><p>The inverse functions (sin⁻¹, cos⁻¹, tan⁻¹) work backwards — they take a ratio and return the angle.</p><h3>Choosing the Right Ratio</h3><table style="border-collapse:collapse;width:100%;font-size:0.93em;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">You know</th><th style="padding:6px 10px;">You want</th><th style="padding:6px 10px;">Use</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">angle + hypotenuse</td><td style="padding:6px 10px;">opposite</td><td style="padding:6px 10px;">sin</td></tr><tr><td style="padding:6px 10px;">angle + hypotenuse</td><td style="padding:6px 10px;">adjacent</td><td style="padding:6px 10px;">cos</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">angle + adjacent</td><td style="padding:6px 10px;">opposite</td><td style="padding:6px 10px;">tan</td></tr><tr><td style="padding:6px 10px;">two sides</td><td style="padding:6px 10px;">angle</td><td style="padding:6px 10px;">sin⁻¹, cos⁻¹, or tan⁻¹</td></tr></table><h3>Connection to Pythagorean Theorem</h3><p>Once you find a missing side using trig, you can verify it with a² + b² = c². Both tools describe the same right triangle — trig just lets you use angles as your starting point.</p>`,
+  'volume': `<h2>Volume of 3D Figures</h2><h3>Cylinder</h3><p>V = πr²h</p><p>Radius 3, height 10: V = π(3)²(10) = 90π ≈ 283 cubic units</p><h3>Cone</h3><p>V = (1/3)πr²h</p><p>Radius 4, height 9: V = (1/3)π(4)²(9) = 48π ≈ 151 cubic units</p><h3>Sphere</h3><p>V = (4/3)πr³</p><p>Radius 5: V = (4/3)π(5)³ = (500/3)π ≈ 524 cubic units</p><h3>Real-World Uses</h3><p>Water tanks, sports balls, ice cream cones, storage containers.</p>`,
+  'scatter-plots': `<h2>Scatter Plots & Line of Best Fit</h2><p><strong>Scatter plots</strong> show relationship between two variables.</p><h3>Creating Scatter Plots</h3><p>Plot points (x, y) representing data pairs.</p><h3>Identifying Associations</h3><ul><li><strong>Positive:</strong> as x increases, y increases</li><li><strong>Negative:</strong> as x increases, y decreases</li><li><strong>No association:</strong> no clear pattern</li></ul><h3>Line of Best Fit</h3><p>Straight line through scattered points showing trend.</p><p>Can estimate values and predict outcomes.</p><h3>Correlation Strength</h3><p>Strong: points close to line. Weak: points spread out.</p>`,
+  'two-way-tables': `<h2>Two-Way Frequency Tables</h2><p>Displays counts of categorical data in rows and columns.</p><h3>Reading Tables</h3><p>Intersection shows count for category combination.</p><h3>Marginal Frequencies</h3><p>Totals at edges (rows and columns)</p><h3>Conditional Frequencies</h3><p>Count for one category given another condition.</p><p>Example: Given male, what's probability of liking sports?</p><h3>Two-Way Relative Frequency</h3><p>Express counts as percentages. Shows proportions.</p><h3>Applications</h3><p>Survey analysis, categorical relationships, decision-making.</p>`,
+  'word-problems': `<h2>Multi-Step Word Problems</h2><p>Complex real-world scenarios requiring multiple operations.</p><h3>Strategy</h3><ol><li>Read carefully, identify what's given</li><li>Identify what's unknown</li><li>Choose operations/methods</li><li>Solve step-by-step</li><li>Check reasonableness</li></ol><h3>Problem Types</h3><ul><li><strong>Linear relationships:</strong> equations with slope</li><li><strong>Systems:</strong> multiple related equations</li><li><strong>Geometry:</strong> area, volume, transformations</li><li><strong>Functions:</strong> input-output relationships</li><li><strong>Data:</strong> analyzing scatter plots, tables</li></ul><h3>Example</h3><p>Manufacturing: Cost = $500 + $20x where x is items. Break-even when revenue = cost.</p>`,
+  'waves': `<h2>Waves — Frequency & Wavelength</h2><p>Waves carry energy through space and matter without transporting matter itself. Sound, light, radio signals, and seismic waves are all waves. Every wave has three key properties: <strong>speed (v)</strong>, <strong>frequency (f)</strong>, and <strong>wavelength (λ)</strong> — and they are connected by a single elegant equation.</p><h3>The Wave Equation</h3><p style="text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;font-size:1.15em;"><strong>v = f × λ</strong></p><ul><li><strong>v</strong> = wave speed (m/s)</li><li><strong>f</strong> = frequency (Hz — cycles per second)</li><li><strong>λ</strong> (lambda) = wavelength (m — length of one complete wave cycle)</li></ul><h3>Solving for Each Variable</h3><ul><li>Speed: v = f × λ</li><li>Frequency: f = v ÷ λ</li><li>Wavelength: λ = v ÷ f</li></ul><p>This is the same algebraic structure as d = v × t — rearranging a linear equation for each variable.</p><h3>Inverse Relationship</h3><p>At constant speed: higher frequency → shorter wavelength. Lower frequency → longer wavelength. This is an <strong>inverse relationship</strong> (f × λ = constant).</p><h3>Sound Waves</h3><p>Speed of sound ≈ 343 m/s in air (at 20°C). Middle A on a piano: f = 440 Hz. Wavelength = 343 ÷ 440 ≈ 0.78 m.</p><h3>The Electromagnetic Spectrum</h3><p>All EM waves travel at the speed of light: <strong>c = 3 × 10⁸ m/s</strong>. Frequency and wavelength vary enormously across the spectrum:</p><table style="border-collapse:collapse;width:100%;font-size:0.9em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:5px 8px;">Type</th><th style="padding:5px 8px;">Frequency (Hz)</th><th style="padding:5px 8px;">Wavelength (m)</th><th style="padding:5px 8px;">Use</th></tr><tr style="background:#f2f2f2;"><td style="padding:5px 8px;">Radio</td><td style="padding:5px 8px;">10⁶–10⁹</td><td style="padding:5px 8px;">1–300 m</td><td style="padding:5px 8px;">Broadcasts</td></tr><tr><td style="padding:5px 8px;">Microwave</td><td style="padding:5px 8px;">10⁹–10¹²</td><td style="padding:5px 8px;">1 mm – 1 m</td><td style="padding:5px 8px;">Cooking, radar</td></tr><tr style="background:#f2f2f2;"><td style="padding:5px 8px;">Visible light</td><td style="padding:5px 8px;">4–7 × 10¹⁴</td><td style="padding:5px 8px;">400–700 nm</td><td style="padding:5px 8px;">Vision</td></tr><tr><td style="padding:5px 8px;">X-ray</td><td style="padding:5px 8px;">10¹⁷–10²⁰</td><td style="padding:5px 8px;">10⁻¹¹–10⁻⁸ m</td><td style="padding:5px 8px;">Medical imaging</td></tr></table><h3>Connection to Scientific Notation</h3><p>The enormous range of wave frequencies and wavelengths in the EM spectrum is exactly why scientific notation is essential. Visible light wavelengths (~700 × 10⁻⁹ m = 7 × 10⁻⁷ m) and radio waves (~1 m) differ by a factor of 10⁶ — you need negative exponents to express the small end.</p>`,
+  'electricity': `<h2>Electricity & Circuits</h2><p>Electric circuits carry current through wires to power devices. Three fundamental quantities describe every circuit:</p><ul><li><strong>Voltage (V)</strong> — electric "pressure" driving current, measured in volts (V)</li><li><strong>Current (I)</strong> — flow of electric charge, measured in amperes (A)</li><li><strong>Resistance (R)</strong> — opposition to current flow, measured in ohms (Ω)</li></ul><h3>Ohm's Law</h3><p style="text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;font-size:1.15em;"><strong>V = I × R</strong></p><p>This is a linear equation. Solve for any variable:</p><ul><li>V = I × R (voltage)</li><li>I = V ÷ R (current)</li><li>R = V ÷ I (resistance)</li></ul><p><strong>Example:</strong> A flashlight bulb has resistance 30 Ω connected to a 6V battery. Current = 6 ÷ 30 = <strong>0.2 A</strong></p><h3>Power</h3><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>P = I × V</strong> (watts = amps × volts)</p><p>Combine with Ohm's Law: P = I²R or P = V²/R</p><p>A phone charger: 5V, 2A. Power = 5 × 2 = <strong>10 watts</strong></p><h3>Series Circuits</h3><p>Components in a single loop. Same current flows through all. Resistances <strong>add</strong>:</p><p>R_total = R₁ + R₂ + R₃</p><p>Two resistors, 10 Ω and 20 Ω in series: R_total = 30 Ω</p><h3>Parallel Circuits</h3><p>Components on separate branches. Same voltage across all. Resistances combine by reciprocal addition:</p><p>1/R_total = 1/R₁ + 1/R₂</p><p>10 Ω and 20 Ω in parallel: 1/R = 1/10 + 1/20 = 3/20, so R = 20/3 ≈ 6.67 Ω</p><p>Parallel resistance is always less than the smallest individual resistor.</p><h3>Why Household Circuits Are Parallel</h3><p>In a series circuit, if one bulb burns out, the whole string goes dark (same current must flow through everything). In parallel, each device has its own branch — one failing doesn't affect others. Home wiring is parallel, which is also why adding more devices increases total current drawn from the supply.</p>`,
+  'optics': `<h2>Optics & Snell's Law</h2><p>Light travels at different speeds in different materials. When light crosses the boundary between two materials at an angle, it bends — this is called <strong>refraction</strong>. Snell's Law describes exactly how much it bends, using the same trigonometric ratios you learned in the Pythagorean theorem unit.</p><h3>Angles in Optics</h3><p>All angles in optics are measured from the <strong>normal</strong> — an imaginary line perpendicular to the surface at the point where the light ray strikes. Even if the surface is curved, the normal points straight out from it.</p><h3>Index of Refraction</h3><p>The <strong>index of refraction (n)</strong> describes how much a material slows light down:</p><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>n = speed of light in vacuum ÷ speed of light in material = c / v</strong></p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Material</th><th style="padding:6px 10px;">n (index)</th><th style="padding:6px 10px;">Effect</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Vacuum</td><td style="padding:6px 10px;">1.000</td><td style="padding:6px 10px;">Fastest possible</td></tr><tr><td style="padding:6px 10px;">Air</td><td style="padding:6px 10px;">1.003</td><td style="padding:6px 10px;">Almost same as vacuum</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Water</td><td style="padding:6px 10px;">1.33</td><td style="padding:6px 10px;">Light slows to 75% speed</td></tr><tr><td style="padding:6px 10px;">Glass</td><td style="padding:6px 10px;">1.50</td><td style="padding:6px 10px;">Light slows to 67% speed</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Diamond</td><td style="padding:6px 10px;">2.42</td><td style="padding:6px 10px;">Light slows to 41% speed — causes sparkle</td></tr></table><h3>Snell's Law</h3><p style="text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;font-size:1.1em;"><strong>n₁ × sin(θ₁) = n₂ × sin(θ₂)</strong></p><p>Where θ₁ is the angle of the incoming ray (in material 1) and θ₂ is the angle of the refracted ray (in material 2).</p><p><strong>Example:</strong> A light ray in air (n=1.00) hits water (n=1.33) at θ₁ = 30°. Find θ₂:</p><ol><li>1.00 × sin(30°) = 1.33 × sin(θ₂)</li><li>0.500 = 1.33 × sin(θ₂)</li><li>sin(θ₂) = 0.500 ÷ 1.33 = 0.376</li><li>θ₂ = sin⁻¹(0.376) ≈ <strong>22.1°</strong></li></ol><p>The light bent toward the normal as it entered the denser medium — this always happens when going from low n to high n.</p><h3>Total Internal Reflection</h3><p>When light travels from a denser medium (high n) to a less dense medium (low n), at steep enough angles it can't exit at all — all light reflects back inside. This is how fiber optic cables carry internet data: light bounces along the inside of a glass fiber, never escaping.</p><h3>Connection to SOH-CAH-TOA</h3><p>Snell's Law uses sin — the same trig function from your Pythagorean theorem unit. The angles θ₁ and θ₂ are not angles in a right triangle in the usual sense, but you still use sin to connect them to the physics. This is trigonometry applied to waves.</p>`,
+  'keplers-laws': `<h2>Kepler's Laws & Orbital Mechanics</h2><p>In the early 1600s, Johannes Kepler discovered that planets don't orbit in circles — they orbit in ellipses, and their motion follows three precise mathematical laws. These laws are the foundation of all spacecraft navigation today.</p><h3>Kepler's First Law</h3><p>Every planet orbits the Sun in an <strong>ellipse</strong>, with the Sun at one focus (not the center). For most planets, the ellipse is nearly circular.</p><h3>Kepler's Second Law</h3><p>A planet sweeps out <strong>equal areas in equal times</strong>. When closer to the Sun, it moves faster. When farther, it moves slower. This is conservation of angular momentum in action.</p><h3>Kepler's Third Law — The Math</h3><p style="text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;font-size:1.1em;"><strong>T² ∝ r³ &nbsp;&nbsp; or &nbsp;&nbsp; T² / r³ = constant</strong></p><ul><li><strong>T</strong> = orbital period (time for one orbit)</li><li><strong>r</strong> = average orbital radius (semi-major axis)</li></ul><p>If we use Earth's orbit as the reference (T = 1 year, r = 1 AU), then for any other planet:</p><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>T² = r³</strong> &nbsp;&nbsp;(in AU and years)</p><h3>Example: Mars</h3><p>Mars is at r = 1.52 AU from the Sun. What is its orbital period?</p><ol><li>T² = r³ = (1.52)³ = 3.51</li><li>T = √3.51 ≈ <strong>1.87 years</strong> (actual: 1.88 years ✓)</li></ol><h3>Example: Unknown Planet</h3><p>A planet has orbital period T = 8 years. What is its orbital radius?</p><ol><li>T² = r³ → 8² = r³ → 64 = r³</li><li>r = ∛64 = <strong>4 AU</strong></li></ol><h3>Solar System Data</h3><table style="border-collapse:collapse;width:100%;font-size:0.9em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:5px 8px;">Planet</th><th style="padding:5px 8px;">r (AU)</th><th style="padding:5px 8px;">T (years)</th><th style="padding:5px 8px;">r³</th><th style="padding:5px 8px;">T²</th></tr><tr style="background:#f2f2f2;"><td style="padding:5px 8px;">Mercury</td><td style="padding:5px 8px;">0.387</td><td style="padding:5px 8px;">0.241</td><td style="padding:5px 8px;">0.058</td><td style="padding:5px 8px;">0.058</td></tr><tr><td style="padding:5px 8px;">Venus</td><td style="padding:5px 8px;">0.723</td><td style="padding:5px 8px;">0.615</td><td style="padding:5px 8px;">0.378</td><td style="padding:5px 8px;">0.378</td></tr><tr style="background:#f2f2f2;"><td style="padding:5px 8px;">Earth</td><td style="padding:5px 8px;">1.000</td><td style="padding:5px 8px;">1.000</td><td style="padding:5px 8px;">1.000</td><td style="padding:5px 8px;">1.000</td></tr><tr><td style="padding:5px 8px;">Mars</td><td style="padding:5px 8px;">1.524</td><td style="padding:5px 8px;">1.881</td><td style="padding:5px 8px;">3.540</td><td style="padding:5px 8px;">3.538</td></tr><tr style="background:#f2f2f2;"><td style="padding:5px 8px;">Jupiter</td><td style="padding:5px 8px;">5.203</td><td style="padding:5px 8px;">11.86</td><td style="padding:5px 8px;">140.8</td><td style="padding:5px 8px;">140.7</td></tr><tr><td style="padding:5px 8px;">Saturn</td><td style="padding:5px 8px;">9.539</td><td style="padding:5px 8px;">29.46</td><td style="padding:5px 8px;">867</td><td style="padding:5px 8px;">868</td></tr></table><p>Notice T² ≈ r³ for every planet — Kepler's Third Law holds with stunning precision across the entire solar system.</p><h3>Connecting to 8th Grade Math</h3><p>This equation T² = r³ involves both square roots and cube roots — skills you've practiced with real numbers and the Pythagorean theorem. It is also a proportional relationship: doubling r by a factor of 2 multiplies T by a factor of 2^(3/2) ≈ 2.83.</p>`
+};
+
+const WORKSHEETS = {
+  'real-numbers': [
+    { q: 'Is 0.5 rational or irrational?', answer: 'Rational' },
+    { q: 'Is √5 rational or irrational?', answer: 'Irrational' },
+    { q: 'Is π rational or irrational?', answer: 'Irrational' },
+    { q: 'Approximate √10 to nearest tenth:', answer: '3.2' },
+    { q: 'Is 1/3 rational or irrational?', answer: 'Rational' },
+    { q: 'Is √16 rational or irrational?', answer: 'Rational' },
+    { q: 'Approximate √50 to nearest tenth:', answer: '7.1' },
+    { q: 'Classify −2.5:', answer: 'Rational' },
+    { q: 'Is √2 rational or irrational?', answer: 'Irrational' },
+    { q: 'Approximate √20 to nearest tenth:', answer: '4.5' }
+  ],
+  'exponents': [
+    { q: '2³ = ?', answer: '8' },
+    { q: '3⁰ = ?', answer: '1' },
+    { q: '2⁻² = ?', answer: '1/4 or 0.25' },
+    { q: '2² × 2³ = ?', answer: '32' },
+    { q: '3⁵ ÷ 3² = ?', answer: '27' },
+    { q: '(2²)³ = ?', answer: '64' },
+    { q: '4⁻¹ = ?', answer: '1/4 or 0.25' },
+    { q: '5¹ = ?', answer: '5' },
+    { q: '10² = ?', answer: '100' },
+    { q: '(3 × 2)² = ?', answer: '36' }
+  ],
+  'unit-conversions': [
+    { q: '3.5 km → m (K to U, 3 steps right):', answer: '3500 m' },
+    { q: '250 cm → m (c to U, 2 steps left):', answer: '2.5 m' },
+    { q: '45 mm → cm (m to c, 1 step left):', answer: '4.5 cm' },
+    { q: '0.6 km → cm (K to c, 5 steps right):', answer: '60,000 cm' },
+    { q: '2800 g → kg (U to K, 3 steps left):', answer: '2.8 kg' },
+    { q: '500 mg → g (m to U, 3 steps left):', answer: '0.5 g' },
+    { q: '4.2 L → mL (U to m, 3 steps right):', answer: '4200 mL' },
+    { q: '1800 mL → L (m to U, 3 steps left):', answer: '1.8 L' },
+    { q: '72 km/h → m/s (÷ 3.6):', answer: '20 m/s' },
+    { q: '15 m/s → km/h (× 3.6):', answer: '54 km/h' },
+    { q: '5 inches → cm (× 2.54):', answer: '12.7 cm' },
+    { q: '10 km → miles (÷ 1.609):', answer: '≈ 6.21 miles' }
+  ],
+  'scientific-notation': [
+    { q: 'Write 5,000,000 in scientific notation:', answer: '5 × 10⁶' },
+    { q: 'Write 0.0003 in scientific notation:', answer: '3 × 10⁻⁴' },
+    { q: 'Write 2.5 × 10⁴ in standard form:', answer: '25,000' },
+    { q: 'Write 1.2 × 10⁻³ in standard form:', answer: '0.0012' },
+    { q: '(2 × 10⁵) × (3 × 10²) = ?', answer: '6 × 10⁷' },
+    { q: '(8 × 10⁶) ÷ (2 × 10³) = ?', answer: '4 × 10³' },
+    { q: 'Write 0.00045 in scientific notation:', answer: '4.5 × 10⁻⁴' },
+    { q: 'Write 3.7 × 10⁵ in standard form:', answer: '370,000' },
+    { q: 'Write 123,000 in scientific notation:', answer: '1.23 × 10⁵' },
+    { q: 'Write 6 × 10⁻² in standard form:', answer: '0.06' }
+  ],
+  'percent-error': [
+    { q: 'Measured c = 2.94×10⁸ m/s, actual 3.00×10⁸ m/s. Percent error = ?', answer: '2%' },
+    { q: 'Measured Avogadro\'s number 6.65×10²³, actual 6.022×10²³. Percent error = ?', answer: '10.43%' },
+    { q: 'Measured hypotenuse 5.2 cm, actual 5.0 cm. Percent error = ?', answer: '4%' },
+    { q: 'Measured density 2.75 g/mL, actual 2.70 g/mL (Al). Percent error = ?', answer: '1.85%' },
+    { q: 'Measured Earth radius 6,420 km, actual 6,371 km. Percent error = ?', answer: '0.77%' },
+    { q: 'Measured π experimentally as 3.10, actual 3.14159. Percent error = ?', answer: '1.32%' },
+    { q: 'Measured 9.78 m/s², actual 9.81 m/s². Percent error = ?', answer: '0.31%' },
+    { q: 'Measured 1.65×10⁻¹⁹ C, actual 1.602×10⁻¹⁹ C. Percent error = ?', answer: '3.0%' },
+    { q: 'Measured frequency 432 Hz, actual 440 Hz. Percent error = ?', answer: '1.82%' },
+    { q: 'Tolerance ±0.01% applies to: pharmaceuticals or aerospace fasteners?', answer: 'aerospace fasteners' }
+  ],
+  'slope': [
+    { q: 'Slope between (2,3) and (5,9):', answer: '2' },
+    { q: 'Slope between (1,4) and (3,8):', answer: '2' },
+    { q: 'Slope between (0,5) and (2,1):', answer: '−2' },
+    { q: 'Slope between (1,1) and (4,4):', answer: '1' },
+    { q: 'Slope of horizontal line:', answer: '0' },
+    { q: 'Slope between (2,2) and (2,8):', answer: 'undefined' },
+    { q: 'Slope between (0,0) and (3,6):', answer: '2' },
+    { q: 'Slope between (1,5) and (3,1):', answer: '−2' },
+    { q: 'Slope between (−2,1) and (1,7):', answer: '2' },
+    { q: 'What slope represents y increases 3 for each x?', answer: '3' }
+  ],
+  'linear-equations': [
+    { q: 'Solve: 2x + 3 = 13', answer: 'x = 5' },
+    { q: 'Solve: 3x − 2 = 10', answer: 'x = 4' },
+    { q: 'Solve: x/2 + 5 = 11', answer: 'x = 12' },
+    { q: 'Solve: 4x − 1 = 2x + 7', answer: 'x = 4' },
+    { q: 'Solve: −2x + 8 = 2', answer: 'x = 3' },
+    { q: 'Solve: 3(x − 2) = 9', answer: 'x = 5' },
+    { q: 'Solve: 2x + 1 = 2x + 5. Solutions?', answer: 'No solution' },
+    { q: 'Solve: x + 3 = x + 3. Solutions?', answer: 'Infinite' },
+    { q: 'Solve: 5x = 25', answer: 'x = 5' },
+    { q: 'Solve: x/3 − 2 = 4', answer: 'x = 18' }
+  ],
+  'physics-equations': [
+    { q: 'Vd = ½gt². g=10, t=3s. Find Vd:', answer: '45 m' },
+    { q: 't = √(2Vd/g). Vd=80m, g=10. Find t:', answer: '4 s' },
+    { q: 'Circular: v = 2πr/T. r=5m, T=10s. Find v:', answer: 'π ≈ 3.14 m/s' },
+    { q: 'Centripetal: a = v²/r. v=10 m/s, r=25m:', answer: '4 m/s²' },
+    { q: 'Linear motion: d = v·t. v=60 km/h, t=3h. Find d:', answer: '180 km' },
+    { q: 'Linear motion: v = d/t. d=150 km, t=2h. Find v:', answer: '75 km/h' },
+    { q: 'Linear motion: t = d/v. d=200 km, v=50 km/h. Find t:', answer: '4 h' },
+    { q: 'Force: F = ma. m=80 kg, a=5 m/s². Find F:', answer: '400 N' },
+    { q: 'Force: a = F/m. F=360 N, m=40 kg. Find a:', answer: '9 m/s²' },
+    { q: 'Force: m = F/a. F=500 N, a=10 m/s². Find m:', answer: '50 kg' },
+    { q: 'Newton\'s 1st Law: a stationary object stays still unless acted on by a:', answer: 'net force' },
+    { q: 'Newton\'s 3rd Law: A rocket pushes gas downward. Gas pushes rocket:', answer: 'upward (equal and opposite)' }
+  ],
+  'systems': [
+    { q: 'Solve: y = 2x, x + y = 6', answer: 'x = 2, y = 4' },
+    { q: 'Solve: x + y = 5, x − y = 1', answer: 'x = 3, y = 2' },
+    { q: 'Solve: 2x + y = 5, x + y = 3', answer: 'x = 2, y = 1' },
+    { q: 'Solve: y = x + 2, y = −x + 4', answer: 'x = 1, y = 3' },
+    { q: 'Solve: 2x + 2y = 4, x + y = 2', answer: 'Infinite solutions' },
+    { q: 'Solve: y = 3x, y = 3x + 1', answer: 'No solution' },
+    { q: 'Solve: x = 2, 2x + y = 8', answer: 'x = 2, y = 4' },
+    { q: 'Solve: x + 2y = 7, x = 1', answer: 'x = 1, y = 3' },
+    { q: 'Solve: y = −x, 2x + y = 5', answer: 'x = 5, y = −5' },
+    { q: 'Solve: 3x − y = 5, y = 3x', answer: 'No solution' }
+  ],
+  'functions': [
+    { q: 'Is {(1,2), (2,3), (3,4)} a function?', answer: 'Yes' },
+    { q: 'Is {(1,2), (1,3), (2,4)} a function?', answer: 'No' },
+    { q: 'If f(x) = 2x + 1, find f(3):', answer: '7' },
+    { q: 'If g(x) = x², find g(5):', answer: '25' },
+    { q: 'If h(x) = 3x − 2, find h(0):', answer: '−2' },
+    { q: 'Domain of y = x²: ?', answer: 'All real numbers' },
+    { q: 'Range of y = x²: ?', answer: 'y ≥ 0' },
+    { q: 'If f(x) = x/2, find f(8):', answer: '4' },
+    { q: 'Linear or nonlinear: y = 3x − 1?', answer: 'Linear' },
+    { q: 'Linear or nonlinear: y = x³?', answer: 'Nonlinear' }
+  ],
+  'linear-functions': [
+    { q: 'Write function: slope 2, y-int −3:', answer: 'f(x) = 2x − 3' },
+    { q: 'Function through (0,4) with slope 3:', answer: 'f(x) = 3x + 4' },
+    { q: 'Slope through (1,2) and (3,6):', answer: '2' },
+    { q: 'Function through (1,3) and (2,5):', answer: 'f(x) = 2x + 1' },
+    { q: 'y-intercept of y = 3x − 7:', answer: '−7' },
+    { q: 'Slope of y = −2x + 5:', answer: '−2' },
+    { q: 'Function through (0,0), (1,3):', answer: 'f(x) = 3x' },
+    { q: 'Slope through (−1,2) and (1,8):', answer: '3' },
+    { q: 'Function through (2,4) with slope 1:', answer: 'f(x) = x + 2' },
+    { q: 'x-intercept of y = 2x − 6:', answer: '3' }
+  ],
+  'transformations': [
+    { q: 'Translate (3,2) right 2, up 1:', answer: '(5,3)' },
+    { q: 'Reflect (4,3) across x-axis:', answer: '(4,−3)' },
+    { q: 'Reflect (2,5) across y-axis:', answer: '(−2,5)' },
+    { q: 'Rotate (1,0) 90° counterclockwise:', answer: '(0,1)' },
+    { q: 'Dilate (2,3) by scale 2:', answer: '(4,6)' },
+    { q: 'Translate (−1,2) left 3, down 1:', answer: '(−4,1)' },
+    { q: 'Reflect (−3,4) across y-axis:', answer: '(3,4)' },
+    { q: 'Dilate (4,6) by scale 0.5:', answer: '(2,3)' },
+    { q: 'Rotate (0,1) 180° about origin:', answer: '(0,−1)' },
+    { q: 'Translate (0,0) right 5, up 3:', answer: '(5,3)' }
+  ],
+  'angle-relationships': [
+    { q: 'If parallel lines, corresponding angles:', answer: 'Equal' },
+    { q: 'Triangle angles sum to:', answer: '180°' },
+    { q: 'If angle is 65°, complement:', answer: '25°' },
+    { q: 'If angle is 65°, supplement:', answer: '115°' },
+    { q: 'Alternate interior angles with parallel lines:', answer: 'Equal' },
+    { q: 'If one angle is 120°, co-interior:', answer: '60°' },
+    { q: 'Vertical angles are:', answer: 'Equal' },
+    { q: 'If triangle has angles 50° and 70°, third:', answer: '60°' },
+    { q: 'Exterior angle of triangle equals...', answer: 'Sum of remote interior angles' },
+    { q: 'Adjacent angles on line sum to:', answer: '180°' }
+  ],
+  'pythagorean': [
+    { q: 'Legs 3, 4. Hypotenuse:', answer: '5' },
+    { q: 'Legs 5, 12. Hypotenuse:', answer: '13' },
+    { q: 'Hypotenuse 10, leg 6. Other leg:', answer: '8' },
+    { q: 'Legs 8, 15. Hypotenuse:', answer: '17' },
+    { q: 'Is 3-4-5 a right triangle?', answer: 'Yes' },
+    { q: 'Distance from (0,0) to (3,4):', answer: '5' },
+    { q: 'sin θ = ? / Hypotenuse', answer: 'Opposite' },
+    { q: 'cos θ = ? / Hypotenuse', answer: 'Adjacent' },
+    { q: 'tan θ = Opposite / ?', answer: 'Adjacent' },
+    { q: 'Angle 30°, hypotenuse 20. Opposite side (sin 30° = 0.5):', answer: '10' },
+    { q: 'Angle 45°, adjacent 7. Hypotenuse (cos 45° ≈ 0.707):', answer: '≈ 9.9' },
+    { q: 'Opposite 6, adjacent 6. Which ratio gives angle? tan θ = 6/6 = 1, so θ =', answer: '45°' },
+    { q: 'Which ratio uses Opposite and Hypotenuse?', answer: 'sin' },
+    { q: 'Which ratio uses Adjacent and Hypotenuse?', answer: 'cos' },
+    { q: 'To find the angle from two sides, use:', answer: 'inverse trig (sin⁻¹, cos⁻¹, or tan⁻¹)' }
+  ],
+  'volume': [
+    { q: 'Cylinder r=2, h=5. Volume:', answer: '20π or ~63 cu units' },
+    { q: 'Cone r=3, h=8. Volume:', answer: '24π or ~75 cu units' },
+    { q: 'Sphere r=2. Volume:', answer: '32π/3 or ~33.5 cu units' },
+    { q: 'Cylinder r=4, h=10. Volume:', answer: '160π or ~503 cu units' },
+    { q: 'Cone r=5, h=12. Volume:', answer: '100π or ~314 cu units' },
+    { q: 'Sphere r=3. Volume:', answer: '36π or ~113 cu units' },
+    { q: 'Cylinder r=1, h=1. Volume:', answer: 'π or ~3.14 cu units' },
+    { q: 'Cone r=2, h=6. Volume:', answer: '8π or ~25.1 cu units' },
+    { q: 'Sphere r=1. Volume:', answer: '4π/3 or ~4.19 cu units' },
+    { q: 'Cylinder r=3, h=3. Volume:', answer: '27π or ~85 cu units' }
+  ],
+  'scatter-plots': [
+    { q: 'Positive association: as x increases, y...', answer: 'Increases' },
+    { q: 'Negative association: as x increases, y...', answer: 'Decreases' },
+    { q: 'Line of best fit shows:', answer: 'Trend' },
+    { q: 'Strong correlation: points are...', answer: 'Close to line' },
+    { q: 'Weak correlation: points are...', answer: 'Spread out' },
+    { q: 'What do we predict using line of best fit?', answer: 'Future values' },
+    { q: 'Scatter plot with no pattern shows:', answer: 'No association' },
+    { q: 'Perfect positive correlation slope:', answer: 'Positive' },
+    { q: 'Perfect negative correlation slope:', answer: 'Negative' },
+    { q: 'Correlation ≠ causation. Why?', answer: 'May be related differently' }
+  ],
+  'two-way-tables': [
+    { q: 'Two-way table shows:', answer: 'Categorical data counts' },
+    { q: 'Marginal frequencies are:', answer: 'Row and column totals' },
+    { q: 'Conditional frequency given A:', answer: 'Count A given another' },
+    { q: 'Relative frequency =', answer: 'Count ÷ Total' },
+    { q: 'Two-way table helps identify:', answer: 'Associations' },
+    { q: 'Row total is sum of:', answer: 'All columns' },
+    { q: 'Column total is sum of:', answer: 'All rows' },
+    { q: 'Joint frequency is:', answer: 'Intersection count' },
+    { q: 'Grand total =', answer: 'Sum all entries' },
+    { q: 'Two-way table use:', answer: 'Survey analysis' }
+  ],
+  'word-problems': [
+    { q: 'Cost $500 + $20x. At x=10, cost:', answer: '$700' },
+    { q: 'Revenue $50x. At x=10, revenue:', answer: '$500' },
+    { q: 'Distance = 60 × time. At 2.5 hrs:', answer: '150 miles' },
+    { q: 'Temp = −5 + 2h (h = hours). At h=6:', answer: '7°' },
+    { q: 'Volume cylinder r=2, h=8:', answer: '32π or ~100.5 cu units' },
+    { q: 'System: Cost = 100 + 50x, Revenue = 75x. Break-even:', answer: 'x = 4' },
+    { q: 'Area rectangle 8×12:', answer: '96 sq units' },
+    { q: 'Pythagorean: legs 6, 8. Hyp:', answer: '10' },
+    { q: 'Linear function slope 5, y-int 10:', answer: 'f(x) = 5x + 10' },
+    { q: 'Percent increase from 100 to 130:', answer: '30%' }
+  ],
+  'waves': [
+    { q: 'A sound wave travels at 343 m/s with frequency 440 Hz. Wavelength = ?', answer: '343 ÷ 440 ≈ 0.78 m' },
+    { q: 'A radio wave has wavelength 3 m. Speed = 3×10⁸ m/s. Frequency = ?', answer: '3×10⁸ ÷ 3 = 1×10⁸ Hz' },
+    { q: 'Yellow light has frequency 5.2×10¹⁴ Hz. Speed = 3×10⁸ m/s. Wavelength = ?', answer: '3×10⁸ ÷ 5.2×10¹⁴ ≈ 5.77×10⁻⁷ m (577 nm)' },
+    { q: 'A wave has speed 340 m/s and wavelength 0.5 m. Frequency = ?', answer: '340 ÷ 0.5 = 680 Hz' },
+    { q: 'Two waves travel at the same speed. Wave A has twice the frequency of Wave B. How do their wavelengths compare?', answer: 'Wave A has half the wavelength of Wave B (inverse relationship)' },
+    { q: 'A microwave oven operates at frequency 2.45×10⁹ Hz. Speed = 3×10⁸ m/s. Wavelength = ?', answer: '3×10⁸ ÷ 2.45×10⁹ ≈ 0.122 m (about 12 cm)' },
+    { q: 'A seismic P-wave travels through rock at 6,000 m/s with wavelength 30 m. Frequency = ?', answer: '6000 ÷ 30 = 200 Hz' },
+    { q: 'Red light: λ ≈ 700×10⁻⁹ m = 7×10⁻⁷ m. Violet light: λ ≈ 400 nm = 4×10⁻⁷ m. Which has higher frequency?', answer: 'Violet (shorter wavelength → higher frequency at same speed)' },
+    { q: 'A whale produces a sound at 30 Hz. Speed in water = 1,500 m/s. Wavelength = ?', answer: '1500 ÷ 30 = 50 m' },
+    { q: 'An X-ray has wavelength 1×10⁻¹⁰ m. Speed = 3×10⁸ m/s. Frequency = ?', answer: '3×10⁸ ÷ 1×10⁻¹⁰ = 3×10¹⁸ Hz' }
+  ],
+  'electricity': [
+    { q: 'A 9V battery powers a circuit with resistance 45 Ω. Current = ?', answer: '9 ÷ 45 = 0.2 A' },
+    { q: 'A light bulb draws 0.5 A from a 120V outlet. Resistance = ?', answer: '120 ÷ 0.5 = 240 Ω' },
+    { q: 'A circuit has V = 12V and R = 4Ω. Power = ?', answer: 'I = 12/4 = 3A; P = 3 × 12 = 36 W' },
+    { q: 'Phone charger: 5V, 2A. Power = ?', answer: 'P = 5 × 2 = 10 W' },
+    { q: 'Three resistors in series: 10 Ω, 15 Ω, 25 Ω. Total resistance = ?', answer: '10 + 15 + 25 = 50 Ω' },
+    { q: 'Two resistors in parallel: 20 Ω and 30 Ω. Find total resistance. (1/R = 1/20 + 1/30)', answer: '1/R = 3/60 + 2/60 = 5/60; R = 12 Ω' },
+    { q: 'A 60W bulb runs on 120V. What current does it draw?', answer: 'I = P/V = 60/120 = 0.5 A' },
+    { q: 'A toaster uses 900W at 120V. Resistance = ?', answer: 'I = 900/120 = 7.5 A; R = 120/7.5 = 16 Ω' },
+    { q: 'Why is the parallel resistance always less than the smallest individual resistor?', answer: 'Because parallel paths share the current load, providing less total opposition than any single path' },
+    { q: 'A circuit uses 0.8 A at 6V for 3 hours. Energy used (in watt-hours) = ?', answer: 'P = 0.8 × 6 = 4.8 W; Energy = 4.8 × 3 = 14.4 Wh' }
+  ],
+  'optics': [
+    { q: 'Light goes from air (n=1.00) into glass (n=1.50) at 45°. Find the refracted angle. sin(45°) ≈ 0.707', answer: 'sin(θ₂) = 1.00×0.707/1.50 = 0.471; θ₂ = sin⁻¹(0.471) ≈ 28.1°' },
+    { q: 'Light in glass (n=1.50) hits air (n=1.00) at 20°. Refracted angle? sin(20°) ≈ 0.342', answer: 'sin(θ₂) = 1.50×0.342/1.00 = 0.513; θ₂ = sin⁻¹(0.513) ≈ 30.9°' },
+    { q: 'When does total internal reflection occur?', answer: 'When light moves from a denser to a less dense medium at an angle steep enough that the refracted angle would exceed 90°' },
+    { q: 'Index of refraction of diamond = 2.42. Light speed in diamond = ? (c = 3×10⁸ m/s)', answer: 'v = c/n = 3×10⁸/2.42 ≈ 1.24×10⁸ m/s' },
+    { q: 'Light hits water (n=1.33) from air (n=1.00) at 0° (straight down). Refracted angle = ?', answer: '0° — no bending at normal incidence' },
+    { q: 'Light in water (n=1.33) enters air (n=1.00) at 25°. sin(25°) ≈ 0.423. Refracted angle?', answer: 'sin(θ₂) = 1.33×0.423/1.00 = 0.562; θ₂ ≈ 34.2°' },
+    { q: 'Which Snell\'s Law formula is correct?', answer: 'n₁ × sin(θ₁) = n₂ × sin(θ₂)' },
+    { q: 'A material slows light to 2×10⁸ m/s. Index of refraction = ? (c = 3×10⁸)', answer: 'n = 3×10⁸ / 2×10⁸ = 1.5 (same as glass)' },
+    { q: 'How do fiber optic cables transmit data using light?', answer: 'Total internal reflection keeps light bouncing inside the glass fiber without escaping, even around bends' },
+    { q: 'What trig function connects incident and refracted angles in Snell\'s Law?', answer: 'Sine (sin) — the same SOH function from right triangle trigonometry' }
+  ],
+  'keplers-laws': [
+    { q: 'Mars orbital radius = 1.524 AU. Calculate T² = r³:', answer: '(1.524)³ ≈ 3.54; T = √3.54 ≈ 1.88 years' },
+    { q: 'A planet has T = 4 years. Find its orbital radius (T² = r³):', answer: '4² = r³ → 16 = r³ → r = ∛16 ≈ 2.52 AU' },
+    { q: 'A planet has T = 8 years. Find its orbital radius:', answer: '64 = r³ → r = ∛64 = 4 AU' },
+    { q: 'What does Kepler\'s Second Law tell us about orbital speed?', answer: 'A planet moves faster when closer to the Sun and slower when farther away' },
+    { q: 'Earth: r = 1 AU, T = 1 yr. Jupiter: r = 5.2 AU. Predict T for Jupiter:', answer: 'T² = (5.2)³ = 140.6; T = √140.6 ≈ 11.86 years' },
+    { q: 'A comet has T = 64 years. Its average orbital radius = ?', answer: '64² = r³ → 4096 = r³ → r = ∛4096 = 16 AU' },
+    { q: 'Why is T² = r³ only valid when using AU for distance and years for time?', answer: 'Because AU and years are defined relative to Earth\'s orbit, which makes the proportionality constant equal to exactly 1' },
+    { q: 'Which 8th grade math skills are used to solve Kepler\'s Third Law problems?', answer: 'Exponents (cubing r), square roots (solving for T), and cube roots (solving for r)' },
+    { q: 'If a planet\'s orbital radius doubles, its orbital period multiplies by approximately:', answer: '2^(3/2) = 2√2 ≈ 2.83 (not double — the relationship is T ∝ r^(3/2))' },
+    { q: 'Venus: T = 0.615 years. Predicted r using T² = r³ (solve r = ∛(T²)):', answer: 'r = ∛(0.615²) = ∛(0.378) ≈ 0.724 AU (actual: 0.723 AU ✓)' }
+  ]
+};
+
+const QUIZZES = {
+  'real-numbers': [
+    { q: 'Which is irrational?', opts: ['0.5', '√2', '1/2', '3'], ans: 1 },
+    { q: '√9 equals:', opts: ['3', '4.5', '9', '81'], ans: 0 },
+    { q: 'Approximate √15:', opts: ['3.8', '3.0', '4.0', '5.0'], ans: 0 },
+    { q: 'Is π rational?', opts: ['yes', 'no', 'maybe', 'undefined'], ans: 1 },
+    { q: 'Real numbers include:', opts: ['only integers', 'rational and irrational', 'only fractions', 'only decimals'], ans: 1 }
+  ],
+  'exponents': [
+    { q: '2⁵ = ?', opts: ['10', '32', '25', '64'], ans: 1 },
+    { q: '5⁰ = ?', opts: ['0', '1', '5', 'undefined'], ans: 1 },
+    { q: '3⁻¹ = ?', opts: ['−3', '1/3', '3', '−1/3'], ans: 1 },
+    { q: '2³ × 2² = ?', opts: ['2⁶', '2⁵', '2¹', '4⁵'], ans: 1 },
+    { q: '(2²)² = ?', opts: ['2⁴', '2²', '4²', '16'], ans: 0 }
+  ],
+  'unit-conversions': [
+    { q: 'KHDUdcm: What does U stand for?', opts: ['Micro', 'Unit (base)', 'Ultra', 'Under'], ans: 1 },
+    { q: 'To convert km to m, you move ___ steps right on KHDUdcm:', opts: ['1', '2', '3', '6'], ans: 2 },
+    { q: '4.5 km = ? m', opts: ['45 m', '450 m', '4500 m', '450,000 m'], ans: 2 },
+    { q: '350 cm = ? m', opts: ['0.035 m', '0.35 m', '3.5 m', '35 m'], ans: 2 },
+    { q: '2000 mL = ? L', opts: ['0.002 L', '0.2 L', '2 L', '20 L'], ans: 2 },
+    { q: '1.5 kg = ? g', opts: ['15 g', '150 g', '1500 g', '15000 g'], ans: 2 },
+    { q: 'Moving LEFT on the KHDUdcm chart means:', opts: ['multiply by 10', 'divide by 10', 'add 10', 'subtract 10'], ans: 1 },
+    { q: '72 km/h ÷ 3.6 = ? m/s', opts: ['10 m/s', '20 m/s', '25 m/s', '30 m/s'], ans: 1 },
+    { q: '1 inch = ? cm', opts: ['1.609 cm', '2.54 cm', '3.28 cm', '0.39 cm'], ans: 1 },
+    { q: 'Each step on KHDUdcm is a factor of:', opts: ['2', '5', '10', '100'], ans: 2 }
+  ],
+  'scientific-notation': [
+    { q: '5 × 10³ = ?', opts: ['500', '5000', '50', '500000'], ans: 1 },
+    { q: '0.00001 = ?', opts: ['1×10⁻⁵', '1×10⁵', '1×10⁻⁴', '1×10⁴'], ans: 0 },
+    { q: '(2×10³)×(3×10²) = ?', opts: ['6×10¹', '6×10⁵', '6×10⁶', '5×10⁵'], ans: 1 },
+    { q: '3.5 × 10⁻² = ?', opts: ['350', '3500', '0.035', '0.0035'], ans: 2 },
+    { q: 'Format: a × 10ⁿ where:', opts: ['a = 1 to 10', 'a = 0 to 1', 'a < 10', 'a > 10'], ans: 0 }
+  ],
+  'percent-error': [
+    { q: 'Measured g = 9.7 m/s², actual 9.81 m/s². Percent error = ?', answer: '1.12%' },
+    { q: 'Measured 1.55×10⁻¹⁹ C, actual 1.60×10⁻¹⁹ C. Percent error = ?', answer: '3.13%' },
+    { q: 'Why can\'t percent error be used when actual value is 0?', answer: 'division by zero' },
+    { q: 'Measured speed of sound 340 m/s, actual 343 m/s. Percent error = ?', answer: '0.87%' },
+    { q: 'Engineering tolerance ±5% applies to: aerospace or construction beam?', answer: 'construction beam' }
+  ],
+  'slope': [
+    { q: 'Slope between (0,0) and (2,4):', opts: ['2', '4', '0.5', '6'], ans: 0 },
+    { q: 'Horizontal line slope:', opts: ['positive', 'negative', 'zero', 'undefined'], ans: 2 },
+    { q: 'Vertical line slope:', opts: ['zero', 'positive', 'negative', 'undefined'], ans: 3 },
+    { q: 'Slope = rise / run. Which is which?', opts: ['rise=vertical', 'rise=horizontal', 'they equal', 'varies'], ans: 0 },
+    { q: 'Negative slope means:', opts: ['up right', 'down right', 'flat', 'undefined'], ans: 1 }
+  ],
+  'linear-equations': [
+    { q: 'Solve 3x = 12:', opts: ['4', '9', '15', '36'], ans: 0 },
+    { q: 'Solve x − 5 = 3:', opts: ['−2', '8', '2', '−8'], ans: 1 },
+    { q: 'Solve 2x + 1 = 5:', opts: ['2', '3', '4', '1'], ans: 0 },
+    { q: 'Variables on both sides: solve 2x = x + 3:', opts: ['3', '0', '1', '−3'], ans: 0 },
+    { q: 'Special: 2x + 1 = 2x + 1:', opts: ['x=0', 'x=1', 'infinite solutions', 'no solution'], ans: 2 }
+  ],
+  'physics-equations': [
+    { q: 'Vd = ½gt². g=10, t=3s. Vd =', opts: ['15 m', '30 m', '45 m', '90 m'], ans: 2 },
+    { q: 't = √(2Vd/g). Vd=80m, g=10. t =', opts: ['2 s', '4 s', '8 s', '16 s'], ans: 1 },
+    { q: 'Circular speed: v = 2πr/T. Solve for T:', opts: ['T = v/2πr', 'T = 2πr/v', 'T = 2πv/r', 'T = r/v'], ans: 1 },
+    { q: 'Linear motion formula:', opts: ['d = v + t', 'd = v · t', 'd = v / t', 'd = v − t'], ans: 1 },
+    { q: 'd = v·t. v=80 km/h, t=2.5h. d =', opts: ['160 km', '180 km', '200 km', '240 km'], ans: 2 },
+    { q: 'v = d/t. d=240 km, t=3h. v =', opts: ['60 km/h', '70 km/h', '80 km/h', '90 km/h'], ans: 2 },
+    { q: 'Speed is the ___ of a distance-time graph:', opts: ['y-intercept', 'area', 'slope', 'x-intercept'], ans: 2 },
+    { q: 'Newton\'s 2nd Law:', opts: ['F = mv', 'F = ma', 'F = m/a', 'F = a/m'], ans: 1 },
+    { q: 'F = ma. F=600N, m=60kg. a =', opts: ['5 m/s²', '10 m/s²', '15 m/s²', '36 m/s²'], ans: 1 },
+    { q: 'Newton\'s 1st Law describes:', opts: ['force', 'inertia', 'reaction', 'acceleration'], ans: 1 }
+  ],
+  'systems': [
+    { q: 'System has one solution when:', opts: ['same line', 'parallel', 'intersect', 'horizontal'], ans: 2 },
+    { q: 'No solution when:', opts: ['intersect', 'parallel', 'same line', 'perpendicular'], ans: 1 },
+    { q: 'Infinite solutions when:', opts: ['intersect once', 'same line', 'parallel', 'cross'], ans: 1 },
+    { q: 'Method: substitute y = 2x into x + y = 6:', opts: ['3x=6', 'x+2x=6', '2x+y=6', 'x=2x'], ans: 1 },
+    { q: 'Elimination: add equations to remove variable?', opts: ['sometimes', 'always', 'never', 'rarely'], ans: 0 }
+  ],
+  'functions': [
+    { q: '{(1,2), (2,3), (3,4)} is function?', opts: ['yes', 'no', 'maybe', 'undefined'], ans: 0 },
+    { q: '{(1,2), (1,3)} is function?', opts: ['yes', 'no', 'maybe', 'yes if 1D'], ans: 1 },
+    { q: 'f(x) = 3x + 1, f(2) = ?', opts: ['5', '7', '6', '8'], ans: 1 },
+    { q: 'Domain of f(x) = x²:', opts: ['x ≥ 0', 'all reals', 'x > 0', 'x = 0'], ans: 1 },
+    { q: 'Range of f(x) = x²:', opts: ['all reals', 'y ≥ 0', 'y ≠ 0', 'y < 0'], ans: 1 }
+  ],
+  'linear-functions': [
+    { q: 'y = 3x − 2 slope:', opts: ['−2', '3', '2', '−3'], ans: 1 },
+    { q: 'y = 3x − 2 y-intercept:', opts: ['3', '−2', '2', '0'], ans: 1 },
+    { q: 'Through (1,3), (3,7). Slope:', opts: ['1', '2', '3', '4'], ans: 1 },
+    { q: 'Through (0,5) slope 2:', opts: ['y=2x+5', 'y=5x+2', 'y=2x−5', 'y=5x'], ans: 0 },
+    { q: 'Rate of change = slope?', opts: ['yes', 'no', 'maybe', 'sometimes'], ans: 0 }
+  ],
+  'transformations': [
+    { q: 'Translation is:', opts: ['flip', 'slide', 'rotate', 'shrink'], ans: 1 },
+    { q: 'Reflection across x-axis: (x,y) → ?', opts: ['(x,−y)', '(−x,y)', '(−x,−y)', '(y,x)'], ans: 0 },
+    { q: 'Rotation 90° CCW: (1,0) → ?', opts: ['(1,0)', '(0,1)', '(−1,0)', '(0,−1)'], ans: 1 },
+    { q: 'Dilation scale 2: (3,4) → ?', opts: ['(5,6)', '(6,8)', '(1.5,2)', '(3,4)'], ans: 1 },
+    { q: 'Congruent transformations:', opts: ['translation', 'dilation', 'reflection', 'A and C'], ans: 3 }
+  ],
+  'angle-relationships': [
+    { q: 'Parallel lines, corresponding angles:', opts: ['different', 'equal', 'sum 180', 'sum 90'], ans: 1 },
+    { q: 'Triangle angles sum to:', opts: ['180°', '360°', '90°', '270°'], ans: 0 },
+    { q: 'Vertical angles are:', opts: ['adjacent', 'equal', 'supplementary', 'complementary'], ans: 1 },
+    { q: 'Alternate interior with parallel:', opts: ['equal', 'different', 'supplementary', 'complementary'], ans: 0 },
+    { q: 'Exterior angle = sum of:', opts: ['all', 'remote interior', 'adjacent', 'vertical'], ans: 1 }
+  ],
+  'pythagorean': [
+    { q: 'a² + b² = c² where c is:', opts: ['leg', 'hypotenuse', 'any side', 'angle'], ans: 1 },
+    { q: 'Legs 6, 8. Hypotenuse:', opts: ['10', '14', '7', '9'], ans: 0 },
+    { q: 'Distance (0,0) to (3,4):', opts: ['5', '7', '6', '12'], ans: 0 },
+    { q: 'SOH stands for:', opts: ['sin = Opp/Hyp', 'sin = Adj/Hyp', 'sin = Opp/Adj', 'sin = Hyp/Opp'], ans: 0 },
+    { q: 'CAH stands for:', opts: ['cos = Opp/Hyp', 'cos = Adj/Hyp', 'cos = Opp/Adj', 'cos = Hyp/Adj'], ans: 1 },
+    { q: 'TOA stands for:', opts: ['tan = Opp/Hyp', 'tan = Adj/Hyp', 'tan = Opp/Adj', 'tan = Hyp/Opp'], ans: 2 },
+    { q: 'Angle 30°, hypotenuse 10. Opposite side? (sin 30° = 0.5)', opts: ['5', '8.66', '10', '2'], ans: 0 },
+    { q: 'Angle 60°, hypotenuse 10. Adjacent side? (cos 60° = 0.5)', opts: ['5', '8.66', '6', '3'], ans: 0 },
+    { q: 'Opposite = 4, adjacent = 4. Angle θ = ?', opts: ['30°', '45°', '60°', '90°'], ans: 1 },
+    { q: 'To find an angle when you know two sides, you use:', opts: ['Pythagorean theorem', 'inverse trig', 'distance formula', 'SOH directly'], ans: 1 }
+  ],
+  'volume': [
+    { q: 'Cylinder V = ?', opts: ['πr²h', '(1/3)πr²h', '(4/3)πr³', '2πr'], ans: 0 },
+    { q: 'Cone V = ?', opts: ['πr²h', '(1/3)πr²h', '(4/3)πr³', 'πrh'], ans: 1 },
+    { q: 'Sphere V = ?', opts: ['πr²', '(4/3)πr³', 'πr³', '2πr²'], ans: 1 },
+    { q: 'Cylinder r=2, h=5. V:', opts: ['20π', '10π', '40π', '5π'], ans: 0 },
+    { q: 'Units for volume:', opts: ['units', 'sq units', 'cubic units', 'linear'], ans: 2 }
+  ],
+  'scatter-plots': [
+    { q: 'Positive association:', opts: ['both decrease', 'both increase', 'opposite', 'none'], ans: 1 },
+    { q: 'Negative association:', opts: ['both increase', 'one increases, one decreases', 'no relation', 'perpendicular'], ans: 1 },
+    { q: 'Strong correlation:', opts: ['scattered', 'close to line', 'random', 'undefined'], ans: 1 },
+    { q: 'Line of best fit shows:', opts: ['one point', 'trend', 'rectangle', 'circle'], ans: 1 },
+    { q: 'Outlier is:', opts: ['average point', 'far from trend', 'perfect', 'missing'], ans: 1 }
+  ],
+  'two-way-tables': [
+    { q: 'Two-way table shows:', opts: ['functions', 'categorical data', 'continuous', 'linear'], ans: 1 },
+    { q: 'Marginal frequencies are:', opts: ['entries', 'totals', 'percentages', 'ratios'], ans: 1 },
+    { q: 'Joint frequency is:', opts: ['total', 'intersection', 'row', 'column'], ans: 1 },
+    { q: 'Conditional frequency given A:', opts: ['all A', 'A given B', 'only A', 'without A'], ans: 1 },
+    { q: 'Relative frequency = ?', opts: ['count', 'total', 'count ÷ total', 'count × total'], ans: 2 }
+  ],
+  'word-problems': [
+    { q: 'Multi-step needs:', opts: ['one step', 'multiple operations', 'calculator', 'guess'], ans: 1 },
+    { q: 'First step: read and identify:', opts: ['solve', 'given and unknown', 'answer', 'method'], ans: 1 },
+    { q: 'Check answer:', answer: '4 options' },
+    { q: 'Real-world often uses:', opts: ['pure math', 'equations/functions', 'decimals', 'negatives'], ans: 1 },
+    { q: 'Cost = 500 + 20x breaks even when:', opts: ['cost = revenue', 'profit = 0', 'always', 'never'], ans: 0 }
+  ],
+  'waves': [
+    { q: 'The wave equation is:', opts: ['v = f + λ', 'v = f × λ', 'v = f / λ', 'f = v × λ'], ans: 1 },
+    { q: 'Sound speed 343 m/s, frequency 343 Hz. Wavelength = ?', opts: ['0.1 m', '1 m', '10 m', '100 m'], ans: 1 },
+    { q: 'If frequency doubles at constant speed, wavelength:', opts: ['doubles', 'halves', 'stays same', 'triples'], ans: 1 },
+    { q: 'Speed of light in vacuum ≈', opts: ['3×10⁶ m/s', '3×10⁸ m/s', '3×10¹⁰ m/s', '343 m/s'], ans: 1 },
+    { q: 'Which EM wave has the highest frequency?', opts: ['Radio', 'Visible light', 'Microwave', 'X-ray'], ans: 3 },
+    { q: 'A wave with λ = 0.01 m and v = 340 m/s has frequency:', opts: ['3.4 Hz', '34 Hz', '340 Hz', '34,000 Hz'], ans: 3 },
+    { q: 'The inverse relationship in waves means:', opts: ['f and λ always equal', 'As f increases, λ decreases at constant v', 'Speed changes with frequency', 'Wavelength equals speed'], ans: 1 },
+    { q: 'Visible light wavelength is approximately:', opts: ['400–700 m', '400–700 mm', '400–700 nm', '400–700 km'], ans: 2 },
+    { q: 'A whale call at 30 Hz in water (v = 1500 m/s). Wavelength:', opts: ['5 m', '50 m', '0.5 m', '500 m'], ans: 1 },
+    { q: 'Why do scientists use scientific notation for EM wave frequencies?', opts: ['It is faster to write', 'Frequencies span many orders of magnitude — from 10⁶ to 10²⁰ Hz', 'All EM waves have same frequency', 'Required by law'], ans: 1 }
+  ],
+  'electricity': [
+    { q: "Ohm's Law states:", opts: ['P = IV', 'V = IR', 'R = IV', 'I = VR'], ans: 1 },
+    { q: 'A 12V battery, 6Ω resistor. Current = ?', opts: ['0.5 A', '2 A', '18 A', '72 A'], ans: 1 },
+    { q: 'R = V/I. At V = 9V, I = 0.3A, R = ?', opts: ['2.7 Ω', '30 Ω', '0.03 Ω', '9.3 Ω'], ans: 1 },
+    { q: 'Power formula P = ?', opts: ['I + V', 'I × V', 'I / V', 'V / I'], ans: 1 },
+    { q: 'A 60W bulb at 120V draws current of:', opts: ['0.5 A', '2 A', '60 A', '7200 A'], ans: 0 },
+    { q: 'Series circuit: resistors 10Ω + 15Ω + 5Ω. Total resistance:', opts: ['30 Ω', '5 Ω', '3.33 Ω', '0.3 Ω'], ans: 0 },
+    { q: 'Parallel resistance is always _____ the smallest resistor:', opts: ['greater than', 'equal to', 'less than', 'double'], ans: 2 },
+    { q: 'Two 20Ω resistors in parallel. Total resistance:', opts: ['40 Ω', '20 Ω', '10 Ω', '5 Ω'], ans: 2 },
+    { q: 'Why are home circuits wired in parallel?', opts: ['Cheaper', 'Each device works independently; one failing does not kill others', 'Less total resistance', 'More current always flows'], ans: 1 },
+    { q: 'Current = 3A, Resistance = 8Ω. Power = ?', opts: ['24 W', '11 W', '72 W', '2.67 W'], ans: 2 }
+  ],
+  'optics': [
+    { q: "Snell's Law is:", opts: ['n₁ + θ₁ = n₂ + θ₂', 'n₁ × sinθ₁ = n₂ × sinθ₂', 'θ₁ / θ₂ = n₂ / n₁', 'n₁ × θ₁ = n₂ × θ₂'], ans: 1 },
+    { q: 'Index of refraction n = ?', opts: ['v/c', 'c/v', 'c × v', 'c + v'], ans: 1 },
+    { q: 'Light goes from air (n=1) into glass (n=1.5). The refracted ray:', opts: ['bends away from normal', 'bends toward normal', 'stays straight', 'reflects back'], ans: 1 },
+    { q: 'Diamond has n = 2.42. Speed of light in diamond (c = 3×10⁸ m/s):', opts: ['7.26×10⁸ m/s', '1.24×10⁸ m/s', '3×10⁸ m/s', '2.42×10⁸ m/s'], ans: 1 },
+    { q: 'Total internal reflection requires light to travel from:', opts: ['Low n to high n medium', 'High n to low n medium', 'Air to water', 'Vacuum to glass'], ans: 1 },
+    { q: 'Fiber optic cables use:', opts: ['Refraction', 'Diffraction', 'Total internal reflection', 'Absorption'], ans: 2 },
+    { q: 'Light hits water (n=1.33) at 0° from normal (straight down). It:', opts: ['Bends 45°', 'Bends toward normal', 'Does not bend', 'Reflects completely'], ans: 2 },
+    { q: "Which trig function is central to Snell's Law calculations?", opts: ['cos', 'tan', 'sin', 'sin⁻¹ only'], ans: 2 },
+    { q: 'Light going from glass (n=1.5) to air (n=1.0): the refracted angle is _____ the incident angle:', opts: ['smaller than', 'equal to', 'larger than', 'the reciprocal of'], ans: 2 },
+    { q: 'The angle of incidence is always measured from:', opts: ['The surface', 'The normal (perpendicular to surface)', 'The horizontal', 'The refracted ray'], ans: 1 }
+  ],
+  'keplers-laws': [
+    { q: "Kepler's Third Law states:", opts: ['T = r²', 'T² = r³', 'T³ = r²', 'T = r³'], ans: 1 },
+    { q: 'Planet at r = 4 AU. T² = r³ = ?', opts: ['8', '12', '16', '64'], ans: 3 },
+    { q: 'T² = 64. Period T = ?', opts: ['4 years', '8 years', '16 years', '32 years'], ans: 1 },
+    { q: 'A planet has T = 27 years. r³ = 729. r = ∛729 = ?', opts: ['3 AU', '9 AU', '27 AU', '81 AU'], ans: 1 },
+    { q: "Kepler's Second Law: a planet moves _____ when closer to the Sun:", opts: ['slower', 'faster', 'at the same speed', 'in a circle'], ans: 1 },
+    { q: 'Which math operation solves T² = r³ for r when T is known?', opts: ['Square root of T²', 'Cube root of T²', 'T divided by 3', 'T cubed'], ans: 1 },
+    { q: 'Earth: 1 AU, 1 year. Jupiter: r = 5.2 AU. T ≈ ?', opts: ['5.2 years', '7.2 years', '11.9 years', '27 years'], ans: 2 },
+    { q: 'Why is the Kepler constant exactly 1 when using AU and years?', opts: ['Earth is the largest planet', "AU and year are defined relative to Earth's own orbit", 'The formula uses base 10', 'Gravity equals 1 in space'], ans: 1 },
+    { q: "Kepler's Laws apply to:", opts: ['Only Earth and Moon', 'Only planets orbiting the Sun', 'Any object orbiting another under gravity', 'Only circular orbits'], ans: 2 },
+    { q: 'If orbital radius triples, orbital period multiplies by approximately:', opts: ['3', '5.2', '9', '27'], ans: 1 }
+  ]
+};
+
+let completedUnits = {};
+let currentUnit = null;
+
+function resourceCardHTML(unit) {
+  const ixlBtn = unit.ixlUrl ? `<a class="btn-ixl" href="${unit.ixlUrl}" target="_blank">📘 IXL Practice</a>` : '';
+  const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
+  const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${ixlBtn}${phetBtn}${ytBtn}</div></div>`;
+}
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(unit => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(unit.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${unit.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${unit.title}${completedUnits[unit.id]?' ✅':''}</div>
+          <div class="unit-card-cc">${unit.cc}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${unit.desc}</div>
+      <div class="unit-card-pills">
+        ${unit.kaUrl?'<div class="pill">📖 Lesson</div>':''}
+        ${unit.ixlUrl?'<div class="pill">📘 IXL</div>':''}
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">▶️ YouTube</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar-content');
+  sidebar.innerHTML = '';
+  UNITS.forEach((unit, idx) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === unit.id ? ' active' : '');
+    item.textContent = `${idx + 1}. ${unit.title}${completedUnits[unit.id]?' ✅':''}`;
+    item.onclick = () => showLesson(unit.id);
+    sidebar.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  document.getElementById('topbar-title').textContent = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Engineering the World with Math';
+}
+
+function showHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  currentUnit = null;
+  var sb = document.getElementById('syllabus-btn');
+  if (sb) sb.classList.remove('active');
+  renderHome();
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  currentUnit = null;
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(unitId) {
+  currentUnit = unitId;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  var sb = document.getElementById('syllabus-btn');
+  if (sb) sb.classList.remove('active');
+  const unit = UNITS.find(u => u.id === unitId);
+  document.getElementById('lesson-content').innerHTML = LESSONS[unitId] + resourceCardHTML(unit);
+  const rwBtn = document.getElementById('realworld-btn');
+  if (rwBtn) rwBtn.style.display = (REALWORLD_8 && REALWORLD_8[unitId]) ? '' : 'none';
+  renderSidebar();
+  setTopbar();
+}
+
+function showWorksheet() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><textarea id="ans-${idx}" placeholder="Your answer..."></textarea></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function checkWorksheet() {
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    const userAns = document.getElementById(`ans-${idx}`).value;
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><div class="answer-key"><strong>Answer:</strong> ${p.answer}</div><p><strong>Your answer:</strong> ${userAns || '(no answer)'}</p></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function showQuiz() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  const quiz = QUIZZES[currentUnit];
+  let html = '';
+  quiz.forEach((q, idx) => {
+    html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${q.q}</p>`;
+    if (q.opts) {
+      q.opts.forEach((opt, optIdx) => {
+        html += `<label><input type="radio" name="q${idx}" value="${optIdx}"> ${opt}</label>`;
+      });
+    }
+    html += `</div>`;
+  });
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function submitQuiz() {
+  const quiz = QUIZZES[currentUnit];
+  let score = 0;
+  quiz.forEach((q, idx) => {
+    if (q.opts) {
+      const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+      if (selected && parseInt(selected.value) === q.ans) score++;
+    }
+  });
+  const percent = Math.round((score / quiz.length) * 100);
+  completedUnits[currentUnit] = true;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('certificate-screen').classList.add('active');
+  document.getElementById('cert-content').innerHTML = `<p style="font-size: 24px; margin: 20px;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p><p>Congratulations on completing this unit!</p>`;
+  renderSidebar();
+  updateProgress();
+}
+
+function updateProgress() {
+  const completed = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${completed}/${UNITS.length}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderSidebar();
+});
+  const HANDOUTS_8 = {
+  'real-numbers': {
+    title: `Engineering Precision Number Classifier`,
+    science: `⚙️ Physical Science — Measurement & Engineering Precision`,
+    mission: `Engineers must know whether measurements are exact (rational) or approximate (irrational). Build a precision tool that classifies numbers and models engineering tolerances!`,
+    steps: [`Create a workbook called <em>Engineering_Precision_Numbers</em>.`,`Column A: Enter 20 numbers including integers, square roots, π, fractions, and decimals.`,`Column B: Decimal values — use <code>=SQRT(A2)</code> for square roots, <code>=PI()</code> for π.`,`Column C: Classification — <code>=IF(B2=INT(B2),"Rational","Check manually")</code>. Column D: Label manually as Rational or Irrational.`,`Sheet 2 — Tolerance Model: Column A = target dimension, Column B = tolerance (±0.001). Column C = min <code>=A2-B2</code>, Column D = max <code>=A2+B2</code>.`,`Column E: Measured value. Column F: <code>=IF(AND(E2>=C2,E2<=D2),"✅ Pass","❌ Fail")</code>.`],
+    deliverable: `Submit workbook with 20 classified numbers and a tolerance model for 10 parts. Write: 'Irrational numbers challenge engineers because ___. The part that failed had measurement ___ because ___.'`,
+    reflect: [`Is 3.14 the same as π? Explain using rational vs. irrational classification.`,`If a drill must make a √2-inch hole, how would an engineer specify this on a blueprint?`]
+  },
+  'exponents': {
+    title: `Inverse Square Law Light Intensity Calculator`,
+    science: `⚙️ Physical Science — Light Intensity & Exponents`,
+    mission: `Light intensity follows the inverse square law: I = P/d². Use exponent laws to analyze how light weakens with distance!`,
+    steps: [`Create a workbook called <em>Inverse_Square_Law_Exponents</em>.`,`Sheet 1: Column A = Distance (m): 1–10. Column B = Power (watts): 100 for all rows.`,`Column C: Intensity <code>=B2/A2^2</code>. Column D: Same using negative exponent <code>=B2*A2^(-2)</code>.`,`Column E: Ratio to intensity at 1m: <code>=C2/C$2</code>.`,`Sheet 2 — Exponent Laws Table: 10 expressions with product and quotient rule examples.`,`Sheet 3 — Engineering Chart: Line chart of Distance vs. Intensity (1/d² decay curve).`],
+    deliverable: `Submit 3-sheet workbook with intensity calculations, exponent law table, and decay chart. Write: 'At 10 m, light intensity is ___% of its value at 1 m. An engineer should place the streetlight ___ m from a reading area for minimum intensity of ___ w/m².'`,
+    reflect: [`Simplify (d²)⁻¹ using exponent laws. How does this appear in the inverse square law?`,`Moving from 2 m to 6 m from a light source, by what factor does intensity decrease?`]
+  },
+  'unit-conversions': {
+    title: `Metric Conversion Calculator & Physics Unit Bridge`,
+    science: `⚙️ Physical Science — Measurement, Speed, and Force Units`,
+    mission: `<strong>Why does unit conversion matter in science?</strong><br><br>
+Every physics formula assumes consistent units. If you calculate speed in km/h but the formula needs m/s, your answer will be wrong by a factor of 3.6. Scientists and engineers convert units constantly — before calculations, not after.<br><br>
+In this project you will build a unit conversion calculator that handles length, mass, volume, and speed, then apply it to real physics problems from linear motion (d = v·t) and Newton's Law (F = ma) to show why unit consistency is critical.`,
+    steps: [
+      `Create a workbook called <em>Metric_Conversion_Calculator</em>.`,
+      `<strong>Sheet 1 — KHDUdcm Reference Chart:</strong> Build the staircase as a visual table. Row 1 = prefix names (Kilo, Hecto, Deca, Unit, deci, centi, milli). Row 2 = abbreviations (k, h, da, —, d, c, m). Row 3 = power of 10 (10³, 10², 10¹, 10⁰, 10⁻¹, 10⁻², 10⁻³). Row 4 = multiplication factor (1000, 100, 10, 1, 0.1, 0.01, 0.001). Color-code: prefixes larger than base in blue, smaller in green, base unit in gold.`,
+      `<strong>Sheet 2 — Length Converter:</strong> Columns: From Unit | Value | To Unit | Steps on Chart | Conversion Factor <code>=10^D2</code> | Result <code>=B2*E2</code>. Enter 10 conversions using km, m, cm, mm. The "Steps" column holds a positive number (moving right) or negative (moving left).`,
+      `<strong>Sheet 3 — Mass & Volume Converter:</strong> Same structure. Include kg→g, g→mg, kg→mg, mL→L, L→mL. Add one row converting pounds to kg using 1 lb = 0.4536 kg.`,
+      `<strong>Sheet 4 — Speed Converter (Physics Bridge):</strong> Columns: Speed (km/h) | Speed (m/s) <code>=A2/3.6</code> | d = v·t in km (t = 2h) <code>=A2*2</code> | d = v·t in m (t = 2h) <code>=B2*7200</code>. Enter speeds: 50, 100, 120, 200, 340 (speed of sound), 1000, 7800 (orbital), 29900 (Earth around Sun) km/h. Show that both distance columns give the same physical distance in different units.`,
+      `<strong>Sheet 5 — Force Units Check (F = ma):</strong> Columns: Mass (kg) | Mass (g) <code>=A2*1000</code> | Accel (m/s²) | Force (N) <code>=A2*C2</code> | Force if mass used in grams (wrong) <code>=B2*C2</code> | Unit Error Factor <code>=F2/D2</code>. Use 5 objects. Observe how using grams instead of kg inflates the force by 1000× — the unit error factor should always be 1000.`
+    ],
+    deliverable: `Submit your 5-sheet workbook. In a text box on Sheet 4, write: <em>A car travels 90 km/h. Convert to m/s, then calculate how far it travels in 45 seconds using d = v·t. Show each step.</em> On Sheet 5 write: <em>Why must mass always be in kg (not grams) when using F = ma?</em>`,
+    reflect: [
+      `Converting 5 km to cm requires 5 steps right on the KHDUdcm chart. How does this connect to what you learned in scientific notation? (Hint: what is 5 × 10⁵?)`,
+      `On Sheet 4, Earth's orbital speed is about 29,900 km/h. Convert to m/s. Now use Vd = ½gt² — how far does the Earth move in 1 second of orbit? Does that seem realistic?`,
+      `A student uses 500 g instead of 0.5 kg in F = ma with a = 10 m/s². What force do they calculate vs. the correct answer? By what factor are they off?`
+    ]
+  },
+  'scientific-notation': {
+    title: `Scale of the Universe Reference Table`,
+    science: `⚙️ Physical Science — Atomic to Astronomical Scales`,
+    mission: `Scientists use scientific notation to work with measurements spanning 40 orders of magnitude — from a proton to the observable universe!`,
+    steps: [`Create a workbook called <em>Scale_of_Universe_Table</em>.`,`Column A: 10 objects — Proton, Hydrogen Atom, DNA Width, Red Blood Cell, Human Hair, Grain of Sand, Marble, Basketball, Earth Diameter, Distance to Sun.`,`Column B: Size in meters (standard). Column C: Scientific notation — <code>=TEXT(B2,"0.00E+00")</code>.`,`Column D: Exponent <code>=INT(LOG10(B2))</code>.`,`Column E: Ratio to previous object <code>=B3/B2</code>.`,`Sheet 2 — Arithmetic: Earth Diameter ÷ Proton size. Nearest Star ÷ Hydrogen Atom. Keep in sci notation.`,`Sheet 3 — Log Scale Bar Chart: Chart of exponents (Column D).`],
+    deliverable: `Submit 3-sheet workbook with 10 objects, conversions, ratios, and log-scale chart. Write: 'Earth is approximately ___ times larger than a proton, which in sci notation is ___. Scientific notation is essential for engineers because ___.'`,
+    reflect: [`Add 3.2 × 10⁴ and 4.1 × 10³ by hand (show each step). Verify in Excel.`,`A nano-chip is 14 nm = 14 × 10⁻⁹ m. How many fit across a human hair (0.0001 m)?`]
+  },
+  'slope': {
+    title: `Vehicle Motion Analysis — Speed & Slope`,
+    science: `⚙️ Physical Science — Velocity, Slope, and Rate of Change`,
+    mission: `Every position-time graph has a slope — and that slope is speed! Analyze real motion data and design a safe speed profile for a school bus route!`,
+    steps: [`Create a workbook called <em>Vehicle_Motion_Analysis</em>.`,`Sheet 1: Column A = Time (s): 0–10. Column B = Position (m): 0, 3, 6, 9, 12, 12, 12, 15, 18, 22, 28.`,`Column C: Speed <code>=(B3-B2)/(A3-A2)</code>. Column D: Motion type using IF formula.`,`Sheet 2 — Dual Charts: Chart 1: Position vs. Time. Chart 2: Speed vs. Time.`,`Sheet 3 — Bus Route Design: 5 stops. Columns: Stop name, Distance to next (m), Travel time (s), Required speed (m/s). Flag speeds over 15 m/s.`],
+    deliverable: `Submit 3-sheet workbook with motion data, dual charts, and bus route design. Write: 'Fastest interval was sec ___ to ___, speed ___ m/s. The highest-speed bus segment is ___ at ___ m/s. I recommend ___.'`,
+    reflect: [`What does a flat section (slope=0) on a position-time graph mean? Find this in your data.`,`The cart travels from 12m to 28m in 5 seconds. What is the average speed over this interval?`]
+  },
+  'linear-equations': {
+    title: `Ohm's Law Circuit Analysis Workbook`,
+    science: `⚙️ Physical Science — Electricity & Linear Equations`,
+    mission: `Every electrical circuit follows Ohm's Law: V = I × R. Solving for any unknown is just solving a linear equation. Build a circuit analysis tool!`,
+    steps: [`Create a workbook called <em>Ohm_Law_Circuit_Workbook</em>.`,`Sheet 1 — Solver: Three columns V, I, R. Enter any two; third calculated automatically. Test 10 scenarios.`,`Sheet 2 — Component Table: 10 resistors. Column A: Name. Column B: Resistance (Ω). Column C: Voltage = 12V. Column D: Current <code>=C2/B2</code>. Column E: <code>=IF(D2>2,"⚠ Overload","✅ Safe")</code>.`,`Sheet 3 — V vs. I Chart: For R = 10Ω, 50Ω, 100Ω, plot V from 0–20V and calculate I. Chart all three lines.`,`Sheet 4 — Engineering Task: 12V source, keep all currents below 2A. Show your work.`],
+    deliverable: `Submit 4-sheet workbook. Write: 'With V=12V and R=8Ω, current is ___ A. This solves the equation ___. Any resistor below ___ Ω would cause dangerous current at 12V.'`,
+    reflect: [`What is the equation for current when V=12 and R=x? What type of function is this?`,`Two resistors in series: R_total = R₁ + R₂. Find R₂ when total must be 15Ω and R₁ = 6Ω.`]
+  },
+  'physics-equations': {
+    title: `Motion Equation Simulator`,
+    science: `⚙️ Physical Science — Falling Objects & Circular Orbits`,
+    mission: `<strong>Physics equations are algebra in action.</strong><br><br>
+Two simple equations describe most motion problems engineers and scientists encounter every day:<br><br>
+<strong>Vd = ½gt²</strong> — tells you how far an object falls in t seconds.<br>
+<strong>t = √(2Vd / g)</strong> — tells you how long it takes to fall a known distance.<br><br>
+In this project you will build a falling-object simulator and a planetary orbit calculator in Excel. Both use the same algebra you already know — the physics just gives the variables real meaning.`,
+    steps: [
+      `Create a workbook called <em>Motion_Equation_Simulator</em>.`,
+      `<strong>Sheet 1 — Falling Object (Vd = ½gt²):</strong> Cell B1 = g (use 9.8). Column A = Time t: 0, 0.5, 1 … 10s. Column B = <code>=0.5*$B$1*A2^2</code>. Column C = <code>=IF(B2=0,"Start",TEXT(B2,"0.0")&" m fallen")</code>. Create a Line Chart of Time vs. Vd — observe the upward curve (not a straight line).`,
+      `<strong>Sheet 2 — Solve for Time (t = √(2Vd/g)):</strong> Column A = distances 5, 20, 45, 80, 125, 180, 245 m. Column B = <code>=SQRT(2*A2/$B$1)</code>. Column C = verification <code>=0.5*$B$1*B2^2</code>. Column D = <code>=IF(ABS(C2-A2)<0.01,"✓ Match","✗ Check")</code>.`,
+      `<strong>Sheet 3 — Linear Motion Calculator (d = v·t):</strong> Header row: Scenario | Speed (km/h) | Time (h) | Distance <code>=B2*C2</code> | Solve for Speed <code>=D2/C2</code> | Solve for Time <code>=D2/B2</code>. Enter 8 real scenarios: car on highway (100 km/h, 3h), bullet train (300 km/h, 2h), bicycle (25 km/h, 1.5h), aircraft (900 km/h, 4h), runner (12 km/h, 0.5h), boat (40 km/h, 6h), space capsule re-entry (8 km/s × 3600 to convert, 0.05h), satellite orbit (7.8 km/s, 1.5h). Add a bar chart of distances.`,
+      `<strong>Sheet 4 — Newton's 2nd Law (F = ma):</strong> Columns: Object | Mass (kg) | Acceleration (m/s²) | Force <code>=B2*C2</code> | Solve for a <code>=D2/B2</code> | Solve for m <code>=D2/C2</code>. Enter 8 objects: bicycle + rider (90 kg, 2 m/s²), car (1200 kg, 4 m/s²), truck (8000 kg, 1.5 m/s²), rocket (500000 kg, 15 m/s²), soccer ball (0.45 kg, 25 m/s²), skateboarder (65 kg, 3 m/s²), elevator (800 kg, 0.5 m/s²), satellite thruster (300 kg, 0.1 m/s²). Add a bar chart of forces.`,
+      `<strong>Sheet 5 — Planetary Orbit (v = 2πr/T):</strong> Mercury, Venus, Earth, Mars, Jupiter. Columns: Planet | r (m) | T (s) | Speed <code>=2*PI()*B2/C2</code> | Centripetal Accel <code>=D2^2/B2</code>. Add a bar chart comparing orbital speeds.`
+    ],
+    deliverable: `Submit your 5-sheet workbook. Write one conclusion sentence per sheet: (1) What shape is the Vd-t curve and why? (2) Verify your t formula with one example. (3) Which scenario has the greatest distance — why? (4) Which object requires the most force — what does that tell you about mass vs. acceleration? (5) Why does Mercury orbit faster than Jupiter?`,
+    reflect: [
+      `On Sheet 3, speed is the slope of a d-t graph. If you graphed two of your scenarios on the same chart, how would the steeper line relate to the faster vehicle?`,
+      `On Sheet 4, the rocket has by far the largest force. But the soccer ball has the largest acceleration. How can a much smaller force produce a larger acceleration? What equation explains this?`,
+      `In the orbital speed formula v = 2πr/T, if a planet's orbital radius doubles but its period also doubles, does its speed change? Show algebraically.`
+    ]
+  },
+  'systems': {
+    title: `Force Balance System Solver`,
+    science: `⚙️ Physical Science — Forces & Engineering Equilibrium`,
+    mission: `Engineers design bridges by solving systems of equations — two conditions that must be satisfied simultaneously. Build a force balance solver!`,
+    steps: [`Create a workbook called <em>Force_Balance_System_Solver</em>.`,`Sheet 1 — Graphical Solution: Two equations (e.g., y=2x+1 and y=-x+7). Column A = x: -5 to 10. Column B and C: y values for each. Chart both lines.`,`Use Goal Seek to find exact intersection: Data → What-If Analysis → Goal Seek.`,`Sheet 2 — Bridge Problem: F₁ + F₂ = 5000 N and F₁ = 2×F₂. Solve by substitution. Verify F₁ + F₂ = 5000.`,`Sheet 3 — Sensitivity Analysis: If total load changes from 4000–8000 N, how do F₁ and F₂ change? Table and chart.`],
+    deliverable: `Submit 3-sheet workbook with graphical solution, bridge problem, and sensitivity chart. Write: 'Intersection is at (___, ___). Support 1 carries ___ N, Support 2 carries ___ N. If load increases to 8000 N, Support 1 needs ___ N.'`,
+    reflect: [`Write the system of equations for the bridge. What does each equation represent physically?`,`If both equations have the same slope, what happens when you solve? What does this mean physically?`]
+  },
+  'functions': {
+    title: `Machine Efficiency Function Analyzer`,
+    science: `⚙️ Physical Science — Energy Efficiency & Functions`,
+    mission: `Every machine converts input energy to useful output. Analyze a linear and nonlinear machine model to find when efficiency breaks down!`,
+    steps: [`Create a workbook called <em>Machine_Efficiency_Functions</em>.`,`Column A: Input energy (J): 0, 100, 200…1000.`,`Column B: Linear machine <code>=0.85*A2</code>. Column C: Nonlinear <code>=0.85*A2-0.0001*A2^2</code>.`,`Column D: Linear efficiency <code>=B2/A2*100</code>. Column E: Nonlinear efficiency <code>=IF(A2>0,C2/A2*100,85)</code>.`,`Chart 1: Input vs. Output (both machines). Chart 2: Input vs. Efficiency %.`],
+    deliverable: `Submit workbook with function tables, efficiency columns, and two charts. Write: 'The linear machine is always ___% efficient. The nonlinear machine starts at ___% but drops to ___% at 1000J. I recommend the ___ machine for high-input operations because ___.'`,
+    reflect: [`At what input level do the two machines produce the same output? Estimate from your table.`,`Is Column C a function of Column A? Prove it using the definition of a function.`]
+  },
+  'linear-functions': {
+    title: `Hooke's Law Spring Analysis Lab`,
+    science: `⚙️ Physical Science — Spring Force & Slope-Intercept Form`,
+    mission: `Hooke's Law says F = kx — a perfect linear function! Find the spring constant (slope) and choose the right spring for an engineering design!`,
+    steps: [`Create a workbook called <em>Hooke_Law_Spring_Lab</em>.`,`Sheet 1 — Spring A: Column A = Stretch (cm): 1–10. Column B = Force (N): ~2, 4, 6, 8, 10, 12, 14, 16, 18, 20 (with slight scatter).`,`Column C: Spring constant each point <code>=B2/A2</code>. Cell E1: Average k = <code>=AVERAGE(C2:C11)</code>.`,`Column D: Predicted force <code>=E$1*A2</code>. Column E: Residual (error) <code>=B2-D2</code>.`,`Sheet 2 — Spring B: Same structure, ~2× stiffer.`,`Sheet 3: Plot both springs on one XY chart with linear trendlines and equations displayed.`],
+    deliverable: `Submit 3-sheet workbook with both spring datasets, k calculations, comparison chart, and engineering recommendation. Write: 'Spring A has k=___ N/cm. Spring B has k=___. The stiffer spring is ___. For car suspension I would choose ___ because ___.'`,
+    reflect: [`What does the slope of Force vs. Stretch represent physically?`,`If the spring passes through the origin (0,0), what does this tell you about the y-intercept?`]
+  },
+  'transformations': {
+    title: `Engineering Transformation Design`,
+    science: `⚙️ Physical Science — Symmetry & Structural Design`,
+    mission: `Engineers use symmetry in bridges, gears, and aircraft because symmetric structures distribute forces evenly. Use coordinate transformations to design structural symmetry!`,
+    steps: [`Create a workbook called <em>Engineering_Transformation_Design</em>.`,`Sheet 1: Define a 6-vertex truss shape. Column A=x, Column B=y. Example: (0,0),(2,0),(4,0),(3,2),(2,4),(1,2).`,`Sheet 2 — Translation: Add h=5 to all x: <code>=A2+5</code>. Chart original and translated.`,`Sheet 3 — Reflection: Across x-axis: y becomes <code>=B2*(-1)</code>. Chart both.`,`Sheet 4 — Gear Dilation: Scale by 0.5, 1.0, 2.0, 4.0. Chart all 4 sizes on one chart.`,`Sheet 5 (optional) — Rotation 90°: new x = -old y, new y = old x.`],
+    deliverable: `Submit 5-sheet workbook with shape and 4 transformations, each with a chart. Write: 'Reflection creates ___ symmetry, important for ___ because ___. A gear dilated by ___ rotates ___ times as fast as the original.'`,
+    reflect: [`What transformation moves a gear tooth from one position to the next around the gear?`,`Why do structural engineers prefer symmetric trusses? What would happen with asymmetry?`]
+  },
+  'angle-relationships': {
+    title: `Roof Truss Angle Analysis`,
+    science: `⚙️ Physical Science — Structural Engineering & Angles`,
+    mission: `Every roof truss is made of triangles with parallel chords. The angles must be precisely calculated for structural safety. Analyze angle relationships in a roof truss!`,
+    steps: [`Create a workbook called <em>Roof_Truss_Angle_Analysis</em>.`,`Sheet 1: Column A = Pitch angle: 10, 15, 20, 25, 30, 35, 40, 45.`,`Column B: Supplementary <code>=180-A2</code>. Column C: Complementary <code>=90-A2</code>. Column D: Vertical <code>=A2</code>. Column E: Corresponding <code>=A2</code>. Column F: Co-interior <code>=180-A2</code>.`,`Sheet 2 — Truss Model at 30°: Calculate all resulting angles. Verify they sum correctly.`,`Sheet 3 — Pitch Angle Chart: Multi-line chart showing each angle type as pitch changes 0–60°.`],
+    deliverable: `Submit 3-sheet workbook with angle table, truss model, and chart. Write: 'At pitch angle 30°, the co-interior angle is ___°. The balanced pitch angle is ___° because ___. I recommend a pitch of ___° for a Honolulu house because ___.'`,
+    reflect: [`If a transversal crosses two parallel chords at 35°, list all 8 angles formed.`,`Why do engineers prefer triangular trusses over rectangular frames?`]
+  },
+  'pythagorean': {
+    title: `Right Triangle Engineering: Theorem & Trigonometry`,
+    science: `⚙️ Physical Science — Structural Engineering & Angle Analysis`,
+    mission: `<strong>Two tools, one triangle.</strong><br><br>
+Engineers who design bridges, ramps, cables, and antennas work with right triangles every day. They have two powerful tools:<br><br>
+<strong>Pythagorean Theorem (a² + b² = c²)</strong> — use this when you know two sides and need the third.<br>
+<strong>SOH-CAH-TOA</strong> — use this when you know an angle and one side, or when you need to find the angle from two sides.<br><br>
+In this project you will build a dual calculator that uses both tools on real engineering scenarios — then compare which method is faster for each problem.`,
+    steps: [
+      `Create a workbook called <em>Right_Triangle_Engineering</em>.`,
+      `<strong>Sheet 1 — Pythagorean Calculator:</strong> Columns: Scenario | Leg a | Leg b | Hypotenuse <code>=SQRT(A2^2+B2^2)</code>. Enter 5 scenarios: cell tower cable (a=15, b=20), roof rafter (a=8, b=15), tunnel diagonal (a=9, b=40), ramp (a=3, b=12), bridge span (a=30, b=40).`,
+      `<strong>Sheet 2 — Trig Calculator:</strong> Columns: Scenario | Angle θ | Known Side | Side Type | Missing Side | Formula Used. Use Excel trig functions: <code>=SIN(RADIANS(angle))</code>, <code>=COS(RADIANS(angle))</code>, <code>=TAN(RADIANS(angle))</code>. Note: Excel uses radians, so always wrap degrees in RADIANS(). Enter 5 scenarios: ramp at 25° with hypotenuse 15m (find height using sin), cable at 38° with base 20m (find cable length using cos), antenna at 72° with base 10m (find height using tan), tunnel at 66° with vertical 36m (find hypotenuse using sin), bridge at 53° with span 30m (find diagonal using cos).`,
+      `<strong>Sheet 3 — Find the Angle:</strong> Use <code>=DEGREES(ATAN(opposite/adjacent))</code>, <code>=DEGREES(ASIN(opposite/hypotenuse))</code>, <code>=DEGREES(ACOS(adjacent/hypotenuse))</code>. Enter 4 scenarios where two sides are known and find the angle.`,
+      `<strong>Sheet 4 — Comparison Table:</strong> List 3 scenarios where you solved using BOTH methods. Columns: Scenario | Pythagorean Answer | Trig Answer | Do they match? (use <code>=IF(ABS(B2-C2)<0.01,"✓ Match","✗ Check")</code>).`,
+      `Add a bar chart on Sheet 4 comparing the hypotenuse values from both methods to visualize that the answers agree.`
+    ],
+    deliverable: `Submit your 4-sheet workbook. In a text box on Sheet 4, answer: <em>When would you choose the Pythagorean theorem over trig? When would you choose trig? Give one real engineering example for each.</em>`,
+    reflect: [
+      `A solar panel is mounted at 35° on a roof. The panel is 2m long (hypotenuse). How high above the roof edge does the top of the panel sit? Which trig ratio do you use, and why?`,
+      `You know a ramp is 6m long and rises 2m high. Can you find the angle using trig? Which inverse function do you use? Could you also solve this with just the Pythagorean theorem — what would you find?`,
+      `Why does Excel require RADIANS() around angle values in SIN(), COS(), and TAN()? What would happen if you forgot it?`
+    ]
+  },
+  'volume': {
+    title: `Tank Engineering Design Comparison`,
+    science: `⚙️ Physical Science — Fluid Containers & Capacity Engineering`,
+    mission: `Water storage engineers choose the best tank shape balancing capacity and cost. Compare 5 different tank designs!`,
+    steps: [`Create a workbook called <em>Tank_Engineering_Design</em>.`,`Sheet 1: 5 tanks of similar surface area. Include: cylinder, rectangular prism, cone+cylinder combo, sphere, cube.`,`Volume formulas: Cylinder <code>=PI()*r^2*h</code>, Cone <code>=(1/3)*PI()*r^2*h</code>, Sphere <code>=(4/3)*PI()*r^3</code>.`,`Calculate surface area for each. Cost analysis: <code>=SA*12</code> ($12/m²).`,`Sheet 2 — Efficiency: Volume ÷ Cost for each design.`,`Sheet 3 — Charts: Bar chart of Volume, Bar chart of Cost, Scatter plot of Volume vs. Cost.`],
+    deliverable: `Submit 3-sheet workbook with 5 designs, volume, SA, cost, efficiency, and 3 charts. Write: 'Most cost-efficient is ___ with volume ___ m³ at cost $___. I recommend it because ___. Least efficient is ___ because ___.'`,
+    reflect: [`A sphere has smallest surface area for given volume. Why don't engineers always use spheres?`,`If a cylinder's radius is doubled (height constant), by what factor does volume increase?`]
+  },
+  'scatter-plots': {
+    title: `Material Elasticity Scatter Plot Analysis`,
+    science: `⚙️ Physical Science — Material Testing & Engineering Data`,
+    mission: `Materials engineers test how materials stretch under force. Use scatter plots and trendlines to identify the right material for a suspension bridge cable!`,
+    steps: [`Create a workbook called <em>Material_Elasticity_Scatter</em>.`,`Sheet 1 — Steel Cable: Column A = Force (N): 100, 200…2000. Column B = Stretch (mm): approximately 0.05, 0.10…1.00 with slight scatter.`,`Sheet 2 — Nylon Rope: Same forces but stretch ~3× more elastic.`,`Sheet 3 — Comparison Chart: Both datasets as XY Scatter. Add linear trendlines with equation and R² displayed.`,`Prediction Table: Use trendline equations to predict stretch at 2500N, 3000N, 5000N for each material.`],
+    deliverable: `Submit 3-sheet workbook with both materials, comparison chart, and prediction table. Write: 'Steel trendline slope is ___ mm/N. Nylon stretches ___ times more per newton. For a bridge cable (must stretch <1mm per 1000N), I recommend ___ because ___.'`,
+    reflect: [`What does R²=0.99 tell you about how well the trendline fits?`,`If rubber is 10× more elastic than nylon, how would its trendline slope compare?`]
+  },
+  'two-way-tables': {
+    title: `Quality Control Two-Way Frequency Analysis`,
+    science: `⚙️ Physical Science — Manufacturing Quality Control`,
+    mission: `Engineers use two-way tables to analyze factory quality control data. Build a QC analysis tool and decide which factory wins the next contract!`,
+    steps: [`Create a workbook called <em>Factory_QC_Two_Way_Analysis</em>.`,`Sheet 1: 2×2 table. Rows: Factory A, B. Columns: Pass, Fail, Total. Enter: Factory A: Pass=92, Fail=8. Factory B: Pass=85, Fail=15.`,`Sheet 2 — Relative Frequencies: Joint (each cell ÷ grand total), Row (each cell ÷ row total), Column (each cell ÷ column total). Format as percentages.`,`Sheet 3 — Charts: <strong>Clustered Bar Chart</strong> comparing Pass% and Fail% for both factories.`,`What-if scenario: If Factory A improves to 96% pass rate, how does the comparison change?`],
+    deliverable: `Submit 3-sheet workbook with frequency table, relative frequency tables, bar chart, and what-if. Write: 'Factory A pass rate ___%. Factory B ___%. I recommend ___ because ___. If Factory B improved to 95%, the decision would ___.'`,
+    reflect: [`What is the difference between joint frequency and conditional frequency?`,`Factory A produced 100 bulbs and Factory B produced 100 bulbs. Is it fair to compare directly? What if one produced 1,000?`]
+  },
+  'word-problems': {
+    title: `Engineering Design Portfolio — Capstone`,
+    science: `⚙️ Physical Science — Capstone Engineering Design Challenge`,
+    mission: `You are now a junior engineer. Choose an engineering design challenge and apply EVERY type of 8th grade math to solve it. This is your capstone!`,
+    steps: [`Choose ONE challenge: Bridge Design, Solar Panel Array, Water Filtration System, Wind Turbine, or Communications Tower.`,`Create <em>Engineering_Design_Portfolio_[YourProject]</em> with 9 sheets.`,`Sheet 1 — Project Brief: Name, project, the problem, and proposed solution.`,`Sheet 2 — Real Numbers & Precision: 3 irrational numbers in your design. Tolerance check for one measurement.`,`Sheet 3 — Exponents & Scientific Notation: 2 measurements in sci notation. One exponent law applied.`,`Sheet 4 — Slope & Linear Functions: Find the slope/rate of change for something in your design.`,`Sheet 5 — Equations & Systems: One linear equation and one system from design constraints.`,`Sheet 6 — Geometry: Volume of a container; Pythagorean theorem for one distance; angle calculations.`,`Sheet 7 — Functions: Model an efficiency or output function. Linear or nonlinear?`,`Sheet 8 — Scatter Plot & Data: Collect/simulate test data. Scatter plot with trendline and prediction.`,`Sheet 9 — Engineering Brief: Professional one-page summary of design with all key numbers.`],
+    deliverable: `Submit complete 9-sheet workbook. Final: Engineering Brief on Sheet 9 referencing specific numbers from every sheet. This is your 8th grade Math With a Purpose capstone!`,
+    reflect: [`Which piece of math was the most important design constraint? Why?`,`What would you change if you had more advanced math? What limitation did 8th grade math impose?`]
+  },
+  'waves': {
+    title: `Sound & Light Wave Engineering Lab`,
+    science: `⚙️ Physical Science — Wave Mechanics & the Electromagnetic Spectrum`,
+    mission: `Engineers who design speakers, antennas, fiber optic systems, and medical imaging tools use v = fλ constantly. In this lab you will build a full wave calculator, model the electromagnetic spectrum, and design a simple speaker system — applying the wave equation the way acoustic and RF engineers do.`,
+    steps: [
+      `Create a workbook called <em>Wave_Engineering_Lab</em>.`,
+      `<strong>Sheet 1 — Wave Equation Calculator:</strong> Build a solver with three sections. Section A (find speed): Column A = frequency (Hz), Column B = wavelength (m), Column C = speed <code>=A2*B2</code>. Section B (find frequency): Column A = speed, Column B = wavelength, Column C = frequency <code>=A8/B8</code>. Section C (find wavelength): Column A = speed, Column B = frequency, Column C = wavelength <code>=A14/B14</code>. Enter 5 examples in each section: sound waves, water waves, seismic waves, ultrasound, infrasound.`,
+      `<strong>Sheet 2 — EM Spectrum Table:</strong> Columns: Wave type | Min frequency (Hz) | Max frequency (Hz) | Min wavelength (m) <code>=3E8/C2</code> | Max wavelength (m) <code>=3E8/B2</code> | Example use. Enter all 7 EM regions: Radio, Microwave, Infrared, Visible, UV, X-ray, Gamma ray. Format frequency columns in scientific notation. Create a <strong>Bar Chart</strong> using LOG10 of frequency: <code>=LOG10(B2)</code>. Add a second bar chart of LOG10 of wavelength. Notice the charts are mirror images — this is the inverse relationship.`,
+      `<strong>Sheet 3 — Visible Light Breakdown:</strong> Each color of visible light has a specific frequency and wavelength range. Columns: Color | Min λ (nm) | Max λ (nm) | Min λ (m) <code>=B2/1E9</code> | Max λ (m) <code>=C2/1E9</code> | Min f (Hz) <code>=3E8/E2</code> | Max f (Hz) <code>=3E8/D2</code>. Enter ROYGBIV: Red (625–740 nm), Orange (590–625), Yellow (565–590), Green (500–565), Blue (450–500), Indigo (425–450), Violet (380–425). Create a colored bar chart of wavelength ranges.`,
+      `<strong>Sheet 4 — Speaker Design Calculator:</strong> A speaker must produce sounds from 20 Hz (bass) to 20,000 Hz (treble) — the human hearing range. Speed of sound = 343 m/s. Column A: Frequency (Hz): 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000. Column B: Wavelength <code>=343/A2</code>. Column C: Classification <code>=IF(A2<250,"Bass",IF(A2<2000,"Midrange","Treble"))</code>. Column D: Speaker size needed — large speakers for long wavelengths, small for short. Create a Line Chart of wavelength vs. frequency. Add: why do subwoofers (bass) need to be so large?`,
+      `<strong>Sheet 5 — Sonar Depth Finder:</strong> Sonar sends a sound pulse down to the ocean floor and measures the echo time. Speed of sound in seawater ≈ 1,530 m/s. Columns: Location | Echo time (s) | Depth <code>=C2*1530/2</code> (÷2 because sound travels down and back). Enter 8 ocean locations with different echo times: 0.5 s, 1.2 s, 2.8 s, 4.0 s, 6.5 s, 8.1 s, 10.3 s, 14.7 s. Column D: Depth in km <code>=D2/1000</code>. Column E: <code>=IF(D2>6000,"Deep ocean trench","Continental shelf or slope")</code>. Create a bar chart of depths.`
+    ],
+    deliverable: `Submit your 5-sheet workbook. Write a "Wave Engineer's Report": <em>"The wavelength of middle C (262 Hz, v=343 m/s) is ___ m. At the same speed, a 20 Hz bass note has wavelength ___ m — ___ times longer. Radio waves at 100 MHz have wavelength ___ m, while X-rays at 10¹⁸ Hz have wavelength ___ m. The ratio of these wavelengths is ___, which is why we need scientific notation to discuss the EM spectrum."</em>`,
+    reflect: [
+      `On Sheet 2, the LOG10 chart for frequency and the LOG10 chart for wavelength are mirror images of each other. Explain why using the equation v = fλ. If you increase f by a factor of 10, what must happen to λ? Connect this to the LOG10 operation.`,
+      `On Sheet 4, bass frequencies (20–200 Hz) have wavelengths of 1.7–17 m. Treble frequencies (5,000–20,000 Hz) have wavelengths of 1.7–6.9 cm. Speaker cones must be roughly the size of the wavelength they produce to be efficient. Write a proportion: if a 30 cm woofer handles 100 Hz, what size tweeter would handle 10,000 Hz?`
+    ]
+  },
+  'electricity': {
+    title: `Circuit Design & Power Consumption Lab`,
+    science: `⚙️ Physical Science — Electrical Engineering & Energy`,
+    mission: `Every electronic device ever built obeys Ohm's Law and the power equation. Engineers design circuits to deliver exactly the right voltage and current to each component — too much burns it out, too little and it fails to work. In this lab you will build a full circuit simulator, design a house electrical system, and calculate real energy costs.`,
+    steps: [
+      `Create a workbook called <em>Circuit_Design_Lab</em>.`,
+      `<strong>Sheet 1 — Ohm's Law Solver:</strong> Build three separate calculators in one sheet. Calculator 1 — Find Voltage: enter I (A) and R (Ω), compute V <code>=B2*C2</code>. Calculator 2 — Find Current: enter V and R, compute I <code>=B8/C8</code>. Calculator 3 — Find Resistance: enter V and I, compute R <code>=B14/C14</code>. Enter 6 test cases in each: flashlight (6V, 0.3A), phone charger (5V, 2A), microwave (120V, 10A), laptop (19V, 3.4A), LED bulb (120V, 0.08A), electric car charger (240V, 32A).`,
+      `<strong>Sheet 2 — Power & Energy Calculator:</strong> Columns: Device | Voltage (V) | Current (A) | Resistance <code>=B2/C2</code> | Power (W) <code>=B2*C2</code> | Energy per hour (Wh) <code>=E2*1</code> | Energy per day (kWh) <code>=E2*24/1000</code> | Monthly cost at $0.30/kWh <code>=G2*30*0.30</code>. Enter 10 household devices: refrigerator (120V, 1.5A), AC unit (240V, 15A), LED TV (120V, 0.5A), desktop computer (120V, 3A), electric stove (240V, 40A), dishwasher (120V, 12A), water heater (240V, 18A), ceiling fan (120V, 0.4A), phone charger (5V, 2A), microwave (120V, 8A). Add a SUM row for total monthly cost.`,
+      `<strong>Sheet 3 — Series Circuit Builder:</strong> Build a series circuit with up to 6 resistors. Columns: Resistor | Resistance (Ω) | Current (A) | Voltage drop (V) <code>=B2*C2</code> | Power dissipated (W) <code>=B2*C2^2</code>. Cell H2: Total resistance <code>=SUM(B2:B7)</code>. Cell H4: Source voltage (enter 12V). Cell H6: Total current <code>=H4/H2</code>. Link: Column C = $H$6 for all resistors. Create a bar chart of voltage drops across each resistor — they should sum to the source voltage.`,
+      `<strong>Sheet 4 — Parallel Circuit Builder:</strong> Column A: Resistor (1–6). Column B: Resistance (Ω). Column C: Conductance <code>=1/B2</code>. Cell H2: Total conductance <code>=SUM(C2:C7)</code>. Cell H4: Total resistance <code>=1/H2</code>. Cell H6: Source voltage (enter 12V). Column D: Current in each branch <code>=$H$6/B2</code>. Cell H8: Total current <code>=SUM(D2:D7)</code>. Verify: total current × total resistance = source voltage. Create a bar chart of branch currents.`,
+      `<strong>Sheet 5 — Home Energy Audit:</strong> Using data from Sheet 2, model a typical Hawaiian home. Column A: Device. Column B: Hours used per day. Column C: Power (W) from Sheet 2. Column D: Daily energy (kWh) <code>=B2*C2/1000</code>. Column E: Monthly energy (kWh) <code>=D2*30</code>. Column F: Monthly cost <code>=E2*0.30</code>. Enter all 10 devices with realistic daily use hours (refrigerator: 24 hr, AC: 8 hr, TV: 4 hr, etc.). Add TOTAL row. Create a Pie Chart of monthly cost by device. Add a "Solar offset" row: if 10 solar panels produce 4 kWh/day each, how does this reduce the bill?`
+    ],
+    deliverable: `Submit your 5-sheet workbook. Write a "Circuit Engineer's Memo": <em>"The highest-power device in our home is ___ at ___ watts. Over a month, it costs $___. Our total monthly electricity bill is approximately $___. If we install solar panels producing ___ kWh/day, our bill drops to $___. The most efficient change we could make is replacing ___ because it would save $___ per month."</em>`,
+    reflect: [
+      `On Sheet 3, as you add more resistors in series, total resistance increases and current decreases. On Sheet 4, as you add more parallel branches, total resistance decreases and total current increases. Explain why using Ohm's Law (V = IR) — if V stays constant and R changes, what happens to I in each case?`,
+      `On Sheet 5, the electric stove (240V, 40A) uses 9,600 watts. A phone charger (5V, 2A) uses 10 watts. The ratio is 960:1. Yet both are "electrical appliances." What does this enormous power difference tell you about how energy use scales with voltage and current? Could you power a stove from a USB port? Explain using P = IV.`
+    ]
+  },
+  'optics': {
+    title: `Optics & Refraction Engineering Lab`,
+    science: `⚙️ Physical Science — Geometric Optics & Trigonometry`,
+    mission: `Optical engineers design lenses, fiber optic cables, periscopes, cameras, and telescopes using Snell's Law. Every time light crosses a material boundary, they calculate exactly how much it bends. In this lab you will build a refraction calculator, design a fiber optic system, and discover why diamonds sparkle — all using the trig you learned with SOH-CAH-TOA.`,
+    steps: [
+      `Create a workbook called <em>Optics_Refraction_Lab</em>.`,
+      `<strong>Sheet 1 — Index of Refraction Reference:</strong> Columns: Material | Index n | Speed of light (m/s) <code>=3E8/B2</code> | % of vacuum speed <code>=C2/3E8*100</code>. Enter 10 materials: Vacuum (1.000), Air (1.003), Ice (1.31), Water (1.333), Eye fluid (1.336), Glass crown (1.52), Glass flint (1.62), Zircon (1.92), Diamond (2.42), Silicon (3.50). Create a bar chart of index values. Add a formula: <code>=IF(B2>1.5,"High index — significant bending","Low index — minimal bending")</code>.`,
+      `<strong>Sheet 2 — Snell's Law Calculator:</strong> Build a refraction solver. Inputs: Cell B2 = n₁ (entering medium), Cell B3 = n₂ (exiting medium), Cell B4 = θ₁ in degrees. Calculations: Cell B6 = sin(θ₁) <code>=SIN(RADIANS(B4))</code>. Cell B7 = sin(θ₂) <code>=B2*B6/B3</code>. Cell B8 = θ₂ <code>=IF(B7>1,"TOTAL INTERNAL REFLECTION",DEGREES(ASIN(B7)))</code>. Cell B10 = "Bending direction" <code>=IF(B3>B2,"Toward normal (denser)","Away from normal (less dense)")</code>. Test all material pairs from Sheet 1 at angles of 10°, 30°, 45°, 60°, 80°. Record which combinations produce total internal reflection.`,
+      `<strong>Sheet 3 — Critical Angle Calculator:</strong> Total internal reflection occurs at and above the critical angle. Formula: sin(θ_c) = n₂/n₁ (only when n₁ > n₂). Column A: Material pair (e.g. "Glass/Air"). Column B: n₁ (denser). Column C: n₂ (less dense). Column D: sin(θ_c) <code>=C2/B2</code>. Column E: θ_c in degrees <code>=DEGREES(ASIN(D2))</code>. Column F: <code>=IF(D2>1,"No TIR possible","TIR occurs above "&TEXT(E2,"0.0")&"°")</code>. Enter 8 material pairs including glass/air, water/air, diamond/air, diamond/water, glass/water, flint glass/crown glass, silicon/air, zircon/air.`,
+      `<strong>Sheet 4 — Fiber Optic Cable Simulation:</strong> A fiber optic cable works by total internal reflection. The core has n=1.50, the cladding has n=1.46. Column A: Ray angle from normal (degrees): 5, 10, 15, 20, 25, 30, 35, 40, 45, 50. Column B: sin(θ) <code>=SIN(RADIANS(A2))</code>. Column C: sin(refracted angle) <code>=1.5*B2/1.46</code>. Column D: Refracted angle or TIR <code>=IF(C2>1,"TIR — light stays inside!",DEGREES(ASIN(C2)))</code>. Column E: Transmitted? <code>=IF(C2>1,"✅ Contained","❌ Escapes")</code>. Create a chart showing which angles produce TIR. Find the critical angle for this glass/cladding combination.`,
+      `<strong>Sheet 5 — Diamond Brilliance Analysis:</strong> Diamond sparkles because of TIR and high n=2.42. Critical angle = sin⁻¹(1/2.42) ≈ 24.4°. Column A: Light ray angle entering diamond face (10°–80° in steps of 10°). Column B: Refracted angle inside diamond (from air n=1 to diamond n=2.42). Column C: After bouncing inside, exit angle. Column D: Does it exit or TIR? <code>=IF(C2>24.4,"TIR — reflects back and sparkles!","Exits — escapes diamond")</code>. Create a comparison chart showing exit vs. TIR for each ray angle. Explain in cell H2 why a well-cut diamond maximizes TIR.`
+    ],
+    deliverable: `Submit your 5-sheet workbook. Write an "Optical Engineer's Analysis": <em>"The critical angle for glass (n=1.52) in air is ___°. For the fiber optic cable (core n=1.50, cladding n=1.46), TIR begins at ___°. Diamond's critical angle is only ___° — meaning any ray hitting the diamond face at more than ___° from the normal will stay trapped inside and eventually exit through the top face, creating the sparkle effect. The mathematical key is the formula sin(θ_c) = n₂/n₁, which uses the ___ trig function."</em>`,
+    reflect: [
+      `On Sheet 2, when n₁ < n₂ (light entering a denser medium), θ₂ is always smaller than θ₁. Prove this algebraically using Snell's Law: if n₁ < n₂, what must be true about sin(θ₁) vs. sin(θ₂)? Since sin is an increasing function for 0°–90°, what does this tell you about the angles?`,
+      `On Sheet 4, the fiber optic cladding (n=1.46) is only slightly less dense than the core (n=1.50). This small difference creates TIR. On Sheet 5, diamond's huge n=2.42 creates a very small critical angle (24.4°). Why does a larger index of refraction create a smaller critical angle? Use the formula sin(θ_c) = n₂/n₁ and consider what happens as n₁ increases while n₂ stays at 1.`
+    ]
+  },
+  'keplers-laws': {
+    title: `Solar System Orbital Mechanics Simulator`,
+    science: `⚙️ Physical Science — Kepler's Laws & Planetary Science`,
+    mission: `NASA mission planners use Kepler's Third Law every time they calculate a spacecraft's orbit or time an interplanetary trajectory. In this lab you will build a complete solar system orbital database, verify Kepler's Law for all planets, predict orbits for dwarf planets and exoplanets, and discover what would happen to Earth's year if it moved to a different orbital radius.`,
+    steps: [
+      `Create a workbook called <em>Solar_System_Orbital_Simulator</em>.`,
+      `<strong>Sheet 1 — Kepler's Third Law Verifier:</strong> Columns: Planet | Orbital radius r (AU) | Orbital period T (years) | r³ <code>=B2^3</code> | T² <code>=C2^2</code> | Ratio T²/r³ <code>=E2/D2</code> | Match? <code>=IF(ABS(F2-1)<0.05,"✓ Verified","✗ Check")</code>. Enter all 8 planets: Mercury (0.387, 0.241), Venus (0.723, 0.615), Earth (1.000, 1.000), Mars (1.524, 1.881), Jupiter (5.203, 11.86), Saturn (9.539, 29.46), Uranus (19.19, 84.01), Neptune (30.07, 164.8). Create a <strong>Scatter Chart</strong> of T² vs. r³ — it should be a straight line through the origin, confirming the proportional relationship.`,
+      `<strong>Sheet 2 — Predicted Periods:</strong> Use T = √(r³) to predict orbital periods for objects where only r is known. Columns: Object | r (AU) | r³ <code>=B2^3</code> | T (years) <code>=SQRT(C2)</code> | T in Earth days <code>=D2*365.25</code> | T in hours (if < 1 yr) <code>=D2*8766</code>. Enter: Ceres (2.77 AU), Pluto (39.48 AU), Eris dwarf planet (67.7 AU), Halley's Comet (avg 17.8 AU), Voyager 1 current distance (158 AU, hypothetical circular orbit), Near-Earth asteroid 2024 (1.02 AU), TRAPPIST-1b exoplanet (0.0115 AU from its star), Proxima b exoplanet (0.0485 AU).`,
+      `<strong>Sheet 3 — What-If Orbital Calculator:</strong> What would happen if Earth moved to a different orbit? Column A: Scenario description. Column B: New orbital radius (AU). Column C: New orbital period T <code>=SQRT(B2^3)</code>. Column D: Length of Earth "year" in current Earth days <code>=C2*365.25</code>. Column E: Change from current year <code>=D2-365.25</code>. Column F: Season length (T/4) <code>=D2/4</code>. Enter 8 scenarios: Earth at Mars distance (1.524 AU), Earth at Venus distance (0.723), Earth at Jupiter distance (5.2), Earth at 1.5 AU (midway to Mars), Earth at 0.9 AU, Earth at Mercury distance (0.387), Earth at 2.0 AU, Earth at 0.5 AU. Create a bar chart of year lengths.`,
+      `<strong>Sheet 4 — Orbital Speed Calculator:</strong> Average orbital speed v = 2πr / T (circumference ÷ period). Columns: Planet | r (AU) | r in km <code>=B2*149600000</code> | T (years) | T in seconds <code>=D2*365.25*24*3600</code> | Orbital speed (km/s) <code>=2*PI()*C2/E2</code> | Relative to Earth <code>=F2/F$3</code>. Fill in for all 8 planets. Create a bar chart of orbital speeds. This connects to Kepler's Second Law — planets closer to the Sun move faster.`,
+      `<strong>Sheet 5 — Exoplanet Detector:</strong> Astronomers find exoplanets by measuring how often a planet passes in front of its star (transit period = orbital period). Column A: Star system. Column B: Transit period T (days). Column C: T in years <code>=B2/365.25</code>. Column D: Orbital radius r <code>=(C2^2)^(1/3)</code> (cube root of T²). Column E: r in km <code>=D2*149600000</code>. Column F: Habitable zone? <code>=IF(AND(D2>0.8,D2<1.5),"✅ Possibly habitable","❌ Too hot or cold")</code>. Enter 8 real exoplanet systems from the Kepler mission with known transit periods.`
+    ],
+    deliverable: `Submit your 5-sheet workbook. Write a "Planetary Science Summary": <em>"Kepler's Third Law is verified for all 8 planets — the ratio T²/r³ equals ___ (approximately 1.00) for every planet. The fastest-orbiting planet is ___ at ___ km/s; the slowest is ___ at ___ km/s. If Earth orbited at Mars's distance (1.524 AU), a year would last ___ days. The exoplanet most likely to be habitable is ___ with orbital radius ___ AU and period ___ days."</em>`,
+    reflect: [
+      `On Sheet 1, the scatter chart of T² vs. r³ forms a straight line through the origin. In algebra terms, this means T² and r³ are proportional: T² = k × r³ where k = 1 (in AU and years). How is this the same mathematical structure as a proportional relationship y = kx? What is x and what is y in Kepler's context?`,
+      `On Sheet 4, Mercury orbits at about 47 km/s and Neptune at about 5.4 km/s. Using the formula v = 2πr/T and Kepler's Third Law (T = r^(3/2)), show algebraically that v ∝ r^(-1/2) — meaning orbital speed decreases as the square root of radius increases. This is why inner planets are faster: gravity's pull is stronger at shorter distances.`
+    ]
+  },
+};
+
+  const REALWORLD_8 = {
+    'slope': {
+      title: `Wheelchair Ramp / Skate Ramp Designer`,
+      banner: `🎨 Real-World Math — Engineering & Slope`,
+      mission: `The Americans with Disabilities Act requires wheelchair ramps to have a slope no steeper than 1:12. Design and draw a ramp for a real entrance with a 30-inch step up.`,
+      steps: [
+      `A 30-inch rise at slope 1:12 needs a run of 30 x 12 = 360 inches = 30 feet of horizontal ramp.`,
+      `Compute the actual slope as a decimal and a percent: 1/12 ≈ 0.0833 = 8.33%.`,
+      `Draw the ramp on graph paper at scale 1 inch = 1 foot. Show: the rise, the run, the angle.`,
+      `Use the Pythagorean theorem to compute the LENGTH of the ramp surface (hypotenuse). a² + b² = c². The ramp length is the c value.`,
+      `Convert your drawing to a skate ramp: a quarter-pipe with a 4-ft rise. What slope ratio does a 6-ft long ramp give? Express as fraction, decimal, and percent.`,
+      `Bonus: ADA also requires a level "landing" every 30 feet. If a building has a 5-ft step up, is one landing enough? Show the math.`
+      ],
+      deliverable: `Submit your scaled ramp drawing with the rise, run, ramp length, slope ratio, slope decimal, and slope percent all labeled. Bonus: the skate-ramp comparison.`,
+      reflect: [
+      `A skate-ramp designer might use a 1:1 slope. A wheelchair ramp uses 1:12. Why are these so different?`,
+      `If you double the rise but keep the slope at 1:12, what happens to the run? What about the ramp’s diagonal length?`
+      ]
+    },
+    'linear-equations': {
+      title: `Phone Plan Comparator`,
+      banner: `🎨 Real-World Math — Smart Spending & Linear Models`,
+      mission: `Two cell phone plans look similar but cost very differently over time. Build linear equations to find the BREAK-EVEN month and decide which is cheaper for your usage.`,
+      steps: [
+      `Plan A: $40 per month, $200 phone (paid up front). Total cost after m months: y = 40m + 200.`,
+      `Plan B: $60 per month, free phone, $50 activation fee. Total cost: y = 60m + 50.`,
+      `Set the equations equal: 40m + 200 = 60m + 50. Solve for m. This is the break-even month.`,
+      `Compute total cost for both plans at m = 6, 12, 18, 24 months. Make a table.`,
+      `On graph paper, plot both lines on the same axes. Mark the intersection point.`,
+      `Bonus: find a 3rd plan online (T-Mobile, Mint, US Cellular) and compute its break-even with both A and B.`
+      ],
+      deliverable: `Submit the equations, the break-even calculation, the cost table, and the graph. Write 2 sentences: which plan would YOU choose, and why?`,
+      reflect: [
+      `Plan B has a higher monthly cost but a cheaper start. Which plan is better for a 6-month visit? For a 4-year contract?`,
+      `On the graph, the break-even is the INTERSECTION of two lines. Why does that point answer "when do they cost the same?"`
+      ]
+    },
+    'systems': {
+      title: `Boba Tea Shop Inventory`,
+      banner: `🎨 Real-World Math — Business & Systems of Equations`,
+      mission: `A boba shop sold 80 drinks today and made $360. Small drinks are $4 each, large are $5. How many of each were sold? Set up and solve a system of equations.`,
+      steps: [
+      `Let s = small drinks, L = large drinks. Write 2 equations: s + L = 80 (total drinks); 4s + 5L = 360 (total revenue).`,
+      `Solve by SUBSTITUTION: from equation 1, s = 80 - L. Substitute into equation 2.`,
+      `Solve by ELIMINATION: multiply equation 1 by 4 and subtract from equation 2 to eliminate s.`,
+      `Verify both methods give the same answer.`,
+      `Now create your OWN scenario. A bakery sells cookies ($2) and brownies ($3). 50 items sold, $112 revenue. How many of each?`,
+      `Bonus: write a 3-variable system. The bakery also sells $4 muffins. 60 items, $190, twice as many cookies as muffins. Solve.`
+      ],
+      deliverable: `Submit both methods of solution for the boba problem, the solution to your own bakery problem, and the bonus 3-variable system.`,
+      reflect: [
+      `Substitution and elimination both solve the same system. When is one easier than the other?`,
+      `Could a system have NO solution? Two parallel lines never meet. Give an example with a boba context.`
+      ]
+    },
+    'pythagorean': {
+      title: `TV Diagonal Decoder`,
+      banner: `🎨 Real-World Math — Pythagorean Theorem in Real Products`,
+      mission: `A "55-inch TV" measures 55 inches diagonally. But what are the real width and height? Use the Pythagorean theorem and the 16:9 ratio to find out.`,
+      steps: [
+      `Modern TVs use a 16:9 aspect ratio. So width / height = 16 / 9. Set width = 16k and height = 9k for some scaling factor k.`,
+      `Apply Pythagoras: (16k)² + (9k)² = 55². Simplify: 256k² + 81k² = 3025. 337 k² = 3025. Solve for k.`,
+      `Find width = 16k and height = 9k.`,
+      `Repeat for a 65-inch TV and a 75-inch TV. Make a table: diagonal | width | height | viewing area.`,
+      `Compute the AREA in sq inches. A 75-inch TV has how many MORE square inches than a 55-inch?`,
+      `Bonus: 4:3 was the old TV ratio. Does a 55-inch 4:3 TV have more or less SCREEN AREA than a 55-inch 16:9? Compute both and compare.`
+      ],
+      deliverable: `Submit your three TV calculations (55, 65, 75) with widths, heights, and areas. Plus the 4:3 vs 16:9 comparison.`,
+      reflect: [
+      `A 65-inch TV has only an 18% bigger diagonal than a 55-inch (10/55), but the area is much more than 18% larger. Compute the area increase as a percent. Why is it bigger?`,
+      `Why does the Pythagorean theorem connect the diagonal and the side lengths of a rectangle? Draw the rectangle and the diagonal: what shape do you see?`
+      ]
+    },
+    'volume': {
+      title: `Surfboard Volume Builder`,
+      banner: `🎨 Real-World Math — Surfing & Volume`,
+      mission: `Surfboards are sold by their VOLUME in liters. Use prism approximations to compute the volume of three boards (a longboard, a shortboard, a fish), and pick the right one for your weight.`,
+      steps: [
+      `A surfboard is roughly a flattened prism. Approximate it as: volume ≈ length x width x thickness x 0.55 (the 0.55 accounts for tapered ends).`,
+      `Compute volumes (in cubic inches) for 3 boards: Longboard: 9’6" x 22.5" x 3"; Shortboard: 6’2" x 19" x 2.4"; Fish: 5’8" x 21" x 2.5".`,
+      `Convert cubic inches to LITERS (1 in³ = 0.01639 L). Round to 1 decimal place.`,
+      `A general rule: surfers want the volume to roughly match their body weight in pounds, reduced by a skill-level factor (beginners 1.0, intermediate 0.7, advanced 0.5). For a 150 lb beginner, target 150 L; intermediate, 105 L; advanced, 75 L.`,
+      `Match the 3 boards to skill levels.`,
+      `Bonus: design YOUR ideal board. Pick a length, width, thickness so the volume matches your weight class.`
+      ],
+      deliverable: `Submit your 3-board volume table (cubic in and liters), your skill-level matching, and your custom board design with all dimensions.`,
+      reflect: [
+      `If you double the LENGTH of a board, the volume also doubles. If you double the WIDTH, volume doubles. If you double ALL three dimensions, what happens?`,
+      `Why is more volume usually easier for a beginner? Tie this to physics (buoyancy is volume-dependent).`
+      ]
+    },
+    'functions': {
+      title: `Roller Coaster Designer`,
+      banner: `🎨 Real-World Math — Functions & Coaster Physics`,
+      mission: `A roller coaster’s elevation along its track must always be a FUNCTION of distance (one elevation per distance — you can’t be at two heights at once). Design a coaster on graph paper, label which segments are functions and which are not.`,
+      steps: [
+      `On graph paper, draw a side view of a coaster track. x-axis = distance along the track, y-axis = elevation in feet. Make the track interesting: one big drop, one loop, one helix turn.`,
+      `Mark on your drawing: which sections PASS the vertical-line test (are functions) and which FAIL (are not). Loops and helices fail; uphills, downhills, and flat sections pass.`,
+      `Identify each "function piece" as linear, increasing, decreasing, or constant. Label each.`,
+      `Pick ONE linear segment. Compute its slope (rise / run). Write its equation y = mx + b.`,
+      `Build a domain-and-range table for each function piece: input distance range, output elevation range.`,
+      `Bonus: design the coaster so that the entire track (no loops!) is a single function. How does this constraint change your design?`
+      ],
+      deliverable: `Submit your annotated coaster drawing with function/not-function labels, the linear-segment equation, the domain-range table, and the bonus single-function version.`,
+      reflect: [
+      `Why does every input have at most one output in a function? What does this rule mean physically for a coaster?`,
+      `A loop is NOT a function of distance. But a coaster can still HAVE loops. How? (Hint: think about parameterization — use TIME as input.)`
+      ]
+    },
+    'transformations': {
+      title: `Hawaiian Tessellation Art`,
+      banner: `🎨 Real-World Math — Art & Geometric Transformations`,
+      mission: `Tessellations cover a plane with a single shape, no gaps, no overlaps. Design an Escher-style tessellation using a Hawaiian theme (sea turtle, hibiscus, wave) using rigid transformations.`,
+      steps: [
+      `Start with a square or hexagon as your base tile. Cut a curve out of one side; tape it onto the OPPOSITE side (translation). The new tile still tessellates.`,
+      `Now do a rotation: cut a curve out of one side; rotate it 90° and tape it to the adjacent side.`,
+      `On the tile, draw a Hawaiian image (turtle, hibiscus, wave). The shape edges should suggest the form.`,
+      `Trace your tile 12 times on a piece of paper, fitting it together. Use the tile and its transformations consistently.`,
+      `For each tile in the tessellation, identify which TRANSFORMATION moved it from the starting tile: translation, rotation, reflection, or glide reflection.`,
+      `Color the result. Use 4 colors so no adjacent tiles share a color (the Four-Color Theorem says this is always possible).`
+      ],
+      deliverable: `Submit (1) your tile template (the original cut shape with image on it) and (2) the finished colored tessellation, plus a sheet labeling each tile’s transformation.`,
+      reflect: [
+      `Why does the "cut and tape opposite side" trick produce a shape that still tessellates? Connect this to the rigid-motion property of translation.`,
+      `Squares and hexagons tessellate, but pentagons (regular 5-sided) do NOT. Why? (Hint: 360° / interior angle should be a whole number.)`
+      ]
+    },
+    'scatter-plots': {
+      title: `Sleep vs. Test Scores Investigation`,
+      banner: `🎨 Real-World Math — Personal Data & Correlation`,
+      mission: `Does more sleep mean better test scores? Run a personal experiment for 2 weeks: log your sleep and your performance, then plot and analyze.`,
+      steps: [
+      `For 14 nights, log: hours of sleep | next-day quiz/homework score (or self-rated focus 1 to 10).`,
+      `On graph paper, plot a scatter plot. x-axis = sleep hours, y-axis = score.`,
+      `Eyeball a "line of best fit" through the cluster.`,
+      `Compute the slope of your line of best fit by picking two points on it. Interpret: how much does the score change per extra hour of sleep?`,
+      `Identify the correlation: positive, negative, none, or strong/weak. Justify.`,
+      `Bonus: pool data with 4 classmates (60+ nights). Replot. Is the correlation stronger or weaker with more data?`
+      ],
+      deliverable: `Submit your data log, scatter plot with line of best fit, the slope calculation and interpretation, and your correlation classification.`,
+      reflect: [
+      `Correlation does NOT prove causation. List 2 OTHER reasons sleep and test scores might both rise on the same days that aren’t "sleep causes the score."`,
+      `Why is a 14-day sample small? How might pooling with classmates change the picture?`
+      ]
+    },
+  };
+
+const ANSWER_KEYS_8 = {
+  'real-numbers': 'Engineering_Precision_Numbers.xlsx',
+  'exponents': 'Inverse_Square_Law_Exponents.xlsx',
+  'unit-conversions': 'Metric_Conversion_Calculator.xlsx',
+  'scientific-notation': 'Scale_of_Universe_Table.xlsx',
+  'slope': 'Vehicle_Motion_Analysis.xlsx',
+  'linear-equations': 'Ohm_Law_Circuit_Workbook.xlsx',
+  'physics-equations': 'Motion_Equation_Simulator.xlsx',
+  'systems': 'Force_Balance_System_Solver.xlsx',
+  'functions': 'Machine_Efficiency_Functions.xlsx',
+  'linear-functions': 'Hooke_Law_Spring_Lab.xlsx',
+  'transformations': 'Engineering_Transformation_Design.xlsx',
+  'angle-relationships': 'Roof_Truss_Angle_Analysis.xlsx',
+  'pythagorean': 'Right_Triangle_Engineering.xlsx',
+  'volume': 'Tank_Engineering_Design.xlsx',
+  'scatter-plots': 'Material_Elasticity_Scatter.xlsx',
+  'two-way-tables': 'Quality_Control_Two_Way.xlsx',
+  'word-problems': 'Engineering_Capstone_Portfolio.xlsx',
+  'waves': 'Sound_Light_Wave_Lab.xlsx',
+  'electricity': 'Circuit_Power_Lab.xlsx',
+  'optics': 'Optics_Refraction_Lab.xlsx',
+  'keplers-laws': 'Solar_System_Orbital.xlsx'
+};
+
+function showHandout() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('handout-screen').classList.add('active');
+  const h = HANDOUTS_8[currentUnit];
+  if (!h) {
+    document.getElementById('handout-content').innerHTML = '<p>No handout available for this unit.</p>';
+    return;
+  }
+  const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
+  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  const akFile = ANSWER_KEYS_8[currentUnit];
+  const answerKeyHtml = akFile ? `
+      <div style="background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:14px;margin:14px 0;">
+        <strong style="color:#1B3A8A;">📗 Answer Key (for self-check):</strong>
+        <a href="answerkeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
+        <div style="font-size:0.9rem;color:#555;margin-top:6px;">Completed workbook with all formulas, charts, and real-world data. Open in Excel or upload to Google Sheets (<em>File → Import → Upload</em>) to compare with your own work after you finish.</div>
+      </div>` : '';
+  document.getElementById('handout-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${h.title}</h3>
+      <div class="handout-science">${h.science}</div>
+      <div class="handout-mission">${h.mission}</div>
+      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <ol class="handout-steps">${stepsHtml}</ol>
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>
+      ${answerKeyHtml}
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>
+    </div>`;
+}
+
+function showRealWorld() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('realworld-screen').classList.add('active');
+  const h = REALWORLD_8[currentUnit];
+  if (!h) {
+    return;
+  }
+  const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
+  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  document.getElementById('realworld-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${h.title}</h3>
+      <div class="handout-science">${h.banner}</div>
+      <div class="handout-mission">${h.mission}</div>
+      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <ol class="handout-steps">${stepsHtml}</ol>
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>

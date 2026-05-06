@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 4th Grade Math Tutorial</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100;  width: 250px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 15px; font-weight: bold; }
+    .sidebar-item { padding: 10px; margin: 5px 0; background: #111d35; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar { border-bottom: 4px solid #FFD100;  background: #1B3A8A; color: white; padding: 15px 30px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .topbar-right { display: flex; gap: 20px; align-items: center; font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 30px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .unit-card { background: white; border-radius: 8px; padding: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(56,189,248,0.2); }
+    .unit-card-header { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 15px; }
+    .unit-card-icon { font-size: 32px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+    .unit-card-cc { font-size: 12px; color: #666; }
+    .unit-card-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.4; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { background: #f0f0f0; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 20px 0 10px 0; color: #1B3A8A; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.6; }
+    .lesson-content ul, .lesson-content ol { margin-left: 20px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 8px; }
+    .btn { display: inline-block; padding: 10px 20px; background: #1B3A8A; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px; }
+    .btn:hover { background: #162E70; }
+    .btn-secondary { background: #6b7280; }
+    .btn-secondary:hover { background: #4b5563; }
+    .btn-ixl { display: inline-block; padding: 10px 15px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ixl:hover { background: #2563eb; }
+    .btn-yt { display: inline-block; padding: 10px 15px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-yt:hover { background: #dc2626; }
+    .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-phet:hover { background: #6d28d9; }
+    .resource-card { background: #f3f4f6; border-radius: 8px; padding: 15px; margin: 20px 0; }
+    .resource-card h3 { margin-bottom: 10px; color: #1B3A8A; font-size: 14px; }
+    .resource-btns { display: flex; flex-wrap: wrap; }
+    .problem { background: white; padding: 15px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 4px; }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; font-family: 'Courier New', monospace; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .quiz-question { background: white; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #1B3A8A; }
+    .quiz-question h4 { margin-bottom: 10px; color: #1B3A8A; }
+    .quiz-question label { display: block; margin: 8px 0; cursor: pointer; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 15px 0; }
+    .result-card h3 { color: #059669; margin-bottom: 10px; }
+    .nav-buttons { display: flex; gap: 10px; margin: 20px 0; }
+    .back-btn { background: #6b7280; }
+    .back-btn:hover { background: #4b5563; }
+
+    .handout-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    .handout-card h3 { margin: 0 0 8px; color: #B8860B; font-size: 1.2rem; }
+    .handout-science { font-size: 0.9rem; color: #666; margin-bottom: 12px; }
+    .handout-mission { background: #f8f9ff; border-radius: 6px; padding: 12px; margin-bottom: 16px; font-style: italic; color: #334; }
+    .handout-steps { margin: 0 0 16px; padding-left: 0; list-style: none; counter-reset: step-counter; }
+    .handout-steps li { counter-increment: step-counter; padding: 8px 12px 8px 44px; margin-bottom: 6px; background: #f0f4ff; border-radius: 6px; position: relative; font-size: 0.92rem; line-height: 1.5; }
+    .handout-steps li::before { content: counter(step-counter); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 0.78rem; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .handout-deliverable { background: #fffbe6; border: 1px solid #f5d000; border-radius: 6px; padding: 12px; margin-bottom: 16px; }
+    .handout-deliverable strong { display: block; margin-bottom: 4px; color: #7a5f00; }
+    .handout-reflect { background: #fffbea; border: 1px solid #68d391; border-radius: 6px; padding: 12px; }
+    .handout-reflect strong { display: block; margin-bottom: 4px; color: #276749; }
+    .handout-reflect ol { margin: 0; padding-left: 20px; }
+    .handout-reflect li { margin-bottom: 6px; font-size: 0.9rem; }
+    code { background: #e8edf5; padding: 1px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.88em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 16px 0;color:#888;font-size:14px;">4th Grade Math Topics</p>
+      <div id="sidebar-content"></div>
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; color: #999;">
+        Progress: <span id="progress-text">0/16</span>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-math-index.html" class="back-index-btn" title="Back to Math Classes">← All Math</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Exploring the World with Math</span>
+        </div>
+        <div class="topbar-right">Math · Grade 4</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn back-btn" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showHome()">← Back</button>
+            <button class="btn" onclick="showHandout()">🌍 Real-World Math</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Check Answers</button>
+            <button class="btn" onclick="showQuiz()">Quiz →</button>
+          </div>
+        </div>
+        <div id="handout-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">🌍 Real-World Math</h2>
+          <div id="handout-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn back-btn" onclick="showWorksheet()">← Back to Worksheet</button>
+          <h2 style="margin: 20px 0;">📝 Quick Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showWorksheet()">← Back</button>
+            <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+          </div>
+        </div>
+        <div id="certificate-screen" class="screen">
+          <div style="text-align: center; padding: 40px;">
+            <h2 style="color: #1B3A8A; margin: 20px 0;">🎉 Unit Completed!</h2>
+            <div id="cert-content"></div>
+            <button class="btn" onclick="showHome()" style="margin-top: 20px;">Return to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+const UNITS = [
+  {
+    "id": "place-value",
+    "title": "Place Value & Rounding",
+    "icon": "🔢",
+    "cc": "4.NBT.1-3",
+    "desc": "Understand place value to the millions; compare and round multi-digit whole numbers.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/identify-place-value-names",
+    "ytSearch": "khan academy 4th grade place value rounding"
+  },
+  {
+    "id": "addition",
+    "title": "Addition",
+    "icon": "➕",
+    "cc": "4.NBT.4",
+    "desc": "Fluently add multi-digit whole numbers using the standard algorithm.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/add-two-multi-digit-numbers",
+    "ytSearch": "khan academy 4th grade multi-digit addition standard algorithm"
+  },
+  {
+    "id": "subtraction",
+    "title": "Subtraction",
+    "icon": "➖",
+    "cc": "4.NBT.4",
+    "desc": "Fluently subtract multi-digit whole numbers, including regrouping across zeros.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/subtract-two-multi-digit-numbers",
+    "ytSearch": "khan academy 4th grade multi-digit subtraction regrouping"
+  },
+  {
+    "id": "mental-mult",
+    "title": "Mental Multiplication",
+    "icon": "🧠",
+    "cc": "4.NBT.5",
+    "desc": "Multiply fluently in your head using times-table facts and mental math tricks.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/multiplication-facts-to-12",
+    "ytSearch": "khan academy 4th grade mental multiplication strategies"
+  },
+  {
+    "id": "multiply-cols",
+    "title": "Multiply in Columns",
+    "icon": "✖️",
+    "cc": "4.NBT.5",
+    "desc": "Multiply a multi-digit whole number by a 1-digit or 2-digit number using the standard algorithm.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/multiply-a-2-digit-number-by-a-2-digit-number",
+    "ytSearch": "khan academy 4th grade multi-digit multiplication standard algorithm",
+    "phetUrl": "https://phet.colorado.edu/en/simulations/arithmetic"
+  },
+  {
+    "id": "mental-div",
+    "title": "Mental Division",
+    "icon": "🧩",
+    "cc": "4.NBT.6",
+    "desc": "Divide fluently using mental math, known multiplication facts, and place value.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/division-facts-to-12",
+    "ytSearch": "khan academy 4th grade mental division strategies"
+  },
+  {
+    "id": "long-div",
+    "title": "Long Division",
+    "icon": "📏",
+    "cc": "4.NBT.6",
+    "desc": "Divide up to 4-digit dividends by 1-digit divisors using the long-division algorithm.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/divide-larger-numbers-by-1-digit-numbers",
+    "ytSearch": "khan academy 4th grade long division"
+  },
+  {
+    "id": "order-ops",
+    "title": "Order of Operations",
+    "icon": "📋",
+    "cc": "4.OA.1",
+    "desc": "Evaluate expressions with grouping symbols; understand operation order.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/identify-mistakes-involving-the-order-of-operations",
+    "ytSearch": "khan academy 4th grade order of operations PEMDAS"
+  },
+  {
+    "id": "roman-numerals",
+    "title": "Roman Numerals",
+    "icon": "🏛️",
+    "cc": "Numeracy/Heritage",
+    "desc": "Read and write Roman numerals I, V, X, L, C, D, M and convert to/from standard form.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/roman-numerals",
+    "ytSearch": "khan academy roman numerals introduction"
+  },
+  {
+    "id": "fractions",
+    "title": "Fractions",
+    "icon": "🍕",
+    "cc": "4.NF.1-6",
+    "desc": "Compare, find equivalents, add and subtract fractions with like denominators.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/identify-equivalent-fractions",
+    "ytSearch": "khan academy 4th grade fractions equivalent adding",
+    "phetUrl": "https://phet.colorado.edu/en/simulations/fractions-equality"
+  },
+  {
+    "id": "decimals",
+    "title": "Decimals",
+    "icon": "💯",
+    "cc": "4.NF.6-7",
+    "desc": "Read, write, and compare decimals to tenths and hundredths; connect to fractions.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/place-values-in-decimal-numbers",
+    "ytSearch": "khan academy 4th grade decimals tenths hundredths"
+  },
+  {
+    "id": "measurement",
+    "title": "Measurement",
+    "icon": "📏",
+    "cc": "4.MD.1-3",
+    "desc": "Convert between units (km/m/cm, lb/oz, ft/in); find area and perimeter of rectangles.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/convert-mixed-customary-units",
+    "ytSearch": "khan academy 4th grade measurement conversion area perimeter"
+  },
+  {
+    "id": "geometry",
+    "title": "Geometry",
+    "icon": "🔷",
+    "cc": "4.G.1-3",
+    "desc": "Identify points, lines, rays, and angles; classify triangles and quadrilaterals; recognize symmetry.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/points-lines-line-segments-rays-and-angles",
+    "ytSearch": "khan academy 4th grade geometry lines angles shapes",
+    "phetUrl": "https://phet.colorado.edu/en/simulations/area-builder"
+  },
+  {
+    "id": "factoring",
+    "title": "Factoring",
+    "icon": "🧮",
+    "cc": "4.OA.4",
+    "desc": "Find factors and multiples of whole numbers; identify prime and composite numbers 1–100.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/prime-and-composite-up-to-100",
+    "ytSearch": "khan academy factors multiples prime composite 4th grade"
+  },
+  {
+    "id": "data-graphing",
+    "title": "Data & Graphing",
+    "icon": "📊",
+    "cc": "4.MD.4",
+    "desc": "Make and read line plots, bar graphs, and pictographs; interpret simple data sets.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/create-line-plots",
+    "ytSearch": "khan academy 4th grade line plots bar graphs data"
+  },
+  {
+    "id": "word-problems",
+    "title": "Word Problems",
+    "icon": "📝",
+    "cc": "4.OA.2-3",
+    "desc": "Solve multi-step word problems using the four operations; interpret remainders.",
+    "ixlUrl": "https://www.ixl.com/math/grade-4/multi-step-word-problems",
+    "ytSearch": "khan academy 4th grade multi-step word problems"
+  }
+];
+
+const LESSONS = {
+  "place-value": "<h2>Place Value & Rounding</h2>\n<p>Every digit's value depends on where it sits in a number. Moving one place <strong>left</strong> makes its value <strong>10 times greater</strong>.</p>\n<p><strong>Place-value chart (example 3,452,678):</strong></p>\n<ul>\n  <li>3 — millions (3,000,000)</li>\n  <li>4 — hundred-thousands (400,000)</li>\n  <li>5 — ten-thousands (50,000)</li>\n  <li>2 — thousands (2,000)</li>\n  <li>6 — hundreds (600)</li>\n  <li>7 — tens (70)</li>\n  <li>8 — ones (8)</li>\n</ul>\n<p><strong>Expanded form:</strong> 3,452,678 = 3,000,000 + 400,000 + 50,000 + 2,000 + 600 + 70 + 8.</p>\n<p><strong>Rounding rule:</strong> Find the rounding place, then look at the digit to its <em>right</em>. If it's 5 or greater, round up; otherwise, round down.</p>\n<p><strong>Example:</strong> Round 47,582 to the nearest thousand. Thousands digit is 7; next digit is 5 → round up → <strong>48,000</strong>.</p>",
+  "addition": "<h2>Addition</h2>\n<p>The <strong>standard addition algorithm</strong> stacks numbers by place value, ones under ones, tens under tens.</p>\n<p><strong>Steps:</strong></p>\n<ol>\n  <li>Line up the place values (right-align).</li>\n  <li>Add each column starting from the ones place.</li>\n  <li>If a column totals 10 or more, <strong>carry</strong> 1 to the next column.</li>\n</ol>\n<p><strong>Example:</strong> 4,876 + 2,389</p>\n<pre>    1 1 1\n    4,876\n  + 2,389\n  --------\n    7,265</pre>\n<p><strong>Tip:</strong> Estimate first — round each number, add mentally. If your actual answer is close to the estimate, you likely didn't make a mistake.</p>",
+  "subtraction": "<h2>Subtraction</h2>\n<p>Subtraction finds the difference between two numbers. When the top digit is smaller than the bottom digit, <strong>regroup</strong> (borrow) from the next place.</p>\n<p><strong>Example:</strong> 5,002 − 1,347</p>\n<pre>    4 9 9 1\n    5,0 0 2\n  − 1,3 4 7\n  ---------\n    3,6 5 5</pre>\n<p>Walk through the regrouping: 2 ones can't give up 7, so borrow from tens. But tens are 0, so we borrow from hundreds — also 0 — all the way from thousands. The whole chain becomes 4-9-9-12.</p>\n<p><strong>Check your work:</strong> Add the answer to the subtrahend. 3,655 + 1,347 = 5,002 ✓</p>",
+  "mental-mult": "<h2>Mental Multiplication</h2>\n<p>Fluent multiplication means doing many products in your head using tricks:</p>\n<ul>\n  <li><strong>×10, ×100, ×1000:</strong> Just add the zeros. 56 × 100 = 5,600.</li>\n  <li><strong>×5 trick:</strong> Halve and multiply by 10. 48 × 5 = (48 ÷ 2) × 10 = 24 × 10 = 240.</li>\n  <li><strong>×9 trick:</strong> Multiply by 10, then subtract the number. 7 × 9 = 70 − 7 = 63.</li>\n  <li><strong>Breaking apart:</strong> 7 × 12 = 7 × 10 + 7 × 2 = 70 + 14 = 84.</li>\n  <li><strong>Doubling:</strong> ×4 = double twice; ×8 = double three times.</li>\n</ul>\n<p><strong>Example:</strong> 25 × 14 → 25 × 4 = 100, 25 × 10 = 250 → 100 + 250 = <strong>350</strong>.</p>",
+  "multiply-cols": "<h2>Multiply in Columns</h2>\n<p>When a product is too big to do in your head, use the <strong>column algorithm</strong> (aka long multiplication).</p>\n<p><strong>Steps for 2-digit × 2-digit:</strong></p>\n<ol>\n  <li>Multiply the top number by the ones digit of the bottom number.</li>\n  <li>Write a 0 in the ones place of the next row (because the next digit is in tens).</li>\n  <li>Multiply the top number by the tens digit and write above that 0.</li>\n  <li>Add the two rows.</li>\n</ol>\n<p><strong>Example:</strong> 237 × 45</p>\n<pre>      237\n   ×   45\n   ------\n     1185    (237 × 5)\n     9480    (237 × 40)\n   ------\n    10,665</pre>\n<p><strong>Estimate check:</strong> 237 ≈ 240, 45 ≈ 50. 240 × 50 = 12,000. Our answer 10,665 is close enough.</p>",
+  "mental-div": "<h2>Mental Division</h2>\n<p>Fast division uses the times-tables in reverse plus useful tricks:</p>\n<ul>\n  <li><strong>÷10:</strong> Drop a zero (or shift decimal). 480 ÷ 10 = 48.</li>\n  <li><strong>Halving:</strong> ÷2 once = halve; ÷4 = halve twice; ÷8 = halve three times.</li>\n  <li><strong>Use factor pairs:</strong> 96 ÷ 6 = (96 ÷ 2) ÷ 3 = 48 ÷ 3 = 16.</li>\n  <li><strong>Divisibility rules:</strong> ÷2 if last digit even; ÷3 if digit sum ÷ 3; ÷5 if ends in 0 or 5; ÷10 if ends in 0.</li>\n</ul>\n<p><strong>Example:</strong> 720 ÷ 9 — think \"9 × what = 720?\" 9 × 80 = 720 → <strong>80</strong>.</p>",
+  "long-div": "<h2>Long Division</h2>\n<p>Long division handles divisions we can't do in our head. The steps are <strong>Divide, Multiply, Subtract, Bring down</strong> (DMSB) — nicknamed \"Dad, Mom, Sister, Brother.\"</p>\n<p><strong>Example:</strong> 952 ÷ 7</p>\n<pre>       1 3 6\n     ________\n  7 | 9 5 2\n      7\n      ---\n      2 5\n      2 1\n      ---\n        4 2\n        4 2\n        ---\n           0    (remainder 0)</pre>\n<p><strong>Answer:</strong> 952 ÷ 7 = 136 remainder 0.</p>\n<p><strong>With a remainder:</strong> 953 ÷ 7 = 136 R 1 (since 953 − 952 = 1).</p>",
+  "order-ops": "<h2>Order of Operations</h2>\n<p>When you see an expression with multiple operations, follow this order:</p>\n<ol>\n  <li><strong>P</strong>arentheses (or brackets) first</li>\n  <li><strong>E</strong>xponents (powers)</li>\n  <li><strong>M</strong>ultiplication and <strong>D</strong>ivision, left to right</li>\n  <li><strong>A</strong>ddition and <strong>S</strong>ubtraction, left to right</li>\n</ol>\n<p><em>Memorize:</em> \"Please Excuse My Dear Aunt Sally\" (PEMDAS).</p>\n<p><strong>Example:</strong> 6 + 2 × (3 + 4)</p>\n<ul>\n  <li>Parentheses: (3 + 4) = 7 → 6 + 2 × 7</li>\n  <li>Multiplication: 2 × 7 = 14 → 6 + 14</li>\n  <li>Addition: 6 + 14 = <strong>20</strong></li>\n</ul>\n<p><strong>Without parentheses:</strong> 6 + 2 × 3 + 4 would be 6 + 6 + 4 = 16. The parentheses change the answer!</p>",
+  "roman-numerals": "<h2>Roman Numerals</h2>\n<p>The ancient Romans wrote numbers with letters. You still see Roman numerals on clock faces, movie copyright dates, and on Hawaiian monarchs' names (e.g., King Kamehameha III).</p>\n<p><strong>The seven symbols:</strong></p>\n<ul>\n  <li>I = 1</li>\n  <li>V = 5</li>\n  <li>X = 10</li>\n  <li>L = 50</li>\n  <li>C = 100</li>\n  <li>D = 500</li>\n  <li>M = 1,000</li>\n</ul>\n<p><strong>Rules:</strong></p>\n<ol>\n  <li>Write from largest to smallest, left to right: MCCC = 1,300.</li>\n  <li>When a smaller symbol comes <em>before</em> a larger one, <strong>subtract</strong>: IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900.</li>\n  <li>A symbol can repeat up to 3 times: III = 3, XXX = 30.</li>\n</ol>\n<p><strong>Example:</strong> MCMLXXXVIII = 1000 + 900 + 50 + 30 + 5 + 3 = <strong>1,988</strong>.</p>",
+  "fractions": "<h2>Fractions</h2>\n<p>A <strong>fraction</strong> shows a part of a whole. The top number (numerator) counts the parts you have; the bottom number (denominator) tells how many equal parts make the whole.</p>\n<p><strong>Equivalent fractions:</strong> Multiply or divide the top and bottom by the same number. 1/2 = 2/4 = 3/6 = 4/8.</p>\n<p><strong>Comparing fractions:</strong></p>\n<ul>\n  <li>Same denominator: compare numerators. 3/5 &lt; 4/5.</li>\n  <li>Different denominators: find a common denominator first. Is 2/3 bigger than 3/5? Common denominator 15: 2/3 = 10/15, 3/5 = 9/15. So 2/3 &gt; 3/5.</li>\n</ul>\n<p><strong>Adding fractions with like denominators:</strong> Add the numerators only — keep the denominator the same.</p>\n<p><strong>Example:</strong> 2/7 + 3/7 = <strong>5/7</strong>.</p>\n<p><strong>Mixed numbers:</strong> 1 whole + 3/4 is written as 1 3/4. You can convert to improper: 1 3/4 = 7/4.</p>",
+  "decimals": "<h2>Decimals</h2>\n<p>A <strong>decimal</strong> is another way to write fractions whose denominators are 10, 100, 1000, etc.</p>\n<ul>\n  <li>0.1 means 1/10 (one tenth)</li>\n  <li>0.01 means 1/100 (one hundredth)</li>\n  <li>0.75 means 75/100 = 3/4</li>\n</ul>\n<p><strong>Reading decimals:</strong> 2.54 is \"two and fifty-four hundredths.\"</p>\n<p><strong>Comparing decimals:</strong> Line up the decimal points and compare digits left-to-right. 0.52 &lt; 0.6 because the tenths digit (5 vs 6) decides it.</p>\n<p><strong>Fraction ↔ Decimal:</strong></p>\n<ul>\n  <li>1/2 = 0.5</li>\n  <li>1/4 = 0.25</li>\n  <li>3/4 = 0.75</li>\n  <li>1/10 = 0.1</li>\n</ul>\n<p><strong>Tip:</strong> To convert a fraction like 3/8 into a decimal, divide: 3 ÷ 8 = 0.375.</p>",
+  "measurement": "<h2>Measurement</h2>\n<p><strong>Customary (U.S.) units:</strong></p>\n<ul>\n  <li>Length: 12 in = 1 ft, 3 ft = 1 yd, 5,280 ft = 1 mi</li>\n  <li>Weight: 16 oz = 1 lb, 2,000 lb = 1 ton</li>\n  <li>Capacity: 8 fl oz = 1 c, 2 c = 1 pt, 2 pt = 1 qt, 4 qt = 1 gal</li>\n</ul>\n<p><strong>Metric units (base-10 friendly):</strong></p>\n<ul>\n  <li>Length: 10 mm = 1 cm, 100 cm = 1 m, 1,000 m = 1 km</li>\n  <li>Mass: 1,000 g = 1 kg</li>\n  <li>Capacity: 1,000 mL = 1 L</li>\n</ul>\n<p><strong>Area of a rectangle:</strong> A = length × width. Example: 6 ft × 4 ft = 24 sq ft.</p>\n<p><strong>Perimeter of a rectangle:</strong> P = 2(length + width). Example: 2(6 + 4) = 20 ft.</p>",
+  "geometry": "<h2>Geometry</h2>\n<p><strong>Building blocks:</strong></p>\n<ul>\n  <li>A <strong>point</strong> is a location.</li>\n  <li>A <strong>line</strong> goes forever in both directions.</li>\n  <li>A <strong>line segment</strong> has two endpoints.</li>\n  <li>A <strong>ray</strong> starts at one point and goes on forever in one direction.</li>\n  <li>An <strong>angle</strong> is formed where two rays share an endpoint.</li>\n</ul>\n<p><strong>Angle types:</strong> right (90°), acute (&lt; 90°), obtuse (between 90° and 180°), straight (180°).</p>\n<p><strong>Triangles by angles:</strong> acute (all &lt; 90°), right (one = 90°), obtuse (one &gt; 90°).</p>\n<p><strong>Triangles by sides:</strong> equilateral (all equal), isosceles (2 equal), scalene (none equal).</p>\n<p><strong>Symmetry:</strong> A shape has <em>line symmetry</em> if you can fold it so the two halves match. A square has 4 lines of symmetry; an equilateral triangle has 3.</p>",
+  "factoring": "<h2>Factoring</h2>\n<p>A <strong>factor</strong> divides a number evenly. A <strong>multiple</strong> is the result of multiplying.</p>\n<p><strong>Factors of 12:</strong> 1, 2, 3, 4, 6, 12.</p>\n<p><strong>Multiples of 6:</strong> 6, 12, 18, 24, 30, 36, …</p>\n<p><strong>Prime numbers</strong> have exactly two factors (1 and themselves). Examples: 2, 3, 5, 7, 11, 13, 17, 19, 23.</p>\n<p><strong>Composite numbers</strong> have more than two factors: 4, 6, 8, 9, 10, 12, …</p>\n<p><strong>1 is neither prime nor composite.</strong></p>\n<p><strong>Factor pairs of 24:</strong> 1 × 24, 2 × 12, 3 × 8, 4 × 6.</p>\n<p><strong>Prime factorization:</strong> Break a number into a product of primes.</p>\n<ul>\n  <li>24 = 2 × 12 = 2 × 2 × 6 = 2 × 2 × 2 × 3 = <strong>2³ × 3</strong></li>\n  <li>45 = 3 × 15 = 3 × 3 × 5 = <strong>3² × 5</strong></li>\n</ul>",
+  "data-graphing": "<h2>Data & Graphing</h2>\n<p>Data are answers to questions — height, temperature, number of petals, etc. We use graphs to <em>see</em> patterns quickly.</p>\n<p><strong>Line plot:</strong> A number line where each data point is an X above its value. Great for small numbers of measurements.</p>\n<p><strong>Bar graph:</strong> Shows amount for each category. Bars can be vertical or horizontal. Always label axes.</p>\n<p><strong>Pictograph:</strong> Each picture represents a count (the key tells you how many).</p>\n<p><strong>Reading graphs — questions to ask:</strong></p>\n<ul>\n  <li>Which category has the most? the least?</li>\n  <li>How many more does X have than Y?</li>\n  <li>What's the total?</li>\n</ul>\n<p><strong>Mean (average):</strong> Sum all data, divide by count. Example: (3 + 5 + 7 + 9) ÷ 4 = 6.</p>\n<p><strong>Range:</strong> largest − smallest = spread of the data.</p>",
+  "word-problems": "<h2>Word Problems</h2>\n<p>A word problem describes a real situation in sentences. Your job: translate into math, solve, and check.</p>\n<p><strong>Four-step plan:</strong></p>\n<ol>\n  <li><strong>Understand:</strong> What is being asked? Highlight the question.</li>\n  <li><strong>Plan:</strong> What operation(s) fit? (+ − × ÷)</li>\n  <li><strong>Solve:</strong> Write the equation and calculate.</li>\n  <li><strong>Check:</strong> Does the answer make sense? Estimate to compare.</li>\n</ol>\n<p><strong>Example:</strong> A class plants 6 rows of corn with 18 stalks each. Birds eat 15 stalks. How many are left?</p>\n<ul>\n  <li>Step 1 — ask: \"How many stalks remain?\"</li>\n  <li>Step 2 — plan: multiply, then subtract.</li>\n  <li>Step 3 — solve: 6 × 18 = 108; 108 − 15 = <strong>93</strong>.</li>\n  <li>Step 4 — check: 93 + 15 = 108 = 6 × 18 ✓</li>\n</ul>\n<p><strong>Interpret remainders:</strong> If 27 cookies are split among 4 friends, 27 ÷ 4 = 6 R 3. Each friend gets 6 cookies; 3 are left over.</p>",
+};
+
+const WORKSHEETS = {
+  "place-value": [{"q": "Write 45,078 in expanded form.", "answer": "40,000 + 5,000 + 70 + 8"}, {"q": "What is the value of the digit 7 in 3,741,280?", "answer": "700,000 (seven hundred thousand)"}, {"q": "Round 58,492 to the nearest thousand.", "answer": "58,000"}, {"q": "Round 294,506 to the nearest hundred-thousand.", "answer": "300,000"}, {"q": "Order from least to greatest: 9,852; 9,258; 9,825; 9,528.", "answer": "9,258; 9,528; 9,825; 9,852"}],
+  "addition": [{"q": "4,876 + 2,389 = ?", "answer": "7,265"}, {"q": "12,457 + 8,963 = ?", "answer": "21,420"}, {"q": "Add: 305,721 + 98,406", "answer": "404,127"}, {"q": "The library had 6,482 books. The school donated 1,975 more. How many books now?", "answer": "8,457 books"}, {"q": "Estimate then find exact: 6,238 + 2,981", "answer": "Estimate ≈ 9,000 (6,000 + 3,000). Exact = 9,219"}],
+  "subtraction": [{"q": "8,402 − 3,657 = ?", "answer": "4,745"}, {"q": "50,003 − 27,429 = ?", "answer": "22,574"}, {"q": "A farmer had 5,000 kg of taro. He sold 1,842 kg. How much remains?", "answer": "3,158 kg"}, {"q": "Check 9,412 − 3,796 = 5,616 by adding back.", "answer": "5,616 + 3,796 = 9,412 ✓ (answer is correct)"}, {"q": "Find the difference: 63,200 − 47,865", "answer": "15,335"}],
+  "mental-mult": [{"q": "60 × 70 = ?", "answer": "4,200 (6 × 7 = 42, add two zeros)"}, {"q": "25 × 8 = ? (use the ×8 = double 3 times trick)", "answer": "200 (25→50→100→200)"}, {"q": "9 × 14 = ? (use the ×9 trick)", "answer": "126 (14 × 10 = 140; 140 − 14 = 126)"}, {"q": "50 × 36 = ? (half-and-double trick)", "answer": "1,800 (36 × 5 = 180; ×10 = 1,800)"}, {"q": "15 × 12 = ? (break apart)", "answer": "180 (15 × 10 + 15 × 2 = 150 + 30)"}],
+  "multiply-cols": [{"q": "237 × 6 = ?", "answer": "1,422"}, {"q": "48 × 35 = ?", "answer": "1,680"}, {"q": "126 × 24 = ?", "answer": "3,024"}, {"q": "A classroom has 24 rows of 18 seats. Total seats?", "answer": "432 seats"}, {"q": "Estimate 492 × 21, then find exact.", "answer": "Estimate ≈ 500 × 20 = 10,000. Exact = 10,332."}],
+  "mental-div": [{"q": "480 ÷ 6 = ?", "answer": "80"}, {"q": "720 ÷ 9 = ?", "answer": "80"}, {"q": "5,600 ÷ 7 = ?", "answer": "800"}, {"q": "Is 342 divisible by 3? (Hint: digit sum rule.)", "answer": "Yes — 3+4+2 = 9, and 9 is divisible by 3"}, {"q": "Divide 360 by 4 using halving twice.", "answer": "90 (360 → 180 → 90)"}],
+  "long-div": [{"q": "852 ÷ 6 = ?", "answer": "142"}, {"q": "967 ÷ 7 = ? (state remainder if any)", "answer": "138 R 1"}, {"q": "3,456 ÷ 8 = ?", "answer": "432"}, {"q": "A teacher shares 845 pencils among 5 classrooms. How many per classroom?", "answer": "169 pencils"}, {"q": "1,250 ÷ 9 = ? (quotient and remainder)", "answer": "138 R 8"}],
+  "order-ops": [{"q": "Evaluate: 5 + 3 × 4", "answer": "17 (multiply first: 3×4=12, then 5+12)"}, {"q": "Evaluate: (5 + 3) × 4", "answer": "32 (parentheses first: 8, then 8×4)"}, {"q": "Evaluate: 20 − 6 ÷ 2", "answer": "17 (divide first: 6÷2=3, then 20−3)"}, {"q": "Evaluate: 2 × (9 − 4) + 5", "answer": "15 (parentheses 5, then 2×5=10, then 10+5)"}, {"q": "Insert parentheses to make it true: 3 + 5 × 2 = 16", "answer": "(3 + 5) × 2 = 16"}],
+  "roman-numerals": [{"q": "Write 27 as a Roman numeral.", "answer": "XXVII"}, {"q": "Write 94 as a Roman numeral.", "answer": "XCIV"}, {"q": "Convert MDCCCLXXII to standard form.", "answer": "1,872"}, {"q": "Convert XLIX to standard form.", "answer": "49"}, {"q": "A movie copyright reads MMXIX. What year?", "answer": "2,019 (2019)"}],
+  "fractions": [{"q": "Give an equivalent fraction to 3/4.", "answer": "6/8 (or 9/12, 12/16, etc.)"}, {"q": "Compare: 2/5 vs 3/7. (use common denominator)", "answer": "2/5 = 14/35; 3/7 = 15/35. So 2/5 < 3/7"}, {"q": "2/9 + 4/9 = ?", "answer": "6/9 (or simplified: 2/3)"}, {"q": "Convert 11/4 to a mixed number.", "answer": "2 3/4"}, {"q": "Write 1/2 + 1/4 with a common denominator.", "answer": "2/4 + 1/4 = 3/4"}],
+  "decimals": [{"q": "Write 3/10 as a decimal.", "answer": "0.3"}, {"q": "Write 47/100 as a decimal.", "answer": "0.47"}, {"q": "Which is larger: 0.6 or 0.56?", "answer": "0.6 (0.6 = 0.60, which is greater than 0.56)"}, {"q": "Write 0.25 as a fraction in simplest form.", "answer": "1/4"}, {"q": "Order from smallest to largest: 0.8, 0.08, 0.88, 0.08.", "answer": "0.08, 0.08, 0.8, 0.88"}],
+  "measurement": [{"q": "How many feet in 5 yards?", "answer": "15 feet (5 × 3)"}, {"q": "Convert 2,500 m to kilometers.", "answer": "2.5 km"}, {"q": "A rectangle is 9 cm by 4 cm. Find area and perimeter.", "answer": "Area = 36 cm²; Perimeter = 26 cm"}, {"q": "Convert 4 lb to ounces.", "answer": "64 oz (4 × 16)"}, {"q": "A garden is 12 m long and 7 m wide. What is its perimeter?", "answer": "38 m"}],
+  "geometry": [{"q": "Name: two rays that share one endpoint form a __.", "answer": "angle"}, {"q": "A triangle with sides 5 cm, 5 cm, 5 cm is __.", "answer": "equilateral"}, {"q": "How many lines of symmetry does a square have?", "answer": "4"}, {"q": "Which has an angle greater than 90°: acute, obtuse, or right?", "answer": "obtuse"}, {"q": "Classify: a quadrilateral with 4 equal sides and 4 right angles.", "answer": "square"}],
+  "factoring": [{"q": "List all factors of 18.", "answer": "1, 2, 3, 6, 9, 18"}, {"q": "Is 29 prime or composite?", "answer": "prime"}, {"q": "Find the prime factorization of 36.", "answer": "2 × 2 × 3 × 3 = 2² × 3²"}, {"q": "List the first five multiples of 7.", "answer": "7, 14, 21, 28, 35"}, {"q": "Name a factor pair of 48 other than 1 × 48.", "answer": "2 × 24 (or 3 × 16, 4 × 12, 6 × 8)"}],
+  "data-graphing": [{"q": "Find the mean of 4, 7, 8, 9, 12.", "answer": "8 (sum 40 ÷ 5)"}, {"q": "Find the range of 12, 5, 8, 20, 15.", "answer": "15 (20 − 5)"}, {"q": "On a line plot with Xs at 1, 1, 2, 3, 3, 3, 4, what number is the mode?", "answer": "3"}, {"q": "A pictograph uses 🌺 = 5 flowers. Anna has 4 🌺🌺🌺🌺. How many flowers?", "answer": "20 flowers"}, {"q": "If a bar graph shows 8 cats, 6 dogs, 4 fish, how many pets total?", "answer": "18 pets"}],
+  "word-problems": [{"q": "A surfboard rental costs $12 per hour. Pele rents for 4 hours and tips $5. Total cost?", "answer": "$53 (12 × 4 = 48; 48 + 5)"}, {"q": "A container holds 672 mL of juice. How many 8-mL servings can be poured?", "answer": "84 servings"}, {"q": "Hikers walked 3 miles in the morning and 2.5 miles in the afternoon. What was their total distance?", "answer": "5.5 miles"}, {"q": "25 students each bring 6 shells to class. After losing 18 shells, how many remain?", "answer": "132 shells (25 × 6 = 150; 150 − 18)"}, {"q": "A pizza is cut into 8 slices. 3 friends each eat 2 slices. What fraction of the pizza is left?", "answer": "2/8 = 1/4"}],
+};
+
+const QUIZZES = {
+  "place-value": [{"q": "In 58,342, the digit 5 is in the ___ place.", "opts": ["tens", "hundreds", "ten-thousands", "thousands"], "ans": 2}, {"q": "Round 64,789 to the nearest hundred.", "opts": ["64,700", "64,800", "64,900", "65,000"], "ans": 1}, {"q": "Which number has a 6 in the hundred-thousands place?", "opts": ["6,245,900", "462,380", "60,125", "642,100"], "ans": 1}, {"q": "Write 700,000 + 20,000 + 3 in standard form.", "opts": ["720,003", "702,003", "72,003", "700,203"], "ans": 0}, {"q": "Which is greatest?", "opts": ["48,912", "48,901", "49,102", "48,990"], "ans": 2}],
+  "addition": [{"q": "3,458 + 2,797 = ?", "opts": ["6,155", "6,245", "6,255", "5,355"], "ans": 2}, {"q": "12,100 + 8,999 = ?", "opts": ["21,099", "20,199", "21,099", "21,009"], "ans": 0}, {"q": "Estimate 4,892 + 3,106 to the nearest thousand.", "opts": ["7,000", "7,900", "8,000", "9,000"], "ans": 2}, {"q": "A sum of 10 ones equals 1 ___.", "opts": ["ten", "hundred", "thousand", "ten-thousand"], "ans": 0}, {"q": "The town had 24,812 residents. 3,560 more moved in. New population?", "opts": ["27,372", "28,372", "21,252", "28,272"], "ans": 0}],
+  "subtraction": [{"q": "7,200 − 3,485 = ?", "opts": ["3,715", "3,815", "3,725", "3,735"], "ans": 0}, {"q": "When we can't subtract, we ___ from the next place.", "opts": ["carry", "regroup (borrow)", "subtract", "multiply"], "ans": 1}, {"q": "50,000 − 23,461 = ?", "opts": ["26,539", "27,539", "26,441", "27,441"], "ans": 0}, {"q": "To check 9,412 − 3,796 = 5,616, we can ___.", "opts": ["add 5,616 + 3,796", "subtract 9,412 − 5,616", "both A and B", "neither"], "ans": 2}, {"q": "Find the difference: 804 − 259.", "opts": ["555", "545", "565", "455"], "ans": 1}],
+  "mental-mult": [{"q": "40 × 50 = ?", "opts": ["200", "2,000", "20", "20,000"], "ans": 1}, {"q": "Quickest way to multiply 48 × 5?", "opts": ["Half of 48, then ×10", "48 × 10, then /5", "Guess", "Break into 40+8"], "ans": 0}, {"q": "9 × 17 = ? (use ×9 trick)", "opts": ["153", "163", "143", "159"], "ans": 0}, {"q": "25 × 16 = ?", "opts": ["400", "425", "250", "160"], "ans": 0}, {"q": "×10 applied to 73 equals ___.", "opts": ["7,300", "730", "73", "7.3"], "ans": 1}],
+  "multiply-cols": [{"q": "156 × 4 = ?", "opts": ["604", "624", "626", "624"], "ans": 1}, {"q": "23 × 45 = ?", "opts": ["1,035", "1,045", "1,135", "1,145"], "ans": 0}, {"q": "412 × 15 = ?", "opts": ["6,180", "6,180", "5,180", "7,180"], "ans": 0}, {"q": "A gym has 28 rows of 22 mats. Total mats?", "opts": ["560", "616", "606", "622"], "ans": 1}, {"q": "Which is a reasonable estimate for 387 × 19?", "opts": ["40", "400", "4,000", "40,000"], "ans": 2}],
+  "mental-div": [{"q": "560 ÷ 8 = ?", "opts": ["60", "70", "80", "90"], "ans": 1}, {"q": "Divisibility by 5 — a number ends in ___.", "opts": ["0 or 5", "2 or 4", "3 or 6", "7 or 9"], "ans": 0}, {"q": "900 ÷ 3 = ?", "opts": ["300", "30", "3,000", "33"], "ans": 0}, {"q": "Halving trick: 640 ÷ 4 = ?", "opts": ["120", "140", "160", "180"], "ans": 2}, {"q": "Is 128 divisible by 8?", "opts": ["Yes", "No", "Only sometimes", "Not enough info"], "ans": 0}],
+  "long-div": [{"q": "672 ÷ 4 = ?", "opts": ["158", "168", "166", "158"], "ans": 1}, {"q": "945 ÷ 7 = ?", "opts": ["135", "145", "125", "155"], "ans": 0}, {"q": "836 ÷ 6 = ? (state remainder)", "opts": ["139 R 2", "140 R 2", "139 R 4", "138 R 8"], "ans": 0}, {"q": "Long-division steps, in order, are ___.", "opts": ["Subtract, Divide, Multiply, Bring down", "Divide, Multiply, Subtract, Bring down", "Multiply, Divide, Subtract, Bring down", "Bring down, Divide, Multiply, Subtract"], "ans": 1}, {"q": "2,310 ÷ 6 = ?", "opts": ["385", "405", "395", "375"], "ans": 0}],
+  "order-ops": [{"q": "4 + 2 × 3 = ?", "opts": ["10", "18", "12", "14"], "ans": 0}, {"q": "(4 + 2) × 3 = ?", "opts": ["10", "12", "18", "14"], "ans": 2}, {"q": "36 ÷ (2 + 4) = ?", "opts": ["6", "12", "9", "18"], "ans": 0}, {"q": "In PEMDAS, which comes first?", "opts": ["E", "P", "M", "A"], "ans": 1}, {"q": "Evaluate: 2 × 3² + 1", "opts": ["12", "19", "13", "37"], "ans": 1}],
+  "roman-numerals": [{"q": "What is XII?", "opts": ["10", "11", "12", "22"], "ans": 2}, {"q": "Write 40 as a Roman numeral.", "opts": ["XXXX", "XL", "VL", "LX"], "ans": 1}, {"q": "Convert LXXVII.", "opts": ["67", "77", "87", "57"], "ans": 1}, {"q": "M stands for ___.", "opts": ["100", "500", "1,000", "5,000"], "ans": 2}, {"q": "CM represents ___.", "opts": ["1,100", "900", "1,000 + M", "990"], "ans": 1}],
+  "fractions": [{"q": "Which is equivalent to 2/3?", "opts": ["4/6", "3/4", "2/4", "3/5"], "ans": 0}, {"q": "1/4 + 2/4 = ?", "opts": ["2/8", "3/8", "3/4", "2/4"], "ans": 2}, {"q": "Compare: 3/5 vs 1/2.", "opts": ["3/5 > 1/2", "3/5 < 1/2", "equal", "cannot tell"], "ans": 0}, {"q": "Write 9/4 as a mixed number.", "opts": ["2 1/4", "2 1/2", "1 9/4", "2 2/4"], "ans": 0}, {"q": "Simplify 6/8.", "opts": ["1/2", "3/4", "2/3", "5/6"], "ans": 1}],
+  "decimals": [{"q": "0.4 means ___.", "opts": ["4/10", "4/100", "40/10", "4"], "ans": 0}, {"q": "Which is largest?", "opts": ["0.7", "0.07", "0.71", "0.17"], "ans": 2}, {"q": "Write 2/5 as a decimal.", "opts": ["0.25", "0.4", "0.5", "0.2"], "ans": 1}, {"q": "Read: 3.09.", "opts": ["three and nine tenths", "three and nine hundredths", "three and nine", "three point nine"], "ans": 1}, {"q": "Order smallest to largest: 0.5, 0.55, 0.05, 0.505.", "opts": ["0.05, 0.5, 0.505, 0.55", "0.05, 0.5, 0.55, 0.505", "0.5, 0.05, 0.505, 0.55", "0.505, 0.55, 0.5, 0.05"], "ans": 0}],
+  "measurement": [{"q": "How many inches in 3 feet?", "opts": ["12", "24", "36", "48"], "ans": 2}, {"q": "Convert 4.5 km to meters.", "opts": ["450", "4,500", "45,000", "45"], "ans": 1}, {"q": "A rectangle 7 m × 3 m has area ___.", "opts": ["10 m²", "14 m²", "21 m²", "24 m²"], "ans": 2}, {"q": "The perimeter of a rectangle with sides 5 and 8 is ___.", "opts": ["13", "26", "40", "20"], "ans": 1}, {"q": "Which is heaviest?", "opts": ["3 lb", "40 oz", "2 lb 14 oz", "50 oz"], "ans": 3}],
+  "geometry": [{"q": "An angle that measures 180° is ___.", "opts": ["acute", "right", "obtuse", "straight"], "ans": 3}, {"q": "A triangle with one 90° angle is ___.", "opts": ["acute", "obtuse", "right", "equilateral"], "ans": 2}, {"q": "An equilateral triangle has ___ lines of symmetry.", "opts": ["1", "2", "3", "4"], "ans": 2}, {"q": "A quadrilateral with 4 right angles but not all sides equal is ___.", "opts": ["rhombus", "rectangle", "square", "trapezoid"], "ans": 1}, {"q": "Two lines that never meet are ___.", "opts": ["parallel", "perpendicular", "intersecting", "curved"], "ans": 0}],
+  "factoring": [{"q": "Which is prime?", "opts": ["9", "21", "11", "15"], "ans": 2}, {"q": "Which is composite?", "opts": ["7", "13", "25", "19"], "ans": 2}, {"q": "Factors of 20 are ___.", "opts": ["1, 2, 4, 5, 10, 20", "1, 2, 4, 20", "1, 5, 10, 20", "1, 2, 5, 20"], "ans": 0}, {"q": "Prime factorization of 30 is ___.", "opts": ["2·3·5", "2·15", "3·10", "5·6"], "ans": 0}, {"q": "The number 1 is ___.", "opts": ["prime", "composite", "neither", "both"], "ans": 2}],
+  "data-graphing": [{"q": "The mean of 2, 4, 6 is ___.", "opts": ["3", "4", "5", "12"], "ans": 1}, {"q": "Range of 10, 14, 22, 6 is ___.", "opts": ["6", "14", "16", "22"], "ans": 2}, {"q": "Mode of 3, 5, 5, 7, 9 is ___.", "opts": ["3", "5", "6", "7"], "ans": 1}, {"q": "A pictograph key is 🐠 = 4 fish. Tank A has 🐠🐠🐠 — that's ___ fish.", "opts": ["3", "4", "7", "12"], "ans": 3}, {"q": "Best graph for showing category counts?", "opts": ["line plot", "bar graph", "scatter plot", "coordinate grid"], "ans": 1}],
+  "word-problems": [{"q": "Maya bought 3 books at $8 each and 1 magazine at $5. Total?", "opts": ["$29", "$24", "$27", "$32"], "ans": 0}, {"q": "72 ÷ 5 = 14 R ___.", "opts": ["1", "2", "3", "4"], "ans": 1}, {"q": "If 4 apples cost $1.20, one apple costs ___.", "opts": ["$0.20", "$0.30", "$0.40", "$0.50"], "ans": 1}, {"q": "Sam read 135 pages in 3 days. Daily average?", "opts": ["35", "40", "45", "50"], "ans": 2}, {"q": "A van holds 8 passengers. To carry 54 people, how many vans?", "opts": ["6", "7", "8", "6 R 6"], "ans": 1}],
+};
+
+const HANDOUTS_4 = {
+  "place-value": {"title": "Hawaiian Island Populations", "science": "🏝️ Real-World Math — Hawaii Geography", "mission": "Hawaii has 8 main islands, each with different populations. You will build a place-value chart of their residents, compare values, and round to make the numbers easier to discuss.", "steps": ["Record each island population: Oahu ≈ 1,016,508; Hawaii (Big Island) ≈ 206,613; Maui ≈ 166,738; Kauai ≈ 73,454; Molokai ≈ 7,345; Lanai ≈ 3,367; Niihau ≈ 84; Kahoolawe ≈ 0.", "Make a place-value chart with columns from millions down to ones. Write each population in the chart.", "Identify the value of the digit 6 in Oahu's population (1,016,508).", "Round each population to the nearest thousand. Then round Oahu's to the nearest million.", "Order the 8 islands from greatest to least population."], "deliverable": "A completed place-value chart, rounded values table, and population ranking.", "reflect": ["Why do we round when talking about a whole island's population?", "Which island population changes the most when rounded — why?"]},
+  "addition": {"title": "Plant a Backyard Rain Garden", "science": "🌺 Real-World Math — Hawaiian Gardens", "mission": "A rain garden uses native Hawaiian plants to soak up rainwater. You will plan the cost of planting one by adding up the price of plants, soil, and mulch.", "steps": ["List 6 Hawaiian plants and their prices: ohia lehua $18, hibiscus $12, naupaka $9, ti plant $15, fern $8, native grass $6.", "Add 2 bags of mulch at $7 each and 3 bags of compost at $11 each.", "Add one shovel for $24 and a pair of garden gloves for $5.", "Find the grand total using the standard addition algorithm — line up the dollars.", "Estimate the total by rounding each item to the nearest ten and compare."], "deliverable": "A full itemized cost list with a grand total and an estimated total for comparison.", "reflect": ["How does estimating help you spot mistakes in your exact total?", "Why is lining up place values crucial when adding dollar amounts?"]},
+  "subtraction": {"title": "Lava Flow Distance Tracker", "science": "🌋 Real-World Math — Volcanoes", "mission": "Kilauea's lava flows move at different speeds. You will calculate how much farther the lava has to go using subtraction.", "steps": ["A lava tube reaches 4,820 m from the vent on Monday. On Tuesday it reaches 6,125 m. How far did it advance in 1 day?", "By Friday the flow is 9,408 m from the vent. Since Tuesday, how far has it advanced?", "The ocean is 12,500 m away. How far does the flow still have to go on Friday?", "The nearest village is 8,900 m from the vent. Has the flow passed it yet on Friday? How far past or short?", "Check your Friday-to-village subtraction by adding the two numbers back."], "deliverable": "A lava-flow log showing distances, daily advances, and distance-to-ocean/village with checks.", "reflect": ["How does the answer change if Friday's distance were smaller than Tuesday's?", "Why does a scientist verify subtraction with addition?"]},
+  "mental-mult": {"title": "Sea Star Arm Counter", "science": "🌟 Real-World Math — Marine Biology", "mission": "Most sea stars have 5 arms, but some have many more. Use mental multiplication to count arms across a tide pool.", "steps": ["A tide pool has 8 five-armed sea stars. Use the ×5 mental trick (half then ×10) to count arms.", "Another pool has 12 sunflower sea stars with 20 arms each. Use ×10 then double.", "A third pool has 9 stars with 7 arms each. Use the ×9 trick (×10 then subtract one group).", "Combine all three pools' arms. Do it mentally where possible, show your breakdowns.", "A scientist wants to photograph 25 sea stars with 5 arms each. Use the ×25 shortcut (×100 then ÷4)."], "deliverable": "A table showing each pool, its arm count, the mental trick used, and the grand total.", "reflect": ["Which mental math trick felt easiest? Why?", "When is mental math faster than writing everything down?"]},
+  "multiply-cols": {"title": "Coral Reef Fish Counter", "science": "🐠 Real-World Math — Marine Ecosystems", "mission": "Scientists survey Hawaii's coral reefs by counting fish in sample areas and multiplying to estimate totals. Use column multiplication for the math.", "steps": ["Divers count 186 yellow tangs in a single 10-meter transect. A whole reef has 24 transects. Estimate total tangs.", "Each tang eats 42 algae pellets per day. How much food does the reef-wide tang population eat?", "A survey shows 234 parrotfish across 15 sections. How many per section on average (setup — divide later)? Multiply 234 × 15 to verify total first.", "The reef area is 385 m × 16 m. What is the total area in square meters?", "Estimate each product first by rounding, then do the column multiplication for the exact answer."], "deliverable": "A marine biology field report with 4 exact column multiplications, estimates, and the reef area calculation.", "reflect": ["How do scientists use multiplication to scale up from a sample?", "Why does lining up columns matter in multi-digit multiplication?"]},
+  "mental-div": {"title": "Sharing Seashells Fair", "science": "🐚 Real-World Math — Beach Science", "mission": "You found a bucket of seashells and want to share them fairly. Use mental division to divide them in several ways.", "steps": ["360 shells shared by 4 friends. Use halving twice to divide mentally.", "720 shells into 9 equal bags. Use times-tables in reverse.", "500 shells split evenly among 5 classes. Use the ÷5 rule (÷10 then ×2).", "800 shells split in 8 teams. Use ÷8 = halve three times.", "Is 246 evenly divisible by 3? Use the digit-sum rule and explain."], "deliverable": "A \"fair share\" chart listing the division, mental-math trick used, and final count per person/group.", "reflect": ["Why do divisibility rules save time before committing to long division?", "If a number is NOT evenly divisible, what does the remainder mean in shell-sharing?"]},
+  "long-div": {"title": "Hawaii Rainfall Monthly Averages", "science": "🌧️ Real-World Math — Weather", "mission": "Hawaii is one of the wettest places on Earth — Mount Waialeale averages about 11,680 mm per year! Use long division to figure out monthly and daily averages.", "steps": ["Mount Waialeale: 11,680 mm of rain in 12 months. Find the monthly average using long division.", "A rainy month at Waialeale brought 1,248 mm in 30 days. Find the daily average.", "Honolulu Airport averages 438 mm per year (much drier). Find its monthly average.", "A 6-day storm in Hilo dumped 852 mm. Daily average?", "State each quotient with remainder if not exact, and explain what the remainder means for millimeters of rain."], "deliverable": "A rainfall data sheet with four long-division problems worked out and quotients interpreted.", "reflect": ["Why is the remainder in rainfall less useful than the quotient?", "How might an average mislead someone — for example, a \"dry month\" in a high-rainfall area?"]},
+  "order-ops": {"title": "Volcano Equation Decoder", "science": "🌋 Real-World Math — Earth Science Puzzles", "mission": "A field scientist left coded messages using PEMDAS. Decode each expression to read the clue.", "steps": ["Expression A: 3 + 4 × 5 — evaluate. (Hint: multiplication first.)", "Expression B: (3 + 4) × 5 — evaluate. Compare to A.", "Expression C: 20 − (6 + 2) × 2 — evaluate.", "Expression D: 2 × (3² + 1) − 4 — evaluate using PEMDAS.", "Invent your own volcano-themed expression: use at least one set of parentheses, one multiplication, and one addition. Swap with a partner and solve."], "deliverable": "Four fully evaluated expressions with PEMDAS steps labeled, plus your own challenge.", "reflect": ["How do parentheses change the answer between A and B?", "Why must every student agree on the order of operations?"]},
+  "roman-numerals": {"title": "Hawaiian History Timeline", "science": "🏛️ Real-World Math — Heritage & Dates", "mission": "Hawaii's monarchs are traditionally listed with Roman numerals (Kamehameha I–V, Kalakaua, Liliuokalani). Use Roman numerals to mark key dates in Hawaiian history.", "steps": ["King Kamehameha I united the Hawaiian islands in 1810. Write 1810 in Roman numerals.", "Captain Cook arrived in Hawaii in 1778. Write 1778 in Roman numerals.", "Hawaii became the 50th U.S. state in 1959. Write 1959 in Roman numerals.", "Convert these monarchs' numerals to standard: Kamehameha III, Kamehameha V, Kalakaua I.", "Build a timeline from 1778 to 2025 with one event per decade, labeling each year in Roman numerals."], "deliverable": "A Hawaiian-history timeline with Roman-numeral dates and conversions shown.", "reflect": ["Why do you think Roman numerals are still used for royalty and movie dates?", "What's one limitation of Roman numerals compared to our decimal system?"]},
+  "fractions": {"title": "Pineapple Slice Math", "science": "🍍 Real-World Math — Hawaiian Agriculture", "mission": "A pineapple is sliced into equal rings. Use fractions to share, compare, and combine portions.", "steps": ["A pineapple is cut into 8 equal slices. Three friends each eat 2 slices. What fraction has been eaten? What fraction remains?", "You combine 1/4 pineapple with 3/8 pineapple on a plate. Add the fractions.", "Another pineapple has 12 slices. Give an equivalent fraction for \"eating 6 of 12\".", "Compare: is 3/8 pineapple more or less than 1/2? Use a common denominator.", "Convert 5/4 pineapples to a mixed number. Draw the picture."], "deliverable": "A \"pineapple log\" with pictures of slices, fractional amounts, comparisons, and mixed-number conversion.", "reflect": ["How does a picture help you check if two fractions are equivalent?", "Why must denominators match before adding or subtracting?"]},
+  "decimals": {"title": "Surf Height Measurements", "science": "🏄 Real-World Math — Hawaiian Surf", "mission": "Surf reports measure wave heights in feet, often with decimals. You'll record, order, and convert wave data from a week on the North Shore.", "steps": ["Record 7 days of wave heights (in feet): Mon 4.5, Tue 6.25, Wed 5.8, Thu 7.0, Fri 8.3, Sat 8.75, Sun 6.5.", "Order them from smallest to largest.", "Convert each day's decimal to a fraction in simplest form.", "Which two days had waves closest in size? Find the difference (subtract).", "Round each height to the nearest whole foot and make a rough summary for a surf report."], "deliverable": "A surf-week report with heights sorted, converted to fractions, differences, and rounded summary.", "reflect": ["Why do decimals give a clearer picture of wave size than whole feet alone?", "How does a surf forecaster decide which decimal place to round to?"]},
+  "measurement": {"title": "Hawaiian Honu (Sea Turtle) Measurements", "science": "🐢 Real-World Math — Marine Biology", "mission": "The green sea turtle (honu) is a Hawaiian icon. Scientists measure shell length, weight, and swimming range. Use measurement conversions to explore honu data.", "steps": ["A honu's shell is 102 cm long. Convert to meters and to millimeters.", "A honu weighs 158 kg. Convert to grams. Then, for comparison, convert 158 kg to pounds (1 kg ≈ 2.2 lb).", "A honu migrates 1,280 km between feeding and nesting grounds. Convert to meters.", "Its nesting area is a rectangle 14 m long and 8 m wide. Compute perimeter and area.", "Track a honu's swimming path: 3 m right, 4 m up, 3 m right, 4 m down (back to start line). What's the total distance? What's the straight-line displacement?"], "deliverable": "A honu-measurements datasheet with conversions, rectangle calculations, and swim-path totals.", "reflect": ["Why is the metric system easier for scientists than customary units?", "How does the perimeter/area distinction matter when protecting a nesting zone?"]},
+  "geometry": {"title": "Hawaiian Quilt Pattern Design", "science": "🎨 Real-World Math — Hawaiian Arts", "mission": "Hawaiian quilts are famous for their bold symmetric patterns, often inspired by plants like breadfruit (ulu) or taro (kalo). You'll design a quilt block using symmetry and geometry.", "steps": ["On grid paper, draw a 12-square × 12-square quilt block.", "Draw a symmetric leaf/flower shape in the upper-left quarter using at least 3 triangles and 1 quadrilateral.", "Reflect the shape across the vertical center line to make a left-right mirror image.", "Reflect the full top half across the horizontal center line to fill the bottom. Count lines of symmetry in your final block.", "Classify every triangle in the block as acute, right, or obtuse, and equilateral, isosceles, or scalene."], "deliverable": "A symmetric quilt-block drawing with every triangle classified and all lines of symmetry drawn in.", "reflect": ["How do reflections make a design look balanced?", "What role does geometry play in traditional crafts and art?"]},
+  "factoring": {"title": "Taro Field Grid Planner", "science": "🌱 Real-World Math — Hawaiian Agriculture", "mission": "Taro (kalo) is a sacred Hawaiian plant grown in flooded fields called loi. You'll use factors and multiples to plan rectangular loi layouts.", "steps": ["You have 24 taro starts (seedlings). List all rectangular arrangements (a × b) you could plant. These are factor pairs of 24.", "A farmer wants a field with area 36 m² and whole-number sides. List every possible layout.", "Two plots — 8 × 6 and 9 × 4 — have equal area. Prove it using factoring.", "List the first 6 multiples of 4 and the first 6 multiples of 6. Find the smallest multiple they share (LCM).", "Is 29 a good choice for total plants? Why or why not? (Hint: prime number.)"], "deliverable": "A loi planning sheet with factor pairs, LCM discussion, and prime-number explanation.", "reflect": ["Why are prime numbers inconvenient for rectangular layouts?", "How might a farmer use LCM to synchronize two planting schedules?"]},
+  "data-graphing": {"title": "Hawaiian Bird Species Count", "science": "🐦 Real-World Math — Hawaiian Wildlife", "mission": "Hawaii is home to native birds like the iiwi, apapane, and nene. You'll build graphs of sightings data and compute averages.", "steps": ["Record this survey data (birds spotted over a week): iiwi 12, apapane 18, amakihi 15, nene 6, honeycreeper 9.", "Draw a bar graph with labeled axes and a title.", "Find the mean (average) number of birds per species.", "Find the mode and range.", "Draw a line plot of daily iiwi sightings: 2, 1, 3, 2, 2, 1, 1. Identify the mode."], "deliverable": "A bar graph, a line plot, and a short summary with mean, mode, and range.", "reflect": ["Why does a bar graph make comparisons easier than a list of numbers?", "Which statistic (mean, mode, or range) best describes \"typical\" for this data? Why?"]},
+  "word-problems": {"title": "Luau Party Planner", "science": "🥥 Real-World Math — Event Planning", "mission": "Your class is hosting a Hawaiian luau! You'll plan food, decorations, and seating using multi-step word problems.", "steps": ["You invite 48 guests. Each table seats 6. How many tables do you need?", "Poke bowls cost $7.25 each. You need 48. Total poke cost?", "Pineapple platters serve 8 people; you need enough for 48. Each platter is $15. Total platter cost?", "You have $500 budget. After poke and platters, how much is left? Can you afford 10 flower leis at $9 each?", "A coconut delivery arrives with 60 coconuts. If each table gets 4, are there enough? How many are left over?"], "deliverable": "A full luau budget and seating plan with all operations shown and a leftover-coconut count.", "reflect": ["Which is the trickiest operation in multi-step word problems, and why?", "How do you decide whether a word problem uses +, −, ×, or ÷?"]},
+};
+
+const ANSWER_KEYS_4 = {
+  "place-value": "Hawaiian_Island_Populations.xlsx",
+  "addition": "Rain_Garden_Planner.xlsx",
+  "subtraction": "Lava_Flow_Tracker.xlsx",
+  "mental-mult": "Sea_Star_Arm_Counter.xlsx",
+  "multiply-cols": "Coral_Reef_Fish_Counter.xlsx",
+  "mental-div": "Seashell_Fair_Share.xlsx",
+  "long-div": "Hawaii_Rainfall_Averages.xlsx",
+  "order-ops": "Volcano_Equation_Decoder.xlsx",
+  "roman-numerals": "Hawaiian_History_Timeline.xlsx",
+  "fractions": "Pineapple_Slice_Math.xlsx",
+  "decimals": "Surf_Height_Measurements.xlsx",
+  "measurement": "Honu_Measurements.xlsx",
+  "geometry": "Hawaiian_Quilt_Design.xlsx",
+  "factoring": "Taro_Field_Grid.xlsx",
+  "data-graphing": "Hawaiian_Bird_Species.xlsx",
+  "word-problems": "Luau_Party_Planner.xlsx"
+};
+
+let completedUnits = {};
+let currentUnit = null;
+
+function resourceCardHTML(unit) {
+  const ixlBtn = unit.ixlUrl ? `<a class="btn-ixl" href="${unit.ixlUrl}" target="_blank">📘 IXL Practice</a>` : '';
+  const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
+  const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${ixlBtn}${phetBtn}${ytBtn}</div></div>`;
+}
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(unit => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(unit.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${unit.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${unit.title}${completedUnits[unit.id]?' ✅':''}</div>
+          <div class="unit-card-cc">${unit.cc}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${unit.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        ${unit.ixlUrl?'<div class="pill">📘 IXL</div>':''}
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">▶️ YouTube</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar-content');
+  sidebar.innerHTML = '';
+  UNITS.forEach((unit, idx) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === unit.id ? ' active' : '');
+    item.textContent = `${idx + 1}. ${unit.title}${completedUnits[unit.id]?' ✅':''}`;
+    item.onclick = () => showLesson(unit.id);
+    sidebar.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  document.getElementById('topbar-title').textContent = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Exploring the World with Math';
+}
+
+function showHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  currentUnit = null;
+  renderHome();
+  renderSidebar();
+  setTopbar();
+}
+
+function showLesson(unitId) {
+  currentUnit = unitId;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  const unit = UNITS.find(u => u.id === unitId);
+  document.getElementById('lesson-content').innerHTML = LESSONS[unitId] + resourceCardHTML(unit);
+  renderSidebar();
+  setTopbar();
+}
+
+function showWorksheet() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><textarea id="ans-${idx}" placeholder="Your answer..."></textarea></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function checkWorksheet() {
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    const userAns = document.getElementById(`ans-${idx}`).value;
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><div class="answer-key"><strong>Answer:</strong> ${p.answer}</div><p><strong>Your answer:</strong> ${userAns || '(no answer)'}</p></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function showQuiz() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  const quiz = QUIZZES[currentUnit];
+  let html = '';
+  quiz.forEach((q, idx) => {
+    html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${q.q}</p>`;
+    q.opts.forEach((opt, optIdx) => {
+      html += `<label><input type="radio" name="q${idx}" value="${optIdx}"> ${opt}</label>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function submitQuiz() {
+  const quiz = QUIZZES[currentUnit];
+  let score = 0;
+  quiz.forEach((q, idx) => {
+    const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+    if (selected && parseInt(selected.value) === q.ans) score++;
+  });
+  const percent = Math.round((score / quiz.length) * 100);
+  completedUnits[currentUnit] = true;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('certificate-screen').classList.add('active');
+  document.getElementById('cert-content').innerHTML = `<p style="font-size: 24px; margin: 20px;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p><p>Congratulations on completing this unit!</p>`;
+  renderSidebar();
+  updateProgress();
+}
+
+function updateProgress() {
+  const completed = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${completed}/${UNITS.length}`;
+}
+
+function showHandout() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('handout-screen').classList.add('active');
+  const h = HANDOUTS_4[currentUnit];
+  if (!h) {
+    document.getElementById('handout-content').innerHTML = '<p>No handout available for this unit.</p>';
+    return;
+  }
+  const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
+  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  const akFile = ANSWER_KEYS_4[currentUnit];
+  const answerKeyHtml = akFile ? `
+      <div style="background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:14px;margin:14px 0;">
+        <strong style="color:#1B3A8A;">📗 Answer Key (for self-check):</strong>
+        <a href="answerkeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
+        <div style="font-size:0.9rem;color:#555;margin-top:6px;">Completed workbook with all formulas, charts, and real-world data. Open in Excel or upload to Google Sheets (<em>File → Import → Upload</em>) to compare with your own work after you finish.</div>
+      </div>` : '';
+  document.getElementById('handout-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${h.title}</h3>
+      <div class="handout-science">${h.science}</div>
+      <div class="handout-mission">${h.mission}</div>
+      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <ol class="handout-steps">${stepsHtml}</ol>
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>
+      ${answerKeyHtml}
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>
+    </div>`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderSidebar();
+});
+  </script>
+</body>
+</html>

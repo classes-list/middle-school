@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 8th Grade ELA: Ideas &amp; Resilience</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .essential-q { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .essential-q strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.book { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-hero .quote { color: #FFD100; font-style: italic; margin-top: 10px; font-size: 0.9rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .scale-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px,1fr)); gap: 6px; margin-top: 8px; }
+    .scale-cell { background: #f8fafc; border-radius: 6px; padding: 8px 10px; text-align: center; border-left: 3px solid #1B3A8A; }
+    .scale-cell strong { color: #1B3A8A; font-size: 0.95rem; display: block; }
+    .scale-cell span { font-size: 0.74rem; color: #64748b; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">8th Grade ELA <span class="grade-tag">Gr. 8</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-ela-index.html" class="back-index-btn" title="Back to ELA Classes">← All ELA</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Ideas &amp; Resilience</span>
+        </div>
+        <div class="topbar-right">ELA &middot; Grade 8</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Ideas &amp; Resilience</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">Lead the discussion. Write across genres. Read literature that grapples with the biggest questions.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen"></div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">How this unit&rsquo;s lessons connect to your daily life.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const SYLLABUS_HTML = `
+  <div class="syl-hero">
+    <div style="font-size:2.4rem;margin-bottom:8px">📚</div>
+    <h2>English Language Arts &mdash; Course Syllabus</h2>
+    <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+    <p class="quote">Empowered to succeed and guided by faith.</p>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card" style="flex:1 1 100%">
+      <h3>📋 Course Description</h3>
+      <p>Welcome to English Language Arts (ELA)! In this course, we&rsquo;ll strengthen our <strong>reading, writing, speaking, listening, and thinking</strong> skills. We&rsquo;ll read stories by diverse authors, create our own written pieces, and engage in thoughtful discussions. ELA is a space to explore ideas, ask questions, and grow as critical and creative thinkers.</p>
+      <p style="margin-top:8px">Please bring: pencils, a composition notebook, your computer, and a dedicated ELA binder. We will use Google Classroom and other edtech programs to support learning.</p>
+      <p style="margin-top:8px">I am excited to learn and grow with you in this special place where we are empowered to succeed and guided by faith. I hope we can establish and fortify a strong connection between home and school, making this a stellar year!</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>👩‍🏫 Teacher</h3>
+      <p><strong>Mrs. Lacey Vasquez</strong></p>
+      <p style="margin-top:8px;font-size:0.86rem;color:#475569">Communication primarily through Google Classroom and email. Please reach out for any questions about your child&rsquo;s progress.</p>
+    </div>
+    <div class="syl-card">
+      <h3>🎒 Materials</h3>
+      <ul>
+        <li>Pencils</li>
+        <li>Composition notebook</li>
+        <li>Computer (school-issued)</li>
+        <li>Dedicated ELA binder</li>
+        <li>Google Classroom + edtech access</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>🎯 8th Grade Goal &mdash; Promoting Ownership</h3>
+    <p>Promotes ownership &mdash; students <strong>lead philosophical discussions and write across genres with confident reasoning, structure, and evidence</strong>. Theme: <strong>ideas and resilience</strong>.</p>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📖 Novels &amp; Readings &mdash; Grade 8 (Ideas/Resilience)</h3>
+    <ul>
+      <li><em>The Pearl</em> by John Steinbeck</li>
+      <li><em>Hatchet</em> by Gary Paulsen</li>
+    </ul>
+    <p style="margin-top:8px;font-size:0.86rem;font-style:italic;color:#475569">Great literature gives the reader opportunities to experience the human condition across decades and centuries. Great literature also has a compelling theme that is expressed through literary devices. We may substitute novels with short stories that have equal literary merit.</p>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>✍️ Types of Writing</h3>
+      <p>At all grade levels, we will have at least one <strong>multistage writing assignment in each quarter</strong>:</p>
+      <ul>
+        <li>Literary analysis</li>
+        <li>Expository</li>
+        <li>Persuasive</li>
+        <li>Argumentative</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>🎤 Types of Speeches</h3>
+      <ul>
+        <li>Storytelling</li>
+        <li>Poetry Reading</li>
+        <li>Dramatic Interpretation</li>
+        <li>Research Presentations</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>💬 Discussion Formats</h3>
+      <ul>
+        <li><strong>Socratic Seminar</strong> (summative assessment)</li>
+        <li>p4C discussion circle</li>
+        <li>Peer-to-peer</li>
+        <li>Table talks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📊 Grade Categories</h3>
+    <div class="syl-grade-row">
+      <div class="syl-grade-pill"><span>15%</span>Homework<small>At-home practice</small></div>
+      <div class="syl-grade-pill"><span>20%</span>Classwork<small>Daily participation, engagement, seatwork</small></div>
+      <div class="syl-grade-pill"><span>10%</span>Quizzes<small>Short formative assessments</small></div>
+      <div class="syl-grade-pill"><span>15%</span>Tests<small>Summative assessments</small></div>
+      <div class="syl-grade-pill"><span>15%</span>Portfolio<small>Student-maintained digital file</small></div>
+      <div class="syl-grade-pill"><span>25%</span>Projects &amp; Essays<small>Multistage</small></div>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📐 Grade Scale</h3>
+    <div class="scale-grid">
+      <div class="scale-cell"><strong>A+</strong><span>100–97%</span></div>
+      <div class="scale-cell"><strong>A</strong><span>96–93%</span></div>
+      <div class="scale-cell"><strong>A−</strong><span>92–90%</span></div>
+      <div class="scale-cell"><strong>B+</strong><span>89–87%</span></div>
+      <div class="scale-cell"><strong>B</strong><span>86–83%</span></div>
+      <div class="scale-cell"><strong>B−</strong><span>82–80%</span></div>
+      <div class="scale-cell"><strong>C+</strong><span>79–77%</span></div>
+      <div class="scale-cell"><strong>C</strong><span>76–73%</span></div>
+      <div class="scale-cell"><strong>C−</strong><span>72–70%</span></div>
+      <div class="scale-cell"><strong>D+</strong><span>69–67%</span></div>
+      <div class="scale-cell"><strong>D</strong><span>66–63%</span></div>
+      <div class="scale-cell"><strong>D−</strong><span>62–60%</span></div>
+      <div class="scale-cell" style="border-left-color:#b91c1c"><strong style="color:#b91c1c">F</strong><span>59–0%</span></div>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card" style="border-top-color:#B8860B">
+      <h3>⏰ No &ldquo;Late Work&rdquo; Policy</h3>
+      <p>Students must turn in their assignments <strong>on the day it is due, at the time it is due</strong>. If you believe your circumstance or situation may be an exception, please contact me through email <em>before</em> the assignment is due.</p>
+      <p style="margin-top:8px;background:#fef3c7;padding:10px 14px;border-radius:6px;border-left:4px solid #FFD100;font-weight:600;color:#7a5f00">All late assignments will be subject to a 10% penalty. All late work must be submitted by the next <u>school</u> (not class) day.</p>
+      <p style="margin-top:8px"><strong>For work missed due to an absence:</strong> Students are responsible for finding out what work they may have missed due to an absence.</p>
+    </div>
+    <div class="syl-card">
+      <h3>📝 Assessments</h3>
+      <ul>
+        <li>STAR Standardized testing</li>
+        <li>Timed essays</li>
+        <li>Socratic Seminar</li>
+        <li>Speeches</li>
+        <li>Multistage projects</li>
+      </ul>
+      <h3 style="margin-top:14px;font-size:0.95rem">📚 Homework &amp; Study Expectations</h3>
+      <p>Students typically have <strong>60–80 minutes</strong> of homework each day. However, students are expected to use their built-in &ldquo;flex time&rdquo; to complete homework assignments and other work.</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>📏 Classroom Rules &amp; Course Expectations</h3>
+      <ul>
+        <li>Stay in your seats</li>
+        <li>Practice safety</li>
+        <li><strong>Use computers and internet for class purposes only</strong></li>
+        <li>Be clean, tidy, and organized</li>
+        <li>Be timely</li>
+        <li>Be responsible</li>
+        <li>Know all your assignments and due dates</li>
+        <li>Be prepared</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>💡 Tips from the Teacher</h3>
+      <ul>
+        <li><strong>Google Classroom:</strong> Every student has a login. Ask for their username and password so you can see assignments and feedback.</li>
+        <li><strong>PE Uniforms:</strong> Leave one set in the classroom cubby &mdash; just in case.</li>
+        <li><strong>Regular Uniforms:</strong> Keep a spare polo in the cubby; recess can be sweaty.</li>
+        <li><strong>&ldquo;Read with a Stutter&rdquo;:</strong> Re-read! If we finished reading a book, story, or passage, we read it again, and again, and again. Once is not enough.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+  </div>
+`;
+
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Leading the Conversation',
+    icon: '🧭',
+    book: 'Skills foundation',
+    timeframe: 'Quarter 1 launch',
+    desc: '8th graders OWN the inquiry &mdash; lead Socratic Seminars, ask philosophical questions, and write across genres with confidence.',
+    essential: 'How does a student turn from participant into a leader of thinking?',
+    vocab: [
+      ['Philosophical question', 'A question with no single right answer; explores big ideas about being human.'],
+      ['Ownership', 'Taking responsibility for your own learning, questions, and growth.'],
+      ['Socratic method', 'Asking questions to lead others to discover ideas for themselves &mdash; named after Socrates.'],
+      ['Cross-genre writing', 'Writing in many different forms: essays, narratives, arguments, poetry, scripts.'],
+      ['Active listening', 'Hearing not just words but meaning &mdash; making space for others before speaking.'],
+      ['Inquiry-based learning', 'Learning that begins with student questions, not just teacher answers.']
+    ],
+    lessonHTML: `
+      <p>By 8th grade, you stop being a kid who reads books FOR class and start being a young scholar who reads books WITH the class. The difference: <strong>you ask the questions, you lead the discussion, you take ownership of what you learn</strong>.</p>
+      <h3>What Makes a Great Discussion Leader?</h3>
+      <ul>
+        <li><strong>Asks better questions, not louder answers.</strong></li>
+        <li><strong>Listens MORE than they talk.</strong> Top discussion leaders speak ~30% of the time.</li>
+        <li><strong>Pulls others in:</strong> &ldquo;Aria, you had a great point yesterday &mdash; what do you think?&rdquo;</li>
+        <li><strong>Uses evidence:</strong> &ldquo;On page 47, the author writes&hellip; which makes me think&hellip;&rdquo;</li>
+        <li><strong>Disagrees respectfully:</strong> &ldquo;I see it differently because&hellip;&rdquo;</li>
+      </ul>
+      <h3>Socratic Method</h3>
+      <p>Socrates (469–399 BC) taught by asking questions, not giving answers. He made his students THINK their way to the truth. Use these question types:</p>
+      <ul>
+        <li><strong>Clarifying:</strong> &ldquo;What do you mean by&hellip;?&rdquo;</li>
+        <li><strong>Probing assumptions:</strong> &ldquo;What are you assuming when you say that?&rdquo;</li>
+        <li><strong>Probing evidence:</strong> &ldquo;What in the text makes you think so?&rdquo;</li>
+        <li><strong>Implications:</strong> &ldquo;If that&rsquo;s true, what follows?&rdquo;</li>
+      </ul>
+      <h3>Cross-Genre Writing</h3>
+      <p>This year you&rsquo;ll write in many forms:</p>
+      <ul>
+        <li>Literary analysis (analyze a text)</li>
+        <li>Argumentative essay (defend a position with evidence and counterarguments)</li>
+        <li>Persuasive essay (move the reader to action)</li>
+        <li>Expository (explain a topic clearly)</li>
+        <li>Narrative (tell a story with craft)</li>
+      </ul>
+      <p>The skills overlap. The voice changes.</p>
+    `,
+    worksheet: [
+      { q: 'What is the difference between a clarifying question and a probing question?', ans: 'Clarifying = &ldquo;What do you mean by X?&rdquo; (asking someone to explain what they said). Probing = &ldquo;What are you assuming?&rdquo; or &ldquo;What evidence supports that?&rdquo; (going deeper into reasoning).' },
+      { q: 'In your own words, what does &ldquo;ownership&rdquo; of learning mean?', ans: 'Taking responsibility for your own learning &mdash; asking your own questions, doing the reading, leading discussion, and growing without waiting to be told.' },
+      { q: 'Who was Socrates, and what was his method?', ans: 'Greek philosopher (469–399 BC). He taught by asking questions to lead his students to discover answers for themselves &mdash; rather than telling them.' },
+      { q: 'List the 5 cross-genre writing types we will practice in 8th grade.', ans: 'Literary analysis, argumentative essay, persuasive essay, expository writing, narrative writing.' },
+      { q: 'What % of the time should a great discussion leader speak?', ans: 'Around 30% (or even less). Great leaders pull OTHERS in more than they speak themselves.' },
+      { q: 'Write one sentence stem you would use to pull a quiet classmate into a discussion.', ans: 'Examples: &ldquo;Aria, you had a great point yesterday — what do you think?&rdquo; / &ldquo;Alex, what&rsquo;s your take on this?&rdquo; / &ldquo;I&rsquo;m curious if anyone who hasn&rsquo;t spoken yet has a thought.&rdquo;' }
+    ],
+    quiz: [
+      { q: '8th grade ELA emphasizes:', opts: ['Following teacher rules only', 'Student ownership of inquiry', 'Memorizing vocabulary', 'Quiet listening only'], ans: 1 },
+      { q: 'Socratic method means:', opts: ['Lecturing', 'Asking questions to lead others to discover ideas', 'Quizzing', 'Reading aloud'], ans: 1 },
+      { q: 'A philosophical question:', opts: ['Has one right answer', 'Has no single right answer; explores big human ideas', 'Is multiple choice', 'Is fact-based'], ans: 1 },
+      { q: 'A great discussion LEADER:', opts: ['Talks the most', 'Listens more than talks; pulls others in', 'Reads from notes', 'Tells people they&rsquo;re wrong'], ans: 1 },
+      { q: 'A clarifying question is:', opts: ['What do you mean by that?', 'What evidence supports that?', 'How old are you?', 'What time is it?'], ans: 0 },
+      { q: 'A probing question is:', opts: ['What is your name?', 'What are you assuming when you say that?', 'How do you spell it?', 'What page?'], ans: 1 },
+      { q: 'Socrates lived in:', opts: ['Roman Empire', 'Ancient Greece (469–399 BC)', 'Renaissance Italy', 'Modern France'], ans: 1 },
+      { q: 'Cross-genre writing means:', opts: ['Only essays', 'Writing in multiple forms (analysis, argument, narrative, etc.)', 'Writing only fiction', 'Writing only nonfiction'], ans: 1 },
+      { q: 'Active listening means:', opts: ['Waiting for your turn to talk', 'Hearing meaning, not just words', 'Looking at the floor', 'Taking notes only'], ans: 1 },
+      { q: 'Disagreeing respectfully sounds like:', opts: ['You&rsquo;re wrong.', 'I see it differently because&hellip;', 'Whatever.', 'No.'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Lead a Family Conversation',
+        scenario: 'Family dinner is silent or full of phone-scrolling.',
+        steps: [
+          'Pick a question: &ldquo;What is something you changed your mind about this year?&rdquo;',
+          'Ask one person. Listen FULLY before adding anything.',
+          'Use a follow-up: &ldquo;What made you change?&rdquo; or &ldquo;What was hardest?&rdquo;',
+          'Loop someone else in by name.'
+        ],
+        reflect: 'How is leading a conversation different from dominating one?'
+      },
+      {
+        title: 'Ask Better Online',
+        scenario: 'You&rsquo;re in a group chat or social-media argument.',
+        steps: [
+          'Before reacting, use a Socratic move: &ldquo;What do you mean by that?&rdquo;',
+          'Or: &ldquo;What evidence supports that?&rdquo;',
+          'Notice how the conversation shifts.',
+          'Reflect: questions de-escalate; assertions escalate.'
+        ],
+        reflect: 'How are good questions an act of respect, even with people you disagree with?'
+      },
+      {
+        title: 'Write One Genre This Week',
+        scenario: 'You want to grow as a writer.',
+        steps: [
+          'Pick a genre you avoid (poetry? argument? narrative?).',
+          'Write a short piece &mdash; one page.',
+          'Read it aloud to find awkward spots.',
+          'Revise once. Then share with a friend or parent.'
+        ],
+        reflect: 'How does writing in different genres make you a better thinker overall?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — Hatchet',
+    icon: '🪓',
+    book: '<em>Hatchet</em> by Gary Paulsen',
+    timeframe: 'Quarter 1–2',
+    desc: 'A 13-year-old crash-lands in the Canadian wilderness with only a hatchet and his wits. A masterclass in survival, resilience, and self-reliance.',
+    essential: 'Who do you become when everything you depended on is gone?',
+    vocab: [
+      ['Survival narrative', 'A story focused on a character&rsquo;s struggle to stay alive against nature.'],
+      ['Internal vs. external conflict', 'External: against the world (cold, hunger, animals). Internal: within the character (fear, despair, doubt).'],
+      ['Resilience', 'The ability to recover from hardship and keep going.'],
+      ['Self-reliance', 'Depending on yourself rather than others.'],
+      ['Sensory detail', 'Words that appeal to sight, sound, smell, taste, touch &mdash; making the reader feel WHERE the character is.'],
+      ['Tone', 'The author&rsquo;s attitude toward the subject (Paulsen&rsquo;s tone: lean, urgent, respectful of nature).']
+    ],
+    lessonHTML: `
+      <p><em>Hatchet</em> by Gary Paulsen tells the story of <strong>Brian Robeson</strong>, a 13-year-old boy whose small plane crashes in the remote Canadian wilderness. The pilot dies of a heart attack. Brian survives the crash with only the clothes he&rsquo;s wearing and a small hatchet his mother gave him. He spends 54 days alone before being rescued.</p>
+      <h3>What Makes This Book Powerful</h3>
+      <ul>
+        <li><strong>Sensory writing</strong> &mdash; you can SMELL the campfire and TASTE the lake water.</li>
+        <li><strong>Internal monologue</strong> &mdash; Brian&rsquo;s thoughts are the heart of the story.</li>
+        <li><strong>Realistic survival</strong> &mdash; this isn&rsquo;t a fantasy. Paulsen lived in the woods himself.</li>
+        <li><strong>The Secret</strong> &mdash; Brian carries an emotional wound (his parents&rsquo; divorce; a secret he saw) that hurts as much as hunger.</li>
+      </ul>
+      <h3>Brian&rsquo;s Journey</h3>
+      <ol>
+        <li><strong>Despair</strong> &mdash; trying suicide; weeping; giving up.</li>
+        <li><strong>Realization:</strong> &ldquo;Self-pity does no good.&rdquo; The turning point.</li>
+        <li><strong>First wins:</strong> fire, shelter, food (turtle eggs, berries, a foolbird).</li>
+        <li><strong>Setbacks:</strong> tornado, porcupine attack, missed rescue.</li>
+        <li><strong>The new Brian</strong> &mdash; tougher, sharper, calmer.</li>
+        <li><strong>Rescue</strong> &mdash; but a changed boy returns.</li>
+      </ol>
+      <h3>Themes to Track</h3>
+      <ul>
+        <li><strong>Resilience</strong> &mdash; the ability to bounce back.</li>
+        <li><strong>Self-reliance</strong> &mdash; what we can do alone, when we must.</li>
+        <li><strong>Patience</strong> &mdash; nature doesn&rsquo;t hurry.</li>
+        <li><strong>Awareness</strong> &mdash; the survivor sees what others miss.</li>
+      </ul>
+      <h3>Literary Skills</h3>
+      <ul>
+        <li><strong>Tracking sensory details</strong> &mdash; underline 5 sensory descriptions in any chapter.</li>
+        <li><strong>Internal vs external conflict</strong> &mdash; make a 2-column chart.</li>
+        <li><strong>Symbol</strong> &mdash; the hatchet itself stands for what?</li>
+        <li><strong>Theme analysis</strong> &mdash; how does Paulsen show resilience without preaching?</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who is the protagonist, and how does he end up alone in the wilderness?', ans: 'Brian Robeson, age 13. His pilot dies of a heart attack mid-flight, and the small plane crashes in the Canadian wilderness on the way to visit Brian&rsquo;s father.' },
+      { q: 'What is &ldquo;The Secret&rdquo; that haunts Brian, and how does it relate to his survival?', ans: 'Brian carries the secret that he saw his mother with another man before his parents divorced. It is an emotional wound that adds to his struggle &mdash; he must survive both the wilderness and his inner pain.' },
+      { q: 'Define internal conflict and give an example from <em>Hatchet</em>.', ans: 'Internal conflict is a struggle within a character. Example: Brian&rsquo;s despair after the crash; his battle against self-pity; his choice to live or give up after the moose attack.' },
+      { q: 'What is the turning point for Brian psychologically?', ans: 'When he realizes &ldquo;self-pity does no good&rdquo; and chooses action over despair. From that moment, he begins to truly survive rather than just react.' },
+      { q: 'Why is the hatchet itself an important symbol?', ans: 'It is Brian&rsquo;s only tool, but more than that, it represents his connection to his mother (who gave it to him), his ability to act, and the power of small things. Without it, he&rsquo;d die. With it, he can build a life.' },
+      { q: 'How is Brian different at the end of the book than at the beginning?', ans: 'He is more patient, more aware, more capable, calmer. He has learned to observe nature, to plan, to act decisively, and to bear pain without despair. Life now feels precious and small things matter.' }
+    ],
+    quiz: [
+      { q: 'The author of <em>Hatchet</em> is:', opts: ['John Steinbeck', 'Gary Paulsen', 'Jack London', 'Ernest Hemingway'], ans: 1 },
+      { q: 'How old is Brian Robeson?', opts: ['11', '13', '15', '17'], ans: 1 },
+      { q: 'Brian crash-lands because:', opts: ['Engine failure', 'The pilot has a heart attack', 'A storm', 'He hits a mountain'], ans: 1 },
+      { q: 'Approximately how many days does Brian survive alone?', opts: ['7', '54', '100', '365'], ans: 1 },
+      { q: 'Brian&rsquo;s only tool is:', opts: ['A pocketknife', 'A hatchet from his mother', 'A flashlight', 'A radio'], ans: 1 },
+      { q: 'Internal conflict is:', opts: ['A fight with another person', 'A struggle inside a character', 'Bad weather', 'A war'], ans: 1 },
+      { q: 'Brian&rsquo;s turning point is when he decides:', opts: ['To give up', 'Self-pity does no good', 'To swim home', 'To eat the pilot'], ans: 1 },
+      { q: 'A central theme of <em>Hatchet</em> is:', opts: ['Wealth', 'Resilience', 'Sports', 'Love'], ans: 1 },
+      { q: 'Sensory details in writing appeal to:', opts: ['Math', 'Sight, sound, smell, taste, touch', 'Numbers', 'Time'], ans: 1 },
+      { q: 'By the end, Brian is mostly:', opts: ['Helpless', 'Patient, aware, and capable', 'Angry', 'Confused'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'A 24-Hour Wilderness Mindset',
+        scenario: 'You feel overwhelmed by school stress.',
+        steps: [
+          'Channel Brian: limit yourself to ONE problem at a time.',
+          'Ask: &ldquo;What is the next single thing I can do?&rdquo;',
+          'Do that thing fully before looking at the next.',
+          'Notice how panic shrinks when you focus.'
+        ],
+        reflect: 'How is &ldquo;one thing at a time&rdquo; the survivor&rsquo;s mindset?'
+      },
+      {
+        title: 'Build a Real Fire',
+        scenario: 'You have a backyard, a fire pit, or a campsite.',
+        steps: [
+          'Like Brian, start with tinder (dry grass, paper).',
+          'Add kindling (small sticks).',
+          'Then larger wood. Light the tinder, breathe gently.',
+          'Notice: success requires patience and the right order. Same in school.'
+        ],
+        reflect: 'What other parts of life require &ldquo;tinder before logs&rdquo;?'
+      },
+      {
+        title: 'Practice Awareness Walk',
+        scenario: 'You walk to school or around your neighborhood.',
+        steps: [
+          'Phone away. Look around like Brian did.',
+          'Note ONE detail you&rsquo;ve never noticed before (a tree pattern, a bird call).',
+          'Repeat tomorrow. And the next day.',
+          'Survivors notice. Distracted people don&rsquo;t.'
+        ],
+        reflect: 'How is awareness itself a form of resilience?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — The Pearl',
+    icon: '🌊',
+    book: '<em>The Pearl</em> by John Steinbeck',
+    timeframe: 'Quarter 2–3',
+    desc: 'A poor pearl diver finds a magnificent pearl &mdash; and discovers that hope can become a curse. A short novel with the weight of allegory.',
+    essential: 'When does a dream become a destroyer?',
+    vocab: [
+      ['Allegory', 'A story where characters and events stand for larger ideas (good/evil, hope/greed, etc.).'],
+      ['Parable', 'A short story that teaches a moral truth.'],
+      ['Greed', 'Excessive desire for wealth, beyond what one needs.'],
+      ['Foreshadowing', 'Hints the author drops about what is coming.'],
+      ['Symbol', 'An object that stands for a bigger idea (the pearl, the canoe, the song).'],
+      ['Naturalism', 'A literary movement that portrays life realistically and shows how environment and forces shape characters.']
+    ],
+    lessonHTML: `
+      <p><em>The Pearl</em> by John Steinbeck (Nobel Prize winner) is a short, devastating novella based on a Mexican folk tale. It tells the story of <strong>Kino</strong>, a poor pearl diver, his wife <strong>Juana</strong>, and their baby <strong>Coyotito</strong>.</p>
+      <h3>The Story</h3>
+      <ol>
+        <li>Coyotito is stung by a scorpion. The doctor refuses to treat the baby because Kino has no money.</li>
+        <li>Kino dives and finds the &ldquo;<strong>Pearl of the World</strong>&rdquo; &mdash; the largest, most beautiful pearl ever found.</li>
+        <li>Kino dreams: a wedding for his wife, an education for his son, a rifle.</li>
+        <li>The town hears. Pearl buyers cheat him. Thieves attack at night.</li>
+        <li>Kino kills a man defending the pearl. The family flees.</li>
+        <li>Trackers pursue them into the mountains. In a desperate moment, Coyotito is shot.</li>
+        <li>Kino and Juana return to the village &mdash; and throw the pearl back into the sea.</li>
+      </ol>
+      <h3>Why This Book Matters</h3>
+      <ul>
+        <li>It&rsquo;s ALLEGORY &mdash; every character and event stands for a bigger idea.</li>
+        <li>The pearl is a symbol of WHAT?</li>
+        <li>It&rsquo;s about how greed and hope can be the same emotion.</li>
+        <li>Steinbeck&rsquo;s prose is spare and powerful &mdash; every word matters.</li>
+      </ul>
+      <h3>Big Ideas to Wrestle With</h3>
+      <ul>
+        <li>Is the pearl evil &mdash; or are people&rsquo;s reactions to it evil?</li>
+        <li>Is Kino a victim of injustice, or partly responsible for his fall?</li>
+        <li>What is Juana&rsquo;s wisdom that Kino doesn&rsquo;t see at first?</li>
+        <li>Could there have been a happy ending? Where did it become impossible?</li>
+      </ul>
+      <h3>Literary Skills</h3>
+      <ul>
+        <li><strong>Allegory analysis</strong> &mdash; what does each element STAND FOR?</li>
+        <li><strong>Symbolism</strong> &mdash; the pearl, the canoe, the songs (&ldquo;Song of the Family,&rdquo; &ldquo;Song of Evil&rdquo;).</li>
+        <li><strong>Parable structure</strong> &mdash; a short story with a deep moral.</li>
+        <li><strong>Foreshadowing</strong> &mdash; how does Steinbeck warn us early?</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who are the three main characters in <em>The Pearl</em>?', ans: 'Kino (pearl diver), Juana (his wife), and Coyotito (their baby son).' },
+      { q: 'Why does the doctor initially refuse to treat Coyotito?', ans: 'Because Kino is poor and the doctor demands payment. He treats wealthy patients but considers Kino&rsquo;s family beneath him &mdash; until news of the pearl arrives.' },
+      { q: 'Define allegory and give one example from <em>The Pearl</em>.', ans: 'Allegory is a story where characters and events stand for larger ideas. Example: the pearl itself can stand for hope, greed, or the corruption of a dream &mdash; depending on how you read it.' },
+      { q: 'List two of Kino&rsquo;s dreams when he first looks into the pearl.', ans: 'Examples: a real church wedding for Juana; an education for Coyotito (so he can read); a rifle; new clothes; medical care.' },
+      { q: 'How is Juana wise in ways Kino is slow to see?', ans: 'Juana recognizes early that the pearl is bringing evil and tries to throw it back into the sea. She sees the danger Kino refuses to see because of his hope.' },
+      { q: 'Why do Kino and Juana throw the pearl back at the end?', ans: 'After Coyotito is killed (the baby for whom they dreamed), the pearl no longer represents hope &mdash; only the cost. Throwing it back is a recognition that the dream destroyed what they were trying to save.' }
+    ],
+    quiz: [
+      { q: 'The author of <em>The Pearl</em> is:', opts: ['Gary Paulsen', 'John Steinbeck', 'Hemingway', 'Faulkner'], ans: 1 },
+      { q: 'Steinbeck won what award?', opts: ['Pulitzer only', 'Nobel Prize in Literature', 'Newbery Medal', 'Booker Prize'], ans: 1 },
+      { q: 'Kino is a:', opts: ['Farmer', 'Pearl diver', 'Soldier', 'Doctor'], ans: 1 },
+      { q: 'The book opens with what crisis?', opts: ['A flood', 'Coyotito is stung by a scorpion', 'A war', 'A storm'], ans: 1 },
+      { q: 'Allegory is:', opts: ['A type of song', 'A story where things stand for bigger ideas', 'A summary', 'A type of poem'], ans: 1 },
+      { q: 'Juana is best described as:', opts: ['Greedy', 'Wise and clear-eyed about danger', 'Cruel', 'Lazy'], ans: 1 },
+      { q: 'The pearl is a SYMBOL of:', opts: ['Just a pearl', 'Hope, greed, and how dreams can corrupt', 'Money', 'Evil only'], ans: 1 },
+      { q: 'At the end, Kino and Juana:', opts: ['Become rich', 'Throw the pearl back into the sea', 'Sell it', 'Hide it forever'], ans: 1 },
+      { q: 'Coyotito is:', opts: ['Their dog', 'Their baby son', 'A neighbor', 'Kino&rsquo;s brother'], ans: 1 },
+      { q: 'A central theme is:', opts: ['Wealth solves all problems', 'The way dreams can become destroyers', 'Sports', 'Family vacation'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Examine Your Own Dreams',
+        scenario: 'You want something badly &mdash; popularity, a phone, a sport.',
+        steps: [
+          'Write down ONE dream.',
+          'Like Kino, ask: what would I sacrifice for it?',
+          'Ask honestly: would the cost be worth the prize?',
+          'Sometimes the answer is yes. Sometimes the dream needs to go back in the sea.'
+        ],
+        reflect: 'How does <em>The Pearl</em> teach us to question our own desires?'
+      },
+      {
+        title: 'Listen to a Family Member&rsquo;s Wisdom',
+        scenario: 'A parent or grandparent warns you about something you want.',
+        steps: [
+          'Like Kino with Juana, you might be tempted to ignore them.',
+          'Stop. Ask THEM the question: &ldquo;Why do you say that?&rdquo;',
+          'Listen for the wisdom under the warning.',
+          'Decide with new information.'
+        ],
+        reflect: 'Why do we often resist the people who see us most clearly?'
+      },
+      {
+        title: 'Read One Steinbeck Sentence Slowly',
+        scenario: 'You want to understand great prose.',
+        steps: [
+          'Open <em>The Pearl</em> to any page. Pick one sentence.',
+          'Read it 5 times.',
+          'Notice how every word earns its place.',
+          'Try to write a sentence as lean as Steinbeck&rsquo;s about something today.'
+        ],
+        reflect: 'Why is short, lean writing often the hardest to do?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Argumentative &amp; Persuasive Writing',
+    icon: '🗣️',
+    book: 'Writing Workshop',
+    timeframe: 'Quarter 3',
+    desc: 'Make a claim. Defend it with evidence. Counter the other side. Move readers to agree &mdash; or to act.',
+    essential: 'How do I move from making points to making people THINK?',
+    vocab: [
+      ['Claim', 'The main argument you are making &mdash; what you want the reader to believe.'],
+      ['Evidence', 'Facts, examples, quotes, and data that support your claim.'],
+      ['Warrant', 'The bridge between evidence and claim &mdash; explaining WHY this evidence proves the claim.'],
+      ['Counterargument', 'The opposing view &mdash; addressed and refuted to strengthen your case.'],
+      ['Rhetorical appeals', 'Three classical persuasion strategies: ethos (credibility), pathos (emotion), logos (logic).'],
+      ['Refutation', 'The act of proving the counterargument wrong (or weaker than yours).']
+    ],
+    lessonHTML: `
+      <p>Argumentative writing is the most important academic skill you will practice. Lawyers do it. Scientists do it. Politicians do it (for better or worse). Pastors do it. Journalists do it. Anyone who needs to convince another adult of something needs this.</p>
+      <h3>Argumentative vs. Persuasive</h3>
+      <ul>
+        <li><strong>Argumentative</strong> &mdash; relies on EVIDENCE and LOGIC. Used in academic and legal writing.</li>
+        <li><strong>Persuasive</strong> &mdash; uses evidence + EMOTION + credibility. Used in speeches, ads, op-eds.</li>
+        <li>Both have a <strong>claim, evidence, warrant, and refutation of counterarguments</strong>.</li>
+      </ul>
+      <h3>Aristotle&rsquo;s Three Appeals</h3>
+      <ul>
+        <li><strong>Ethos</strong> &mdash; credibility. WHY should we trust YOU on this?</li>
+        <li><strong>Pathos</strong> &mdash; emotion. Why does this MATTER to your reader?</li>
+        <li><strong>Logos</strong> &mdash; logic. Does the reasoning hold up?</li>
+      </ul>
+      <h3>The Argumentative Essay Structure</h3>
+      <ol>
+        <li><strong>Hook + context</strong> &mdash; capture attention; establish the topic.</li>
+        <li><strong>Thesis</strong> &mdash; one sentence stating your claim.</li>
+        <li><strong>Body paragraph 1</strong> &mdash; evidence + warrant + analysis.</li>
+        <li><strong>Body paragraph 2</strong> &mdash; more evidence + warrant + analysis.</li>
+        <li><strong>Counterargument paragraph</strong> &mdash; concede the strongest opposing view, then refute it.</li>
+        <li><strong>Conclusion</strong> &mdash; restate thesis with new insight; call to action or thought.</li>
+      </ol>
+      <h3>Common Logical Fallacies to Avoid</h3>
+      <ul>
+        <li><strong>Ad hominem</strong> &mdash; attacking the person, not their argument.</li>
+        <li><strong>Straw man</strong> &mdash; misrepresenting the other side to make it easy to attack.</li>
+        <li><strong>Slippery slope</strong> &mdash; claiming a small step leads inevitably to disaster.</li>
+        <li><strong>Either/or</strong> &mdash; pretending only two choices exist.</li>
+        <li><strong>Bandwagon</strong> &mdash; &ldquo;everyone&rsquo;s doing it.&rdquo;</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'In one sentence, distinguish argumentative from persuasive writing.', ans: 'Argumentative writing relies primarily on evidence and logic for academic/legal contexts. Persuasive writing combines evidence with emotion and credibility to move readers to agree or act.' },
+      { q: 'Define Aristotle&rsquo;s three appeals.', ans: 'Ethos = credibility (why trust the speaker). Pathos = emotion (why this matters to the audience). Logos = logic (does the reasoning hold up).' },
+      { q: 'What is a warrant in argumentation?', ans: 'The bridge between evidence and claim &mdash; the reasoning that explains WHY this evidence proves the claim. Without a warrant, evidence is just an unsupported fact.' },
+      { q: 'List the six parts of a strong argumentative essay structure.', ans: '1) Hook + context; 2) Thesis; 3) Body paragraph 1 (evidence + analysis); 4) Body paragraph 2 (more evidence + analysis); 5) Counterargument + refutation; 6) Conclusion.' },
+      { q: 'Define one logical fallacy and give an example.', ans: 'Examples: Ad hominem = attacking the person not the argument (&ldquo;You can&rsquo;t trust him because he&rsquo;s ugly.&rdquo;). Straw man = misrepresenting opposing view. Slippery slope = small step leads to disaster. Bandwagon = &ldquo;everyone&rsquo;s doing it.&rdquo;' },
+      { q: 'Why is including a counterargument actually a STRENGTH, not a weakness?', ans: 'It shows you understood the other side and considered it. By engaging and refuting the strongest opposing point, you prove your case is stronger &mdash; not just louder.' }
+    ],
+    quiz: [
+      { q: 'A claim is:', opts: ['A summary', 'The main argument you make', 'A counterargument', 'Evidence'], ans: 1 },
+      { q: 'Logos is the appeal to:', opts: ['Emotion', 'Logic', 'Credibility', 'Authority'], ans: 1 },
+      { q: 'Pathos is the appeal to:', opts: ['Logic', 'Emotion', 'Money', 'Speed'], ans: 1 },
+      { q: 'Ethos is the appeal to:', opts: ['Credibility / character of the speaker', 'Emotion', 'Logic', 'Numbers'], ans: 0 },
+      { q: 'A warrant explains:', opts: ['Why evidence supports the claim', 'How tall the writer is', 'When the essay is due', 'Where to publish'], ans: 0 },
+      { q: 'A counterargument should be:', opts: ['Avoided', 'Acknowledged and refuted', 'Mocked', 'Dismissed silently'], ans: 1 },
+      { q: 'Ad hominem means attacking:', opts: ['The argument', 'The person, not the argument', 'Logic', 'A claim'], ans: 1 },
+      { q: 'A straw man fallacy:', opts: ['Builds a real argument', 'Misrepresents the other side to make it easy to attack', 'Cites real evidence', 'Uses ethos'], ans: 1 },
+      { q: 'A slippery slope fallacy claims:', opts: ['One step leads inevitably to disaster', 'There are many options', 'Logic is invalid', 'Emotion is needed'], ans: 0 },
+      { q: 'The strongest argumentative essay:', opts: ['Ignores the other side', 'Engages and refutes the strongest counterargument', 'Yells louder', 'Avoids evidence'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Argue for Something Real',
+        scenario: 'You want a privilege from your parents.',
+        steps: [
+          'Write a one-sentence claim: &ldquo;I should _____ because _____.&rdquo;',
+          'List 3 pieces of evidence (facts, examples).',
+          'Anticipate ONE objection and prepare a refutation.',
+          'Present the case calmly. Notice how prep changes the conversation.'
+        ],
+        reflect: 'Why is academic argument actually a life skill, not just a school skill?'
+      },
+      {
+        title: 'Spot Fallacies in the Wild',
+        scenario: 'You scroll social media or watch the news.',
+        steps: [
+          'Listen for ad hominem (&ldquo;He&rsquo;s an idiot, so&hellip;&rdquo;).',
+          'Listen for straw man (&ldquo;They want to ban all _____&rdquo;).',
+          'Listen for slippery slope (&ldquo;If we do X, soon we&rsquo;ll be doing Y, Z, end of civilization&rdquo;).',
+          'When you spot one, call it by name in your head.'
+        ],
+        reflect: 'How does naming fallacies protect your thinking?'
+      },
+      {
+        title: 'Persuasive Writing for a Cause',
+        scenario: 'There&rsquo;s an issue at school you care about.',
+        steps: [
+          'Write a 1-page persuasive piece.',
+          'Use ethos (your experience), pathos (a real story), and logos (data).',
+          'End with a specific call to action.',
+          'Submit to your principal, post to school paper, or send to a parent.'
+        ],
+        reflect: 'How does writing turn a concern into a movement?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — Final Socratic Seminar &amp; Portfolio',
+    icon: '🎓',
+    book: 'Synthesis &amp; Portfolio',
+    timeframe: 'Quarter 4',
+    desc: 'Lead the final Socratic Seminar. Deliver a major speech. Curate a Portfolio that captures three years of growth in middle school ELA.',
+    essential: 'Who am I as a reader, writer, speaker, and thinker &mdash; and where am I going next?',
+    vocab: [
+      ['Socratic Seminar (summative)', 'A graded student-led discussion where students lead inquiry into a major text.'],
+      ['Capstone', 'The final, culminating project of a course or program.'],
+      ['Portfolio', 'A digital folder showcasing your strongest work and growth across the year.'],
+      ['Reflection', 'Looking back to identify what you learned and how you have grown.'],
+      ['Speech delivery', 'Pacing, volume, eye contact, gesture, and presence as you present.'],
+      ['Self-advocacy', 'Speaking up for what you need to grow as a learner.']
+    ],
+    lessonHTML: `
+      <p>This is the year&rsquo;s capstone. You will lead a final Socratic Seminar on a major text, deliver one of the four speech types as your final speech, and submit a Portfolio that captures your growth from 6th grade through 8th grade.</p>
+      <h3>Final Socratic Seminar (Summative)</h3>
+      <p>You&rsquo;ll be graded on:</p>
+      <ul>
+        <li>Quality and depth of your contributions (not quantity).</li>
+        <li>Use of textual evidence and prior class discussions.</li>
+        <li>Building on classmates&rsquo; ideas with new insight.</li>
+        <li>Asking thoughtful, opening questions.</li>
+        <li>Respectful disagreement and honest reconsideration.</li>
+        <li>Pulling quieter classmates into the conversation.</li>
+      </ul>
+      <h3>The Final Speech</h3>
+      <p>Pick ONE of the four speech types. This time, make it your most polished:</p>
+      <ul>
+        <li>Memorize key passages.</li>
+        <li>Practice in front of someone twice.</li>
+        <li>Time yourself.</li>
+        <li>Use intentional pauses, eye contact, and gesture.</li>
+        <li>Speak from a place of caring &mdash; about your topic and your audience.</li>
+      </ul>
+      <h3>Your 8th Grade Portfolio</h3>
+      <p>Your Portfolio should include:</p>
+      <ul>
+        <li>Your strongest analytical or argumentative essay (with revision drafts).</li>
+        <li>A creative piece you are proud of.</li>
+        <li>A speech transcript or video.</li>
+        <li>Evidence of Socratic Seminar participation (notes, reflections).</li>
+        <li>A reflection comparing your 6th-grade-self to your 8th-grade-self as a reader, writer, and speaker.</li>
+        <li>A goal for high-school ELA.</li>
+      </ul>
+      <h3>The Year-End Reflection</h3>
+      <p>Answer in writing:</p>
+      <ul>
+        <li>What is one book that changed how I see the world?</li>
+        <li>What is one writing skill I am proud of developing?</li>
+        <li>What is one habit I want to keep as a high school student?</li>
+        <li>What am I still working on?</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'In a final Socratic Seminar, what 5 things should you DO?', ans: 'Examples: bring evidence from the text, build on others&rsquo; ideas, ask thoughtful questions, disagree respectfully, pull quieter classmates in.' },
+      { q: 'List the four speech types from which you may choose your final speech.', ans: 'Storytelling, Poetry Reading, Dramatic Interpretation, Research Presentations.' },
+      { q: 'Name three preparation steps for a polished final speech.', ans: 'Examples: memorize key passages; practice in front of someone twice; time yourself; mark places for intentional pauses; rehearse eye contact.' },
+      { q: 'List four things your 8th grade Portfolio should contain.', ans: 'Examples: best analytical or argumentative essay; creative piece; speech transcript or video; Socratic Seminar reflection; year-end reflection; goal for high school.' },
+      { q: 'What questions should an end-of-year reflection answer?', ans: 'What book changed how I see the world; what writing skill I am proud of; what habit I want to keep; what I am still working on.' },
+      { q: 'How is graduating from middle school ELA different from graduating from elementary?', ans: 'You leave with the ability to read deeply, write with structure and evidence, lead a discussion, and reflect on your own growth &mdash; all skills you will use for the rest of your life.' }
+    ],
+    quiz: [
+      { q: 'A final Socratic Seminar is:', opts: ['A test', 'A summative student-led discussion', 'A pop quiz', 'A book report'], ans: 1 },
+      { q: 'In a Socratic Seminar, you are graded on:', opts: ['How loud you are', 'Quality of contributions, evidence, and listening', 'Length of speeches', 'Outfit'], ans: 1 },
+      { q: 'A capstone is:', opts: ['A first project', 'A final culminating project', 'A type of test', 'A textbook'], ans: 1 },
+      { q: 'Final speech preparation includes:', opts: ['Reading at the last minute', 'Memorizing key parts and practicing aloud', 'Avoiding eye contact', 'Reading off your phone'], ans: 1 },
+      { q: 'A Portfolio in 8th grade should show:', opts: ['Just one assignment', 'Your strongest work AND your growth', 'Random papers', 'Only A+ work'], ans: 1 },
+      { q: 'Including drafts in your Portfolio shows:', opts: ['Sloppiness', 'Your writing process and growth', 'Inability to finish', 'Nothing important'], ans: 1 },
+      { q: 'A year-end reflection should answer:', opts: ['Trivial questions', 'How you have grown and where you are going', 'Just grades', 'Other classmates&rsquo; work'], ans: 1 },
+      { q: 'Building on a classmate&rsquo;s idea sounds like:', opts: ['You&rsquo;re wrong.', 'Adding to what _____ said&hellip;', 'Whatever.', 'I disagree (no reason).'], ans: 1 },
+      { q: 'The best discussion participants:', opts: ['Talk the most', 'Listen as much as they speak', 'Read off notes', 'Wait silently'], ans: 1 },
+      { q: 'Self-advocacy means:', opts: ['Bragging', 'Speaking up for what you need to grow', 'Doing nothing', 'Following silently'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Build a 3-Year Capstone Portfolio',
+        scenario: 'Graduating 8th grade.',
+        steps: [
+          'Make a Google Drive folder &ldquo;Middle School ELA Capstone.&rdquo;',
+          'Pull your best work from 6th, 7th, AND 8th grade.',
+          'For each piece, add a short note: what does this show about my growth?',
+          'Include a 2-page reflection comparing your 6th- and 8th-grade selves.'
+        ],
+        reflect: 'How does seeing 3 years of work in one place change how you see yourself?'
+      },
+      {
+        title: 'Lead a Real Conversation',
+        scenario: 'A family meeting or friend group disagreement.',
+        steps: [
+          'Use Socratic moves: clarifying, probing assumptions, asking for evidence.',
+          'Pull in someone quieter.',
+          'Restate what you heard before adding your view.',
+          'Notice how the conversation deepens when YOU lead well.'
+        ],
+        reflect: 'What does it feel like to be the one shaping the conversation rather than reacting to it?'
+      },
+      {
+        title: 'Set a High-School Goal',
+        scenario: 'You&rsquo;re heading to high school next year.',
+        steps: [
+          'Pick ONE specific ELA goal: read X books a year, write a piece for the school paper, join debate, etc.',
+          'Write the goal somewhere you&rsquo;ll see it.',
+          'Tell ONE adult who can hold you accountable.',
+          'Take the first step in the next 7 days.'
+        ],
+        reflect: 'How do you keep growing as a reader and writer when no one is grading you anymore?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.book} &middot; ${u.timeframe}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Ideas & Resilience';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const ss = document.getElementById('syllabus-screen');
+  ss.innerHTML = SYLLABUS_HTML;
+  ss.classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <div class="meta-bar">
+      <span class="meta-pill book">📖 ${u.book}</span>
+      <span class="meta-pill">📅 ${u.timeframe}</span>
+    </div>
+    <div class="essential-q"><strong>Essential Question:</strong> ${u.essential}</div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. You may use your novel and your notes.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Excellent — you&rsquo;re thinking like a scholar!' : '📖 Re-read the chapter (&ldquo;read with a stutter&rdquo;) and try again.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 7th Grade ELA: Identity</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .essential-q { background: #fffbe6; border-left: 5px solid #FFD100; padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-style: italic; color: #4a3a00; }
+    .essential-q strong { color: #7a5f00; font-style: normal; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.book { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-hero .quote { color: #FFD100; font-style: italic; margin-top: 10px; font-size: 0.9rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .scale-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px,1fr)); gap: 6px; margin-top: 8px; }
+    .scale-cell { background: #f8fafc; border-radius: 6px; padding: 8px 10px; text-align: center; border-left: 3px solid #1B3A8A; }
+    .scale-cell strong { color: #1B3A8A; font-size: 0.95rem; display: block; }
+    .scale-cell span { font-size: 0.74rem; color: #64748b; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">7th Grade ELA <span class="grade-tag">Gr. 7</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/5</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-ela-index.html" class="back-index-btn" title="Back to ELA Classes">← All ELA</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Identity</span>
+        </div>
+        <div class="topbar-right">ELA &middot; Grade 7</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Identity</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">Who am I &mdash; and how do hardship, family, and choice shape who I become? Explored through two powerful novels.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen"></div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">How this unit&rsquo;s lessons connect to your daily life.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const SYLLABUS_HTML = `
+  <div class="syl-hero">
+    <div style="font-size:2.4rem;margin-bottom:8px">📚</div>
+    <h2>English Language Arts &mdash; Course Syllabus</h2>
+    <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+    <p class="quote">Empowered to succeed and guided by faith.</p>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card" style="flex:1 1 100%">
+      <h3>📋 Course Description</h3>
+      <p>Welcome to English Language Arts (ELA)! In this course, we&rsquo;ll strengthen our <strong>reading, writing, speaking, listening, and thinking</strong> skills. We&rsquo;ll read stories by diverse authors, create our own written pieces, and engage in thoughtful discussions. ELA is a space to explore ideas, ask questions, and grow as critical and creative thinkers.</p>
+      <p style="margin-top:8px">Please bring: pencils, a composition notebook, your computer, and a dedicated ELA binder. We will use Google Classroom and other edtech programs to support learning.</p>
+      <p style="margin-top:8px">I am excited to learn and grow with you in this special place where we are empowered to succeed and guided by faith. I hope we can establish and fortify a strong connection between home and school, making this a stellar year!</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>👩‍🏫 Teacher</h3>
+      <p><strong>Mrs. Lacey Vasquez</strong></p>
+      <p style="margin-top:8px;font-size:0.86rem;color:#475569">Communication primarily through Google Classroom and email. Please reach out for any questions about your child&rsquo;s progress.</p>
+    </div>
+    <div class="syl-card">
+      <h3>🎒 Materials</h3>
+      <ul>
+        <li>Pencils</li>
+        <li>Composition notebook</li>
+        <li>Computer (school-issued)</li>
+        <li>Dedicated ELA binder</li>
+        <li>Google Classroom + edtech access</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>🎯 7th Grade Goal &mdash; Deepening Inquiry</h3>
+    <p>Deepens the inquiry and writing &mdash; students <strong>ask more complex questions and craft analytical or expository responses with growing independence</strong>. Theme: <strong>identity</strong>.</p>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📖 Novels &amp; Readings &mdash; Grade 7 (Identity)</h3>
+    <ul>
+      <li><em>Stealing Freedom</em> by Elisa Lynn Carbone</li>
+      <li><em>Esperanza Rising</em> by Pam Muñoz Ryan</li>
+    </ul>
+    <p style="margin-top:8px;font-size:0.86rem;font-style:italic;color:#475569">Great literature gives the reader opportunities to experience the human condition across decades and centuries. Great literature also has a compelling theme that is expressed through literary devices. We may substitute novels with short stories that have equal literary merit.</p>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>✍️ Types of Writing</h3>
+      <p>At all grade levels, we will have at least one <strong>multistage writing assignment in each quarter</strong>:</p>
+      <ul>
+        <li>Literary analysis</li>
+        <li>Expository</li>
+        <li>Persuasive</li>
+        <li>Argumentative</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>🎤 Types of Speeches</h3>
+      <ul>
+        <li>Storytelling</li>
+        <li>Poetry Reading</li>
+        <li>Dramatic Interpretation</li>
+        <li>Research Presentations</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>💬 Discussion Formats</h3>
+      <ul>
+        <li><strong>Socratic Seminar</strong> (summative assessment)</li>
+        <li>p4C discussion circle</li>
+        <li>Peer-to-peer</li>
+        <li>Table talks</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📊 Grade Categories</h3>
+    <div class="syl-grade-row">
+      <div class="syl-grade-pill"><span>15%</span>Homework<small>At-home practice</small></div>
+      <div class="syl-grade-pill"><span>20%</span>Classwork<small>Daily participation, engagement, seatwork</small></div>
+      <div class="syl-grade-pill"><span>10%</span>Quizzes<small>Short formative assessments</small></div>
+      <div class="syl-grade-pill"><span>15%</span>Tests<small>Summative assessments</small></div>
+      <div class="syl-grade-pill"><span>15%</span>Portfolio<small>Student-maintained digital file</small></div>
+      <div class="syl-grade-pill"><span>25%</span>Projects &amp; Essays<small>Multistage</small></div>
+    </div>
+  </div>
+
+  <div class="syl-card" style="margin-bottom:18px">
+    <h3>📐 Grade Scale</h3>
+    <div class="scale-grid">
+      <div class="scale-cell"><strong>A+</strong><span>100–97%</span></div>
+      <div class="scale-cell"><strong>A</strong><span>96–93%</span></div>
+      <div class="scale-cell"><strong>A−</strong><span>92–90%</span></div>
+      <div class="scale-cell"><strong>B+</strong><span>89–87%</span></div>
+      <div class="scale-cell"><strong>B</strong><span>86–83%</span></div>
+      <div class="scale-cell"><strong>B−</strong><span>82–80%</span></div>
+      <div class="scale-cell"><strong>C+</strong><span>79–77%</span></div>
+      <div class="scale-cell"><strong>C</strong><span>76–73%</span></div>
+      <div class="scale-cell"><strong>C−</strong><span>72–70%</span></div>
+      <div class="scale-cell"><strong>D+</strong><span>69–67%</span></div>
+      <div class="scale-cell"><strong>D</strong><span>66–63%</span></div>
+      <div class="scale-cell"><strong>D−</strong><span>62–60%</span></div>
+      <div class="scale-cell" style="border-left-color:#b91c1c"><strong style="color:#b91c1c">F</strong><span>59–0%</span></div>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card" style="border-top-color:#B8860B">
+      <h3>⏰ No &ldquo;Late Work&rdquo; Policy</h3>
+      <p>Students must turn in their assignments <strong>on the day it is due, at the time it is due</strong>. If you believe your circumstance or situation may be an exception, please contact me through email <em>before</em> the assignment is due.</p>
+      <p style="margin-top:8px;background:#fef3c7;padding:10px 14px;border-radius:6px;border-left:4px solid #FFD100;font-weight:600;color:#7a5f00">All late assignments will be subject to a 10% penalty. All late work must be submitted by the next <u>school</u> (not class) day.</p>
+      <p style="margin-top:8px"><strong>For work missed due to an absence:</strong> Students are responsible for finding out what work they may have missed due to an absence.</p>
+    </div>
+    <div class="syl-card">
+      <h3>📝 Assessments</h3>
+      <ul>
+        <li>STAR Standardized testing</li>
+        <li>Timed essays</li>
+        <li>Socratic Seminar</li>
+        <li>Speeches</li>
+        <li>Multistage projects</li>
+      </ul>
+      <h3 style="margin-top:14px;font-size:0.95rem">📚 Homework &amp; Study Expectations</h3>
+      <p>Students typically have <strong>60–80 minutes</strong> of homework each day. However, students are expected to use their built-in &ldquo;flex time&rdquo; to complete homework assignments and other work.</p>
+    </div>
+  </div>
+
+  <div class="syl-grid">
+    <div class="syl-card">
+      <h3>📏 Classroom Rules &amp; Course Expectations</h3>
+      <ul>
+        <li>Stay in your seats</li>
+        <li>Practice safety</li>
+        <li><strong>Use computers and internet for class purposes only</strong></li>
+        <li>Be clean, tidy, and organized</li>
+        <li>Be timely</li>
+        <li>Be responsible</li>
+        <li>Know all your assignments and due dates</li>
+        <li>Be prepared</li>
+      </ul>
+    </div>
+    <div class="syl-card">
+      <h3>💡 Tips from the Teacher</h3>
+      <ul>
+        <li><strong>Google Classroom:</strong> Every student has a login. Ask for their username and password so you can see assignments and feedback.</li>
+        <li><strong>PE Uniforms:</strong> Leave one set in the classroom cubby &mdash; just in case.</li>
+        <li><strong>Regular Uniforms:</strong> Keep a spare polo in the cubby; recess can be sweaty.</li>
+        <li><strong>&ldquo;Read with a Stutter&rdquo;:</strong> Re-read! If we finished reading a book, story, or passage, we read it again, and again, and again. Once is not enough.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+  </div>
+`;
+
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — Inquiry &amp; Independent Reading',
+    icon: '🔍',
+    book: 'Skills foundation',
+    timeframe: 'Quarter 1 launch',
+    desc: 'Sharpen the tools we&rsquo;ll use all year &mdash; deeper questions, stronger annotation, and more independent analysis.',
+    essential: 'How do better questions lead to deeper understanding?',
+    vocab: [
+      ['Inquiry', 'A process of asking questions to deepen understanding rather than rushing to easy answers.'],
+      ['Annotation', 'Marking up a text with notes, questions, and insights as you read.'],
+      ['Analytical writing', 'Writing that examines HOW or WHY something happens — not just summarizing what happened.'],
+      ['Synthesis', 'Combining information from multiple sources or moments in a text to form a new insight.'],
+      ['Evidence', 'Specific details from the text that support your interpretation.'],
+      ['Inference', 'A conclusion you draw from clues + your own knowledge.']
+    ],
+    lessonHTML: `
+      <p>In 6th grade, we learned the basics. In 7th grade, we go <strong>deeper</strong>. The goal isn&rsquo;t just to read a story &mdash; it&rsquo;s to ask <em>why</em> the author made every choice, and what those choices tell us about identity, life, and ourselves.</p>
+      <h3>Levels of Questions</h3>
+      <ul>
+        <li><strong>Surface questions</strong> &mdash; What happened? (Easy &mdash; the answer is in the text.)</li>
+        <li><strong>Inferential questions</strong> &mdash; Why did the character do that? (Requires evidence + thinking.)</li>
+        <li><strong>Universal / philosophical questions</strong> &mdash; What does this say about being human? (No single answer; great for p4C circles.)</li>
+      </ul>
+      <h3>From Summary to Analysis</h3>
+      <p>A 6th grader might write: &ldquo;The character was sad because his dog died.&rdquo; A 7th grader writes: &ldquo;The author uses short, broken sentences when the dog dies, mirroring the character&rsquo;s broken thinking and showing us grief without naming it.&rdquo; Same scene; deeper read.</p>
+      <h3>Strong Annotation Habits</h3>
+      <ul>
+        <li>Underline + symbol: !&nbsp;= surprising, ?&nbsp;= confused, ★&nbsp;= important, ↔&nbsp;= connection</li>
+        <li>Track CHANGE in characters across chapters</li>
+        <li>Notice REPEATED words or images &mdash; they often signal theme</li>
+      </ul>
+      <h3>Sentence Stems for Deeper Discussion</h3>
+      <ul>
+        <li>&ldquo;The author seems to be suggesting that&hellip;&rdquo;</li>
+        <li>&ldquo;What if we read this scene as&hellip;?&rdquo;</li>
+        <li>&ldquo;The text says X, but I wonder if it really means&hellip;&rdquo;</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'What is the difference between a surface question and a universal question?', ans: 'Surface = answerable from the text directly (&ldquo;Where does the character live?&rdquo;). Universal = a big question about being human (&ldquo;What does it mean to belong?&rdquo;).' },
+      { q: 'Define analytical writing in your own words.', ans: 'Writing that examines HOW or WHY something happens, not just summarizing what happens. It looks at author&rsquo;s choices, language, and structure.' },
+      { q: 'Give one example of an inference you might make while reading.', ans: 'Open answer. Example: If a character keeps looking at a photo of someone who died, you can infer they are still grieving, even if the text doesn&rsquo;t say so directly.' },
+      { q: 'What is one annotation symbol and what it means?', ans: 'Examples: ! (surprising), ? (confused), ★ (important), ↔ (connection between parts).' },
+      { q: 'Why are repeated words or images important when reading?', ans: 'They often signal a theme — what the author wants us to keep noticing. Repetition is the author&rsquo;s thumb on the scale.' },
+      { q: 'Write one strong question stem you could use in a 7th grade discussion.', ans: 'Examples: &ldquo;The author seems to be suggesting that&hellip;&rdquo; or &ldquo;What if we read this scene as&hellip;?&rdquo;' }
+    ],
+    quiz: [
+      { q: '7th grade analytical writing focuses on:', opts: ['Summarizing the plot', 'How and why the author made choices', 'Memorizing dates', 'Drawing pictures'], ans: 1 },
+      { q: 'A universal question:', opts: ['Has one answer in the text', 'Is a big question about being human', 'Is a math problem', 'Is closed-ended'], ans: 1 },
+      { q: 'Inferring means:', opts: ['Stating obvious facts', 'Drawing conclusions from clues + thinking', 'Skipping passages', 'Memorizing'], ans: 1 },
+      { q: 'Annotation should include:', opts: ['Only highlights', 'Notes, questions, and reactions', 'Crossed-out lines only', 'Nothing'], ans: 1 },
+      { q: 'Repeated images or words in a story usually signal:', opts: ['Mistakes', 'Theme', 'Random choices', 'Filler'], ans: 1 },
+      { q: 'A good 7th grade analytical sentence:', opts: ['He was sad.', 'The character was sad.', 'The author uses short sentences to show fragmented grief.', 'The book is long.'], ans: 2 },
+      { q: 'In a Socratic Seminar, you build on:', opts: ['Just your own ideas', 'Others&rsquo; ideas, with evidence', 'The teacher&rsquo;s ideas only', 'Random thoughts'], ans: 1 },
+      { q: 'Synthesis means:', opts: ['Repeating one source', 'Combining multiple sources for new insight', 'Skipping reading', 'Plagiarism'], ans: 1 },
+      { q: 'Evidence in literary writing is:', opts: ['A guess', 'Specific details from the text supporting your claim', 'A summary', 'A title'], ans: 1 },
+      { q: 'Why do 7th graders &ldquo;Read with a Stutter&rdquo;?', opts: ['To finish faster', 'To find what they missed the first time', 'To memorize', 'To skip pages'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Ask Three Levels of Questions',
+        scenario: 'You read an article online.',
+        steps: [
+          'Write ONE surface question (answerable from the article).',
+          'Write ONE inferential question (requires reading between the lines).',
+          'Write ONE universal question (about being human).',
+          'Notice which kind of question opens up the best discussion.'
+        ],
+        reflect: 'How does the QUALITY of your question shape the QUALITY of your thinking?'
+      },
+      {
+        title: 'Track One Character&rsquo;s Change',
+        scenario: 'You finish a novel or movie.',
+        steps: [
+          'Pick one character.',
+          'Note three moments where they CHANGE.',
+          'For each, ask: WHAT changed? WHY?',
+          'Now you have the spine of a literary analysis essay.'
+        ],
+        reflect: 'How is character change the most important thing in a story?'
+      },
+      {
+        title: 'Annotate a Speech',
+        scenario: 'You hear a famous speech (MLK, Steve Jobs, etc.).',
+        steps: [
+          'Find the transcript online.',
+          'Print or copy it. Underline ALL repeated words.',
+          'Star moments where the speaker pauses for emphasis.',
+          'Identify the speaker&rsquo;s ONE big idea — what is the theme?'
+        ],
+        reflect: 'How do speakers and authors use the same techniques?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — Stealing Freedom',
+    icon: '🏃‍♀️',
+    book: '<em>Stealing Freedom</em> by Elisa Lynn Carbone',
+    timeframe: 'Quarter 1–2',
+    desc: 'Based on the true story of Ann Maria Weems &mdash; a young enslaved girl who escaped the Underground Railroad disguised as a boy.',
+    essential: 'When the world tries to erase your identity, how do you hold on to who you are?',
+    vocab: [
+      ['Slavery', 'The legal ownership of one human being by another. Abolished in the U.S. by the 13th Amendment (1865).'],
+      ['Underground Railroad', 'A network of secret routes and safe houses helping enslaved people escape to free states or Canada.'],
+      ['Abolitionist', 'A person who worked to end slavery — Black and white, Northern and Southern.'],
+      ['Identity', 'The combination of qualities, beliefs, and experiences that make someone who they are.'],
+      ['Historical fiction', 'Fiction set in real historical events, blending real and imagined characters.'],
+      ['Conflict', 'A struggle in a story; here, both external (escape) and internal (fear, identity).']
+    ],
+    lessonHTML: `
+      <p><em>Stealing Freedom</em> by Elisa Lynn Carbone tells the true-based story of <strong>Ann Maria Weems</strong>, a young enslaved girl in 1850s Maryland who, with the help of the Underground Railroad and abolitionists, escaped to freedom in Canada &mdash; disguised as a boy named &ldquo;Joe Wright.&rdquo;</p>
+      <h3>Why This Book</h3>
+      <p>Identity is the central theme. Ann is forced to:</p>
+      <ul>
+        <li>Cut her hair</li>
+        <li>Wear boys&rsquo; clothes</li>
+        <li>Use a false name</li>
+        <li>Pretend to be someone she isn&rsquo;t &mdash; just to survive</li>
+      </ul>
+      <p>Yet through it all, she keeps a <strong>core sense of who she is</strong>: a daughter, a sister, a person who deserves to be free. The book asks: how does identity survive when everything around you tries to take it?</p>
+      <h3>Historical Context</h3>
+      <ul>
+        <li>The Fugitive Slave Act (1850) made escaping harder &mdash; runaway slaves had to be returned even from free states.</li>
+        <li>The Underground Railroad was led by people like <strong>Harriet Tubman</strong>, who helped 70+ people escape.</li>
+        <li>Abolitionists were Black and white, often Quakers or churches who hid escapees.</li>
+        <li>Ann Maria Weems was a real person; her escape was helped by a real abolitionist named William Still.</li>
+      </ul>
+      <h3>Literary Skills</h3>
+      <ul>
+        <li><strong>Historical fiction analysis</strong> &mdash; what&rsquo;s real, what&rsquo;s invented?</li>
+        <li><strong>Character motivation</strong> &mdash; what drives Ann to keep going?</li>
+        <li><strong>Symbolism</strong> &mdash; the boys&rsquo; clothes, the new name, the hidden journal.</li>
+        <li><strong>Theme tracking</strong> &mdash; identity, family, freedom, faith.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who is the real-life person Ann Maria Weems based on?', ans: 'Ann Maria Weems was a real young enslaved girl in 1850s Maryland whose escape via the Underground Railroad was documented by abolitionist William Still.' },
+      { q: 'What disguise does Ann wear during her escape?', ans: 'She wears boys&rsquo; clothes and a short haircut, and uses the false name &ldquo;Joe Wright.&rdquo;' },
+      { q: 'Define historical fiction.', ans: 'Fiction set in real historical events, blending real and imagined characters and details.' },
+      { q: 'What was the Underground Railroad?', ans: 'A secret network of routes and safe houses that helped enslaved people escape to free states or Canada.' },
+      { q: 'Why does Ann keep her core identity even while pretending to be someone else?', ans: 'Open answer. Ann remembers her family, her faith, her love for her brother Augustus, and the inner truth that she is a free person regardless of what the law says.' },
+      { q: 'What was the Fugitive Slave Act of 1850, and why did it matter?', ans: 'It required that runaway slaves be returned to their owners even from free states. It made escape much more dangerous and forced many fugitives to flee all the way to Canada.' }
+    ],
+    quiz: [
+      { q: 'The author of <em>Stealing Freedom</em> is:', opts: ['Lois Lowry', 'Elisa Lynn Carbone', 'Pam Muñoz Ryan', 'Toni Morrison'], ans: 1 },
+      { q: 'Ann Maria Weems was:', opts: ['A fictional character', 'A real enslaved girl', 'A teacher', 'A soldier'], ans: 1 },
+      { q: 'During her escape, Ann disguises herself as:', opts: ['A grown woman', 'A boy', 'A nun', 'An old man'], ans: 1 },
+      { q: 'The Underground Railroad was a:', opts: ['Real subway', 'Network of safe houses for escapees', 'Type of train', 'Confederate plan'], ans: 1 },
+      { q: 'Famous Underground Railroad &ldquo;conductor&rdquo; was:', opts: ['Frederick Douglass', 'Harriet Tubman', 'Booker T. Washington', 'Sojourner Truth'], ans: 1 },
+      { q: 'The Fugitive Slave Act of 1850:', opts: ['Freed all slaves', 'Required runaways be returned', 'Created the Underground Railroad', 'Ended slavery'], ans: 1 },
+      { q: 'Many escapees fled all the way to Canada because:', opts: ['It was nearby', 'U.S. free states still had to return them', 'They wanted snow', 'The trip was easy'], ans: 1 },
+      { q: 'Historical fiction means:', opts: ['Made-up facts', 'Fiction set in real history', 'Pure history', 'A type of poem'], ans: 1 },
+      { q: 'The central theme of <em>Stealing Freedom</em> is:', opts: ['Wealth', 'Holding on to identity under pressure', 'Sports', 'Cooking'], ans: 1 },
+      { q: 'Slavery was abolished by the:', opts: ['12th Amendment', '13th Amendment', '14th Amendment', '19th Amendment'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Visit a Local Historic Site',
+        scenario: 'Many cities have Underground Railroad markers.',
+        steps: [
+          'Search &ldquo;Underground Railroad sites near [your state].&rdquo;',
+          'Find the closest historic home, church, or marker.',
+          'Visit if possible &mdash; or read its story online.',
+          'Note: ordinary people risked their lives. Could you?'
+        ],
+        reflect: 'How do everyday choices shape historical change?'
+      },
+      {
+        title: 'Hold On to Your Identity',
+        scenario: 'You feel pressured to be someone you&rsquo;re not.',
+        steps: [
+          'Write 3 things that make you YOU (no one else).',
+          'When pressure hits (peer, social media), come back to those 3.',
+          'Like Ann, you can adapt outside while staying you inside.',
+          'Tell a trusted person who you are; they&rsquo;ll help you remember.'
+        ],
+        reflect: 'How is identity something you choose to protect, every day?'
+      },
+      {
+        title: 'Be a Modern &ldquo;Conductor&rdquo;',
+        scenario: 'Someone needs help &mdash; a friend in trouble, a new student lost.',
+        steps: [
+          'Recall: the Underground Railroad worked because ordinary people offered safe houses.',
+          'Identify ONE person who needs a &ldquo;safe place&rdquo; right now.',
+          'Offer it &mdash; sit with them, walk with them, listen to them.',
+          'Ann had helpers; we all need them.'
+        ],
+        reflect: 'What does it cost YOU to make space for someone else?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — Esperanza Rising',
+    icon: '🌹',
+    book: '<em>Esperanza Rising</em> by Pam Muñoz Ryan',
+    timeframe: 'Quarter 2–3',
+    desc: 'A privileged Mexican girl loses everything overnight and must build a new identity in 1930s California.',
+    essential: 'Who are you when everything you owned is gone?',
+    vocab: [
+      ['Immigration', 'Moving from one country to another to live.'],
+      ['Great Depression', 'A worldwide economic crisis (1929–1939) marked by mass unemployment and poverty.'],
+      ['Migrant worker', 'A person who moves seasonally for farm work; often poorly paid and poorly treated.'],
+      ['Foreshadowing', 'Hints the author drops about future events.'],
+      ['Resilience', 'The ability to recover from hardship and keep going.'],
+      ['Phoenix metaphor', 'A symbol of rising from the ashes &mdash; central to Esperanza&rsquo;s journey.']
+    ],
+    lessonHTML: `
+      <p><em>Esperanza Rising</em> by Pam Muñoz Ryan, based partly on the author&rsquo;s grandmother, tells the story of <strong>Esperanza Ortega</strong> &mdash; a wealthy Mexican rancher&rsquo;s daughter who, after her father is murdered, flees to a California farm-labor camp during the Great Depression.</p>
+      <h3>The Story Arc</h3>
+      <ul>
+        <li><strong>Mexico (1930)</strong> &mdash; Esperanza is privileged. Servants do everything. She has a doll, beautiful dresses, a beautiful home.</li>
+        <li><strong>The fire and flight</strong> &mdash; Her father is killed; her uncles try to take the ranch. Esperanza and her mother must flee.</li>
+        <li><strong>California migrant camp</strong> &mdash; Esperanza must learn to do laundry, sweep, care for babies, work in the fields.</li>
+        <li><strong>Mama&rsquo;s illness</strong> &mdash; Esperanza must work to keep her mother alive in the hospital.</li>
+        <li><strong>Rising</strong> &mdash; Esperanza grows resilient, kind, fierce. She learns who she really is.</li>
+      </ul>
+      <h3>Why This Book Is Special</h3>
+      <ul>
+        <li>Each chapter is named for a fruit or vegetable in Spanish (Las Uvas / Grapes; Las Almendras / Almonds&hellip;).</li>
+        <li>It honors Mexican-American culture, language, and faith.</li>
+        <li>It shows the GREAT DEPRESSION through the eyes of immigrant farmworkers &mdash; a perspective often missing from textbooks.</li>
+        <li>It&rsquo;s a coming-of-age story where the character&rsquo;s LOSS becomes her teacher.</li>
+      </ul>
+      <h3>Literary Skills</h3>
+      <ul>
+        <li><strong>Foreshadowing</strong> &mdash; the early flute scene; the lightning rod; the mountains.</li>
+        <li><strong>Metaphor</strong> &mdash; the phoenix; the heartbeat of the earth; rising vs. falling.</li>
+        <li><strong>Bilingual reading</strong> &mdash; what does Spanish add to the story?</li>
+        <li><strong>Character growth arc</strong> &mdash; Esperanza Ortega → Anza, the worker.</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'Who wrote <em>Esperanza Rising</em>, and where is her own family from?', ans: 'Pam Muñoz Ryan; her grandmother&rsquo;s real story partly inspired the novel. Her family is Mexican-American.' },
+      { q: 'Where does Esperanza live at the start of the novel? Where does she end up?', ans: 'She starts on her family&rsquo;s wealthy ranch in Aguascalientes, Mexico (1930). She ends up in a migrant farm-labor camp in California during the Great Depression.' },
+      { q: 'What inciting event forces Esperanza&rsquo;s family to flee?', ans: 'Her father is murdered by bandits. Her father&rsquo;s greedy half-brothers (her uncles) try to take the ranch and the family escapes.' },
+      { q: 'Why are the chapters named after fruits and vegetables in Spanish?', ans: 'Each fruit/vegetable corresponds to the harvest season the migrant workers face — connecting the family&rsquo;s journey to the rhythm of the land. It also honors Spanish language and Mexican-American heritage.' },
+      { q: 'Define resilience and give one example from the book.', ans: 'Resilience = the ability to recover from hardship. Example: Esperanza learns to sweep, care for babies, and work in fields, all while caring for her sick mother — and grows stronger through it.' },
+      { q: 'What does the &ldquo;phoenix&rdquo; metaphor mean for Esperanza&rsquo;s story?', ans: 'The phoenix is a mythical bird that rises from its own ashes. Esperanza loses everything (wealth, status, father) and rises into a stronger, kinder, more capable person.' }
+    ],
+    quiz: [
+      { q: 'The author of <em>Esperanza Rising</em> is:', opts: ['Lois Lowry', 'Pam Muñoz Ryan', 'Elisa Lynn Carbone', 'Sandra Cisneros'], ans: 1 },
+      { q: 'Esperanza begins the book in:', opts: ['California', 'Mexico', 'Texas', 'Spain'], ans: 1 },
+      { q: 'The historical event the novel takes place during is the:', opts: ['Civil War', 'Great Depression', 'WWII', 'Cold War'], ans: 1 },
+      { q: 'Esperanza ends up working in:', opts: ['A factory', 'California migrant farm camps', 'A diner', 'A school'], ans: 1 },
+      { q: 'Each chapter is named for:', opts: ['A character', 'A fruit/vegetable in Spanish', 'A song', 'A month'], ans: 1 },
+      { q: 'The chapter naming connects to:', opts: ['Random choices', 'The harvest the workers do', 'Esperanza&rsquo;s favorite foods', 'Mexican holidays only'], ans: 1 },
+      { q: 'A migrant worker is someone who:', opts: ['Stays in one place', 'Moves seasonally for farm work', 'Owns a farm', 'Lives in a city'], ans: 1 },
+      { q: 'A central theme of the novel is:', opts: ['Wealth', 'Resilience &amp; rising from loss', 'Sports', 'Travel'], ans: 1 },
+      { q: 'The phoenix is a symbol of:', opts: ['A pet', 'Rising from ashes &mdash; renewal', 'A meal', 'A storm'], ans: 1 },
+      { q: 'Esperanza&rsquo;s mother becomes ill from:', opts: ['Magic', 'Dust pneumonia', 'A broken bone', 'Snake bite'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Hear a Family Migration Story',
+        scenario: 'Most American families have a moving story.',
+        steps: [
+          'Ask: who in our family came from another country, state, or town?',
+          'Ask: what did they leave behind? What did they bring?',
+          'Take notes &mdash; even small details matter.',
+          'Notice: every family has its own &ldquo;Esperanza&rdquo; story.'
+        ],
+        reflect: 'How does knowing where you came from shape who you become?'
+      },
+      {
+        title: 'Honor Workers Who Feed You',
+        scenario: 'You eat fruits and vegetables today.',
+        steps: [
+          'Look at the produce in your kitchen. Where was it grown? Who picked it?',
+          'Most American produce is harvested by migrant workers &mdash; often Latino.',
+          'Read about an organization that supports farmworkers (United Farm Workers, founded by Cesar Chavez).',
+          'Eat your next meal more slowly, with gratitude.'
+        ],
+        reflect: 'How does Esperanza&rsquo;s story change how you see workers around you?'
+      },
+      {
+        title: 'Practice Resilience',
+        scenario: 'Something hard just happened &mdash; a loss, a disappointment.',
+        steps: [
+          'Recall Esperanza&rsquo;s arc: from privilege → loss → growth.',
+          'Write what you LOST.',
+          'Write what you might GAIN through this hard time (it might be later).',
+          'Resilience is a muscle; this is a rep.'
+        ],
+        reflect: 'How can hardship be a teacher rather than just a wound?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Analytical &amp; Expository Writing',
+    icon: '✍️',
+    book: 'Writing Workshop',
+    timeframe: 'Quarter 3',
+    desc: 'Move beyond &ldquo;what happened&rdquo; into HOW and WHY &mdash; with stronger thesis statements, evidence, and structure.',
+    essential: 'How do I prove a point in writing without just saying my opinion?',
+    vocab: [
+      ['Thesis statement', 'A single sentence that captures your main argument or claim.'],
+      ['Evidence', 'Specific quotes, details, or examples from the text that support your thesis.'],
+      ['Analysis', 'Your explanation of HOW the evidence supports your thesis.'],
+      ['Topic sentence', 'The first sentence of a body paragraph &mdash; states what the paragraph will prove.'],
+      ['Transition', 'A word or phrase that connects ideas (Furthermore, However, In addition, Therefore).'],
+      ['Counterargument', 'The opposite point of view &mdash; addressing it makes your argument stronger.']
+    ],
+    lessonHTML: `
+      <p>By 7th grade, your writing should make a CLAIM and prove it with EVIDENCE. This is the foundation of every academic paper you&rsquo;ll write through high school and college.</p>
+      <h3>The Anatomy of a Strong Body Paragraph</h3>
+      <ol>
+        <li><strong>Topic sentence</strong> &mdash; what this paragraph will prove.</li>
+        <li><strong>Transition + context</strong> &mdash; set up the moment from the text.</li>
+        <li><strong>Evidence</strong> &mdash; a specific quote or detail from the text.</li>
+        <li><strong>Analysis</strong> &mdash; explain HOW this evidence supports your claim. (This is the longest and most important part!)</li>
+        <li><strong>Concluding/transition sentence</strong> &mdash; close the loop and lead to the next idea.</li>
+      </ol>
+      <h3>Strong Thesis Statements</h3>
+      <p><strong>Weak:</strong> &ldquo;Esperanza is a good character.&rdquo;</p>
+      <p><strong>Strong:</strong> &ldquo;In <em>Esperanza Rising</em>, Pam Muñoz Ryan uses the metaphor of the rising phoenix to show that identity is not lost when wealth is lost &mdash; it is forged.&rdquo;</p>
+      <h3>Tips That Make Writing Sharper</h3>
+      <ul>
+        <li><strong>Cut filler words</strong> &mdash; &ldquo;basically,&rdquo; &ldquo;in my opinion,&rdquo; &ldquo;a lot of.&rdquo;</li>
+        <li><strong>Use strong verbs</strong> &mdash; not &ldquo;was running&rdquo; → just &ldquo;ran.&rdquo; Not &ldquo;is showing&rdquo; → &ldquo;shows.&rdquo;</li>
+        <li><strong>Quote precisely</strong> &mdash; pick the most powerful words, not the longest sentence.</li>
+        <li><strong>Vary sentence length</strong> &mdash; mix short punchy sentences with longer flowing ones.</li>
+      </ul>
+      <h3>Expository vs. Argumentative</h3>
+      <ul>
+        <li><strong>Expository:</strong> EXPLAIN a topic (&ldquo;The major causes of the Great Depression were&hellip;&rdquo;)</li>
+        <li><strong>Argumentative:</strong> DEFEND a position (&ldquo;The novel argues that&hellip;&rdquo;)</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'List the five parts of a strong body paragraph.', ans: 'Topic sentence; Transition + context; Evidence (quote); Analysis (explanation of HOW evidence proves point); Concluding/transition sentence.' },
+      { q: 'Rewrite this weak thesis to make it strong: &ldquo;Esperanza is brave.&rdquo;', ans: 'Sample: &ldquo;In <em>Esperanza Rising</em>, Pam Muñoz Ryan demonstrates Esperanza&rsquo;s growing courage through her willingness to work, sacrifice for her mother, and adopt a new identity in California &mdash; showing that bravery is not the absence of fear but action despite it.&rdquo;' },
+      { q: 'What is a counterargument, and why include one?', ans: 'A counterargument is the opposite point of view. Including (and refuting) it makes your argument stronger because it shows you considered multiple perspectives.' },
+      { q: 'List two filler words you should cut from your writing.', ans: 'Examples: &ldquo;basically,&rdquo; &ldquo;in my opinion,&rdquo; &ldquo;a lot of,&rdquo; &ldquo;very,&rdquo; &ldquo;just,&rdquo; &ldquo;really,&rdquo; &ldquo;like.&rdquo;' },
+      { q: 'Give an example of a transition word for adding evidence.', ans: 'Examples: Furthermore, In addition, Moreover, Additionally, Also.' },
+      { q: 'In one sentence, distinguish expository from argumentative writing.', ans: 'Expository EXPLAINS a topic neutrally; argumentative DEFENDS a position with evidence and considers counterarguments.' }
+    ],
+    quiz: [
+      { q: 'A thesis statement is:', opts: ['A summary', 'A single sentence stating your main claim', 'A quotation', 'The conclusion'], ans: 1 },
+      { q: 'Evidence in literary writing is:', opts: ['Your opinion', 'Specific details from the text', 'A guess', 'A summary'], ans: 1 },
+      { q: 'Analysis means:', opts: ['Listing facts', 'Explaining HOW evidence supports your claim', 'Adding a summary', 'Skipping evidence'], ans: 1 },
+      { q: 'A topic sentence is the:', opts: ['Last sentence of a paragraph', 'First sentence of a body paragraph stating its purpose', 'Title of an essay', 'A direct quote'], ans: 1 },
+      { q: 'Which is a STRONG verb?', opts: ['was running', 'ran', 'is running', 'will be running'], ans: 1 },
+      { q: 'A counterargument:', opts: ['Weakens your essay', 'Strengthens your essay by addressing the other side', 'Should never appear', 'Is a copy-paste'], ans: 1 },
+      { q: 'Expository writing is:', opts: ['Persuasive', 'Explanatory', 'Personal opinion only', 'Fiction'], ans: 1 },
+      { q: 'Argumentative writing is:', opts: ['Just opinion', 'Defending a position with evidence', 'A summary', 'A poem'], ans: 1 },
+      { q: 'A filler word to CUT is:', opts: ['Therefore', 'Basically', 'Subsequently', 'In conclusion'], ans: 1 },
+      { q: 'In a body paragraph, the LONGEST part should be:', opts: ['Topic sentence', 'Quote', 'Analysis', 'Transition'], ans: 2 }
+    ],
+    rla: [
+      {
+        title: 'Make a Real Argument at Home',
+        scenario: 'You want to convince a parent of something.',
+        steps: [
+          'Write a one-sentence thesis: &ldquo;I should _____ because _____.&rdquo;',
+          'List 3 specific reasons (your evidence).',
+          'For each reason, explain WHY it&rsquo;s important (your analysis).',
+          'Anticipate one objection (counterargument) and address it.'
+        ],
+        reflect: 'How is academic writing actually a life skill?'
+      },
+      {
+        title: 'Cut the Fluff',
+        scenario: 'You write a text or email.',
+        steps: [
+          'Read it before sending.',
+          'Cut every &ldquo;basically,&rdquo; &ldquo;just,&rdquo; &ldquo;like,&rdquo; &ldquo;really.&rdquo;',
+          'Replace weak verbs (was/were) with action verbs.',
+          'Send the tighter version.'
+        ],
+        reflect: 'How does sharper writing show clearer thinking?'
+      },
+      {
+        title: 'Find a Thesis in the News',
+        scenario: 'You read a news article or op-ed.',
+        steps: [
+          'Read the first 2 paragraphs.',
+          'Find the writer&rsquo;s thesis &mdash; the ONE sentence claim.',
+          'Identify their three biggest pieces of evidence.',
+          'Decide: did they prove their thesis?'
+        ],
+        reflect: 'Why is recognizing a thesis a defense against bad arguments?'
+      }
+    ]
+  },
+  {
+    id: 'unit5',
+    title: 'Unit 5 — Speeches &amp; Portfolio',
+    icon: '🎤',
+    book: 'Synthesis &amp; Portfolio',
+    timeframe: 'Quarter 4',
+    desc: 'Bring it together &mdash; speeches, your final Socratic Seminar, and your end-of-year Portfolio.',
+    essential: 'How do I show what I&rsquo;ve learned this year through my own voice?',
+    vocab: [
+      ['Storytelling', 'Telling a personal or family story aloud with vivid detail and timing.'],
+      ['Poetry reading', 'Performing a poem aloud with feeling, pacing, and emphasis.'],
+      ['Dramatic interpretation', 'Reading a literary scene aloud with character voices and emotion.'],
+      ['Research presentation', 'Sharing findings on a topic, with visuals and citations.'],
+      ['Socratic Seminar', 'A graded student-led discussion where everyone contributes evidence-based ideas.'],
+      ['Portfolio', 'A digital collection showcasing your strongest work and reflection on growth.']
+    ],
+    lessonHTML: `
+      <p>You&rsquo;ve read deeply, written analytically, and discussed thoughtfully. Now &mdash; show it.</p>
+      <h3>Speech Choice</h3>
+      <p>Pick ONE of the four speech types:</p>
+      <ul>
+        <li><strong>Storytelling</strong> &mdash; tell a true family story.</li>
+        <li><strong>Poetry Reading</strong> &mdash; perform a poem you love.</li>
+        <li><strong>Dramatic Interpretation</strong> &mdash; perform a scene from a book or play.</li>
+        <li><strong>Research Presentation</strong> &mdash; share findings on a topic of your choice.</li>
+      </ul>
+      <h3>Speech Skills</h3>
+      <ul>
+        <li><strong>Pacing</strong> &mdash; vary your speed; pause for emphasis.</li>
+        <li><strong>Volume</strong> &mdash; project to the back of the room.</li>
+        <li><strong>Eye contact</strong> &mdash; pick three friendly faces.</li>
+        <li><strong>Gestures</strong> &mdash; natural, not forced.</li>
+        <li><strong>Practice</strong> &mdash; 5+ times before you present.</li>
+      </ul>
+      <h3>Final Socratic Seminar</h3>
+      <p>This is a SUMMATIVE assessment. You&rsquo;ll be graded on:</p>
+      <ul>
+        <li>Quality of your ideas (not just quantity).</li>
+        <li>Use of evidence from the text.</li>
+        <li>Building on classmates&rsquo; ideas.</li>
+        <li>Asking thoughtful questions.</li>
+        <li>Respectful disagreement.</li>
+      </ul>
+      <h3>Your Portfolio</h3>
+      <p>A digital folder showcasing your best work. Include:</p>
+      <ul>
+        <li>Your best multistage essay (with revision drafts to show process).</li>
+        <li>A creative writing piece you&rsquo;re proud of.</li>
+        <li>A speech transcript or video.</li>
+        <li>A reflection: How have you grown as a reader, writer, and speaker this year?</li>
+      </ul>
+    `,
+    worksheet: [
+      { q: 'List the four types of speeches we may give in ELA.', ans: 'Storytelling, Poetry Reading, Dramatic Interpretation, Research Presentations.' },
+      { q: 'List four speech delivery skills.', ans: 'Examples: pacing, volume/projection, eye contact, gestures, posture, breathing, emphasis through tone.' },
+      { q: 'In a Socratic Seminar, name three things that earn credit.', ans: 'Examples: building on classmates&rsquo; ideas, citing text evidence, asking thoughtful questions, respectful disagreement, listening actively.' },
+      { q: 'What is a Portfolio, and why is it important?', ans: 'A digital folder showing your best work and reflection. It tracks GROWTH (not just final grades) and gives you a record to look back on.' },
+      { q: 'Why include earlier drafts of an essay in your Portfolio?', ans: 'To show the writing PROCESS &mdash; how revision improved the piece. Growth is more compelling than perfection.' },
+      { q: 'What should a year-end reflection address?', ans: 'How you&rsquo;ve grown as a reader, writer, and speaker; what was hardest; what you&rsquo;re most proud of; what you want to work on next.' }
+    ],
+    quiz: [
+      { q: 'Which is NOT a type of ELA speech?', opts: ['Storytelling', 'Poetry Reading', 'Cooking demo', 'Dramatic Interpretation'], ans: 2 },
+      { q: 'Eye contact during a speech should be:', opts: ['Avoided', 'Made with 3+ friendly faces', 'Stared at the floor', 'Only with the teacher'], ans: 1 },
+      { q: 'Pacing means:', opts: ['Walking fast', 'Varying speed and pausing for emphasis', 'Reading rapidly', 'Standing still'], ans: 1 },
+      { q: 'A Socratic Seminar is a:', opts: ['Lecture', 'Student-led discussion', 'Pop quiz', 'Test'], ans: 1 },
+      { q: 'In a Socratic Seminar, you should:', opts: ['Talk over others', 'Build on others&rsquo; ideas with evidence', 'Stay completely silent', 'Read your phone'], ans: 1 },
+      { q: 'A Portfolio is:', opts: ['A test', 'A digital file of your best work and reflection', 'A textbook', 'A standardized exam'], ans: 1 },
+      { q: 'Including drafts in your Portfolio shows:', opts: ['You&rsquo;re sloppy', 'Your writing process &mdash; growth', 'You can&rsquo;t edit', 'Nothing'], ans: 1 },
+      { q: 'A reflection at year-end should focus on:', opts: ['Just grades', 'Growth as a reader, writer, speaker', 'Other students&rsquo; work', 'Complaints'], ans: 1 },
+      { q: 'A great speech feels:', opts: ['Memorized robotically', 'Like a real conversation', 'Read off a phone', 'Whispered'], ans: 1 },
+      { q: 'Practicing a speech 5 times BEFORE presenting:', opts: ['Is unnecessary', 'Builds fluency and confidence', 'Wastes time', 'Sounds fake'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Build Your Portfolio Folder',
+        scenario: 'End of year is coming.',
+        steps: [
+          'Make a Google Drive folder &ldquo;7th Grade ELA Portfolio.&rdquo;',
+          'Save your best multistage essay (with all drafts).',
+          'Save your favorite creative piece and a speech recording.',
+          'Add a 1-page reflection: how did you grow this year?'
+        ],
+        reflect: 'How does seeing your own growth on paper change how you see yourself?'
+      },
+      {
+        title: 'Practice a Speech for Family',
+        scenario: 'You have a family dinner or gathering.',
+        steps: [
+          'Pick a topic: &ldquo;A book that helped me understand identity.&rdquo;',
+          'Practice 5 times in front of a mirror.',
+          'Stand up at dinner and give it &mdash; ONE minute, eye contact, slow.',
+          'Notice what felt different from your normal speaking.'
+        ],
+        reflect: 'How does sharing your thinking aloud sharpen the thinking itself?'
+      },
+      {
+        title: 'Lead a Family Socratic Seminar',
+        scenario: 'You watch a movie or read a book together.',
+        steps: [
+          'After, sit in a circle.',
+          'Ask: &ldquo;What was the BIG question in this story?&rdquo;',
+          'Use sentence stems: &ldquo;I noticed&hellip;&rdquo; &ldquo;Building on what Dad said&hellip;&rdquo;',
+          'Notice: when you LEAD a discussion, you understand more.'
+        ],
+        reflect: 'Why is being able to lead a conversation a real-world superpower?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.book} &middot; ${u.timeframe}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Identity';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const ss = document.getElementById('syllabus-screen');
+  ss.innerHTML = SYLLABUS_HTML;
+  ss.classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <div class="meta-bar">
+      <span class="meta-pill book">📖 ${u.book}</span>
+      <span class="meta-pill">📅 ${u.timeframe}</span>
+    </div>
+    <div class="essential-q"><strong>Essential Question:</strong> ${u.essential}</div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. You may use your novel and your notes.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Excellent — you&rsquo;re thinking like a reader!' : '📖 Re-read the chapter (&ldquo;read with a stutter&rdquo;) and try again.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

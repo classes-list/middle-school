@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 6th Grade Math Tutorial</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100;  width: 250px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 15px; font-weight: bold; }
+    .sidebar-item { padding: 10px; margin: 5px 0; background: #111d35; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    /* Syllabus page (STS-style) */
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .syl-quarter { background: #f8fafc; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; border-left: 4px solid #1B3A8A; }
+    .syl-quarter h4 { font-size: 0.95rem; color: #1B3A8A; margin-bottom: 6px; }
+    .syl-quarter ul { margin: 4px 0 0 22px; }
+    .syl-quarter li { font-size: 0.88rem; color: #374151; margin-bottom: 3px; }
+    .syl-mission { background: linear-gradient(90deg, #fffbe6, #fff, #fffbe6); border-radius: 8px; padding: 12px 16px; text-align: center; font-weight: 700; color: #1B3A8A; margin-top: 8px; font-size: 0.92rem; }
+    .syl-mission .nui { color: #B8860B; display: block; font-size: 0.82rem; font-weight: 600; margin-top: 4px; letter-spacing: 0.04em; }
+
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar { border-bottom: 4px solid #FFD100;  background: #1B3A8A; color: white; padding: 15px 30px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .topbar-right { display: flex; gap: 20px; align-items: center; font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 30px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .unit-card { background: white; border-radius: 8px; padding: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(56,189,248,0.2); }
+    .unit-card-header { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 15px; }
+    .unit-card-icon { font-size: 32px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+    .unit-card-cc { font-size: 12px; color: #666; }
+    .unit-card-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.4; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { background: #f0f0f0; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 20px 0 10px 0; color: #1B3A8A; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.6; }
+    .lesson-content ul, .lesson-content ol { margin-left: 20px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 8px; }
+    .btn { display: inline-block; padding: 10px 20px; background: #1B3A8A; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px; }
+    .btn:hover { background: #162E70; }
+    .btn-secondary { background: #6b7280; }
+    .btn-secondary:hover { background: #4b5563; }
+    .btn-ka { display: inline-block; padding: 10px 15px; background: #16a34a; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ka:hover { background: #16a34a; }
+    .btn-ixl { display: inline-block; padding: 10px 15px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ixl:hover { background: #2563eb; }
+    .btn-yt { display: inline-block; padding: 10px 15px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-yt:hover { background: #dc2626; }
+    .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-phet:hover { background: #6d28d9; }
+    .resource-card { background: #f3f4f6; border-radius: 8px; padding: 15px; margin: 20px 0; }
+    .resource-card h3 { margin-bottom: 10px; color: #1B3A8A; font-size: 14px; }
+    .resource-btns { display: flex; flex-wrap: wrap; }
+    .problem { background: white; padding: 15px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 4px; }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; font-family: 'Courier New', monospace; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .quiz-question { background: white; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #1B3A8A; }
+    .quiz-question h4 { margin-bottom: 10px; color: #1B3A8A; }
+    .quiz-question label { display: block; margin: 8px 0; cursor: pointer; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 15px 0; }
+    .result-card h3 { color: #059669; margin-bottom: 10px; }
+    .nav-buttons { display: flex; gap: 10px; margin: 20px 0; }
+    .back-btn { background: #6b7280; }
+    .back-btn:hover { background: #4b5563; }
+  
+      .handout-card {
+        background: #fff;
+        border-left: 5px solid #B8860B;
+        border-radius: 10px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      }
+      .handout-card h3 {
+        margin: 0 0 8px;
+        color: #B8860B;
+        font-size: 1.2rem;
+      }
+      .handout-science {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 12px;
+      }
+      .handout-mission {
+        background: #f8f9ff;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 16px;
+        font-style: italic;
+        color: #334;
+      }
+      .handout-steps {
+        margin: 0 0 16px;
+        padding-left: 0;
+        list-style: none;
+        counter-reset: step-counter;
+      }
+      .handout-steps li {
+        counter-increment: step-counter;
+        padding: 8px 12px 8px 44px;
+        margin-bottom: 6px;
+        background: #f0f4ff;
+        border-radius: 6px;
+        position: relative;
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+      .handout-steps li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        width: 22px;
+        height: 22px;
+        background: #B8860B;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 0.78rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .handout-deliverable {
+        background: #fffbe6;
+        border: 1px solid #f5d000;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 16px;
+      }
+      .handout-deliverable strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #7a5f00;
+      }
+      .handout-reflect {
+        background: #fffbea;
+        border: 1px solid #68d391;
+        border-radius: 6px;
+        padding: 12px;
+      }
+      .handout-reflect strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #276749;
+      }
+      .handout-reflect ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .handout-reflect li {
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+      }
+      code {
+        background: #e8edf5;
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.88em;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 16px 0;color:#888;font-size:14px;">6th Grade Math</p><button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; color: #999;">
+        Progress: <span id="progress-text">0/16</span>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-math-index.html" class="back-index-btn" title="Back to Math Classes">← All Math</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Describing the World with Math</span>
+        </div>
+        <div class="topbar-right">Math · Grade 6</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+                    <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">🧮</div>
+            <h2>Math 6 &mdash; Course Syllabus</h2>
+            <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+            <div class="syl-mission">EMPOWERED TO SUCCEED &mdash; GUIDED BY FAITH</div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p>It will be my pleasure to be working with you and your child this school year. I take a very deliberate approach with algorithms that are easy to follow. Your child and I will work together to prepare for the following year. We will use a variety of methods to accomplish this: small group, big group, individual study, math games, lecture notes, and projects.</p>
+              <p style="margin-top:8px"><strong>Textbook:</strong> Glencoe Math Volume 1 and 2</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👨‍🏫 Teacher</h3>
+              <p><strong>Mr. Peter Park</strong></p>
+              <p>📧 <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a></p>
+              <p>📞 (808) 228-2288 &nbsp;<em style="font-size:0.83rem;color:#64748b">(text is best)</em></p>
+              <p style="margin-top:8px;font-size:0.86rem;color:#4a5568">Parents may email me or leave a message with the school. I respond within 24 hours.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Materials</h3>
+              <ul>
+                <li>Composition notebook</li>
+                <li>Pencils, erasers, highlighters</li>
+                <li>Notebook paper</li>
+                <li>Calculator</li>
+                <li>Folder for handouts</li>
+                <li>Textbook (Glencoe Math Volume 1 and 2)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📊 Grading Policy</h3>
+            <div class="syl-grade-row">
+              <div class="syl-grade-pill"><span>20%</span>Participation<small>Composition books, notes, in-class behavior, supplies</small></div>
+              <div class="syl-grade-pill"><span>25%</span>Tests<small>Q&amp;A, written essay (1 per chapter, 20 pts)</small></div>
+              <div class="syl-grade-pill"><span>30%</span>Homework<small>Assignments, classwork, class prep, projects</small></div>
+              <div class="syl-grade-pill"><span>25%</span>Quizzes<small>2 per chapter, 5 pts each</small></div>
+            </div>
+            <p style="margin-top:12px;font-size:0.86rem"><strong>Make-ups:</strong> Students who score below 80% on tests may make corrections / retest to improve their grade.</p>
+            <p style="margin-top:6px;font-size:0.86rem"><strong>Late work:</strong> Homework is due the next class meeting. Late work earns a maximum of 50% credit; if not turned in after two class meetings, the grade is a zero.</p>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Course Outline by Quarter &mdash; Math 6</h3>
+            <p style="font-size:0.85rem;color:#64748b;font-style:italic;margin-bottom:10px">Chapters from Glencoe Math Volume 1 and 2.</p>
+            <div class="syl-quarter"><h4>Q1</h4><ul><li>1 — Ratios and Rates</li><li>2 — Fractions, Decimals, and Percent</li><li>3 — Computation</li></ul></div>
+          <div class="syl-quarter"><h4>Q2</h4><ul><li>4 — Multiply and Divide Fractions</li><li>5 — Integers and Coordinate Plane</li><li>6 — Expressions</li></ul></div>
+          <div class="syl-quarter"><h4>Q3</h4><ul><li>7 — Equations</li><li>8 — Functions and Inequalities</li><li>9 — Area</li></ul></div>
+          <div class="syl-quarter"><h4>Q4</h4><ul><li>10 — Volume</li><li>11 — Statistics</li><li>12 — Statistical Displays</li></ul></div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>💬 Student &amp; Parent Communication</h3>
+              <p><strong>Beehively</strong> is the platform where students and parents can regularly check grade progress and receive notifications of missing or incomplete assignments.</p>
+              <p style="margin-top:6px">Parents are contacted by email up to 2 times if their child is receiving a deficiency, plus standard email notifications. Students are always informed of any grade that is a C or lower and ultimately are responsible for their grades.</p>
+              <p style="margin-top:6px">Student work is updated regularly.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎯 Middle School Math Goal</h3>
+              <p>From 6th through 8th grade, we focus on more than just numbers &mdash; we work to build strong math skills, boost confidence, and develop critical problem-solving abilities that students can apply in every subject and in everyday life. Our approach combines hands-on activities, real-world applications, and a supportive learning environment where students feel encouraged to take risks, ask questions, and think creatively.</p>
+              <p style="margin-top:6px">By the time they graduate, our students are not only ready for Algebra and beyond, but they also possess the perseverance, analytical thinking, and resourcefulness they need to thrive in high school and in life.</p>
+            </div>
+          </div>
+
+          <div class="nav-buttons" style="margin-top:18px;">
+            <button class="btn back-btn" onclick="showHome()">← Back to Topics</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn back-btn" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showHome()">← Back</button>
+            <button class="btn" onclick="showHandout()">🔬 Science Connection</button>
+            <button class="btn" id="realworld-btn" onclick="showRealWorld()">🎨 Real-World Project</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Check Answers</button>
+            <button class="btn" onclick="showQuiz()">Quiz →</button>
+          </div>
+        </div>
+        <div id="handout-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">🔬 Science Connection</h2>
+          <div id="handout-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="realworld-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">🎨 Real-World Project</h2>
+          <div id="realworld-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn back-btn" onclick="showWorksheet()">← Back to Worksheet</button>
+          <h2 style="margin: 20px 0;">📝 Quick Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showWorksheet()">← Back</button>
+            <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+          </div>
+        </div>
+        <div id="exam-screen" class="screen">
+          <h2 style="margin: 20px 0;">📊 Unit Exam</h2>
+          <div id="exam-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showHome()">← Home</button>
+            <button class="btn" onclick="submitExam()">Submit Exam</button>
+          </div>
+        </div>
+        <div id="certificate-screen" class="screen">
+          <div style="text-align: center; padding: 40px;">
+            <h2 style="color: #1B3A8A; margin: 20px 0;">🎉 Unit Completed!</h2>
+            <div id="cert-content"></div>
+            <button class="btn" onclick="showHome()" style="margin-top: 20px;">Return to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+const UNITS = [
+  { id:'factors-multiples', title:'Factors & Multiples', icon:'🔢', cc:'6.NS.4', desc:'Find GCF and LCM using prime factorization and apply to real-world problems.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-factors-and-multiples', ixlUrl:'https://www.ixl.com/math/grade-6/greatest-common-factor', ytSearch:'khan academy 6th grade GCF LCM factors multiples' },
+  { id:'fraction-division', title:'Fraction Division', icon:'➗', cc:'6.NS.1', desc:'Divide fractions by fractions using models and algorithms.', kaUrl:'https://www.khanacademy.org/math/arithmetic/fraction-arithmetic', ixlUrl:'https://www.ixl.com/math/grade-6/divide-fractions', ytSearch:'khan academy 6th grade dividing fractions', phetUrl:'https://phet.colorado.edu/en/simulations/build-a-fraction' },
+  { id:'decimal-ops', title:'Decimal Operations', icon:'💯', cc:'6.NS.2-3', desc:'Add, subtract, multiply, and divide multi-digit decimals.', kaUrl:'https://www.khanacademy.org/math/arithmetic/arith-decimals', ixlUrl:'https://www.ixl.com/math/grade-6/add-and-subtract-decimals', ytSearch:'khan academy 6th grade decimal operations', phetUrl:'https://phet.colorado.edu/en/simulations/area-model-decimals' },
+  { id:'unit-conversions', title:'Unit Conversions (KHDUdcm)', icon:'📐', cc:'6.RP + Science', desc:'Convert between metric units using the KHDUdcm staircase — King Henry Doesn\'t Usually drink chocolate milk.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-ratios-prop', ixlUrl:'https://www.ixl.com/math/grade-6/convert-between-metric-units', ytSearch:'metric unit conversions KHDUdcm kilo hecto deca unit deci centi milli 6th grade' },
+  { id:'density', title:'Density (Mass / Volume)', icon:'⚖️', cc:'6.RP + Earth Science', desc:'Density tells you how much matter is packed into a volume. Use the formula D = m / V to identify minerals, predict whether objects float or sink, and compare layers of the Earth.', kaUrl:'https://www.khanacademy.org/science/middle-school-physics/x11e4e3a3a8b76ade:matter-and-its-interactions/x11e4e3a3a8b76ade:density', ixlUrl:'https://www.ixl.com/science/grade-6/calculate-density', ytSearch:'density mass volume formula 6th grade earth science minerals floats sinks' },
+  { id:'scientific-notation', title:'Scientific Notation', icon:'🔬', cc:'6.EE + Science Preview', desc:'Write very large numbers in scientific notation using powers of 10, and understand why scientists need this tool.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-expressions-and-variables', ixlUrl:'https://www.ixl.com/math/grade-6/convert-between-standard-and-scientific-notation', ytSearch:'khan academy scientific notation powers of 10 6th grade introduction' },
+  { id:'ratios-rates', title:'Ratios & Rates', icon:'⚖️', cc:'6.RP.1-3', desc:'Understand ratios, unit rates, and solve proportional problems.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-ratios-prop', ixlUrl:'https://www.ixl.com/math/grade-6/unit-rates', ytSearch:'khan academy 6th grade ratios rates proportions', phetUrl:'https://phet.colorado.edu/en/simulations/unit-rates' },
+  { id:'percents', title:'Percents', icon:'%', cc:'6.RP.3c', desc:'Find percentages of numbers and apply to real-world contexts.', kaUrl:'https://www.khanacademy.org/math/pre-algebra/pre-algebra-ratios-rates', ixlUrl:'https://www.ixl.com/math/grade-6/percents-of-numbers', ytSearch:'khan academy 6th grade percents', phetUrl:'https://phet.colorado.edu/en/simulations/unit-rates' },
+  { id:'percent-error', title:'Percent Error', icon:'⚠️', cc:'6.RP + Science', desc:'When you measure something, your answer is rarely exactly right. Percent error tells you how close your measurement is to the true value. Use the formula |measured − actual| ÷ actual × 100% to evaluate the accuracy of an experiment.', kaUrl:'https://www.khanacademy.org/math/pre-algebra/pre-algebra-ratios-rates', ixlUrl:'https://www.ixl.com/math/grade-6/percents-of-numbers', ytSearch:'percent error formula 6th grade science measurement' },
+  { id:'integers', title:'Integers & Number System', icon:'➕➖', cc:'6.NS.5-6', desc:'Understand positive and negative integers and their real-world meaning.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-negative-number-topic', ixlUrl:'https://www.ixl.com/math/grade-6/integers-on-number-lines', ytSearch:'khan academy 6th grade integers negative numbers', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-integers' },
+  { id:'coordinate-plane', title:'Coordinate Plane', icon:'📍', cc:'6.NS.6-8', desc:'Plot and find distances on a four-quadrant coordinate plane.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-negative-number-topic', ixlUrl:'https://www.ixl.com/math/grade-6/coordinate-plane-review', ytSearch:'khan academy 6th grade coordinate plane quadrants', phetUrl:'https://phet.colorado.edu/en/simulations/graphing-lines' },
+  { id:'alg-expressions', title:'Algebraic Expressions', icon:'🔣', cc:'6.EE.1-4', desc:'Write, evaluate, and simplify algebraic expressions with variables.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-expressions-and-variables', ixlUrl:'https://www.ixl.com/math/grade-6/write-variable-expressions', ytSearch:'khan academy 6th grade algebraic expressions variables', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' },
+  { id:'equations', title:'Equations', icon:'⚖', cc:'6.EE.5-7', desc:'Write and solve one-step equations using inverse operations.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-equations-and-inequalities', ixlUrl:'https://www.ixl.com/math/grade-6/solve-one-step-equations', ytSearch:'khan academy 6th grade solving equations', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer' },
+  { id:'inequalities', title:'Inequalities', icon:'📏', cc:'6.EE.5,8', desc:'Write, solve, and graph inequalities on the number line.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-equations-and-inequalities', ixlUrl:'https://www.ixl.com/math/grade-6/graph-inequalities-on-number-lines', ytSearch:'khan academy 6th grade inequalities number line', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer' },
+  { id:'variables-relationships', title:'Variables & Relationships', icon:'📊', cc:'6.EE.9', desc:'Identify independent and dependent variables and analyze relationships.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-expressions-and-variables', ixlUrl:'https://www.ixl.com/math/grade-6/identify-independent-and-dependent-variables', ytSearch:'khan academy 6th grade dependent independent variables', phetUrl:'https://phet.colorado.edu/en/simulations/function-builder' },
+  { id:'area-polygons', title:'Area of Polygons', icon:'🔷', cc:'6.G.1', desc:'Find area of triangles, quadrilaterals, and composite figures.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-geometry-topic', ixlUrl:'https://www.ixl.com/math/grade-6/area-of-triangles', ytSearch:'khan academy 6th grade area polygons triangles', phetUrl:'https://phet.colorado.edu/en/simulations/area-builder' },
+  { id:'surface-area', title:'Surface Area', icon:'📦', cc:'6.G.4', desc:'Use nets and formulas to find surface area of 3D figures.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-geometry-topic', ixlUrl:'https://www.ixl.com/math/grade-6/surface-area-of-prisms', ytSearch:'khan academy 6th grade surface area nets' },
+  { id:'volume', title:'Volume', icon:'🧊', cc:'6.G.2', desc:'Find volume of rectangular prisms with fractional edge lengths.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-geometry-topic', ixlUrl:'https://www.ixl.com/math/grade-6/volume-of-rectangular-prisms', ytSearch:'khan academy 6th grade volume rectangular prisms', phetUrl:'https://phet.colorado.edu/en/simulations/density' },
+  { id:'statistics-data', title:'Statistics & Data', icon:'📈', cc:'6.SP.1-5', desc:'Summarize data sets using mean, median, mode, range, and displays.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-data-statistics', ixlUrl:'https://www.ixl.com/math/grade-6/calculate-mean-median-mode-and-range', ytSearch:'khan academy 6th grade statistics mean median mode range', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability' },
+  { id:'word-problems', title:'Word Problems', icon:'📝', cc:'mixed', desc:'Solve multi-step real-world problems across all 6th grade topics.', kaUrl:null, ixlUrl:'https://www.ixl.com/math/grade-6/multi-step-word-problems', ytSearch:'khan academy 6th grade word problems multi step' },
+  { id:'plate-tectonics', title:'Plate Tectonics & Rates', icon:'🌋', cc:'6.RP + Earth Science', desc:'Tectonic plates move just centimeters per year — but over millions of years they reshape continents. Use rates, ratios, and proportions to calculate geological motion.', kaUrl:'https://www.khanacademy.org/science/cosmology-and-astronomy', ixlUrl:'https://www.ixl.com/math/grade-6/unit-rates', ytSearch:'tectonic plate motion rates math geology 6th grade', phetUrl:'https://phet.colorado.edu/en/simulations/plate-tectonics' },
+  { id:'richter-scale', title:'Richter Scale & Powers of 10', icon:'📉', cc:'6.EE + Earth Science', desc:'The Richter scale measures earthquakes using powers of 10. A magnitude 7 quake releases 10× more ground motion than a magnitude 6 — learn to compare using exponential reasoning.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-expressions-and-variables', ixlUrl:'https://www.ixl.com/math/grade-6/understanding-exponents', ytSearch:'richter scale powers of 10 earthquake magnitude explanation 6th grade' },
+  { id:'radioactive-decay', title:'Radioactive Decay & Half-Life', icon:'⚛️', cc:'6.NS + Earth Science', desc:'Radioactive elements lose half their atoms in each half-life period. Use fractions and patterns to model this process — the same math geologists use to date rocks billions of years old.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-factors-and-multiples', ixlUrl:'https://www.ixl.com/math/grade-6/fractions-of-a-number', ytSearch:'radioactive decay half life math fractions 6th grade geology' },
+  { id:'topographic-maps', title:'Topographic Maps & Slope', icon:'🗺️', cc:'6.RP + Earth Science', desc:'Topographic maps use contour lines to show elevation. Calculate slope (rise over run), read contour intervals, and determine how steep a mountain is using ratio reasoning.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-ratios-and-proportions', ixlUrl:'https://www.ixl.com/math/grade-6/unit-rates', ytSearch:'topographic maps slope rise over run elevation 6th grade math' }
+];
+
+const LESSONS = {
+  'factors-multiples': `<h2>Factors & Multiples</h2><p>A <strong>factor</strong> is a number that divides evenly into another number. A <strong>multiple</strong> is a number that results from multiplying a number by an integer.</p><h3>Key Concepts</h3><ul><li>Factors of 12: 1, 2, 3, 4, 6, 12</li><li>Multiples of 5: 5, 10, 15, 20, 25, ...</li><li>The <strong>Greatest Common Factor (GCF)</strong> is the largest factor shared by two numbers</li><li>The <strong>Least Common Multiple (LCM)</strong> is the smallest multiple shared by two numbers</li></ul><h3>Finding GCF and LCM</h3><p><strong>Prime Factorization Method:</strong></p><ul><li>Write each number as a product of prime factors</li><li>For GCF: multiply shared prime factors</li><li>For LCM: multiply all prime factors (use highest power)</li></ul><p><strong>Example:</strong> Find GCF and LCM of 12 and 18</p><ul><li>12 = 2² × 3</li><li>18 = 2 × 3²</li><li>GCF = 2 × 3 = 6</li><li>LCM = 2² × 3² = 36</li></ul><h3>Real-World Applications</h3><p>GCF helps divide items into groups (e.g., arranging 24 apples and 36 oranges into identical baskets). LCM helps find when events repeat together (e.g., buses arriving on schedules).</p>`,
+  'fraction-division': `<h2>Dividing Fractions</h2><p>Dividing by a fraction means multiplying by its <strong>reciprocal</strong>.</p><h3>The Reciprocal</h3><p>The reciprocal of a fraction flips the numerator and denominator. For example:</p><ul><li>Reciprocal of 3/4 is 4/3</li><li>Reciprocal of 5 is 1/5</li></ul><h3>Division Rule</h3><p>a ÷ b/c = a × c/b</p><h3>Steps</h3><ol><li>Keep the first fraction</li><li>Change ÷ to ×</li><li>Flip the second fraction</li><li>Multiply and simplify</li></ol><h3>Example</h3><p>3/4 ÷ 2/5 = 3/4 × 5/2 = 15/8 = 1 7/8</p><h3>Word Problems</h3><p>If you have 3/4 gallon of juice and each serving is 1/6 gallon, how many servings? Answer: 3/4 ÷ 1/6 = 3/4 × 6/1 = 18/4 = 4.5 servings</p>`,
+  'decimal-ops': `<h2>Decimal Operations</h2><p>Working with decimals is essential for money, measurements, and science.</p><h3>Adding & Subtracting Decimals</h3><ul><li>Align decimal points</li><li>Add or subtract as with whole numbers</li><li>Keep decimal in same position</li></ul><p><strong>Example:</strong> 12.45 + 8.37 = 20.82</p><h3>Multiplying Decimals</h3><ul><li>Multiply as whole numbers (ignore decimals)</li><li>Count total decimal places in both numbers</li><li>Place decimal in answer</li></ul><p><strong>Example:</strong> 2.5 × 3.2 = 8.00</p><h3>Dividing Decimals</h3><ul><li>Move decimal in divisor to right to make whole</li><li>Move decimal in dividend same number of places</li><li>Divide as usual</li></ul><p><strong>Example:</strong> 7.5 ÷ 2.5 = 75 ÷ 25 = 3</p><h3>Applications</h3><p>Decimals appear in shopping (prices), science (measurements), and sports (times).</p>`,
+  'scientific-notation': `<h2>Scientific Notation</h2><p>Some numbers in science are so large they are nearly impossible to write in full. The distance from Earth to the Sun is 150,000,000,000 meters. Scientific notation gives us a shortcut using powers of 10.</p><h3>Connection to KHDUdcm</h3><p>You already know that each step on the KHDUdcm chart multiplies or divides by 10. Scientific notation extends that same idea — every time you multiply by 10, you move the decimal one place right and increase the exponent by 1.</p><ul><li>10 = 10¹</li><li>100 = 10²</li><li>1,000 = 10³</li><li>10,000 = 10⁴</li><li>1,000,000 = 10⁶</li></ul><h3>The Format</h3><p>Scientific notation always looks like: <strong>a × 10ⁿ</strong></p><ul><li><strong>a</strong> = a number from 1 to 9.999… (always one digit before the decimal)</li><li><strong>10ⁿ</strong> = the power of 10 that shows how large the number is</li></ul><h3>Converting a Large Number to Scientific Notation</h3><ol><li>Move the decimal point left until only one digit is in front of it</li><li>Count how many places you moved — that is your exponent</li></ol><p><strong>Example:</strong> 4,500,000 → move decimal 6 places left → <strong>4.5 × 10⁶</strong></p><p><strong>Example:</strong> 93,000,000 miles (Earth–Sun distance) → <strong>9.3 × 10⁷</strong> miles</p><h3>Converting from Scientific Notation to Standard Form</h3><p>Reverse the process — move the decimal right by the exponent.</p><ul><li>3.2 × 10⁴ → move decimal 4 right → <strong>32,000</strong></li><li>7.1 × 10⁶ → move decimal 6 right → <strong>7,100,000</strong></li></ul><h3>Why Scientists Use It</h3><table style="border-collapse:collapse;width:100%;font-size:0.93em;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Measurement</th><th style="padding:6px 10px;">Standard</th><th style="padding:6px 10px;">Scientific Notation</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Earth–Moon distance</td><td style="padding:6px 10px;">384,400,000 m</td><td style="padding:6px 10px;">3.844 × 10⁸ m</td></tr><tr><td style="padding:6px 10px;">Age of Earth</td><td style="padding:6px 10px;">4,500,000,000 years</td><td style="padding:6px 10px;">4.5 × 10⁹ years</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Mass of Earth</td><td style="padding:6px 10px;">5,970,000,000,000,000,000,000,000 kg</td><td style="padding:6px 10px;">5.97 × 10²⁴ kg</td></tr></table><h3>Comparing Numbers in Scientific Notation</h3><p>To compare, first look at the exponent — the larger the exponent, the larger the number. If exponents are equal, compare the decimal part.</p><ul><li>3.2 × 10⁵ vs 8.1 × 10⁴ → 10⁵ wins → <strong>3.2 × 10⁵ is larger</strong></li></ul>`,
+  'unit-conversions': `<h2>Unit Conversions — KHDUdcm</h2><p>Scientists measure everything — rock mass, rainfall, distances between volcanoes. To compare measurements they must be in the same unit. The <strong>KHDUdcm staircase</strong> organizes all metric prefixes in order:</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">K</th><th style="padding:7px 10px;">H</th><th style="padding:7px 10px;">D</th><th style="padding:7px 10px;">U</th><th style="padding:7px 10px;">d</th><th style="padding:7px 10px;">c</th><th style="padding:7px 10px;">m</th></tr><tr style="text-align:center;background:#f2f2f2;"><td style="padding:6px 10px;">Kilo</td><td style="padding:6px 10px;">Hecto</td><td style="padding:6px 10px;">Deca</td><td style="padding:6px 10px;font-weight:bold;">Unit</td><td style="padding:6px 10px;">deci</td><td style="padding:6px 10px;">centi</td><td style="padding:6px 10px;">milli</td></tr><tr style="text-align:center;"><td style="padding:6px 10px;">× 1000</td><td style="padding:6px 10px;">× 100</td><td style="padding:6px 10px;">× 10</td><td style="padding:6px 10px;font-weight:bold;">× 1</td><td style="padding:6px 10px;">× 0.1</td><td style="padding:6px 10px;">× 0.01</td><td style="padding:6px 10px;">× 0.001</td></tr></table><p><strong>Memory phrase:</strong> <em>"<strong>K</strong>ing <strong>H</strong>enry <strong>D</strong>oesn't <strong>U</strong>sually <strong>d</strong>rink <strong>c</strong>hocolate <strong>m</strong>ilk"</em></p><p>The <strong>U</strong> in the middle is your base unit — meter (m) for length, gram (g) for mass, liter (L) for volume.</p><h3>The One Rule</h3><ul><li>Moving <strong>right</strong> on the chart → multiply by 10 per step → decimal point moves right</li><li>Moving <strong>left</strong> on the chart → divide by 10 per step → decimal point moves left</li></ul><h3>Connection to Decimal Operations</h3><p>Converting units IS decimal multiplication. 2.5 km → m is just 2.5 × 1000 = 2500 — the same skill you used in decimal operations, applied to measurement.</p><h3>Examples — Length</h3><ul><li><strong>4 km → m:</strong> K to U = 3 steps right → 4 × 1000 = <strong>4000 m</strong></li><li><strong>350 cm → m:</strong> c to U = 2 steps left → 350 ÷ 100 = <strong>3.5 m</strong></li><li><strong>80 mm → cm:</strong> m to c = 1 step left → 80 ÷ 10 = <strong>8 cm</strong></li></ul><h3>Examples — Mass</h3><ul><li><strong>3 kg → g:</strong> K to U = 3 steps right → 3 × 1000 = <strong>3000 g</strong></li><li><strong>500 g → kg:</strong> U to K = 3 steps left → 500 ÷ 1000 = <strong>0.5 kg</strong></li></ul><h3>Examples — Volume</h3><ul><li><strong>2 L → mL:</strong> U to m = 3 steps right → 2 × 1000 = <strong>2000 mL</strong></li><li><strong>750 mL → L:</strong> m to U = 3 steps left → 750 ÷ 1000 = <strong>0.75 L</strong></li></ul><h3>The Factor-Label Method (Dimensional Analysis)</h3><p>The KHDUdcm staircase is fast for metric conversions, but science classes use a more powerful tool that also works for <em>any</em> conversion — metric to imperial, rates to rates, even chained conversions in chemistry. It is called the <strong>factor-label method</strong> (also called <em>dimensional analysis</em>).</p><h4>The big idea</h4><p>Multiply by fractions equal to <strong>1</strong> — built from a unit equality — so units <strong>cancel</strong> on the way to the answer. Anything you multiply by 1 stays the same value, so the math is always honest.</p><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>1 km = 1000 m</strong> &nbsp; → &nbsp; <strong>1 = 1000 m / 1 km</strong> &nbsp; or &nbsp; <strong>1 = 1 km / 1000 m</strong></p><h4>Step-by-step recipe</h4><ol><li>Write the starting value with its unit.</li><li>Multiply by a "1" fraction whose <em>top</em> has the unit you want, <em>bottom</em> has the unit you want to get rid of.</li><li>Cancel the matching units (cross them out diagonally).</li><li>Multiply the numbers; carry the surviving unit.</li></ol><h4>Worked example — single step</h4><p>Convert <strong>2.5 km</strong> to meters:</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">2.5 km × (1000 m / 1 km) = 2500 m</p><p>"km" cancels (one on top, one on bottom). The "m" survives. Numbers: 2.5 × 1000 = 2500.</p><h4>Worked example — chained (rate)</h4><p>Convert <strong>72 km/h</strong> to m/s. Use TWO unit equalities at once:</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">72 km/h × (1000 m / 1 km) × (1 h / 3600 s) = 72 × 1000 / 3600 m/s = 20 m/s</p><p>"km" cancels and "h" cancels — leaving m/s. This is exactly the same answer as ÷ 3.6, but the work shows <em>why</em>.</p><h4>Worked example — three-step (medicine)</h4><p>A child weighs <strong>30 kg</strong> and the prescription is <strong>5 mg per kg</strong>. How many <strong>grams</strong> total?</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">30 kg × (5 mg / 1 kg) × (1 g / 1000 mg) = 150/1000 g = 0.15 g</p><p>"kg" cancels with "kg", "mg" cancels with "mg". "g" survives.</p><h4>Why this is useful in science</h4><ul><li>It works for <strong>any</strong> conversion — not just powers of ten.</li><li>It catches errors: if your units do not cancel, you set up the fraction upside-down.</li><li>It is the same method used in chemistry (mole conversions), physics (unit checks), and medicine (dose calculations).</li><li>It pairs with KHDUdcm: use the staircase for quick metric jumps, factor-label for everything else.</li></ul>`,
+  'density': `<h2>Density &mdash; Mass per Volume</h2><p><strong>Density</strong> is how much mass is packed into a given volume. Two objects can have the same volume but very different masses &mdash; the denser one has more matter crammed into the same space. Density is one of the most useful numbers in earth science: it lets you identify minerals, predict whether objects float or sink, and explain why the Earth has layers.</p><h3>The Formula</h3><p style="text-align:center;padding:10px;background:#f0f4ff;border-radius:6px;font-size:1.15em;"><strong>Density = Mass &divide; Volume</strong> &nbsp;&nbsp; or &nbsp;&nbsp; <strong>D = m / V</strong></p><ul><li><strong>Mass</strong> &mdash; how much stuff there is &mdash; measured in grams (g) or kilograms (kg).</li><li><strong>Volume</strong> &mdash; how much space it takes up &mdash; measured in cm&sup3; or mL (<em>1 cm&sup3; = 1 mL</em>).</li><li><strong>Density</strong> &mdash; comes out in g/cm&sup3; or g/mL.</li></ul><h3>Worked Examples</h3><p><strong>Example 1.</strong> A rock has mass 60 g and volume 20 cm&sup3;.</p><p style="font-family:monospace;padding:8px;background:#f9fafb;border-left:3px solid #2563eb;">D = 60 g &divide; 20 cm&sup3; = 3 g/cm&sup3;</p><p><strong>Example 2.</strong> A 50-mL block of pure water. Water&apos;s mass is 50 g.</p><p style="font-family:monospace;padding:8px;background:#f9fafb;border-left:3px solid #2563eb;">D = 50 g &divide; 50 mL = 1 g/mL  &nbsp;(this is why water density is the reference, 1.00 g/mL)</p><h3>Floats or Sinks?</h3><p><strong>If an object&apos;s density is less than 1 g/mL, it floats in water. If greater than 1 g/mL, it sinks.</strong></p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">Material</th><th style="padding:7px 10px;">Density (g/cm&sup3;)</th><th style="padding:7px 10px;">In water?</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Cork</td><td style="padding:6px 10px;">0.24</td><td style="padding:6px 10px;">Floats</td></tr><tr><td style="padding:6px 10px;">Ice</td><td style="padding:6px 10px;">0.92</td><td style="padding:6px 10px;">Floats</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Water</td><td style="padding:6px 10px;">1.00</td><td style="padding:6px 10px;">&mdash;</td></tr><tr><td style="padding:6px 10px;">Aluminum</td><td style="padding:6px 10px;">2.70</td><td style="padding:6px 10px;">Sinks</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Iron</td><td style="padding:6px 10px;">7.87</td><td style="padding:6px 10px;">Sinks</td></tr><tr><td style="padding:6px 10px;">Lead</td><td style="padding:6px 10px;">11.34</td><td style="padding:6px 10px;">Sinks</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Gold</td><td style="padding:6px 10px;">19.30</td><td style="padding:6px 10px;">Sinks fast</td></tr></table><h3>Identifying Minerals by Density</h3><p>Earth-science classes use density to <em>identify</em> unknown mineral samples. Quartz (2.65), feldspar (2.56), mica (2.8), pyrite (5.0), galena (7.5). Measure mass with a balance, find volume by water displacement, divide &mdash; the density matches one mineral on the chart.</p><p><em>Example.</em> A shiny yellow sample has mass 50 g. In a graduated cylinder, water rises from 20 mL to 30 mL when the sample is added. Volume = 10 mL. Density = 50 / 10 = 5 g/cm&sup3;. That&apos;s pyrite ("fool&apos;s gold"), not gold (which is 19.3).</p><h3>Layers of the Earth</h3><p>Earth&apos;s layers are arranged by density &mdash; densest on the inside.</p><ul><li>Inner core (solid iron + nickel): about 13 g/cm&sup3;</li><li>Outer core (liquid iron): about 11 g/cm&sup3;</li><li>Mantle (silicate rock): about 4.5 g/cm&sup3;</li><li>Continental crust (granite): about 2.7 g/cm&sup3;</li><li>Oceanic crust (basalt): about 3.0 g/cm&sup3;</li></ul><p>Less-dense oceanic crust floats on the denser mantle &mdash; that&apos;s why plates can move. Hot rock is less dense than cold rock, which is why mantle convection works.</p><h3>Solving for Mass or Volume</h3><p>Rearrange the formula when you know two of the three values:</p><ul><li><strong>m = D &times; V</strong> &mdash; given a density and a volume, find the mass.</li><li><strong>V = m &divide; D</strong> &mdash; given a mass and a density, find the volume.</li></ul><p><em>Example.</em> What is the mass of 100 cm&sup3; of aluminum (D = 2.70)? m = 2.70 &times; 100 = 270 g.</p>`,
+  'ratios-rates': `<h2>Ratios & Rates</h2><p>A <strong>ratio</strong> compares two quantities. A <strong>rate</strong> compares quantities with different units.</p><h3>Ratios</h3><ul><li>Can be written as 3:5, 3 to 5, or 3/5</li><li>Must be simplified like fractions</li><li>Are used to compare quantities</li></ul><p><strong>Example:</strong> In a class of 12 boys and 8 girls, the ratio is 12:8 = 3:2</p><h3>Unit Rates</h3><p>A unit rate has a denominator of 1. It tells you "how much per 1"</p><ul><li>60 miles in 2 hours → 30 miles per hour</li><li>$15 for 3 books → $5 per book</li></ul><h3>Solving Proportions</h3><p>If ratios are equal, we can solve for missing values using cross-multiplication:</p><p>3/5 = x/20 → 3 × 20 = 5 × x → x = 12</p><h3>Real-World Uses</h3><p>Scale models use ratios. If a model car is 1:24 scale and is 5 inches long, the real car is 120 inches (10 feet) long.</p>`,
+  'percents': `<h2>Percents</h2><p>A <strong>percent</strong> means "per hundred" and is written with the % symbol.</p><h3>Understanding Percents</h3><ul><li>50% = 50/100 = 0.5 = one-half</li><li>25% = 25/100 = 0.25 = one-quarter</li><li>100% = the whole amount</li></ul><h3>Finding a Percent of a Number</h3><p>To find 20% of 50:</p><ul><li>Method 1: 20/100 × 50 = 10</li><li>Method 2: 0.20 × 50 = 10</li></ul><h3>Common Percents</h3><ul><li>10% - move decimal left one place</li><li>50% - divide by 2</li><li>25% - divide by 4</li></ul><h3>Real-World Contexts</h3><p>Percents appear in:</p><ul><li>Discounts: 30% off means pay 70%</li><li>Tips: 15-20% of bill</li><li>Taxes: vary by location</li><li>Test scores: 85% correct</li></ul>`,
+  'percent-error': `<h2>Percent Error &mdash; How Close Is Your Measurement?</h2><p>When you measure something &mdash; the length of a desk, the mass of a rock, the time for a pendulum to swing &mdash; your answer is almost never exactly right. Maybe the ruler is a little off, or your hand wobbled, or the scale rounded. <strong>Percent error</strong> is the math tool scientists and engineers use to say <em>how close</em> a measurement is to the true (accepted) value.</p><h3>The Formula</h3><p style="text-align:center;padding:10px;background:#f0f4ff;border-radius:8px;font-size:1.05em;"><strong>Percent Error = |measured &minus; actual| &divide; actual &times; 100%</strong></p><ul><li><strong>measured</strong> = the value YOU got (your experiment)</li><li><strong>actual</strong> = the true or accepted value (from a textbook, manufacturer, or careful measurement)</li><li>The vertical bars | | mean <strong>absolute value</strong> &mdash; always make the answer positive. Whether you measured too high or too low, error is a positive number.</li></ul><h3>Worked Example 1 &mdash; Measuring a Pencil</h3><p>You measure a pencil with a ruler and get 14 cm. The actual length, measured carefully, is 15 cm.</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|14 &minus; 15| &divide; 15 &times; 100%<br>= 1 &divide; 15 &times; 100%<br>= 0.0667 &times; 100%<br>= <strong>6.67%</strong></p><p>Your measurement was off by about 6.67%. That is pretty good for a 6th grade ruler reading.</p><h3>Worked Example 2 &mdash; Weighing Flour</h3><p>A recipe calls for 250 g of flour. You scoop out flour and weigh it: the scale reads 240 g. What is your percent error?</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|240 &minus; 250| &divide; 250 &times; 100%<br>= 10 &divide; 250 &times; 100%<br>= 0.04 &times; 100% = <strong>4%</strong></p><h3>Worked Example 3 &mdash; A Class Pendulum</h3><p>The accepted period of a 1-meter pendulum is 2.0 seconds. Your group times it and gets 2.2 seconds.</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|2.2 &minus; 2.0| &divide; 2.0 &times; 100%<br>= 0.2 &divide; 2.0 &times; 100% = <strong>10%</strong></p><h3>What Counts as a &ldquo;Good&rdquo; Percent Error?</h3><table style="border-collapse:collapse;width:100%;font-size:0.95em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">% Error</th><th style="padding:7px 10px;">What it means in the lab</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Under 5%</td><td style="padding:6px 10px;">Excellent &mdash; very accurate</td></tr><tr><td style="padding:6px 10px;">5&ndash;10%</td><td style="padding:6px 10px;">Good &mdash; acceptable for most middle-school labs</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">10&ndash;20%</td><td style="padding:6px 10px;">Fair &mdash; check tools and procedure</td></tr><tr><td style="padding:6px 10px;">Over 20%</td><td style="padding:6px 10px;">Poor &mdash; something likely went wrong; repeat the experiment</td></tr></table><h3>Why It Matters</h3><ul><li><strong>Cooking:</strong> 4% off on flour might still bake fine. 25% off ruins the recipe.</li><li><strong>Medicine:</strong> A 5% dosing error might be safe. A 50% error could be dangerous.</li><li><strong>Engineering:</strong> A bridge measurement off by 10% would be catastrophic.</li><li><strong>Sports:</strong> Olympic times are measured to the thousandth of a second &mdash; the percent error of the timing equipment must be tiny.</li></ul><h3>Quick Recipe</h3><ol><li>Subtract: <em>measured</em> &minus; <em>actual</em>.</li><li>Take the absolute value (drop the negative sign if any).</li><li>Divide by <em>actual</em>.</li><li>Multiply by 100 to convert to a percent.</li></ol>`,
+  'integers': `<h2>Integers & the Number System</h2><p><strong>Integers</strong> include positive numbers, negative numbers, and zero: ..., -3, -2, -1, 0, 1, 2, 3, ...</p><h3>Understanding Negatives</h3><p>Negative numbers represent:</p><ul><li>Temperatures below zero</li><li>Depths below sea level</li><li>Debts or withdrawals</li><li>Movement in opposite directions</li></ul><h3>Number Line</h3><p>Numbers increase to the right, decrease to the left. The distance from zero is called <strong>absolute value</strong>, written |−5| = 5.</p><h3>Ordering Integers</h3><ul><li>−10 < −5 (more negative is smaller)</li><li>−3 < 2 (negatives are less than positives)</li><li>0 is greater than all negative numbers</li></ul><h3>Adding & Subtracting Integers</h3><ul><li>Same signs: add, keep sign</li><li>Different signs: subtract, keep sign of larger</li><li>Subtracting means adding the opposite</li></ul><p><strong>Examples:</strong> 5 + 3 = 8, −5 − 3 = −8, 5 − (−3) = 8</p>`,
+  'coordinate-plane': `<h2>The Coordinate Plane</h2><p>A coordinate plane is formed by two perpendicular number lines: the x-axis (horizontal) and y-axis (vertical).</p><h3>Quadrants</h3><ul><li>Quadrant I: (+, +) - upper right</li><li>Quadrant II: (−, +) - upper left</li><li>Quadrant III: (−, −) - lower left</li><li>Quadrant IV: (+, −) - lower right</li></ul><h3>Ordered Pairs</h3><p>A point is written as (x, y):</p><ul><li>First number: x-coordinate (left/right)</li><li>Second number: y-coordinate (up/down)</li></ul><p><strong>Example:</strong> (3, 4) means 3 right, 4 up from origin</p><h3>Finding Distance</h3><p>Distance between (0, 0) and (3, 4):</p><ul><li>Using Pythagorean theorem later</li><li>Or count units on graph</li></ul><h3>Reflections & Transformations</h3><p>Reflecting (3, 4) across y-axis gives (−3, 4). Reflecting across x-axis gives (3, −4).</p>`,
+  'alg-expressions': `<h2>Algebraic Expressions</h2><p>An <strong>algebraic expression</strong> uses variables, numbers, and operations to represent quantities.</p><h3>Writing Expressions</h3><p>Translate words to symbols:</p><ul><li>Sum of x and 5: x + 5</li><li>Product of 3 and y: 3y</li><li>5 less than z: z − 5</li><li>Quotient of a and 2: a/2</li></ul><h3>Evaluating Expressions</h3><p>Substitute values and calculate:</p><p>If x = 3, then 2x + 5 = 2(3) + 5 = 6 + 5 = 11</p><h3>Simplifying Expressions</h3><p><strong>Combining like terms:</strong> Terms with same variable can be added/subtracted</p><p>3x + 2y + 5x − y = 8x + y</p><h3>Order of Operations (PEMDAS)</h3><ol><li>Parentheses</li><li>Exponents</li><li>Multiplication & Division (left to right)</li><li>Addition & Subtraction (left to right)</li></ol>`,
+  'equations': `<h2>Solving Equations</h2><p>An <strong>equation</strong> is a statement that two expressions are equal. A solution is the value that makes it true.</p><h3>One-Step Equations</h3><p>Use <strong>inverse operations</strong> to isolate the variable:</p><ul><li>Addition ↔ Subtraction</li><li>Multiplication ↔ Division</li></ul><h3>Examples</h3><ul><li>x + 5 = 12 → x = 12 − 5 → x = 7</li><li>3y = 15 → y = 15 ÷ 3 → y = 5</li><li>z − 4 = 10 → z = 10 + 4 → z = 14</li></ul><h3>Two-Step Equations</h3><p>2x + 3 = 11</p><ol><li>Subtract 3: 2x = 8</li><li>Divide by 2: x = 4</li></ol><h3>Check Your Answer</h3><p>Substitute back: 2(4) + 3 = 8 + 3 = 11 ✓</p>`,
+  'inequalities': `<h2>Inequalities</h2><p>An <strong>inequality</strong> compares quantities using <, >, ≤, ≥, or ≠.</p><h3>Symbols</h3><ul><li>< means "less than"</li><li>> means "greater than"</li><li>≤ means "less than or equal to"</li><li>≥ means "greater than or equal to"</li></ul><h3>Graphing Inequalities</h3><ul><li>Use open circle for < or ></li><li>Use closed circle for ≤ or ≥</li><li>Shade toward the solution</li></ul><p><strong>Example:</strong> x > 3 means all numbers greater than 3</p><h3>Solving Inequalities</h3><p>Same as equations, BUT flip inequality sign when multiplying/dividing by negative:</p><ul><li>x + 2 > 5 → x > 3</li><li>−2x < 6 → x > −3 (flip sign!)</li></ul><h3>Real-World Contexts</h3><p>Speed limit: v ≤ 55 mph. Age requirement: a ≥ 13. Budget constraint: c < 100</p>`,
+  'variables-relationships': `<h2>Variables & Relationships</h2><p>In a relationship between two variables, one depends on the other.</p><h3>Independent vs. Dependent Variables</h3><ul><li><strong>Independent:</strong> The variable you control or change</li><li><strong>Dependent:</strong> The variable that responds to changes</li></ul><p><strong>Example:</strong> "Hours worked" (independent) determines "Money earned" (dependent)</p><h3>Making Tables</h3><p>If you earn $12 per hour:</p><ul><li>2 hours → $24</li><li>3 hours → $36</li><li>4 hours → $48</li></ul><h3>Finding Patterns</h3><p>Look for the relationship: Money = 12 × Hours</p><h3>Graphing Relationships</h3><p>Plot points (hours, money) and look for patterns. Linear relationships form straight lines.</p>`,
+  'area-polygons': `<h2>Area of Polygons</h2><p><strong>Area</strong> measures the space inside a shape, measured in square units.</p><h3>Rectangles & Parallelograms</h3><p>Area = base × height</p><ul><li>Rectangle 5 × 3 = 15 square units</li><li>Parallelogram uses perpendicular height, not slant</li></ul><h3>Triangles</h3><p>Area = (base × height) ÷ 2</p><p>A triangle with base 6 and height 4: (6 × 4) ÷ 2 = 12 square units</p><h3>Trapezoids</h3><p>Area = ((base₁ + base₂) × height) ÷ 2</p><h3>Composite Figures</h3><p>Break into rectangles and triangles, find each area, add together.</p><h3>Real-World Uses</h3><p>Calculate flooring needed, paint required, or yard dimensions.</p>`,
+  'surface-area': `<h2>Surface Area of 3D Figures</h2><p><strong>Surface Area</strong> is the total area of all faces of a 3D shape.</p><h3>Using Nets</h3><p>A <strong>net</strong> unfolds the shape. Count all exposed faces and find their areas.</p><h3>Rectangular Prism</h3><p>SA = 2(lw) + 2(lh) + 2(wh)</p><p>For a 3 × 4 × 5 prism:</p><ul><li>SA = 2(12) + 2(15) + 2(20) = 24 + 30 + 40 = 94</li></ul><h3>Cubes</h3><p>All sides equal, so SA = 6s² where s is side length</p><h3>Triangular Prism</h3><p>Find area of two triangular bases and three rectangular sides.</p><h3>Applications</h3><p>Wrapping boxes, painting containers, or manufacturing packaging.</p>`,
+  'volume': `<h2>Volume of Rectangular Prisms</h2><p><strong>Volume</strong> measures space inside a 3D shape, in cubic units.</p><h3>Formula</h3><p>Volume = length × width × height</p><h3>Examples</h3><ul><li>5 × 3 × 2 = 30 cubic units</li><li>With fractions: 2½ × 3 × 4 = (5/2) × 3 × 4 = 30 cubic units</li></ul><h3>Finding Missing Dimensions</h3><p>If V = 24 and l = 4, w = 3, find h: 24 = 4 × 3 × h → h = 2</p><h3>Real-World Contexts</h3><ul><li>Water tank capacity</li><li>Box dimensions for shipping</li><li>Concrete or sand needed</li></ul><h3>Unit Conversions</h3><p>1 cubic foot = 1,728 cubic inches. Always check unit consistency!</p>`,
+  'statistics-data': `<h2>Statistics & Data Analysis</h2><p>Statistics help us understand data and make decisions.</p><h3>Measures of Center</h3><ul><li><strong>Mean:</strong> Average - sum all, divide by count</li><li><strong>Median:</strong> Middle value when ordered</li><li><strong>Mode:</strong> Most frequent value</li></ul><p><strong>Example:</strong> Data: 2, 3, 3, 5, 7</p><ul><li>Mean = (2+3+3+5+7) ÷ 5 = 4</li><li>Median = 3 (middle value)</li><li>Mode = 3 (appears twice)</li></ul><h3>Range & Spread</h3><p>Range = max − min = 7 − 2 = 5</p><h3>Data Displays</h3><ul><li>Bar graphs: compare categories</li><li>Line plots: show frequency</li><li>Histograms: show distribution</li><li>Box plots: show quartiles</li></ul><h3>Applications</h3><p>Survey analysis, sports statistics, weather patterns, academic performance.</p>`,
+  'word-problems': `<h2>Multi-Step Word Problems</h2><p>Word problems combine multiple skills and require careful reading.</p><h3>Four-Step Approach</h3><ol><li>Read carefully and identify what you know</li><li>Identify what you need to find</li><li>Choose operation(s) and solve</li><li>Check if answer makes sense</li></ol><h3>Common Problem Types</h3><ul><li><strong>Combined:</strong> Add/subtract quantities from different sources</li><li><strong>Comparison:</strong> Find how much more/less</li><li><strong>Proportional:</strong> Use ratios or rates</li><li><strong>Percent:</strong> Find discounts, tips, taxes</li><li><strong>Area/Volume:</strong> Real-world geometry</li></ul><h3>Example</h3><p>Sarah buys 3 books at $8 each and uses a 10% coupon. What's the final cost?</p><ol><li>Total before coupon: 3 × $8 = $24</li><li>Discount: 10% of $24 = $2.40</li><li>Final: $24 − $2.40 = $21.60</li></ol><h3>Practice Tips</h3><p>Draw diagrams, write equations, and check units!</p>`,
+  'plate-tectonics': `<h2>Plate Tectonics & Rates</h2><p>Earth's crust is broken into giant pieces called <strong>tectonic plates</strong>. These plates move — but so slowly you can't feel it. The North American Plate moves about <strong>2.3 cm per year</strong>. The Pacific Plate moves up to <strong>10 cm per year</strong>. Over millions of years, these tiny movements add up to thousands of kilometers.</p><h3>Using Unit Rates to Calculate Geological Motion</h3><p>A unit rate is a ratio compared to 1. If the Pacific Plate moves 10 cm/year:</p><ul><li>In 100 years: 10 × 100 = 1,000 cm = <strong>10 m</strong></li><li>In 1,000 years: 10 × 1,000 = 10,000 cm = <strong>100 m</strong></li><li>In 1,000,000 years: 10 × 1,000,000 = 10,000,000 cm = <strong>100 km</strong></li></ul><p>This is unit rate reasoning extended over geological time scales!</p><h3>Working with Very Large Numbers</h3><p>Geologists often work in <strong>millions of years (Ma)</strong>. To keep calculations manageable, convert first:</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Time Period</th><th style="padding:6px 10px;">In years</th><th style="padding:6px 10px;">Pacific Plate distance (10 cm/yr)</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">100 years</td><td style="padding:6px 10px;">100</td><td style="padding:6px 10px;">1,000 cm = 10 m</td></tr><tr><td style="padding:6px 10px;">1,000 years</td><td style="padding:6px 10px;">1,000</td><td style="padding:6px 10px;">10,000 cm = 100 m</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">1 million years</td><td style="padding:6px 10px;">1,000,000</td><td style="padding:6px 10px;">10,000,000 cm = 100 km</td></tr><tr><td style="padding:6px 10px;">50 million years</td><td style="padding:6px 10px;">50,000,000</td><td style="padding:6px 10px;">500,000,000 cm = 5,000 km</td></tr></table><h3>Proportions for Plate Motion Problems</h3><p>Use the ratio: distance/time = speed, just like any unit rate problem.</p><p><strong>Example:</strong> The Atlantic Ocean widens at 2.5 cm/year. How long ago were Africa and South America touching (they are now 7,600 km apart)?</p><ol><li>Convert: 7,600 km = 760,000,000 cm</li><li>Time = distance ÷ rate = 760,000,000 ÷ 2.5 = <strong>304,000,000 years ≈ 304 million years ago</strong></li></ol><h3>Plate Types & Motion</h3><p>Plates interact in three ways — each creating different landforms:</p><ul><li><strong>Convergent:</strong> Plates push together → mountains or deep ocean trenches</li><li><strong>Divergent:</strong> Plates pull apart → mid-ocean ridges (seafloor spreading)</li><li><strong>Transform:</strong> Plates slide past each other → earthquakes (like the San Andreas Fault)</li></ul>`,
+  'richter-scale': `<h2>Richter Scale & Powers of 10</h2><p>When an earthquake strikes, scientists measure its size using the <strong>Richter scale</strong>. This scale looks simple — just numbers like 3, 5, or 7 — but it hides a powerful mathematical idea: <strong>each whole number step represents 10 times more ground shaking</strong>.</p><h3>How the Richter Scale Works</h3><p>The Richter scale is a <em>logarithmic</em> scale based on powers of 10. You've already learned powers of 10 in scientific notation. Here's how they connect:</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Magnitude</th><th style="padding:6px 10px;">Ground Motion (× baseline)</th><th style="padding:6px 10px;">Comparison</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">1</td><td style="padding:6px 10px;">10¹ = 10</td><td style="padding:6px 10px;">Barely felt</td></tr><tr><td style="padding:6px 10px;">2</td><td style="padding:6px 10px;">10² = 100</td><td style="padding:6px 10px;">Often felt</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">3</td><td style="padding:6px 10px;">10³ = 1,000</td><td style="padding:6px 10px;">Minor damage</td></tr><tr><td style="padding:6px 10px;">5</td><td style="padding:6px 10px;">10⁵ = 100,000</td><td style="padding:6px 10px;">Significant damage</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">7</td><td style="padding:6px 10px;">10⁷ = 10,000,000</td><td style="padding:6px 10px;">Major earthquake</td></tr><tr><td style="padding:6px 10px;">9</td><td style="padding:6px 10px;">10⁹ = 1,000,000,000</td><td style="padding:6px 10px;">Great earthquake (rare)</td></tr></table><h3>Comparing Two Earthquakes</h3><p>To find how many times stronger one earthquake is than another, subtract the magnitudes and raise 10 to that power:</p><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>Ratio = 10^(difference in magnitudes)</strong></p><ul><li>Magnitude 6 vs. Magnitude 4: difference = 2, so 10² = <strong>100 times stronger</strong></li><li>Magnitude 7 vs. Magnitude 5: difference = 2, so 10² = <strong>100 times stronger</strong></li><li>Magnitude 9 vs. Magnitude 6: difference = 3, so 10³ = <strong>1,000 times stronger</strong></li></ul><h3>Why Use Powers of 10?</h3><p>The range of earthquake sizes is enormous — from tiny tremors (magnitude 1) to the largest ever recorded (magnitude 9.5, Chile 1960). If we tried to plot all earthquakes on a regular number line, the large ones would be so far off the chart they'd be impossible to show. Powers of 10 compress this huge range into a manageable scale. This is exactly why scientists use scientific notation — same reason, same math.</p><h3>Real Earthquake Data</h3><ul><li><strong>2011 Japan (Tōhoku):</strong> Magnitude 9.0 — caused the Fukushima nuclear incident</li><li><strong>1906 San Francisco:</strong> Magnitude 7.9 — destroyed most of the city</li><li><strong>Everyday California:</strong> Hundreds of magnitude 2–3 quakes per week — most unfelt</li></ul>`,
+  'radioactive-decay': `<h2>Radioactive Decay & Half-Life</h2><p>Every atom of a radioactive element is unstable — it will eventually break apart and transform into a different element. Scientists can't predict <em>which</em> atom will decay next, but they can predict exactly what <em>fraction</em> will decay over a given period of time. That fraction is always one-half, and the time it takes is called the <strong>half-life</strong>.</p><h3>What Is a Half-Life?</h3><p>A half-life is the amount of time it takes for exactly <strong>half</strong> of the radioactive atoms in a sample to decay. After one half-life, half remain. After a second half-life, half of that half remains — and so on.</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;"># of Half-Lives</th><th style="padding:6px 10px;">Fraction Remaining</th><th style="padding:6px 10px;">Percent Remaining</th><th style="padding:6px 10px;">Pattern</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">0 (start)</td><td style="padding:6px 10px;">1</td><td style="padding:6px 10px;">100%</td><td style="padding:6px 10px;">(1/2)⁰ = 1</td></tr><tr><td style="padding:6px 10px;">1</td><td style="padding:6px 10px;">1/2</td><td style="padding:6px 10px;">50%</td><td style="padding:6px 10px;">(1/2)¹</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">2</td><td style="padding:6px 10px;">1/4</td><td style="padding:6px 10px;">25%</td><td style="padding:6px 10px;">(1/2)²</td></tr><tr><td style="padding:6px 10px;">3</td><td style="padding:6px 10px;">1/8</td><td style="padding:6px 10px;">12.5%</td><td style="padding:6px 10px;">(1/2)³</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">4</td><td style="padding:6px 10px;">1/16</td><td style="padding:6px 10px;">6.25%</td><td style="padding:6px 10px;">(1/2)⁴</td></tr><tr><td style="padding:6px 10px;">10</td><td style="padding:6px 10px;">1/1024</td><td style="padding:6px 10px;">≈ 0.1%</td><td style="padding:6px 10px;">(1/2)¹⁰</td></tr></table><h3>Rule: Amount Remaining = Starting Amount × (1/2)ⁿ</h3><p>Where n = number of half-lives elapsed.</p><p><strong>Example:</strong> A rock contains 80 g of Carbon-14 (half-life = 5,730 years). How much remains after 17,190 years?</p><ol><li>Number of half-lives: 17,190 ÷ 5,730 = <strong>3 half-lives</strong></li><li>Amount remaining: 80 × (1/2)³ = 80 × 1/8 = <strong>10 g</strong></li></ol><h3>Radiometric Dating — How Geologists Use This</h3><p>Geologists measure how much of a radioactive element remains in a rock and compare it to how much decay product has built up. By counting "how many half-lives worth" has passed, they calculate the rock's age. This is how we know Earth is about 4.5 billion years old.</p><h3>Common Radioactive Elements in Geology</h3><ul><li><strong>Carbon-14:</strong> Half-life 5,730 years — used for fossils and wood up to ~50,000 years old</li><li><strong>Potassium-40:</strong> Half-life 1.25 billion years — used for ancient rocks and minerals</li><li><strong>Uranium-238:</strong> Half-life 4.47 billion years — used to date the oldest rocks on Earth</li></ul>`,
+  'topographic-maps': `<h2>Topographic Maps & Slope</h2><p>A topographic map shows the shape of Earth's surface using <strong>contour lines</strong> — lines that connect all points at the same elevation. By reading these lines, geographers and geologists can visualize mountains, valleys, and plains on a flat piece of paper.</p><h3>Reading Contour Lines</h3><p>The <strong>contour interval</strong> is the difference in elevation between two adjacent contour lines. If the interval is 20 meters, then each line you cross going up the hill means you've climbed 20 more meters.</p><ul><li><strong>Lines close together:</strong> Steep terrain — elevation changes quickly</li><li><strong>Lines far apart:</strong> Gentle terrain — elevation changes slowly</li><li><strong>Closed loops:</strong> A hilltop or basin (depression)</li></ul><h3>Calculating Slope</h3><p>Slope measures how steep a surface is. It is a ratio:</p><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>Slope = Rise ÷ Run = (vertical change) ÷ (horizontal distance)</strong></p><p>Slope can be written as a fraction, a decimal, or a percentage (called <em>grade</em> by road engineers).</p><ul><li><strong>Example:</strong> A trail rises 120 m over a horizontal distance of 800 m. Slope = 120/800 = 0.15 = <strong>15% grade</strong></li><li>Highway engineers require slopes under 6% (0.06) for safety</li><li>A 45° slope = slope of 1.0 = 100% — extremely steep</li></ul><h3>Map Scale & Distance</h3><p>A map scale is a ratio comparing map distance to real-world distance. A scale of 1:50,000 means 1 cm on the map = 50,000 cm = 500 m in real life.</p><p><strong>Example:</strong> Two mountains are 4.5 cm apart on a 1:50,000 map. Real distance = 4.5 × 50,000 = 225,000 cm = <strong>2.25 km</strong></p><h3>Cross Sections — Graphing Elevation</h3><p>Geographers draw <em>cross sections</em> by picking a line across a map and plotting elevation vs. horizontal distance. This turns contour data into a side-view graph — the x-axis is distance, the y-axis is elevation. The steepness of your graph line equals the slope!</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Landform</th><th style="padding:6px 10px;">Typical Slope</th><th style="padding:6px 10px;">Description</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Plains / valleys</td><td style="padding:6px 10px;">< 2%</td><td style="padding:6px 10px;">Nearly flat, contour lines very spread out</td></tr><tr><td style="padding:6px 10px;">Rolling hills</td><td style="padding:6px 10px;">2–15%</td><td style="padding:6px 10px;">Moderate slope, easy hiking</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Mountain trails</td><td style="padding:6px 10px;">15–40%</td><td style="padding:6px 10px;">Steep — contour lines close together</td></tr><tr><td style="padding:6px 10px;">Cliff faces</td><td style="padding:6px 10px;">> 100%</td><td style="padding:6px 10px;">Overhanging — slope > 1.0</td></tr></table>`
+};
+
+const WORKSHEETS = {
+  'factors-multiples': [
+    { q: 'List all factors of 24:', answer: '1, 2, 3, 4, 6, 8, 12, 24' },
+    { q: 'Find GCF of 18 and 24 using prime factorization:', answer: '6' },
+    { q: 'Find LCM of 12 and 16:', answer: '48' },
+    { q: 'What are the first 5 multiples of 7?', answer: '7, 14, 21, 28, 35' },
+    { q: 'Find GCF of 30 and 45:', answer: '15' },
+    { q: 'Is 5 a factor of 45? Explain:', answer: 'Yes, 45 ÷ 5 = 9' },
+    { q: 'Find LCM of 6 and 9:', answer: '18' },
+    { q: 'List all factors of 36:', answer: '1, 2, 3, 4, 6, 9, 12, 18, 36' },
+    { q: 'Find GCF of 20, 30, and 40:', answer: '10' },
+    { q: 'What is the LCM of 15 and 20?', answer: '60' }
+  ],
+  'fraction-division': [
+    { q: '3/4 ÷ 1/2 = ?', answer: '3/2 or 1 1/2' },
+    { q: '5/6 ÷ 2/3 = ?', answer: '5/4 or 1 1/4' },
+    { q: 'If you have 2/3 gallon of milk and use 1/6 gallon, how much is left?', answer: '1/2 gallon' },
+    { q: '7/8 ÷ 7/4 = ?', answer: '1/2' },
+    { q: '4 ÷ 2/5 = ?', answer: '10' },
+    { q: '1/2 ÷ 1/4 = ?', answer: '2' },
+    { q: 'How many 1/3 cup servings in 2 2/3 cups?', answer: '8 servings' },
+    { q: '6/7 ÷ 3/5 = ?', answer: '10/7' },
+    { q: '9/10 ÷ 3/5 = ?', answer: '3/2 or 1 1/2' },
+    { q: '5 ÷ 1/2 = ?', answer: '10' }
+  ],
+  'decimal-ops': [
+    { q: '12.5 + 8.3 = ?', answer: '20.8' },
+    { q: '15.6 − 7.2 = ?', answer: '8.4' },
+    { q: '2.5 × 3.4 = ?', answer: '8.5' },
+    { q: '12.8 ÷ 3.2 = ?', answer: '4' },
+    { q: 'At $2.50 per item, cost of 6 items?', answer: '$15.00' },
+    { q: '0.75 + 0.25 = ?', answer: '1.0' },
+    { q: '5.6 × 2 = ?', answer: '11.2' },
+    { q: '10 − 3.75 = ?', answer: '6.25' },
+    { q: '0.5 × 0.4 = ?', answer: '0.2' },
+    { q: '7.5 ÷ 1.5 = ?', answer: '5' }
+  ],
+  'scientific-notation': [
+    { q: 'Write 6,000,000 in scientific notation:', answer: '6 × 10⁶' },
+    { q: 'Write 3.2 × 10⁴ in standard form:', answer: '32,000' },
+    { q: 'Write 450,000 in scientific notation:', answer: '4.5 × 10⁵' },
+    { q: 'Write 9.1 × 10³ in standard form:', answer: '9,100' },
+    { q: 'Write 12,000,000 in scientific notation:', answer: '1.2 × 10⁷' },
+    { q: 'Write 2.05 × 10⁶ in standard form:', answer: '2,050,000' },
+    { q: 'Earth–Sun distance ≈ 150,000,000,000 m. Scientific notation:', answer: '1.5 × 10¹¹ m' },
+    { q: 'Age of Earth ≈ 4,500,000,000 years. Scientific notation:', answer: '4.5 × 10⁹ years' },
+    { q: 'Which is larger: 3.0 × 10⁵ or 9.9 × 10⁴?', answer: '3.0 × 10⁵' },
+    { q: 'Is 12 × 10³ in correct scientific notation? Fix it if not:', answer: 'No — correct form is 1.2 × 10⁴' }
+  ],
+  'unit-conversions': [
+    { q: '5 km → m (3 steps right, × 1000):', answer: '5000 m' },
+    { q: '2500 m → km (3 steps left, ÷ 1000):', answer: '2.5 km' },
+    { q: '3 m → cm (2 steps right, × 100):', answer: '300 cm' },
+    { q: '450 cm → m (2 steps left, ÷ 100):', answer: '4.5 m' },
+    { q: '8 cm → mm (1 step right, × 10):', answer: '80 mm' },
+    { q: '60 mm → cm (1 step left, ÷ 10):', answer: '6 cm' },
+    { q: '4 kg → g (3 steps right, × 1000):', answer: '4000 g' },
+    { q: '2500 g → kg (3 steps left, ÷ 1000):', answer: '2.5 kg' },
+    { q: '3 L → mL (3 steps right, × 1000):', answer: '3000 mL' },
+    { q: '500 mL → L (3 steps left, ÷ 1000):', answer: '0.5 L' },
+    { q: 'Rock sample: 850 g → kg:', answer: '0.85 kg' },
+    { q: 'Rainfall: 45 mm → cm:', answer: '4.5 cm' }
+  ],
+  'density': [
+    { q: 'Mass 60 g, volume 20 cm³. Density?', answer: '3 g/cm³' },
+    { q: 'Mass 80 g, volume 10 cm³. Density?', answer: '8 g/cm³' },
+    { q: 'Mass 25 g, volume 100 mL. Density?', answer: '0.25 g/mL (floats)' },
+    { q: 'Mass 200 g, volume 25 cm³. Density? Floats or sinks?', answer: '8 g/cm³, sinks' },
+    { q: 'Sample 50 g, water rises 20→30 mL. Volume? Density?', answer: '10 mL, 5 g/cm³ (pyrite)' },
+    { q: 'Density of water?', answer: '1.00 g/mL' },
+    { q: 'Aluminum density 2.70. Mass of 100 cm³?', answer: '270 g' },
+    { q: 'Gold density 19.30. Mass of 5 cm³?', answer: '96.5 g' },
+    { q: 'Iron density 7.87. Volume of 78.7 g?', answer: '10 cm³' },
+    { q: 'Mass of mercury (D = 13.5) in 20 mL beaker?', answer: '270 g' },
+    { q: 'Object D = 0.85 g/mL. Floats or sinks?', answer: 'Floats' },
+    { q: 'Object D = 2.5 g/mL. Floats or sinks?', answer: 'Sinks' },
+    { q: 'Mantle ~4.5 g/cm³, crust ~2.7. Which floats?', answer: 'Crust floats on mantle' }
+  ],
+  'ratios-rates': [
+    { q: 'If you drive 120 miles in 2 hours, what is the unit rate?', answer: '60 miles per hour' },
+    { q: 'Simplify ratio 6:9', answer: '2:3' },
+    { q: 'If 3 notebooks cost $12, what is the unit price?', answer: '$4 per notebook' },
+    { q: 'Scale factor 2:5. If one is 10, what is the other?', answer: '25' },
+    { q: 'Ratio of girls to boys is 4:5. If 20 girls, how many boys?', answer: '25 boys' },
+    { q: 'Simplify ratio 15:25', answer: '3:5' },
+    { q: 'Recipe calls for 2 cups flour per 1 cup sugar. For 4 cups sugar?', answer: '8 cups flour' },
+    { q: 'Unit rate: $24 for 6 items = ?', answer: '$4 per item' },
+    { q: '5:7 ratio. If total is 60, find each part.', answer: '25 and 35' },
+    { q: 'Speed is 45 km in 1.5 hours. Unit rate?', answer: '30 km/hour' }
+  ],
+  'percents': [
+    { q: 'Find 20% of 50', answer: '10' },
+    { q: 'Find 25% of 80', answer: '20' },
+    { q: 'If 40% of a number is 16, what is the number?', answer: '40' },
+    { q: 'A shirt costs $30. 15% off. Final price?', answer: '$25.50' },
+    { q: 'Find 10% of 200', answer: '20' },
+    { q: 'What percent is 15 of 60?', answer: '25%' },
+    { q: 'A $50 item with 30% discount costs?', answer: '$35' },
+    { q: 'Find 5% of 120', answer: '6' },
+    { q: '50 is what percent of 200?', answer: '25%' },
+    { q: 'If 60% of students passed, and 18 passed, how many total?', answer: '30 students' }
+  ],
+  'percent-error': [
+    { q: 'Measured 14 cm, actual 15 cm. Percent error = ?', answer: '6.67%' },
+    { q: 'Measured 10 g, actual 12 g. Percent error = ?', answer: '16.67%' },
+    { q: 'Measured 240 mL, actual 250 mL. Percent error = ?', answer: '4%' },
+    { q: 'Measured 9.5 s, actual 10 s. Percent error = ?', answer: '5%' },
+    { q: 'Measured 200 m, actual 192 m. Percent error = ?', answer: '4.17%' },
+    { q: 'Measured 50 °C, actual 48 °C. Percent error = ?', answer: '4.17%' },
+    { q: 'Measured 3.0 kg, actual 3.5 kg. Percent error = ?', answer: '14.29%' },
+    { q: 'Measured 75 cm, actual 80 cm. Percent error = ?', answer: '6.25%' },
+    { q: 'Measured 2.2 s, actual 2.0 s for a pendulum. Percent error = ?', answer: '10%' },
+    { q: 'Is 4% percent error acceptable for a middle-school lab? (yes/no)', answer: 'yes' }
+  ],
+  'integers': [
+    { q: 'Order from least to greatest: 3, −5, 0, −2, 4', answer: '−5, −2, 0, 3, 4' },
+    { q: 'What is |−7|?', answer: '7' },
+    { q: '−3 + 5 = ?', answer: '2' },
+    { q: '−4 − (−2) = ?', answer: '−2' },
+    { q: 'Temperature rises 8 degrees from −5°F. New temp?', answer: '3°F' },
+    { q: '−6 + (−3) = ?', answer: '−9' },
+    { q: 'What is |−12|?', answer: '12' },
+    { q: '7 − (−3) = ?', answer: '10' },
+    { q: 'Order: 0, −8, 2, −3, 1', answer: '−8, −3, 0, 1, 2' },
+    { q: '−5 + 5 = ?', answer: '0' }
+  ],
+  'coordinate-plane': [
+    { q: 'What is the x-coordinate of point (−3, 5)?', answer: '−3' },
+    { q: 'In which quadrant is (−2, −4)?', answer: 'Quadrant III' },
+    { q: 'Reflect (3, 4) across the y-axis. New point?', answer: '(−3, 4)' },
+    { q: 'What quadrant has (−, +) coordinates?', answer: 'Quadrant II' },
+    { q: 'Translate (1, 2) right 3 and up 2. New point?', answer: '(4, 4)' },
+    { q: 'Is (0, 5) on an axis? Which one?', answer: 'Yes, y-axis' },
+    { q: 'Reflect (2, 3) across x-axis. New point?', answer: '(2, −3)' },
+    { q: 'Which quadrant has (−, −)?', answer: 'Quadrant III' },
+    { q: 'Point (3, 0) is on which axis?', answer: 'x-axis' },
+    { q: 'Translate (−1, −2) left 2 and down 1. New point?', answer: '(−3, −3)' }
+  ],
+  'alg-expressions': [
+    { q: 'Write as expression: sum of x and 7', answer: 'x + 7' },
+    { q: 'If x = 3, find value of 2x + 5', answer: '11' },
+    { q: 'Simplify: 3x + 2x − 1', answer: '5x − 1' },
+    { q: 'Write as expression: 5 times y', answer: '5y' },
+    { q: 'If a = 4, find 3a − 2', answer: '10' },
+    { q: 'Combine like terms: 2a + 3b + a − b', answer: '3a + 2b' },
+    { q: 'Write as expression: z divided by 3', answer: 'z/3' },
+    { q: 'If m = 2, find m² + 3m', answer: '10' },
+    { q: 'Simplify: 4x + 6 − 2x − 3', answer: '2x + 3' },
+    { q: 'Write as expression: 10 less than w', answer: 'w − 10' }
+  ],
+  'equations': [
+    { q: 'Solve: x + 5 = 12', answer: 'x = 7' },
+    { q: 'Solve: 3y = 15', answer: 'y = 5' },
+    { q: 'Solve: z − 4 = 10', answer: 'z = 14' },
+    { q: 'Solve: 2x + 3 = 11', answer: 'x = 4' },
+    { q: 'Solve: 4a − 2 = 10', answer: 'a = 3' },
+    { q: 'Solve: b/2 = 6', answer: 'b = 12' },
+    { q: 'Solve: 5m = 25', answer: 'm = 5' },
+    { q: 'Solve: n − 8 = 3', answer: 'n = 11' },
+    { q: 'Solve: 2p + 1 = 9', answer: 'p = 4' },
+    { q: 'Solve: c/3 + 2 = 5', answer: 'c = 9' }
+  ],
+  'inequalities': [
+    { q: 'Solve: x + 3 > 7', answer: 'x > 4' },
+    { q: 'Solve: 2y < 10', answer: 'y < 5' },
+    { q: 'Solve: z − 5 ≥ 3', answer: 'z ≥ 8' },
+    { q: 'Solve: 3a ≤ 12', answer: 'a ≤ 4' },
+    { q: 'Solve: b/2 > 5', answer: 'b > 10' },
+    { q: 'Graph x < 3. Use open or closed circle?', answer: 'Open circle' },
+    { q: 'Solve: −2m < 6 (watch sign flip!)', answer: 'm > −3' },
+    { q: 'Solve: 4n + 2 > 10', answer: 'n > 2' },
+    { q: 'Is −2 a solution to x > −3?', answer: 'Yes' },
+    { q: 'Solve: p/4 ≤ 2', answer: 'p ≤ 8' }
+  ],
+  'variables-relationships': [
+    { q: 'If hours (independent) earns $15/hour, complete table for 1, 2, 3 hours:', answer: '$15, $30, $45' },
+    { q: 'Distance = speed × time. Which is independent?', answer: 'Speed and time are independent' },
+    { q: 'Temperature increases 2° per hour starting at 60°. Temp after 5 hours?', answer: '70°' },
+    { q: 'If y = 2x + 1, find y when x = 3:', answer: 'y = 7' },
+    { q: 'Complete pattern: (1,2), (2,4), (3,6), (4,?)', answer: '8' },
+    { q: 'If cost = $5 × quantity, what is independent variable?', answer: 'Quantity' },
+    { q: 'y = 3x. Find y when x = 5:', answer: 'y = 15' },
+    { q: 'Hours = days × 24. When days = 3, hours = ?', answer: '72' },
+    { q: 'In y = 2x − 3, find y when x = 4:', answer: 'y = 5' },
+    { q: 'Complete: If x = 0, 1, 2; and y = x + 3, then y = ?', answer: '3, 4, 5' }
+  ],
+  'area-polygons': [
+    { q: 'Area of rectangle 5 × 8 = ?', answer: '40 square units' },
+    { q: 'Area of triangle with base 6, height 4 = ?', answer: '12 square units' },
+    { q: 'Area of parallelogram base 5, height 7 = ?', answer: '35 square units' },
+    { q: 'Triangle with base 10, height 3 = ?', answer: '15 square units' },
+    { q: 'Rectangle 12 × 4 = ?', answer: '48 square units' },
+    { q: 'Trapezoid bases 4 and 6, height 5 = ?', answer: '25 square units' },
+    { q: 'Area of triangle with b=8, h=9 = ?', answer: '36 square units' },
+    { q: 'Composite: rectangle 3×4 + rectangle 2×2 = ?', answer: '16 square units' },
+    { q: 'Parallelogram base 12, height 5 = ?', answer: '60 square units' },
+    { q: 'Triangle: base 7, height 6 = ?', answer: '21 square units' }
+  ],
+  'surface-area': [
+    { q: 'Surface area of cube with side 3 = ?', answer: '54 square units' },
+    { q: 'Rectangular prism 2×3×4. SA = ?', answer: '52 square units' },
+    { q: 'Cube side 5. SA = ?', answer: '150 square units' },
+    { q: 'Rectangular prism 1×2×3. SA = ?', answer: '22 square units' },
+    { q: 'Cube side 2. SA = ?', answer: '24 square units' },
+    { q: 'How many faces on rectangular prism?', answer: '6' },
+    { q: 'Box 4×4×4. SA = ?', answer: '96 square units' },
+    { q: 'Prism 3×3×5. SA = ?', answer: '78 square units' },
+    { q: 'Cube side 4. SA = ?', answer: '96 square units' },
+    { q: 'Rectangular prism 2×4×6. SA = ?', answer: '88 square units' }
+  ],
+  'volume': [
+    { q: 'Volume 5×3×2 = ?', answer: '30 cubic units' },
+    { q: 'Box 4×4×4. V = ?', answer: '64 cubic units' },
+    { q: 'V = 12, l = 4, w = 3. h = ?', answer: 'h = 1' },
+    { q: 'Volume 2.5×3×4 = ?', answer: '30 cubic units' },
+    { q: 'Cube side 3. V = ?', answer: '27 cubic units' },
+    { q: 'Box 6×2×5. V = ?', answer: '60 cubic units' },
+    { q: 'V = 48, l = 6, w = 4. h = ?', answer: 'h = 2' },
+    { q: 'Volume 1.5×2×8 = ?', answer: '24 cubic units' },
+    { q: 'Cube side 5. V = ?', answer: '125 cubic units' },
+    { q: 'Box 10×3×2. V = ?', answer: '60 cubic units' }
+  ],
+  'statistics-data': [
+    { q: 'Mean of 2, 4, 6, 8 = ?', answer: '5' },
+    { q: 'Median of 1, 3, 5, 7, 9 = ?', answer: '5' },
+    { q: 'Mode of 1, 2, 2, 3, 4, 2 = ?', answer: '2' },
+    { q: 'Range of 5, 10, 15, 20 = ?', answer: '15' },
+    { q: 'Mean of 10, 20, 30 = ?', answer: '20' },
+    { q: 'Median of 2, 4, 6, 8, 10 = ?', answer: '6' },
+    { q: 'Find mode: 5, 5, 5, 7, 9', answer: '5' },
+    { q: 'Range of 3, 7, 12, 15 = ?', answer: '12' },
+    { q: 'Mean of 5, 5, 5, 5 = ?', answer: '5' },
+    { q: 'Median of 1, 1, 2, 3, 5 = ?', answer: '2' }
+  ],
+  'word-problems': [
+    { q: 'Sarah buys 3 books at $8 each with 10% off. Final cost?', answer: '$21.60' },
+    { q: 'If 12 apples cost $4.80, what is 1 apple?', answer: '$0.40' },
+    { q: 'Tank holds 50 gallons. 25% drained. How much left?', answer: '37.5 gallons' },
+    { q: 'Distance 120 mi, time 2.5 hrs. Speed = ?', answer: '48 mph' },
+    { q: 'Ratio boys:girls 3:4. If 12 boys, girls = ?', answer: '16 girls' },
+    { q: 'Rectangle 8×5. Area = ?', answer: '40 sq units' },
+    { q: 'Mean of 10, 20, 30, 40 = ?', answer: '25' },
+    { q: 'Item $30, 20% off, plus 8% tax. Final = ?', answer: '$25.92' },
+    { q: 'Perimeter of square side 7 = ?', answer: '28 units' },
+    { q: 'Price $50, discount $10. % off = ?', answer: '20%' }
+  ],
+  'plate-tectonics': [
+    { q: 'The Pacific Plate moves 10 cm/year. How far in 500 years (in meters)?', answer: '50 m' },
+    { q: 'The North American Plate moves 2.3 cm/year. How far in 1,000 years (in cm)?', answer: '2,300 cm' },
+    { q: 'Convert: 10,000,000 cm = ? km', answer: '100 km' },
+    { q: 'The Atlantic Ocean widens at 2.5 cm/year. How wide in 1 million years (in km)?', answer: '25 km' },
+    { q: 'A plate moves 8 cm/year. At this rate, how many years to travel 1 km (= 100,000 cm)?', answer: '12,500 years' },
+    { q: 'Africa and South America are 7,600 km apart. The rate of spreading is 2.5 cm/year. Convert 7,600 km to cm, then find time.', answer: '760,000,000 cm ÷ 2.5 = 304,000,000 years' },
+    { q: 'Which type of plate boundary creates mountains when two plates collide?', answer: 'Convergent boundary' },
+    { q: 'The Mid-Atlantic Ridge is formed by plates pulling apart. What type of boundary is this?', answer: 'Divergent boundary' },
+    { q: 'India moved north at 15 cm/year for 50 million years to collide with Asia. How far did it travel (in km)?', answer: '7,500 km' },
+    { q: 'A fossil of a tropical plant is found in Antarctica. The Antarctic Plate moves 1 cm/year. If it moved 5,000 km from the tropics, how long ago was it in the tropics?', answer: '500,000,000 years (500 million years)' }
+  ],
+  'richter-scale': [
+    { q: 'A magnitude 5 quake is how many times stronger than a magnitude 3?', answer: '100 times (10²)' },
+    { q: 'A magnitude 7 quake is how many times stronger than a magnitude 5?', answer: '100 times (10²)' },
+    { q: 'A magnitude 9 quake is how many times stronger than a magnitude 6?', answer: '1,000 times (10³)' },
+    { q: 'Write the ground motion for a magnitude 4 quake as a power of 10:', answer: '10⁴ = 10,000' },
+    { q: 'Two quakes: magnitude 8 and magnitude 5. Difference = 3. Ratio of ground motion = ?', answer: '10³ = 1,000' },
+    { q: 'The 1906 San Francisco quake was magnitude 7.9. A magnitude 4 quake hits nearby. Roughly how many times stronger was 1906? (Round to nearest whole difference = 4)', answer: '≈ 10,000 times stronger' },
+    { q: 'Why does the Richter scale use powers of 10 instead of regular counting numbers?', answer: 'Because earthquake sizes span an enormous range — powers of 10 compress the scale to make it manageable' },
+    { q: 'If a magnitude 6 releases 10⁶ units of energy, how much does a magnitude 8 release?', answer: '10⁸ = 100,000,000 units' },
+    { q: 'An earthquake is "10,000 times stronger" than a reference. What is the difference in Richter magnitude?', answer: '4 (because 10⁴ = 10,000)' },
+    { q: 'The 2011 Japan earthquake was magnitude 9.0. A common California quake is magnitude 3.0. How many times stronger was Japan?', answer: '10⁶ = 1,000,000 times stronger' }
+  ],
+  'radioactive-decay': [
+    { q: 'A sample has 400 g of Carbon-14. After 1 half-life, how much remains?', answer: '200 g' },
+    { q: 'After 2 half-lives, what fraction of the original sample remains?', answer: '1/4' },
+    { q: 'A 240 g sample undergoes 3 half-lives. How much remains?', answer: '30 g (240 × 1/8)' },
+    { q: 'Carbon-14 half-life = 5,730 years. A fossil is 11,460 years old. How many half-lives is that?', answer: '2 half-lives' },
+    { q: 'After 2 half-lives of Carbon-14 (11,460 years), what percent of original C-14 remains?', answer: '25%' },
+    { q: 'A rock has 1/16 of its original Potassium-40 remaining. How many half-lives have passed?', answer: '4 half-lives' },
+    { q: 'Potassium-40 has a half-life of 1.25 billion years. If 4 half-lives have passed, how old is the rock?', answer: '5 billion years' },
+    { q: 'Write (1/2)⁵ as a fraction:', answer: '1/32' },
+    { q: 'A sample starts with 960 g. After 4 half-lives, how much remains?', answer: '60 g (960 ÷ 16)' },
+    { q: 'Why can\'t Carbon-14 be used to date rocks that are 1 billion years old?', answer: 'Because the half-life is only 5,730 years — after ~50,000 years, almost none remains to measure' }
+  ],
+  'topographic-maps': [
+    { q: 'A trail rises 80 m over 400 m horizontal distance. What is the slope as a decimal?', answer: '0.2' },
+    { q: 'Convert slope 0.2 to a percent grade:', answer: '20%' },
+    { q: 'A map has scale 1:50,000. Two peaks are 6 cm apart on the map. Real distance = ?', answer: '300,000 cm = 3 km' },
+    { q: 'Contour interval is 25 m. A hiker crosses 8 contour lines going up. Total elevation gain?', answer: '200 m' },
+    { q: 'A road drops 90 m over 1,500 m of horizontal distance. Is this slope above or below the 6% highway limit?', answer: '90/1500 = 6% — exactly at the limit' },
+    { q: 'Two contour lines show elevations 500 m and 600 m. The horizontal distance is 2 km = 2,000 m. Slope?', answer: '100/2000 = 0.05 = 5%' },
+    { q: 'If contour lines are close together, what does that tell you about the terrain?', answer: 'It is steep — elevation changes rapidly over a short distance' },
+    { q: 'A mountain cross section goes from sea level (0 m) to 3,000 m over a horizontal distance of 15 km. Average slope?', answer: '3000/15000 = 0.2 = 20%' },
+    { q: 'On a map with scale 1:25,000, a river appears 12 cm long. Actual length = ?', answer: '300,000 cm = 3 km' },
+    { q: 'A valley bottom sits at 200 m. The nearest hilltop is at 680 m, 3 km away. What is the average slope between them?', answer: '480/3000 = 0.16 = 16%' }
+  ]
+};
+
+const QUIZZES = {
+  'factors-multiples': [
+    { q: 'What is the GCF of 15 and 25?', opts: ['5', '10', '15', '25'], ans: 0 },
+    { q: 'Is 7 a factor of 49?', opts: ['Yes', 'No'], ans: 0 },
+    { q: 'What is the LCM of 4 and 6?', opts: ['12', '24', '10', '8'], ans: 0 },
+    { q: 'The first multiple of 8 is...', opts: ['8', '16', '0', '1'], ans: 0 },
+    { q: 'How many factors does 12 have?', opts: ['4', '6', '3', '12'], ans: 1 }
+  ],
+  'fraction-division': [
+    { q: '1/2 ÷ 1/4 = ?', opts: ['1/8', '2', '1/2', '4'], ans: 1 },
+    { q: 'To divide fractions, multiply by the...', opts: ['opposite', 'reciprocal', 'same number', 'denominator'], ans: 1 },
+    { q: '3/4 ÷ 3/4 = ?', opts: ['0', '1', '2', '1/2'], ans: 1 },
+    { q: '2 ÷ 1/3 = ?', opts: ['2/3', '6', '1/6', '3'], ans: 1 },
+    { q: 'What is the reciprocal of 5?', opts: ['0.2', '1/5', '5', 'itself'], ans: 1 }
+  ],
+  'decimal-ops': [
+    { q: '2.5 + 1.5 = ?', opts: ['3.0', '4.0', '1.0', '0.0'], ans: 1 },
+    { q: '5.6 - 2.1 = ?', opts: ['3.5', '3.4', '3.6', '3.7'], ans: 0 },
+    { q: '0.5 × 0.4 = ?', opts: ['0.2', '0.9', '0.02', '2.0'], ans: 0 },
+    { q: '6 ÷ 1.5 = ?', opts: ['4', '9', '3', '7.5'], ans: 0 },
+    { q: 'When multiplying decimals, count...', opts: ['total places', 'sum', 'factors', 'factors twice'], ans: 0 }
+  ],
+  'scientific-notation': [
+    { q: 'Scientific notation format is:', opts: ['a + 10ⁿ', 'a × 10ⁿ', 'a ÷ 10ⁿ', 'aⁿ'], ans: 1 },
+    { q: 'The value of "a" in scientific notation must be:', opts: ['any number', '1 to 9.99…', 'a whole number', 'greater than 10'], ans: 1 },
+    { q: '5,000 in scientific notation:', opts: ['5 × 10²', '5 × 10³', '5 × 10⁴', '0.5 × 10⁴'], ans: 1 },
+    { q: '2.3 × 10⁵ in standard form:', opts: ['23,000', '230,000', '2,300,000', '0.000023'], ans: 1 },
+    { q: '700,000 in scientific notation:', opts: ['7 × 10⁴', '7 × 10⁵', '7 × 10⁶', '0.7 × 10⁶'], ans: 1 },
+    { q: 'Which is larger: 4 × 10⁶ or 9 × 10⁵?', opts: ['9 × 10⁵', '4 × 10⁶', 'they\'re equal', 'can\'t tell'], ans: 1 },
+    { q: '10⁴ = ?', opts: ['40', '1,000', '10,000', '100,000'], ans: 2 },
+    { q: 'Earth\'s mass ≈ 5.97 × 10²⁴ kg. Exponent 24 means:', opts: ['24 zeros', 'decimal moved 24 right', 'both A and B', 'neither'], ans: 2 },
+    { q: 'Is 0.6 × 10⁷ correct scientific notation?', opts: ['yes', 'no — a must be ≥ 1', 'no — exponent wrong', 'yes if a < 1'], ans: 1 },
+    { q: 'KHDUdcm and scientific notation both use:', opts: ['fractions', 'powers of 10', 'negative numbers', 'square roots'], ans: 1 }
+  ],
+  'unit-conversions': [
+    { q: 'KHDUdcm: What does the U stand for?', opts: ['Ultra', 'Unit (base)', 'Under', 'Uniform'], ans: 1 },
+    { q: 'Moving RIGHT on KHDUdcm means:', opts: ['divide by 10', 'multiply by 10', 'add 10', 'subtract 10'], ans: 1 },
+    { q: '3 km = ? m', opts: ['30 m', '300 m', '3000 m', '30000 m'], ans: 2 },
+    { q: '400 cm = ? m', opts: ['0.04 m', '0.4 m', '4 m', '40 m'], ans: 2 },
+    { q: '2 kg = ? g', opts: ['20 g', '200 g', '2000 g', '20000 g'], ans: 2 },
+    { q: '5000 mL = ? L', opts: ['0.5 L', '5 L', '50 L', '500 L'], ans: 1 },
+    { q: 'From km to cm, you move ___ steps right:', opts: ['3', '4', '5', '6'], ans: 2 },
+    { q: '75 mm = ? cm', opts: ['0.75 cm', '7.5 cm', '750 cm', '7500 cm'], ans: 1 },
+    { q: 'Memory: K H D U d c m stands for King Henry...', opts: ['Does Usually...', 'Doesn\'t Usually drink...', 'Drinks Usually...', 'Did Usually...'], ans: 1 },
+    { q: 'Base unit for mass is:', opts: ['kilogram', 'gram', 'milligram', 'liter'], ans: 1 }
+  ],
+  'density': [
+    { q: 'Density formula?', opts: ['m × V', 'm / V', 'V / m', 'm + V'], ans: 1 },
+    { q: 'Mass 90 g, V = 30 cm³. Density?', opts: ['2 g/cm³', '3 g/cm³', '6 g/cm³', '30 g/cm³'], ans: 1 },
+    { q: 'Density of pure water?', opts: ['0.5 g/mL', '1.0 g/mL', '1.5 g/mL', '10 g/mL'], ans: 1 },
+    { q: 'Object D = 0.7 g/mL in water:', opts: ['Sinks', 'Floats', 'Dissolves', 'Stays in middle'], ans: 1 },
+    { q: 'Object D = 4.2 g/mL in water:', opts: ['Sinks', 'Floats', 'Dissolves', 'Stays in middle'], ans: 0 },
+    { q: 'Aluminum D = 2.70. Mass of 50 cm³?', opts: ['52.7 g', '135 g', '150 g', '270 g'], ans: 1 },
+    { q: '1 cm³ equals:', opts: ['1 g', '1 mL', '1 kg', '1 L'], ans: 1 },
+    { q: 'Earth\'s densest layer is the:', opts: ['Crust', 'Mantle', 'Outer core', 'Inner core'], ans: 3 },
+    { q: 'Sample 75 g, V = 25 mL. Density?', opts: ['1 g/mL', '3 g/mL', '5 g/mL', '50 g/mL'], ans: 1 },
+    { q: 'Iron D = 7.87. Volume of 15.74 g?', opts: ['1 cm³', '2 cm³', '5 cm³', '7.87 cm³'], ans: 1 }
+  ],
+  'ratios-rates': [
+    { q: 'If 3 items cost $12, what is the unit price?', opts: ['$3', '$4', '$5', '$6'], ans: 1 },
+    { q: 'Simplify 8:12', opts: ['2:3', '4:6', '8:12', '1:2'], ans: 1 },
+    { q: '60 miles in 2 hours = ? mph', opts: ['30', '60', '120', '40'], ans: 0 },
+    { q: 'What is a unit rate?', opts: ['ratio', 'rate with 1', 'comparison', 'average'], ans: 1 },
+    { q: 'Ratio 2:5. If one is 10, the other is...', opts: ['4', '25', '5', '15'], ans: 1 }
+  ],
+  'percents': [
+    { q: 'What does percent mean?', opts: ['per 100', 'per 10', 'total', 'part'], ans: 0 },
+    { q: 'Find 50% of 80', opts: ['40', '60', '80', '100'], ans: 0 },
+    { q: 'What is 10% of 200?', opts: ['20', '10', '100', '50'], ans: 0 },
+    { q: 'If 25% is 10, the whole is...', opts: ['40', '50', '25', '100'], ans: 0 },
+    { q: '$50 with 20% off costs...', opts: ['$30', '$40', '$35', '$45'], ans: 1 }
+  ],
+  'percent-error': [
+    { q: 'A student measures 18 cm; actual is 20 cm. Percent error = ?', answer: '10%' },
+    { q: 'Measured 95 g, actual 100 g. Percent error = ?', answer: '5%' },
+    { q: 'Which is more accurate: 8% or 12% error?', answer: '8%' },
+    { q: 'Measured 49 cm, actual 50 cm. Percent error = ?', answer: '2%' },
+    { q: 'Why use absolute value in percent error?', answer: 'errors should always be positive' }
+  ],
+  'integers': [
+    { q: 'What is the opposite of -5?', opts: ['-5', '5', '0', '10'], ans: 1 },
+    { q: 'Order least to greatest: 3, -2, 0', opts: ['-2, 0, 3', '0, -2, 3', '3, 0, -2', '-2, 3, 0'], ans: 0 },
+    { q: '-3 + 5 = ?', opts: ['8', '2', '-2', '-8'], ans: 1 },
+    { q: '|-7| = ?', opts: ['7', '-7', '0', '14'], ans: 0 },
+    { q: '-4 - (-2) = ?', opts: ['-6', '-2', '6', '2'], ans: 1 }
+  ],
+  'coordinate-plane': [
+    { q: 'How many quadrants on a coordinate plane?', opts: ['2', '3', '4', '6'], ans: 2 },
+    { q: 'Which quadrant has (-, +)?', opts: ['I', 'II', 'III', 'IV'], ans: 1 },
+    { q: 'What is the y-coordinate of (3, 5)?', opts: ['3', '5', '2', '8'], ans: 1 },
+    { q: 'The center of the plane is at...', opts: ['(1,1)', '(0,0)', '(1,0)', '(0,1)'], ans: 1 },
+    { q: 'Reflect (2, 3) across y-axis. New point?', opts: ['(2, -3)', '(-2, 3)', '(-2, -3)', '(3, 2)'], ans: 1 }
+  ],
+  'alg-expressions': [
+    { q: '"5 more than x" means...', opts: ['5-x', 'x+5', '5x', 'x/5'], ans: 1 },
+    { q: 'If x=2, then 3x+1 = ?', opts: ['5', '6', '7', '10'], ans: 2 },
+    { q: 'Simplify 2x + 3x', opts: ['5x', '6x', 'x', '5'], ans: 0 },
+    { q: 'What is "product of x and 4"?', opts: ['x+4', 'x-4', '4x', 'x/4'], ans: 2 },
+    { q: 'Combine: 3a + 2b + a - b', opts: ['4a+3b', '3a+2b', '4a+b', '5a+b'], ans: 2 }
+  ],
+  'equations': [
+    { q: 'Solve x + 3 = 8', opts: ['5', '11', '3', '8'], ans: 0 },
+    { q: 'Solve 2x = 10', opts: ['5', '12', '20', '8'], ans: 0 },
+    { q: 'Solve x - 4 = 6', opts: ['2', '10', '24', '1'], ans: 1 },
+    { q: 'Solve 3x + 1 = 10', opts: ['3', '4', '9', '11'], ans: 0 },
+    { q: 'Check: Is x=5 a solution to x+2=7?', opts: ['Yes', 'No', 'Maybe', 'Always'], ans: 0 }
+  ],
+  'inequalities': [
+    { q: 'Solve x + 2 > 5', opts: ['x > 3', 'x < 3', 'x = 3', 'x ≤ 3'], ans: 0 },
+    { q: 'Solve 3x < 12', opts: ['x < 4', 'x > 4', 'x = 4', 'x ≤ 4'], ans: 0 },
+    { q: 'Which symbol means greater than or equal?', opts: ['<', '>', '≤', '≥'], ans: 3 },
+    { q: 'When multiplying by negative, inequality...', opts: ['stays same', 'flips', 'becomes equal', 'disappears'], ans: 1 },
+    { q: 'Is -2 a solution to x > -3?', opts: ['Yes', 'No', 'Maybe', 'Undefined'], ans: 0 }
+  ],
+  'variables-relationships': [
+    { q: 'In "distance = speed × time", speed is...', opts: ['dependent', 'independent', 'constant', 'result'], ans: 1 },
+    { q: 'If y = 2x, what is y when x = 3?', opts: ['5', '6', '2', '3'], ans: 1 },
+    { q: 'Which determines which?', opts: ['outcome determines input', 'input determines outcome', 'both equal', 'same thing'], ans: 1 },
+    { q: 'Complete: If x=1,2,3 and y=x+1, y=?', opts: ['1,2,3', '2,3,4', '0,1,2', '3,2,1'], ans: 1 },
+    { q: 'y = 3x + 2. When x=1, y=?', opts: ['3', '5', '6', '2'], ans: 1 }
+  ],
+  'area-polygons': [
+    { q: 'Area of rectangle 4×5 = ?', opts: ['9', '18', '20', '10'], ans: 2 },
+    { q: 'Triangle base 6, height 4. Area = ?', opts: ['10', '12', '24', '20'], ans: 1 },
+    { q: 'Which formula is for triangle?', opts: ['lw', 'bh', '(1/2)bh', 'bh²'], ans: 2 },
+    { q: 'Area of parallelogram 5×7 = ?', opts: ['12', '35', '24', '70'], ans: 1 },
+    { q: 'Trapezoid bases 4,6 height 5. Area = ?', opts: ['20', '25', '30', '50'], ans: 1 }
+  ],
+  'surface-area': [
+    { q: 'Cube side 3. SA = ?', opts: ['27', '54', '18', '36'], ans: 1 },
+    { q: 'How many faces on a prism?', opts: ['3', '4', '5', '6'], ans: 3 },
+    { q: 'Formula SA of cube = ?', opts: ['s²', '6s', '6s²', 's³'], ans: 2 },
+    { q: 'Prism 2×3×4. SA = ?', opts: ['24', '52', '48', '30'], ans: 1 },
+    { q: 'Net shows...', opts: ['inside', 'outside faces', 'volume', 'perimeter'], ans: 1 }
+  ],
+  'volume': [
+    { q: 'Box 5×3×2. V = ?', opts: ['10', '15', '30', '60'], ans: 2 },
+    { q: 'Cube side 4. V = ?', opts: ['16', '24', '64', '80'], ans: 2 },
+    { q: 'V = lwh. This is...', opts: ['area', 'perimeter', 'volume', 'surface'], ans: 2 },
+    { q: 'V = 24, l = 4, w = 3. h = ?', opts: ['2', '3', '4', '6'], ans: 0 },
+    { q: 'Units for volume are...', opts: ['units', 'sq units', 'cubic units', 'linear units'], ans: 2 }
+  ],
+  'statistics-data': [
+    { q: 'Mean of 2,4,6,8 = ?', opts: ['4', '5', '6', '20'], ans: 1 },
+    { q: 'Median of 1,3,5,7 = ?', opts: ['4', '5', '3', '1'], ans: 0 },
+    { q: 'Mode is the...', opts: ['average', 'middle', 'most common', 'difference'], ans: 2 },
+    { q: 'Range of 5,10,15 = ?', opts: ['30', '10', '15', '5'], ans: 1 },
+    { q: 'Mean is used for...', opts: ['typical value', 'spread', 'frequency', 'sorted data'], ans: 0 }
+  ],
+  'word-problems': [
+    { q: '3 books at $8. Total?', opts: ['$11', '$24', '$30', '$8'], ans: 1 },
+    { q: 'Speed 60 mph for 2 hours. Distance?', opts: ['30 mi', '60 mi', '120 mi', '180 mi'], ans: 2 },
+    { q: '50% of 20 = ?', opts: ['10', '15', '20', '30'], ans: 0 },
+    { q: 'Ratio 2:3. If 1st is 4, 2nd is...', opts: ['6', '8', '2', '12'], ans: 0 },
+    { q: '$100 item, 25% off. Final cost?', opts: ['$50', '$75', '$100', '$125'], ans: 1 }
+  ],
+  'plate-tectonics': [
+    { q: 'The Pacific Plate moves 10 cm/year. In 1,000 years it moves:', opts: ['100 cm', '1,000 cm', '10,000 cm', '100,000 cm'], ans: 2 },
+    { q: 'What type of boundary creates mountains when plates collide?', opts: ['Divergent', 'Transform', 'Convergent', 'Subduction'], ans: 2 },
+    { q: '5,000 km in cm = ?', opts: ['5,000 cm', '500,000 cm', '5,000,000 cm', '500,000,000 cm'], ans: 3 },
+    { q: 'A plate moves 2.5 cm/year. Distance in 1 million years (in km):', opts: ['2.5 km', '25 km', '250 km', '2,500 km'], ans: 1 },
+    { q: 'The San Andreas Fault is an example of which boundary type?', opts: ['Convergent', 'Divergent', 'Transform', 'Subduction'], ans: 2 },
+    { q: 'Mid-ocean ridges form at which boundary type?', opts: ['Convergent', 'Divergent', 'Transform', 'Continental'], ans: 1 },
+    { q: 'If a plate moved 3,000 km in 200 million years, what was its average speed in cm/year?', opts: ['0.15 cm/yr', '1.5 cm/yr', '15 cm/yr', '150 cm/yr'], ans: 1 },
+    { q: 'India moved 7,500 km north in 50 million years. Rate in cm/year:', opts: ['1.5 cm/yr', '15 cm/yr', '150 cm/yr', '0.15 cm/yr'], ans: 1 },
+    { q: 'Which math concept is used to find how long a plate takes to travel a set distance?', opts: ['Mean', 'Unit rate', 'Area', 'GCF'], ans: 1 },
+    { q: 'The Atlantic widens 2.5 cm/year. In 100 years, it widens:', opts: ['25 cm', '250 cm', '2.5 cm', '0.25 cm'], ans: 1 }
+  ],
+  'richter-scale': [
+    { q: 'Magnitude 6 vs. magnitude 4 — how many times stronger?', opts: ['2×', '20×', '100×', '1000×'], ans: 2 },
+    { q: 'What is 10³ in standard form?', opts: ['30', '300', '1,000', '10,000'], ans: 2 },
+    { q: 'The Richter scale is based on powers of:', opts: ['2', '5', '10', '100'], ans: 2 },
+    { q: 'Magnitude 9 vs. magnitude 6: ratio of ground motion = ?', opts: ['10¹', '10²', '10³', '10⁶'], ans: 2 },
+    { q: 'An earthquake is 10,000 times stronger than a reference quake. The magnitude difference is:', opts: ['2', '3', '4', '5'], ans: 2 },
+    { q: 'Why do scientists use the Richter scale instead of just counting vibrations?', opts: ['It is simpler', 'Earthquake sizes span a huge range — powers of 10 compress it', 'It uses addition', 'All quakes are similar'], ans: 1 },
+    { q: 'If magnitude 4 = 10⁴ units, magnitude 7 = ?', opts: ['10⁵', '10⁶', '10⁷', '4×10⁷'], ans: 2 },
+    { q: 'A magnitude 8 quake is how many times stronger than a magnitude 5?', opts: ['3×', '30×', '1,000×', '8,000×'], ans: 2 },
+    { q: '10⁰ = ?', opts: ['0', '1', '10', '100'], ans: 1 },
+    { q: 'The 2011 Japan quake (M9) vs. a M3 quake — ratio of ground motion:', opts: ['10³', '10⁶', '9', '1,000,000'], ans: 1 }
+  ],
+  'radioactive-decay': [
+    { q: 'After 1 half-life, what fraction of a sample remains?', opts: ['1/2', '1/4', '3/4', '1/3'], ans: 0 },
+    { q: 'After 3 half-lives, what fraction remains?', opts: ['1/6', '1/8', '3/8', '1/3'], ans: 1 },
+    { q: '480 g after 2 half-lives. How much remains?', opts: ['240 g', '120 g', '60 g', '30 g'], ans: 1 },
+    { q: 'Carbon-14 half-life = 5,730 years. After 11,460 years, how many half-lives?', opts: ['1', '2', '3', '4'], ans: 1 },
+    { q: '(1/2)⁴ = ?', opts: ['1/8', '1/16', '4/8', '1/2'], ans: 1 },
+    { q: 'A sample has 1/8 of its original radioactive material. Number of half-lives elapsed:', opts: ['2', '3', '4', '8'], ans: 1 },
+    { q: 'Why is Uranium-238 (half-life 4.47 billion years) used to date old rocks instead of C-14?', opts: ['It is cheaper', 'C-14 decays too fast — after 50,000 years none remains', 'Uranium is more common', 'C-14 does not decay'], ans: 1 },
+    { q: 'If you start with 1,000 g and 4 half-lives pass, you have:', opts: ['250 g', '125 g', '62.5 g', '500 g'], ans: 2 },
+    { q: 'Radioactive decay always removes what fraction per half-life?', opts: ['1/3', '1/4', '1/2', '2/3'], ans: 2 },
+    { q: 'After 0 half-lives, what percent of the sample remains?', opts: ['0%', '50%', '100%', '25%'], ans: 2 }
+  ],
+  'topographic-maps': [
+    { q: 'Slope = rise ÷ run. Rise = 60 m, run = 300 m. Slope = ?', opts: ['0.02', '0.2', '2.0', '20'], ans: 1 },
+    { q: 'Slope 0.2 expressed as a percent grade:', opts: ['0.2%', '2%', '20%', '200%'], ans: 2 },
+    { q: 'Map scale 1:50,000. Two points are 3 cm apart on the map. Real distance:', opts: ['150 m', '1.5 km', '15 km', '150 km'], ans: 1 },
+    { q: 'Contour interval is 40 m. Crossing 5 lines going uphill = total climb of:', opts: ['8 m', '40 m', '200 m', '400 m'], ans: 2 },
+    { q: 'Contour lines packed closely together indicate:', opts: ['Flat land', 'Gentle hills', 'Steep terrain', 'A valley'], ans: 2 },
+    { q: 'A road drops 90 m over 1,500 m. The grade is:', opts: ['6%', '9%', '15%', '1.5%'], ans: 0 },
+    { q: 'Which type of graph shows a cross section of a topographic map?', opts: ['Bar graph', 'Pie chart', 'Elevation vs. distance line graph', 'Histogram'], ans: 2 },
+    { q: 'Map scale 1:25,000. A trail is 8 cm on the map. Actual length:', opts: ['200 m', '2 km', '20 km', '200 km'], ans: 1 },
+    { q: 'A slope of 1.0 (100%) is equivalent to what angle?', opts: ['45°', '90°', '30°', '60°'], ans: 0 },
+    { q: 'Rise = 500 m, run = 10 km = 10,000 m. Slope as percent:', opts: ['0.5%', '5%', '50%', '500%'], ans: 1 }
+  ]
+};
+
+let completedUnits = {};
+let currentUnit = null;
+
+function resourceCardHTML(unit) {
+  const ixlBtn = unit.ixlUrl ? `<a class="btn-ixl" href="${unit.ixlUrl}" target="_blank">📘 IXL Practice</a>` : '';
+  const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
+  const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${ixlBtn}${phetBtn}${ytBtn}</div></div>`;
+}
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(unit => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(unit.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${unit.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${unit.title}${completedUnits[unit.id]?' ✅':''}</div>
+          <div class="unit-card-cc">${unit.cc}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${unit.desc}</div>
+      <div class="unit-card-pills">
+        ${unit.kaUrl?'<div class="pill">📖 Lesson</div>':''}
+        ${unit.ixlUrl?'<div class="pill">📘 IXL</div>':''}
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">▶️ YouTube</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar-content');
+  sidebar.innerHTML = '';
+  UNITS.forEach((unit, idx) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === unit.id ? ' active' : '');
+    item.textContent = `${idx + 1}. ${unit.title}${completedUnits[unit.id]?' ✅':''}`;
+    item.onclick = () => showLesson(unit.id);
+    sidebar.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  document.getElementById('topbar-title').textContent = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Describing the World with Math';
+}
+
+function showHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  currentUnit = null;
+  var sb = document.getElementById('syllabus-btn');
+  if (sb) sb.classList.remove('active');
+  renderHome();
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  currentUnit = null;
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(unitId) {
+  currentUnit = unitId;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  var sb = document.getElementById('syllabus-btn');
+  if (sb) sb.classList.remove('active');
+  const unit = UNITS.find(u => u.id === unitId);
+  document.getElementById('lesson-content').innerHTML = LESSONS[unitId] + resourceCardHTML(unit);
+  const rwBtn = document.getElementById('realworld-btn');
+  if (rwBtn) rwBtn.style.display = (REALWORLD_6 && REALWORLD_6[unitId]) ? '' : 'none';
+  renderSidebar();
+  setTopbar();
+}
+
+function showWorksheet() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><textarea id="ans-${idx}" placeholder="Your answer..."></textarea></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function checkWorksheet() {
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    const userAns = document.getElementById(`ans-${idx}`).value;
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><div class="answer-key"><strong>Answer:</strong> ${p.answer}</div><p><strong>Your answer:</strong> ${userAns || '(no answer)'}</p></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function showQuiz() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  const quiz = QUIZZES[currentUnit];
+  let html = '';
+  quiz.forEach((q, idx) => {
+    html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${q.q}</p>`;
+    q.opts.forEach((opt, optIdx) => {
+      html += `<label><input type="radio" name="q${idx}" value="${optIdx}"> ${opt}</label>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function submitQuiz() {
+  const quiz = QUIZZES[currentUnit];
+  let score = 0;
+  quiz.forEach((q, idx) => {
+    const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+    if (selected && parseInt(selected.value) === q.ans) score++;
+  });
+  const percent = Math.round((score / quiz.length) * 100);
+  completedUnits[currentUnit] = true;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('certificate-screen').classList.add('active');
+  document.getElementById('cert-content').innerHTML = `<p style="font-size: 24px; margin: 20px;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p><p>Congratulations on completing this unit!</p>`;
+  renderSidebar();
+  updateProgress();
+}
+
+function updateProgress() {
+  const completed = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${completed}/${UNITS.length}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderSidebar();
+});
+  const HANDOUTS_6 = {
+  'factors-multiples': {
+    title: `Mineral Factor Analyzer`,
+    science: `🌍 Earth Science — Rock & Mineral Classification`,
+    mission: `<strong>Why do geologists compare mineral GCF?</strong><br><br>
+Geologists classify minerals using physical properties like hardness, cleavage, luster, and crystal structure. The <strong>Mohs hardness scale</strong> ranks minerals 1–10 by which can scratch which — but those numbers are <em>ordinal</em>, meaning they show order, not size. Scientists also measure <strong>absolute hardness</strong>, which captures the true physical resistance of each mineral. Talc measures 1, Diamond measures 1,500 — showing that Diamond is not just "9 steps harder" but roughly <strong>1,500 times harder</strong> than Talc.<br><br>
+When we find the <strong>GCF of two minerals' absolute hardness values</strong>, we are asking: <em>What is the largest unit of hardness these two minerals share?</em> A high GCF suggests similar atomic bonding — minerals like Quartz (100) and Topaz (200) have a GCF of 100, meaning Topaz is <em>exactly twice</em> as hard as Quartz, hinting at related crystal structures. A GCF of 1, like Talc (1) and Gypsum (3), means no shared factor — completely different atomic structures.<br><br>
+This kind of comparison mirrors how geologists think in the field: find the shared "building block" between samples. GCF and LCM also build the foundation for <strong>ratio reasoning</strong> — real geologists use ratios constantly for isotope dating, rock classification, and ore identification. In this project, you will use real absolute hardness values to analyze mineral relationships, just like a field geologist.`,
+    steps: [
+      `Open Excel and create a new workbook called <em>Mineral_Factor_Analyzer</em>.`,
+      `Column A: Enter the names of 10 minerals in order of hardness: Talc, Gypsum, Calcite, Fluorite, Apatite, Orthoclase, Quartz, Topaz, Corundum, Diamond.`,
+      `Column B: Enter their <strong>absolute hardness values</strong>: 1, 3, 9, 21, 48, 72, 100, 200, 400, 1500. These are real measured values — notice how much larger Diamond's value is compared to the others!`,
+      `Column C: Label it <em>Prime Factorization</em>. Write out the prime factors for each value by hand. Examples: 9 = 3², 21 = 3 × 7, 48 = 2⁴ × 3, 72 = 2³ × 3², 100 = 2² × 5², 200 = 2³ × 5², 400 = 2⁴ × 5², 1500 = 2² × 3 × 5³.`,
+      `Column D (blue): Use <code>=GCD(B2,B3)</code> for each consecutive pair. This is the GCF — do you notice a pattern in the GCF values as hardness increases?`,
+      `Column E (yellow): Use <code>=LCM(B2,B3)</code> for each consecutive pair. This is the LCM.`,
+      `Row 13: Add <code>=AVERAGE(D2:D11)</code> and <code>=AVERAGE(E2:E11)</code> to find the average GCF and LCM across all pairs.`,
+      `Select the GCF column and insert a <strong>Bar Chart</strong> titled <em>Mineral GCF Comparison</em>. Label the x-axis with mineral pair names (e.g., "Talc–Gypsum"). What shape does the chart make, and why?`
+    ],
+    deliverable: `Submit your Excel workbook with the mineral data table, absolute hardness values, prime factorizations, GCF/LCM columns, summary averages, and bar chart. Add a text box answering: <em>Which pair has the highest GCF? Which has GCF = 1? What does each tell you about how those minerals are related?</em>`,
+    reflect: [
+      `Hardness reflects how tightly atoms are bonded in a crystal. If two minerals have a high GCF, what might that suggest about their atomic structure?`,
+      `Geologists use ratios — like silica-to-oxide ratios — to classify rocks. How is finding a GCF similar to simplifying a ratio?`,
+      `Talc (absolute hardness 1) and Gypsum (absolute hardness 3) have a GCF of 1. Diamond (1500) and Corundum (400) also have a GCF of 100. What does it mean when GCF equals one of the original values?`
+    ]
+  },
+  'fraction-division': {
+    title: `Rock Sample Splitter`,
+    science: `🌍 Earth Science — Soil & Rock Sample Analysis`,
+    mission: `A geologist divides rock core samples into equal segments for testing. Model this with fraction division in Excel!`,
+    steps: [`Open Excel and title your sheet <em>Sample_Splitter</em>.`,`Column A: Enter 10 total sample lengths as decimals (e.g., 0.75, 1.5, 2.25, 0.5, 1.0…).`,`Column B: Enter 10 segment sizes (e.g., 0.25, 0.5, 0.125, 0.1…).`,`Column C: Formula <code>=A2/B2</code> — calculates how many segments fit.`,`Column D: Formula <code>=IF(C2=INT(C2),"Whole Number","Fraction")</code> — classifies the result.`,`Use <strong>Conditional Formatting</strong> on Column C: highlight green when result is a whole number.`,`Create a bar chart showing sample sizes (Col A) and number of segments (Col C).`],
+    deliverable: `Submit your Excel file with 10 scenarios, division results, color-coded formatting, and chart. Conclusion: Which sample sizes divide into whole-number segments, and why does that matter for a geologist?`,
+    reflect: [`What does the quotient mean in the context of a rock sample?`,`If a segment size is greater than the total sample length, what does the result tell you?`]
+  },
+  'scientific-notation': {
+    title: `Scale of the Solar System Explorer`,
+    science: `🌍 Earth Science — Distances, Sizes & Powers of 10`,
+    mission: `<strong>Why do scientists need scientific notation?</strong><br><br>
+The distance from Earth to the Sun is 150,000,000,000 meters. The age of Earth is 4,500,000,000 years. Writing and comparing these numbers in standard form is slow and error-prone — it's easy to miscount zeros. Scientists use scientific notation so they can write, compare, and compute with enormous numbers quickly and accurately.<br><br>
+In this project you will build a Solar System data table in Excel using scientific notation, and discover that the same powers of 10 you learned in KHDUdcm are the foundation of this tool.`,
+    steps: [
+      `Create a workbook called <em>Solar_System_Explorer</em>.`,
+      `<strong>Sheet 1 — Powers of 10 Reference:</strong> Column A = exponent (1 through 12). Column B = power of 10 <code>=10^A2</code>. Column C = standard form (type the number out). Column D = "this is about…" (write a real-world example: 10³ = about 1 km in meters, 10⁶ = about the population of Honolulu, etc.).`,
+      `<strong>Sheet 2 — Solar System Data Table:</strong> Columns: Planet/Object | Distance from Sun (km) | Scientific Notation (type manually) | Diameter (km) | Diameter Scientific Notation. Enter all 8 planets plus the Sun and Moon. Use real values (e.g., Earth–Sun = 149,600,000 km = 1.496 × 10⁸ km).`,
+      `Column F: <code>=IF(C2=TEXT(B2,"0.00E+00"),"✓","Review")</code> to check if your scientific notation matches Excel's built-in format. Note: Excel uses E notation (1.50E+08) — discuss how this is the same as 1.5 × 10⁸.`,
+      `<strong>Sheet 3 — Comparison & Ordering:</strong> Copy the distances to a new column and sort from smallest to largest. Add a bar chart — note that the Sun's diameter dwarfs all others. Discuss why a log-scale chart might be better for this data.`,
+      `<strong>Sheet 4 — Age of Earth Timeline:</strong> Column A = geological event, Column B = years ago (standard), Column C = scientific notation (type). Events: Formation of Earth (4,500,000,000), First life (3,800,000,000), First fish (500,000,000), First dinosaurs (230,000,000), Mass extinction (66,000,000), First humans (300,000), Today (0).`
+    ],
+    deliverable: `Submit your 4-sheet workbook. In a text box on Sheet 2, write: <em>The distance from Mercury to Neptune is approximately how many km? Write your estimate in scientific notation. How many times farther is Neptune than Mercury from the Sun?</em>`,
+    reflect: [
+      `On the KHDUdcm chart, moving 3 steps right multiplies by 10³ = 1000. How is this the same operation as changing 1.5 × 10³ to 1.5 × 10⁶?`,
+      `Earth's diameter is about 1.27 × 10⁷ m. Jupiter's is about 1.43 × 10⁸ m. Without calculating, how do you know Jupiter is larger — and roughly how many times larger?`,
+      `Why is it important to have exactly one digit before the decimal in scientific notation? What would go wrong if we allowed 12 × 10⁵?`
+    ]
+  },
+  'unit-conversions': {
+    title: `Earth Science Measurement Converter`,
+    science: `🌍 Earth Science — Field Measurement & Unit Analysis`,
+    mission: `<strong>Why do scientists need to convert units?</strong><br><br>
+A geologist in the field might measure a rock layer in centimeters, then report it in meters for a map. A meteorologist records rainfall in millimeters but calculates totals in liters. Scientists always choose the most convenient unit to measure, then convert to the unit needed for comparison or calculation.<br><br>
+In this project you will build a metric conversion tool for real Earth science measurements — and discover that converting units is just multiplying or dividing decimals by powers of 10 using the KHDUdcm staircase.`,
+    steps: [
+      `Create a workbook called <em>Earth_Science_Measurement_Converter</em>.`,
+      `<strong>Sheet 1 — KHDUdcm Reference:</strong> Build the staircase as a visual table. Row 1: K, H, D, U, d, c, m. Row 2: prefix names. Row 3: multiplication values (1000, 100, 10, 1, 0.1, 0.01, 0.001). Color the Unit column gold, the larger prefixes blue, and the smaller prefixes green.`,
+      `<strong>Sheet 2 — Length Converter:</strong> Columns: Measurement | From Unit | Value | To Unit | Steps (+ = right, − = left) | Conversion Factor <code>=10^E2</code> | Result <code>=C2*F2</code>. Enter 8 Earth science measurements: hiking trail (4.2 km → m), rock layer (35 cm → m), mineral crystal (8 mm → cm), cave depth (450 m → km), lava flow (2.3 km → m), cliff height (180 m → cm), earthquake fault (12 km → m), river width (0.8 km → m).`,
+      `<strong>Sheet 3 — Mass Converter:</strong> Same structure. Enter 6 mineral/rock samples: basalt chunk (2.8 kg → g), quartz crystal (450 g → kg), sand sample (1200 g → kg), obsidian shard (85 g → mg), pumice piece (0.35 kg → g), granite core (5.5 kg → g).`,
+      `<strong>Sheet 4 — Volume Converter (Rainfall):</strong> Columns: Location | Rainfall (mm) | Rainfall (cm) <code>=A2/10</code> | Rainfall (m) <code>=A2/1000</code> | Area (m²) | Total Volume (L) <code>=D2*E2*1000</code>. Enter Honolulu, Mt. Waiʻaleʻale, Sahara Desert, Amazon Rainforest, Death Valley with real average annual rainfall values.`
+    ],
+    deliverable: `Submit your 4-sheet workbook. In a text box on Sheet 2, write: <em>A geologist measures a rock formation as 230 cm. Convert this to meters AND to kilometers. Show each step using KHDUdcm.</em>`,
+    reflect: [
+      `Converting 2.5 km to meters gives 2500 m. How does this connect to what you learned about multiplying decimals by powers of 10?`,
+      `A mineral sample weighs 1,500 mg. Is it heavier or lighter than 1 gram? Convert to grams to check.`,
+      `Why does Mt. Waiʻaleʻale (one of Earth's wettest places) on Kauaʻi matter to Hawaiʻi? Convert its annual rainfall from mm to meters and discuss.`
+    ]
+  },
+  'density': {
+    title: `Mineral Density Identification Lab`,
+    science: `🔬 Earth Science — Identifying Unknown Minerals by Density`,
+    mission: `Geologists use density to identify unknown mineral samples in the field. Build a Sheets workbook that calculates density, classifies float-or-sink, and matches samples to a known density table.`,
+    steps: [
+      `Create a workbook called <em>Mineral_Density_Lab</em>.`,
+      `<strong>Sheet 1 — Reference Table:</strong> Columns: Mineral | Density (g/cm³). Enter: Quartz 2.65, Feldspar 2.56, Mica 2.80, Calcite 2.71, Pyrite 5.00, Galena 7.50, Hematite 5.30, Gold 19.30, Aluminum 2.70, Iron 7.87.`,
+      `<strong>Sheet 2 — Density Calculator:</strong> Columns: Sample # | Mass (g) | Initial water (mL) | Final water (mL) | Volume (mL) <code>=D2-C2</code> | Density (g/mL) <code>=B2/E2</code> | Float/Sink <code>=IF(F2&lt;1,"Floats","Sinks")</code>.`,
+      `Enter 6 sample rows: Sample A 80 g (20→50 mL), Sample B 60 g (20→40 mL), Sample C 27 g (50→60 mL), Sample D 39.65 g (10→15 mL), Sample E 75 g (50→60 mL), Sample F 96.5 g (10→15 mL).`,
+      `<strong>Sheet 3 — Identification:</strong> For each sample, write the closest mineral match from the reference. Use <code>=VLOOKUP</code> for bonus points, or do it manually.`,
+      `<strong>Sheet 4 — Earth Layers Bar Chart:</strong> Plot crust (2.7), mantle (4.5), outer core (11), inner core (13) as a bar chart. Title: “Earth&apos;s Density Increases with Depth.”`
+    ],
+    deliverable: `Submit your 4-sheet workbook with all calculated densities, identifications, and the Earth-layers chart. Write: <em>Sample ___ has the highest density and is most likely ___. Sample ___ would float in water because ___.</em>`,
+    reflect: [
+      `If two samples have the same mass but different volumes, which one is denser? Explain why.`,
+      `Why does oceanic crust (3.0 g/cm³) sink BENEATH continental crust (2.7 g/cm³) at subduction zones, even though both float on the mantle?`,
+      `A student measures a sample’s density as 1.05 g/cm³. Should they trust the answer if water beads up on the sample (so air bubbles cling to it)? Why or why not?`
+    ]
+  },
+  'decimal-ops': {
+    title: `Weather Station Dashboard`,
+    science: `🌍 Earth Science — Weather Data Recording`,
+    mission: `Meteorologists record precise decimal measurements every day. Build a real weather dashboard for Honolulu using decimal operations!`,
+    steps: [`Create a workbook called <em>Weather_Station_Dashboard</em>.`,`Sheet 1 — Raw Data: Columns: Day | Rainfall (in) | High Temp (°F) | Low Temp (°F) | Humidity (%). Enter 7 days.`,`Sheet 2 — Statistics: Use <code>=SUM()</code>, <code>=AVERAGE()</code>, <code>=MAX()</code>, <code>=MIN()</code> for each column.`,`Add a Range row using <code>=MAX(range)-MIN(range)</code>.`,`Sheet 3 — Charts: Create a <strong>Line Chart</strong> of daily rainfall and a separate one for high temperatures.`,`Add chart titles and axis labels with units.`],
+    deliverable: `Submit your 3-sheet workbook with raw data, statistics table, and two labeled charts. Write 3 sentences describing Honolulu's weather using specific decimal numbers.`,
+    reflect: [`Why is decimal precision important in weather reporting?`,`How does the range of temperatures compare to the range of rainfall values?`]
+  },
+  'ratios-rates': {
+    title: `Ocean Salinity Ratio Table`,
+    science: `🌍 Earth Science — Ocean Water Chemistry`,
+    mission: `The ocean is roughly 3.5% salt. Use unit rates and proportions to analyze water samples from different oceans!`,
+    steps: [`Create a workbook called <em>Ocean_Chemistry_Ratios</em>.`,`Sheet 1 — Salinity Calculator: Column A = Sample sizes (g): 100, 250, 500, 750, 1000, 1500, 2000, 2500, 3000, 5000.`,`Column B: Formula <code>=A2*0.035</code> — expected salt content (g).`,`Column C: Formula <code>=A2/B2</code> — verify unit rate (should always be ~28.57 g water per g salt).`,`Sheet 2 — Ocean Comparison: Enter salinity for Pacific (3.5%), Atlantic (3.6%), Mediterranean (3.8%), Red Sea (4.1%), Dead Sea (33%). Calculate salt per 1,000 g for each.`,`Create a <strong>Bar Chart</strong> comparing salinity across water bodies.`],
+    deliverable: `Submit your workbook with the salinity calculator, comparison table, and bar chart. Write: Why does the Dead Sea have such high salinity, and what ratio would you expect for a sample there?`,
+    reflect: [`What is the unit rate for Pacific Ocean salinity?`,`How many times saltier is the Dead Sea than the Pacific Ocean?`]
+  },
+  'percents': {
+    title: `Atmosphere Composition Analyzer`,
+    science: `🌍 Earth Science — Atmosphere Composition`,
+    mission: `Earth's air is 78% nitrogen, 21% oxygen, and 1% other gases. Model your classroom's air and compare it to other planets!`,
+    steps: [`Create a workbook called <em>Atmosphere_Analyzer</em>.`,`Sheet 1: Cell B1 = 1500 liters (classroom volume). Column A: Gas names. Column B: Percentages (78%, 21%, 1%).`,`Column C: <code>=B1*A2/100</code> — volume of each gas.`,`Sheet 2 — Planet Comparison: Table with Earth, Mars, Venus columns and rows for major gases.`,`Use <code>=IF(C2&lt;19,"Danger","Safe")</code> to flag low oxygen.`,`Sheet 3: Create a <strong>Pie Chart</strong> of Earth's atmospheric composition with percentage labels.`],
+    deliverable: `Submit your workbook with classroom calculator, planet comparison, and pie chart. Text box: 'If you were on Mars, you would breathe ___% CO₂ — that is ___ times more than Earth.'`,
+    reflect: [`What percent of your classroom air is NOT oxygen?`,`If oxygen dropped to 15%, what would happen? Use the IF formula to model this.`]
+  },
+  'integers': {
+    title: `Global Elevation Tracker`,
+    science: `🌍 Earth Science — Elevation & Ocean Depth`,
+    mission: `Earth's surface ranges from +8,849 m (Everest) to -11,034 m (Mariana Trench). Use integers to map and analyze these extremes!`,
+    steps: [`Create a workbook called <em>Global_Elevation_Tracker</em>.`,`Enter 10 geographic features with elevations: Mt. Everest (+8849), Dead Sea (-430), Mariana Trench (-11034), Death Valley (-86), Kilimanjaro (+5895), Mauna Kea above sea (+4205), Mauna Kea total (+10210), Amazon River (+0), Lake Baikal depth (-1642), Sahara Desert (+400).`,`Column C: <code>=ABS(B2)</code> — absolute elevation from sea level.`,`Sort from most negative to most positive: <em>Data → Sort → Smallest to Largest</em>.`,`Create a <strong>Bar Chart</strong> with feature names on x-axis and elevation on y-axis. Negative bars extend below zero!`],
+    deliverable: `Submit your workbook with sorted elevation table, absolute value column, and bar chart. Write one paragraph comparing the highest point on land vs. the deepest ocean point using integers.`,
+    reflect: [`What integer represents sea level?`,`Which is further from zero: -11,034 or +8,849? Use absolute value to explain.`]
+  },
+  'coordinate-plane': {
+    title: `Earthquake Coordinate Map`,
+    science: `🌍 Earth Science — Mapping Tectonic Plates`,
+    mission: `Geologists use latitude and longitude — just like a coordinate plane — to track earthquakes. Map real data and discover plate boundaries!`,
+    steps: [`Visit <strong>earthquake.usgs.gov</strong> and find 10 recent earthquakes with latitude and longitude.`,`Create a workbook called <em>Earthquake_Coordinate_Map</em>.`,`Column A: Location name. Column B: Longitude (x). Column C: Latitude (y). Column D: Magnitude.`,`Select Columns B and C → Insert → <strong>XY Scatter Chart</strong>.`,`Column E: Distance from origin: <code>=SQRT(B2^2+C2^2)</code>.`,`Conditional formatting on Column D: red for magnitude ≥ 7, yellow for ≥ 5, green below 5.`],
+    deliverable: `Submit workbook with data table, scatter chart, distance calculations, and color-coded magnitudes. Write: Do your plotted points cluster near known plate boundaries?`,
+    reflect: [`Which quadrant does an earthquake at (-122°, 37°) plot in?`,`What does the distance from (0,0) represent geographically?`]
+  },
+  'alg-expressions': {
+    title: `Rock Age Expression Evaluator`,
+    science: `🌍 Earth Science — Rock Age & Radioactive Decay`,
+    mission: `Scientists use algebraic expressions to estimate rock ages from isotope ratios. Write and evaluate expressions that model age calculations!`,
+    steps: [`Create a workbook called <em>Rock_Age_Expressions</em>.`,`Column A: Variable values: 10, 20, 30, 40, 50, 60, 70, 80.`,`Column B: Expression 1 = <code>=2*A2+500</code>.`,`Column C: Expression 2 = <code>=A2^2/10+100</code>.`,`Column D: Expression 3 = <code>=3*A2-150</code>.`,`Create a <strong>Line Chart</strong> with all three expressions on the same chart.`,`Sheet 2 — Geologist's Lab: 5 rock samples with known isotope ratios; use your expressions to estimate age.`],
+    deliverable: `Submit workbook with expression evaluation table, multi-line chart, and Geologist's Lab sheet. Write: What happens to the age estimate when the variable doubles?`,
+    reflect: [`In 2x + 500, what does the '500' represent? What does it mean for rock age?`,`Which expression grows fastest as x increases? How can you tell from the chart?`]
+  },
+  'equations': {
+    title: `Evaporation Equation Solver`,
+    science: `🌍 Earth Science — Water Cycle & Evaporation`,
+    mission: `Puddles and lakes lose water through evaporation every day. Use one-step equations to figure out exactly when a puddle will disappear!`,
+    steps: [`Create a workbook called <em>Evaporation_Equations</em>.`,`Column A: Initial depth (mm): 12, 24, 36, 48, 60, 75, 90, 100.`,`Column B: Evaporation rate (mm/hr): 3, 3, 4, 4, 5, 5, 6, 6.`,`Column C: <code>=A2/B2</code> — hours until puddle disappears.`,`Column D: <code>=INT(C2)</code> — whole hours. Column E: <code>=MOD(C2,1)*60</code> — remaining minutes.`,`Create a <strong>Line Chart</strong>: initial depth vs. hours to evaporate.`],
+    deliverable: `Submit workbook with equation table, hours/minutes columns, and line chart. Write: 'The equation I solved was ___ = ___. The solution means ___.' for two scenarios.`,
+    reflect: [`If you double the initial depth with same rate, what happens to the solution?`,`What rate makes a 36mm puddle evaporate in exactly 4 hours?`]
+  },
+  'inequalities': {
+    title: `Air Quality Inequality Monitor`,
+    science: `🌍 Earth Science — Safe Pollution Thresholds`,
+    mission: `The EPA says air quality is 'unhealthy' when PM2.5 particles exceed 35 µg/m³. Use inequalities to classify a week of Honolulu air quality data!`,
+    steps: [`Create a workbook called <em>AQI_Inequality_Monitor</em>.`,`Column A: Day (Mon–Sun). Column B: PM2.5 readings (vary from 10 to 55).`,`Column C: <code>=IF(B2>35,"⚠ Unhealthy","✅ Safe")</code>.`,`Column D: <code>=B2-35</code> — distance above/below threshold.`,`Cell F2: <code>=COUNTIF(C2:C8,"⚠ Unhealthy")</code>. Cell F4: <code>=F2/7*100</code> — % unhealthy.`,`Create a <strong>Bar Chart</strong> of AQI readings with a horizontal reference line at 35.`],
+    deliverable: `Submit workbook with AQI data, IF classifications, COUNTIF summary, and bar chart. Write: 'The inequality for a safe day is ___. On ___ of 7 days, the air was safe.'`,
+    reflect: [`Write the inequality for 'unhealthy' air. Write the inequality for 'safe' air.`,`If PM2.5 = 35 exactly, is it safe or unhealthy? Which inequality symbol applies?`]
+  },
+  'variables-relationships': {
+    title: `Earth Temperature Relationship`,
+    science: `🌍 Earth Science — Soil Temperature vs. Depth`,
+    mission: `The deeper you dig into Earth, the hotter it gets! Use variables and formulas to explore this geothermal relationship.`,
+    steps: [`Create a workbook called <em>Earth_Temperature_Relationship</em>.`,`Sheet 1: Column A = Depth (km): 0–10. Column B: <code>=A2*25+15</code> — temperature °C.`,`Sheet 2: Column A = Ocean depth (m): 0, 50, 100, 200, 500, 1000, 2000, 4000. Column B: temperatures 28, 20, 15, 10, 5, 4, 2, 1.`,`Sheet 3: Plot both datasets on one <strong>XY Scatter Chart</strong> with two series.`,`Label axes and add a legend. Title: 'Temperature vs. Depth: Earth vs. Ocean'.`],
+    deliverable: `Submit 3-sheet workbook with both datasets and combined chart. Write: 'Independent variable is ___, dependent is ___. As depth increases in Earth's crust, temperature ___. As depth increases in the ocean, temperature ___.'`,
+    reflect: [`What is the temperature 4 km below Earth's surface? Write and evaluate the equation.`,`Which relationship is linear: geothermal or ocean temperature? How can you tell from the chart?`]
+  },
+  'area-polygons': {
+    title: `Habitat Area Analyzer`,
+    science: `🌍 Earth Science — Land Use & Habitat Area`,
+    mission: `Hawaii has lost 90% of its native forest. Use area formulas to calculate how much habitat remains — and how much has been lost!`,
+    steps: [`Create a workbook called <em>Hawaii_Habitat_Area</em>.`,`5 land zones for O'ahu: Native Forest, Urban, Agricultural, Beach/Coast, Other.`,`Column A: Zone. Column B: Width (miles). Column C: Length (miles).`,`Column D: Rectangle area <code>=B2*C2</code>; for triangular coastal zones: <code>=0.5*B2*C2</code>.`,`Column E: <code>=D2/SUM(D:D)*100</code> — percentage of total island area.`,`Make totals add to ~600 sq miles. Create a <strong>Pie Chart</strong> of land use.`],
+    deliverable: `Submit workbook with land use table, area calculations, percentage column, and pie chart. Write: 'Native forest once covered about ___ sq miles of O'ahu. Today about ___. That is a ___% decrease.'`,
+    reflect: [`If you doubled the width of a forest zone but kept the length the same, how would the area change?`,`A triangular coastal zone has base 5 miles and height 3 miles. What is its area?`]
+  },
+  'surface-area': {
+    title: `Rock Weathering Surface Area Model`,
+    science: `🌍 Earth Science — Weathering & Erosion Rates`,
+    mission: `When you break a rock into smaller pieces, total surface area increases — and weathering happens faster. Model this in Excel!`,
+    steps: [`Create a workbook called <em>Rock_Weathering_SA_Model</em>.`,`Column A: Number of equal pieces: 1, 8, 27, 64, 125.`,`Column B: Side length of each piece: <code>=(1000/A2)^(1/3)</code> (starting from a 10cm cube = 1000 cm³).`,`Column C: Surface area of ONE small cube: <code>=6*B2^2</code>.`,`Column D: Total surface area: <code>=A2*C2</code>.`,`Column E: Ratio vs. original: <code>=D2/D$2</code>.`,`Create a <strong>Line Chart</strong> of Column A vs. Column D.`],
+    deliverable: `Submit workbook with subdivision table and line chart. Write: 'When I break one rock into 64 pieces, total surface area increases by a factor of ___. Weathering would happen ___ times faster.'`,
+    reflect: [`Why do geologists say small rocks weather faster? Use your data.`,`What would happen to the surface area if you broke the rock into 1,000 pieces?`]
+  },
+  'volume': {
+    title: `Glacier Volume Analysis`,
+    science: `🌍 Earth Science — Glacier & Ice Cap Volume`,
+    mission: `Antarctica holds enough ice to raise sea levels 60 meters if it all melted. Calculate volumes of major ice bodies and their sea level impact!`,
+    steps: [`Create a workbook called <em>Glacier_Volume_Analysis</em>.`,`Enter 8 ice bodies: Antarctic Ice Sheet, Greenland Ice Sheet, Arctic Sea Ice, Himalayan Glaciers, Alaskan Glaciers, Patagonian Ice Fields, Icelandic Glaciers, Rocky Mountain Glaciers.`,`Column A: Name. Column B: Area (km²). Column C: Average thickness (km).`,`Column D: Volume <code>=B2*C2</code>. Column E: Water equivalent <code>=D2*0.9</code>.`,`Column F: Sea level rise estimate <code>=E2/361</code> (mm).`,`Create a <strong>Bar Chart</strong> comparing volumes (sorted largest to smallest).`],
+    deliverable: `Submit workbook with data, four calculated columns, and sorted bar chart. Write: 'If the ___ ice body melted, sea levels would rise ~___ mm. The total impact of all 8 bodies would be ___.'`,
+    reflect: [`Which ice body poses the greatest sea level threat? How did you determine this?`,`If sea levels rise 1 meter, what would happen to Honolulu's coastline?`]
+  },
+  'statistics-data': {
+    title: `Honolulu Climate Report`,
+    science: `🌍 Earth Science — Climate Data Analysis`,
+    mission: `Meteorologists analyze years of climate data to describe local weather patterns. Build a statistical analysis of Honolulu's climate!`,
+    steps: [`Search for 'Honolulu average monthly rainfall temperature' and find real data.`,`Create a workbook called <em>Honolulu_Climate_Report</em>.`,`Sheet 1 — Raw Data: Month | Avg Rainfall (in) | Avg High (°F) | Avg Low (°F). Enter all 12 months.`,`Sheet 2 — Statistics: Calculate <code>=AVERAGE()</code>, <code>=MEDIAN()</code>, <code>=MODE()</code>, <code>=MAX()-MIN()</code> for each column.`,`Sheet 3 — Charts: Bar chart for monthly rainfall; Line chart for monthly high and low temperatures on the same axes.`],
+    deliverable: `Submit 3-sheet workbook with real climate data, full statistics, and two labeled charts. Write: 'Honolulu receives an average of ___ inches of rain per month. The rainiest month is ___. Temperatures range from ___ to ___. The mean temperature is ___.'`,
+    reflect: [`Is mean or median a better measure of typical monthly rainfall for Honolulu? Why?`,`What does the range of temperatures tell you about how much Honolulu's weather varies through the year?`]
+  },
+  'word-problems': {
+    title: `Earth System Report — Capstone`,
+    science: `🌍 Earth Science — Integrated Earth Systems Challenge`,
+    mission: `Real scientists use ALL types of math at once. Choose one Earth system and apply every 6th grade math skill to describe it completely!`,
+    steps: [`Choose ONE topic: Water Cycle, Atmosphere, Volcano, Ocean System, or Earthquake Zones.`,`Create a workbook called <em>Earth_System_Report_[YourTopic]</em> with 7 sheets.`,`Sheet 1 — Overview: Title, your name, topic description.`,`Sheet 2 — Ratios & Percents: At least 3 calculations related to your topic.`,`Sheet 3 — Integers & Coordinates: Use integers (elevations, temperatures) and plot 5 coordinate points.`,`Sheet 4 — Equations & Inequalities: Write and solve 2 equations and 1 inequality from your topic.`,`Sheet 5 — Area/Volume: Calculate at least 2 measurements from your topic.`,`Sheet 6 — Statistics: Dataset of 10+ values; mean, median, mode, range, and one chart.`,`Sheet 7 — Summary: Paragraph using math vocabulary and specific numbers from your calculations.`],
+    deliverable: `Submit complete 7-sheet workbook. Final: A 'Scientist's Summary' paragraph using at least 6 different math terms and 5 specific numbers from your calculations. This is your 6th grade Math With a Purpose capstone!`,
+    reflect: [`Which math skill was most useful for describing your Earth system? Why?`,`What question about your Earth science could you NOT answer with 6th grade math? What would you need to learn next?`]
+  },
+  'plate-tectonics': {
+    title: `Tectonic Plate Motion Calculator`,
+    science: `🌋 Earth Science — Plate Tectonics & Geological Time`,
+    mission: `Geologists track how continents have moved across geological time using rate calculations — the same math as speed, distance, and time. In this project you will build a calculator that models real tectonic plate motion from centimeters per year all the way to thousands of kilometers over millions of years.`,
+    steps: [
+      `Create a workbook called <em>Tectonic_Plate_Motion_Calculator</em>.`,
+      `<strong>Sheet 1 — Plate Speed Reference:</strong> Build a table of 8 real tectonic plates with their names, average speeds (cm/year), and boundary types. Include: Pacific (10 cm/yr), North American (2.3), Eurasian (2.1), African (2.15), Australian (6.7), Antarctic (1.4), Nazca (7.7), Caribbean (2.0). Column D: Speed in mm/year <code>=B2*10</code>. Column E: Speed in m/1000yr <code>=B2*10</code>. Add a bar chart comparing plate speeds.`,
+      `<strong>Sheet 2 — Distance Calculator:</strong> Columns: Plate | Speed (cm/yr) | Years | Distance (cm) <code>=B2*C2</code> | Distance (m) <code>=D2/100</code> | Distance (km) <code>=E2/1000</code>. Fill in rows for each plate at 3 different time periods: 10,000 years, 1 million years, 50 million years. Color code slow plates (< 3 cm/yr) blue and fast plates (> 6 cm/yr) red: use <code>=IF(B2<3,"Slow","Fast")</code> in column G.`,
+      `<strong>Sheet 3 — Atlantic Ocean Age Estimator:</strong> The Atlantic Ocean is widening. Columns: Location | Current Width (km) | Spreading Rate (cm/yr) | Width in cm <code>=B2*100000</code> | Age (years) <code>=D2/C2</code> | Age (millions of years) <code>=E2/1000000</code>. Enter: North Atlantic 5,800 km (2.5 cm/yr), South Atlantic 4,900 km (3.4 cm/yr), Equatorial Atlantic 4,200 km (2.8 cm/yr).`,
+      `<strong>Sheet 4 — India's Journey:</strong> India separated from Africa ~180 million years ago and collided with Asia ~50 million years ago, traveling about 7,600 km. Build a timeline: Column A = Time (Ma): 180, 150, 120, 90, 60, 50, 0. Column B: Distance from original position (km) — calculate using average rate of 15 cm/yr. Column C: Convert km to cm and back. Create a <strong>Line Chart</strong> of distance vs. time titled "India's Journey North."`,
+      `<strong>Sheet 5 — Future Pangea:</strong> Scientists predict that in ~250 million years, continents will re-assemble. Use current speeds to estimate positions: If Africa moves north at 2.15 cm/yr, how much farther north is it in 250 million years (in km)? Set up a calculator for 5 plates showing future distance in millions of km.`
+    ],
+    deliverable: `Submit your 5-sheet workbook. Write a "Geological Summary": <em>"The fastest plate is ___ at ___ cm/year. In 50 million years it will have moved ___ km. The Atlantic Ocean is approximately ___ million years old based on spreading rate calculations."</em>`,
+    reflect: [
+      `On Sheet 2, the Pacific Plate (10 cm/yr) moves how many times faster than the Antarctic Plate (1.4 cm/yr)? Show the ratio. What landforms would you expect at each plate's boundaries given these speeds?`,
+      `On Sheet 3, the North and South Atlantic have different spreading rates but similar widths. What does that tell you about their ages? Which one started opening first?`,
+      `The formula Age = Width ÷ Rate is the same structure as Time = Distance ÷ Speed from 5th grade. Write both formulas side by side. What do they have in common?`
+    ]
+  },
+  'richter-scale': {
+    title: `Global Earthquake Power Comparator`,
+    science: `🌍 Earth Science — Seismology & Powers of 10`,
+    mission: `The Richter scale compresses an enormous range of earthquake sizes into a simple 1–10 scale using powers of 10. In this project you will build a seismology dashboard that calculates, compares, and visualizes real earthquake magnitudes — discovering just how dramatically these events differ in power.`,
+    steps: [
+      `Create a workbook called <em>Global_Earthquake_Power_Comparator</em>.`,
+      `<strong>Sheet 1 — Powers of 10 Reference:</strong> Column A: Magnitude (1 through 10). Column B: Ground motion as power of 10 <code>=10^A2</code>. Column C: Written in standard form (just type: 10, 100, 1000...). Column D: Relative to magnitude 1 <code>=B2/B$2</code>. Add a bar chart of magnitudes 1–9 showing ground motion values. Note how the scale makes small and large values both visible.`,
+      `<strong>Sheet 2 — Historic Earthquake Database:</strong> Build a table of 10 real earthquakes. Columns: Year | Location | Magnitude | Ground Motion <code>=10^C2</code> | Ratio to a M5.0 <code>=D2/10^5</code> | Deaths (look up or estimate) | Damage Category <code>=IF(C2>=8,"Great",IF(C2>=7,"Major",IF(C2>=5,"Moderate","Minor")))</code>. Enter: 1960 Chile (9.5), 2011 Japan (9.0), 2004 Indian Ocean (9.1), 1906 San Francisco (7.9), 1994 Northridge CA (6.7), 2010 Haiti (7.0), 1989 Loma Prieta (6.9), 2015 Nepal (7.8), 2023 Turkey-Syria (7.8), 2020 Puerto Rico (6.4).`,
+      `<strong>Sheet 3 — Magnitude Comparator:</strong> Set up a side-by-side comparison. Cells B2 and B3: enter two magnitudes. Cell B5: <code>=10^(B2-B3)</code> — this is how many times stronger quake 1 is than quake 2. Cell B6: <code>=IF(B5>1,"Quake 1 is stronger","Quake 2 is stronger")</code>. Cell B7: Written comparison: use <code>=CONCATENATE("Quake 1 is ",TEXT(B5,"#,##0")," times stronger than Quake 2")</code>. Test all pairs from Sheet 2.`,
+      `<strong>Sheet 4 — Energy Release Chart:</strong> Scientists use a separate energy formula — energy roughly scales as 10^(1.5×M). Column A: Magnitude 1–10. Column B: Relative energy <code>=10^(1.5*A2)</code>. Create a bar chart. Compare: How much more energy does a M9 release than a M6?`
+    ],
+    deliverable: `Submit 4-sheet workbook. Write a "Seismologist's Report": <em>"The 1960 Chile earthquake (M9.5) was ___ times stronger in ground motion than the 2010 Haiti quake (M7.0). In terms of energy, it was ___ times greater. The most dangerous factor is not magnitude alone but ___."</em>`,
+    reflect: [
+      `On Sheet 3, test magnitudes 9.0 vs. 7.0. The formula gives 10² = 100. But the energy formula gives 10^(1.5×2) = 10³ = 1,000. Why are these two numbers different? What are they each measuring?`,
+      `On Sheet 1, the bar chart looks odd — the bar for magnitude 9 is so much taller than everything else it's hard to see the smaller bars. What would a better chart type be for data that spans many powers of 10? (Hint: think about what "log scale" means on a graph axis.)`
+    ]
+  },
+  'radioactive-decay': {
+    title: `Geological Age Dating Lab`,
+    science: `🌍 Earth Science — Radiometric Dating & Deep Time`,
+    mission: `Radioactive decay follows a precise mathematical pattern — the same fraction decays in every equal time interval. Geologists exploit this predictability to date rocks billions of years old. In this project you will build a radiometric dating calculator and use it to determine the ages of real geological samples.`,
+    steps: [
+      `Create a workbook called <em>Geological_Age_Dating_Lab</em>.`,
+      `<strong>Sheet 1 — Half-Life Decay Table:</strong> Column A: Number of half-lives (0 through 12). Column B: Fraction remaining <code>=0.5^A2</code>. Column C: Percent remaining <code>=B2*100</code>. Column D: Amount remaining if started with 1000 g <code>=1000*B2</code>. Create a <strong>Line Chart</strong> of percent remaining vs. number of half-lives. Label the 50%, 25%, and 12.5% points.`,
+      `<strong>Sheet 2 — Isotope Reference Table:</strong> Build a table of 5 radioactive isotopes used in geology. Columns: Isotope | Parent Element | Daughter Element | Half-life (years). Enter: Carbon-14 (Nitrogen-14, 5,730 yr), Potassium-40 (Argon-40, 1,250,000,000 yr), Uranium-238 (Lead-206, 4,470,000,000 yr), Rubidium-87 (Strontium-87, 48,800,000,000 yr), Thorium-232 (Lead-208, 14,050,000,000 yr). Column E: Useful dating range <code>=IF(D2<100000,"up to 50,000 yr","millions–billions of years")</code>.`,
+      `<strong>Sheet 3 — Age Calculator:</strong> Columns: Sample | Isotope | Half-life (yr) | Original amount (g) | Current amount (g) | Half-lives elapsed <code>=LOG(E2/D2)/LOG(0.5)</code> | Age (yr) <code>=F2*C2</code> | Age (millions yr) <code>=G2/1000000</code>. Enter 6 samples: Moon rock (U-238, start 100 g, now 88.3 g), Ancient coral (C-14, start 200 g, now 12.5 g), Granite boulder (K-40, start 400 g, now 200 g), Martian meteorite (U-238, start 100 g, now 75.0 g), Ancient wood (C-14, start 100 g, now 6.25 g), Oldest Earth zircon (U-238, start 100 g, now 36.7 g).`,
+      `<strong>Sheet 4 — Deep Time Timeline:</strong> Build a visual timeline of major Earth events. Column A: Event. Column B: Age (millions of years ago). Enter: Formation of Earth (4,600 Ma), Oldest known rocks (4,000 Ma), First life (3,800 Ma), First multicellular life (600 Ma), First land plants (475 Ma), Dinosaur extinction (66 Ma), First humans (0.3 Ma), Today (0). Column C: <code>=B2/4600*100</code> — what % of Earth's history ago. Create a horizontal bar chart as a timeline.`
+    ],
+    deliverable: `Submit your 4-sheet workbook. Write a "Dating Report" for each of the 6 samples on Sheet 3: <em>"Sample ___ is approximately ___ million years old. This was calculated using ___ half-lives of ___. This means when this sample formed, ___ was happening on Earth."</em>`,
+    reflect: [
+      `On Sheet 3, the ancient wood sample started with 100 g of C-14 and has 6.25 g remaining. How many half-lives is that? Show the fraction calculation. At 5,730 years per half-life, how old is the wood? Is this consistent with the formula result?`,
+      `The LOG formula on Sheet 3 uses logarithms — a math tool you'll study in Algebra 2. But the result it gives is just "how many times do I halve to get from starting amount to current amount?" Explain in your own words why LOG gives that answer, using the half-life table from Sheet 1 as evidence.`
+    ]
+  },
+  'topographic-maps': {
+    title: `Hawaiian Volcano Topographic Analysis`,
+    science: `🌍 Earth Science — Volcanic Landforms & Elevation`,
+    mission: `Hawaii's volcanoes are the world's most active and some of its tallest mountains — if measured from the ocean floor. In this project you will analyze real Hawaiian topographic data, calculate slopes, map distances, and discover why Mauna Kea is technically the tallest mountain on Earth.`,
+    steps: [
+      `Create a workbook called <em>Hawaiian_Volcano_Topography</em>.`,
+      `<strong>Sheet 1 — Elevation Reference:</strong> Build a table of 8 Hawaiian volcanic peaks and features. Columns: Location | Elevation above sea level (m) | Ocean depth at base (m) | Total height from ocean floor (m) <code>=B2+C2</code> | Taller than Everest (8,849 m)? <code>=IF(D2>8849,"YES","NO")</code>. Enter: Mauna Kea summit (4,205 m above, 5,800 m below), Mauna Loa (4,169, 5,000), Kīlauea (1,247, 4,500), Diamond Head (232, 0), Haleakalā Maui (3,055, 2,000), Ko'olau Range O'ahu (960, 0), Everest for comparison (8,849, 0), Death Valley for comparison (-86, 0). Add a bar chart of total height.`,
+      `<strong>Sheet 2 — Slope Calculator:</strong> Mauna Loa's slopes are gentle on the surface but steep on the flank. Build a cross-section slope table. Columns: Segment | Start elevation (m) | End elevation (m) | Rise (m) <code>=C2-B2</code> | Horizontal distance (m) | Slope <code>=D2/E2</code> | Percent grade <code>=F2*100</code> | Classification <code>=IF(G2<2,"Flat",IF(G2<15,"Gentle","Steep"))</code>. Enter 6 segments from base to summit of Mauna Loa at different flanks. Use real or estimated distances (the base-to-summit horizontal distance is about 120 km = 120,000 m).`,
+      `<strong>Sheet 3 — Lava Flow Distance Calculator:</strong> Lava flows downhill following slope. Columns: Flow | Starting elevation (m) | Ending elevation (m) | Drop (m) | Horizontal distance (km) | Average slope <code>=(B2-C2)/(D2*1000)</code> | Flow speed context <code>=IF(F2>0.2,"Fast (basaltic)","Slow (silicic)")</code>. Enter 5 famous Kīlauea lava flows with their data.`,
+      `<strong>Sheet 4 — Cross Section Graph:</strong> Build a topographic cross section of a Hawaiian island. Column A: Horizontal distance from west coast (km): 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100. Column B: Elevation (m) — model with approximate values rising to a peak at 50 km then declining. Column C: Slope from previous point <code>=(B3-B2)/(10000)</code>. Create a <strong>Line Chart</strong> of elevation vs. distance — this IS your cross section. Add data labels at the peak.`
+    ],
+    deliverable: `Submit your 4-sheet workbook. Write a "Volcanologist's Summary": <em>"Mauna Kea's total height from ocean floor is ___ m, which is ___ m taller than Everest. The steepest section of Mauna Loa has a slope of ___% grade. A hiker going from sea level to the summit of Mauna Kea would climb ___ m of elevation over approximately ___ km."</em>`,
+    reflect: [
+      `On Sheet 1, Mauna Kea beats Everest when measured from its base on the ocean floor. But Everest has a higher elevation above sea level. Write a sentence explaining the difference between "elevation" and "total height" using both mountains as examples. Which measurement do you think is more meaningful and why?`,
+      `On Sheet 2, shield volcanoes like Mauna Loa have very gentle slopes (typically 2–5°) while stratovolcanoes like Rainier have steep slopes (30–40°). What does this tell you about how lava behaves differently in each type of volcano? Connect to the slope formula.`
+    ]
+  },
+};
+
+  const REALWORLD_6 = {
+    'factors-multiples': {
+      title: `Hawaiian Kapa Pattern Designer`,
+      banner: `🎨 Real-World Math — Pattern Design (LCM & GCD)`,
+      mission: `Hawaiian kapa cloth and quilt designs use repeating motifs that line up at predictable intervals. Use LCM and GCD to design a two-motif pattern that "syncs" perfectly across a quilt.`,
+      steps: [
+      `Pick two motifs (a flower and a wave, for example) with two different repeat periods. Try motif A repeating every 4 squares and motif B repeating every 6 squares.`,
+      `Compute the LCM of the two periods. This tells you how many squares the full pattern needs before both motifs align again.`,
+      `Compute the GCD of the two periods to find the smallest "tile" both motifs share.`,
+      `Draw a 12-square strip on graph paper. Color motif A every 4 squares and motif B every 6 squares. Highlight the squares where they overlap.`,
+      `Now design a 24x24 quilt using YOUR own pair of periods. Pick two motifs. Calculate the LCM. Use the LCM to choose your block size.`,
+      `In the corner of your quilt, write: "Motif A repeats every ___. Motif B repeats every ___. They align every ___ squares (the LCM)."`
+      ],
+      deliverable: `Submit your hand-colored quilt design plus the LCM/GCD calculation. Bonus: photograph a real Hawaiian quilt online and identify its repeat period.`,
+      reflect: [
+      `If motif A repeats every 4 squares and motif B every 5 squares, when do they first align? Why is this answer the LCM and not just A times B?`,
+      `Why would a quilt designer want to know the LCM before cutting fabric?`
+      ]
+    },
+    'fraction-division': {
+      title: `Lūʻau Recipe Scaler`,
+      banner: `🎨 Real-World Math — Cooking & Fraction Division`,
+      mission: `A friend is hosting a lūʻau and asks you to scale a poke recipe that serves 8 to feed 60 people. Practice multiplying and dividing fractions and mixed numbers as you compute every ingredient.`,
+      steps: [
+      `Find or create a poke (or any local-favorite) recipe that serves 8 people. List 6 to 8 ingredients with fractional amounts — for example 1 1/4 lb tuna, 1/3 cup soy sauce, 1/2 tsp Hawaiian salt.`,
+      `Compute the scale factor: 60 / 8 = 7 1/2. Every ingredient gets multiplied by 7 1/2.`,
+      `For each ingredient, write out the multiplication: original quantity x 7 1/2. Convert mixed numbers to improper fractions before multiplying. Show your full work.`,
+      `Convert your final answers back to mixed numbers in the most useful unit. (33 tsp → 11 Tbsp; 5/4 cup → 1 1/4 cup.)`,
+      `Now reverse the process: a different friend asks for a scale-down to 4 people. Divide every original amount by 2 (because 4 / 8 = 1/2).`,
+      `Build a clean recipe card showing both versions side by side: Original (8), Big party (60), Solo (4).`
+      ],
+      deliverable: `Submit your three-column recipe card with all multiplication and division work shown. On the back, write a short note: "Which step was the hardest fraction calculation? Why?"`,
+      reflect: [
+      `Why does scaling a recipe for 60 people involve BOTH multiplication and division?`,
+      `A recipe says "1/4 cup oil per serving." For 7 1/2 servings, you need 1/4 x 7 1/2 cups. Show this two ways: as fractions and as decimals. Which is easier to measure in the kitchen?`
+      ]
+    },
+    'ratios-rates': {
+      title: `Lemonade Stand Profit Lab`,
+      banner: `🎨 Real-World Math — Entrepreneurship & Unit Rates`,
+      mission: `Run a virtual lemonade stand. Use ratios, unit rates, and basic profit math to figure out how much to charge per cup, how many lemons to buy, and whether you actually made a profit.`,
+      steps: [
+      `Set up costs: a 6 lb bag of lemons costs $9, sugar 5 lb for $5, paper cups (50 ct) for $4. Compute the unit rate (cost per lemon, cost per cup, cost per gram of sugar).`,
+      `Decide your recipe: 2 lemons, 1/4 cup sugar, and 12 oz water make 1 cup of lemonade. Compute the cost of ingredients per cup.`,
+      `Set a price. Try $1.50 per cup. Profit per cup = price - cost. Multiply by your sales target (50 cups) to find total profit.`,
+      `Now stress-test the model. What if lemons go up to $12 a bag? Recompute cost per cup and profit per cup.`,
+      `Build a "Sales Day" table on graph paper: hour | cups sold | revenue | running profit. Add columns for each hour from 10 AM to 4 PM. Use realistic numbers.`,
+      `At the end, compute average revenue per hour, best hour, and total profit.`
+      ],
+      deliverable: `Submit your priced recipe sheet and the Sales Day table. Write a one-paragraph "investor pitch": tell a parent why $1.50 is the right price.`,
+      reflect: [
+      `If lemons doubled in price, would you raise your price to $3.00? Why might that be a bad idea?`,
+      `What is the unit rate "cost per cup of lemonade"? Why is the unit rate more useful than the total ingredient cost?`
+      ]
+    },
+    'percents': {
+      title: `Hawaii Tax + Tip Trainer`,
+      banner: `🎨 Real-World Math — Personal Finance & Percents`,
+      mission: `Hawaii’s 4.712% General Excise Tax (Honolulu) and the 18-20% restaurant tip add up. Build a one-page calculator that takes any menu price and shows the final amount.`,
+      steps: [
+      `Pick a real Honolulu restaurant menu (online is fine). Choose 6 items with realistic prices.`,
+      `For each item, compute: subtotal | GET 4.712% | with-tax total | tip 18% on subtotal | grand total.`,
+      `Verify your work using a different method: 4.712% = 0.04712. Multiply twice (once by tax, once by tip) and add. Get the same answer? Good.`,
+      `Mental-math shortcut: round the tax to 5% (= price / 20) and the tip to 20% (= price / 5). Use these shortcuts for a quick estimate; compare to the exact calculation.`,
+      `Make a lookup table you could keep in your wallet. Rows: $5, $10, $20, $50, $100. Columns: tax (4.712%), tax-included, tip (18%), tip (20%), grand total.`,
+      `Bonus challenge: a coupon offers 15% off. Does the discount apply before or after tax? Compute both — you’ll discover discount-then-tax saves more.`
+      ],
+      deliverable: `Submit your filled-in menu page, your verification calculations, the wallet-card lookup, and the discount comparison.`,
+      reflect: [
+      `If you eat out 3 times a week, how much do you pay in tax + tip in a year (assume $20 meal each time)? Surprised?`,
+      `Why does it almost never matter whether you compute the tip on subtotal or on with-tax total?`
+      ]
+    },
+    'coordinate-plane': {
+      title: `ʻIolani Palace Treasure Map`,
+      banner: `🎨 Real-World Math — Coordinates & Game Design`,
+      mission: `Design a treasure-hunt game on the grounds of ʻIolani Palace using a coordinate-plane map. A friend should be able to follow your clues and find the treasure.`,
+      steps: [
+      `Draw a 20-by-20 coordinate plane on graph paper with both positive and negative axes. Set origin at the palace front steps.`,
+      `Mark 8 landmarks with coordinates: banyan tree, gate, fountain, etc. Label each.`,
+      `Hide a "treasure" at a secret coordinate — don’t mark it on the map you’ll give your friend.`,
+      `Write 6 clues that walk a player from the origin to the treasure using ordered pairs and directional moves — for example "Start at (0,0). Move 4 right and 3 up. You should be at the banyan tree (4,3)."`,
+      `Each clue should END at a marked landmark so the player can self-check. The final clue lands on the treasure.`,
+      `Bonus: include a clue with NEGATIVE coordinates to test the player’s comfort with all four quadrants.`
+      ],
+      deliverable: `Submit (1) the labeled landmark map and (2) the clue card with the secret coordinate sealed in an envelope. Trade with a classmate — did they find the treasure?`,
+      reflect: [
+      `Why must the order in (x, y) matter? What goes wrong if a clue says "(3, 4)" and the friend reads it as "(4, 3)"?`,
+      `You write a clue "Move 5 left and 2 down from (1, 3)." Where do you end up? Show the algebra.`
+      ]
+    },
+    'volume': {
+      title: `Backyard Aquaponics Tank Designer`,
+      banner: `🎨 Real-World Math — Sustainable Farming`,
+      mission: `Aquaponics combines fish and plants. The fish tank and the grow bed must have a roughly 1:1 volume ratio. Design a working setup for your backyard.`,
+      steps: [
+      `Choose a fish-tank shape. A rectangular prism 4 ft x 2 ft x 2 ft holds 16 ft³ of water. Convert to gallons (1 ft³ ≈ 7.48 gal).`,
+      `Design a grow bed with the SAME volume. It can be a different shape — say 6 ft x 2 ft x ?? ft. Solve for the missing height to match volume.`,
+      `How many fish? Tilapia need about 5 gallons each. Compute fish capacity.`,
+      `How many plants? Each plant needs 1 ft² of grow-bed surface. Compute plant capacity.`,
+      `Build a labeled diagram with: tank dimensions and volume, grow-bed dimensions and volume, fish count, plant count, and water-pump rate (1 turnover per hour).`,
+      `Bonus: scale up. What dimensions for a tank that holds 100 fish? Solve for the volume first, then for length-width-height.`
+      ],
+      deliverable: `Submit your dimensioned diagram of the tank and grow bed, with all volume calculations shown, plus the fish and plant counts.`,
+      reflect: [
+      `Why does the system need EQUAL volume in tank and grow bed? Think about water flow.`,
+      `If you double every dimension of the tank, what happens to the volume? Why does the volume go up by a FACTOR of 8 — not 2?`
+      ]
+    },
+    'statistics-data': {
+      title: `Backpack Weight Survey`,
+      banner: `🎨 Real-World Math — Personal Data Collection`,
+      mission: `Doctors recommend kids carry no more than 10% of body weight in their backpack. Conduct a real survey, organize the data, and discover whether your class follows the rule.`,
+      steps: [
+      `With permission, weigh 12 to 20 classmates and their backpacks. Record body weight (lb), backpack weight (lb), and grade level.`,
+      `Compute each student’s "backpack ratio" — backpack weight divided by body weight, as a percent.`,
+      `Find the mean, median, mode, and range of the ratios.`,
+      `Make a dot plot or bar chart showing every student’s ratio. Mark the 10% safety line.`,
+      `Count: how many students are above 10%? Express as a fraction and a percent.`,
+      `Compare boys vs. girls (or by grade level). Are the means significantly different?`
+      ],
+      deliverable: `Submit your data table, your statistics summary, and your dot plot. Write a one-paragraph recommendation: "Should our school worry about backpack weight? Why or why not?"`,
+      reflect: [
+      `Why is the median sometimes more useful than the mean when one student carries an extreme load?`,
+      `Your sample is 15 students. Can you trust your conclusions for the WHOLE school? Why might a sample of 15 be too small?`
+      ]
+    },
+  };
+
+const ANSWER_KEYS_6 = {
+  'factors-multiples': 'Mineral_Factor_Analyzer.xlsx',
+  'fraction-division': 'Sample_Splitter.xlsx',
+  'scientific-notation': 'Solar_System_Explorer.xlsx',
+  'unit-conversions': 'Earth_Science_Measurement_Converter.xlsx',
+  'decimal-ops': 'Weather_Station_Dashboard.xlsx',
+  'ratios-rates': 'Ocean_Chemistry_Ratios.xlsx',
+  'percents': 'Atmosphere_Analyzer.xlsx',
+  'integers': 'Global_Elevation_Tracker.xlsx',
+  'coordinate-plane': 'Earthquake_Coordinate_Map.xlsx',
+  'alg-expressions': 'Rock_Age_Expressions.xlsx',
+  'equations': 'Evaporation_Equations.xlsx',
+  'inequalities': 'AQI_Inequality_Monitor.xlsx',
+  'variables-relationships': 'Earth_Temperature_Relationship.xlsx',
+  'area-polygons': 'Hawaii_Habitat_Area.xlsx',
+  'surface-area': 'Rock_Weathering_SA_Model.xlsx',
+  'volume': 'Glacier_Volume_Analysis.xlsx',
+  'statistics-data': 'Honolulu_Climate_Report.xlsx',
+  'word-problems': 'Earth_System_Report.xlsx',
+  'plate-tectonics': 'Tectonic_Plate_Motion_Calculator.xlsx',
+  'richter-scale': 'Global_Earthquake_Power_Comparator.xlsx',
+  'radioactive-decay': 'Geological_Age_Dating_Lab.xlsx',
+  'topographic-maps': 'Hawaiian_Volcano_Topography.xlsx'
+};
+
+function showHandout() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('handout-screen').classList.add('active');
+  const h = HANDOUTS_6[currentUnit];
+  if (!h) {
+    document.getElementById('handout-content').innerHTML = '<p>No handout available for this unit.</p>';
+    return;
+  }
+  const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
+  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  const akFile = ANSWER_KEYS_6[currentUnit];
+  const answerKeyHtml = akFile ? `
+      <div style="background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:14px;margin:14px 0;">
+        <strong style="color:#1B3A8A;">📗 Answer Key (for self-check):</strong>
+        <a href="answerkeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
+        <div style="font-size:0.9rem;color:#555;margin-top:6px;">Completed workbook with all formulas, charts, and real-world data. Open in Excel or upload to Google Sheets (<em>File → Import → Upload</em>) to compare with your own work after you finish.</div>
+      </div>` : '';
+  document.getElementById('handout-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${h.title}</h3>
+      <div class="handout-science">${h.science}</div>
+      <div class="handout-mission">${h.mission}</div>
+      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <ol class="handout-steps">${stepsHtml}</ol>
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>
+      ${answerKeyHtml}
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>
+    </div>`;
+}
+
+function showRealWorld() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('realworld-screen').classList.add('active');
+  const h = REALWORLD_6[currentUnit];
+  if (!h) {
+    return;
+  }
+  const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
+  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  document.getElementById('realworld-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${h.title}</h3>
+      <div class="handout-science">${h.banner}</div>
+      <div class="handout-mission">${h.mission}</div>
+      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <ol class="handout-steps">${stepsHtml}</ol>
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>

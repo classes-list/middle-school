@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 8th Grade STEM: Physical Science</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100; width: 260px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 4px; font-weight: bold; }
+    .sidebar .subtitle { color:#888; font-size: 13px; margin-bottom: 18px; }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    .sidebar-item { padding: 10px; margin: 6px 0; background: #111d35; border-radius: 6px; cursor: pointer; font-size: 13px; line-height: 1.4; }
+    .sidebar-item:hover { background: #1B3A8A; }
+    .sidebar-item.active { background: #1B3A8A; border-left: 4px solid #FFD100; padding-left: 6px; }
+    .sidebar-progress { margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 12px; color: #999; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .topbar { border-bottom: 4px solid #FFD100; background: #1B3A8A; color: white; padding: 14px 28px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-right { font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 28px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 22px; }
+    .unit-card { background: white; border-radius: 10px; padding: 22px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.08); border-top: 5px solid #1B3A8A; }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(27,58,138,0.2); }
+    .unit-card-header { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+    .unit-card-icon { font-size: 36px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: 700; font-size: 17px; margin-bottom: 4px; color: #1B3A8A; }
+    .unit-card-cc { font-size: 12px; color: #888; }
+    .unit-card-desc { font-size: 13.5px; color: #555; margin-bottom: 12px; line-height: 1.5; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pill { background: #f0f3fa; color:#1B3A8A; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 18px 0 12px; color: #1B3A8A; font-size: 24px; }
+    .lesson-content h3 { margin: 18px 0 8px; color: #1B3A8A; font-size: 18px; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.65; }
+    .lesson-content ul, .lesson-content ol { margin-left: 24px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 6px; line-height: 1.55; }
+    .inquiry-box { background: #eff6ff; border-left: 5px solid #1B3A8A; padding: 14px 18px; border-radius: 6px; margin: 14px 0; color: #1e3a8a; }
+    .inquiry-box strong { color: #1B3A8A; }
+    .inquiry-box .q { margin: 6px 0; padding-left: 10px; }
+    .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 10px; margin: 14px 0; }
+    .vocab-card { background: #f0f3fa; border-radius: 6px; padding: 12px; border-left: 3px solid #1B3A8A; }
+    .vocab-card strong { color: #1B3A8A; display: block; margin-bottom: 4px; }
+    .vocab-card span { font-size: 13px; color: #555; }
+    .chapter-list { background: #f8f9fa; border-radius: 8px; padding: 16px 22px; margin: 14px 0; }
+    .chapter-list h4 { color: #1B3A8A; margin-bottom: 8px; }
+    .chapter-list ol, .chapter-list ul { margin-left: 22px; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 18px; font-size: 12px; }
+    .meta-pill { background: #f0f3fa; color: #1B3A8A; padding: 5px 12px; border-radius: 14px; font-weight: 600; }
+    .meta-pill.date { background: #fef3c7; color: #7a5f00; }
+    .btn { display: inline-block; padding: 10px 18px; background: #1B3A8A; color: white; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; margin: 4px; font-size: 14px; }
+    .btn:hover { background: #162E70; }
+    .btn-back { background: #6b7280; }
+    .btn-back:hover { background: #4b5563; }
+    .btn-rla { background: #B8860B; }
+    .btn-rla:hover { background: #966a00; }
+    .btn-quiz { background: #047857; }
+    .btn-quiz:hover { background: #065f46; }
+    .btn-worksheet { background: #c2410c; }
+    .btn-worksheet:hover { background: #9a3412; }
+    .nav-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+    .problem { background: white; padding: 14px 18px; margin: 12px 0; border-left: 4px solid #1B3A8A; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .problem h4 { margin-bottom: 8px; color: #1B3A8A; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 6px 0; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
+    .problem textarea { min-height: 70px; resize: vertical; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .answer-key strong { color: #7a5f00; }
+    .quiz-question { background: white; padding: 16px 18px; margin: 14px 0; border-radius: 6px; border-left: 4px solid #047857; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+    .quiz-question h4 { margin-bottom: 10px; color: #047857; }
+    .quiz-question label { display: block; margin: 6px 0; cursor: pointer; padding: 6px 10px; border-radius: 4px; }
+    .quiz-question label:hover { background: #f0fdf4; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #ecfdf5; border-left: 5px solid #047857; padding: 18px; border-radius: 8px; margin: 16px 0; }
+    .result-card h3 { color: #065f46; margin-bottom: 6px; }
+    .rla-card { background: #fff; border-left: 5px solid #B8860B; border-radius: 10px; padding: 22px; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+    .rla-card h3 { color: #B8860B; margin-bottom: 6px; font-size: 1.15rem; }
+    .rla-card .scenario { font-style: italic; color: #555; margin-bottom: 12px; background: #fffbe6; padding: 10px 14px; border-radius: 6px; }
+    .rla-steps { list-style: none; counter-reset: stp; padding: 0; }
+    .rla-steps li { counter-increment: stp; padding: 8px 12px 8px 42px; margin-bottom: 6px; background: #f8f9fa; border-radius: 6px; position: relative; font-size: 0.95em; }
+    .rla-steps li::before { content: counter(stp); position: absolute; left: 10px; top: 8px; width: 22px; height: 22px; background: #B8860B; color: #fff; border-radius: 50%; font-size: 12px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+    .rla-reflect { background: #fefce8; border: 1px solid #fde68a; border-radius: 6px; padding: 12px; margin-top: 12px; }
+    .rla-reflect strong { color: #7a5f00; display: block; margin-bottom: 4px; }
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-unit-row { background: #f8fafc; border-radius: 10px; padding: 12px 16px; margin-bottom: 8px; border-left: 4px solid #1B3A8A; }
+    .syl-unit-row strong { font-size: 0.95rem; color: #1B3A8A; }
+    .syl-unit-row span { font-size: 0.85rem; color: #4a5568; display: block; margin-top: 4px; line-height: 1.5; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 90px; }
+    .syl-grade-pill span { display: block; font-size: 1.2rem; font-weight: 800; color: #1B3A8A; }
+    /* — Detailed unit syllabus blocks — */
+    .syl-unit-detail { background: #f8fafc; border-left: 4px solid #1B3A8A; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+    .syl-unit-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .syl-unit-emoji { font-size: 1.6rem; flex-shrink: 0; }
+    .syl-unit-head strong { font-size: 1rem; color: #1B3A8A; display: block; }
+    .syl-unit-dates { display: block; font-size: 0.82rem; color: #B8860B; font-weight: 600; margin-top: 2px; }
+    .syl-myp-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+    .myp-pill { background: #eef2fa; color: #1B3A8A; font-size: 0.78rem; padding: 4px 10px; border-radius: 12px; }
+    .myp-pill b { font-weight: 700; }
+    .syl-inquiry-block { background: #fff; border-left: 3px solid #FFD100; padding: 10px 14px; margin: 10px 0; border-radius: 6px; }
+    .syl-inquiry-block p { font-size: 0.86rem; line-height: 1.55; color: #374151; margin: 4px 0; }
+    .syl-inquiry-block p em { color: #7a5f00; font-weight: 600; font-style: normal; }
+    .syl-inquiry-block p.iq { padding-left: 14px; }
+    .syl-kud { display: grid; gap: 6px; margin: 10px 0; padding: 10px 14px; background: #fff; border-radius: 6px; border: 1px solid #e2e8f0; }
+    .syl-kud > div { font-size: 0.86rem; line-height: 1.55; color: #374151; }
+    .syl-kud b { color: #1B3A8A; }
+    .syl-assessments { background: #fffbe6; border: 1px solid #fde68a; border-radius: 6px; padding: 10px 14px; margin-top: 10px; }
+    .syl-assessments b { color: #7a5f00; }
+    .syl-assessments ul { margin: 4px 0 0 22px; }
+    .syl-assessments li { font-size: 0.86rem; color: #4a3a00; }
+    .syl-crit-grid { display: grid; gap: 8px; }
+    .syl-crit { display: grid; grid-template-columns: 50px 1fr auto; gap: 14px; align-items: center; background: #f1f5f9; border-radius: 8px; padding: 10px 14px; }
+    .crit-letter { width: 40px; height: 40px; background: #1B3A8A; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; }
+    .syl-crit strong { display: block; font-size: 0.92rem; color: #1B3A8A; }
+    .syl-crit span { display: block; font-size: 0.82rem; color: #4a5568; margin-top: 2px; line-height: 1.4; }
+    .crit-score { font-weight: 700; color: #B8860B; font-size: 0.85rem; white-space: nowrap; }
+    .grade-tag { display:inline-block; background: #FFD100; color:#1a2a4a; padding: 3px 10px; border-radius: 14px; font-size: 12px; font-weight: 700; margin-left: 8px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Mary, Star of the Sea</h2>
+      <p class="subtitle">8th Grade STEM <span class="grade-tag">Gr. 8</span></p>
+      <button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div class="sidebar-progress">Progress: <span id="progress-text">0/4</span> units</div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-stem-index.html" class="back-index-btn" title="Back to STEM Classes">← All STEM</a>
+          <button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Physical Science</span>
+        </div>
+        <div class="topbar-right">STEM &middot; Grade 8</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+          <h2 style="color:#1B3A8A;margin-bottom:6px;">Physical Science</h2>
+          <p style="color:#555;margin-bottom:22px;font-style:italic;">Chemistry &amp; Physics — from atoms to forces to electricity. The science of matter, motion, and energy.</p>
+          <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">⚗️</div>
+            <h2>STEM &mdash; Course Syllabus</h2>
+            <p>Grade 8: Physical Science &middot; SY 2025-2026</p>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p style="margin-top:8px">8th Grade STEM is an introduction to <strong>Chemistry and Physics</strong>. The course is focused on ways to unite our world view as citizens of the planet, nurture our understanding of how chemistry and physics are interrelated and inspire the next generation of scientists and engineers.</p>
+              <p style="margin-top:8px">The year begins with a short introduction to the Scientific Method and the Engineering Design Process as well as the principal tools and techniques of a scientist and engineer. Then it&rsquo;s time to launch into the study of matter, the elements, the principles of chemistry, and finally an investigation of polymers and the impact they are having on our environment. After the Winter Break, our third unit will find us going back in time, to discover how the science of Physics developed. We will investigate the laws of motion developed by Sir Isaac Newton and build a few simple machines to throw things around the lab. After Spring Break, we will conclude the year with an investigation of Faraday&rsquo;s Fundamental Forces, electricity and magnetism, and how these two fundamental forces act together.</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👨‍🔬 Teacher</h3>
+              <p><strong>Mr. Dave Eachus</strong></p>
+              <p>📍 Innovations Lab (C-17)</p>
+              <p>📧 <a href="mailto:deachus@starofthesea.org">deachus@starofthesea.org</a></p>
+              <p>📞 (808) 734-0208 x 2221</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Classroom &amp; Lab Materials</h3>
+              <ul>
+                <li>Composition notebook (lab journal)</li>
+                <li>Pencils, pens, colored pencils</li>
+                <li>Lab safety goggles</li>
+                <li>Computer / device for simulations</li>
+                <li>Calculator</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Scope &amp; Sequence &mdash; Grade 8: Physical Science</h3>
+            <p style="font-size:0.88rem;color:#64748b;margin-bottom:12px;font-style:italic">2025–2026, August&ndash;June. All unit dates are projected and may be subject to change.</p>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🔬</span><div><strong>Unit 1 &mdash; I am a Scientist and an Engineer</strong><span class="syl-unit-dates">5 Aug – 30 Aug</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Systems</span>
+              <span class="myp-pill"><b>Related:</b> Patterns, Form, Function</span>
+              <span class="myp-pill"><b>Global Context:</b> Science and Technical Innovation</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> The Scientific Method and the Engineering Design Process allow us to investigate the form and function of patterns observed in natural systems or designs.</p>
+              <p class="iq"><b>Factual:</b> How do scientists and engineers use the Scientific Method and the Engineering Design Process?</p>
+              <p class="iq"><b>Conceptual:</b> How does experimental science and engineering expand our body of knowledge?</p>
+              <p class="iq"><b>Debatable:</b> Can the Scientific Method or the Engineering Design Process be used to answer any question or solve any problem?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Scientific Method, Engineering Design Process, Properties of Matter.</div>
+              <div><b>Understand:</b> How the Scientific Method/Engineering Design Process solves problems. Review the linkage between Mass, Volume, and Density. Investigate heat energy.</div>
+              <div><b>Do:</b> Lab Safety, Scientific Method/Experimental Cycle, variables and hypothesis formulation, Lab report format, intro to probe-ware.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Properties of Matter Lab (Crit. B/C)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">⚗️</span><div><strong>Unit 2 &mdash; A Period Matters!</strong><span class="syl-unit-dates">2 Sep – 18 Dec</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Change</span>
+              <span class="myp-pill"><b>Related:</b> Models, Patterns, Consequences</span>
+              <span class="myp-pill"><b>Global Context:</b> Science and Technical Innovation</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> Scientists use models to understand the patterns of change in matter and the consequences of science and technology on our world.</p>
+              <p class="iq"><b>Factual:</b> How are elements organized in the periodic table?</p>
+              <p class="iq"><b>Conceptual:</b> Why is Conservation of Matter so important in chemistry?</p>
+              <p class="iq"><b>Debatable:</b> Should society have control/approval over scientific research?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Structure and states of matter, elements of the Periodic Table, atomic models, types of chemical reactions, field study methods.</div>
+              <div><b>Understand:</b> How the atomic theory of interactions is the basis for chemical reactions. How to translate theory into practical application (stoichiometry).</div>
+              <div><b>Do:</b> Metrics Lab, Lab Skills Assessment, Chemical Reactions Lab, Acids/Bases Lab, Nuts and Bolts Lab, Stain Lab, Polymer Lab.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Element Babybook (Crit. A/D)</li><li>Berth Project (Crit. A/D)</li><li>Stain Lab (Crit. B/C)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">🚀</span><div><strong>Unit 3 &mdash; Forces and Motion</strong><span class="syl-unit-dates">6 Jan – 13 Mar</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Change</span>
+              <span class="myp-pill"><b>Related:</b> Transformation, Movement, Energy</span>
+              <span class="myp-pill"><b>Global Context:</b> Orientation in Space and Time</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> Observing changes in movement allows scientists to detect and understand the transformation of energy.</p>
+              <p class="iq"><b>Factual:</b> Why are &ldquo;unbalanced&rdquo; forces so important in the understanding of physics?</p>
+              <p class="iq"><b>Conceptual:</b> How are the Laws of Conservation of Motion and Energy related?</p>
+              <p class="iq"><b>Debatable:</b> Must religion and science always be at odds with one another?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Newton&rsquo;s Laws of Motion, what is velocity and acceleration, Newton&rsquo;s Universal Law of Gravity.</div>
+              <div><b>Understand:</b> How unbalanced forces result in the changes we observe in physics.</div>
+              <div><b>Do:</b> Simple Machines Lab, Mover Lab, Velocity Lab, Acceleration Lab, Projectile Lab.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>The Apprentices Project (Crit. A/B/C/D)</li></ul>
+            </div>
+          </div>
+          <div class="syl-unit-detail">
+            <div class="syl-unit-head"><span class="syl-unit-emoji">⚡</span><div><strong>Unit 4 &mdash; Faraday&rsquo;s Fundamental Forces</strong><span class="syl-unit-dates">30 Mar – 3 Jun</span></div></div>
+            <div class="syl-myp-row">
+              <span class="myp-pill"><b>Key Concept:</b> Systems</span>
+              <span class="myp-pill"><b>Related:</b> Balance, Energy, Consequences</span>
+              <span class="myp-pill"><b>Global Context:</b> Globalization and Sustainability</span>
+            </div>
+            <div class="syl-inquiry-block">
+              <p><em>Inquiry statement:</em> Understanding the balance between the uses of electronics, AI and robotics and the potential consequences will allow us to develop sustainable global systems.</p>
+              <p class="iq"><b>Factual:</b> How is magnetism related to the production of electricity?</p>
+              <p class="iq"><b>Conceptual:</b> How do AI and robotics affect our world today and in the future?</p>
+              <p class="iq"><b>Debatable:</b> Are we relying on electronics too much in the world today?</p>
+            </div>
+            <div class="syl-kud">
+              <div><b>Know:</b> Fundamentals of electric current and magnetism, electro-magnetic energy and its applications; basics of electric power generation; fundamentals of AI and robotics.</div>
+              <div><b>Understand:</b> The relationship between electricity and magnetism, Ohm&rsquo;s Law, and circuit analysis. The consequences of relying on electronics for Hawai&lsquo;i and the world. How the use of AI and robots can affect the future.</div>
+              <div><b>Do:</b> Circuits Lab, Magnetic Field Lab, Combo-Circuits Lab.</div>
+            </div>
+            <div class="syl-assessments">
+              <b>Summative Assessment Tasks:</b>
+              <ul><li>Critical Lab Skills Assessment (Crit. B/C)</li><li>Faraday Final Exam (Crit. A/D)</li></ul>
+            </div>
+          </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📊 STEM Assessment Criteria</h3>
+            <p style="font-size:0.88rem;color:#374151;margin-bottom:10px">Each criterion is scored on an MYP-style scale of <strong>0&ndash;8</strong>. Student activities are assessed against the criteria below; end-of-quarter letter grades reflect overall progress.</p>
+            <div class="syl-crit-grid">
+              <div class="syl-crit"><div class="crit-letter">A</div><div><strong>Knowing &amp; Understanding</strong><span>Recall and apply scientific knowledge; explain phenomena.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">B</div><div><strong>Inquiring &amp; Designing</strong><span>1st half of the Experimental / Design Cycle: question, plan, hypothesize, design.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">C</div><div><strong>Processing &amp; Evaluating</strong><span>2nd half of the Experimental / Design Cycle: collect, analyze, draw conclusions.</span></div><div class="crit-score">0&ndash;8</div></div>
+              <div class="syl-crit"><div class="crit-letter">D</div><div><strong>Reflecting on the Impacts of Science / Engineering</strong><span>Consider ethical, environmental, and social implications of science and engineering decisions.</span></div><div class="crit-score">0&ndash;8</div></div>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>🕒 Learning Support &amp; Communication</h3>
+              <ul>
+                <li>Parents with questions or concerns may directly contact the instructor.</li>
+                <li>Students are encouraged to use study hall or lunch recess to obtain additional learning support.</li>
+                <li>The <strong>Innovations Lab</strong> is open every <strong>Wednesday afternoon (except Mini-days) until 4&nbsp;pm</strong> for any student needing help or to finish lab work.</li>
+                <li>Students and/or parents should email Mr. Eachus to make arrangements for additional learning opportunities.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn btn-back" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showHome()">← Back</button>
+            <button class="btn btn-rla" onclick="showRLA()">🌟 Real-Life Applications</button>
+            <button class="btn btn-worksheet" onclick="showWorksheet()">📋 Worksheet →</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#c2410c;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Show Answer Key</button>
+            <button class="btn btn-quiz" onclick="showQuiz()">📝 Quiz →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#047857;">📝 Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn btn-quiz" onclick="gradeQuiz()">Submit Quiz</button>
+          </div>
+          <div id="quiz-result"></div>
+        </div>
+        <div id="rla-screen" class="screen">
+          <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 18px 0;color:#B8860B;">🌟 Real-Life Applications</h2>
+          <p style="color:#555;margin-bottom:18px;">Where this unit&rsquo;s science meets your daily life and the world around you.</p>
+          <div id="rla-content"></div>
+          <div class="nav-buttons">
+            <button class="btn btn-back" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const UNITS = [
+  {
+    id: 'unit1',
+    title: 'Unit 1 — I am a Scientist and an Engineer',
+    icon: '🔬',
+    theme: 'Scientific Method &amp; Properties of Matter',
+    dates: '5 Aug – 30 Aug',
+    keyConcept: 'Systems',
+    relatedConcepts: 'Patterns, Form, Function',
+    globalContext: 'Science and Technical Innovation',
+    desc: 'Refresh the scientist/engineer mindset and apply it to the basic properties of matter — the foundation of all chemistry and physics.',
+    inquiry: {
+      statement: 'The Scientific Method and the Engineering Design Process allow us to investigate the form and function of patterns observed in natural systems or designs.',
+      factual: 'How do scientists and engineers use the Scientific Method and the Engineering Design Process?',
+      conceptual: 'How does experimental science and engineering expand our body of knowledge?',
+      debatable: 'Can the Scientific Method or the Engineering Design Process be used to answer any question or solve any problem?'
+    },
+    content: {
+      know: 'Scientific Method, Engineering Design Process, Properties of Matter.',
+      understand: 'How the Scientific Method/Engineering Design Process solves problems; the linkage between mass, volume, and density; heat energy.',
+      doIt: 'Lab Safety; Scientific Method/Experimental Cycle; variables and hypothesis formulation; lab report format; intro to probe-ware.'
+    },
+    assessments: ['Properties of Matter Lab (Crit. B/C)'],
+    vocab: [
+      ['Matter', 'Anything that has mass and takes up space.'],
+      ['Mass', 'Amount of matter in an object (g, kg).'],
+      ['Volume', 'Amount of space occupied (cm³, mL, L).'],
+      ['Density', 'Mass per unit volume (g/cm³); D = m/V.'],
+      ['Temperature', 'Average kinetic energy of particles (°C, K).'],
+      ['Heat', 'Total thermal energy transferred from a hot object to a cold object.']
+    ],
+    lessonHTML: `
+      <p>You&rsquo;re entering 8th grade STEM having already used the scientific method for two years. Now we apply it to the building blocks of the physical universe: <strong>matter</strong>.</p>
+      <h3>Properties of Matter</h3>
+      <ul>
+        <li><strong>Mass</strong> — how much matter is in an object.</li>
+        <li><strong>Volume</strong> — how much space it takes up.</li>
+        <li><strong>Density</strong> — how packed the matter is. <code>D = m / V</code></li>
+        <li><strong>States</strong> — solid, liquid, gas, plasma. Particles have less freedom in solids, more in gases.</li>
+      </ul>
+      <h3>Heat &amp; Temperature</h3>
+      <p>People often confuse the two. <strong>Temperature</strong> is the <em>average</em> kinetic energy of particles (how fast they jiggle). <strong>Heat</strong> is the <em>total</em> energy transferred. A bathtub of warm water has much more total heat than a candle&rsquo;s small flame, even though the flame is hotter.</p>
+      <h3>Probe-ware: Modern Lab Tools</h3>
+      <p>Probes (sensors) connect to a computer or tablet to collect very precise data &mdash; pH, temperature, force, motion, light, etc. They are how working scientists actually run experiments today.</p>
+    `,
+    worksheet: [
+      { q: 'Define matter in your own words.', ans: 'Anything that has mass and takes up space.' },
+      { q: 'A block has mass 240 g and volume 80 cm³. What is its density?', ans: 'D = m/V = 240/80 = 3 g/cm³.' },
+      { q: 'List the four states of matter, in order of increasing particle freedom.', ans: 'Solid → Liquid → Gas → Plasma.' },
+      { q: 'In one sentence, distinguish heat from temperature.', ans: 'Temperature is the average kinetic energy per particle; heat is the total thermal energy transferred between objects.' },
+      { q: 'Which is hotter: 100 g of water at 80°C or 1 g of water at 100°C? Which has more total heat?', ans: 'The 1 g sample is hotter; the 100 g sample has more total heat (more total energy stored).' },
+      { q: 'Name three lab safety rules specific to chemistry.', ans: 'Examples: Always wear goggles when chemicals are in use; never directly smell a chemical (waft); know the location of eyewash and shower; tie hair back; never pipette by mouth.' }
+    ],
+    quiz: [
+      { q: 'Density equals:', opts: ['mass × volume', 'mass + volume', 'mass ÷ volume', 'volume ÷ mass'], ans: 2 },
+      { q: 'Which is NOT a state of matter?', opts: ['Solid', 'Liquid', 'Steam', 'Plasma'], ans: 2 },
+      { q: 'A 50 g object with volume 25 cm³ has density:', opts: ['0.5 g/cm³', '1 g/cm³', '2 g/cm³', '50 g/cm³'], ans: 2 },
+      { q: 'Particles in a solid:', opts: ['Move freely', 'Vibrate in place in fixed positions', 'Have no kinetic energy', 'Are spread far apart'], ans: 1 },
+      { q: 'Temperature measures:', opts: ['Total heat', 'Average kinetic energy of particles', 'Volume', 'Mass'], ans: 1 },
+      { q: 'Which has MORE total heat: a candle flame at 1000°C OR a bathtub of warm water at 40°C?', opts: ['The flame', 'The bathtub', 'They are equal', 'Cannot be determined'], ans: 1 },
+      { q: 'A "probe" in a science lab is a:', opts: ['Robot arm', 'Sensor that collects data', 'Type of scale', 'Type of paper'], ans: 1 },
+      { q: 'Mass is measured in:', opts: ['Liters', 'Meters', 'Grams', 'Newtons'], ans: 2 },
+      { q: 'Volume of a liquid is best measured in:', opts: ['Milliliters', 'Inches', 'Pounds', 'Degrees'], ans: 0 },
+      { q: 'An object that is less dense than water will:', opts: ['Sink', 'Float', 'Dissolve', 'Boil'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Density at the Pool',
+        scenario: 'You wonder why ice cubes float on top of your drink.',
+        steps: [
+          'Recall: water expands when it freezes (unusual property!).',
+          'Density of liquid water = 1.00 g/cm³; density of ice = 0.92 g/cm³.',
+          'Less dense → ice floats. This insulates lakes in winter, saving aquatic life.',
+          'Try: weigh ice cube, melt it, weigh again — mass stays the same.'
+        ],
+        reflect: 'How does this property of water make life on Earth possible?'
+      },
+      {
+        title: 'Heat vs. Temperature in Cooking',
+        scenario: 'Dad pulls a pan from the oven; it&rsquo;s 200°C but the air is also hot.',
+        steps: [
+          'Both are at high temperature, but the metal pan transfers WAY more heat to your skin (more total energy in dense metal).',
+          'That&rsquo;s why a pan burns you instantly while standing in 200°C air for a moment doesn&rsquo;t (until the air heats your skin enough).',
+          'Use mitts: low-conductivity material → slow heat transfer → no burn.',
+          'Apply to: why metal benches feel cold even at room temperature (they pull heat from your body fast).'
+        ],
+        reflect: 'How does understanding heat transfer make you safer in the kitchen, lab, and outdoors?'
+      },
+      {
+        title: 'Lab Probes vs. Manual Measurements',
+        scenario: 'You and a partner record temperature changes during a reaction.',
+        steps: [
+          'Manually with a thermometer: a reading every 30 seconds.',
+          'With a Vernier or PASCO temperature probe: 10 readings per second.',
+          'The probe captures spikes you&rsquo;d miss by hand.',
+          'This is exactly how university labs and tech industry collect data today.'
+        ],
+        reflect: 'Why are accurate, fast measurements the foundation of trustworthy science?'
+      }
+    ]
+  },
+  {
+    id: 'unit2',
+    title: 'Unit 2 — A Period Matters!',
+    icon: '⚗️',
+    theme: 'Periodic table, atoms, chemical reactions, polymers',
+    dates: '2 Sep – 18 Dec',
+    keyConcept: 'Change',
+    relatedConcepts: 'Models, Patterns, Consequences',
+    globalContext: 'Science and Technical Innovation',
+    desc: 'Decode the periodic table — the chemist&rsquo;s map of matter — and explore the reactions that transform our world.',
+    inquiry: {
+      statement: 'Scientists use models to understand the patterns of change in matter and the consequences of science and technology on our world.',
+      factual: 'How are elements organized in the periodic table?',
+      conceptual: 'Why is Conservation of Matter so important in chemistry?',
+      debatable: 'Should society have control/approval over scientific research?'
+    },
+    content: {
+      know: 'Structure and states of matter; elements of the Periodic Table; atomic models; types of chemical reactions; field study methods.',
+      understand: 'How the atomic theory of interactions is the basis for chemical reactions; how to translate theory into practical application (stoichiometry).',
+      doIt: 'Metrics Lab, Lab Skills Assessment, Chemical Reactions Lab, Acids/Bases Lab, Nuts and Bolts Lab, Stain Lab, Polymer Lab.'
+    },
+    assessments: ['Element Babybook (Crit. A/D)', 'Berth Project (Crit. A/D)', 'Stain Lab (Crit. B/C)'],
+    vocab: [
+      ['Atom', 'The smallest unit of an element. Made of protons, neutrons, electrons.'],
+      ['Element', 'A pure substance with one type of atom (e.g., Hydrogen, Iron).'],
+      ['Periodic Table', 'A chart organizing all known elements by atomic number and properties.'],
+      ['Chemical Reaction', 'A process where one or more substances change into different substances.'],
+      ['Conservation of Matter', 'In a chemical reaction, matter (atoms) is neither created nor destroyed — only rearranged.'],
+      ['Polymer', 'A large molecule made of many repeating smaller units (monomers) — e.g., plastic, DNA, proteins.']
+    ],
+    lessonHTML: `
+      <p>The <strong>Periodic Table</strong> is one of the great triumphs of human thought. It organizes every known element by <strong>atomic number</strong> (number of protons) and reveals deep patterns in their behavior.</p>
+      <h3>Atoms 101</h3>
+      <ul>
+        <li><strong>Protons</strong> &mdash; positive, in the nucleus. Atomic number = # of protons.</li>
+        <li><strong>Neutrons</strong> &mdash; neutral, in the nucleus.</li>
+        <li><strong>Electrons</strong> &mdash; negative, in shells around the nucleus. Determine chemical behavior.</li>
+      </ul>
+      <h3>The Periodic Table&rsquo;s Patterns</h3>
+      <ul>
+        <li><strong>Periods (rows)</strong> &mdash; same number of electron shells.</li>
+        <li><strong>Groups (columns)</strong> &mdash; same number of valence electrons → similar chemistry.</li>
+        <li>Group 1 (alkali metals): explosive with water.</li>
+        <li>Group 18 (noble gases): inert &mdash; rarely react.</li>
+      </ul>
+      <h3>Chemical Reactions &amp; Conservation of Matter</h3>
+      <p>In every reaction, atoms rearrange but <strong>none are lost</strong>. This is why we balance equations:</p>
+      <p style="font-family:'Courier New',monospace;background:#f0f3fa;padding:12px;border-radius:6px;display:inline-block;">2 H₂ + O₂ → 2 H₂O &nbsp; (4 H, 2 O on each side)</p>
+      <h3>Polymers — The Modern World&rsquo;s Material</h3>
+      <p>Plastics, DNA, proteins, rubber, Kevlar &mdash; all polymers. They are huge molecules made of repeating units. Polymer chemistry made modern life possible &mdash; and brought serious environmental challenges (microplastics, ocean pollution).</p>
+    `,
+    worksheet: [
+      { q: 'Define an atom and name its three subatomic particles.', ans: 'The smallest unit of an element. Subatomic particles: protons (+), neutrons (0), electrons (–).' },
+      { q: 'What does the atomic number of an element tell you?', ans: 'The number of protons in the nucleus (also = number of electrons in a neutral atom).' },
+      { q: 'Why do elements in the same group of the periodic table behave similarly?', ans: 'They have the same number of valence (outer) electrons, which controls chemical behavior.' },
+      { q: 'Balance: ___ H₂ + ___ O₂ → ___ H₂O', ans: '2 H₂ + 1 O₂ → 2 H₂O.' },
+      { q: 'What is the Law of Conservation of Matter?', ans: 'Matter (atoms) is neither created nor destroyed in a chemical reaction; the total mass before = total mass after.' },
+      { q: 'Define polymer and give one synthetic and one natural example.', ans: 'A large molecule made of many repeating smaller units (monomers). Synthetic: polyethylene (plastic). Natural: DNA, protein, cellulose.' }
+    ],
+    quiz: [
+      { q: 'The atomic number of an element equals its number of:', opts: ['Neutrons', 'Protons', 'Electrons in shells', 'Atomic mass'], ans: 1 },
+      { q: 'Which subatomic particle has a NEGATIVE charge?', opts: ['Proton', 'Neutron', 'Electron', 'Nucleus'], ans: 2 },
+      { q: 'Group 18 elements (noble gases) are:', opts: ['Highly reactive', 'Inert (rarely react)', 'Liquid at room temperature', 'Toxic'], ans: 1 },
+      { q: 'In 2 H₂ + O₂ → 2 H₂O, the total atoms of oxygen on the LEFT side is:', opts: ['1', '2', '3', '4'], ans: 1 },
+      { q: 'Conservation of Matter says:', opts: ['Matter can be created', 'Matter can be destroyed', 'Atoms are rearranged but never lost', 'All atoms get heavier in a reaction'], ans: 2 },
+      { q: 'A polymer is:', opts: ['A small molecule', 'A large molecule made of repeating units', 'A type of metal', 'An ion'], ans: 1 },
+      { q: 'Which is NOT a polymer?', opts: ['Plastic bag', 'DNA', 'Salt', 'Hair (keratin)'], ans: 2 },
+      { q: 'On the periodic table, columns are called:', opts: ['Periods', 'Groups', 'Rows', 'Phases'], ans: 1 },
+      { q: 'pH below 7 is:', opts: ['Basic', 'Neutral', 'Acidic', 'Salty'], ans: 2 },
+      { q: 'A real environmental problem of polymers in the ocean is:', opts: ['They sink', 'They evaporate', 'Microplastics that don&rsquo;t biodegrade', 'They glow in the dark'], ans: 2 }
+    ],
+    rla: [
+      {
+        title: 'Read a Food Label',
+        scenario: 'You pick up a packaged snack.',
+        steps: [
+          'Find the ingredients list — it&rsquo;s pure chemistry.',
+          'Identify any preservatives (often acids: citric, ascorbic, sodium benzoate).',
+          'Note the polymer in the packaging (PET = #1, HDPE = #2).',
+          'Check the recycling number to know which polymer it is.'
+        ],
+        reflect: 'How does basic chemistry literacy make you a smarter consumer?'
+      },
+      {
+        title: 'Tracking Plastics Pollution',
+        scenario: 'You see plastic on a Hawaiian beach.',
+        steps: [
+          'Pick up 5 pieces (gloves on!) and identify recycling number on each.',
+          'Look up which polymer each is and its average ocean lifetime.',
+          'Most: PET bottles last 450+ years. Microplastics last "forever."',
+          'Plan a beach cleanup or write a letter to a local representative.'
+        ],
+        reflect: 'How do science, ethics, and policy intersect on the plastics issue?'
+      },
+      {
+        title: 'Acid-Base in Your Kitchen',
+        scenario: 'You spilled milk on the carpet — the smell stays.',
+        steps: [
+          'Bacteria break down milk → acidic compounds.',
+          'Apply a basic solution (baking soda, NaHCO₃ in water) to neutralize.',
+          'pH adjusts toward neutral (7) → odor reduced.',
+          'Try the experiment with red cabbage juice (a natural pH indicator) to see colors change.'
+        ],
+        reflect: 'Where else do acid-base reactions show up in your daily life?'
+      }
+    ]
+  },
+  {
+    id: 'unit3',
+    title: 'Unit 3 — Forces and Motion',
+    icon: '🚀',
+    theme: 'Newton&rsquo;s Laws, velocity, acceleration, machines',
+    dates: '6 Jan – 13 Mar',
+    keyConcept: 'Change',
+    relatedConcepts: 'Transformation, Movement, Energy',
+    globalContext: 'Orientation in Space and Time',
+    desc: 'Discover the laws that govern every moving thing — from a thrown ball to a rocket — and use them to design machines.',
+    inquiry: {
+      statement: 'Observing changes in movement allows scientists to detect and understand the transformation of energy.',
+      factual: 'Why are "unbalanced" forces so important in the understanding of physics?',
+      conceptual: 'How are the Laws of Conservation of Motion and Energy related?',
+      debatable: 'Must religion and science always be at odds with one another?'
+    },
+    content: {
+      know: 'Newton&rsquo;s Laws of Motion; velocity and acceleration; Newton&rsquo;s Universal Law of Gravity.',
+      understand: 'How unbalanced forces result in the changes we observe in physics.',
+      doIt: 'Simple Machines Lab, Mover Lab, Velocity Lab, Acceleration Lab, Projectile Lab.'
+    },
+    assessments: ['The Apprentices Project (Crit. A/B/C/D)'],
+    vocab: [
+      ['Force', 'A push or pull, measured in Newtons (N).'],
+      ['Velocity', 'Speed in a specific direction (m/s).'],
+      ['Acceleration', 'Rate of change of velocity (m/s²).'],
+      ['Inertia', 'An object&rsquo;s resistance to changes in its motion (Newton&rsquo;s 1st Law).'],
+      ['Momentum', 'Mass × velocity (kg·m/s) — what makes a moving object hard to stop.'],
+      ['Simple Machine', 'A device that changes force or distance: lever, wheel-and-axle, pulley, inclined plane, wedge, screw.']
+    ],
+    lessonHTML: `
+      <p>Sir <strong>Isaac Newton</strong> (1642–1727) gave us three laws that describe almost everything that moves around us.</p>
+      <h3>Newton&rsquo;s Three Laws of Motion</h3>
+      <ol>
+        <li><strong>1st Law (Inertia):</strong> An object at rest stays at rest, and an object in motion stays in motion in a straight line, unless acted on by a net (unbalanced) force.</li>
+        <li><strong>2nd Law:</strong> <code>F = m · a</code> &mdash; the more mass, the more force needed to accelerate it.</li>
+        <li><strong>3rd Law:</strong> For every action, there is an equal and opposite reaction.</li>
+      </ol>
+      <h3>Velocity vs. Acceleration</h3>
+      <p>Velocity = distance / time, with direction. Acceleration = change in velocity / time. A car going 60 mph in a straight line has velocity. A car speeding up, slowing down, OR turning is accelerating.</p>
+      <h3>Gravity (Newton&rsquo;s Universal Law)</h3>
+      <p>Every object with mass attracts every other object. The more mass, the stronger the pull. The further away, the weaker. On Earth, <code>g ≈ 9.8 m/s²</code> &mdash; the rate at which everything in free-fall accelerates.</p>
+      <h3>Simple Machines</h3>
+      <p>Lever, wheel-and-axle, pulley, inclined plane, wedge, screw. Each one trades distance for force (or vice versa). A ramp lets you lift a heavy box with less force, but you must push it a longer distance.</p>
+    `,
+    worksheet: [
+      { q: 'State Newton&rsquo;s First Law in your own words.', ans: 'Objects keep doing what they&rsquo;re doing (at rest or moving in a straight line) until something pushes or pulls them — i.e., the law of inertia.' },
+      { q: 'Apply F = ma: A 4 kg object accelerates at 5 m/s². What is the net force?', ans: 'F = m·a = 4 × 5 = 20 N (Newtons).' },
+      { q: 'Explain Newton&rsquo;s Third Law and give a real example.', ans: 'For every action force, there is an equal and opposite reaction force. Example: when you push down on the ground while jumping, the ground pushes up on you with equal force, propelling you upward. Or: rocket exhaust pushes down → rocket goes up.' },
+      { q: 'What is the acceleration due to gravity at Earth&rsquo;s surface?', ans: '~9.8 m/s².' },
+      { q: 'Name the six classic simple machines.', ans: 'Lever, wheel-and-axle, pulley, inclined plane, wedge, screw.' },
+      { q: 'A car has velocity 60 mph north and slows to 30 mph north over 5 seconds. Is it accelerating? Explain.', ans: 'Yes &mdash; acceleration is a CHANGE in velocity (including slowing down). Here a = (30-60) mph / 5 s = -6 mph per second (deceleration).' }
+    ],
+    quiz: [
+      { q: 'Newton&rsquo;s First Law is also called the Law of:', opts: ['Gravity', 'Inertia', 'Action-Reaction', 'Energy'], ans: 1 },
+      { q: 'F = ma is Newton&rsquo;s:', opts: ['1st Law', '2nd Law', '3rd Law', 'Universal Law of Gravity'], ans: 1 },
+      { q: 'A 10 kg object accelerated by 2 m/s² requires what force?', opts: ['5 N', '12 N', '20 N', '50 N'], ans: 2 },
+      { q: 'Which is NOT a simple machine?', opts: ['Lever', 'Pulley', 'Engine', 'Inclined plane'], ans: 2 },
+      { q: 'Acceleration is measured in:', opts: ['m/s', 'm/s²', 'kg', 'N'], ans: 1 },
+      { q: 'The unit of force is the:', opts: ['Joule', 'Watt', 'Newton', 'Pascal'], ans: 2 },
+      { q: 'A rocket lifts off because:', opts: ['Magic', 'Hot air rises', 'Equal-and-opposite reaction (Newton&rsquo;s 3rd Law)', 'Gravity reverses'], ans: 2 },
+      { q: 'On Earth, free-fall acceleration g is approximately:', opts: ['1.0 m/s²', '9.8 m/s²', '32 m/s²', '100 m/s²'], ans: 1 },
+      { q: 'Momentum equals:', opts: ['mass × acceleration', 'mass × velocity', 'force × time', 'force × distance'], ans: 1 },
+      { q: 'Two cars collide. Each exerts a force on the other. These forces are:', opts: ['Different sizes', 'Equal in size, opposite in direction', 'Both forward', 'Cancelled to zero'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Why Seatbelts Save Lives',
+        scenario: 'You&rsquo;re in a car when it stops suddenly.',
+        steps: [
+          'Newton&rsquo;s 1st Law: your body wants to keep moving forward at the car&rsquo;s previous speed.',
+          'A seatbelt provides the force to slow YOU down with the car.',
+          'Without a seatbelt, your body keeps going until something stops it (the windshield).',
+          'This is why airbags + seatbelts work together: they spread out the stopping force.'
+        ],
+        reflect: 'How does basic physics turn into life-saving engineering?'
+      },
+      {
+        title: 'Throwing a Ball Like a Pro',
+        scenario: 'You want to throw a ball as far as possible.',
+        steps: [
+          'Optimal angle is ~45° (without air resistance).',
+          'Use Newton&rsquo;s 3rd Law: drive your back foot into the ground hard.',
+          'Use F = ma: more arm acceleration → more force on the ball.',
+          'Use Conservation of Momentum: rotate hips and shoulders to add momentum.'
+        ],
+        reflect: 'How does sports science apply Newton&rsquo;s laws every day?'
+      },
+      {
+        title: 'Faith and Science Are Friends',
+        scenario: 'A friend says "Science contradicts religion."',
+        steps: [
+          'Note: many great scientists (Newton, Mendel, Lemaître) were people of faith.',
+          'Lemaître, a Catholic priest, proposed the Big Bang theory.',
+          'Faith asks "why?"; science asks "how?". Different but compatible questions.',
+          'Cite Pope John Paul II (1996) on evolution + faith.'
+        ],
+        reflect: 'How does Unit 3&rsquo;s debatable inquiry question challenge stereotypes about science vs. religion?'
+      }
+    ]
+  },
+  {
+    id: 'unit4',
+    title: 'Unit 4 — Faraday&rsquo;s Fundamental Forces',
+    icon: '⚡',
+    theme: 'Electricity, magnetism, AI, robotics',
+    dates: '30 Mar – 3 Jun',
+    keyConcept: 'Systems',
+    relatedConcepts: 'Balance, Energy, Consequences',
+    globalContext: 'Globalization and Sustainability',
+    desc: 'Investigate the invisible forces that power the modern world — and the AI &amp; robotics that depend on them.',
+    inquiry: {
+      statement: 'Understanding the balance between the uses of electronics, AI, and robotics and the potential consequences will allow us to develop sustainable global systems.',
+      factual: 'How is magnetism related to the production of electricity?',
+      conceptual: 'How do AI and robotics affect our world today and in the future?',
+      debatable: 'Are we relying on electronics too much in the world today?'
+    },
+    content: {
+      know: 'Fundamentals of electric current and magnetism; electromagnetic energy and applications; basics of electric power generation; fundamentals of AI and robotics.',
+      understand: 'The relationship between electricity and magnetism; Ohm&rsquo;s Law; circuit analysis; consequences of relying on electronics for Hawai&lsquo;i and the world; how AI and robots can affect the future.',
+      doIt: 'Circuits Lab, Magnetic Field Lab, Combo-Circuits Lab.'
+    },
+    assessments: ['Critical Lab Skills Assessment (Crit. B/C)', 'Faraday Final Exam (Crit. A/D)'],
+    vocab: [
+      ['Current', 'Flow of electric charge, measured in Amperes (A).'],
+      ['Voltage', 'Electric potential difference (the "push"), measured in Volts (V).'],
+      ['Resistance', 'Opposition to current flow, measured in Ohms (Ω).'],
+      ['Ohm&rsquo;s Law', 'V = I · R (Voltage = Current × Resistance).'],
+      ['Electromagnetism', 'The relationship between electricity and magnetism — moving electric charges create magnetic fields, and changing magnetic fields create electricity.'],
+      ['AI (Artificial Intelligence)', 'Computer systems that perform tasks normally requiring human intelligence — pattern recognition, learning, decision-making.']
+    ],
+    lessonHTML: `
+      <p>Michael <strong>Faraday</strong> (1791–1867) and James Clerk <strong>Maxwell</strong> (1831–1879) showed that electricity and magnetism are <strong>two faces of the same force</strong>. This unification powers your phone, your home, and the AI systems shaping the modern world.</p>
+      <h3>The Three Friends: V, I, R</h3>
+      <p style="font-family:'Courier New',monospace;background:#f0f3fa;padding:12px;border-radius:6px;display:inline-block;">V = I &times; R &nbsp; (Ohm&rsquo;s Law)</p>
+      <ul>
+        <li><strong>V</strong> &mdash; voltage (volts, V) &mdash; the "push" or potential.</li>
+        <li><strong>I</strong> &mdash; current (amps, A) &mdash; the flow of electrons.</li>
+        <li><strong>R</strong> &mdash; resistance (ohms, Ω) &mdash; how much the wire resists the flow.</li>
+      </ul>
+      <h3>Electromagnetism — Generating Electricity</h3>
+      <p>If you spin a magnet near a coil of wire, you generate electricity. This is how every power plant in the world works: spinning a turbine that spins a magnet near coils. The energy source (steam, water, wind, nuclear) just powers the spinning.</p>
+      <h3>AI and Robotics</h3>
+      <p>Modern AI uses thousands of small computations on very fast processors. Robots combine electronics, sensors, and AI to perceive and act in the physical world. Both have huge potential for good (medicine, climate research) and risks (bias, job displacement, misuse).</p>
+      <h3>The Hawai&lsquo;i Energy Question</h3>
+      <p>Hawai&lsquo;i imports nearly all of its fossil fuels. As we shift to renewables, we face challenges: storage, grid reliability, equity. Engineers and citizens together must shape this future.</p>
+    `,
+    worksheet: [
+      { q: 'Write Ohm&rsquo;s Law and identify the units of each variable.', ans: 'V = I × R; Voltage in Volts (V); Current in Amperes (A); Resistance in Ohms (Ω).' },
+      { q: 'A circuit has 12 V and 4 Ω resistance. What is the current?', ans: 'I = V / R = 12 / 4 = 3 A.' },
+      { q: 'In one sentence, explain how a power plant produces electricity.', ans: 'A turbine spins a magnet near coils of wire, inducing an electric current (electromagnetic induction).' },
+      { q: 'Name three sources of energy that can spin a turbine.', ans: 'Examples: steam (coal/nuclear/geothermal), falling water (hydroelectric), wind, ocean waves.' },
+      { q: 'List two helpful and two concerning uses of AI today.', ans: 'Helpful: medical imaging, language translation, climate modeling. Concerning: deepfakes, bias in hiring algorithms, misinformation, job displacement.' },
+      { q: 'Why is energy storage so important in a renewable-only grid?', ans: 'Solar produces only in daytime; wind is intermittent. Storage (batteries, pumped hydro) lets us use renewable energy when the source isn&rsquo;t producing.' }
+    ],
+    quiz: [
+      { q: 'Ohm&rsquo;s Law is:', opts: ['F = m·a', 'V = I·R', 'E = m·c²', 'P = m·v'], ans: 1 },
+      { q: 'Current is measured in:', opts: ['Ohms', 'Volts', 'Amperes', 'Watts'], ans: 2 },
+      { q: 'A 9 V battery powers a circuit with 3 Ω resistance. The current is:', opts: ['1 A', '3 A', '6 A', '12 A'], ans: 1 },
+      { q: 'A power plant generates electricity by:', opts: ['Burning fuel directly', 'Magnets spinning near coils of wire', 'Solar panels only', 'Chemistry alone'], ans: 1 },
+      { q: 'The relationship between electricity and magnetism is called:', opts: ['Gravitation', 'Electromagnetism', 'Thermodynamics', 'Friction'], ans: 1 },
+      { q: 'Faraday&rsquo;s law of induction means:', opts: ['Magnets are still', 'A changing magnetic field creates electricity', 'Electricity stops magnetism', 'Coils have no role'], ans: 1 },
+      { q: 'Resistance is measured in:', opts: ['Volts', 'Amperes', 'Ohms', 'Joules'], ans: 2 },
+      { q: 'AI stands for:', opts: ['Always Intelligent', 'Artificial Intelligence', 'Automated Internet', 'Algorithm Index'], ans: 1 },
+      { q: 'A robot needs all of these EXCEPT:', opts: ['Sensors', 'Power source', 'Actuators (motors)', 'Emotions'], ans: 3 },
+      { q: 'Hawai&lsquo;i&rsquo;s biggest energy challenge is:', opts: ['Too much oil', 'Importing nearly all fossil fuels', 'Too cold', 'No sunshine'], ans: 1 }
+    ],
+    rla: [
+      {
+        title: 'Build a Simple Circuit',
+        scenario: 'You have a battery, a wire, and a small lightbulb.',
+        steps: [
+          'Connect: battery → wire → bulb → wire → battery.',
+          'Touch the wire to make a complete loop. The bulb lights.',
+          'Add a second bulb in series — both glow dimmer (current is the same, voltage divides).',
+          'Try parallel — both glow at full brightness (each has full voltage).'
+        ],
+        reflect: 'How are the lights in your house wired — series or parallel? (Hint: turn one off, the rest stay on.)'
+      },
+      {
+        title: 'Hawai&lsquo;i&rsquo;s Renewable Future',
+        scenario: 'Hawai&lsquo;i wants 100% renewable electricity by 2045.',
+        steps: [
+          'Look up the current Hawaii Electric energy mix online.',
+          'Identify the largest renewable source (rooftop solar? wind? geothermal?).',
+          'Identify one challenge (storage, grid stability, equity).',
+          'Sketch a simple plan: how would you balance solar + wind + storage?'
+        ],
+        reflect: 'How do voters, engineers, and utility companies need to work together?'
+      },
+      {
+        title: 'Use AI Wisely',
+        scenario: 'You can ask an AI chatbot for help on homework.',
+        steps: [
+          'Use AI to clarify concepts you don&rsquo;t understand — like a tutor.',
+          'NEVER copy AI responses as your own work (academic integrity).',
+          'Always verify AI answers with another source — AIs make confident-sounding mistakes.',
+          'Reflect: did using AI deepen or shortcut your learning?'
+        ],
+        reflect: 'How does the debatable question — "are we relying on electronics too much?" — apply to using AI for school?'
+      }
+    ]
+  }
+];
+
+let currentUnit = null;
+let completedUnits = {};
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(u => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(u.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${u.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${u.title}${completedUnits[u.id] ? ' ✅' : ''}</div>
+          <div class="unit-card-cc">${u.theme} &middot; ${u.dates}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${u.desc}</div>
+      <div class="unit-card-pills">
+        <div class="pill">📖 Lesson</div>
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">📝 Quiz</div>
+        <div class="pill">🌟 Real-Life</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar-content');
+  sb.innerHTML = '';
+  UNITS.forEach((u, i) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === u.id ? ' active' : '');
+    item.innerHTML = `${i + 1}. ${u.title.replace(/^Unit \d+ — /, '')}${completedUnits[u.id] ? ' ✅' : ''}`;
+    item.onclick = () => showLesson(u.id);
+    sb.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  const t = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Physical Science';
+  document.getElementById('topbar-title').innerHTML = t;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(id) {
+  currentUnit = id;
+  const u = UNITS.find(x => x.id === id);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('syllabus-btn').classList.remove('active');
+  const html = `
+    <h2>${u.title}</h2>
+    <p style="color:#666;font-style:italic;margin-bottom:6px;">${u.theme}</p>
+    <div class="meta-bar">
+      <span class="meta-pill date">📅 ${u.dates}</span>
+      <span class="meta-pill">Key Concept: ${u.keyConcept}</span>
+      <span class="meta-pill">Related: ${u.relatedConcepts}</span>
+      <span class="meta-pill">Global Context: ${u.globalContext}</span>
+    </div>
+    <div class="inquiry-box">
+      <p><strong>Inquiry statement:</strong> ${u.inquiry.statement}</p>
+      <p class="q"><strong>Factual:</strong> ${u.inquiry.factual}</p>
+      <p class="q"><strong>Conceptual:</strong> ${u.inquiry.conceptual}</p>
+      <p class="q"><strong>Debatable:</strong> ${u.inquiry.debatable}</p>
+    </div>
+    <div class="chapter-list">
+      <h4>📖 Content Goals</h4>
+      <ul>
+        <li><strong>Know:</strong> ${u.content.know}</li>
+        <li><strong>Understand:</strong> ${u.content.understand}</li>
+        <li><strong>Do:</strong> ${u.content.doIt}</li>
+      </ul>
+    </div>
+    ${u.lessonHTML}
+    <h3>Vocabulary</h3>
+    <div class="vocab-grid">${u.vocab.map(v => `<div class="vocab-card"><strong>${v[0]}</strong><span>${v[1]}</span></div>`).join('')}</div>
+    <div class="chapter-list">
+      <h4>🎯 Summative Assessments</h4>
+      <ul>${u.assessments.map(a => `<li>${a}</li>`).join('')}</ul>
+    </div>
+  `;
+  document.getElementById('lesson-content').innerHTML = html;
+  renderSidebar();
+  setTopbar();
+  completedUnits[id] = true;
+  updateProgress();
+}
+
+function showWorksheet() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const html = u.worksheet.map((p, i) => `
+    <div class="problem">
+      <h4>${i + 1}. ${p.q}</h4>
+      <textarea placeholder="Write your answer here..."></textarea>
+      <div class="answer-key" style="display:none;" id="ans-${i}"><strong>Sample answer:</strong> ${p.ans}</div>
+    </div>
+  `).join('');
+  document.getElementById('worksheet-content').innerHTML = `<p style="color:#555;margin-bottom:12px;">Answer in complete sentences. Use your science journal and references as needed.</p>` + html;
+}
+
+function checkWorksheet() {
+  document.querySelectorAll('.answer-key').forEach(a => a.style.display = 'block');
+}
+
+function showQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  document.getElementById('quiz-result').innerHTML = '';
+  const html = u.quiz.map((q, i) => `
+    <div class="quiz-question">
+      <h4>${i + 1}. ${q.q}</h4>
+      ${q.opts.map((opt, j) => `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`).join('')}
+    </div>
+  `).join('');
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function gradeQuiz() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  let score = 0;
+  let details = '';
+  u.quiz.forEach((q, i) => {
+    const sel = document.querySelector(`input[name="q${i}"]:checked`);
+    const got = sel ? parseInt(sel.value) : -1;
+    const correct = got === q.ans;
+    if (correct) score++;
+    details += `<div style="margin:6px 0;color:${correct ? '#047857' : '#b91c1c'};">${i + 1}. ${correct ? '✓' : '✗'} ${correct ? '' : `Correct: <strong>${q.opts[q.ans]}</strong>`}</div>`;
+  });
+  const pct = Math.round(score / u.quiz.length * 100);
+  document.getElementById('quiz-result').innerHTML = `
+    <div class="result-card">
+      <h3>Score: ${score} / ${u.quiz.length} (${pct}%)</h3>
+      ${pct >= 80 ? '🎉 Excellent — you&rsquo;re thinking like a scientist!' : '🔬 Review the lesson and try again. Every scientist runs trials more than once.'}
+      ${details}
+    </div>`;
+}
+
+function showRLA() {
+  if (!currentUnit) return;
+  const u = UNITS.find(x => x.id === currentUnit);
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('rla-screen').classList.add('active');
+  const html = u.rla.map(r => `
+    <div class="rla-card">
+      <h3>🌟 ${r.title}</h3>
+      <div class="scenario">📍 <strong>Scenario:</strong> ${r.scenario}</div>
+      <ol class="rla-steps">${r.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+      <div class="rla-reflect"><strong>🪞 Reflect:</strong>${r.reflect}</div>
+    </div>
+  `).join('');
+  document.getElementById('rla-content').innerHTML = html;
+}
+
+function updateProgress() {
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${done}/${UNITS.length}`;
+}
+
+renderHome();
+renderSidebar();
+updateProgress();
+</script>
+</body>
+</html>

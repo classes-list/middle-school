@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea — 7th Grade Math Tutorial</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; }
+    .container { display: flex; height: 100vh; }
+    .sidebar { border-right: 3px solid #FFD100;  width: 250px; background: #1a2a4a; color: white; overflow-y: auto; padding: 20px; }
+    .sidebar h2 { font-size: 14px; margin-bottom: 15px; font-weight: bold; }
+    .sidebar-item { padding: 10px; margin: 5px 0; background: #111d35; border-radius: 4px; cursor: pointer; font-size: 13px; }
+    .sidebar-item:hover { background: #a78bfa; }
+    .sidebar-item.active { background: #a78bfa; }
+    .main { flex: 1; display: flex; flex-direction: column; }
+    .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
+    .home-btn:hover { background: rgba(0,0,0,0.35); }
+    .syllabus-btn { display:block; width:100%; padding: 12px; margin-bottom: 14px; background: #FFD100; color:#1a2a4a; border:none; border-radius: 6px; cursor:pointer; font-weight: 700; font-size: 14px; text-align:center; transition: all 0.18s; }
+    .syllabus-btn:hover { background:#ffc400; }
+    .syllabus-btn.active { background:#ffc400; box-shadow: 0 0 0 3px rgba(255,209,0,0.35); transform: translateY(-1px); }
+    /* Syllabus page (STS-style) */
+    .syl-hero { background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%); color: white; border-radius: 16px; padding: 28px 32px; margin-bottom: 22px; text-align: center; box-shadow: 0 4px 14px rgba(27,58,138,0.25); }
+    .syl-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 6px; color: white; }
+    .syl-hero p { opacity: 0.92; font-size: 0.95rem; }
+    .syl-grid { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 18px; }
+    .syl-card { background: white; border-radius: 12px; padding: 20px 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); flex: 1 1 300px; border-top: 4px solid #1B3A8A; }
+    .syl-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B3A8A; margin-bottom: 10px; }
+    .syl-card p { font-size: 0.92rem; color: #374151; line-height: 1.6; margin-bottom: 6px; }
+    .syl-card ul { padding-left: 18px; margin: 6px 0 0; }
+    .syl-card li { font-size: 0.9rem; color: #374151; margin-bottom: 4px; line-height: 1.55; }
+    .syl-card a { color: #1B3A8A; }
+    .syl-grade-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .syl-grade-pill { background: #f1f5f9; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; font-weight: 600; color: #374151; text-align: center; flex: 1 1 110px; }
+    .syl-grade-pill span { display: block; font-size: 1.3rem; font-weight: 800; color: #1B3A8A; }
+    .syl-grade-pill small { display: block; font-size: 0.72rem; font-weight: 500; color: #64748b; margin-top: 4px; line-height: 1.35; }
+    .syl-quarter { background: #f8fafc; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; border-left: 4px solid #1B3A8A; }
+    .syl-quarter h4 { font-size: 0.95rem; color: #1B3A8A; margin-bottom: 6px; }
+    .syl-quarter ul { margin: 4px 0 0 22px; }
+    .syl-quarter li { font-size: 0.88rem; color: #374151; margin-bottom: 3px; }
+    .syl-mission { background: linear-gradient(90deg, #fffbe6, #fff, #fffbe6); border-radius: 8px; padding: 12px 16px; text-align: center; font-weight: 700; color: #1B3A8A; margin-top: 8px; font-size: 0.92rem; }
+    .syl-mission .nui { color: #B8860B; display: block; font-size: 0.82rem; font-weight: 600; margin-top: 4px; letter-spacing: 0.04em; }
+
+    .back-index-btn { background: #FFD100; color: #1a2a4a; border: none; cursor: pointer; font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 6px; margin-right: 10px; text-decoration: none; display: inline-block; transition: all 0.18s; }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar { border-bottom: 4px solid #FFD100;  background: #a78bfa; color: white; padding: 15px 30px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+    .topbar-right { display: flex; gap: 20px; align-items: center; font-size: 14px; opacity: 0.85; }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle { width: 50px; height: 50px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 800px) { .logo-circle { width: 40px; height: 40px; } }
+    .content { flex: 1; overflow-y: auto; padding: 30px; }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .unit-card { background: white; border-radius: 8px; padding: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .unit-card:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(167,139,250,0.2); }
+    .unit-card-header { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 15px; }
+    .unit-card-icon { font-size: 32px; }
+    .unit-card-meta { flex: 1; }
+    .unit-card-title { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+    .unit-card-cc { font-size: 12px; color: #666; }
+    .unit-card-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.4; }
+    .unit-card-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { background: #f0f0f0; padding: 4px 10px; border-radius: 16px; font-size: 11px; }
+    .lesson-content h2 { margin: 20px 0 10px 0; color: #a78bfa; }
+    .lesson-content p { margin-bottom: 12px; line-height: 1.6; }
+    .lesson-content ul, .lesson-content ol { margin-left: 20px; margin-bottom: 12px; }
+    .lesson-content li { margin-bottom: 8px; }
+    .btn { display: inline-block; padding: 10px 20px; background: #a78bfa; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px; }
+    .btn:hover { background: #8b5cf6; }
+    .btn-secondary { background: #6b7280; }
+    .btn-secondary:hover { background: #4b5563; }
+    .btn-ka { display: inline-block; padding: 10px 15px; background: #16a34a; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ka:hover { background: #16a34a; }
+    .btn-ixl { display: inline-block; padding: 10px 15px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ixl:hover { background: #2563eb; }
+    .btn-yt { display: inline-block; padding: 10px 15px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-yt:hover { background: #dc2626; }
+    .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-phet:hover { background: #6d28d9; }
+    .resource-card { background: #f3f4f6; border-radius: 8px; padding: 15px; margin: 20px 0; }
+    .resource-card h3 { margin-bottom: 10px; color: #a78bfa; font-size: 14px; }
+    .resource-btns { display: flex; flex-wrap: wrap; }
+    .problem { background: white; padding: 15px; margin: 12px 0; border-left: 4px solid #a78bfa; border-radius: 4px; }
+    .problem h4 { margin-bottom: 8px; color: #a78bfa; }
+    .problem input, .problem textarea { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; font-family: 'Courier New', monospace; }
+    .answer-key { background: #fef3c7; padding: 10px; margin: 8px 0; border-radius: 4px; font-size: 13px; }
+    .quiz-question { background: white; padding: 15px; margin: 15px 0; border-radius: 4px; border-left: 4px solid #a78bfa; }
+    .quiz-question h4 { margin-bottom: 10px; color: #a78bfa; }
+    .quiz-question label { display: block; margin: 8px 0; cursor: pointer; }
+    .quiz-question input[type="radio"] { margin-right: 8px; }
+    .result-card { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 15px 0; }
+    .result-card h3 { color: #059669; margin-bottom: 10px; }
+    .nav-buttons { display: flex; gap: 10px; margin: 20px 0; }
+    .back-btn { background: #6b7280; }
+    .back-btn:hover { background: #4b5563; }
+  
+      .handout-card {
+        background: #fff;
+        border-left: 5px solid #7c3aed;
+        border-radius: 10px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      }
+      .handout-card h3 {
+        margin: 0 0 8px;
+        color: #7c3aed;
+        font-size: 1.2rem;
+      }
+      .handout-science {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 12px;
+      }
+      .handout-mission {
+        background: #f8f9ff;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 16px;
+        font-style: italic;
+        color: #334;
+      }
+      .handout-steps {
+        margin: 0 0 16px;
+        padding-left: 0;
+        list-style: none;
+        counter-reset: step-counter;
+      }
+      .handout-steps li {
+        counter-increment: step-counter;
+        padding: 8px 12px 8px 44px;
+        margin-bottom: 6px;
+        background: #f0f4ff;
+        border-radius: 6px;
+        position: relative;
+        font-size: 0.92rem;
+        line-height: 1.5;
+      }
+      .handout-steps li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 10px;
+        top: 8px;
+        width: 22px;
+        height: 22px;
+        background: #7c3aed;
+        color: #fff;
+        border-radius: 50%;
+        font-size: 0.78rem;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .handout-deliverable {
+        background: #fffbe6;
+        border: 1px solid #f5d000;
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 16px;
+      }
+      .handout-deliverable strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #7a5f00;
+      }
+      .handout-reflect {
+        background: #fffbea;
+        border: 1px solid #68d391;
+        border-radius: 6px;
+        padding: 12px;
+      }
+      .handout-reflect strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #276749;
+      }
+      .handout-reflect ol {
+        margin: 0;
+        padding-left: 20px;
+      }
+      .handout-reflect li {
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+      }
+      code {
+        background: #e8edf5;
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.88em;
+      }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 16px 0;color:#888;font-size:14px;">7th Grade Math</p><button class="syllabus-btn" id="syllabus-btn" onclick="showSyllabus()">📋 Syllabus</button>
+      <div id="sidebar-content"></div>
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #444; font-size: 12px; color: #999;">
+        Progress: <span id="progress-text">0/17</span>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+          <a href="msos-math-index.html" class="back-index-btn" title="Back to Math Classes">← All Math</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <div class="topbar-logos">
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+          </div>
+          <span id="topbar-title">Predicting the World with Math</span>
+        </div>
+        <div class="topbar-right">Math · Grade 7</div>
+      </div>
+      <div class="content">
+        <div id="home-screen" class="screen active">
+                    <div id="units-grid" class="units-grid"></div>
+        </div>
+        <div id="syllabus-screen" class="screen">
+          <div class="syl-hero">
+            <div style="font-size:2.4rem;margin-bottom:8px">📐</div>
+            <h2>Pre-Algebra &mdash; Course Syllabus</h2>
+            <p>Mary, Star of the Sea School &middot; SY 2026-2027</p>
+            <div class="syl-mission">EMPOWERED TO SUCCEED &mdash; GUIDED BY FAITH</div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card" style="flex:1 1 100%">
+              <h3>📋 Course Description</h3>
+              <p>It will be my pleasure to be working with you and your child this school year. I take a very deliberate approach with algorithms that are easy to follow. Your child and I will work together to prepare for the following year. We will use a variety of methods to accomplish this: small group, big group, individual study, math games, lecture notes, and projects.</p>
+              <p style="margin-top:8px"><strong>Textbook:</strong> Glencoe Math Accelerated Pre-Algebra</p>
+            </div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>👨‍🏫 Teacher</h3>
+              <p><strong>Mr. Peter Park</strong></p>
+              <p>📧 <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a></p>
+              <p>📞 (808) 228-2288 &nbsp;<em style="font-size:0.83rem;color:#64748b">(text is best)</em></p>
+              <p style="margin-top:8px;font-size:0.86rem;color:#4a5568">Parents may email me or leave a message with the school. I respond within 24 hours.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎒 Materials</h3>
+              <ul>
+                <li>Composition notebook</li>
+                <li>Pencils, erasers, highlighters</li>
+                <li>Notebook paper</li>
+                <li>Calculator</li>
+                <li>Folder for handouts</li>
+                <li>Textbook (Glencoe Math Accelerated Pre-Algebra)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📊 Grading Policy</h3>
+            <div class="syl-grade-row">
+              <div class="syl-grade-pill"><span>20%</span>Participation<small>Composition books, notes, in-class behavior, supplies</small></div>
+              <div class="syl-grade-pill"><span>25%</span>Tests<small>Q&amp;A, written essay (1 per chapter, 20 pts)</small></div>
+              <div class="syl-grade-pill"><span>30%</span>Homework<small>Assignments, classwork, class prep, projects</small></div>
+              <div class="syl-grade-pill"><span>25%</span>Quizzes<small>2 per chapter, 5 pts each</small></div>
+            </div>
+            <p style="margin-top:12px;font-size:0.86rem"><strong>Make-ups:</strong> Students who score below 80% on tests may make corrections / retest to improve their grade.</p>
+            <p style="margin-top:6px;font-size:0.86rem"><strong>Late work:</strong> Homework is due the next class meeting. Late work earns a maximum of 50% credit; if not turned in after two class meetings, the grade is a zero.</p>
+          </div>
+
+          <div class="syl-card" style="margin-bottom:18px">
+            <h3>📚 Course Outline by Quarter &mdash; Pre-Algebra</h3>
+            <p style="font-size:0.85rem;color:#64748b;font-style:italic;margin-bottom:10px">Chapters from Glencoe Math Accelerated Pre-Algebra.</p>
+            <div class="syl-quarter"><h4>Q1</h4><ul><li>1 — Algebra Language</li><li>2 — Integers</li><li>3 — Rational Numbers</li></ul></div>
+          <div class="syl-quarter"><h4>Q2</h4><ul><li>4 — Powers and Roots</li><li>5 — Ratio, Proportion and Similar Figures</li><li>6 — Percent</li></ul></div>
+          <div class="syl-quarter"><h4>Q3</h4><ul><li>7 — Algebraic Expressions</li><li>8 — Equations and Inequalities</li><li>9 — Linear Functions</li></ul></div>
+          <div class="syl-quarter"><h4>Q4</h4><ul><li>10 — Statistics and Probability</li><li>11 — Congruence, Similarity, and Transformations</li><li>12 — Volume, Surface Area</li></ul></div>
+          </div>
+
+          <div class="syl-grid">
+            <div class="syl-card">
+              <h3>💬 Student &amp; Parent Communication</h3>
+              <p><strong>Beehively</strong> is the platform where students and parents can regularly check grade progress and receive notifications of missing or incomplete assignments.</p>
+              <p style="margin-top:6px">Parents are contacted by email up to 2 times if their child is receiving a deficiency, plus standard email notifications. Students are always informed of any grade that is a C or lower and ultimately are responsible for their grades.</p>
+              <p style="margin-top:6px">Student work is updated regularly.</p>
+            </div>
+            <div class="syl-card">
+              <h3>🎯 Middle School Math Goal</h3>
+              <p>From 6th through 8th grade, we focus on more than just numbers &mdash; we work to build strong math skills, boost confidence, and develop critical problem-solving abilities that students can apply in every subject and in everyday life. Our approach combines hands-on activities, real-world applications, and a supportive learning environment where students feel encouraged to take risks, ask questions, and think creatively.</p>
+              <p style="margin-top:6px">By the time they graduate, our students are not only ready for Algebra and beyond, but they also possess the perseverance, analytical thinking, and resourcefulness they need to thrive in high school and in life.</p>
+            </div>
+          </div>
+
+          <div class="nav-buttons" style="margin-top:18px;">
+            <button class="btn back-btn" onclick="showHome()">← Back to Topics</button>
+          </div>
+        </div>
+        <div id="lesson-screen" class="screen">
+          <button class="btn back-btn" onclick="showHome()">← Back to Units</button>
+          <div id="lesson-content" class="lesson-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showHome()">← Back</button>
+            <button class="btn" onclick="showHandout()">🔬 Science Connection</button>
+            <button class="btn" id="realworld-btn" onclick="showRealWorld()">🎨 Real-World Project</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="worksheet-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">📋 Worksheet</h2>
+          <div id="worksheet-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back</button>
+            <button class="btn" onclick="checkWorksheet()">Check Answers</button>
+            <button class="btn" onclick="showQuiz()">Quiz →</button>
+          </div>
+        </div>
+        <div id="handout-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">🔬 Science Connection</h2>
+          <div id="handout-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="realworld-screen" class="screen">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <h2 style="margin: 20px 0;">🎨 Real-World Project</h2>
+          <div id="realworld-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+          </div>
+        </div>
+        <div id="quiz-screen" class="screen">
+          <button class="btn back-btn" onclick="showWorksheet()">← Back to Worksheet</button>
+          <h2 style="margin: 20px 0;">📝 Quick Quiz</h2>
+          <div id="quiz-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showWorksheet()">← Back</button>
+            <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+          </div>
+        </div>
+        <div id="exam-screen" class="screen">
+          <h2 style="margin: 20px 0;">📊 Unit Exam</h2>
+          <div id="exam-content"></div>
+          <div class="nav-buttons">
+            <button class="btn back-btn" onclick="showHome()">← Home</button>
+            <button class="btn" onclick="submitExam()">Submit Exam</button>
+          </div>
+        </div>
+        <div id="certificate-screen" class="screen">
+          <div style="text-align: center; padding: 40px;">
+            <h2 style="color: #a78bfa; margin: 20px 0;">🎉 Unit Completed!</h2>
+            <div id="cert-content"></div>
+            <button class="btn" onclick="showHome()" style="margin-top: 20px;">Return to Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+const UNITS = [
+  { id:'proportional', title:'Proportional Relationships', icon:'⚖️', cc:'7.RP.1-3', desc:'Identify proportional relationships and apply to real-world problems.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-ratio-proportion', ixlUrl:'https://www.ixl.com/math/grade-7/identify-proportional-relationships', ytSearch:'khan academy 7th grade proportional relationships', phetUrl:'https://phet.colorado.edu/en/simulations/proportion-playground' },
+  { id:'ratios-rates', title:'Ratios & Unit Rates', icon:'📐', cc:'7.RP.1', desc:'Compute unit rates with ratios of fractions.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-ratio-proportion', ixlUrl:'https://www.ixl.com/math/grade-7/unit-rates', ytSearch:'khan academy 7th grade ratios unit rates', phetUrl:'https://phet.colorado.edu/en/simulations/unit-rates' },
+  { id:'unit-conversions', title:'Unit Conversions (KHDUdcm)', icon:'📐', cc:'7.RP + Science', desc:'Convert metric units using the KHDUdcm staircase, including multi-step conversions and rate conversions like km/h to m/s.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-ratio-proportion', ixlUrl:'https://www.ixl.com/math/grade-7/convert-between-metric-units', ytSearch:'metric unit conversions KHDUdcm multi-step rate conversion km/h to m/s 7th grade' },
+  { id:'scientific-notation', title:'Scientific Notation', icon:'🔬', cc:'7.EE + Science', desc:'Extend scientific notation to very small numbers using negative exponents, and compute with numbers in scientific notation — multiply, divide, and compare.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ixlUrl:'https://www.ixl.com/math/grade-7/convert-between-standard-and-scientific-notation', ytSearch:'khan academy scientific notation negative exponents multiply divide 7th grade' },
+  { id:'percents', title:'Percents & Percent Change', icon:'%', cc:'7.RP.3', desc:'Solve percent problems including percent increase and decrease.', kaUrl:'https://www.khanacademy.org/math/pre-algebra/pre-algebra-ratios-rates', ixlUrl:'https://www.ixl.com/math/grade-7/percent-of-change', ytSearch:'khan academy 7th grade percent change increase decrease', phetUrl:'https://phet.colorado.edu/en/simulations/unit-rates' },
+  { id:'percent-error', title:'Percent Error', icon:'⚠️', cc:'7.RP + Science', desc:'Every lab measurement has some error. Percent error |measured − actual| ÷ actual × 100% lets scientists compare experimental results to accepted values, evaluate accuracy, and decide if a result is good enough to publish or repeat.', kaUrl:'https://www.khanacademy.org/math/pre-algebra/pre-algebra-ratios-rates', ixlUrl:'https://www.ixl.com/math/grade-7/percent-of-change', ytSearch:'percent error formula 7th grade science lab measurement' },
+  { id:'add-sub-rational', title:'Adding & Subtracting Rational Numbers', icon:'➕', cc:'7.NS.1', desc:'Add and subtract rational numbers including negatives.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-negative-numbers', ixlUrl:'https://www.ixl.com/math/grade-7/add-and-subtract-rational-numbers', ytSearch:'khan academy 7th grade adding subtracting rational numbers', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-operations' },
+  { id:'mult-div-rational', title:'Multiplying & Dividing Rational Numbers', icon:'✖️', cc:'7.NS.2', desc:'Multiply and divide rational numbers including negatives.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-negative-numbers', ixlUrl:'https://www.ixl.com/math/grade-7/multiply-and-divide-rational-numbers', ytSearch:'khan academy 7th grade multiplying dividing rational numbers', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-operations' },
+  { id:'alg-expressions', title:'Algebraic Expressions', icon:'🔣', cc:'7.EE.1-2', desc:'Add, subtract, factor, and expand linear expressions.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-variables-expressions', ixlUrl:'https://www.ixl.com/math/grade-7/simplify-variable-expressions', ytSearch:'khan academy 7th grade algebraic expressions simplify', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' },
+  { id:'equations', title:'Equations', icon:'⚖', cc:'7.EE.3-4a', desc:'Solve multi-step real-life equations with rational numbers.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-equations-expressions', ixlUrl:'https://www.ixl.com/math/grade-7/solve-two-step-equations', ytSearch:'khan academy 7th grade solving two step equations', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer-two-variables' },
+  { id:'inequalities', title:'Inequalities', icon:'📏', cc:'7.EE.4b', desc:'Solve and graph inequalities; interpret solutions in context.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-equations-expressions', ixlUrl:'https://www.ixl.com/math/grade-7/solve-two-step-inequalities', ytSearch:'khan academy 7th grade inequalities', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer-two-variables' },
+  { id:'rearranging-formulas', title:'Rearranging Formulas', icon:'🔄', cc:'7.EE + Science', desc:'Science formulas often need to be rearranged to solve for a different variable. Use inverse operations to solve D = m/V for m or V, v = d/t for d or t, and any rate formula for any of its three quantities. Master the formula triangle as a quick check.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-equations-expressions', ixlUrl:'https://www.ixl.com/math/grade-7/rearrange-multi-variable-equations', ytSearch:'rearranging formulas D=m/V solve for variable formula triangle 7th grade science' },
+  { id:'scale-drawings', title:'Scale Drawings', icon:'🗺️', cc:'7.G.1', desc:'Use scale factors to solve problems with scale drawings and maps.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-geometry', ixlUrl:'https://www.ixl.com/math/grade-7/scale-drawings', ytSearch:'khan academy 7th grade scale drawings', phetUrl:'https://phet.colorado.edu/en/simulations/estimation' },
+  { id:'triangles', title:'Geometric Shapes & Triangles', icon:'🔺', cc:'7.G.2', desc:'Draw geometric shapes and explore triangle conditions.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-geometry', ixlUrl:'https://www.ixl.com/math/grade-7/triangle-inequality-theorem', ytSearch:'khan academy 7th grade triangles geometry' },
+  { id:'circles', title:'Circles', icon:'⭕', cc:'7.G.4', desc:'Find circumference and area of circles using π.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-geometry', ixlUrl:'https://www.ixl.com/math/grade-7/circles-calculate-area-circumference-radius-and-diameter', ytSearch:'khan academy 7th grade circles circumference area' },
+  { id:'area-polygons', title:'Area of Polygons', icon:'🔷', cc:'7.G.6', desc:'Solve real-world problems involving area of 2D figures.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-geometry', ixlUrl:'https://www.ixl.com/math/grade-7/area-of-compound-figures', ytSearch:'khan academy 7th grade area polygons composite figures', phetUrl:'https://phet.colorado.edu/en/simulations/area-builder' },
+  { id:'surface-area-volume', title:'Surface Area & Volume', icon:'📦', cc:'7.G.6', desc:'Find surface area and volume of prisms and pyramids.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-geometry', ixlUrl:'https://www.ixl.com/math/grade-7/surface-area-and-volume-of-prisms', ytSearch:'khan academy 7th grade surface area volume prisms' },
+  { id:'surface-area-volume-ratio', title:'Surface Area : Volume Ratio', icon:'🧫', cc:'7.G + Life Science', desc:'Why are cells microscopic? As objects grow, surface area grows by the square but volume grows by the cube — so the surface area to volume ratio shrinks. Calculate SA/V for cubes and spheres at different sizes and predict biological consequences.', kaUrl:'https://www.khanacademy.org/science/ms-biology/x0c5bb03129646fd6:cells-and-organisms/x0c5bb03129646fd6:cell-size-and-scale', ixlUrl:'https://www.ixl.com/math/grade-7/surface-area-and-volume-of-prisms', ytSearch:'surface area volume ratio cell size 7th grade life science why cells small' },
+  { id:'angles', title:'Angles', icon:'📐', cc:'7.G.5', desc:'Use facts about supplementary, complementary, and vertical angles.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-geometry', ixlUrl:'https://www.ixl.com/math/grade-7/identify-complementary-supplementary-vertical-adjacent-and-congruent-angles', ytSearch:'khan academy 7th grade angles supplementary complementary vertical' },
+  { id:'probability', title:'Probability', icon:'🎲', cc:'7.SP.5-8', desc:'Find probability of simple and compound events.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-probability-statistics', ixlUrl:'https://www.ixl.com/math/grade-7/probability-of-simple-events', ytSearch:'khan academy 7th grade probability', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability' },
+  { id:'statistics', title:'Statistics', icon:'📊', cc:'7.SP.1-4', desc:'Use random sampling to draw inferences and compare populations.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-probability-statistics', ixlUrl:'https://www.ixl.com/math/grade-7/calculate-mean-median-mode-and-range', ytSearch:'khan academy 7th grade statistics sampling' },
+  { id:'word-problems', title:'Word Problems', icon:'📝', cc:'mixed', desc:'Solve multi-step real-world problems across all 7th grade topics.', kaUrl:null, ixlUrl:'https://www.ixl.com/math/grade-7/multi-step-word-problems', ytSearch:'khan academy 7th grade word problems multi step' },
+  { id:'population-growth', title:'Population Growth Models', icon:'📈', cc:'7.RP + Life Science', desc:'Populations grow by doubling over time — the same fraction added each period. Use ratios, tables, and graphs to model exponential growth and predict future population sizes.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-ratio-proportion', ixlUrl:'https://www.ixl.com/math/grade-7/identify-proportional-relationships', ytSearch:'population growth doubling time exponential 7th grade life science math', phetUrl:'https://phet.colorado.edu/en/simulations/natural-selection' },
+  { id:'genetics-probability', title:'Genetics & Probability', icon:'🧬', cc:'7.SP + Life Science', desc:'Heredity follows probability rules. Punnett squares are organized multiplication tables for traits. Predict the likelihood of inheriting dominant or recessive traits using 7th grade probability.', kaUrl:'https://www.khanacademy.org/science/ap-biology/heredity/mendelian-genetics-ap/a/the-law-of-segregation', ixlUrl:'https://www.ixl.com/math/grade-7/probability-of-simple-events', ytSearch:'punnett square probability genetics 7th grade math', phetUrl:'https://phet.colorado.edu/en/simulations/natural-selection' },
+  { id:'pharmacokinetics', title:'Pharmacokinetics — Drug Half-Life', icon:'💊', cc:'7.NS + Life Science', desc:'Every medicine is eliminated from the body at a predictable rate. Model drug concentration using repeated halving — the same fraction is eliminated per time period — and determine safe dosing windows.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-negative-numbers', ixlUrl:'https://www.ixl.com/math/grade-7/fractions-and-mixed-numbers', ytSearch:'drug half life pharmacokinetics math fractions 7th grade' },
+  { id:'biodiversity', title:'Ecology & Biodiversity Index', icon:'🌿', cc:'7.SP + Life Science', desc:'Ecologists measure how "healthy" an ecosystem is using biodiversity indices. Count species, compute proportions, and compare ecosystems using the simple Shannon diversity approach.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-probability-statistics', ixlUrl:'https://www.ixl.com/math/grade-7/probability-of-simple-events', ytSearch:'biodiversity index species richness evenness math proportions 7th grade ecology' }
+];
+
+const LESSONS = {
+  'proportional': `<h2>Proportional Relationships</h2><p>A <strong>proportional relationship</strong> exists when two quantities have a constant ratio.</p><h3>Identifying Proportional Relationships</h3><ul><li>Ratio stays the same: 2:3, 4:6, 6:9 are all equivalent</li><li>Graph passes through origin (0,0)</li><li>Equation form: y = kx where k is constant</li></ul><h3>The Constant of Proportionality</h3><p>k represents the constant ratio. If y = 3x, then k = 3. For every 1 unit increase in x, y increases by 3.</p><h3>Real-World Examples</h3><ul><li>Distance = 50 × time (50 mph)</li><li>Cost = 2.50 × quantity ($2.50 per item)</li><li>Conversions: kilometers = 1.609 × miles</li></ul><h3>Tables and Graphs</h3><p>Look for consistent ratios in tables. Linear graphs through origin show proportional relationships.</p>`,
+  'ratios-rates': `<h2>Ratios & Unit Rates</h2><p>A <strong>unit rate</strong> is a rate with denominator 1. It simplifies comparisons.</p><h3>Finding Unit Rates from Fractions</h3><p>Rate with fractions: 3/4 mile in 1/2 hour</p><p>Unit rate = (3/4) ÷ (1/2) = (3/4) × (2/1) = 3/2 = 1.5 miles per hour</p><h3>Comparing Unit Rates</h3><p>Option A: 300 miles per 5 hours = 60 mph</p><p>Option B: 400 miles per 8 hours = 50 mph</p><p>Option A is faster!</p><h3>Applications</h3><ul><li>Speed comparisons</li><li>Price per unit</li><li>Conversions</li><li>Density and concentration</li></ul><h3>Solving with Unit Rates</h3><p>If 1 item costs $3.50, find cost of 8: 8 × 3.50 = $28</p>`,
+  'scientific-notation': `<h2>Scientific Notation — Extended</h2><p>In 6th grade you used scientific notation for very <strong>large</strong> numbers (positive exponents). In 7th grade we extend to very <strong>small</strong> numbers using <strong>negative exponents</strong>, and learn to multiply and divide in scientific notation.</p><h3>Negative Exponents — Very Small Numbers</h3><p>A negative exponent means you move the decimal <em>left</em> instead of right:</p><ul><li>10⁻¹ = 0.1 (one-tenth)</li><li>10⁻³ = 0.001 (one-thousandth)</li><li>10⁻⁶ = 0.000001 (one-millionth)</li></ul><p><strong>Rule:</strong> 10⁻ⁿ = 1 ÷ 10ⁿ</p><h3>Converting Small Numbers to Scientific Notation</h3><ol><li>Move the decimal <em>right</em> until one non-zero digit is in front</li><li>Count steps moved — that is your <em>negative</em> exponent</li></ol><ul><li>0.0045 → move decimal 3 right → <strong>4.5 × 10⁻³</strong></li><li>0.000000082 → move 8 right → <strong>8.2 × 10⁻⁸</strong></li></ul><h3>Life Science Examples</h3><table style="border-collapse:collapse;width:100%;font-size:0.93em;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Object</th><th style="padding:6px 10px;">Size (m)</th><th style="padding:6px 10px;">Scientific Notation</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Red blood cell</td><td style="padding:6px 10px;">0.000008 m</td><td style="padding:6px 10px;">8 × 10⁻⁶ m</td></tr><tr><td style="padding:6px 10px;">Bacterium</td><td style="padding:6px 10px;">0.000002 m</td><td style="padding:6px 10px;">2 × 10⁻⁶ m</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Virus</td><td style="padding:6px 10px;">0.0000001 m</td><td style="padding:6px 10px;">1 × 10⁻⁷ m</td></tr><tr><td style="padding:6px 10px;">DNA width</td><td style="padding:6px 10px;">0.0000000025 m</td><td style="padding:6px 10px;">2.5 × 10⁻⁹ m</td></tr></table><h3>Multiplying in Scientific Notation</h3><p>Multiply the decimal parts, then add the exponents:</p><p>(a × 10ᵐ) × (b × 10ⁿ) = (a × b) × 10<sup>m+n</sup></p><ul><li>(3 × 10⁴) × (2 × 10³) = 6 × 10⁷</li><li>(4 × 10⁵) × (2 × 10⁻³) = 8 × 10²</li></ul><p>If the result's decimal part is ≥ 10, adjust: 12 × 10³ → 1.2 × 10⁴</p><h3>Dividing in Scientific Notation</h3><p>Divide the decimal parts, then subtract the exponents:</p><ul><li>(8 × 10⁶) ÷ (2 × 10³) = 4 × 10³</li><li>(6 × 10²) ÷ (3 × 10⁵) = 2 × 10⁻³</li></ul><h3>Connection to Unit Conversions</h3><p>The milli- prefix is 10⁻³, centi- is 10⁻², deci- is 10⁻¹ — these are negative exponents from the KHDUdcm chart. A red blood cell at 8 × 10⁻⁶ m is 8 micrometers — two steps below milli on an extended chart. The systems connect perfectly.`,
+  'unit-conversions': `<h2>Unit Conversions — KHDUdcm</h2><p>You learned the KHDUdcm staircase in 6th grade for basic conversions. In 7th grade, we extend to <strong>multi-step conversions</strong> and <strong>rate conversions</strong> — skills used constantly in life science and medicine.</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">K</th><th style="padding:7px 10px;">H</th><th style="padding:7px 10px;">D</th><th style="padding:7px 10px;">U</th><th style="padding:7px 10px;">d</th><th style="padding:7px 10px;">c</th><th style="padding:7px 10px;">m</th></tr><tr style="text-align:center;background:#f2f2f2;"><td style="padding:6px 10px;">Kilo</td><td style="padding:6px 10px;">Hecto</td><td style="padding:6px 10px;">Deca</td><td style="padding:6px 10px;font-weight:bold;">Unit</td><td style="padding:6px 10px;">deci</td><td style="padding:6px 10px;">centi</td><td style="padding:6px 10px;">milli</td></tr><tr style="text-align:center;"><td style="padding:6px 10px;">10³</td><td style="padding:6px 10px;">10²</td><td style="padding:6px 10px;">10¹</td><td style="padding:6px 10px;font-weight:bold;">10⁰</td><td style="padding:6px 10px;">10⁻¹</td><td style="padding:6px 10px;">10⁻²</td><td style="padding:6px 10px;">10⁻³</td></tr></table><p><strong>Memory:</strong> <em>"<strong>K</strong>ing <strong>H</strong>enry <strong>D</strong>oesn't <strong>U</strong>sually <strong>d</strong>rink <strong>c</strong>hocolate <strong>m</strong>ilk"</em></p><h3>Multi-Step Conversions</h3><p>To convert from km to cm, count 5 steps right → multiply by 10⁵ = 100,000.</p><ul><li><strong>0.8 km → cm:</strong> 0.8 × 100,000 = <strong>80,000 cm</strong></li><li><strong>1.2 kg → mg:</strong> 6 steps right → 1.2 × 1,000,000 = <strong>1,200,000 mg</strong></li><li><strong>5000 mm → km:</strong> 6 steps left → 5000 ÷ 1,000,000 = <strong>0.005 km</strong></li></ul><h3>Rate Conversions — km/h to m/s</h3><p>Speed in km/h needs to become m/s for science calculations. Use two unit rate conversions at once:</p><ol><li>1 km = 1000 m → multiply by 1000</li><li>1 hour = 3600 seconds → divide by 3600</li></ol><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>m/s = km/h × 1000 ÷ 3600 = km/h ÷ 3.6</strong></p><ul><li>72 km/h → 72 ÷ 3.6 = <strong>20 m/s</strong></li><li>108 km/h → 108 ÷ 3.6 = <strong>30 m/s</strong></li><li>Reverse: 15 m/s × 3.6 = <strong>54 km/h</strong></li></ul><h3>Connection to Unit Rates (7.RP.1)</h3><p>Converting 72 km/h to m/s is a <em>compound unit rate</em> — two conversions happening together. You are finding how many meters per second using the same proportional reasoning you apply to any unit rate problem.</p><h3>Life Science Applications</h3><ul><li><strong>Medicine doses:</strong> Pediatric dosing is given in mg per kg of body weight. A 30 kg child needing 5 mg/kg → 30 × 5 = 150 mg dose. Convert to g → 0.15 g.</li><li><strong>Cell sizes:</strong> A red blood cell is about 8 µm (micrometers). 1 mm = 1000 µm, so 8 µm = 0.008 mm.</li><li><strong>Organism lengths:</strong> A blue whale (30 m) vs. an ant (3 mm) — convert both to cm to compare directly.</li></ul><h3>The Factor-Label Method (Dimensional Analysis)</h3><p>The KHDUdcm staircase is fast for metric conversions, but science classes use a more powerful tool that also works for <em>any</em> conversion — metric to imperial, rates to rates, even chained conversions in chemistry. It is called the <strong>factor-label method</strong> (also called <em>dimensional analysis</em>).</p><h4>The big idea</h4><p>Multiply by fractions equal to <strong>1</strong> — built from a unit equality — so units <strong>cancel</strong> on the way to the answer. Anything you multiply by 1 stays the same value, so the math is always honest.</p><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>1 km = 1000 m</strong> &nbsp; → &nbsp; <strong>1 = 1000 m / 1 km</strong> &nbsp; or &nbsp; <strong>1 = 1 km / 1000 m</strong></p><h4>Step-by-step recipe</h4><ol><li>Write the starting value with its unit.</li><li>Multiply by a "1" fraction whose <em>top</em> has the unit you want, <em>bottom</em> has the unit you want to get rid of.</li><li>Cancel the matching units (cross them out diagonally).</li><li>Multiply the numbers; carry the surviving unit.</li></ol><h4>Worked example — single step</h4><p>Convert <strong>2.5 km</strong> to meters:</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">2.5 km × (1000 m / 1 km) = 2500 m</p><p>"km" cancels (one on top, one on bottom). The "m" survives. Numbers: 2.5 × 1000 = 2500.</p><h4>Worked example — chained (rate)</h4><p>Convert <strong>72 km/h</strong> to m/s. Use TWO unit equalities at once:</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">72 km/h × (1000 m / 1 km) × (1 h / 3600 s) = 72 × 1000 / 3600 m/s = 20 m/s</p><p>"km" cancels and "h" cancels — leaving m/s. This is exactly the same answer as ÷ 3.6, but the work shows <em>why</em>.</p><h4>Worked example — three-step (medicine)</h4><p>A child weighs <strong>30 kg</strong> and the prescription is <strong>5 mg per kg</strong>. How many <strong>grams</strong> total?</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">30 kg × (5 mg / 1 kg) × (1 g / 1000 mg) = 150/1000 g = 0.15 g</p><p>"kg" cancels with "kg", "mg" cancels with "mg". "g" survives.</p><h4>Why this is useful in science</h4><ul><li>It works for <strong>any</strong> conversion — not just powers of ten.</li><li>It catches errors: if your units do not cancel, you set up the fraction upside-down.</li><li>It is the same method used in chemistry (mole conversions), physics (unit checks), and medicine (dose calculations).</li><li>It pairs with KHDUdcm: use the staircase for quick metric jumps, factor-label for everything else.</li></ul>`,
+  'percents': `<h2>Percents & Percent Change</h2><p><strong>Percent change</strong> measures how much something increased or decreased as a percentage.</p><h3>Formula</h3><p>Percent Change = (Change ÷ Original) × 100%</p><h3>Percent Increase</h3><p>Original price: $50, New price: $65</p><p>Change = 65 − 50 = 15</p><p>Percent increase = (15 ÷ 50) × 100% = 30%</p><h3>Percent Decrease</h3><p>Original: 80, New: 60</p><p>Change = 80 − 60 = 20</p><p>Percent decrease = (20 ÷ 80) × 100% = 25%</p><h3>Real-World Applications</h3><ul><li>Sales and discounts</li><li>Population growth</li><li>Grade improvements</li><li>Investment returns</li></ul><h3>Finding Original Amount</h3><p>If 30% of x = 15, then x = 15 ÷ 0.30 = 50</p>`,
+  'percent-error': `<h2>Percent Error &mdash; The Lab Math Every Scientist Uses</h2><p>You learned <strong>percent change</strong> earlier this year: how much something grew or shrank as a percentage of its original value. <strong>Percent error</strong> uses the same math, but with a different question: <em>how close did I get to the right answer?</em> Every science lab in 7th grade and beyond reports results with percent error so other scientists can judge how trustworthy the data are.</p><h3>The Formula</h3><p style="text-align:center;padding:10px;background:#f0f4ff;border-radius:8px;font-size:1.05em;"><strong>Percent Error = |measured &minus; actual| &divide; actual &times; 100%</strong></p><p>Compare to last unit&apos;s percent change formula: |new &minus; old| &divide; old &times; 100%. Same shape. The difference is what you call the numbers and why you compute it.</p><table style="border-collapse:collapse;width:100%;font-size:0.95em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">Term</th><th style="padding:7px 10px;">Percent Change</th><th style="padding:7px 10px;">Percent Error</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Numerator</td><td style="padding:6px 10px;">|new &minus; old|</td><td style="padding:6px 10px;">|measured &minus; actual|</td></tr><tr><td style="padding:6px 10px;">Denominator</td><td style="padding:6px 10px;">old (starting value)</td><td style="padding:6px 10px;">actual (true value)</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Used for</td><td style="padding:6px 10px;">Tracking growth or decline</td><td style="padding:6px 10px;">Evaluating accuracy of a measurement</td></tr></table><h3>Worked Example 1 &mdash; Density of Water</h3><p>The accepted density of water is <strong>1.00 g/mL</strong>. In lab, you measure a sample as <strong>0.95 g/mL</strong>. Percent error?</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|0.95 &minus; 1.00| &divide; 1.00 &times; 100%<br>= 0.05 &divide; 1.00 &times; 100% = <strong>5.0%</strong></p><h3>Worked Example 2 &mdash; Speed of a Toy Car</h3><p>A toy car is rated to travel at 2.0 m/s. You time it and calculate 1.7 m/s.</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|1.7 &minus; 2.0| &divide; 2.0 &times; 100% = 0.3 &divide; 2.0 &times; 100% = <strong>15%</strong></p><p>15% is high &mdash; check timing technique or whether the car is tired.</p><h3>Worked Example 3 &mdash; Acceleration Due to Gravity</h3><p>The accepted value for g is 9.81 m/s&sup2;. A class pendulum experiment yields g = 9.5 m/s&sup2;.</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|9.5 &minus; 9.81| &divide; 9.81 &times; 100% = 0.31 &divide; 9.81 &times; 100% &asymp; <strong>3.16%</strong></p><h3>Worked Example 4 &mdash; A Pediatric Drug Dose</h3><p>A doctor orders 250 mg of a medicine for a child. The pharmacy actually delivers 235 mg.</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">|235 &minus; 250| &divide; 250 &times; 100% = 15 &divide; 250 &times; 100% = <strong>6%</strong></p><p>For most medicines that is acceptable. For drugs with a narrow therapeutic window, even 6% can matter &mdash; that is why pharmacists double-check.</p><h3>Accuracy vs. Precision</h3><p>These two words sound similar but mean different things in science:</p><ul><li><strong>Accuracy</strong> = how close to the actual value (low percent error = high accuracy)</li><li><strong>Precision</strong> = how close repeated measurements are to <em>each other</em> (consistency)</li></ul><p>You can be precise but not accurate (the same wrong answer every time, like a clock that&apos;s 10 minutes fast). You can be accurate but not precise (close on average, but each measurement varies). The goal is both.</p><h3>What Counts as Acceptable Error?</h3><table style="border-collapse:collapse;width:100%;font-size:0.95em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">Field</th><th style="padding:7px 10px;">Typical Acceptable %Error</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Middle-school science labs</td><td style="padding:6px 10px;">Under 10%</td></tr><tr><td style="padding:6px 10px;">High-school chemistry</td><td style="padding:6px 10px;">Under 5%</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Pharmaceutical manufacturing</td><td style="padding:6px 10px;">Under 1%</td></tr><tr><td style="padding:6px 10px;">NIST physical-constant calibration</td><td style="padding:6px 10px;">Under 0.0001%</td></tr></table><h3>Sources of Error in a Lab</h3><ul><li><strong>Tool resolution:</strong> a ruler with 1 mm marks cannot measure smaller than that</li><li><strong>Reaction time:</strong> stopwatch press timing limits</li><li><strong>Reading the meniscus:</strong> liquids curve in narrow tubes</li><li><strong>Temperature drift:</strong> hot fluids change density</li><li><strong>Calibration:</strong> a scale that wasn&apos;t zeroed</li></ul><p>Reporting percent error and identifying its likely sources is what separates a science <em>fair</em> project from a science <em>experiment</em>.</p>`,
+  'add-sub-rational': `<h2>Adding & Subtracting Rational Numbers</h2><p><strong>Rational numbers</strong> include fractions, decimals, and integers (both positive and negative).</p><h3>Same Signs</h3><p>Add absolute values, keep the sign:</p><ul><li>3/4 + 1/4 = 4/4 = 1</li><li>−2.5 + (−1.5) = −4</li></ul><h3>Different Signs</h3><p>Subtract absolute values, keep sign of larger:</p><ul><li>5 + (−3) = 2 (5 is larger)</li><li>−7 + 2 = −5 (7 is larger)</li></ul><h3>With Fractions</h3><p>Find common denominator:</p><p>1/2 + 3/4 = 2/4 + 3/4 = 5/4</p><h3>With Decimals</h3><p>Align decimal points:</p><p>2.75 + (−1.25) = 1.50</p><h3>Real-World Contexts</h3><p>Elevation changes, temperature swings, account balances.</p>`,
+  'mult-div-rational': `<h2>Multiplying & Dividing Rational Numbers</h2><h3>Sign Rules</h3><ul><li>Positive × Positive = Positive</li><li>Negative × Negative = Positive</li><li>Positive × Negative = Negative</li><li>Negative ÷ Negative = Positive</li><li>Positive ÷ Negative = Negative</li></ul><h3>Multiplying Fractions</h3><p>(3/4) × (2/5) = 6/20 = 3/10</p><p>Multiply numerators, multiply denominators, simplify.</p><h3>Dividing Fractions</h3><p>(3/4) ÷ (1/2) = (3/4) × (2/1) = 6/4 = 3/2</p><h3>Multiplying Decimals</h3><p>2.5 × (−3.2) = −8.0</p><p>Count decimal places, place decimal in answer.</p><h3>Dividing Decimals</h3><p>−10.5 ÷ 3 = −3.5</p>`,
+  'alg-expressions': `<h2>Algebraic Expressions</h2><p>Work with expressions involving multiple operations and variables.</p><h3>Expanding Expressions</h3><p>Distributive property: 3(2x + 4) = 6x + 12</p><h3>Factoring Expressions</h3><p>Find GCF: 6x + 9 = 3(2x + 3)</p><h3>Combining Like Terms</h3><p>4x + 2y − x + 5y = 3x + 7y</p><h3>Simplifying</h3><p>2(3x + 1) − (x − 2) = 6x + 2 − x + 2 = 5x + 4</p><h3>Multi-Step Simplification</h3><p>Follow order of operations, combine like terms, distribute carefully.</p>`,
+  'equations': `<h2>Multi-Step Equations</h2><p>Equations with variables on both sides require careful isolation.</p><h3>Two-Step Equations</h3><p>3x + 5 = 20</p><ol><li>Subtract 5: 3x = 15</li><li>Divide by 3: x = 5</li></ol><h3>Variables on Both Sides</h3><p>2x + 3 = x + 7</p><ol><li>Subtract x: x + 3 = 7</li><li>Subtract 3: x = 4</li></ol><h3>Fractions and Decimals</h3><p>x/3 + 2 = 5</p><ol><li>Subtract 2: x/3 = 3</li><li>Multiply by 3: x = 9</li></ol><h3>Real-World Equations</h3><p>Cost problem: 2x + 10 = 30 solves to x = 10</p>`,
+  'inequalities': `<h2>Solving & Graphing Inequalities</h2><p>Inequalities are solved like equations, but remember: flip sign when multiplying/dividing by negative!</p><h3>Two-Step Inequalities</h3><p>2x + 3 < 9</p><ol><li>Subtract 3: 2x < 6</li><li>Divide by 2: x < 3</li></ol><h3>With Negatives</h3><p>−2x > 8</p><ol><li>Divide by −2: x < −4 (flip sign!)</li></ol><h3>Graphing Solutions</h3><ul><li>Open circle for < or ></li><li>Closed circle for ≤ or ≥</li><li>Shade toward solution</li></ul><h3>Real-World Contexts</h3><p>Budget limits, age requirements, safety ranges.</p>`,
+  'rearranging-formulas': `<h2>Rearranging Formulas &mdash; Solving for a Different Variable</h2><p>Science is full of three-quantity formulas: <strong>D = m / V</strong>, <strong>v = d / t</strong>, <strong>F = m &times; a</strong>, <strong>P = W / t</strong>, <strong>Dose = mg/kg &times; kg</strong>. Most of the time you do not need the formula in its <em>given</em> form &mdash; you need to solve for one of the <em>other</em> two variables. That skill is called <strong>rearranging</strong> (or <em>transposing</em>) the formula.</p><h3>The Big Idea &mdash; Inverse Operations</h3><p>Whatever is happening to the variable you want, undo it on BOTH sides. Multiplication undoes division. Division undoes multiplication.</p><h3>Master Example: D = m / V</strong></h3><p>You know D and V, find m. The variable m is on the top of a fraction, divided by V. Multiply both sides by V to undo the division.</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">D = m / V<br>D &times; V = m / V &times; V<br>D &times; V = m <br><strong>m = D &times; V</strong></p><p>Now solve for V (you know D and m). Start from the original. Multiply both sides by V to clear the fraction, then divide by D.</p><p style="font-family:monospace;background:#f9fafb;padding:10px;border-left:3px solid #2563eb;">D = m / V<br>D &times; V = m<br>V = m / D</p><h3>The Formula Triangle (Memory Aid)</h3><p>For any formula of the shape <strong>top = middle &times; bottom</strong>, draw a triangle with the top variable on top and the other two on the bottom. <em>Cover</em> what you want to find &mdash; the rest tells you what to do.</p><table style="margin:0 auto;border-collapse:collapse;"><tr><td style="padding:8px 14px;text-align:center;"><svg width="180" height="160" viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg"><polygon points="90,15 170,140 10,140" fill="#fef3c7" stroke="#1F3864" stroke-width="2"/><line x1="30" y1="85" x2="150" y2="85" stroke="#1F3864" stroke-width="2"/><line x1="90" y1="85" x2="90" y2="140" stroke="#1F3864" stroke-width="2"/><text x="90" y="60" font-size="24" font-weight="bold" text-anchor="middle" fill="#1F3864">m</text><text x="55" y="125" font-size="22" font-weight="bold" text-anchor="middle" fill="#1F3864">D</text><text x="125" y="125" font-size="22" font-weight="bold" text-anchor="middle" fill="#1F3864">V</text></svg><div style="font-size:0.92em;">m = D &times; V<br>D = m / V<br>V = m / D</div></td><td style="padding:8px 14px;text-align:center;"><svg width="180" height="160" viewBox="0 0 180 160" xmlns="http://www.w3.org/2000/svg"><polygon points="90,15 170,140 10,140" fill="#dcfce7" stroke="#1F3864" stroke-width="2"/><line x1="30" y1="85" x2="150" y2="85" stroke="#1F3864" stroke-width="2"/><line x1="90" y1="85" x2="90" y2="140" stroke="#1F3864" stroke-width="2"/><text x="90" y="60" font-size="24" font-weight="bold" text-anchor="middle" fill="#1F3864">d</text><text x="55" y="125" font-size="22" font-weight="bold" text-anchor="middle" fill="#1F3864">v</text><text x="125" y="125" font-size="22" font-weight="bold" text-anchor="middle" fill="#1F3864">t</text></svg><div style="font-size:0.92em;">d = v &times; t<br>v = d / t<br>t = d / v</div></td></tr></table><p><em>Cover m</em> and you see D over V → D &times; V (side-by-side means multiply). <em>Cover D</em> and you see m over V → m / V. The triangle is just a picture of the algebra.</p><h3>Worked Examples</h3><p><strong>Density.</strong> A sample has D = 5 g/cm³ and V = 20 cm³. Find m.</p><p style="font-family:monospace;background:#f9fafb;padding:8px;border-left:3px solid #2563eb;">m = D &times; V = 5 &times; 20 = 100 g</p><p><strong>Speed.</strong> A car travels d = 240 km in t = 4 h. Find v.</p><p style="font-family:monospace;background:#f9fafb;padding:8px;border-left:3px solid #2563eb;">v = d / t = 240 / 4 = 60 km/h</p><p><strong>Speed.</strong> A runner moves at v = 5 m/s for t = 30 s. Find d.</p><p style="font-family:monospace;background:#f9fafb;padding:8px;border-left:3px solid #2563eb;">d = v &times; t = 5 &times; 30 = 150 m</p><p><strong>Speed.</strong> A plane covers d = 1500 km at v = 750 km/h. Find t.</p><p style="font-family:monospace;background:#f9fafb;padding:8px;border-left:3px solid #2563eb;">t = d / v = 1500 / 750 = 2 h</p><h3>Life Science Connections</h3><ul><li><strong>Heart-rate output.</strong> Cardiac output = stroke volume &times; heart rate. Solve for stroke volume given output and heart rate.</li><li><strong>Drug dosing.</strong> Total dose = (mg/kg) &times; body weight. Solve for body weight when you know the total dose and the per-kg rate.</li><li><strong>Population growth.</strong> Population = rate &times; time + start. Solve for time when a target population is given.</li><li><strong>Microscope.</strong> Observed size = magnification &times; actual size. Solve for actual size given the observed size and magnification.</li></ul><h3>The General Recipe</h3><ol><li>Find the variable you want.</li><li>If it is being multiplied, divide both sides by the other factor.</li><li>If it is being divided, multiply both sides by the divisor.</li><li>If it is on top of a fraction with the variable in the denominator, multiply both sides by that variable first &mdash; then divide.</li><li>Always check: substitute back and confirm both sides are equal.</li></ol>`,
+  'scale-drawings': `<h2>Scale Drawings</h2><p>A <strong>scale</strong> is a ratio that relates distances on a drawing to actual distances.</p><h3>Understanding Scale</h3><p>Scale 1:100 means 1 unit on drawing = 100 units in real life</p><h3>Finding Missing Lengths</h3><p>Drawing 3 cm with scale 1:50</p><p>Actual = 3 × 50 = 150 cm</p><h3>Working Backward</h3><p>Actual distance 200 m, scale 1:10000</p><p>Drawing = 200 ÷ 10000 = 0.02 m = 2 cm</p><h3>Area and Scale</h3><p>If linear scale is 1:2, area scale is 1:4</p><p>If drawing area is 5 sq cm, actual is 5 × 4 = 20 sq cm</p><h3>Maps and Models</h3><p>Blueprint scales, map legends, model trains.</p>`,
+  'triangles': `<h2>Geometric Shapes & Triangles</h2><p>Triangles have special properties and constraints.</p><h3>Triangle Inequality Theorem</h3><p>The sum of any two sides must be greater than the third side.</p><p>Can sides 3, 4, 8 form triangle? 3 + 4 = 7, not > 8. No!</p><h3>Angle Sum</h3><p>All angles in a triangle sum to 180°</p><h3>Triangle Types</h3><ul><li>Equilateral: all sides equal</li><li>Isosceles: two sides equal</li><li>Scalene: all sides different</li><li>Right: one 90° angle</li></ul><h3>Drawing Figures</h3><p>Use rulers and protractors to accurately construct geometric shapes.</p>`,
+  'circles': `<h2>Circles</h2><p><strong>Circumference</strong> is the distance around. <strong>Area</strong> is space inside.</p><h3>Key Measurements</h3><ul><li>Radius (r): distance from center to edge</li><li>Diameter (d): distance across through center = 2r</li><li>π ≈ 3.14159</li></ul><h3>Circumference Formula</h3><p>C = πd or C = 2πr</p><p>Diameter 10 cm: C = 10π ≈ 31.4 cm</p><h3>Area Formula</h3><p>A = πr²</p><p>Radius 5 cm: A = π(5)² = 25π ≈ 78.5 sq cm</p><h3>Real-World Applications</h3><p>Track distances, pizza sizes, wheel rotations, pond dimensions.</p>`,
+  'area-polygons': `<h2>Area of Polygons</h2><p>Find areas of complex shapes by breaking them into simpler parts.</p><h3>Basic Formulas</h3><ul><li>Rectangle: A = lw</li><li>Triangle: A = (1/2)bh</li><li>Parallelogram: A = bh</li><li>Trapezoid: A = ((b₁ + b₂)/2) × h</li></ul><h3>Composite Figures</h3><p>L-shape: split into two rectangles, find each area, add.</p><h3>Irregular Polygons</h3><p>Divide into triangles using diagonals, find each area.</p><h3>Applications</h3><p>Lawn treatment, floor plans, fabric needed, garden design.</p>`,
+  'surface-area-volume': `<h2>Surface Area & Volume of 3D Figures</h2><h3>Rectangular Prisms</h3><p>SA = 2(lw + lh + wh)</p><p>V = lwh</p><h3>Triangular Prisms</h3><p>SA = (area of triangles) + (lateral rectangles)</p><p>V = (area of base) × height</p><h3>Pyramids</h3><p>SA = (base area) + (lateral triangle areas)</p><p>V = (1/3) × (base area) × height</p><h3>Real-World Uses</h3><p>Packaging materials, storage capacity, tent design, pool volume.</p>`,
+  'surface-area-volume-ratio': `<h2>Surface Area : Volume Ratio &mdash; Why Cells Stay Small</h2><p>Why is every cell in your body microscopic, even though you are not? Why do small animals lose body heat faster than big animals? Why does a chopped onion brown faster than a whole one? All three answers come from the same rule of geometry: <strong>as size grows, surface area grows slower than volume</strong>.</p><h3>The Math</h3><p>Take a cube with side length s.</p><table style="border-collapse:collapse;width:100%;font-size:0.95em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">Dimension</th><th style="padding:7px 10px;">Formula</th><th style="padding:7px 10px;">How it scales</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Surface Area (SA)</td><td style="padding:6px 10px;">6 s²</td><td style="padding:6px 10px;">grows with the SQUARE of size</td></tr><tr><td style="padding:6px 10px;">Volume (V)</td><td style="padding:6px 10px;">s³</td><td style="padding:6px 10px;">grows with the CUBE of size</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">SA / V</td><td style="padding:6px 10px;">6 s² / s³ = 6 / s</td><td style="padding:6px 10px;">SHRINKS as size grows</td></tr></table><h3>Cube SA : V Table</h3><table style="border-collapse:collapse;width:100%;font-size:0.95em;margin:10px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:7px 10px;">Side s</th><th style="padding:7px 10px;">SA = 6 s²</th><th style="padding:7px 10px;">V = s³</th><th style="padding:7px 10px;">SA : V (per unit)</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">1</td><td style="padding:6px 10px;">6</td><td style="padding:6px 10px;">1</td><td style="padding:6px 10px;"><strong>6 : 1</strong></td></tr><tr><td style="padding:6px 10px;">2</td><td style="padding:6px 10px;">24</td><td style="padding:6px 10px;">8</td><td style="padding:6px 10px;"><strong>3 : 1</strong></td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">3</td><td style="padding:6px 10px;">54</td><td style="padding:6px 10px;">27</td><td style="padding:6px 10px;"><strong>2 : 1</strong></td></tr><tr><td style="padding:6px 10px;">4</td><td style="padding:6px 10px;">96</td><td style="padding:6px 10px;">64</td><td style="padding:6px 10px;"><strong>1.5 : 1</strong></td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">6</td><td style="padding:6px 10px;">216</td><td style="padding:6px 10px;">216</td><td style="padding:6px 10px;"><strong>1 : 1</strong></td></tr><tr><td style="padding:6px 10px;">10</td><td style="padding:6px 10px;">600</td><td style="padding:6px 10px;">1000</td><td style="padding:6px 10px;"><strong>0.6 : 1</strong></td></tr></table><p>Each time the side doubles, SA quadruples but V multiplies by 8 &mdash; so SA / V is cut in half.</p><h3>Why Cells Are Tiny</h3><p>A cell takes in nutrients and oxygen through its surface (the membrane), and uses them in its volume (the cytoplasm). If volume grows much faster than surface, eventually a cell cannot import food fast enough. That is the upper size limit for a cell.</p><p>Most cells are 10 µm to 100 µm. Above that, they either divide (most cells), develop a folded surface (intestinal lining), or are stretched extremely thin (nerve cells).</p><p><em>Quick check.</em> A spherical cell with radius 5 µm has SA = 4&pi;r² ≈ 314 µm² and V = (4/3)&pi;r³ ≈ 524 µm³. SA/V ≈ 0.6 per µm. Doubling the radius to 10 drops SA/V to 0.3 per µm — half the import efficiency.</p><h3>Allometric Scaling &mdash; Animal Size and Heat Loss</h3><p>Animals lose heat through their skin (surface) and produce heat in their tissue (volume). Small animals have HIGH SA : V → they lose heat fast → they need to eat constantly. (A shrew eats every few hours or starves.) Big animals have LOW SA : V → they conserve heat well, but cannot dump excess heat easily — elephants need big ears, hippos stay in water.</p><h3>Speeding Things Up by Increasing Surface Area</h3><ul><li>Chopped onion browns faster than whole onion (more surface exposed to air).</li><li>Crushed ice melts faster than a single block (more surface in contact with warm air).</li><li>Lungs fold into 300 million alveoli to maximize surface for gas exchange.</li><li>Small intestine has finger-like villi to maximize surface for absorption.</li><li>Tree roots branch and re-branch to maximize surface for water uptake.</li></ul><h3>Calculating SA : V for Other Shapes</h3><p><strong>Cube (side s):</strong> SA = 6s², V = s³, SA/V = 6/s.</p><p><strong>Rectangular prism (l × w × h):</strong> SA = 2(lw + lh + wh), V = l×w×h.</p><p><strong>Sphere (radius r):</strong> SA = 4&pi;r², V = (4/3)&pi;r³, SA/V = 3/r.</p><p><strong>Cylinder (r, h):</strong> SA = 2&pi;rh + 2&pi;r², V = &pi;r²h, SA/V = 2/r + 2/h.</p><h3>Worked Example</h3><p>Compare a mouse (assume sphere, r = 3 cm) and an elephant (sphere, r = 100 cm).</p><p style="font-family:monospace;background:#f9fafb;padding:8px;border-left:3px solid #2563eb;">Mouse SA/V = 3 / 3 = 1.0 per cm<br>Elephant SA/V = 3 / 100 = 0.03 per cm</p><p>The mouse has roughly <strong>33 times</strong> more surface per unit volume than the elephant. That is why the mouse must eat its body weight in food every few days to stay warm.</p>`,
+  'angles': `<h2>Angle Relationships</h2><h3>Angle Pairs</h3><ul><li><strong>Complementary:</strong> sum to 90°</li><li><strong>Supplementary:</strong> sum to 180°</li><li><strong>Vertical:</strong> opposite angles formed by intersecting lines (equal)</li><li><strong>Adjacent:</strong> share a side</li></ul><h3>Parallel Lines & Transversals</h3><p>When a line crosses parallel lines:</p><ul><li>Corresponding angles are equal</li><li>Alternate interior angles are equal</li><li>Co-interior angles sum to 180°</li></ul><h3>Finding Missing Angles</h3><p>If one angle is 65°, its supplement is 180° − 65° = 115°</p><h3>Applications</h3><p>Carpentry, construction, road design, navigation.</p>`,
+  'probability': `<h2>Probability</h2><p><strong>Probability</strong> measures likelihood of an event: 0 to 1 (or 0% to 100%).</p><h3>Simple Probability</h3><p>P(event) = (favorable outcomes) ÷ (total outcomes)</p><p>Coin flip heads: 1 ÷ 2 = 0.5 or 50%</p><h3>Compound Events</h3><p>Rolling two dice, drawing cards with replacement.</p><p>P(both heads) = 0.5 × 0.5 = 0.25</p><h3>Theoretical vs. Experimental</h3><ul><li><strong>Theoretical:</strong> calculated mathematically</li><li><strong>Experimental:</strong> based on trials</li></ul><h3>Real-World Applications</h3><p>Games, weather forecasts, medical testing, insurance.</p>`,
+  'statistics': `<h2>Statistics & Sampling</h2><p><strong>Random sampling</strong> helps draw fair conclusions about populations.</p><h3>Population vs. Sample</h3><p>Population: all items. Sample: subset for study.</p><h3>Random Samples</h3><p>Every item has equal chance of selection. Avoids bias.</p><h3>Comparing Distributions</h3><ul><li>Mean: average value</li><li>Median: middle value</li><li>Mode: most common</li><li>Range: spread of data</li></ul><h3>Inferences</h3><p>If sample mean is 75, we estimate population mean is near 75.</p><h3>Applications</h3><p>Surveys, market research, quality control, sports analytics.</p>`,
+  'word-problems': `<h2>Multi-Step Word Problems</h2><p>Complex problems require multiple steps and mathematical modeling.</p><h3>Problem-Solving Steps</h3><ol><li>Read carefully, identify given and unknown</li><li>Plan approach (what operations needed?)</li><li>Solve step-by-step</li><li>Check answer makes sense</li></ol><h3>Problem Types</h3><ul><li><strong>Proportional:</strong> constant ratios</li><li><strong>Percent:</strong> increase, decrease, part of whole</li><li><strong>Geometry:</strong> area, volume, angles</li><li><strong>Probability:</strong> likelihood of outcomes</li><li><strong>Statistics:</strong> analyzing data</li></ul><h3>Example</h3><p>Movie ticket $12, 15% group discount, 8% tax. Final cost for 6 people?</p><ol><li>Full cost: 6 × $12 = $72</li><li>Discount: 15% of $72 = $10.80</li><li>After discount: $72 − $10.80 = $61.20</li><li>Tax: 8% of $61.20 = $4.90</li><li>Final: $61.20 + $4.90 = $66.10</li></ol>`,
+  'population-growth': `<h2>Population Growth Models</h2><p>Biologists track how populations change over time. The simplest model assumes a population grows by the same <em>factor</em> each time period — for example, doubling every 20 years. This is called <strong>exponential growth</strong>, and it starts slowly but eventually produces enormous numbers.</p><h3>The Doubling Pattern</h3><p>If a population doubles every period, you multiply by 2 each time. Starting with 100 bacteria:</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Period</th><th style="padding:6px 10px;">Population</th><th style="padding:6px 10px;">Pattern</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">0</td><td style="padding:6px 10px;">100</td><td style="padding:6px 10px;">100 × 2⁰ = 100</td></tr><tr><td style="padding:6px 10px;">1</td><td style="padding:6px 10px;">200</td><td style="padding:6px 10px;">100 × 2¹ = 200</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">2</td><td style="padding:6px 10px;">400</td><td style="padding:6px 10px;">100 × 2² = 400</td></tr><tr><td style="padding:6px 10px;">3</td><td style="padding:6px 10px;">800</td><td style="padding:6px 10px;">100 × 2³ = 800</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">n</td><td style="padding:6px 10px;">100 × 2ⁿ</td><td style="padding:6px 10px;">General rule</td></tr></table><h3>Doubling Time</h3><p>The <strong>doubling time</strong> is how long it takes a population to double. Real examples:</p><ul><li><em>E. coli</em> bacteria: doubles every 20 minutes in ideal conditions</li><li>Human world population: doubled from 3.5B to 7B in about 47 years (1967–2014)</li><li>Hawaiian monk seal: doubling slowly — recovering from near-extinction</li></ul><h3>Growth Rate vs. Doubling Time</h3><p>The Rule of 70 gives a quick estimate: <strong>Doubling time ≈ 70 ÷ growth rate (%)</strong></p><ul><li>Population growing at 2% per year: doubles in ~35 years</li><li>Bacteria growing at 3.5% per minute: doubles in ~20 minutes</li></ul><h3>Logistic Growth — When Resources Limit Growth</h3><p>Real populations can't grow forever — they hit a <strong>carrying capacity (K)</strong>, the maximum the environment can support. Growth slows as population approaches K. This creates an S-shaped curve instead of a J-shaped curve.</p><h3>Predator-Prey Oscillation</h3><p>When wolves (predators) increase, deer (prey) decrease. Fewer deer → less food for wolves → wolves decrease → deer recover. The two populations cycle up and down in sync, never perfectly stabilizing.</p>`,
+  'genetics-probability': `<h2>Genetics & Probability</h2><p>Genes come in pairs. Each parent passes one copy to a child — chosen at random. The result? Inherited traits follow the exact same rules as probability. Gregor Mendel discovered this in 1866 by counting pea plants — he was really doing statistics on living things.</p><h3>Key Vocabulary</h3><ul><li><strong>Gene:</strong> segment of DNA coding for one trait</li><li><strong>Allele:</strong> a version of a gene (e.g., B = brown eyes, b = blue eyes)</li><li><strong>Dominant (capital letter):</strong> expressed even with one copy — B</li><li><strong>Recessive (lowercase):</strong> expressed only with two copies — bb</li><li><strong>Genotype:</strong> actual allele pair (BB, Bb, bb)</li><li><strong>Phenotype:</strong> visible trait (brown or blue eyes)</li></ul><h3>The Punnett Square</h3><p>A Punnett square is a 2×2 multiplication table that shows all possible offspring combinations. If both parents are <strong>Bb</strong> (brown eyes, carrying recessive blue):</p><table style="border-collapse:collapse;margin:8px auto;font-size:1em;"><tr><td style="padding:4px;"></td><td style="padding:8px;background:#1F3864;color:#fff;font-weight:bold;">B</td><td style="padding:8px;background:#1F3864;color:#fff;font-weight:bold;">b</td></tr><tr><td style="padding:8px;background:#1F3864;color:#fff;font-weight:bold;">B</td><td style="padding:8px;background:#E2EFDA;">BB</td><td style="padding:8px;background:#E2EFDA;">Bb</td></tr><tr><td style="padding:8px;background:#1F3864;color:#fff;font-weight:bold;">b</td><td style="padding:8px;background:#E2EFDA;">Bb</td><td style="padding:8px;background:#BDD7EE;">bb</td></tr></table><ul><li>P(BB) = 1/4 = 25% — brown eyes, doesn't carry recessive</li><li>P(Bb) = 2/4 = 50% — brown eyes, carries recessive</li><li>P(bb) = 1/4 = 25% — blue eyes</li><li>P(brown phenotype) = 3/4 = 75%</li><li>P(blue phenotype) = 1/4 = 25%</li></ul><h3>Predicted vs. Observed Ratios</h3><p>Mendel's famous 3:1 ratio (dominant:recessive) is a <em>probability prediction</em>, not a guarantee. With small samples, results vary. With thousands of plants, results get very close to 3:1 — just like flipping a coin 1,000 times gives close to 50% heads.</p><h3>Real-World Applications</h3><ul><li>Genetic counselors calculate probability of inheriting conditions like cystic fibrosis (recessive)</li><li>Blood type inheritance follows the same probability rules (with 3 alleles instead of 2)</li><li>DNA fingerprinting uses probability to identify suspects — "1 in 1 billion chance of random match"</li></ul>`,
+  'pharmacokinetics': `<h2>Pharmacokinetics — Drug Half-Life</h2><p>Every medicine you take gets eliminated from your body at a predictable rate. The body eliminates a constant <em>fraction</em> of the drug per time period — usually one-half. This is called the drug's <strong>half-life</strong>, and it determines how often you need to take a dose and when the drug is safely out of your system.</p><h3>What Is Drug Half-Life?</h3><p>A drug's half-life is the time it takes for the concentration in your blood to fall to half its previous level. This is identical to radioactive decay — the same math, applied to medicine.</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Time (half-lives)</th><th style="padding:6px 10px;">Fraction remaining</th><th style="padding:6px 10px;">Example: 500 mg dose</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">0</td><td style="padding:6px 10px;">1 = 100%</td><td style="padding:6px 10px;">500 mg</td></tr><tr><td style="padding:6px 10px;">1</td><td style="padding:6px 10px;">1/2 = 50%</td><td style="padding:6px 10px;">250 mg</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">2</td><td style="padding:6px 10px;">1/4 = 25%</td><td style="padding:6px 10px;">125 mg</td></tr><tr><td style="padding:6px 10px;">3</td><td style="padding:6px 10px;">1/8 = 12.5%</td><td style="padding:6px 10px;">62.5 mg</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">4</td><td style="padding:6px 10px;">1/16 = 6.25%</td><td style="padding:6px 10px;">31.25 mg</td></tr><tr><td style="padding:6px 10px;">5</td><td style="padding:6px 10px;">1/32 ≈ 3%</td><td style="padding:6px 10px;">15.6 mg</td></tr></table><h3>Real Drug Half-Lives</h3><ul><li><strong>Aspirin:</strong> ~3–5 hours (mostly gone in a day)</li><li><strong>Ibuprofen:</strong> ~2 hours (gone in 10–12 hours)</li><li><strong>Caffeine:</strong> ~5 hours (a cup of coffee is half gone in 5 hours)</li><li><strong>Diazepam (Valium):</strong> 20–100 hours (stays in system days to weeks)</li></ul><h3>Therapeutic Window</h3><p>Medicines must stay within a "therapeutic window" — high enough to work but low enough to avoid toxicity. Doctors use half-life to time repeat doses so the drug never drops too low between doses or builds up to dangerous levels with repeated dosing.</p><h3>Connection to Fractions</h3><p>After n half-lives: Amount remaining = Initial dose × (1/2)ⁿ. This is the same formula as radioactive decay. Both are examples of <strong>exponential decay</strong> — a pattern you'll study formally in Algebra 2, but which you can already model using fractions.</p>`,
+  'biodiversity': `<h2>Ecology & Biodiversity Index</h2><p>Ecologists study ecosystems — communities of organisms living together. One key measure of ecosystem health is <strong>biodiversity</strong>: how many different species are present and how evenly they are distributed. A healthy forest has many different species in balanced numbers. A damaged ecosystem might have thousands of one invasive species and almost nothing else.</p><h3>Two Components of Biodiversity</h3><ul><li><strong>Species richness:</strong> how many different species are present (a count)</li><li><strong>Species evenness:</strong> how evenly individuals are distributed among species (a proportion)</li></ul><p>A pond with 5 species and 1,000 individuals of each is more diverse than a pond with 5 species where one species makes up 990 of 1,000 individuals.</p><h3>Proportion as a Biodiversity Tool</h3><p>For each species, calculate its <strong>proportion</strong> of the total: p = count of that species ÷ total individuals</p><p>Then compute: p × log₂(p) for each species and sum them. The result (called Shannon's H) is a diversity index. Higher H = more diverse.</p><p><strong>For 7th grade, we simplify:</strong> compute the proportions only and use them to compare ecosystems.</p><h3>Example — Two Forest Plots</h3><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Species</th><th style="padding:6px 10px;">Forest A count</th><th style="padding:6px 10px;">Forest A %</th><th style="padding:6px 10px;">Forest B count</th><th style="padding:6px 10px;">Forest B %</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Ōhiʻa</td><td style="padding:6px 10px;">200</td><td style="padding:6px 10px;">40%</td><td style="padding:6px 10px;">700</td><td style="padding:6px 10px;">70%</td></tr><tr><td style="padding:6px 10px;">Koa</td><td style="padding:6px 10px;">150</td><td style="padding:6px 10px;">30%</td><td style="padding:6px 10px;">150</td><td style="padding:6px 10px;">15%</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Tree fern</td><td style="padding:6px 10px;">100</td><td style="padding:6px 10px;">20%</td><td style="padding:6px 10px;">80</td><td style="padding:6px 10px;">8%</td></tr><tr><td style="padding:6px 10px;">Other</td><td style="padding:6px 10px;">50</td><td style="padding:6px 10px;">10%</td><td style="padding:6px 10px;">70</td><td style="padding:6px 10px;">7%</td></tr></table><p>Forest A is more diverse — no single species dominates. Forest B is less diverse — Ōhiʻa dominates at 70%.</p><h3>Invasive Species & Biodiversity Loss</h3><p>In Hawaii, invasive species like strawberry guava and axis deer have dramatically reduced native biodiversity. One invasive species can shift a forest from 40% dominant to 90%+ dominant in a few decades — the proportion math makes this visible.</p>`
+};
+
+const WORKSHEETS = {
+  'proportional': [
+    { q: 'If y = 4x, find y when x = 5:', answer: 'y = 20' },
+    { q: 'Is the ratio 2:3 proportional to 4:6?', answer: 'Yes' },
+    { q: 'Find constant k if y = kx and (2, 10) is on line:', answer: 'k = 5' },
+    { q: 'Distance = 50 × time. At 3 hours, distance = ?', answer: '150' },
+    { q: 'Constant of proportionality if 3 items cost $12:', answer: 'k = 4' },
+    { q: 'Complete: y = 2x. If x = 0, 1, 2; y = ?', answer: '0, 2, 4' },
+    { q: 'Graph y = 1.5x passes through origin? Why?', answer: 'Yes, proportional' },
+    { q: 'If ratio 5:8, find second number when first is 20:', answer: '32' },
+    { q: 'Proportional y = 3x. What is y when x = 10?', answer: 'y = 30' },
+    { q: 'Is (0,0) on line y = 2x? Why?', answer: 'Yes, proportional' }
+  ],
+  'ratios-rates': [
+    { q: 'Unit rate: 300 miles in 5 hours = ?', answer: '60 mph' },
+    { q: '1/2 mile in 1/4 hour. Unit rate = ?', answer: '2 mph' },
+    { q: 'Price per item if 4 items cost $20:', answer: '$5' },
+    { q: '2/3 pounds in 1/2 cup. Rate = ?', answer: '4/3 lb/cup' },
+    { q: 'If 1 gallon costs $3.50, cost of 3 gallons?', answer: '$10.50' },
+    { q: '45 meters in 9 seconds = ? meters per second', answer: '5' },
+    { q: 'Unit rate: 360 miles in 6 hours = ?', answer: '60 mph' },
+    { q: '2.5 pounds costs $10. Unit price = ?', answer: '$4/lb' },
+    { q: '3/4 of task in 1/2 hour. Unit rate = ?', answer: '1.5 tasks/hr' },
+    { q: 'If 2 items cost $8, 5 items cost ?', answer: '$20' }
+  ],
+  'unit-conversions': [
+    { q: '2.5 km → m:', answer: '2500 m' },
+    { q: '0.8 km → cm (5 steps right):', answer: '80,000 cm' },
+    { q: '3000 mm → m (3 steps left):', answer: '3 m' },
+    { q: '1.5 kg → mg (6 steps right):', answer: '1,500,000 mg' },
+    { q: '250 mL → L:', answer: '0.25 L' },
+    { q: '72 km/h → m/s (÷ 3.6):', answer: '20 m/s' },
+    { q: '108 km/h → m/s:', answer: '30 m/s' },
+    { q: '25 m/s → km/h (× 3.6):', answer: '90 km/h' },
+    { q: 'Child weighs 25 kg. Dose is 4 mg/kg. Total dose:', answer: '100 mg' },
+    { q: '100 mg → g:', answer: '0.1 g' },
+    { q: 'Blue whale 30 m → cm:', answer: '3000 cm' },
+    { q: 'Ant 3 mm → cm:', answer: '0.3 cm' }
+  ],
+  'scientific-notation': [
+    { q: 'Write 0.000045 in scientific notation:', answer: '4.5 × 10⁻⁵' },
+    { q: 'Write 0.000000082 in scientific notation:', answer: '8.2 × 10⁻⁸' },
+    { q: 'Write 6.3 × 10⁻⁴ in standard form:', answer: '0.00063' },
+    { q: 'Write 1.5 × 10⁻⁷ in standard form:', answer: '0.00000015' },
+    { q: 'A red blood cell is 8 × 10⁻⁶ m. A bacterium is 2 × 10⁻⁶ m. How many times larger is the red blood cell?', answer: '4 times larger' },
+    { q: 'A virus is 1 × 10⁻⁷ m. Convert to nm (1 nm = 10⁻⁹ m). How many nm?', answer: '100 nm (1 × 10² nm)' },
+    { q: '(3 × 10⁴) × (2 × 10⁻²) = ?', answer: '6 × 10²' },
+    { q: '(8 × 10⁶) ÷ (4 × 10³) = ?', answer: '2 × 10³' },
+    { q: '(5 × 10⁻³) × (4 × 10⁻⁴) = ?', answer: '2 × 10⁻⁶' },
+    { q: 'DNA is 2.5 × 10⁻⁹ m wide. A red blood cell is 8 × 10⁻⁶ m wide. How many DNA widths fit across one red blood cell? (Divide.)', answer: '3,200 (3.2 × 10³)' }
+  ],
+  'percents': [
+    { q: 'Original $50, new $65. Percent increase = ?', answer: '30%' },
+    { q: 'Original 100, new 75. Percent decrease = ?', answer: '25%' },
+    { q: 'Change from 20 to 25. Percent change = ?', answer: '25%' },
+    { q: 'Price $80, increases 10%. New price = ?', answer: '$88' },
+    { q: 'Temperature drops from 80° to 68°. % change = ?', answer: '15% decrease' },
+    { q: 'Original 40, new 50. Percent increase = ?', answer: '25%' },
+    { q: 'Population 1000, decreases to 900. % change = ?', answer: '10%' },
+    { q: 'Grade 75%, increases by 8%. New grade = ?', answer: '81%' },
+    { q: 'Cost $200, 15% markup. New cost = ?', answer: '$230' },
+    { q: 'Sales $5000, decreases 20%. New sales = ?', answer: '$4000' }
+  ],
+  'percent-error': [
+    { q: 'Measured density 0.95 g/mL, actual 1.00 g/mL. Percent error = ?', answer: '5%' },
+    { q: 'Measured 1.7 m/s, actual 2.0 m/s. Percent error = ?', answer: '15%' },
+    { q: 'Measured g = 9.5 m/s², actual g = 9.81 m/s². Percent error = ?', answer: '3.16%' },
+    { q: 'Pharmacy delivered 235 mg of a 250 mg dose. Percent error = ?', answer: '6%' },
+    { q: 'Measured spring constant 18 N/m, actual 20 N/m. Percent error = ?', answer: '10%' },
+    { q: 'Measured 96 mL, actual 100 mL. Percent error = ?', answer: '4%' },
+    { q: 'Measured boiling point 98 °C, actual 100 °C. Percent error = ?', answer: '2%' },
+    { q: 'Measured 4.65 g, actual 4.50 g. Percent error = ?', answer: '3.33%' },
+    { q: 'Accuracy or precision: hitting near the bullseye on average?', answer: 'accuracy' },
+    { q: 'Accuracy or precision: getting the same wrong answer every time?', answer: 'precision' }
+  ],
+  'add-sub-rational': [
+    { q: '3.5 + 2.3 = ?', answer: '5.8' },
+    { q: '1/2 + 1/4 = ?', answer: '3/4' },
+    { q: '−5 + 3 = ?', answer: '−2' },
+    { q: '2.5 + (−1.5) = ?', answer: '1' },
+    { q: '3/4 − 1/4 = ?', answer: '1/2' },
+    { q: '−7 + (−2) = ?', answer: '−9' },
+    { q: '5 − (−3) = ?', answer: '8' },
+    { q: '2/3 + 1/6 = ?', answer: '5/6' },
+    { q: '−4.2 − 1.8 = ?', answer: '−6' },
+    { q: '−1/2 + 3/4 = ?', answer: '1/4' }
+  ],
+  'mult-div-rational': [
+    { q: '3 × (−4) = ?', answer: '−12' },
+    { q: '(−2) × (−5) = ?', answer: '10' },
+    { q: '(1/2) × (2/3) = ?', answer: '1/3' },
+    { q: '2.5 × 4 = ?', answer: '10' },
+    { q: '−10 ÷ 2 = ?', answer: '−5' },
+    { q: '−12 ÷ (−3) = ?', answer: '4' },
+    { q: '(3/4) ÷ (1/2) = ?', answer: '3/2' },
+    { q: '2.4 ÷ 0.6 = ?', answer: '4' },
+    { q: '(−1/2) × (3/4) = ?', answer: '−3/8' },
+    { q: '−8 ÷ (−4) = ?', answer: '2' }
+  ],
+  'alg-expressions': [
+    { q: 'Expand: 3(2x + 4) = ?', answer: '6x + 12' },
+    { q: 'Factor: 4x + 6 = ?', answer: '2(2x + 3)' },
+    { q: 'Combine: 3x + 2y − x + y = ?', answer: '2x + 3y' },
+    { q: 'Expand: 2(3a − 1) = ?', answer: '6a − 2' },
+    { q: 'Simplify: 5x − (2x − 3) = ?', answer: '3x + 3' },
+    { q: 'Factor: 5a + 10 = ?', answer: '5(a + 2)' },
+    { q: 'Combine: 4m + 3n + 2m − n = ?', answer: '6m + 2n' },
+    { q: 'Expand: −2(3x − 4) = ?', answer: '−6x + 8' },
+    { q: 'Simplify: 2(x + 3) + x = ?', answer: '3x + 6' },
+    { q: 'Factor: 6x − 9 = ?', answer: '3(2x − 3)' }
+  ],
+  'equations': [
+    { q: 'Solve: 2x + 5 = 13', answer: 'x = 4' },
+    { q: 'Solve: 3x − 2 = 10', answer: 'x = 4' },
+    { q: 'Solve: 2x + 3 = x + 7', answer: 'x = 4' },
+    { q: 'Solve: x/2 + 3 = 8', answer: 'x = 10' },
+    { q: 'Solve: 3x − 4 = 2x + 1', answer: 'x = 5' },
+    { q: 'Solve: 4x + 2 = 18', answer: 'x = 4' },
+    { q: 'Solve: x/3 − 1 = 2', answer: 'x = 9' },
+    { q: 'Solve: 5x + 1 = 2x + 10', answer: 'x = 3' },
+    { q: 'Solve: 2(x + 3) = 10', answer: 'x = 2' },
+    { q: 'Solve: 3x − 5 = x + 3', answer: 'x = 4' }
+  ],
+  'inequalities': [
+    { q: 'Solve: x + 3 > 7', answer: 'x > 4' },
+    { q: 'Solve: 2x < 10', answer: 'x < 5' },
+    { q: 'Solve: x − 4 ≤ 2', answer: 'x ≤ 6' },
+    { q: 'Solve: 3x + 1 > 7', answer: 'x > 2' },
+    { q: 'Solve: −2x < 8 (flip!)', answer: 'x > −4' },
+    { q: 'Solve: 2x + 3 ≥ 9', answer: 'x ≥ 3' },
+    { q: 'Solve: x/2 < 5', answer: 'x < 10' },
+    { q: 'Solve: 4x − 3 ≤ 5', answer: 'x ≤ 2' },
+    { q: 'Solve: −3x > 12 (flip!)', answer: 'x < −4' },
+    { q: 'Solve: 2x + 1 ≤ 3x − 2', answer: 'x ≥ 3' }
+  ],
+  'rearranging-formulas': [
+    { q: 'D = m / V. Solve for m.', answer: 'm = D × V' },
+    { q: 'D = m / V. Solve for V.', answer: 'V = m / D' },
+    { q: 'v = d / t. Solve for d.', answer: 'd = v × t' },
+    { q: 'v = d / t. Solve for t.', answer: 't = d / v' },
+    { q: 'D = 4 g/cm³, V = 25 cm³. Find m.', answer: '100 g' },
+    { q: 'm = 90 g, D = 9 g/cm³. Find V.', answer: '10 cm³' },
+    { q: 'd = 180 km in t = 3 h. Find v.', answer: '60 km/h' },
+    { q: 'v = 25 m/s, t = 8 s. Find d.', answer: '200 m' },
+    { q: 'd = 100 m at v = 4 m/s. Find t.', answer: '25 s' },
+    { q: 'F = m × a. Solve for a.', answer: 'a = F / m' },
+    { q: 'Cardiac output 5 L/min = stroke vol 70 mL × HR. Find HR.', answer: '≈71 bpm' },
+    { q: 'Dose 150 mg = 5 mg/kg × weight. Find weight.', answer: '30 kg' },
+    { q: 'Observed 200 µm = 100× × actual. Find actual.', answer: '2 µm' }
+  ],
+  'scale-drawings': [
+    { q: 'Scale 1:100. Drawing 5 cm = actual ?', answer: '500 cm or 5 m' },
+    { q: 'Actual 200 m, scale 1:10000. Drawing = ?', answer: '2 cm' },
+    { q: 'Scale 1:50. Drawing 3 cm = actual ?', answer: '150 cm' },
+    { q: 'Actual 10 km, scale 1:100000. Drawing = ?', answer: '10 cm' },
+    { q: 'Scale 1:20. Actual 1 m = drawing ?', answer: '5 cm' },
+    { q: 'Drawing 4 cm, scale 1:25. Actual = ?', answer: '100 cm or 1 m' },
+    { q: 'Scale 1:500. Drawing 2 cm = actual ?', answer: '1000 cm or 10 m' },
+    { q: 'Actual 50 km, scale 1:1000000. Drawing = ?', answer: '5 cm' },
+    { q: 'Scale 1:2, area scale = ?', answer: '1:4' },
+    { q: 'Drawing area 4 sq cm, scale 1:2. Actual area = ?', answer: '16 sq cm' }
+  ],
+  'triangles': [
+    { q: 'Can 3, 4, 8 form triangle? (check inequality)', answer: 'No, 3+4<8' },
+    { q: 'Can 5, 6, 10 form triangle?', answer: 'Yes' },
+    { q: 'Triangle angles sum to ?', answer: '180°' },
+    { q: 'Can 2, 2, 5 form triangle?', answer: 'No' },
+    { q: 'If two angles are 50° and 60°, third = ?', answer: '70°' },
+    { q: 'Can 7, 8, 9 form triangle?', answer: 'Yes' },
+    { q: 'Equilateral triangle: all sides ?', answer: 'equal' },
+    { q: 'If angles are 45°, 45°, ?:', answer: '90°' },
+    { q: 'Can 4, 4, 8 form triangle?', answer: 'No, 4+4=8' },
+    { q: 'Isosceles triangle: ? sides equal', answer: '2' }
+  ],
+  'circles': [
+    { q: 'Circumference if radius = 5 cm:', answer: '10π or ~31.4 cm' },
+    { q: 'Area if radius = 3 cm:', answer: '9π or ~28.3 sq cm' },
+    { q: 'If diameter = 8, radius = ?', answer: '4' },
+    { q: 'Circumference if diameter = 10:', answer: '10π or ~31.4 cm' },
+    { q: 'Area if diameter = 6 cm:', answer: '9π or ~28.3 sq cm' },
+    { q: 'Radius = 4. Circumference = ?', answer: '8π or ~25.1 cm' },
+    { q: 'Area of circle radius 2:', answer: '4π or ~12.6 sq cm' },
+    { q: 'If C = 2πr, C = 14π, r = ?', answer: '7' },
+    { q: 'Diameter 12 cm. Circumference = ?', answer: '12π or ~37.7 cm' },
+    { q: 'Radius 6. Area = ?', answer: '36π or ~113 sq cm' }
+  ],
+  'area-polygons': [
+    { q: 'Triangle base 10, height 6. Area = ?', answer: '30 sq units' },
+    { q: 'Trapezoid bases 5, 7; height 4. Area = ?', answer: '24 sq units' },
+    { q: 'L-shape: rect 3×4 + rect 2×2. Area = ?', answer: '16 sq units' },
+    { q: 'Parallelogram base 8, height 5. Area = ?', answer: '40 sq units' },
+    { q: 'Triangle base 12, height 8. Area = ?', answer: '48 sq units' },
+    { q: 'Trapezoid bases 3, 5; height 6. Area = ?', answer: '24 sq units' },
+    { q: 'Pentagon divided into 3 triangles, areas 10, 12, 8. Total = ?', answer: '30 sq units' },
+    { q: 'Rectangle 6×7 minus triangle base 6, height 2. Area = ?', answer: '36 sq units' },
+    { q: 'Parallelogram base 9, height 4. Area = ?', answer: '36 sq units' },
+    { q: 'Composite: rect 4×5 + triangle base 4, height 3. Area = ?', answer: '26 sq units' }
+  ],
+  'surface-area-volume': [
+    { q: 'Rectangular prism 2×3×4. V = ?', answer: '24 cubic units' },
+    { q: 'Rectangular prism 2×3×4. SA = ?', answer: '52 sq units' },
+    { q: 'Triangular prism. Base triangle area 5, prism height 10. V = ?', answer: '50 cubic units' },
+    { q: 'Square pyramid base 4×4, height 6. V = ?', answer: '32 cubic units' },
+    { q: 'Rectangular prism 5×5×5. V = ?', answer: '125 cubic units' },
+    { q: 'Cube side 3. SA = ?', answer: '54 sq units' },
+    { q: 'Rectangular prism 3×4×5. V = ?', answer: '60 cubic units' },
+    { q: 'Triangular prism base area 10, height 8. V = ?', answer: '80 cubic units' },
+    { q: 'Cube side 2. V = ?', answer: '8 cubic units' },
+    { q: 'Rectangular prism 1×2×10. V = ?', answer: '20 cubic units' }
+  ],
+  'surface-area-volume-ratio': [
+    { q: 'Cube s = 2 cm. SA?', answer: '24 cm²' },
+    { q: 'Cube s = 2 cm. V?', answer: '8 cm³' },
+    { q: 'Cube s = 2 cm. SA : V?', answer: '3 : 1' },
+    { q: 'Cube s = 5 cm. SA : V?', answer: '6/5 = 1.2 : 1' },
+    { q: 'Cube s = 10 cm. SA : V?', answer: '0.6 : 1' },
+    { q: 'When side doubles, SA multiplies by:', answer: '4 (square of 2)' },
+    { q: 'When side doubles, V multiplies by:', answer: '8 (cube of 2)' },
+    { q: 'When side doubles, SA : V is multiplied by:', answer: '1/2 (cut in half)' },
+    { q: 'Sphere r = 5. SA : V?', answer: '3/5 = 0.6 per unit' },
+    { q: 'Sphere r = 10. SA : V?', answer: '0.3 per unit' },
+    { q: 'Why must cells stay small?', answer: 'High SA:V keeps import/export of materials efficient' },
+    { q: 'Why do small animals eat constantly?', answer: 'High SA:V loses heat fast, needs constant fuel' },
+    { q: 'Why do alveoli fold inside lungs?', answer: 'To maximize SA for gas exchange while keeping V small' }
+  ],
+  'angles': [
+    { q: 'Complementary to 35° = ?', answer: '55°' },
+    { q: 'Supplementary to 70° = ?', answer: '110°' },
+    { q: 'Vertical angles are ?', answer: 'equal' },
+    { q: 'Adjacent angles share a ?', answer: 'side' },
+    { q: 'Co-interior angles sum to ?', answer: '180°' },
+    { q: 'Supplementary to 125° = ?', answer: '55°' },
+    { q: 'Complementary to 28° = ?', answer: '62°' },
+    { q: 'If angle is 60°, vertical angle = ?', answer: '60°' },
+    { q: 'Corresponding angles with parallel lines are ?', answer: 'equal' },
+    { q: 'Alternate interior angles are ?', answer: 'equal' }
+  ],
+  'probability': [
+    { q: 'P(heads) on coin = ?', answer: '1/2 or 50%' },
+    { q: 'P(rolling 3) on die = ?', answer: '1/6' },
+    { q: 'P(both heads, flip twice) = ?', answer: '1/4' },
+    { q: 'P(1 or 2 on die) = ?', answer: '1/3' },
+    { q: 'Deck 52 cards. P(red) = ?', answer: '1/2' },
+    { q: 'Bag: 3 red, 2 blue. P(red) = ?', answer: '3/5' },
+    { q: 'P(rolling 6 twice) = ?', answer: '1/36' },
+    { q: 'P(not 1) on die = ?', answer: '5/6' },
+    { q: 'Spinner 4 equal sections. P(one section) = ?', answer: '1/4' },
+    { q: 'Two coins both heads = ?', answer: '1/4' }
+  ],
+  'statistics': [
+    { q: 'Mean of 10, 20, 30, 40 = ?', answer: '25' },
+    { q: 'Median of 5, 10, 15, 20 = ?', answer: '12.5' },
+    { q: 'Mode of 1, 2, 2, 3, 4 = ?', answer: '2' },
+    { q: 'Range of 5, 15, 25 = ?', answer: '20' },
+    { q: 'Mean of 8, 8, 8, 8 = ?', answer: '8' },
+    { q: 'Median of 1, 3, 5, 7, 9 = ?', answer: '5' },
+    { q: 'Mode of 10, 20, 30 (all appear once) = ?', answer: 'no mode' },
+    { q: 'Range of 2, 18 = ?', answer: '16' },
+    { q: 'Mean of 4, 6, 8, 10 = ?', answer: '7' },
+    { q: 'Median of 2, 4, 6, 8 = ?', answer: '5' }
+  ],
+  'word-problems': [
+    { q: 'Cost $50, 20% discount. Final = ?', answer: '$40' },
+    { q: '3 items at $7 each, 10% off. Total = ?', answer: '$18.90' },
+    { q: 'Speed 60 mph × 2.5 hours = distance ?', answer: '150 miles' },
+    { q: 'Ratio 3:5. If first is 9, second = ?', answer: '15' },
+    { q: 'Area rect 8×6 minus triangle base 4, height 3 = ?', answer: '42 sq units' },
+    { q: 'Population 500, increases 20% = ?', answer: '600' },
+    { q: 'Unit rate 8 apples for $4 = ?', answer: '$0.50 each' },
+    { q: 'Percent change from 80 to 96 = ?', answer: '20%' },
+    { q: 'Volume box 5×4×3 = ?', answer: '60 cubic units' },
+    { q: 'Circumference circle d=10 = ?', answer: '10π or ~31.4' }
+  ],
+  'population-growth': [
+    { q: 'A bacterial colony starts at 50 cells and doubles every hour. After 3 hours, how many cells?', answer: '400 cells (50 × 2³)' },
+    { q: 'A population of 200 doubles every 20 years. After 60 years, what is the population?', answer: '1,600 (200 × 2³)' },
+    { q: 'Using the Rule of 70: a population growing at 7% per year has a doubling time of approximately:', answer: '10 years (70 ÷ 7)' },
+    { q: 'A population grows from 1,000 to 4,000 in 2 doubling periods. After 3 more periods, what is the population?', answer: '32,000 (4,000 × 2³)' },
+    { q: 'Wolves increase from 50 to 100 (year 1), 200 (year 2). Deer decrease from 1000 to 700 (year 1), 400 (year 2). What happens to deer if wolf population continues doubling to 400?', answer: 'Deer will continue declining — predict approximately 100 or fewer' },
+    { q: 'E. coli doubles every 20 minutes. Starting from 1 cell, how many after 2 hours (6 periods)?', answer: '64 cells (2⁶)' },
+    { q: 'A bird population was 2,000 in 1980 and is 500 today (2024). Has it grown or declined? By what factor?', answer: 'Declined by a factor of 4 (from 2000 to 500)' },
+    { q: 'A rabbit colony doubles every 6 months. Starting at 10, how many after 2 years (4 periods)?', answer: '160 rabbits (10 × 2⁴)' },
+    { q: 'Population A: 100, growing at 14% per year. Doubling time ≈ ? years.', answer: '5 years (70 ÷ 14)' },
+    { q: 'A population hits its "carrying capacity." What happens to the growth rate?', answer: 'It slows toward zero — the population levels off' }
+  ],
+  'genetics-probability': [
+    { q: 'Two Bb parents cross. Probability of a bb (recessive) offspring:', answer: '1/4 = 25%' },
+    { q: 'Two Bb parents cross. Probability of brown eyes (B dominant over b):', answer: '3/4 = 75%' },
+    { q: 'A BB parent crosses with a bb parent. What fraction of offspring are Bb?', answer: '4/4 = 100%' },
+    { q: 'One parent is BB, the other is Bb. What is the probability of a bb child?', answer: '0% — impossible, because BB parent can only give B' },
+    { q: 'Cystic fibrosis (CF) is recessive. Both parents are Cc (carriers). Probability of a child with CF (cc):', answer: '1/4 = 25%' },
+    { q: 'In Mendel\'s 3:1 ratio, what fraction show the dominant phenotype?', answer: '3/4 = 75%' },
+    { q: 'A Punnett square has 4 boxes. Two show Bb, one shows BB, one shows bb. What percent show the dominant phenotype?', answer: '75% (3 out of 4 have at least one B)' },
+    { q: 'Blood type O is recessive (ii). If both parents are Ii (type A carrier), what is the probability of a child with blood type O?', answer: '1/4 = 25%' },
+    { q: 'If a trait is recessive and a child shows it (e.g., blue eyes), what must BOTH parents have in their genotype?', answer: 'At least one recessive allele each (at minimum Bb × Bb)' },
+    { q: 'In a large population, 900 pea plants have round seeds and 300 have wrinkled seeds. What is the ratio, and does it match Mendel\'s prediction?', answer: '3:1 — yes, matches Mendel\'s predicted ratio exactly' }
+  ],
+  'pharmacokinetics': [
+    { q: 'A 400 mg dose of ibuprofen has a half-life of 2 hours. After 4 hours (2 half-lives), how much remains?', answer: '100 mg' },
+    { q: 'Caffeine has a half-life of 5 hours. You drink 200 mg at noon. How much is left at 10 pm (10 hours later)?', answer: '50 mg (200 × 1/4)' },
+    { q: 'After 3 half-lives, what fraction of a drug remains?', answer: '1/8' },
+    { q: 'A drug is considered "out of your system" when less than 3% remains. Approximately how many half-lives is that?', answer: '5 half-lives (1/32 ≈ 3%)' },
+    { q: 'A 500 mg dose of aspirin has a half-life of 4 hours. How much remains after 12 hours?', answer: '62.5 mg (3 half-lives: 500 → 250 → 125 → 62.5)' },
+    { q: 'A doctor gives a drug with half-life 6 hours. To keep drug above 50% of dose, how often must it be given?', answer: 'Every 6 hours (one half-life)' },
+    { q: 'A 320 mg dose is reduced by half every 8 hours. After 24 hours, how much remains?', answer: '40 mg (3 half-lives)' },
+    { q: 'Write the general formula for amount remaining after n half-lives, starting with dose D:', answer: 'Amount = D × (1/2)ⁿ' },
+    { q: 'A drug has a half-life of 3 hours. After how many hours will less than 10% remain? (Hint: (1/2)³ = 12.5%, (1/2)⁴ = 6.25%)', answer: 'After 4 half-lives = 12 hours' },
+    { q: 'Why is knowing a drug\'s half-life important for patient safety?', answer: 'So doctors can time doses to keep drug concentration in the safe therapeutic window — not too low (ineffective) and not too high (toxic)' }
+  ],
+  'biodiversity': [
+    { q: 'Forest A has 4 species in equal numbers. Forest B has 4 species but one makes up 90% of all individuals. Which is more diverse?', answer: 'Forest A — more even distribution' },
+    { q: 'A pond has 200 total fish: 80 bass, 60 trout, 40 catfish, 20 perch. What proportion are bass?', answer: '80/200 = 0.40 = 40%' },
+    { q: 'Using the proportions from question 2: which species is most dominant?', answer: 'Bass at 40%' },
+    { q: 'Invasive strawberry guava takes over a Hawaiian forest, going from 10% to 75% of all plants in 30 years. What happened to native plant proportions overall?', answer: 'They decreased from 90% to 25% total — a dramatic drop in biodiversity' },
+    { q: 'Ecosystem A: 3 species, 100 individuals each (300 total). Ecosystem B: 3 species: 240, 40, 20. Which has higher evenness?', answer: 'Ecosystem A — all species are equally represented at 1/3 each' },
+    { q: 'Species richness counts the number of different species. A rainforest has 500 species per hectare. A corn field has 3. What is the richness of each?', answer: 'Rainforest: 500; corn field: 3' },
+    { q: 'An ecologist surveys two tide pools. Pool 1: 6 species, most proportions near 16%. Pool 2: 6 species, one at 80%, others at ~4% each. Which is healthier?', answer: 'Pool 1 — more even proportions indicate higher biodiversity and health' },
+    { q: '200 birds total: 100 species A, 60 species B, 40 species C. Compute all three proportions.', answer: 'A: 0.50, B: 0.30, C: 0.20' },
+    { q: 'If a coral reef loses 2 of its 12 species, the number of species drops by what percent?', answer: '2/12 = 16.7% decrease in richness' },
+    { q: 'Why do ecologists care if one species becomes dominant (even if total number of individuals stays the same)?', answer: 'Because low evenness means the ecosystem is fragile — if that one dominant species is threatened, the whole ecosystem collapses' }
+  ]
+};
+
+const QUIZZES = {
+  'proportional': [
+    { q: 'y = 2x is proportional. Find y when x=4:', opts: ['6', '8', '2', '4'], ans: 1 },
+    { q: 'What passes through origin in proportional?', opts: ['line', 'circle', 'parabola', 'none'], ans: 0 },
+    { q: 'Constant if 5 items = $20?', opts: ['5', '4', '20', '100'], ans: 1 },
+    { q: 'Ratio 2:3 equals:', opts: ['4:5', '4:6', '3:4', '2:2'], ans: 1 },
+    { q: 'y=kx. If (3,12) on line, k=?', opts: ['3', '4', '12', '9'], ans: 1 }
+  ],
+  'ratios-rates': [
+    { q: 'Unit rate 120 miles in 3 hours:', opts: ['40 mph', '120 mph', '3 mph', '360 mph'], ans: 0 },
+    { q: '2 items for $10. Price per item?', opts: ['$5', '$2', '$10', '$20'], ans: 0 },
+    { q: 'Half mile in 1/4 hour. Speed?', opts: ['2 mph', '1/8 mph', '0.5 mph', '4 mph'], ans: 0 },
+    { q: 'If 3 cost $12, 7 cost?', opts: ['$28', '$36', '$12', '$4'], ans: 0 },
+    { q: 'Unit rate compares to...', opts: ['1 unit', 'any ratio', 'whole', 'decimal'], ans: 0 }
+  ],
+  'unit-conversions': [
+    { q: 'KHDUdcm memory phrase starts with:', opts: ['King Henry Did...', 'King Henry Doesn\'t...', 'King Henry Drinks...', 'King Henry Dares...'], ans: 1 },
+    { q: '0.5 km = ? m', opts: ['5 m', '50 m', '500 m', '5000 m'], ans: 2 },
+    { q: '2 km → cm (5 steps right). Answer:', opts: ['200 cm', '2000 cm', '20,000 cm', '200,000 cm'], ans: 3 },
+    { q: '4500 g = ? kg', opts: ['0.045 kg', '0.45 kg', '4.5 kg', '45 kg'], ans: 2 },
+    { q: 'To convert km/h to m/s, you:', opts: ['× 3.6', '÷ 3.6', '× 1000', '÷ 60'], ans: 1 },
+    { q: '90 km/h = ? m/s', opts: ['25 m/s', '30 m/s', '32 m/s', '90 m/s'], ans: 0 },
+    { q: '10 m/s = ? km/h', opts: ['10 km/h', '36 km/h', '60 km/h', '100 km/h'], ans: 1 },
+    { q: 'Child 20 kg, dose 5 mg/kg. Total dose:', opts: ['4 mg', '25 mg', '100 mg', '200 mg'], ans: 2 },
+    { q: '500 mg = ? g', opts: ['0.05 g', '0.5 g', '5 g', '50 g'], ans: 1 },
+    { q: 'Multi-step: 3 kg → mg (6 steps right):', opts: ['3000 mg', '30,000 mg', '300,000 mg', '3,000,000 mg'], ans: 3 }
+  ],
+  'scientific-notation': [
+    { q: 'Write 0.00032 in scientific notation:', opts: ['3.2 × 10³', '3.2 × 10⁻⁴', '3.2 × 10⁻³', '0.32 × 10⁻³'], ans: 1 },
+    { q: 'What does a negative exponent mean in scientific notation?', opts: ['The number is negative', 'Move decimal left (very small number)', 'Multiply by a negative', 'The base is negative'], ans: 1 },
+    { q: '1.8 × 10⁻⁵ in standard form is:', opts: ['18,000', '0.000018', '0.00018', '0.0000018'], ans: 1 },
+    { q: 'A bacterium is 2 × 10⁻⁶ m. A virus is 1 × 10⁻⁷ m. The bacterium is how many times larger?', opts: ['2', '5', '20', '200'], ans: 2 },
+    { q: '(3 × 10⁵) × (2 × 10⁴) = ?', opts: ['6 × 10⁹', '6 × 10²⁰', '5 × 10⁹', '6 × 10¹'], ans: 0 },
+    { q: '(9 × 10⁸) ÷ (3 × 10⁵) = ?', opts: ['3 × 10³', '3 × 10¹³', '6 × 10³', '3 × 10⁻³'], ans: 0 },
+    { q: 'Which is the correct form of scientific notation?', opts: ['0.45 × 10⁶', '45 × 10⁵', '4.5 × 10⁶', '45 × 10⁻¹'], ans: 2 },
+    { q: 'DNA width is 2.5 × 10⁻⁹ m. This is smaller than a red blood cell (8 × 10⁻⁶ m) by a factor of approximately:', opts: ['3,200', '32', '320', '32,000'], ans: 0 },
+    { q: 'Which prefix equals 10⁻³?', opts: ['centi', 'deci', 'milli', 'micro'], ans: 2 },
+    { q: '(4 × 10⁻²) × (5 × 10⁻³) = ?', opts: ['20 × 10⁻⁵', '2 × 10⁻⁴', '2 × 10⁻⁵', '9 × 10⁻⁵'], ans: 1 }
+  ],
+  'percents': [
+    { q: 'Price $100 increases to $120. % change?', opts: ['20%', '80%', '100%', '120%'], ans: 0 },
+    { q: 'Decrease from 50 to 40. % decrease?', opts: ['20%', '10%', '25%', '50%'], ans: 0 },
+    { q: 'Item $80, 25% off. Final?', opts: ['$60', '$55', '$20', '$100'], ans: 0 },
+    { q: 'Increase 60 to 75. % change?', opts: ['15%', '25%', '60%', '75%'], ans: 1 },
+    { q: 'Find % change: (change÷original)×100%?', opts: ['formula', 'ratio', 'constant', 'sum'], ans: 0 }
+  ],
+  'percent-error': [
+    { q: 'Density measured 8.9 g/mL, actual 9.0 g/mL. Percent error = ?', answer: '1.11%' },
+    { q: 'Speed measured 4.5 m/s, actual 5.0 m/s. Percent error = ?', answer: '10%' },
+    { q: 'Difference between accuracy and precision?', answer: 'accuracy = closeness to true; precision = consistency' },
+    { q: 'Lab acceptable error for middle school?', answer: 'under 10%' },
+    { q: 'Pharmacy gives 290 mg vs. ordered 300 mg. Percent error = ?', answer: '3.33%' }
+  ],
+  'add-sub-rational': [
+    { q: '3.5 + 2.5 = ?', opts: ['5', '6', '1', '0'], ans: 1 },
+    { q: '1/2 + 1/3 = ?', opts: ['1/5', '2/5', '5/6', '1/6'], ans: 2 },
+    { q: '−5 + (−3) = ?', opts: ['8', '−8', '2', '−2'], ans: 1 },
+    { q: 'Same signs, add and keep sign?', opts: ['true', 'false', 'maybe', 'never'], ans: 0 },
+    { q: '2/3 − 1/2 = ?', opts: ['1/6', '1/3', '2/6', '3/2'], ans: 0 }
+  ],
+  'mult-div-rational': [
+    { q: 'Negative × negative = ?', opts: ['negative', 'positive', 'zero', 'undefined'], ans: 1 },
+    { q: '(1/2) × (2/3) = ?', opts: ['1/6', '2/6', '1/3', '2'], ans: 2 },
+    { q: '3 × (−4) = ?', opts: ['−12', '12', '−1', '7'], ans: 0 },
+    { q: '−10 ÷ 2 = ?', opts: ['−5', '5', '−20', '20'], ans: 0 },
+    { q: '(−2) × (−5) = ?', opts: ['−10', '10', '−3', '3'], ans: 1 }
+  ],
+  'alg-expressions': [
+    { q: 'Expand 3(x+2):', opts: ['3x+2', '3x+6', 'x+6', '3x'], ans: 1 },
+    { q: 'Factor 2x+4:', opts: ['2(x+4)', '4(x+2)', '2(x+2)', 'x(2+4)'], ans: 2 },
+    { q: 'Combine 3x+2x:', opts: ['5', '5x', '6x', 'x'], ans: 1 },
+    { q: 'Distribute −2(a−3):', opts: ['−2a−3', '−2a+6', '−2a−6', '2a+6'], ans: 1 },
+    { q: 'Simplify 4x+3−x:', opts: ['3x+3', '5x+3', 'x+3', '4x'], ans: 0 }
+  ],
+  'equations': [
+    { q: 'Solve 2x+3=9:', opts: ['3', '6', '2', '9'], ans: 0 },
+    { q: '3x−2=10:', opts: ['4', '12', '6', '3'], ans: 0 },
+    { q: '2x+1=x+5:', opts: ['6', '4', '2', '1'], ans: 1 },
+    { q: 'x/2=6:', opts: ['3', '12', '6', '2'], ans: 1 },
+    { q: '3(x+1)=9:', opts: ['2', '3', '9', '6'], ans: 0 }
+  ],
+  'inequalities': [
+    { q: 'Solve x+2>5:', opts: ['x>3', 'x<3', 'x≤3', 'x≥3'], ans: 0 },
+    { q: '2x<8:', opts: ['x<4', 'x>4', 'x≤4', 'x=4'], ans: 0 },
+    { q: 'Flip when multiply/divide by negative?', opts: ['yes', 'no', 'maybe', 'never'], ans: 0 },
+    { q: '−2x>6:', opts: ['x>−3', 'x<−3', 'x=−3', 'no solution'], ans: 1 },
+    { q: 'Open circle for < or >?', opts: ['yes', 'no', 'sometimes', 'always'], ans: 0 }
+  ],
+  'rearranging-formulas': [
+    { q: 'D = m / V. m = ?', opts: ['D + V', 'D / V', 'D × V', 'V / D'], ans: 2 },
+    { q: 'D = m / V. V = ?', opts: ['D × m', 'm / D', 'D / m', 'D + m'], ans: 1 },
+    { q: 'v = d / t. d = ?', opts: ['v / t', 'v × t', 't / v', 'v + t'], ans: 1 },
+    { q: 'v = d / t. t = ?', opts: ['d / v', 'v × d', 'd × v', 'd − v'], ans: 0 },
+    { q: 'F = m × a. a = ?', opts: ['F + m', 'F − m', 'F / m', 'F × m'], ans: 2 },
+    { q: 'D = 5, V = 12. Find m.', opts: ['2.4', '17', '60', '120'], ans: 2 },
+    { q: 'm = 80 g, D = 8 g/cm³. Find V.', opts: ['10 cm³', '72 cm³', '88 cm³', '640 cm³'], ans: 0 },
+    { q: 'd = 300 km, t = 5 h. Find v.', opts: ['60 km/h', '305 km/h', '1500 km/h', '60 km'], ans: 0 },
+    { q: 'Inverse of multiplication is:', opts: ['Addition', 'Subtraction', 'Division', 'Squaring'], ans: 2 },
+    { q: 'Cover m in the m/D/V triangle. You see:', opts: ['D + V', 'D × V', 'D / V', 'V / D'], ans: 1 }
+  ],
+  'scale-drawings': [
+    { q: 'Scale 1:100, drawing 4cm=actual?', opts: ['400cm', '100cm', '4m', '104cm'], ans: 0 },
+    { q: 'Actual 5km, scale 1:100000=drawing?', opts: ['0.05cm', '5cm', '50cm', '0.5cm'], ans: 1 },
+    { q: 'Scale 1:2, area scale is?', opts: ['1:2', '1:4', '1:8', '2:1'], ans: 1 },
+    { q: 'Drawing 3cm, scale 1:50=actual?', opts: ['50cm', '150cm', '3m', '0.3m'], ans: 1 },
+    { q: 'Scale represents...', opts: ['ratio', 'area', 'volume', 'distance'], ans: 0 }
+  ],
+  'triangles': [
+    { q: 'Can 2, 3, 6 form triangle?', opts: ['yes', 'no', 'maybe', 'always'], ans: 1 },
+    { q: 'Triangle angles sum to?', opts: ['90°', '180°', '360°', '270°'], ans: 1 },
+    { q: 'Can 5, 5, 8 form triangle?', opts: ['yes', 'no', 'maybe', 'depends'], ans: 0 },
+    { q: 'Triangle inequality: sum of 2 > ?', opts: ['third', 'fourth', 'zero', 'sum'], ans: 0 },
+    { q: 'Angles 40°, 60°, then 3rd=?', opts: ['80°', '100°', '120°', '180°'], ans: 0 }
+  ],
+  'circles': [
+    { q: 'Circumference formula:', opts: ['πr²', '2πr', 'πd', 'B and C'], ans: 3 },
+    { q: 'Area formula:', opts: ['πd', 'πr', '2πr', 'πr²'], ans: 3 },
+    { q: 'Diameter=10, radius=?', opts: ['5', '20', '10', '100'], ans: 0 },
+    { q: 'C=2πr. If r=5, C=?', opts: ['10π', '25π', '5π', '100π'], ans: 0 },
+    { q: 'A=πr². If r=3, A=?', opts: ['3π', '6π', '9π', '36π'], ans: 2 }
+  ],
+  'area-polygons': [
+    { q: 'Triangle base 8, height 5. Area?', opts: ['40', '20', '13', '80'], ans: 1 },
+    { q: 'Trapezoid bases 3,5 height 4?', opts: ['16', '20', '24', '32'], ans: 0 },
+    { q: 'Parallelogram 6×4?', opts: ['10', '20', '24', '48'], ans: 2 },
+    { q: 'Triangle formula:', opts: ['bh', '(1/2)bh', 'b+h', '2bh'], ans: 1 },
+    { q: 'L-shape is?', opts: ['composite', 'simple', 'triangle', 'circle'], ans: 0 }
+  ],
+  'surface-area-volume': [
+    { q: 'V=lwh. This is?', opts: ['area', 'volume', 'surface', 'perimeter'], ans: 1 },
+    { q: 'Box 3×4×5. V?', opts: ['12', '24', '60', '120'], ans: 2 },
+    { q: 'Cube side 2. V?', opts: ['4', '6', '8', '16'], ans: 2 },
+    { q: 'Prism base area 10, height 5. V?', opts: ['15', '50', '500', '25'], ans: 1 },
+    { q: 'Pyramid V=(1/3)bh?', opts: ['always', 'sometimes', 'true', 'false'], ans: 2 }
+  ],
+  'surface-area-volume-ratio': [
+    { q: 'SA of a cube with side s:', opts: ['s²', '4 s²', '6 s²', 's³'], ans: 2 },
+    { q: 'V of a cube with side s:', opts: ['s²', '6 s²', 's³', '4 s³'], ans: 2 },
+    { q: 'Cube s = 4. SA : V?', opts: ['1 : 1', '1.5 : 1', '3 : 1', '6 : 1'], ans: 1 },
+    { q: 'As size grows, SA : V:', opts: ['Grows', 'Stays the same', 'Shrinks', 'First grows then shrinks'], ans: 2 },
+    { q: 'When side doubles, V multiplies by:', opts: ['2', '4', '6', '8'], ans: 3 },
+    { q: 'Why are cells microscopic?', opts: ['They cannot get bigger by physics', 'They divide before SA:V drops too low', 'Bigger cells are slower', 'They eat each other'], ans: 1 },
+    { q: 'High SA : V means:', opts: ['Loses heat fast', 'Loses heat slow', 'No effect on heat', 'Stores more food'], ans: 0 },
+    { q: 'Sphere SA : V formula:', opts: ['3/r', '3 r', 'r/3', '4 r²'], ans: 0 },
+    { q: 'Mouse vs elephant: which has higher SA : V?', opts: ['Mouse', 'Elephant', 'Same', 'Depends on temperature'], ans: 0 },
+    { q: 'Lungs fold (alveoli) to:', opts: ['Decrease V', 'Increase SA', 'Decrease SA', 'Increase weight'], ans: 1 }
+  ],
+  'angles': [
+    { q: 'Complementary sum to?', opts: ['90°', '180°', '45°', '360°'], ans: 0 },
+    { q: 'Supplementary sum to?', opts: ['90°', '180°', '45°', '360°'], ans: 1 },
+    { q: 'Vertical angles are?', opts: ['equal', 'different', 'supplementary', 'adjacent'], ans: 0 },
+    { q: 'Complement of 35°?', opts: ['55°', '145°', '35°', '70°'], ans: 0 },
+    { q: 'Supplement of 120°?', opts: ['60°', '120°', '30°', '150°'], ans: 0 }
+  ],
+  'probability': [
+    { q: 'P(coin heads)?', opts: ['1/4', '1/3', '1/2', '1'], ans: 2 },
+    { q: 'P(die roll 1)?', opts: ['1/2', '1/3', '1/6', '1'], ans: 2 },
+    { q: 'Two coins both heads?', opts: ['1/2', '1/4', '1/8', '1/3'], ans: 1 },
+    { q: 'Probability ranges:', opts: ['0 to 1', '−1 to 1', '1 to 10', 'unlimited'], ans: 0 },
+    { q: 'Deck red card?', opts: ['1/4', '1/3', '1/2', '1/13'], ans: 2 }
+  ],
+  'statistics': [
+    { q: 'Mean is?', opts: ['middle', 'average', 'most common', 'difference'], ans: 1 },
+    { q: 'Median is?', opts: ['average', 'middle', 'most common', 'spread'], ans: 1 },
+    { q: 'Mode is?', opts: ['average', 'middle', 'most common', 'spread'], ans: 2 },
+    { q: 'Range is?', opts: ['average', 'middle', 'max−min', 'typical'], ans: 2 },
+    { q: 'Sample is?', opts: ['all items', 'subset', 'population', 'one item'], ans: 1 }
+  ],
+  'word-problems': [
+    { q: '$100 item, 15% off. Cost?', opts: ['$75', '$85', '$115', '$150'], ans: 1 },
+    { q: '5 apples $10. Each costs?', opts: ['$2', '$5', '$50', '$15'], ans: 0 },
+    { q: 'Speed 50 mph, 3 hours, distance?', opts: ['17 mi', '50 mi', '150 mi', '300 mi'], ans: 2 },
+    { q: 'Ratio 2:3, if 1st is 6, 2nd?', opts: ['9', '4', '8', '3'], ans: 0 },
+    { q: 'Percent change 20 to 25?', opts: ['5%', '20%', '25%', '80%'], ans: 0 }
+  ],
+  'population-growth': [
+    { q: 'A population of 100 doubles every year for 3 years. Final population:', opts: ['300', '400', '600', '800'], ans: 3 },
+    { q: 'Rule of 70: population grows at 10% per year. Doubling time ≈', opts: ['5 years', '7 years', '10 years', '70 years'], ans: 1 },
+    { q: 'E. coli doubles every 20 min. Starting from 1 cell, after 1 hour (3 periods):', opts: ['3', '6', '8', '16'], ans: 2 },
+    { q: 'A population shows J-shaped growth. This means:', opts: ['Growth is slowing', 'Growth is limited by resources', 'Population is exponentially increasing', 'Population is declining'], ans: 2 },
+    { q: 'Carrying capacity is:', opts: ['When a population doubles', 'The max population an environment can support', 'The initial population size', 'The growth rate'], ans: 1 },
+    { q: 'Wolf population doubles, deer population drops. This relationship is called:', opts: ['Mutualism', 'Predator-prey oscillation', 'Competition', 'Commensalism'], ans: 1 },
+    { q: 'Population grows from 500 to 2,000 in 2 doubling periods. How many doublings occurred?', opts: ['1', '2', '3', '4'], ans: 2 },
+    { q: 'An S-shaped growth curve shows population growth that:', opts: ['Never stops', 'Speeds up forever', 'Levels off near carrying capacity', 'Drops to zero'], ans: 2 },
+    { q: 'A colony starts at 10 bacteria. After 4 doublings: ', opts: ['40', '80', '100', '160'], ans: 3 },
+    { q: 'Doubling time of 35 years implies annual growth rate of approximately:', opts: ['1%', '2%', '3.5%', '7%'], ans: 1 }
+  ],
+  'genetics-probability': [
+    { q: 'In a Bb × Bb cross, probability of bb offspring:', opts: ['0%', '25%', '50%', '75%'], ans: 1 },
+    { q: 'In a Bb × Bb cross, probability of brown eyes (B dominant):', opts: ['25%', '50%', '75%', '100%'], ans: 2 },
+    { q: 'A BB × bb cross produces only:', opts: ['BB', 'Bb', 'bb', 'Both BB and bb'], ans: 1 },
+    { q: 'Both parents are carriers (Cc) for a recessive disease. Chance of affected child (cc):', opts: ['0%', '25%', '50%', '75%'], ans: 1 },
+    { q: 'Mendel\'s 3:1 ratio means:', opts: ['3 recessive for every 1 dominant', '3 dominant phenotype for every 1 recessive phenotype', '3 alleles per gene', '3 parents needed'], ans: 1 },
+    { q: 'A trait expressed only when two recessive alleles are present is called:', opts: ['Dominant', 'Codominant', 'Recessive', 'Genotype'], ans: 2 },
+    { q: 'What does the genotype BB mean?', opts: ['One dominant, one recessive allele', 'Two recessive alleles', 'Two dominant alleles', 'No alleles expressed'], ans: 2 },
+    { q: 'A child has blue eyes (recessive). What must be true about each parent\'s genotype?', opts: ['Both must be BB', 'Both must have at least one b allele', 'One must be bb', 'Both must be bb'], ans: 1 },
+    { q: 'Why does Mendel\'s 3:1 ratio only hold perfectly with very large sample sizes?', opts: ['Genetics uses division', 'Probability predictions require large samples to average out', 'Punnett squares are inaccurate', 'Alleles change between generations'], ans: 1 },
+    { q: 'In blood typing, type O requires ii genotype (two recessive alleles). If both parents are Ii, what fraction of children have type O blood?', opts: ['0%', '25%', '50%', '100%'], ans: 1 }
+  ],
+  'pharmacokinetics': [
+    { q: 'A 400 mg dose has half-life 4 hrs. After 8 hrs (2 half-lives), amount remaining:', opts: ['200 mg', '100 mg', '50 mg', '25 mg'], ans: 1 },
+    { q: 'After 5 half-lives, approximately what percent remains?', opts: ['50%', '25%', '10%', '3%'], ans: 3 },
+    { q: 'The formula for drug remaining after n half-lives starting at dose D is:', opts: ['D × n', 'D ÷ n', 'D × (1/2)ⁿ', 'D + (1/2)ⁿ'], ans: 2 },
+    { q: 'Caffeine half-life = 5 hrs. 200 mg at noon — amount at 10 PM (10 hrs later):', opts: ['100 mg', '50 mg', '25 mg', '12.5 mg'], ans: 1 },
+    { q: 'A drug must stay above 50 mg to be effective. Starting dose 400 mg, half-life 6 hrs. How many hours until it drops below 50 mg?', opts: ['18 hrs', '24 hrs', '30 hrs', '36 hrs'], ans: 1 },
+    { q: 'Which drug stays in your system longer?', opts: ['Half-life 2 hrs', 'Half-life 10 hrs', 'Half-life 1 hr', 'Half-life 3 hrs'], ans: 1 },
+    { q: 'Pharmacokinetics is the study of:', opts: ['Drug side effects', 'How drugs are absorbed, distributed, and eliminated', 'What diseases drugs treat', 'Drug cost'], ans: 1 },
+    { q: 'Drug half-life math is identical to:', opts: ['Richter scale', 'Radioactive decay', 'Population doubling', 'Slope calculation'], ans: 1 },
+    { q: 'A 320 mg dose, half-life 8 hrs. After 24 hrs:', opts: ['80 mg', '40 mg', '20 mg', '10 mg'], ans: 1 },
+    { q: 'Therapeutic window means:', opts: ['Time of day to take medicine', 'Safe concentration range — high enough to work, low enough to avoid toxicity', 'Number of doses per day', 'Drug half-life range'], ans: 1 }
+  ],
+  'biodiversity': [
+    { q: 'Species richness measures:', opts: ['How evenly individuals are distributed', 'The number of different species present', 'The size of the ecosystem', 'The dominant species proportion'], ans: 1 },
+    { q: 'Species evenness measures:', opts: ['Number of species', 'How evenly individuals are distributed among species', 'Total population size', 'Which species is most common'], ans: 1 },
+    { q: '200 individuals: 100 species A, 60 B, 40 C. Proportion of species B:', opts: ['0.20', '0.30', '0.40', '0.60'], ans: 1 },
+    { q: 'Forest A: 3 species at 33% each. Forest B: 3 species at 90%, 6%, 4%. Which is more diverse?', opts: ['Forest A', 'Forest B', 'They are equal', 'Cannot determine'], ans: 0 },
+    { q: 'An invasive species takes over from 10% to 80% of all individuals. Native species proportions:', opts: ['Increased from 90% to 20%', 'Decreased from 90% to 20%', 'Stayed the same', 'Doubled'], ans: 1 },
+    { q: 'Biodiversity indices like Shannon\'s H combine:', opts: ['Richness and evenness', 'Richness only', 'Evenness only', 'Total population size'], ans: 0 },
+    { q: 'Why is a coral reef with 50 species more valuable ecologically than one with 5 species?', opts: ['It has more fish to catch', 'Higher biodiversity means more resilience — if one species is lost, others fill its role', 'It is prettier', 'Larger reefs are always better'], ans: 1 },
+    { q: 'If species A makes up 200/500 = 0.40 of an ecosystem, and species B makes up 150/500, what is species B\'s proportion?', opts: ['0.20', '0.25', '0.30', '0.35'], ans: 2 },
+    { q: 'A monoculture (one species) like a corn farm has evenness of:', opts: ['1.0 (perfectly even)', '0.5', '0 (only one species — no diversity)', '100%'], ans: 2 },
+    { q: 'Which math operation is most central to computing biodiversity proportions?', opts: ['Multiplication', 'Division (part ÷ whole)', 'Addition', 'Exponents'], ans: 1 }
+  ]
+};
+
+let completedUnits = {};
+let currentUnit = null;
+
+function resourceCardHTML(unit) {
+  const ixlBtn = unit.ixlUrl ? `<a class="btn-ixl" href="${unit.ixlUrl}" target="_blank">📘 IXL Practice</a>` : '';
+  const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
+  const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${ixlBtn}${phetBtn}${ytBtn}</div></div>`;
+}
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = '';
+  UNITS.forEach(unit => {
+    const card = document.createElement('div');
+    card.className = 'unit-card';
+    card.onclick = () => showLesson(unit.id);
+    card.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${unit.icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title">${unit.title}${completedUnits[unit.id]?' ✅':''}</div>
+          <div class="unit-card-cc">${unit.cc}</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${unit.desc}</div>
+      <div class="unit-card-pills">
+        ${unit.kaUrl?'<div class="pill">📖 Lesson</div>':''}
+        ${unit.ixlUrl?'<div class="pill">📘 IXL</div>':''}
+        <div class="pill">📋 Worksheet</div>
+        <div class="pill">▶️ YouTube</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderSidebar() {
+  const sidebar = document.getElementById('sidebar-content');
+  sidebar.innerHTML = '';
+  UNITS.forEach((unit, idx) => {
+    const item = document.createElement('div');
+    item.className = 'sidebar-item' + (currentUnit === unit.id ? ' active' : '');
+    item.textContent = `${idx + 1}. ${unit.title}${completedUnits[unit.id]?' ✅':''}`;
+    item.onclick = () => showLesson(unit.id);
+    sidebar.appendChild(item);
+  });
+}
+
+function setTopbar() {
+  document.getElementById('topbar-title').textContent = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Predicting the World with Math';
+}
+
+function showHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  currentUnit = null;
+  var sb = document.getElementById('syllabus-btn');
+  if (sb) sb.classList.remove('active');
+  renderHome();
+  renderSidebar();
+  setTopbar();
+}
+
+function showSyllabus() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('syllabus-screen').classList.add('active');
+  currentUnit = null;
+  document.getElementById('topbar-title').textContent = 'Course Syllabus';
+  renderSidebar();
+  document.getElementById('syllabus-btn').classList.add('active');
+}
+
+function showLesson(unitId) {
+  currentUnit = unitId;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  var sb = document.getElementById('syllabus-btn');
+  if (sb) sb.classList.remove('active');
+  const unit = UNITS.find(u => u.id === unitId);
+  document.getElementById('lesson-content').innerHTML = LESSONS[unitId] + resourceCardHTML(unit);
+  const rwBtn = document.getElementById('realworld-btn');
+  if (rwBtn) rwBtn.style.display = (REALWORLD_7 && REALWORLD_7[unitId]) ? '' : 'none';
+  renderSidebar();
+  setTopbar();
+}
+
+function showWorksheet() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><textarea id="ans-${idx}" placeholder="Your answer..."></textarea></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function checkWorksheet() {
+  const ws = WORKSHEETS[currentUnit];
+  let html = '';
+  ws.forEach((p, idx) => {
+    const userAns = document.getElementById(`ans-${idx}`).value;
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><div class="answer-key"><strong>Answer:</strong> ${p.answer}</div><p><strong>Your answer:</strong> ${userAns || '(no answer)'}</p></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function showQuiz() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  const quiz = QUIZZES[currentUnit];
+  let html = '';
+  quiz.forEach((q, idx) => {
+    html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${q.q}</p>`;
+    q.opts.forEach((opt, optIdx) => {
+      html += `<label><input type="radio" name="q${idx}" value="${optIdx}"> ${opt}</label>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function submitQuiz() {
+  const quiz = QUIZZES[currentUnit];
+  let score = 0;
+  quiz.forEach((q, idx) => {
+    const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+    if (selected && parseInt(selected.value) === q.ans) score++;
+  });
+  const percent = Math.round((score / quiz.length) * 100);
+  completedUnits[currentUnit] = true;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('certificate-screen').classList.add('active');
+  document.getElementById('cert-content').innerHTML = `<p style="font-size: 24px; margin: 20px;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p><p>Congratulations on completing this unit!</p>`;
+  renderSidebar();
+  updateProgress();
+}
+
+function updateProgress() {
+  const completed = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = `${completed}/${UNITS.length}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderSidebar();
+});
+  const HANDOUTS_7 = {
+  'proportional': {
+    title: `Population Growth Prediction Model`,
+    science: `🔬 Life Science — Predicting Bacteria Population Growth`,
+    mission: `Scientists predict how fast bacteria populations will grow using proportional relationships. Build a model that forecasts population size at any future time!`,
+    steps: [`Create a workbook called <em>Population_Prediction_Model</em>.`,`Column A: Time in hours: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10.`,`Column B: Population (doubling every hour): start at 100. From row 3: <code>=B2*2</code>.`,`Column C: Linear model: <code>=100+200*A2</code>.`,`Create an <strong>XY Scatter Chart</strong> with both models. Add a legend.`,`Prediction section: What is the population at hour 15? Hour 20?`,`Conditional formatting on Column B: red when population exceeds 10,000.`],
+    deliverable: `Submit workbook with both models, prediction values, and chart. Write: 'After ___ hours, the exponential model overtakes the linear model. At hour 20, the population is approximately ___.'`,
+    reflect: [`Is the bacteria doubling model a proportional relationship (y = kx)? Why or why not?`,`At what point does the linear model predict more accurately — early or late? Explain using your chart.`]
+  },
+  'ratios-rates': {
+    title: `Animal Heart Rate Unit Rate Comparator`,
+    science: `🔬 Life Science — Animal Metabolism & Heart Rate`,
+    mission: `Heart rate reveals a lot about an animal's metabolism. Compare 10 animals' heart rates across different time scales!`,
+    steps: [`Create a workbook called <em>Animal_Heart_Rate_Comparator</em>.`,`Column A: Animal name. Column B: Heart rate (beats/min). Enter: Hummingbird 1200, Dog 80, Human 70, Cat 150, Elephant 30, Blue Whale 8, Mouse 600, Horse 44, Hamster 450, Cheetah 120.`,`Column C: Beats per second — <code>=B2/60</code>.`,`Column D: Beats per hour — <code>=B2*60</code>.`,`Column E: Beats per day — <code>=B2*1440</code>.`,`Column F: Lifetime beats (10 years) — <code>=E2*365*10</code>.`,`Sort from lowest to highest heart rate. Create a <strong>Bar Chart</strong>.`],
+    deliverable: `Submit workbook with all calculated columns, sorted bar chart, and analysis: 'The unit rate of the hummingbird is ___ beats/second. This is ___ times faster than a human.'`,
+    reflect: [`What is the unit rate of a blue whale in beats per second?`,`If a hummingbird and human both start at the same time, when would the hummingbird have beaten 10,000 more times?`]
+  },
+  'unit-conversions': {
+    title: `Life Science Measurement & Medicine Dosing Lab`,
+    science: `🔬 Life Science — Organism Sizes, Speeds & Pediatric Medicine`,
+    mission: `<strong>Unit conversions are a life skill — literally.</strong><br><br>
+In medicine, the wrong unit can mean a dangerous overdose or an ineffective dose. Pediatric dosing is calculated in mg per kg of body weight, which requires converting between milligrams, grams, and kilograms accurately.<br><br>
+In this project you will build a life science measurement tool that converts organism sizes, computes pediatric medicine doses, and converts animal speeds — all using the KHDUdcm staircase and proportional reasoning.`,
+    steps: [
+      `Create a workbook called <em>Life_Science_Measurement_Lab</em>.`,
+      `<strong>Sheet 1 — KHDUdcm Reference:</strong> Build the staircase table (K H D U d c m) with prefix names, multipliers, and powers of 10. Color code as in class.`,
+      `<strong>Sheet 2 — Organism Size Comparator:</strong> Columns: Organism | Measurement | Unit | Length in mm <code>=convert to mm</code> | Length in cm <code>=D2/10</code> | Length in m <code>=D2/1000</code>. Enter: Blue Whale (30 m), Giant Squid (14 m), Human (1.7 m), House Cat (46 cm), Mouse (8 cm), Honeybee (15 mm), Red Blood Cell (0.008 mm), Bacterium (0.002 mm). Sort by length and create a bar chart. Note: the last two values will barely show — discuss why a log scale might be better.`,
+      `<strong>Sheet 3 — Pediatric Dosing Calculator:</strong> Columns: Patient | Weight (kg) | Dose (mg/kg) | Total Dose (mg) <code>=B2*C2</code> | Total Dose (g) <code>=D2/1000</code> | Safe? <code>=IF(D2<=500,"✅ Safe","⚠ Check")</code>. Enter 6 patients: Kenji 12 kg (5 mg/kg), Leilani 25 kg (3 mg/kg), Marco 8 kg (10 mg/kg), Aiko 40 kg (2 mg/kg), Sam 60 kg (1.5 mg/kg), Baby 4 kg (15 mg/kg).`,
+      `<strong>Sheet 4 — Animal Speed Converter:</strong> Columns: Animal | Speed (km/h) | Speed (m/s) <code>=B2/3.6</code> | Speed (m/min) <code>=C2*60</code>. Enter: Cheetah 120, Lion 80, Ostrich 72, Grizzly Bear 48, Human sprinter 45, Elephant 25, Tortoise 0.48 km/h. Add a bar chart of m/s values.`
+    ],
+    deliverable: `Submit your 4-sheet workbook. On Sheet 3, write: <em>Why is it dangerous to use milligrams instead of grams in the dose formula? Show with one patient example what the wrong answer would be and how much it differs from the correct dose.</em>`,
+    reflect: [
+      `On Sheet 2, a red blood cell is 0.008 mm. Convert this to meters. Write it in scientific notation. Why is scientific notation more useful than decimal form here?`,
+      `On Sheet 4, a cheetah runs at 120 km/h. How many meters does it cover in 5 seconds? Show: first convert km/h to m/s, then use d = v·t.`,
+      `Converting km/h to m/s uses two unit rates at once: 1 km = 1000 m and 1 h = 3600 s. Write this out as a proportion and explain why dividing by 3.6 gives the same result.`
+    ]
+  },
+  'scientific-notation': {
+    title: `Microscopic World Data Table`,
+    science: `🔬 Life Science — Cell Biology & Scale of Life`,
+    mission: `Scientists who study cells work with numbers so small that writing them in decimal form is impractical — and nearly impossible to compare. Scientific notation is the universal language of biology at the microscopic scale.<br><br>
+In this project you will build a Microscopic World Data Table that stores real life science measurements in scientific notation, converts between scales, and performs multiplication and division to answer comparative biology questions.`,
+    steps: [
+      `Create a workbook called <em>Microscopic_World_Data_Table</em>.`,
+      `<strong>Sheet 1 — Negative Exponent Reference:</strong> Build a table showing powers of 10 from 10⁻¹ to 10⁻¹⁰. Column A: Exponent. Column B: Power of 10 (e.g., =10^(-1)). Column C: Decimal form (e.g., 0.1). Column D: Prefix or description (deci, centi, milli, micro, nano, etc.). Color the header row navy and add a note: "10⁻³ = milli, 10⁻⁶ = micro, 10⁻⁹ = nano."`,
+      `<strong>Sheet 2 — Organism Size Comparator:</strong> Columns: Object | Size (m) in Standard Form | Scientific Notation (text) | Exponent only | Size relative to red blood cell.<br>Enter these 10 objects: Blue whale (30 m), Human height (1.7 m), Frog (0.05 m), Ant (0.002 m), Human hair width (0.00007 m), Red blood cell (0.000008 m), Bacterium (0.000002 m), Virus (0.0000001 m), Protein (0.00000001 m), DNA width (0.0000000025 m).<br>Column D: <code>=LOG10(B2)</code> (this gives the exponent). Column E relative to red blood cell: <code>=B2/0.000008</code>. Format Column B with scientific notation (Format → Cells → Scientific). Add a bar chart of LOG10 size to show the full scale of life.`,
+      `<strong>Sheet 3 — Operations in Scientific Notation:</strong> Set up a multiplication/division calculator. Columns: Label | Number 1 | Number 2 | Operation | Result.<br>Enter 6 problems using actual biology data:<br>1. How many viruses (1×10⁻⁷ m) fit across a red blood cell (8×10⁻⁶ m)? → Divide.<br>2. How many DNA widths (2.5×10⁻⁹ m) fit across a bacterium (2×10⁻⁶ m)? → Divide.<br>3. If 1 million bacteria (each 2×10⁻⁶ m) were stacked end to end, how long? → Multiply.<br>4. Human heart beats ~70/min. In one year (5.26×10⁵ min), total beats? → Multiply.<br>5. A red blood cell lives ~120 days = 1.728×10⁷ seconds. If it travels 0.5 m/s, total distance? → Multiply.<br>6. Earth is 6.4×10⁶ m in radius. How many red blood cells wide? → Divide.<br>Compute results using <code>=</code> formulas. Format results in scientific notation.`,
+      `<strong>Sheet 4 — Converting Between Scales:</strong> Columns: Object | Size in meters | Size in mm | Size in µm (micrometers) | Size in nm (nanometers).<br>Use: <code>=B2*1000</code> (m→mm), <code>=B2*1000000</code> (m→µm), <code>=B2*1000000000</code> (m→nm).<br>Enter: Red blood cell (8×10⁻⁶ m), Bacterium (2×10⁻⁶ m), Virus (1×10⁻⁷ m), Protein (1×10⁻⁸ m), DNA (2.5×10⁻⁹ m).<br>Format all columns with scientific notation. Add a formula in column F: <code>=IF(B2>=0.000001,"µm scale","nm scale")</code>.`
+    ],
+    deliverable: `Submit your 4-sheet workbook. On Sheet 3, write two sentences: <em>"The most surprising calculation was problem ___ because ___. Writing these numbers in scientific notation helps because ___."</em> On Sheet 4, write: <em>"To convert meters to nanometers I multiply by ___, which is the same as moving the decimal ___ places right."</em>`,
+    reflect: [
+      `A red blood cell is 8 × 10⁻⁶ m and a virus is 1 × 10⁻⁷ m. When you divide, you get 80. Write this division out showing the coefficient division and exponent subtraction separately. Which step gave you 80?`,
+      `On Sheet 2, the LOG10 values for large objects are positive and for tiny objects are negative. Why does LOG10 produce a negative number for values smaller than 1? Connect this to what you know about negative exponents.`,
+      `On Sheet 4, converting meters to micrometers multiplies by 10⁶. On the KHDUdcm staircase, "micro" would be 6 steps below the base unit. How does the staircase model connect to multiplying by a power of 10?`
+    ]
+  },
+  'percents': {
+    title: `Hawaii Endangered Species Tracker`,
+    science: `🔬 Life Science — Species Population Decline`,
+    mission: `Hawaii has more endangered species per square mile than anywhere on Earth. Use percent change to track populations and predict their future!`,
+    steps: [`Create a workbook called <em>Hawaii_Endangered_Species_Tracker</em>.`,`Enter 8 Hawaiian species with past and current populations.`,`Column D: Percent change <code>=(C2-B2)/B2*100</code>.`,`Column E: 10-year projection <code>=C2*(1+D2/100/2)</code>.`,`Column F: Status <code>=IF(D2>0,"📈 Growing",IF(D2<0,"📉 Declining","➡ Stable"))</code>.`,`Create a <strong>Bar Chart</strong> showing current vs. projected population.`],
+    deliverable: `Submit workbook with species data, percent change, projections, status labels, and bar chart. Write a 3-sentence conservation recommendation for ONE declining species.`,
+    reflect: [`Which species has the largest percent decrease? Does a large decrease always mean the most endangered? Explain.`,`How would you adjust the projection formula if conservation efforts cut the decline rate in half?`]
+  },
+  'add-sub-rational': {
+    title: `Patient Temperature Homeostasis Log`,
+    science: `🔬 Life Science — Body Temperature & Homeostasis`,
+    mission: `The body maintains a narrow temperature range through homeostasis. Track a patient's temperature over 24 hours using rational number operations!`,
+    steps: [`Create a workbook called <em>Patient_Temperature_Log</em>.`,`Column A: Hour (0–23). Column B: Temperature change each hour (+ or -).`,`Column C: Running temperature — start at 98.6. Formula from C3: <code>=C2+B3</code>.`,`Column D: Status — <code>=IF(C2>=103,"🚨 Critical",IF(C2>=100.4,"⚠ Fever",IF(C2<=95,"❄ Hypothermia","✅ Normal")))</code>.`,`Create a <strong>Line Chart</strong> of hour vs. temperature.`,`Add reference lines at 98.6 (normal), 100.4 (fever), 95 (hypothermia) as extra data series.`],
+    deliverable: `Submit workbook with hourly changes, running temperature, status column, and line chart. Write: 'The patient experienced a fever starting at hour ___ reaching ___°F. After treatment, normal range returned at hour ___.'`,
+    reflect: [`What is the net temperature change over 24 hours? Write as a single addition problem.`,`When temperature drops below 98.6, are you subtracting or adding a negative? Are these the same thing?`]
+  },
+  'mult-div-rational': {
+    title: `Cell Division Scaling Model`,
+    science: `🔬 Life Science — Cell Division & Microscope Scaling`,
+    mission: `Under a microscope, cells appear much larger than they really are. Use multiplication and division to calculate actual and observed sizes across generations of division!`,
+    steps: [`Create a workbook called <em>Cell_Division_Scaling_Model</em>.`,`Sheet 1 — Microscope Calculator: Column A = actual size (µm): 0.5 to 100. Column B = magnification: 40×, 100×, 400×, 1000×.`,`Column C: Observed size <code>=A2*B2</code>. Column D: Reverse actual <code>=A2/B2</code>.`,`Sheet 2 — Cell Division: Column A = generation (0–8). Column B = cell count <code>=2^A2</code>. Column C = cell size <code>=10/2^A2</code>.`,`Sheet 3 — Charts: generations vs. cell count AND generations vs. cell size on same sheet.`],
+    deliverable: `Submit 3-sheet workbook with microscope calculator, division table, and two charts. Write: 'After 8 generations, there are ___ cells, each ___ µm in size. The product of count × size equals ___ — what does this constant tell you?'`,
+    reflect: [`If you double the magnification, what happens to observed size? Write as an equation.`,`At generation 10, how many cells are there? What fraction of the original size is each cell?`]
+  },
+  'alg-expressions': {
+    title: `Photosynthesis Rate Expression Model`,
+    science: `🔬 Life Science — Photosynthesis Rate Modeling`,
+    mission: `Scientists write algebraic expressions to model how plants produce energy. Discover which variable most affects photosynthesis!`,
+    steps: [`Create a workbook called <em>Photosynthesis_Expression_Model</em>.`,`Sheet 1 — Light Sensitivity: Fix CO₂=400, Temp=25. Column A = Light: 100–800. Column B: Rate <code>=(A2*400)/25</code>. Chart: Light vs. Rate.`,`Sheet 2 — CO₂ Sensitivity: Fix Light=400, Temp=25. Column A = CO₂: 200–700. Column B: <code>=(400*A2)/25</code>. Chart.`,`Sheet 3 — Temperature Sensitivity: Fix Light=400, CO₂=400. Column A = Temp: 10–40. Column B: <code>=(400*400)/A2</code>. Chart.`],
+    deliverable: `Submit 3-sheet workbook with one sensitivity analysis per sheet. Write: 'The variable with the greatest impact is ___ because ___. The variable with the least impact is ___.'`,
+    reflect: [`In (L × C) ÷ T, if L doubles, what happens to the rate? Show with numbers.`,`What does it mean if temperature appears in the denominator vs. the numerator?`]
+  },
+  'equations': {
+    title: `7-Day Caloric Balance Equation Workbook`,
+    science: `🔬 Life Science — Caloric Balance & Energy`,
+    mission: `Your body is an energy equation: calories in vs. calories out. If equal, you maintain weight. Model this with equations!`,
+    steps: [`Create a workbook called <em>Caloric_Balance_Equations</em>.`,`Sheet 1: Column A = Day. Column B = Calories eaten. Column C = Calories burned (~1,800 + activity). Column D = Net balance <code>=B2-C2</code>.`,`Column E: Status <code>=IF(D2>200,"📦 Surplus",IF(D2<-200,"🔥 Deficit","⚖ Balanced"))</code>.`,`Sheet 2 — Equation Solver: Solve Net = Calories In − 1,800 for net = 0, +500, -500.`,`Sheet 3: <strong>Bar Chart</strong> of Net Balance over 7 days.`],
+    deliverable: `Submit 3-sheet workbook with daily log, equation solutions, and balance chart. Write: 'To maintain weight I need ___ calories/day. To lose weight safely I should aim for a deficit of ___, meaning I eat ___ calories/day.'`,
+    reflect: [`Write the equation for day 3. What is the solution and what does it mean biologically?`,`Why might 'net balance = 0' not always mean a person is perfectly healthy?`]
+  },
+  'inequalities': {
+    title: `Species Survival Inequality Monitor`,
+    science: `🔬 Life Science — Survival Thresholds & Tolerance Ranges`,
+    mission: `Every species has a temperature range where it can survive. Use inequalities to classify ocean temperature data for sea turtle safety!`,
+    steps: [`Create a workbook called <em>Species_Survival_Monitor</em>.`,`Column A: Date (30 days). Column B: Ocean temperature (°F). Enter values between 55 and 90.`,`Column C: <code>=IF(AND(B2>=60,B2<=85),"✅ Safe","⚠ Danger")</code>.`,`Column D: Distance from safe range <code>=IF(B2<60,60-B2,IF(B2>85,B2-85,0))</code>.`,`Cell F2: Danger days <code>=COUNTIF(C2:C31,"⚠ Danger")</code>. Cell F4: % Danger <code>=F2/30*100</code>.`,`Sheet 2 — Threshold Chart: Line chart of temperature with reference lines at 60°F and 85°F.`],
+    deliverable: `Submit 2-sheet workbook with log, classification formulas, summary, and threshold chart. Write: 'The compound inequality for safe habitat is ___. In 30 days, temperature was in the danger zone ___ days (___%). My prediction for population risk is ___.'`,
+    reflect: [`Write the two separate inequalities that describe each danger zone.`,`How many consecutive danger days would concern a wildlife biologist?`]
+  },
+  'rearranging-formulas': {
+    title: `Formula Rearrangement Lab`,
+    science: `🔬 Life Science — Solving Real Biological Equations`,
+    mission: `Doctors, biologists, and pharmacists rearrange formulas every day. Build a Sheets workbook that solves D = m/V, v = d/t, and dose = (mg/kg) × weight for ANY of the three variables — then test it on real medical and biology data.`,
+    steps: [
+      `Create a workbook called <em>Formula_Rearrangement_Lab</em>.`,
+      `<strong>Sheet 1 — Density Solver:</strong> Build three rows: 'Find m', 'Find D', 'Find V'. Each row has cells for the two known values and a formula in the third cell using <code>=B2*C2</code>, <code>=B2/C2</code>, or <code>=B2/C2</code> as appropriate.`,
+      `<strong>Sheet 2 — Speed Solver:</strong> Same pattern for v, d, t. Test with: a marathoner runs 42.2 km in 4 h, find v. A car at 100 km/h for 2.5 h, find d.`,
+      `<strong>Sheet 3 — Pediatric Dosing Calculator:</strong> Columns: Patient | Weight (kg) | Dose rate (mg/kg) | Total dose (mg) <code>=B2*C2</code>. Add a reverse calculator below: given a prescribed total dose and rate, find the patient&apos;s weight. Enter 5 patients with realistic data.`,
+      `<strong>Sheet 4 — Cardiac Output:</strong> Output (mL/min) = Stroke Volume (mL) × Heart Rate (bpm). Solve for any of the three. Compare resting (5 L/min) vs. exercising (20 L/min) athletes.`
+    ],
+    deliverable: `Submit your 4-sheet workbook with all three formula rearrangements, the dosing calculator, and the cardiac-output analysis. Write: <em>The same algebra step (multiply or divide both sides) appeared in every solver. The hardest one to set up was ___ because ___.</em>`,
+    reflect: [
+      `For D = m/V, why does multiplying both sides by V give m = D × V instead of m = D / V?`,
+      `Why is rearranging dose = (mg/kg) × weight to find <em>weight</em> safer than guessing? What could go wrong if a pharmacist did not check this calculation?`,
+      `In the formula triangle, covering the variable you want gives you the operation. Why does this trick work — what is the math underneath the picture?`
+    ]
+  },
+  'scale-drawings': {
+    title: `Cell Organelle Scale Conversion Table`,
+    science: `🔬 Life Science — Cell Diagrams & Scale Drawings`,
+    mission: `Biologists draw cells much larger than actual size. Create a scale conversion system for 8 major organelles!`,
+    steps: [`Create a workbook called <em>Cell_Scale_Conversion_Table</em>.`,`Column A: Organelle. Column B: Actual size (µm). Enter: Cell Membrane (10), Nucleus (6), Mitochondria (2), Ribosome (0.02), Lysosome (0.5), Vacuole (3), Chloroplast (5), ER (0.1).`,`Column C: 100× drawn size <code>=B2*100</code>. Column D: 1000× <code>=B2*1000</code>. Column E: 10000× <code>=B2*10000</code>.`,`Column F: Reverse — given 15 µm drawn at 1000×, find actual: <code>=15/1000</code>.`,`Sheet 2: <strong>Grouped Bar Chart</strong> showing all three scale sizes for each organelle.`,`Sheet 3: 20×20 Excel grid drawing a simplified cell to scale.`],
+    deliverable: `Submit 3-sheet workbook with conversion table, bar chart, and scale drawing grid. Write: 'A nucleus is 6 µm wide. At 1000× I draw it ___ µm wide. At 100× I draw it ___ µm wide. Scale drawings matter because ___.'`,
+    reflect: [`If a drawing shows a ribosome at 20 µm and the scale factor is 1000×, what is the actual size?`,`Why can't we use the same scale for both a ribosome and a whole cell in one diagram?`]
+  },
+  'triangles': {
+    title: `Triangle Inequality in Nature Checker`,
+    science: `🔬 Life Science — Structural Geometry in Living Organisms`,
+    mission: `Nature uses triangles because they are the most rigid shape. Test whether triangles found in living organisms are geometrically valid!`,
+    steps: [`Create a workbook called <em>Triangle_Inequality_Nature</em>.`,`10 biological structures as rows (leaf veins, bone struts, fin rays, shell spirals, wing supports).`,`Columns B, C, D: Three side lengths for each.`,`Column E: <code>=IF(AND(B2+C2>D2,B2+D2>C2,C2+D2>B2),"✅ Valid","❌ Invalid")</code>.`,`Column F: Perimeter <code>=B2+C2+D2</code> for valid triangles.`,`Column G: Area using Heron's formula <code>=IF(E2="✅ Valid",SQRT((F2/2)*(F2/2-B2)*(F2/2-C2)*(F2/2-D2)),0)</code>.`],
+    deliverable: `Submit workbook with 10 biological triangles, validity checks, perimeter, area. Write: '___ of 10 structures formed valid triangles. The benefit of triangular shape in organisms is ___ because the inequality guarantees ___.'`,
+    reflect: [`A bone strut has sides 3, 4, 9 cm. Is it valid? Why does this matter for structural integrity?`,`What is a triangle with sides 5, 5, 5 called? What is its area?`]
+  },
+  'circles': {
+    title: `Tree Ring Dendrochronology Analyzer`,
+    science: `🔬 Life Science — Tree Ring Analysis & Growth Prediction`,
+    mission: `Each ring in a tree trunk represents one year of growth. Wider rings mean better conditions. Analyze a tree's history and predict its future!`,
+    steps: [`Create a workbook called <em>Tree_Ring_Analyzer</em>.`,`Column A: Year (1–15). Column B: Cumulative radius (cm): 1.2, 2.5, 3.6, 4.9, 6.5, 7.4, 8.0, 8.8, 10.1, 11.8, 13.0, 13.6, 14.2, 15.8, 17.5.`,`Column C: Area of full circle each year: <code>=PI()*B2^2</code>.`,`Column D: Ring area added that year: <code>=C2-C1</code> (from row 3).`,`Column E: Ring width: <code>=B2-B1</code> (from row 3).`,`Create a <strong>Line Chart</strong> of Year vs. Ring Width. Add a moving average trendline.`],
+    deliverable: `Submit workbook with radius/area/ring data, line chart, and trendline. Write: 'Narrowest ring was year ___, possibly indicating ___. Widest ring was year ___. Predicted ring width in year 16 is approximately ___.'`,
+    reflect: [`In what year does ring area grow fastest? What environmental event might explain this?`,`What do consistently narrow rings for 5 years suggest about the climate?`]
+  },
+  'area-polygons': {
+    title: `Leaf Area & Photosynthesis Comparator`,
+    science: `🔬 Life Science — Leaf Surface Area & Photosynthesis Prediction`,
+    mission: `Plants with larger leaves capture more sunlight. Compare leaf areas of 5 Hawaiian plant species!`,
+    steps: [`Create a workbook called <em>Leaf_Area_Photosynthesis</em>.`,`5 Hawaiian plants: Plumeria, Taro, Monstera, Fern, Naupaka.`,`Columns B, C: Length and Width (cm). Column D: Area <code>=B2*C2</code> (rectangle) or <code>=0.5*B2*C2</code> (triangle).`,`Column E: Correction factor <code>=D2*0.7</code> (actual leaf shape ~70% of bounding rectangle).`,`Column F: Relative photosynthesis rate <code>=E2*0.15</code>.`,`Create a <strong>Bar Chart</strong> of species vs. adjusted leaf area.`],
+    deliverable: `Submit workbook with 5 species, all calculated columns, and bar chart. Write: 'The plant with greatest leaf area is ___. In a shaded environment I predict ___. In full sunlight the best choice is ___ because ___.'`,
+    reflect: [`Why use a correction factor of 0.7 instead of the full rectangle area?`,`A taro leaf is roughly triangular with base 30 cm and height 25 cm. What is its approximate actual area?`]
+  },
+  'surface-area-volume': {
+    title: `Animal Thermoregulation SA:V Analysis`,
+    science: `🔬 Life Science — Body Shape & Temperature Regulation`,
+    mission: `Why do arctic animals have rounder bodies while tropical animals are leaner? The surface area to volume ratio holds the answer!`,
+    steps: [`Create a workbook called <em>Animal_Thermoregulation_SA_V</em>.`,`6 animals as rectangular prisms: Arctic Fox (20×10×12), Tropical Lizard (15×4×3), Polar Bear (100×60×60), Cheetah (120×30×25), Arctic Seal (150×50×40), Hummingbird (8×2×2) — all in cm.`,`Column E: SA <code>=2*(B2*C2+B2*D2+C2*D2)</code>. Column F: Volume <code>=B2*C2*D2</code>.`,`Column G: SA:V Ratio <code>=E2/F2</code>. Column H: Climate label.`,`Create a <strong>Scatter Chart</strong> of SA:V Ratio vs. Volume, color coded by climate.`],
+    deliverable: `Submit workbook with all 6 animals, SA, Volume, SA:V, and scatter chart. Write: 'Arctic animals tend to have a ___ SA:V ratio. This helps them ___ because ___. An undiscovered polar animal would have body shape that ___.'`,
+    reflect: [`Why does a smaller SA:V ratio help animals stay warm in cold climates?`,`If you doubled all dimensions of an animal, what happens to its SA:V ratio?`]
+  },
+  'surface-area-volume-ratio': {
+    title: `Cell Size Limit Investigation`,
+    science: `🔬 Life Science — Why Cells Stay Microscopic`,
+    mission: `Build a Sheets workbook that calculates surface area, volume, and SA/V ratio for cubes and spheres at every size from 1 µm to 1 m. Use it to predict why cells divide.`,
+    steps: [
+      `Create a workbook called <em>SA_Volume_Ratio_Investigation</em>.`,
+      `<strong>Sheet 1 — Cube Calculator:</strong> Columns: Side s | SA <code>=6*A2^2</code> | V <code>=A2^3</code> | SA/V <code>=B2/C2</code>. Enter sides: 1, 2, 3, 4, 5, 6, 8, 10, 20, 50, 100.`,
+      `<strong>Sheet 2 — Sphere Calculator:</strong> Columns: r | SA <code>=4*PI()*A2^2</code> | V <code>=(4/3)*PI()*A2^3</code> | SA/V <code>=B2/C2</code>. Enter r: 1, 2, 5, 10, 50, 100.`,
+      `<strong>Sheet 3 — Cell Comparison:</strong> Compare a small cell (r = 5 µm), a large cell (r = 50 µm), an egg cell (r = 100 µm), an apple (r = 4 cm = 40,000 µm). Compute SA/V for each. Mark which would survive at that size and which would not.`,
+      `<strong>Sheet 4 — SA/V Decay Chart:</strong> Plot Sheet 1 as a line graph: x = side, y = SA/V. Title: “Why Cells Can’t Grow Bigger.” Add a second series for the sphere from Sheet 2.`
+    ],
+    deliverable: `Submit your 4-sheet workbook with all calculations and the decay chart. Write: <em>A cell with radius greater than ___ µm would have SA/V too low to import enough nutrients. The biggest single cell on Earth (an ostrich egg yolk) survives because ___.</em>`,
+    reflect: [
+      `Why is the formula SA/V = 6/s for a cube? Show the algebra: SA = 6s², V = s³, SA/V = 6s²/s³.`,
+      `Why does a chopped onion release more flavor than a whole one? Tie this to SA/V.`,
+      `An elephant in Antarctica would FREEZE to death even though small mice survive. Why? Use SA/V in your explanation.`
+    ]
+  },
+  'angles': {
+    title: `Human Joint Angle Reference Table`,
+    science: `🔬 Life Science — Joint Angles & Range of Motion`,
+    mission: `Physical therapists use angle measurements to evaluate joint health. Build an angle reference table for 6 major joints!`,
+    steps: [`Create a workbook called <em>Human_Joint_Angle_Table</em>.`,`Column A: Knee, Elbow, Hip, Shoulder, Wrist, Ankle. Column B: Resting angle: 170, 170, 120, 90, 0, 90.`,`Column C: Supplementary <code>=180-B2</code>. Column D: Complementary <code>=IF(B2<=90,90-B2,"N/A")</code>.`,`Column E: Normal range of motion (ROM). Column F: Is resting angle within ROM?`,`Create a <strong>Bar Chart</strong> comparing full range of motion per joint.`],
+    deliverable: `Submit workbook with 6 joints, angle calculations, ROM data, and bar chart. Write: 'The supplementary angle of a 170° knee is ___°. The joint with greatest ROM is ___. Understanding angles matters in PT because ___.'`,
+    reflect: [`A patient's elbow can only bend to 60° (normal 145°). What is the percent decrease in ROM?`,`If two bones meet at complementary angles, what is the relationship between them?`]
+  },
+  'probability': {
+    title: `Genetic Probability Model (Punnett Squares)`,
+    science: `🔬 Life Science — Genetics & Inheritance Probability`,
+    mission: `A Punnett square is a probability model. Use multiplication of fractions to predict the likelihood of genetic traits across multiple generations!`,
+    steps: [`Create a workbook called <em>Genetic_Probability_Model</em>.`,`Sheet 1: Punnett Calculator for Ss × Ss cross. Columns: Genotype | Fraction | Decimal | Percent.`,`Sheet 2 — Multi-Generation: Two Ss parents → child. Use P(ss)×P(ss) for two affected children.`,`Build a 3-generation tree calculating probability of at least one ss child each generation.`,`Sheet 3 — Simulation: 100 trials using <code>=RANDBETWEEN(1,4)</code>. Count outcomes with >2.`,`Compare simulated % to theoretical 25%.`],
+    deliverable: `Submit 3-sheet workbook with Punnett calculator, multi-generation tree, and simulation. Write: 'Theoretical probability of two Ss parents having an affected child is ___. My simulation showed ___%. The difference is ___ percentage points.'`,
+    reflect: [`If both parents are Ss, what is the probability BOTH of their first two children are affected?`,`How does the Law of Large Numbers explain why 100 trials gives a closer estimate than 10?`]
+  },
+  'statistics': {
+    title: `Bird Species Population Comparison`,
+    science: `🔬 Life Science — Comparing Populations to Make Predictions`,
+    mission: `Scientists compare native and invasive species populations to predict which will dominate. Use statistics to analyze and forecast the outcome!`,
+    steps: [`Create a workbook called <em>Species_Population_Comparison</em>.`,`Sheet 1 — Native Bird: 30 wingspan values (mm), roughly 75–95 mm range.`,`Sheet 2 — Invasive Bird: 30 wingspan values, roughly 82–108 mm range.`,`Sheet 3 — Statistics: For each species: <code>=AVERAGE()</code>, <code>=MEDIAN()</code>, <code>=MAX()-MIN()</code>, <code>=QUARTILE(data,1)</code>, <code>=QUARTILE(data,3)</code>.`,`Build a box plot using min, Q1, median, Q3, max. Overlay both species on same chart.`],
+    deliverable: `Submit 3-sheet workbook with both species' data, statistics table, and overlaid box plot. Write: 'The ___ bird has a larger average wingspan. The IQR for native is ___, invasive is ___. My 50-year prediction is ___ because ___.'`,
+    reflect: [`What does a larger IQR tell you about a bird population?`,`If mean wingspans are equal but one IQR is much larger, what does this suggest?`]
+  },
+  'word-problems': {
+    title: `Ecosystem Prediction Report — Capstone`,
+    science: `🔬 Life Science — Integrated Ecosystem Prediction Challenge`,
+    mission: `You are an ecologist. Choose a Hawaiian ecosystem and use ALL your 7th grade math to predict what it will look like in 10 years. This is your capstone!`,
+    steps: [`Choose ONE ecosystem: Coral Reef, Native Rainforest, Coastal Wetland, or Ocean Open Water.`,`Create <em>Ecosystem_Prediction_Report_[YourEcosystem]</em> with 8 sheets.`,`Sheet 1 — Overview: Ecosystem, key species, your main prediction.`,`Sheet 2 — Proportional Relationships: Population growing proportionally. Table and chart.`,`Sheet 3 — Percent Change: 2 species past 10 years; project 10 more.`,`Sheet 4 — Rational Numbers: Temperature/pH/salinity changes using add/subtract.`,`Sheet 5 — Equations & Inequalities: One equation, one tolerance range inequality.`,`Sheet 6 — Geometry: Area of ecosystem; SA:V or scale for one organism.`,`Sheet 7 — Probability & Statistics: One probability calculation; statistics on one population dataset.`,`Sheet 8 — Prediction Summary: 10-year prediction with evidence from each sheet.`],
+    deliverable: `Submit complete 8-sheet workbook. Write a one-page 'Ecologist's Forecast' on Sheet 8 referencing specific numbers from Sheets 2–7. This is your 7th grade Math With a Purpose capstone!`,
+    reflect: [`Which math skill gave you the most useful prediction tool? Why?`,`What assumption in your model could be most wrong? How would you correct it?`]
+  },
+  'population-growth': {
+    title: `Hawaiian Species Population Growth Simulator`,
+    science: `🔬 Life Science — Population Ecology & Exponential Growth`,
+    mission: `Ecologists use mathematical models to predict population sizes — and to sound the alarm when species are declining. In this project you will build a population growth simulator for real Hawaiian species, comparing exponential growth, doubling time, and carrying capacity to understand why some species thrive and others vanish.`,
+    steps: [
+      `Create a workbook called <em>Hawaiian_Population_Simulator</em>.`,
+      `<strong>Sheet 1 — Exponential Growth Calculator:</strong> Column A: Time period (0–10). Column B: Population A — starts at 100, doubles each period <code>=B2*2</code>. Column C: Population B — starts at 100, grows at 30% per period <code>=C2*1.3</code>. Column D: Population C — starts at 1000, declines 20% per period <code>=D2*0.8</code>. Create a <strong>Line Chart</strong> with all three curves. Label which shows exponential growth, percent growth, and decline.`,
+      `<strong>Sheet 2 — Doubling Time Calculator:</strong> Column A: Species name. Column B: Annual growth rate (%). Column C: Doubling time <code>=70/B2</code>. Column D: Population in 50 years if starting at 1,000 <code>=1000*2^(50/C2)</code>. Enter 8 Hawaiian species: Hawaiian monk seal (3.2%), Hawaiian hawk (1.8%), Nene goose (12%), ʻAlalā (Hawaiian crow, -5%), Humpback whale (7%), Hawksbill sea turtle (2%), ʻŌpeʻapeʻa (Hawaiian bat, 4%), Pueo (Hawaiian owl, -2%).`,
+      `<strong>Sheet 3 — Logistic Growth Model:</strong> Model a population approaching carrying capacity. Column A: Year (1–20). Column B: Population using simplified logistic formula. Start at P=100, K=1000 (carrying capacity). Each year: <code>=B2 + 0.5*B2*(1-B2/1000)</code>. Column C: How far from K <code>=1000-B2</code>. Column D: % of K reached <code>=B2/1000*100</code>. Create a Line Chart — this should show the S-curve of logistic growth.`,
+      `<strong>Sheet 4 — Predator-Prey Oscillation:</strong> Build a simple predator-prey table. Column A: Year (1–20). Column B: Prey (start=500). Column C: Predators (start=50). Use simplified rules: Prey next year <code>=B2 + B2*0.4 - C2*10</code> (grows 40% but decreases with predators). Predators next year <code>=C2 + C2*0.2 - B2*0.01</code>. Add a <code>=MAX(0,formula)</code> wrapper to prevent negatives. Create a dual-axis Line Chart showing both oscillating populations over time.`,
+      `<strong>Sheet 5 — Endangered Species Alert:</strong> Column A: Species. Column B: Population 1990. Column C: Population 2024. Column D: Percent change <code>=(C2-B2)/B2*100</code>. Column E: Status <code>=IF(D2>20,"Growing 📈",IF(D2>0,"Recovering ↗",IF(D2>-30,"Declining ⚠","Critical 🚨")))</code>. Column F: Projected 2050 at current rate <code>=C2*(1+D2/100)^26</code>. Enter 8 Hawaiian species with real or estimated data.`
+    ],
+    deliverable: `Submit your 5-sheet workbook. Write a "Conservation Report": <em>"The species most urgently needing conservation action is ___ because its population has changed by ___% since 1990 and is projected to reach ___ by 2050. Mathematically, this is an example of ___ growth. To reverse the trend, the growth rate would need to become at least ___% positive."</em>`,
+    reflect: [
+      `On Sheet 2, the Nene goose (12% annual growth) has a much shorter doubling time than the monk seal (3.2%). Write both doubling times. If both species start at 500 individuals in 2024, how many of each will there be in 2059 (35 years)? Show your calculation.`,
+      `On Sheet 3, at what year does the population cross 50% of carrying capacity? At 90%? The logistic growth slows down as population approaches K. Using the formula, explain mathematically why this happens — what part of the formula gets smaller as B approaches 1000?`
+    ]
+  },
+  'genetics-probability': {
+    title: `Hawaiian Species Genetics & Trait Inheritance Lab`,
+    science: `🔬 Life Science — Mendelian Genetics & Population Genetics`,
+    mission: `Every hereditary trait follows probability rules discoverable with a simple 2×2 table. In this project you will build a genetics calculator that predicts trait outcomes, tests observed vs. expected ratios, and applies genetics probability to real conservation biology questions about Hawaiian species.`,
+    steps: [
+      `Create a workbook called <em>Genetics_Probability_Lab</em>.`,
+      `<strong>Sheet 1 — Punnett Square Calculator:</strong> Build a reusable 2×2 calculator. Cells B2 and C2: enter parent 1 alleles (e.g., B and b). Cells B3 and C3: enter parent 2 alleles. Cells B5:C6: offspring combinations (use CONCATENATE to join pairs). Cells B8:B11: probability of each genotype (=1/4 each for a simple monohybrid cross). Cell B13: P(dominant phenotype) = =IF(B10="BB",1,0) + IF(B10="Bb",1,0) — count all boxes showing dominant. Use this to test 5 different crosses.`,
+      `<strong>Sheet 2 — Observed vs. Expected:</strong> Mendel's Law predicts a 3:1 ratio for dominant:recessive phenotype. Column A: Cross number (1–6). Column B: Total offspring observed. Column C: Observed dominant count. Column D: Observed recessive count. Column E: Expected dominant <code>=B2*0.75</code>. Column F: Expected recessive <code>=B2*0.25</code>. Column G: Difference (dominant) <code>=C2-E2</code>. Enter 6 trial datasets (you can invent numbers near 3:1 with small variation). Create a <strong>Grouped Bar Chart</strong> of observed vs. expected.`,
+      `<strong>Sheet 3 — Hawaiian Species Genetics:</strong> Apply genetics to real conservation. Columns: Species | Trait | Dominant allele | Recessive allele | Cross scenario | P(recessive phenotype) | Concern? <code>=IF(F2>0.25,"Monitor","OK")</code>. Enter 5 scenarios: (1) Nene coat color — dark (B) vs. pale (b), parents Bb × Bb; (2) ʻAlalā beak curve — curved (C) vs. straight (c), parents Cc × cc; (3) Monk seal flipper length — long (L) vs. short (l), Ll × Ll; (4) Hawaiian hawk hunting success — high (H) vs. low (h), Hh × Hh; (5) Sea turtle shell pattern, parents BB × Bb.`,
+      `<strong>Sheet 4 — Population Genetics (Allele Frequency):</strong> In a population, allele frequency tells you how common each allele is. Column A: Generation (1–8). Column B: Total population. Column C: Number with dominant allele B. Column D: Frequency of B <code>=C2/(B2*2)</code>. Column E: Frequency of b <code>=1-D2</code>. Enter a scenario where a recessive allele gradually decreases (e.g., if recessive reduces survival). Create a Line Chart showing allele frequencies changing over generations.`
+    ],
+    deliverable: `Submit your 4-sheet workbook. Write a "Genetics Report": <em>"In a Bb × Bb cross, the probability of a recessive phenotype is ___. In my observed data (Sheet 2), the closest result to Mendel's 3:1 prediction was Cross ___, which had ___ dominant and ___ recessive out of ___ total. The biggest deviation was Cross ___ — this is expected because ___."</em>`,
+    reflect: [
+      `On Sheet 2, even if the true probability is 75% dominant, small samples can deviate significantly. If you flipped a coin 4 times, you might get 4 heads. Why does a larger sample give results closer to the theoretical probability? Connect this to the Law of Large Numbers from statistics.`,
+      `On Sheet 4, why would a recessive allele that reduces survival eventually become less common in a population over generations? If the recessive allele causes no harm when paired with a dominant allele (carrier), why can it never completely disappear from a large population?`
+    ]
+  },
+  'pharmacokinetics': {
+    title: `Pediatric Drug Dosing & Elimination Lab`,
+    science: `🔬 Life Science — Pharmacokinetics & Medicine Safety`,
+    mission: `Getting the right drug dose to a patient requires math — the wrong amount can be ineffective or dangerous. Pediatric (children's) dosing is especially critical because children's bodies eliminate drugs differently than adults. In this project you will build a dosing calculator, model drug elimination over time, and identify safe dosing intervals.`,
+    steps: [
+      `Create a workbook called <em>Drug_Dosing_Elimination_Lab</em>.`,
+      `<strong>Sheet 1 — Half-Life Decay Table:</strong> Column A: Half-life number (0–8). Column B: Fraction remaining <code>=0.5^A2</code>. Column C: Percent remaining <code>=B2*100</code>. Column D: Amount remaining from a 400 mg dose <code>=400*B2</code>. Column E: Amount remaining from a 100 mg dose <code>=100*B2</code>. Add a <strong>Line Chart</strong> of percent remaining vs. half-life number. Mark the 50%, 25%, and ~3% points.`,
+      `<strong>Sheet 2 — Drug Comparison Table:</strong> Build a reference for 6 common medications. Columns: Drug | Typical Dose (mg) | Half-life (hrs) | Time for 5 half-lives (hrs) <code>=C2*5</code> | Amount at 5 half-lives <code>=B2*0.5^5</code> | Hours in system until <3% <code>=C2*5</code> | Safe for children? (enter manually). Enter: Ibuprofen (200 mg, 2 hr), Acetaminophen (250 mg, 3 hr), Amoxicillin (250 mg, 1.5 hr), Caffeine (40 mg, 5 hr), Diazepam (5 mg, 50 hr), Melatonin (1 mg, 1 hr).`,
+      `<strong>Sheet 3 — Pediatric Dosing Calculator:</strong> Columns: Patient | Weight (kg) | Drug | Dose (mg/kg) | Total Dose <code>=B2*D2</code> | Half-life (hrs) | Amount after 4 hrs <code>=E2*0.5^(4/F2)</code> | Amount after 8 hrs <code>=E2*0.5^(8/F2)</code> | Safe? <code>=IF(E2<=500,"✅","⚠ Check")</code>. Enter 6 pediatric patients: Kenji 12 kg ibuprofen (5 mg/kg, t½=2hr), Leilani 25 kg acetaminophen (10 mg/kg, t½=3hr), Marco 8 kg amoxicillin (25 mg/kg, t½=1.5hr), Aiko 40 kg ibuprofen (7 mg/kg), Sam 15 kg acetaminophen (12 mg/kg), Mele 30 kg amoxicillin (20 mg/kg).`,
+      `<strong>Sheet 4 — Dosing Interval Optimizer:</strong> A drug must stay above a minimum effective concentration (MEC). Column A: Hours after dose (0–24). Column B: Drug level <code>=InitialDose * 0.5^(A2/halflife)</code> — use $references for the initial dose and half-life. Column C: MEC threshold (constant, e.g., 50 mg). Column D: Effective? <code>=IF(B2>=C2,"✅ Effective","❌ Below MEC")</code>. Create a Line Chart showing drug level vs. time with a horizontal reference line at MEC. Determine: when should the next dose be given to keep drug above MEC?`
+    ],
+    deliverable: `Submit your 4-sheet workbook. Write a "Pharmacist's Recommendation": <em>"Drug ___ has a half-life of ___ hours. A ___ mg dose drops below the minimum effective concentration after approximately ___ hours. Therefore, it should be taken every ___ hours. After ___ hours total, it is essentially out of the body (less than 3% remains)."</em>`,
+    reflect: [
+      `On Sheet 3, Marco weighs 8 kg and receives 25 mg/kg of amoxicillin. What is his total dose? The formula uses <code>=B2*D2</code>. If a nurse accidentally enters Marco's weight in grams instead of kilograms (8,000 g), what dose would the formula compute? What is the danger? Connect this to the unit conversion skill.`,
+      `On Sheet 4, if you double the initial dose but keep the same half-life, does the drug stay above MEC for twice as long? Use the formula to test this. The answer is no — explain why using the structure of the exponential decay formula.`
+    ]
+  },
+  'biodiversity': {
+    title: `Hawaiian Ecosystem Biodiversity Assessment`,
+    science: `🔬 Life Science — Biodiversity, Species Proportions & Ecosystem Health`,
+    mission: `Hawaii is both the most biodiverse island chain on Earth and the extinction capital of the world — more than 75 species have gone extinct in Hawaii since humans arrived. In this project you will measure the biodiversity of real Hawaiian ecosystems using species counts and proportions, compare healthy vs. degraded ecosystems, and predict the impact of invasive species.`,
+    steps: [
+      `Create a workbook called <em>Hawaiian_Biodiversity_Assessment</em>.`,
+      `<strong>Sheet 1 — Species Proportions Calculator:</strong> Columns: Species | Count | Total (use SUM) | Proportion <code>=B2/B$12</code> | Percent <code>=D2*100</code> | Rank <code>=RANK(B2,B$2:B$11)</code>. Enter data for a native Hawaiian rainforest plot (100 trees total): Ōhiʻa lehua (35), Koa (22), Hāpuʻu fern (18), Kōpiko (10), ʻŌlapa (7), Olonā (3), Pilo (2), Maile (1), ʻŌhiʻa loa (1), Other native (1). Create a <strong>Pie Chart</strong> of proportions. Add a second pie chart of a degraded version: Strawberry guava (70), Ōhiʻa (10), Koa (8), Hāpuʻu (5), Others (7). Compare visually.`,
+      `<strong>Sheet 2 — Richness & Evenness Calculator:</strong> Column A: Ecosystem name. Column B: Number of species (richness). Column C: Total individuals. Column D: Most dominant species count. Column E: Dominance proportion <code>=D2/C2</code>. Column F: Evenness estimate <code>=1-E2</code> (1 = perfectly even, 0 = one species dominates). Column G: Biodiversity rating <code>=IF(F2>0.8,"High 🌿",IF(F2>0.5,"Medium","Low ⚠"))</code>. Enter 6 Hawaiian ecosystems with estimated data: Native rainforest, Degraded rainforest (guava invasion), Coral reef (healthy), Bleached coral reef, Alpine shrubland, Agricultural field.`,
+      `<strong>Sheet 3 — Invasive Species Impact Tracker:</strong> Track how an invasive species changes proportions over time. Column A: Year. Column B: Native proportion. Column C: Invasive proportion <code>=1-B2</code>. Column D: Predicted native species richness <code>=B2*20</code> (assume 20 native species at full coverage). Column E: Biodiversity status <code>=IF(B2>0.7,"Healthy",IF(B2>0.4,"At risk","Critical"))</code>. Enter data for 1990–2024 at 5-year intervals for a forest being invaded by strawberry guava: native prop = 0.95, 0.85, 0.70, 0.55, 0.40, 0.25, 0.15. Project 2029 and 2034 using the trend. Create a Line Chart.`,
+      `<strong>Sheet 4 — Restoration Calculator:</strong> How many years of restoration work to recover biodiversity? Column A: Restoration year (0–15). Column B: Native proportion (starts at 0.15, increases 0.05/yr with active management) <code>=MIN(0.95, B2+0.05)</code>. Column C: Invasive proportion <code>=1-B2</code>. Column D: Effective species richness <code>=B2*20</code>. Column E: Year <code>=2024+A2</code>. Create a Line Chart showing native vs. invasive proportion over restoration years. Mark the year when native proportion exceeds 50% and 80%.`
+    ],
+    deliverable: `Submit your 4-sheet workbook. Write a "Conservation Assessment": <em>"The native Hawaiian rainforest has a biodiversity rating of ___ with a dominance proportion of ___. After strawberry guava invasion, the native proportion dropped to ___% by 2024, reducing effective richness from ___ to approximately ___ species. With active restoration (Sheet 4), the ecosystem could recover to 80% native cover by year ___ (___AD)."</em>`,
+    reflect: [
+      `On Sheet 1, the pie chart of the invaded forest shows strawberry guava at 70% and all native species together at 30%. If there are 10 native species sharing that 30% and 1 invasive species at 70%, which ecosystem has higher richness? Which has higher evenness? Write a sentence explaining why richness alone can be misleading.`,
+      `On Sheet 3, the native proportion declines from 0.95 to 0.15 over 34 years. Calculate the average rate of decline per year. At this rate, when would native species reach 0%? On Sheet 4, restoration adds 0.05 per year. How many years of decline does one year of restoration undo? What does this tell you about the cost of prevention vs. restoration?`
+    ]
+  },
+};
+
+  const REALWORLD_7 = {
+    'proportional': {
+      title: `Crochet Granny-Square Blanket Designer`,
+      banner: `🎨 Real-World Math — Fiber Arts & Proportional Reasoning`,
+      mission: `A finished granny square is 5 inches across and uses about 20 yards of yarn. Use proportional reasoning to plan a queen-size blanket.`,
+      steps: [
+      `A queen-size blanket is roughly 90 in x 90 in. Each square is 5 in x 5 in. How many squares wide? How many tall? Total squares?`,
+      `Each square uses 20 yards of yarn. Set up a proportion: (20 yd / 1 sq) = (? yd / total squares). Solve for total yardage.`,
+      `A standard skein has 200 yards and costs $4.50. How many skeins do you need? Round UP. Total cost?`,
+      `Make a graph: x-axis = number of squares, y-axis = yards of yarn. Plot a few points and draw the line. What is the slope (= constant of proportionality)?`,
+      `Test the relationship for non-proportional behavior. If you change the square size to 7 inches, is the yarn-per-square constant still 20 yd? Why not?`,
+      `Bonus: design a 3-color stripe pattern. If 60% of squares are color 1, 30% color 2, 10% color 3, how many of each, and how much yarn of each?`
+      ],
+      deliverable: `Submit your blanket plan: total squares, total yardage, total skeins, total cost, and a sketch of the layout with color counts. Bring an actual crochet sample if you can.`,
+      reflect: [
+      `Is yards = 20 x squares a proportional relationship? Show that it passes through (0,0) and that the ratio is constant.`,
+      `Why does the cost NOT have a perfectly proportional relationship to squares? (Hint: you can’t buy half a skein.)`
+      ]
+    },
+    'scale-drawings': {
+      title: `Tiny House Floor Plan`,
+      banner: `🎨 Real-World Math — Architecture & Scale`,
+      mission: `Tiny houses are usually 200 to 400 sq ft. Design a tiny house and produce a scaled floor plan that an actual builder could read.`,
+      steps: [
+      `Choose your house dimensions. Aim for 200 to 300 sq ft. Sketch the outline at FULL size on scratch paper to plan rooms.`,
+      `Use scale 1/4 inch = 1 foot. So 12 ft = 3 inches on paper, 8 ft = 2 inches. Convert every dimension before drawing.`,
+      `On graph paper draw the floor plan to scale: walls, doors, windows. Label every room with both real dimensions ("12 ft x 10 ft") and the area ("120 sq ft").`,
+      `Add furniture at the same scale: a 6-ft couch is 1.5 inches; a 4-ft x 6-ft bed is 1 in x 1.5 in. Plan the layout so people can walk around.`,
+      `Compute the total floor area in real square feet. Compute the area of your scaled drawing in paper square inches.`,
+      `Show that scale_area = scale_factor² x real_area. Verify with your numbers: (1/4)² = 1/16 should connect paper sq in to real sq ft.`
+      ],
+      deliverable: `Submit your scaled floor plan with full dimensions, room areas, and furniture. On the back, write the scale-factor verification: paper area, real area, and the (1/4)² = 1/16 check.`,
+      reflect: [
+      `A 1/4 in : 1 ft scale means lengths shrink by 1/48 (since 1 ft = 12 in). Verify this.`,
+      `Why does AREA shrink by the SQUARE of the length scale factor? Show the algebra: area = length x width.`
+      ]
+    },
+    'circles': {
+      title: `Pizza Pricing Detective`,
+      banner: `🎨 Real-World Math — Smart Shopping & π`,
+      mission: `Pizza menus list diameter and price, but you’re paying for AREA. Use πr² and unit rates to find which size is the best deal.`,
+      steps: [
+      `From any pizza chain, list the prices of small (10 in), medium (12 in), large (14 in), and extra-large (16 in) pizzas.`,
+      `For each size, compute the area: A = π r². Use π ≈ 3.14.`,
+      `Compute the unit rate: dollars per square inch = price / area. Round to 4 decimal places.`,
+      `Rank the sizes from BEST deal (lowest $/sq in) to WORST. Which is it?`,
+      `Bonus 1: A "personal" 8-inch pizza is $7. How does this compare? Where does it rank?`,
+      `Bonus 2: "Two medium pizzas for $20" — is that better than one extra-large for $22? Compare areas and prices.`
+      ],
+      deliverable: `Submit a clean table with diameter, radius, area, price, and unit rate for every size. Highlight the best deal. Write 2 sentences explaining why diameter alone is misleading.`,
+      reflect: [
+      `A 14-inch pizza has roughly TWICE the area of a 10-inch one. Verify with the formula.`,
+      `Why is "twice the diameter = four times the area"? Tie this to the r² in the area formula.`
+      ]
+    },
+    'triangles': {
+      title: `Origami Crane Geometry Lab`,
+      banner: `🎨 Real-World Math — Origami & Triangle Properties`,
+      mission: `A traditional origami crane uses dozens of folds, each creating a triangle. Fold a crane and document every triangle, angle, and triangle inequality you find.`,
+      steps: [
+      `Find a YouTube tutorial or paper guide and fold a crane from a 6-inch square. (If folding is hard, do a simpler model like a paper airplane or fortune teller.)`,
+      `After folding the "preliminary base" (the diamond shape), unfold the paper. Trace the crease pattern in pencil.`,
+      `Identify 6 triangles in the crease pattern. Measure their angles with a protractor and record them.`,
+      `For each triangle, verify that the angles sum to 180°. Record any deviations — are they measurement errors or paper errors?`,
+      `Identify 3 pairs of CONGRUENT triangles in the crease pattern (same shape and size). How can you tell they’re congruent without measuring?`,
+      `For each triangle, measure all 3 sides and verify the triangle inequality (any two sides sum greater than the third).`
+      ],
+      deliverable: `Submit (1) the finished crane, (2) the unfolded paper with the crease pattern highlighted, (3) a table of 6 triangles with angles and sides, (4) your congruence pairs.`,
+      reflect: [
+      `Why do all the angles in any triangle ALWAYS sum to 180°?`,
+      `Origami can be done with paper that has any shape, but folding usually starts with a SQUARE. Why? What do the right angles of a square give you for free?`
+      ]
+    },
+    'probability': {
+      title: `Pokemon Card Pack Probability Lab`,
+      banner: `🎨 Real-World Math — Game Probability`,
+      mission: `A pack of trading cards lists drop rates: 1 in 4 packs has a holographic, 1 in 36 has a "Vmax." Test the rates: are the printed odds true?`,
+      steps: [
+      `Either open 30 to 60 real packs (with permission!) or simulate online (the "Pokemon TCG Live" tutorial mode is free).`,
+      `For each pack, record: number of holos, number of rares, number of any "ultra" cards.`,
+      `Compute observed probability: count / total packs. Compare to printed odds.`,
+      `Theoretical probability of getting NO holographic in 4 packs at 1/4 rate: (3/4)⁴. Compute it.`,
+      `Probability of pulling at least one Vmax in 36 packs at 1/36: 1 - (35/36)³⁶. Compute it. Compare to your observed rate.`,
+      `Make a bar chart: rarity tier on x-axis, observed % vs. theoretical % on y-axis.`
+      ],
+      deliverable: `Submit your data table, the bar chart, and a short paragraph: is your sample close to theoretical? If not, would more packs make it closer? (This is the Law of Large Numbers in action.)`,
+      reflect: [
+      `If the holographic rate is 1 in 4, why are you NOT guaranteed a holographic in every 4 packs?`,
+      `A friend opens 8 packs and gets 4 holos. What probability does THEIR sample suggest? Is your friend lucky, or is the printed rate wrong?`
+      ]
+    },
+    'statistics': {
+      title: `Spotify Listening Stats Project`,
+      banner: `🎨 Real-World Math — Personal Data & Statistics`,
+      mission: `Spotify, YouTube Music, and Apple Music let you download your own listening history. Use real data to compute personal music statistics.`,
+      steps: [
+      `Open your music app and find "Recently Played" or download history. Get the most-recent 30 songs.`,
+      `Build a table: song title | artist | length (min:sec) | genre.`,
+      `Convert every length to total seconds. Compute the mean, median, and range of song length in seconds.`,
+      `Tally genres. What is the modal genre? Compute the percent of songs in each genre.`,
+      `Make a HISTOGRAM of song length: bins of 30 seconds wide.`,
+      `Bonus: if you listen 1 hour a day, predict your total listening time per year using the mean. Compare to Spotify’s "Wrapped" stat if you have it.`
+      ],
+      deliverable: `Submit your data table, summary stats, histogram, and yearly listening prediction. On the back: which genre dominates your listening? Were you surprised?`,
+      reflect: [
+      `Why is the median often more useful than the mean for song length? What happens if your playlist contains a 30-minute live track?`,
+      `Your sample is 30 songs. How could you make it more representative of your "true" listening?`
+      ]
+    },
+    'percents': {
+      title: `Thrift Flip Business`,
+      banner: `🎨 Real-World Math — Entrepreneurship & Percent Change`,
+      mission: `Thrifting and reselling is real teen business. Plan a flip: buy low at a thrift store, add value, sell higher. Compute markup, profit margin, and percent change.`,
+      steps: [
+      `On Depop, Poshmark, or eBay, identify 5 items that resold for at least 3x their thrift cost. Record (estimated) thrift price and resale price.`,
+      `For each item, compute markup ($) and percent increase. Use the formula (new - old) / old x 100.`,
+      `Compute profit MARGIN: profit / sale_price x 100. (Different from markup!)`,
+      `Now subtract realistic costs: $5 shipping, 10% platform fee. Recompute net profit and net margin.`,
+      `Pick ONE item type as your imaginary niche (vintage Nike, denim, Y2K, etc.). Plan: how many items per month, average margin, target monthly profit.`,
+      `Build a 3-month forecast table: month | items sold | revenue | costs | net profit. Project your total profit at end of 3 months.`
+      ],
+      deliverable: `Submit the 5-item case study, your niche pitch, and the 3-month forecast. Write 1 sentence: "If I had $50 to start, I would buy ___ first because ___."`,
+      reflect: [
+      `A $5 thrifted item resells for $25. What is the markup percent? What is the profit margin percent? Why are these different?`,
+      `Why does subtracting platform fees and shipping change the margin so much? Could a high-markup item still be unprofitable?`
+      ]
+    },
+  };
+
+const ANSWER_KEYS_7 = {
+  'proportional': 'Population_Prediction_Model.xlsx',
+  'ratios-rates': 'Animal_Heart_Rate_Comparator.xlsx',
+  'unit-conversions': 'Life_Science_Measurement_Lab.xlsx',
+  'scientific-notation': 'Microscopic_World_Data_Table.xlsx',
+  'percents': 'Hawaii_Endangered_Species_Tracker.xlsx',
+  'add-sub-rational': 'Patient_Temperature_Log.xlsx',
+  'mult-div-rational': 'Cell_Division_Scaling_Model.xlsx',
+  'alg-expressions': 'Photosynthesis_Expression_Model.xlsx',
+  'equations': 'Caloric_Balance_Equations.xlsx',
+  'inequalities': 'Species_Survival_Monitor.xlsx',
+  'scale-drawings': 'Cell_Scale_Conversion_Table.xlsx',
+  'triangles': 'Triangle_Inequality_Nature.xlsx',
+  'circles': 'Tree_Ring_Analyzer.xlsx',
+  'area-polygons': 'Leaf_Area_Photosynthesis.xlsx',
+  'surface-area-volume': 'Animal_Thermoregulation_SA_V.xlsx',
+  'angles': 'Human_Joint_Angle_Table.xlsx',
+  'probability': 'Genetic_Probability_Model.xlsx',
+  'statistics': 'Species_Population_Comparison.xlsx',
+  'word-problems': 'Ecosystem_Prediction_Report.xlsx',
+  'population-growth': 'Hawaiian_Population_Simulator.xlsx',
+  'genetics-probability': 'Genetics_Probability_Lab.xlsx',
+  'pharmacokinetics': 'Drug_Dosing_Elimination_Lab.xlsx',
+  'biodiversity': 'Hawaiian_Biodiversity_Assessment.xlsx'
+};
+
+function showHandout() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('handout-screen').classList.add('active');
+  const h = HANDOUTS_7[currentUnit];
+  if (!h) {
+    document.getElementById('handout-content').innerHTML = '<p>No handout available for this unit.</p>';
+    return;
+  }
+  const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
+  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  const akFile = ANSWER_KEYS_7[currentUnit];
+  const answerKeyHtml = akFile ? `
+      <div style="background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:14px;margin:14px 0;">
+        <strong style="color:#1B3A8A;">📗 Answer Key (for self-check):</strong>
+        <a href="answerkeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
+        <div style="font-size:0.9rem;color:#555;margin-top:6px;">Completed workbook with all formulas, charts, and real-world data. Open in Excel or upload to Google Sheets (<em>File → Import → Upload</em>) to compare with your own work after you finish.</div>
+      </div>` : '';
+  document.getElementById('handout-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${h.title}</h3>
+      <div class="handout-science">${h.science}</div>
+      <div class="handout-mission">${h.mission}</div>
+      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <ol class="handout-steps">${stepsHtml}</ol>
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>
+      ${answerKeyHtml}
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>
+    </div>`;
+}
+
+function showRealWorld() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('realworld-screen').classList.add('active');
+  const h = REALWORLD_7[currentUnit];
+  if (!h) {
+    return;
+  }
+  const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
+  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  document.getElementById('realworld-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${h.title}</h3>
+      <div class="handout-science">${h.banner}</div>
+      <div class="handout-mission">${h.mission}</div>
+      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <ol class="handout-steps">${stepsHtml}</ol>
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>
+    </div>`;
+}
+</script>
+</body>
+</html>
