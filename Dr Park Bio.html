@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Dr. Peter Park &mdash; Mary, Star of the Sea</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+      color: #253a77;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .container { max-width: 860px; width: 100%; }
+    .back-index-btn {
+      position: fixed;
+      top: 20px; left: 20px;
+      background: #253a77; color: #fff; text-decoration: none;
+      padding: 10px 16px; border-radius: 8px;
+      font-size: 14px; font-weight: 700;
+      box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+      transition: all 0.18s; z-index: 10;
+    }
+    .back-index-btn:hover { background: #1a2a4a; transform: translateX(-2px); box-shadow: 0 5px 14px rgba(37,58,119,0.35); }
+
+    .bio-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+      padding: 36px 40px;
+      border-top: 6px solid #FFD100;
+    }
+    .header-row {
+      display: flex; gap: 28px; align-items: center;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .photo {
+      flex: 0 0 200px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: #1a2a4a;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(37,58,119,0.25);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 35% 35%;
+      display: block;
+    }
+    .photo .initials {
+      color: #FFD100;
+      font-size: 4rem; font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .id { flex: 1 1 260px; }
+    .id h1 {
+      color: #253a77;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .id .role {
+      color: #7a5f00;
+      font-size: 1.05rem;
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+    .id .contact {
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.7;
+    }
+    .id .contact strong { color: #253a77; }
+    .id .contact a { color: #253a77; text-decoration: none; }
+    .id .contact a:hover { text-decoration: underline; }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #d8dee9, transparent);
+      margin: 12px 0 24px;
+    }
+
+    .bio-section h2 {
+      color: #253a77;
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+    .bio-section p {
+      color: #2d3748;
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+    .bio-section p:last-child { margin-bottom: 0; }
+
+    .quick-facts {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+    }
+    .fact {
+      background: #f0f4fc;
+      border-left: 3px solid #253a77;
+      padding: 12px 14px;
+      border-radius: 6px;
+    }
+    .fact .label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .fact .value {
+      font-size: 0.92rem;
+      color: #253a77;
+      font-weight: 600;
+    }
+
+    .education {
+      margin-top: 30px;
+      padding: 22px 24px;
+      background: #f8fafc;
+      border-radius: 10px;
+      border-left: 4px solid #FFD100;
+    }
+    .education h2 {
+      color: #253a77;
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .edu-list { list-style: none; padding: 0; margin: 0; }
+    .edu-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px dashed #d8dee9;
+    }
+    .edu-list li:last-child { border-bottom: none; }
+    .edu-degree {
+      flex: 0 0 240px;
+      font-weight: 700;
+      color: #253a77;
+      font-size: 0.95rem;
+    }
+    .edu-school {
+      flex: 1 1 auto;
+      color: #444;
+      font-size: 0.92rem;
+      font-style: italic;
+    }
+    @media (max-width: 600px) {
+      .edu-list li { flex-direction: column; gap: 2px; }
+      .edu-degree { flex: 1 1 auto; }
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    @media (max-width: 600px) {
+      .bio-card { padding: 26px 22px; }
+      .header-row { flex-direction: column; text-align: center; }
+      .photo { flex: 0 0 160px; width: 160px; height: 160px; }
+      .id { text-align: center; }
+      .id h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <a href="MSOS Math Index.html" class="back-index-btn" title="Back to Math Classes &amp; Resources">&larr; Back to Math</a>
+  <div class="container">
+    <div class="bio-card">
+      <div class="header-row">
+        <div class="photo">
+          <img src="Dr Park Riding.jpg" alt="Dr. Peter Park" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="initials" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">PP</div>
+        </div>
+        <div class="id">
+          <h1>Dr. Peter Park</h1>
+          <p class="role">Middle School Math Teacher</p>
+          <div class="contact">
+            <strong>Email:</strong> <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a><br>
+            <strong>Phone:</strong> (808) 228-2285
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="bio-section">
+        <h2>About Dr. Park</h2>
+        <p>Dr. Park brings a unique blend of global experience, academic rigor, and infectious enthusiasm to every classroom.</p>
+        <p>Born and raised in South Korea, he moved to Hawai&lsquo;i during his sophomore year at Mid-Pacific Institute. He earned a Bachelor of Science in Electrical Engineering from Northeastern University in Boston before discovering his true passion for education. He went on to complete a Doctor of Education at Chaminade University of Honolulu.</p>
+        <p>With 15 years of teaching experience in Catholic schools, Dr. Park has inspired students in math, science, robotics, and engineering.</p>
+        <p>When not in the classroom, he is an avid motorcycle enthusiast who explores the world on two wheels. His calmer pursuit is golf, which he credits with keeping him mentally sharp and physically balanced after days with energetic students.</p>
+      </div>
+
+      <div class="education">
+        <h2>&#127891; Education &amp; Credentials</h2>
+        <ul class="edu-list">
+          <li>
+            <span class="edu-degree">High School</span>
+            <span class="edu-school">Mid-Pacific Institute, Honolulu, Hawai&lsquo;i</span>
+          </li>
+          <li>
+            <span class="edu-degree">B.S. Electrical Engineering</span>
+            <span class="edu-school">Northeastern University, Boston</span>
+          </li>
+          <li>
+            <span class="edu-degree">French Teaching Certificate</span>
+            <span class="edu-school">Universit&eacute; de Nice</span>
+          </li>
+          <li>
+            <span class="edu-degree">Master of Arts in Teaching, ESL</span>
+            <span class="edu-school">Fairleigh Dickinson University</span>
+          </li>
+          <li>
+            <span class="edu-degree">Master of Education</span>
+            <span class="edu-school">University of Hawai&lsquo;i at M&#257;noa</span>
+          </li>
+          <li>
+            <span class="edu-degree">Doctor of Education</span>
+            <span class="edu-school">Chaminade University of Honolulu</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="quick-facts">
+        <div class="fact">
+          <div class="label">From</div>
+          <div class="value">South Korea &rarr; Hawai&lsquo;i</div>
+        </div>
+        <div class="fact">
+          <div class="label">Experience</div>
+          <div class="value">15 years in Catholic schools</div>
+        </div>
+        <div class="fact">
+          <div class="label">Teaches</div>
+          <div class="value">Math, Science, Robotics, Engineering</div>
+        </div>
+        <div class="fact">
+          <div class="label">Off the clock</div>
+          <div class="value">Motorcycles &middot; Golf</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      &copy; Mary, Star of the Sea School &middot; SY 2026-2027
+    </footer>
+  </div>
+</body>
+</html>
