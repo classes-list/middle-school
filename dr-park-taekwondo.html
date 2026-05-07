@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Park &mdash; Taekwondo &mdash; Mary, Star of the Sea</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+      color: #253a77;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .back-index-btn {
+      position: fixed;
+      top: 20px; left: 20px;
+      background: #253a77; color: #fff; text-decoration: none;
+      padding: 10px 16px; border-radius: 8px;
+      font-size: 14px; font-weight: 700;
+      box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+      transition: all 0.18s; z-index: 10;
+    }
+    .back-index-btn:hover { background: #1a2a4a; transform: translateX(-2px); box-shadow: 0 5px 14px rgba(37,58,119,0.35); }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 28px;
+      padding: 22px 24px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 22px rgba(37,58,119,0.10);
+      border-top: 6px solid #FFD100;
+    }
+    .page-header h1 {
+      color: #253a77;
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .page-header .belt {
+      display: inline-block;
+      background: #1a1a1a;
+      color: #FFD100;
+      padding: 6px 16px;
+      border-radius: 22px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    }
+    .page-header .intro {
+      max-width: 720px;
+      margin: 14px auto 0;
+      color: #444;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+    .photo {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(37,58,119,0.10);
+      transition: transform 0.18s, box-shadow 0.18s;
+      display: flex; flex-direction: column;
+      cursor: zoom-in;
+    }
+    .photo:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 22px rgba(37,58,119,0.20);
+    }
+    .photo-frame {
+      background: #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-bottom: 3px solid #FFD100;
+    }
+    .photo-frame img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto; height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    .photo-caption {
+      padding: 12px 16px;
+      text-align: center;
+    }
+    .photo-caption .title {
+      color: #253a77;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(10, 18, 38, 0.92);
+      display: none;
+      align-items: center; justify-content: center;
+      z-index: 100;
+      padding: 30px;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 100%; max-height: 100%;
+      display: block;
+      border-radius: 6px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+    .lightbox .close-hint {
+      position: absolute; top: 24px; right: 30px;
+      color: #FFD100;
+      font-size: 1.1rem; font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      margin-top: 38px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    @media (max-width: 600px) {
+      .page-header h1 { font-size: 1.55rem; }
+      .gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a href="dr-park-bio.html" class="back-index-btn" title="Back to Dr. Park&apos;s bio">&larr; Back to Bio</a>
+  <div class="container">
+
+    <div class="page-header">
+      <h1>&#129354; Taekwondo</h1>
+      <div class="belt">4th Degree Black Belt</div>
+      <p class="intro">A lifelong student of the martial art &mdash; Taekwondo has shaped Dr. Park&apos;s discipline, focus, and respect for hard work, qualities he brings into the classroom every day.</p>
+    </div>
+
+    <div class="gallery">
+      <div class="photo">
+        <div class="photo-frame"><img src="taekwondo1.jpg" alt="Taekwondo 1"></div>
+        <div class="photo-caption"><div class="title">Taekwondo &mdash; I</div></div>
+      </div>
+      <div class="photo">
+        <div class="photo-frame"><img src="taekwondo2.jpg" alt="Taekwondo 2"></div>
+        <div class="photo-caption"><div class="title">Taekwondo &mdash; II</div></div>
+      </div>
+      <div class="photo">
+        <div class="photo-frame"><img src="taekwondo3.jpg" alt="Taekwondo 3"></div>
+        <div class="photo-caption"><div class="title">Taekwondo &mdash; III</div></div>
+      </div>
+      <div class="photo">
+        <div class="photo-frame"><img src="taekwondo4.jpg" alt="Taekwondo 4"></div>
+        <div class="photo-caption"><div class="title">Taekwondo &mdash; IV</div></div>
+      </div>
+    </div>
+
+    <footer>
+      &copy; Mary, Star of the Sea School &middot; SY 2026-2027
+    </footer>
+  </div>
+
+  <div id="lightbox" class="lightbox" onclick="this.classList.remove('open');">
+    <span class="close-hint">Click anywhere to close &times;</span>
+    <img id="lightbox-img" src="" alt="Enlarged photo">
+  </div>
+
+  <script>
+    document.querySelectorAll('.photo').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var img = card.querySelector('img');
+        if (!img) return;
+        var lb = document.getElementById('lightbox');
+        var lbImg = document.getElementById('lightbox-img');
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        lb.classList.add('open');
+      });
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+    });
+  </script>
+</body>
+</html>
