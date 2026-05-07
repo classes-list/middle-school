@@ -63,17 +63,23 @@
     }
 
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
+      columns: 2;
+      column-gap: 22px;
+    }
+    @media (max-width: 600px) {
+      .gallery { columns: 1; }
     }
     .photo {
+      break-inside: avoid;
+      page-break-inside: avoid;
       background: #fff;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 14px rgba(37,58,119,0.10);
       transition: transform 0.18s, box-shadow 0.18s;
-      display: flex; flex-direction: column;
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 22px;
       cursor: zoom-in;
     }
     .photo:hover {
@@ -81,17 +87,13 @@
       box-shadow: 0 8px 22px rgba(37,58,119,0.20);
     }
     .photo-frame {
-      background: #1a1a1a;
-      display: flex; align-items: center; justify-content: center;
-      aspect-ratio: 4 / 5;
       overflow: hidden;
       border-bottom: 3px solid #FFD100;
+      line-height: 0;
     }
     .photo-frame img {
-      max-width: 100%;
-      max-height: 100%;
-      width: auto; height: auto;
-      object-fit: contain;
+      width: 100%;
+      height: auto;
       display: block;
     }
     .photo-caption {
@@ -137,7 +139,6 @@
 
     @media (max-width: 600px) {
       .page-header h1 { font-size: 1.55rem; }
-      .gallery { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -153,20 +154,20 @@
 
     <div class="gallery">
       <div class="photo">
-        <div class="photo-frame"><img src="taekwondo1.jpg" alt="Taekwondo 1"></div>
-        <div class="photo-caption"><div class="title">Taekwondo &mdash; I</div></div>
+        <div class="photo-frame"><img src="taekwondo1.jpg" alt="By the Mediterranean"></div>
+        <div class="photo-caption"><div class="title">By the Mediterranean</div></div>
       </div>
       <div class="photo">
-        <div class="photo-frame"><img src="taekwondo2.jpg" alt="Taekwondo 2"></div>
-        <div class="photo-caption"><div class="title">Taekwondo &mdash; II</div></div>
+        <div class="photo-frame"><img src="taekwondo2.jpg" alt="Ax Kick"></div>
+        <div class="photo-caption"><div class="title">Ax Kick</div></div>
       </div>
       <div class="photo">
-        <div class="photo-frame"><img src="taekwondo3.jpg" alt="Taekwondo 3"></div>
-        <div class="photo-caption"><div class="title">Taekwondo &mdash; III</div></div>
+        <div class="photo-frame"><img src="taekwondo3.jpg" alt="Front Kick"></div>
+        <div class="photo-caption"><div class="title">Front Kick</div></div>
       </div>
       <div class="photo">
-        <div class="photo-frame"><img src="taekwondo4.jpg" alt="Taekwondo 4"></div>
-        <div class="photo-caption"><div class="title">Taekwondo &mdash; IV</div></div>
+        <div class="photo-frame"><img src="taekwondo4.jpg" alt="Side Kick"></div>
+        <div class="photo-caption"><div class="title">Side Kick</div></div>
       </div>
     </div>
 
