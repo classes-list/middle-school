@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 8 &middot; Summative Projects Guide &middot; Mary, Star of the Sea</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+    color: #253a77;
+    padding: 28px 22px;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+    padding: 28px 32px 36px;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #253a77;
+    padding-bottom: 14px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .titleblock h1 {
+    font-size: 1.55rem; color: #253a77; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .titleblock p {
+    font-size: 0.92rem; color: #555; margin-top: 4px; font-style: italic;
+  }
+  .back-btn {
+    display:inline-block; background:#FFD100; color:#1a2a4a; padding:7px 14px;
+    border-radius:6px; text-decoration:none; font-weight:700; font-size:0.82rem;
+    border:1.5px solid #d4ad00; box-shadow:0 2px 6px rgba(212,173,0,0.3);
+  }
+  .back-btn:hover { background:#ffc400; }
+
+  .intro {
+    background: #f0f4fc;
+    border-left: 4px solid #253a77;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: #2d3748;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .quarter-section {
+    margin-top: 28px;
+  }
+  .quarter-banner {
+    display: flex; align-items: center; gap: 14px;
+    background: #1a2a4a;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 10px 10px 0 0;
+  }
+  .qbadge {
+    background: #FFD100;
+    color: #1a2a4a;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 6px 14px;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+  }
+  .quarter-banner h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .project-card {
+    border: 1.5px solid #d8dee9;
+    border-top: none;
+    background: #fff;
+    margin-bottom: 6px;
+  }
+  .project-card:last-child {
+    border-radius: 0 0 10px 10px;
+  }
+  .project-header {
+    background: linear-gradient(90deg, #f0f4fc 0%, #fff 100%);
+    border-bottom: 1px solid #d8dee9;
+    padding: 14px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .project-header h3 {
+    color: #1a2a4a;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .project-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .chip-time { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .chip-myp  { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+
+  .project-body {
+    padding: 14px 20px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .block-steps      { grid-column: 1 / -1; }
+  .block-deliverable { grid-column: 1 / -1; }
+  .block {
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .block-math       { background: #f0f4fc; border-left: 3px solid #253a77; }
+  .block-materials  { background: #fffefa; border-left: 3px solid #FFD100; }
+  .block-steps      { background: #f7fafc; border-left: 3px solid #38b2ac; }
+  .block-deliverable { background: #fef3c7; border-left: 3px solid #B8860B; }
+
+  .block h4 {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 800;
+    color: #1a2a4a;
+    margin-bottom: 8px;
+  }
+  .block-math h4       { color: #1a2a4a; }
+  .block-materials h4  { color: #B8860B; }
+  .block-steps h4      { color: #0f766e; }
+  .block-deliverable h4 { color: #92400e; }
+
+  .block ul, .block ol {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .block li {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: #2d3748;
+    padding: 3px 0;
+  }
+  .block-deliverable p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #2d3748;
+    font-weight: 500;
+  }
+  .block ol li { padding: 5px 0; }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #888;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .page { box-shadow: none; padding: 14px 18px; }
+    .project-card { page-break-inside: avoid; }
+    .quarter-section { page-break-before: auto; }
+    .back-btn { display: none; }
+  }
+  @media (max-width: 800px) {
+    .project-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="titleblock">
+      <h1>Math 8 &middot; Summative Projects Guide</h1>
+      <p>Glencoe Algebra 1 &middot; Mary, Star of the Sea School &middot; SY 2026&ndash;2027</p>
+    </div>
+    <a href="msos-math-8.html#syllabus" class="back-btn">&larr; Back to syllabus</a>
+  </header>
+
+  <div class="intro">
+    <strong>Two project-based summative assessments per quarter</strong> &mdash; each designed
+    as a 1.5- to 2.5-week capstone tied to the math standards of the quarter and (where
+    possible) directly aligned with a STEM science assessment. Each project lists the
+    math content, materials, step-by-step instructions, and final deliverable. MYP
+    criteria targeted: <strong>A</strong> Knowing &amp; Understanding, <strong>B</strong>
+    Inquiring &amp; Designing, <strong>C</strong> Processing &amp; Evaluating,
+    <strong>D</strong> Reflecting on Impacts.
+  </div>
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q1</span>
+      <h2>Lab Math &amp; Number Foundation</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>&quot;Identify the Unknown&quot; Materials Forensics Lab</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 1.5 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Density (D = m/V)</li>
+          <li>Significant figures</li>
+          <li>Percent error</li>
+          <li>Scientific notation</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>5 numbered unknown samples (metals, plastics)</li>
+          <li>Digital scale (0.01 g)</li>
+          <li>Graduated cylinder (50 mL or 100 mL)</li>
+          <li>Reference table of densities</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Receive 5 unknown numbered samples.</b> Do not be told what they are.</li>
+          <li><b>Measure mass.</b> 0.01 g precision.</li>
+          <li><b>Measure volume.</b> Water-displacement method for irregular shapes.</li>
+          <li><b>Compute density.</b> D = m / V with appropriate sig figs (limited by least-precise measurement).</li>
+          <li><b>Match to reference table.</b> Compare density to: aluminum 2.70, iron 7.87, copper 8.96, lead 11.34, brass ~8.4, PVC ~1.4, polyethylene ~0.95.</li>
+          <li><b>Identify each sample.</b> If two candidates are within 5% of each other, list both and propose a follow-up test (magnetic? color?).</li>
+          <li><b>Compute percent error.</b> For each sample, compare measured density to the accepted value of your identified material.</li>
+          <li><b>Forensic report.</b> 5-page lab report with photos, methods, calculations with sig figs, identification rationale, percent error analysis.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>5-page forensic-style lab report.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Tsunami Travel-Time Calculator</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · B · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Square roots (v = √(g × h))</li>
+          <li>Scientific notation (Pacific distances)</li>
+          <li>Unit conversion (m/s ↔ km/h ↔ knots)</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Spreadsheet software</li>
+          <li>Pacific bathymetry data (NOAA)</li>
+          <li>Distance reference (great-circle calculator)</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Learn the formula.</b> Tsunami speed v = √(g × h) where g = 9.81 m/s² and h = ocean depth in meters.</li>
+          <li><b>Build calculator skeleton.</b> Spreadsheet with cells for source (lat/long), target (Hilo, Honolulu), and average depth along path.</li>
+          <li><b>Plug in real depths.</b> Average Pacific depth is 4,000 m. Speed ≈ √(9.81 × 4,000) ≈ 198 m/s. Verify your formula.</li>
+          <li><b>Convert.</b> m/s to km/h and to knots. Express speeds in scientific notation where helpful.</li>
+          <li><b>Distance lookup.</b> Use a great-circle calculator for source-to-Hilo distance.</li>
+          <li><b>Travel time.</b> Time = distance ÷ speed.</li>
+          <li><b>Validate against history.</b> 1960 Chile earthquake: travel time to Hilo? Compare to actual 15 hours.</li>
+          <li><b>User interface.</b> Add dropdown for source location: 5 historical epicenters.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Functional spreadsheet calculator + 2-page validation report against historical events.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q2</span>
+      <h2>Lines, Slopes &amp; Stoichiometry</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Element Storytelling Babybook</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2.5 weeks</span>
+        <span class="chip chip-myp">MYP A · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Weighted average (atomic mass from isotopes)</li>
+          <li>Percent (isotope abundance)</li>
+          <li>Linear equations (property vs. atomic number)</li>
+          <li>Coordinate plane</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Periodic table</li>
+          <li>Isotope abundance data</li>
+          <li>Calculator</li>
+          <li>Art supplies for the book</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Adopt an element.</b> Pick one with multiple stable isotopes (e.g., carbon, chlorine, copper, magnesium).</li>
+          <li><b>Weighted-average atomic mass.</b> Each isotope's mass × abundance. Sum to verify against periodic table.</li>
+          <li><b>Isotope percent abundance pie chart.</b> Visualize the isotopes.</li>
+          <li><b>Pull data on your element's column.</b> Melting points of all elements in the column.</li>
+          <li><b>Linear regression.</b> Plot melting point vs. atomic number. Compute slope (rise/run) and y-intercept. Write the equation y = mx + b.</li>
+          <li><b>Predict.</b> Use your linear equation to predict the melting point of an unobserved element (extrapolate or interpolate).</li>
+          <li><b>Periodic-table coordinates.</b> Locate your element by (group, period) — its coordinate map.</li>
+          <li><b>Write the babybook.</b> 10-page illustrated story incorporating all calculations: birth (formation in stars), family (other elements in its column), traits (linear-equation properties), siblings (isotopes).</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Illustrated 10-page &quot;babybook&quot; for the element with all quantitative work integrated.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Catamaran Load Curve Model</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Linear functions (y = mx + b)</li>
+          <li>Systems of equations (intersection of two lines)</li>
+          <li>Slope as rate of change</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Catamaran specifications (Hawaiian outrigger or commercial)</li>
+          <li>Graph paper or spreadsheet</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Research catamaran specs.</b> Find empty weight, displacement at full load, hull dimensions.</li>
+          <li><b>Build a load curve.</b> Plot draft (depth in water) vs. total weight. It is roughly linear.</li>
+          <li><b>Write the linear function.</b> draft = m × weight + b. Compute slope and intercept.</li>
+          <li><b>Design a second catamaran.</b> Same hull length but a different beam (width). Predict and plot its load curve.</li>
+          <li><b>Solve the system.</b> Where do the two lines intersect? At what weight do both have the same draft?</li>
+          <li><b>Apply buoyancy.</b> Find maximum allowable load before draft exceeds safe limit.</li>
+          <li><b>Engineering recommendation.</b> 4-page report with both load curves, the system solution, and a justified design choice.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>4-page engineering report with graphs.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q3</span>
+      <h2>Math for Motion (Front-Loaded)</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Marble Run Projectile Engineering</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2.5 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>v = d / t (velocity)</li>
+          <li>Linear functions (slope of ramps)</li>
+          <li>Pythagorean theorem (diagonal paths)</li>
+          <li>Projectile range R = v² × sin(2θ) / g</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Cardboard, foam, or PVC for tracks</li>
+          <li>Marbles</li>
+          <li>Ruler, protractor</li>
+          <li>Stopwatch</li>
+          <li>Target / landing zone (cup or basket)</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Define the target.</b> Choose a landing spot ~30 cm from the end of your last ramp.</li>
+          <li><b>Design the run.</b> 3–5 ramps with different slopes. Sketch first.</li>
+          <li><b>Measure marble velocity.</b> At the end of each ramp, use d / t. Repeat for accuracy.</li>
+          <li><b>Compute slopes.</b> Each ramp: slope = rise / run.</li>
+          <li><b>Apply Pythagorean theorem.</b> For each diagonal ramp, compute the actual track length given vertical and horizontal distances.</li>
+          <li><b>Projectile math.</b> At the end of the run, the marble launches at angle θ with velocity v. Use R = v² × sin(2θ) / g to predict horizontal range.</li>
+          <li><b>Build and iterate.</b> Run 10 trials. Track success rate. Adjust angle, ramp slope, or marble launch height.</li>
+          <li><b>Engineering log.</b> Record every change you made and its effect.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Physical working marble run + engineering log with all measurements, calculations, and design iterations.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Surf Wave Geometry Photo Analysis</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Pythagorean theorem (wave-face length)</li>
+          <li>Trigonometry (SOH-CAH-TOA)</li>
+          <li>Angles</li>
+          <li>Ratios</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>5 photos of Hawaiian surf (own or stock)</li>
+          <li>Ruler</li>
+          <li>Protractor</li>
+          <li>Calculator</li>
+          <li>Known scale reference (surfer height ≈ 1.75 m)</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Collect 5 surf photos.</b> Pipeline, Waimea, Sunset, Jaws, Honolua. Each must contain a surfer for scale.</li>
+          <li><b>Establish scale.</b> Surfer's height = 1.75 m. Measure surfer in photo (cm), find scale factor for that photo.</li>
+          <li><b>Measure wave height.</b> Vertical pixels × scale factor = real meters.</li>
+          <li><b>Pythagorean wave-face.</b> If wave is h meters tall and slope is s meters horizontally, face length = √(h² + s²).</li>
+          <li><b>Measure wave-face angle.</b> Use the protractor on the photo to get θ.</li>
+          <li><b>Verify with trig.</b> sin(θ) = h / face_length. Does this match your Pythagorean calculation?</li>
+          <li><b>Compare 5 waves.</b> Make a comparison table: height, face length, angle, location.</li>
+          <li><b>Analytical write-up.</b> Which wave is steepest? Which is biggest? Connect to surfing difficulty.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>5-page analysis with annotated photos, calculations, and comparison table.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q4</span>
+      <h2>Electricity, Waves &amp; Cosmos</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Hawai‘i-Powered Phone Charging Station Design</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2.5 weeks</span>
+        <span class="chip chip-myp">MYP A · B · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Ohm's Law (V = IR)</li>
+          <li>Linear functions (power vs. current)</li>
+          <li>Inverse variation (frequency × wavelength)</li>
+          <li>Watt-hour budgeting</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Small solar panel spec sheet (or hypothetical numbers)</li>
+          <li>Phone-charging requirements (5 V, 2 A typical)</li>
+          <li>Calculator</li>
+          <li>Optional: actual solar panel and breadboard</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Research solar output.</b> Honolulu averages 5.5 sun-hours per day. A small 10 W panel produces 10 × 5.5 = 55 Wh per day.</li>
+          <li><b>Circuit design.</b> Use Ohm's Law: if V = 5 V and R = 2.5 Ω, what is I? Verify your phone charger numbers.</li>
+          <li><b>Power-vs.-current linear function.</b> P = V × I. Plot P vs. I for V = 5 V. Slope = 5.</li>
+          <li><b>Inverter wavelength.</b> An inverter converts DC to 60 Hz AC. Use f × λ = c (speed of EM waves) to compute wavelength. (Inverse variation: as f goes up, λ goes down.)</li>
+          <li><b>Watt-hour budget.</b> Phone battery is 3,000 mAh at 3.7 V = 11.1 Wh per charge. Your station produces 55 Wh/day. How many charges per day?</li>
+          <li><b>Cost analysis.</b> Solar panel cost + inverter + cables. Cost per charge over 10-year lifetime. Compare to grid electricity.</li>
+          <li><b>Design portfolio.</b> Schematic, calculations, parts list, expected output, payback period.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Detailed design portfolio (8 pages) OR a working prototype with a 4-page documentation.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Orbital Sundial or Pinhole Telescope Build</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2.5 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Angles (latitude, gnomon angle)</li>
+          <li>Kepler's laws (orbital geometry)</li>
+          <li>Snell's Law (lens refraction)</li>
+          <li>Volume / focal length geometry</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li><b>For sundial:</b></li>
+          <li style="padding-left:24px;">Cardboard, stick or wire for gnomon</li>
+          <li style="padding-left:24px;">Protractor</li>
+          <li style="padding-left:24px;">Compass (magnetic)</li>
+          <li style="padding-left:24px;">Notebook for observations</li>
+          <li><b>For telescope:</b></li>
+          <li style="padding-left:24px;">Two convex lenses (one long focal length, one short)</li>
+          <li style="padding-left:24px;">Cardboard tube</li>
+          <li style="padding-left:24px;">Ruler</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Choose one project: sundial OR telescope.</b></li>
+          <li><b>(Sundial) Calculate Hawai‘i latitude.</b> ~21°. The gnomon must be tilted at 21° from horizontal.</li>
+          <li><b>(Sundial) Build the dial face.</b> Hour lines spaced at 15° (24 hours × 15° = 360°).</li>
+          <li><b>(Sundial) Use Kepler's 2nd Law.</b> Earth sweeps equal areas in equal times. This means the shadow does NOT move at uniform angular speed across the day in winter — apply correction.</li>
+          <li><b>(Sundial) Calibrate against the actual time.</b> Test for 5 days. Record errors.</li>
+          <li><b>(Telescope) Lens equation.</b> 1/f = 1/d₀ + 1/dᵢ. Choose lens focal lengths and tube length using Snell's-Law-derived relationship.</li>
+          <li><b>(Telescope) Calculate magnification.</b> M = f_objective / f_eyepiece.</li>
+          <li><b>(Telescope) Test.</b> Observe the moon. Compare to expected magnification.</li>
+          <li><b>Observation log.</b> 5 days of data, with errors and refinements.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Working sundial OR telescope + 5-day observation log + geometry write-up.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <footer>
+    Dr. Peter Park &middot; <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a>
+    &middot; (808) 228-2285 &middot; Math 8 Summative Projects &middot; SY 2026&ndash;2027
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 7 &middot; Summative Projects Guide &middot; Mary, Star of the Sea</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+    color: #253a77;
+    padding: 28px 22px;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+    padding: 28px 32px 36px;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #253a77;
+    padding-bottom: 14px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .titleblock h1 {
+    font-size: 1.55rem; color: #253a77; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .titleblock p {
+    font-size: 0.92rem; color: #555; margin-top: 4px; font-style: italic;
+  }
+  .back-btn {
+    display:inline-block; background:#FFD100; color:#1a2a4a; padding:7px 14px;
+    border-radius:6px; text-decoration:none; font-weight:700; font-size:0.82rem;
+    border:1.5px solid #d4ad00; box-shadow:0 2px 6px rgba(212,173,0,0.3);
+  }
+  .back-btn:hover { background:#ffc400; }
+
+  .intro {
+    background: #f0f4fc;
+    border-left: 4px solid #253a77;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: #2d3748;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .quarter-section {
+    margin-top: 28px;
+  }
+  .quarter-banner {
+    display: flex; align-items: center; gap: 14px;
+    background: #1a2a4a;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 10px 10px 0 0;
+  }
+  .qbadge {
+    background: #FFD100;
+    color: #1a2a4a;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 6px 14px;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+  }
+  .quarter-banner h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .project-card {
+    border: 1.5px solid #d8dee9;
+    border-top: none;
+    background: #fff;
+    margin-bottom: 6px;
+  }
+  .project-card:last-child {
+    border-radius: 0 0 10px 10px;
+  }
+  .project-header {
+    background: linear-gradient(90deg, #f0f4fc 0%, #fff 100%);
+    border-bottom: 1px solid #d8dee9;
+    padding: 14px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .project-header h3 {
+    color: #1a2a4a;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .project-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .chip-time { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .chip-myp  { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+
+  .project-body {
+    padding: 14px 20px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .block-steps      { grid-column: 1 / -1; }
+  .block-deliverable { grid-column: 1 / -1; }
+  .block {
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .block-math       { background: #f0f4fc; border-left: 3px solid #253a77; }
+  .block-materials  { background: #fffefa; border-left: 3px solid #FFD100; }
+  .block-steps      { background: #f7fafc; border-left: 3px solid #38b2ac; }
+  .block-deliverable { background: #fef3c7; border-left: 3px solid #B8860B; }
+
+  .block h4 {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 800;
+    color: #1a2a4a;
+    margin-bottom: 8px;
+  }
+  .block-math h4       { color: #1a2a4a; }
+  .block-materials h4  { color: #B8860B; }
+  .block-steps h4      { color: #0f766e; }
+  .block-deliverable h4 { color: #92400e; }
+
+  .block ul, .block ol {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .block li {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: #2d3748;
+    padding: 3px 0;
+  }
+  .block-deliverable p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #2d3748;
+    font-weight: 500;
+  }
+  .block ol li { padding: 5px 0; }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #888;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .page { box-shadow: none; padding: 14px 18px; }
+    .project-card { page-break-inside: avoid; }
+    .quarter-section { page-break-before: auto; }
+    .back-btn { display: none; }
+  }
+  @media (max-width: 800px) {
+    .project-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="titleblock">
+      <h1>Math 7 &middot; Summative Projects Guide</h1>
+      <p>Glencoe Math Accelerated (Pre-Algebra) &middot; Mary, Star of the Sea School &middot; SY 2026&ndash;2027</p>
+    </div>
+    <a href="msos-math-7.html#syllabus" class="back-btn">&larr; Back to syllabus</a>
+  </header>
+
+  <div class="intro">
+    <strong>Two project-based summative assessments per quarter</strong> &mdash; each designed
+    as a 1.5- to 2.5-week capstone tied to the math standards of the quarter and (where
+    possible) directly aligned with a STEM science assessment. Each project lists the
+    math content, materials, step-by-step instructions, and final deliverable. MYP
+    criteria targeted: <strong>A</strong> Knowing &amp; Understanding, <strong>B</strong>
+    Inquiring &amp; Designing, <strong>C</strong> Processing &amp; Evaluating,
+    <strong>D</strong> Reflecting on Impacts.
+  </div>
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q1</span>
+      <h2>Lab Math Refresher &amp; Foundations</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Hawaiian Watershed Water Budget</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Proportional reasoning</li>
+          <li>Unit conversion (cfs → L/min → m³/s)</li>
+          <li>Percent of a whole</li>
+          <li>Percent error</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>USGS watershed data for chosen Hawaiian watershed</li>
+          <li>Calculator</li>
+          <li>Watershed map (downloadable)</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Choose a watershed.</b> Ko‘olau, Wai‘anae, or Waipio (Big Island).</li>
+          <li><b>Gather annual numbers.</b> Annual rainfall (m), surface runoff (m³), groundwater recharge (m³), evapotranspiration (m³).</li>
+          <li><b>Compute the water budget.</b> Inputs (rainfall) = Outputs (runoff + recharge + ET). Verify the balance.</li>
+          <li><b>Compute percentages.</b> What % of rainfall becomes runoff vs. groundwater vs. lost to evaporation?</li>
+          <li><b>Convert flow rates.</b> Find a streamflow value in cubic feet per second (cfs) and convert to liters per minute and cubic meters per second.</li>
+          <li><b>Compare to USGS published value.</b> Calculate percent error.</li>
+          <li><b>Draw the map.</b> Sketch the watershed with arrows showing water flow paths.</li>
+          <li><b>Hydrology report.</b> 3-page report: data table, calculations, map, conclusion on watershed health.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>3-page hydrology report with watershed map, water-budget table, and conclusion.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Microscopic World Scale Trading Cards</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 1.5 weeks</span>
+        <span class="chip chip-myp">MYP A · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Scientific notation with negative exponents</li>
+          <li>Scale ratios between objects</li>
+          <li>Order-of-magnitude comparisons</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Cardstock</li>
+          <li>Color printer (or markers)</li>
+          <li>Calculator</li>
+          <li>Reference table of microscopic sizes</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Pick 12 microscopic objects.</b> Examples: human red blood cell (8 µm), bacterium (1 µm), HIV virus (120 nm), DNA helix (2 nm), mitochondrion (1 µm), ribosome (20 nm), water molecule (0.3 nm).</li>
+          <li><b>Convert sizes to scientific notation.</b> Each in meters with negative exponents (e.g., 8 µm = 8 × 10⁻⁶ m).</li>
+          <li><b>Choose a card layout.</b> Standard size card with: name, photo or sketch, size in scientific notation, magnification needed to see (= 1 m ÷ size).</li>
+          <li><b>Calculate scale ratios.</b> For each card, choose 2 other cards and compute the size ratio. Put as &quot;stat block&quot; on the card (e.g., &quot;100× larger than ribosome&quot;).</li>
+          <li><b>Rank the deck.</b> Order from largest to smallest.</li>
+          <li><b>Print &amp; assemble.</b> 12 cards, double-sided.</li>
+          <li><b>Bonus.</b> Add a card showing how many of one object equal the size of a poppy seed (~1 mm).</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>12-card printed deck + 1-page rank sheet showing the relative-size calculations.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q2</span>
+      <h2>Brain Data + Tools for Cells</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Screen Time vs. Sleep Class Study</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP B · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Survey design / bias controls</li>
+          <li>Sampling</li>
+          <li>Mean, median, range, IQR</li>
+          <li>Percent change between groups</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Survey tool (Google Form or paper)</li>
+          <li>Class roster (anonymized)</li>
+          <li>Spreadsheet</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Draft survey questions.</b> &quot;Hours of screen time yesterday&quot;, &quot;Hours of sleep last night.&quot; Avoid leading questions.</li>
+          <li><b>Pilot.</b> Test on 5 classmates; refine wording.</li>
+          <li><b>Run for the class.</b> Make it anonymous. Aim for 100% response.</li>
+          <li><b>Clean data.</b> Remove implausible responses (e.g., 25 hours of sleep).</li>
+          <li><b>Compute statistics.</b> Mean, median, range for screen time and for sleep separately.</li>
+          <li><b>Sort into groups.</b> &quot;High screen&quot; (above median) vs. &quot;Low screen&quot; (below median).</li>
+          <li><b>Compare sleep across groups.</b> Compute percent change in mean sleep from low-screen to high-screen group.</li>
+          <li><b>Write findings.</b> 2-page summary with: methodology, charts, percent change, and caveats (small sample, correlation ≠ causation, self-report bias).</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>2-page research summary + 1-page survey instrument + data table.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Build-a-Cell with SA:V Calculations</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Surface area &amp; volume of a sphere</li>
+          <li>SA : V ratio</li>
+          <li>Rearranging formulas (D = m/V)</li>
+          <li>Geometry of organelles</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Modeling clay, styrofoam ball, or cardboard for the cell</li>
+          <li>Smaller items for organelles</li>
+          <li>Ruler</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Build a 3D cell.</b> ~30 cm diameter sphere or rounded blob. Include 3 organelles: nucleus, mitochondrion, ribosome (sized roughly to scale).</li>
+          <li><b>Whole-cell math.</b> SA = 4πr² and V = (4/3)πr³. Compute both for the cell and the SA:V ratio.</li>
+          <li><b>Organelle math.</b> Repeat SA and V calculations for the nucleus (~10 cm diameter) and mitochondrion (~3 cm). Report each SA:V ratio.</li>
+          <li><b>Compare ratios.</b> Smaller organelles have higher SA:V — why does that matter biologically?</li>
+          <li><b>Rearrange D = m/V.</b> If your model cell has density 1.05 g/cm³ (typical for a cell), use V to compute mass. Then solve for V if mass were known.</li>
+          <li><b>Diffusion prediction.</b> Use SA:V to estimate which organelle diffuses oxygen fastest.</li>
+          <li><b>Technical report.</b> 2 pages: diagram with measurements, all calculations, biological interpretation.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Physical 3D cell model + 2-page technical report.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q3</span>
+      <h2>Cells, Geometry &amp; Inequalities</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Outbreak Spread Simulation</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Exponential growth (cases = N₀ × R^t)</li>
+          <li>Probability of transmission per contact</li>
+          <li>Inequalities (hospital capacity)</li>
+          <li>Reading log-scale graphs</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Spreadsheet</li>
+          <li>Calculator</li>
+          <li>Real outbreak data (COVID 2020, Dengue Hawaii 2015, etc.)</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Choose an outbreak.</b> Real data, real R₀ (basic reproduction number).</li>
+          <li><b>Set parameters.</b> Initial cases N₀, R₀, and infectious period.</li>
+          <li><b>Build exponential model.</b> Cases on day t = N₀ × R₀^(t / period). Compute days 1–30 in a spreadsheet.</li>
+          <li><b>Calculate probability of transmission.</b> If R₀ = 3 with 10 contacts per day for 5 days, what is per-contact transmission probability?</li>
+          <li><b>Apply inequality for hospital capacity.</b> If Hawai‘i has 3,000 hospital beds and 5% of cases need hospitalization, on what day do cases × 5% &gt; 3,000?</li>
+          <li><b>Try interventions.</b> Reduce R₀ by 30% (masking + distancing). Recalculate the day capacity is reached.</li>
+          <li><b>Graph results.</b> Line graph of cases over time, both with and without intervention. Add a horizontal line for hospital capacity.</li>
+          <li><b>Policy memo.</b> 1 page: the math, your recommendation, the cost-benefit reasoning.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Spreadsheet model + 2-page policy memo with graphs.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Marine Protected Area Geometry Design</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · B · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Area of polygons</li>
+          <li>Area &amp; circumference of a circle</li>
+          <li>Surface area of reef structures</li>
+          <li>Inequality constraints</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Hawaiian coastline map</li>
+          <li>Graph paper or GIS tool</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Choose a coastline.</b> Hanauma Bay, Pūpūkea, Honaunau, Molokini.</li>
+          <li><b>Draw the MPA boundary.</b> Polygon (4–6 sides) along the coastline. Mark corners with coordinates.</li>
+          <li><b>Compute polygon area.</b> Use the shoelace formula or triangulation.</li>
+          <li><b>Add a no-take zone.</b> Circle within the MPA where fishing is fully banned. Compute its area and circumference.</li>
+          <li><b>Estimate reef SA.</b> Reefs are 3D. Assume the reef structures occupy 10% of the MPA's bottom area and rise 2 m. Estimate reef surface area.</li>
+          <li><b>Apply legal constraints.</b> MPA must be at least 50 acres and at most 200 acres. Convert your area to acres. Does it satisfy?</li>
+          <li><b>Write a permit application.</b> Justify size, location, no-take zone, and expected ecological benefit.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Annotated map + 4-page MPA proposal in permit-application format.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q4</span>
+      <h2>Probability for Genetics</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Mock Pedigree Probability Project</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · C</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Punnett squares</li>
+          <li>Compound probability (independent events)</li>
+          <li>Pedigree analysis across 3 generations</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Pedigree chart template</li>
+          <li>Three fictional traits (one autosomal dominant, one X-linked recessive, one co-dominant)</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Invent a fictional family.</b> 3 generations. Avoid using real family for sensitivity.</li>
+          <li><b>Choose 3 traits.</b> Pick one of each type (autosomal dominant, X-linked recessive, co-dominant). Define alleles.</li>
+          <li><b>Assign genotypes.</b> Decide grandparents' genotypes for all 3 traits.</li>
+          <li><b>Build Punnett squares.</b> For each pair of parents in each generation. Compute genotype and phenotype probabilities.</li>
+          <li><b>Apply compound probability.</b> What is the probability a 3rd-generation child has all 3 dominant phenotypes? Multiply independent probabilities.</li>
+          <li><b>Trait pedigree chart.</b> Color-code each generation according to the 3 traits.</li>
+          <li><b>Predict the next generation.</b> Given the 3rd generation's expected matings, predict the 4th generation's distribution.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Multi-generation pedigree chart + 2-page probability summary with all Punnett squares.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Hawaiian Monk Seal Population Model</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Exponential / logistic growth</li>
+          <li>Doubling time (Rule of 70)</li>
+          <li>Proportions across populations</li>
+          <li>Simplified Shannon biodiversity index</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>NOAA monk seal data</li>
+          <li>Spreadsheet</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Research current population.</b> The Hawaiian monk seal is endangered, ~1,500 individuals.</li>
+          <li><b>Pull growth-rate data.</b> Annual growth rate from NOAA monitoring (currently ~2% per year).</li>
+          <li><b>Apply Rule of 70.</b> Doubling time ≈ 70 / annual growth rate (in %). Compute it.</li>
+          <li><b>Project under 3 scenarios.</b> Scenario A (status quo, 2% growth). Scenario B (intensive conservation, 5% growth). Scenario C (climate stressor, 0% growth).</li>
+          <li><b>50-year forecast.</b> Use exponential formula P = P₀ × (1 + r)^t for each scenario.</li>
+          <li><b>Biodiversity index.</b> Take 5 species in monk seal habitat with proportions; compute simplified Shannon index (sum p × log₂(p)).</li>
+          <li><b>Conservation memo.</b> 1 page on why you recommend a particular scenario.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Spreadsheet model + 1-page conservation memo with graph of 3 projected scenarios.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <footer>
+    Dr. Peter Park &middot; <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a>
+    &middot; (808) 228-2285 &middot; Math 7 Summative Projects &middot; SY 2026&ndash;2027
+  </footer>
+</div>
+</body>
+</html>

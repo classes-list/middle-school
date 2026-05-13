@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 6 &middot; Summative Projects Guide &middot; Mary, Star of the Sea</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+    color: #253a77;
+    padding: 28px 22px;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+    padding: 28px 32px 36px;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #253a77;
+    padding-bottom: 14px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .titleblock h1 {
+    font-size: 1.55rem; color: #253a77; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .titleblock p {
+    font-size: 0.92rem; color: #555; margin-top: 4px; font-style: italic;
+  }
+  .back-btn {
+    display:inline-block; background:#FFD100; color:#1a2a4a; padding:7px 14px;
+    border-radius:6px; text-decoration:none; font-weight:700; font-size:0.82rem;
+    border:1.5px solid #d4ad00; box-shadow:0 2px 6px rgba(212,173,0,0.3);
+  }
+  .back-btn:hover { background:#ffc400; }
+
+  .intro {
+    background: #f0f4fc;
+    border-left: 4px solid #253a77;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: #2d3748;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .quarter-section {
+    margin-top: 28px;
+  }
+  .quarter-banner {
+    display: flex; align-items: center; gap: 14px;
+    background: #1a2a4a;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 10px 10px 0 0;
+  }
+  .qbadge {
+    background: #FFD100;
+    color: #1a2a4a;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 6px 14px;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+  }
+  .quarter-banner h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .project-card {
+    border: 1.5px solid #d8dee9;
+    border-top: none;
+    background: #fff;
+    margin-bottom: 6px;
+  }
+  .project-card:last-child {
+    border-radius: 0 0 10px 10px;
+  }
+  .project-header {
+    background: linear-gradient(90deg, #f0f4fc 0%, #fff 100%);
+    border-bottom: 1px solid #d8dee9;
+    padding: 14px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .project-header h3 {
+    color: #1a2a4a;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+  .project-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .chip-time { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+  .chip-myp  { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+
+  .project-body {
+    padding: 14px 20px 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .block-steps      { grid-column: 1 / -1; }
+  .block-deliverable { grid-column: 1 / -1; }
+  .block {
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .block-math       { background: #f0f4fc; border-left: 3px solid #253a77; }
+  .block-materials  { background: #fffefa; border-left: 3px solid #FFD100; }
+  .block-steps      { background: #f7fafc; border-left: 3px solid #38b2ac; }
+  .block-deliverable { background: #fef3c7; border-left: 3px solid #B8860B; }
+
+  .block h4 {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 800;
+    color: #1a2a4a;
+    margin-bottom: 8px;
+  }
+  .block-math h4       { color: #1a2a4a; }
+  .block-materials h4  { color: #B8860B; }
+  .block-steps h4      { color: #0f766e; }
+  .block-deliverable h4 { color: #92400e; }
+
+  .block ul, .block ol {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .block li {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: #2d3748;
+    padding: 3px 0;
+  }
+  .block-deliverable p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #2d3748;
+    font-weight: 500;
+  }
+  .block ol li { padding: 5px 0; }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #888;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .page { box-shadow: none; padding: 14px 18px; }
+    .project-card { page-break-inside: avoid; }
+    .quarter-section { page-break-before: auto; }
+    .back-btn { display: none; }
+  }
+  @media (max-width: 800px) {
+    .project-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="titleblock">
+      <h1>Math 6 &middot; Summative Projects Guide</h1>
+      <p>Glencoe Math Course 2 &middot; Mary, Star of the Sea School &middot; SY 2026&ndash;2027</p>
+    </div>
+    <a href="msos-math-6.html#syllabus" class="back-btn">&larr; Back to syllabus</a>
+  </header>
+
+  <div class="intro">
+    <strong>Two project-based summative assessments per quarter</strong> &mdash; each designed
+    as a 1.5- to 2.5-week capstone tied to the math standards of the quarter and (where
+    possible) directly aligned with a STEM science assessment. Each project lists the
+    math content, materials, step-by-step instructions, and final deliverable. MYP
+    criteria targeted: <strong>A</strong> Knowing &amp; Understanding, <strong>B</strong>
+    Inquiring &amp; Designing, <strong>C</strong> Processing &amp; Evaluating,
+    <strong>D</strong> Reflecting on Impacts.
+  </div>
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q1</span>
+      <h2>Lab Math &amp; Density</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Hawaiian Rock Density Lab + Field Notebook</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks (1 week field/lab, 1 week notebook)</span>
+        <span class="chip chip-myp">MYP A · B · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Mass &amp; volume measurement</li>
+          <li>Decimal division (D = m/V)</li>
+          <li>KHDUdcm unit conversion (g/cm³ ↔ kg/m³)</li>
+          <li>Percent error calculation</li>
+          <li>Significant figures</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>4 different rocks (collected outside)</li>
+          <li>Triple-beam balance or digital scale (0.1 g)</li>
+          <li>Graduated cylinder (100 mL)</li>
+          <li>Water for displacement</li>
+          <li>Composition notebook or template</li>
+          <li>Calculator</li>
+          <li>Rock-density reference table</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Collect.</b> Find 4 rocks of varying composition. Each must fit in a graduated cylinder. Label them A, B, C, D and record where you found each one.</li>
+          <li><b>Measure mass.</b> Weigh each rock on the balance to the nearest 0.1 g. Record in your field notebook with units.</li>
+          <li><b>Measure volume.</b> Fill the cylinder to 50.0 mL. Slip rock A in carefully. Record the new water level. Volume = (new level − 50.0) mL.</li>
+          <li><b>Calculate density.</b> Compute D = m / V for each rock in g/cm³ (1 mL = 1 cm³). Use 3 significant figures.</li>
+          <li><b>Convert units.</b> Convert each density value to kg/m³ using the KHDUdcm staircase. Show the conversion arithmetic.</li>
+          <li><b>Identify rock type.</b> Match your computed density against the reference table (basalt ≈ 3.0; granite ≈ 2.7; limestone ≈ 2.5; coral ≈ 2.5; pumice &lt; 1.0). Justify each ID.</li>
+          <li><b>Percent error.</b> Compute |measured − accepted| / accepted × 100% for each rock. Comment on whether your error is acceptable (under 10% = good).</li>
+          <li><b>Compile notebook.</b> Each rock gets a page with: photo, location, measurements, calculations, identification, percent error, and a one-sentence reflection on probable error source.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Field notebook (10–12 pages) with photos, measurements, density calculations, conversion work, identifications, and a 1-paragraph reflection on sources of measurement error.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Lūʻau for 50 — Recipe Scaling Project</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 1.5 weeks</span>
+        <span class="chip chip-myp">MYP A · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Fraction division and multiplication</li>
+          <li>Greatest common factor (GCF) for bulk purchasing</li>
+          <li>Decimal cost-per-person</li>
+          <li>Unit conversion (cups → oz; tsp → tbsp)</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>A traditional Hawaiian recipe at 8 servings (kalua pig, lomi salmon, haupia, poi)</li>
+          <li>Current grocery flyer (Foodland or Times)</li>
+          <li>Calculator</li>
+          <li>Measuring conversion chart</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Choose a recipe.</b> Pick a traditional 8-serving Hawaiian dish. Find a credible recipe with all ingredient quantities listed.</li>
+          <li><b>Compute the scale factor.</b> 50 ÷ 8 = 6.25. Every ingredient gets multiplied by 6.25.</li>
+          <li><b>Scale each ingredient.</b> Apply 6.25× to every quantity. For fractions, multiply (e.g., 3/4 cup × 6.25 = 4.6875 cups). Round sensibly for cooking.</li>
+          <li><b>Convert units.</b> Where the scaled amount becomes awkward (e.g., 18 tsp), convert to a larger unit (18 tsp = 6 tbsp = 3/8 cup).</li>
+          <li><b>GCF for grouping.</b> If you need 9.4 lb of pork and the store sells 2-lb packages, use GCF to figure out the smallest number of packages that exceeds your need (10 lb total = 5 packs).</li>
+          <li><b>Price each ingredient.</b> Multiply quantity needed × unit price from the flyer. Total the recipe.</li>
+          <li><b>Cost-per-person.</b> Total cost ÷ 50.</li>
+          <li><b>Submit a cookbook page.</b> Lay out the scaled recipe like a cookbook entry: ingredient list, instructions, photo (or sketch), cost-per-serving, scale factor used.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>1-page cookbook layout + 1-page itemized shopping list with prices and total cost.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q2</span>
+      <h2>Numbers at Universe Scale</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Solar System Hallway Scale Model</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · B · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Ratios &amp; scale factor</li>
+          <li>Scientific notation (large numbers)</li>
+          <li>Coordinate plane</li>
+          <li>Powers of 10</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Long hallway (at least 30 m)</li>
+          <li>Measuring tape</li>
+          <li>Paper / cardstock for planet markers</li>
+          <li>Markers, ruler</li>
+          <li>Reference data for planet sizes &amp; distances</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Research.</b> Look up planet diameters (km) and distances from Sun (km). Express each in scientific notation.</li>
+          <li><b>Choose a distance scale.</b> Decide: 1 m of hallway = ? km of real space. Try 1 m = 30 million km (3 × 10⁷ km). This puts Neptune ~150 m away — too far. Adjust until Neptune fits the hallway.</li>
+          <li><b>Calculate scaled distances.</b> For each planet: scaled_distance (m) = real_distance (km) ÷ scale_factor (km/m). Show your work.</li>
+          <li><b>Realize the diameter problem.</b> Apply the same scale factor to diameters. Earth becomes a sub-millimeter speck! Note this in your report — sizes and distances cannot share the same scale.</li>
+          <li><b>Pick a separate diameter scale</b> so the planets are visible (e.g., 1 cm = 10,000 km).</li>
+          <li><b>Build planet markers.</b> Cut circles to the diameter-scale size, label with name, real diameter, real distance.</li>
+          <li><b>Install in hallway.</b> Measure scaled distances, tape markers to wall.</li>
+          <li><b>Add a coordinate-plane map.</b> On a separate sheet, plot each planet as an ordered pair (distance from Sun, 0). Include Pluto with a debate panel: should we count it as the 9th marker?</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Physical hallway installation + a printed scale-map handout for visitors + a 1-page Pluto-debate position paper.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Hawai‘i Energy Mix Infographic</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 1.5 weeks</span>
+        <span class="chip chip-myp">MYP A · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Percents from raw data</li>
+          <li>Rates (kWh per source per year)</li>
+          <li>Percent change vs. baseline year</li>
+          <li>Pie/bar chart construction</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Hawaiian Electric energy data (publicly available)</li>
+          <li>Spreadsheet or Canva for infographic</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Pull data.</b> Find Hawaiian Electric's most recent annual energy generation by source (solar, wind, biomass, oil, coal, geothermal) in kWh.</li>
+          <li><b>Compute percentages.</b> Each source ÷ total × 100%. Round to 1 decimal place. Verify percents sum to 100%.</li>
+          <li><b>Find 2010 baseline data.</b> Compute the same percentages for 2010.</li>
+          <li><b>Calculate percent change.</b> For each source: (new % − 2010 %) ÷ 2010 % × 100%.</li>
+          <li><b>Project 2035 mix.</b> Hawai‘i has a 100% renewable mandate for 2045. Sketch what the mix needs to look like by 2035 to be on pace.</li>
+          <li><b>Per-person rate.</b> Total kWh ÷ Hawai‘i population = annual kWh per resident.</li>
+          <li><b>Design infographic.</b> Two charts (pie for current mix, bar for percent change) + 4 callout statistics + headline.</li>
+          <li><b>Print at 11×17&quot;.</b> Ready for display.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Printed 11×17&quot; infographic + 1-page methodology note (data sources and calculation steps).</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q3</span>
+      <h2>Reading the Earth</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Trail Slope Field Guide</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP B · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Slope = rise ÷ run</li>
+          <li>Topographic map reading (contour intervals)</li>
+          <li>Linear equations (y = mx + b)</li>
+          <li>Rate conversion</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Topographic map of chosen Hawaiian trail (download from USGS)</li>
+          <li>Ruler</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Choose a Hawaiian trail.</b> Diamond Head, Koko Crater Railway, Manoa Falls, or Lanikai Pillbox.</li>
+          <li><b>Download the topographic map.</b> Find the contour interval (usually 10 m or 40 ft).</li>
+          <li><b>Identify 5 trail segments.</b> Mark them along the trail. Each segment should cross at least one contour line.</li>
+          <li><b>Measure horizontal distance.</b> Use the map's scale bar to find ground distance for each segment in meters.</li>
+          <li><b>Measure elevation gain.</b> Count contour lines crossed × contour interval = rise in meters.</li>
+          <li><b>Calculate slope.</b> For each segment: slope = rise ÷ run. Express as a fraction, decimal, and percent grade.</li>
+          <li><b>Write a linear equation.</b> For each segment: elevation = slope × distance + starting elevation.</li>
+          <li><b>Build the hiker's guide.</b> One page per segment with: photo or sketch, the linear equation, percent grade, predicted minutes (assume 1 km of flat = 10 min, then add 1 min per 10 m of climb).</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>4–6 page printed trail guide with maps, equations, and pacing predictions.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Radiometric Rock Dating Lab</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Half-life equation: N = N₀(1/2)^(t/T)</li>
+          <li>Powers of 10</li>
+          <li>Fractions / exponents</li>
+          <li>Logarithms (optional — graph reading instead)</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>M&amp;M's or pennies (about 200 per group)</li>
+          <li>Provided fictional rock-sample data</li>
+          <li>Graph paper</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Simulate decay with candy.</b> Start with 100 M&amp;M's facing up. Each &quot;turn&quot; (= 1 half-life), shake and remove every one facing down. Record how many remain after each turn for 8 turns.</li>
+          <li><b>Graph the decay.</b> Plot &quot;number remaining&quot; vs. &quot;turn number.&quot; Confirm it halves each turn.</li>
+          <li><b>Connect to the formula.</b> Verify your data matches N = 100 × (1/2)^t.</li>
+          <li><b>Pull fictional rock data.</b> Each sample lists the percent of parent isotope remaining. (Example: Sample 1 has 25% remaining → 2 half-lives have passed.)</li>
+          <li><b>Solve for age.</b> Use the formula with known half-life T. For carbon-14, T = 5,730 years. For K-Ar, T = 1.25 × 10⁹ years.</li>
+          <li><b>Date 5 Hawaiian rock samples.</b> Use K-Ar half-life (suitable for old rocks). Report ages in scientific notation.</li>
+          <li><b>Compare to known ages.</b> Kīlauea lava &lt; 1,000 years; Mauna Kea ~1 × 10⁶ years; Kaua‘i ~5 × 10⁶ years.</li>
+          <li><b>Lab report.</b> Submit candy simulation graph, formula derivation, 5 rock-sample calculations with ages, and comparison to known values.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>5–7 page lab report with simulation data, decay graph, 5 dated samples, and reflection.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q4</span>
+      <h2>Climate Data &amp; Geometry</h2>
+    </div>
+    
+  <div class="project-card">
+    <div class="project-header">
+      <h3>30-Year Honolulu Climate Dashboard</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2.5 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Mean, median, range, IQR</li>
+          <li>Percent change vs. baseline</li>
+          <li>Inequalities (years above a threshold)</li>
+          <li>Trend graphing</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Spreadsheet software (Excel, Google Sheets, Numbers)</li>
+          <li>NOAA Honolulu climate data 1995–present</li>
+          <li>Calculator (built-in)</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Download data.</b> Pull NOAA monthly temperature and rainfall for Honolulu, 1995–2025.</li>
+          <li><b>Build a clean table.</b> One row per year, columns for annual mean temp, annual rainfall, hottest month, wettest month.</li>
+          <li><b>Decadal statistics.</b> Compute mean, median, range, and IQR for each decade (1995–2004, 2005–2014, 2015–2024).</li>
+          <li><b>Percent change.</b> Compute %-change in mean temp from 1995 to most recent year.</li>
+          <li><b>Inequality analysis.</b> Identify all years where mean temp &gt; (1995 mean + 1 °C). What proportion of recent years exceeds this?</li>
+          <li><b>Trend chart.</b> Line chart of annual mean temperature with trend line.</li>
+          <li><b>Dashboard.</b> Combine on one sheet: stats table, trend chart, key callouts (e.g., &quot;coolest year,&quot; &quot;hottest year&quot;).</li>
+          <li><b>Summary.</b> 1-page write-up: is Honolulu warming? Cite three pieces of evidence from your dashboard.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Interactive spreadsheet with dashboard sheet + 1-page summary memo answering &quot;is Honolulu warming?&quot;</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card">
+    <div class="project-header">
+      <h3>Sustainable Hale Design Project (Word-Problems Capstone)</h3>
+      <div class="project-meta">
+        <span class="chip chip-time">⏱ 2.5 weeks</span>
+        <span class="chip chip-myp">MYP A · B · C · D</span>
+      </div>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>Math Content</h4>
+        <ul>
+          <li>Area (rectangles, triangles)</li>
+          <li>Surface area (walls, roof)</li>
+          <li>Volume (room capacity for cooling)</li>
+          <li>Word problems integrating all topics</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>Materials</h4>
+        <ul>
+          <li>Graph paper</li>
+          <li>Ruler</li>
+          <li>Calculator</li>
+          <li>Cardboard or paper for 1:24 scale model</li>
+          <li>Reference photos of traditional Hawaiian hale</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>Step-by-Step</h4>
+        <ol>
+          <li><b>Research the hale.</b> Look up traditional Hawaiian hale construction: floor plan, pili-grass thatching, ohia post framing, roof pitch.</li>
+          <li><b>Design a 1-room hale.</b> Plan view, ~3 × 4 m floor. Draw to scale on graph paper.</li>
+          <li><b>Calculate floor area.</b> A = l × w.</li>
+          <li><b>Calculate wall surface area.</b> Four walls; subtract door opening.</li>
+          <li><b>Roof pitch geometry.</b> Roof is two triangles + two trapezoids. Compute roof surface area.</li>
+          <li><b>Volume.</b> Compute room volume for passive cooling calculations.</li>
+          <li><b>Material list.</b> Estimate pili grass needed (kg per m² of roof × roof area), ohia poles (count and total length).</li>
+          <li><b>Build 1:24 scale model.</b> Use cardboard. Scale every dimension: real m × (1/24) × 100 = model cm.</li>
+          <li><b>Capstone word problem.</b> One page: &quot;If hot air rises and a hale holds 36 m³ of air at 30 °C, and the door area is 1.5 m², how long until air turnover at typical Hawaiian trade-wind speeds?&quot; Solve.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>Deliverable</h4>
+        <p>Scaled blueprint + physical 1:24 model + material list + 1-page capstone word problem with full solution.</p>
+      </div>
+    </div>
+  </div>
+
+  </section>
+
+
+  <footer>
+    Dr. Peter Park &middot; <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a>
+    &middot; (808) 228-2285 &middot; Math 6 Summative Projects &middot; SY 2026&ndash;2027
+  </footer>
+</div>
+</body>
+</html>
