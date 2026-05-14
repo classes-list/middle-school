@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 6 &middot; Co-Assessment Map &middot; Mary, Star of the Sea</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+    color: #253a77;
+    padding: 28px 22px;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+    padding: 28px 32px 36px;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #253a77;
+    padding-bottom: 14px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .titleblock h1 {
+    font-size: 1.55rem; color: #253a77; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .titleblock p {
+    font-size: 0.92rem; color: #555; margin-top: 4px; font-style: italic;
+  }
+  .back-btn {
+    display:inline-block; background:#FFD100; color:#1a2a4a; padding:7px 14px;
+    border-radius:6px; text-decoration:none; font-weight:700; font-size:0.82rem;
+    border:1.5px solid #d4ad00; box-shadow:0 2px 6px rgba(212,173,0,0.3);
+  }
+  .back-btn:hover { background:#ffc400; }
+
+  .intro {
+    background: #f0f4fc;
+    border-left: 4px solid #253a77;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: #2d3748;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+  .intro strong { color: #1a2a4a; }
+
+  .legend {
+    display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px;
+    font-size: 0.82rem;
+  }
+  .legend-item {
+    background: #fffbe6;
+    border: 1px solid #fcd34d;
+    border-radius: 6px;
+    padding: 8px 14px;
+    color: #4a3a00;
+  }
+  .legend-item b { color: #1a2a4a; }
+
+  .quarter-section {
+    margin-top: 28px;
+  }
+  .quarter-banner {
+    display: flex; align-items: center; gap: 14px;
+    background: #1a2a4a;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 10px 10px 0 0;
+  }
+  .qbadge {
+    background: #FFD100;
+    color: #1a2a4a;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 6px 14px;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+  }
+  .qhead-text h2 { font-size: 1.15rem; font-weight: 700; margin: 0; }
+  .qhead-text .qwindow {
+    display: block; font-size: 0.78rem; color: #ffd100; font-style: italic; margin-top: 2px;
+  }
+
+  .capstone-card {
+    border: 1.5px solid #d8dee9;
+    border-top: none;
+    background: #fff;
+    padding: 18px 22px;
+  }
+  .capstone-header {
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .capstone-label {
+    display: inline-block;
+    background: #1a2a4a;
+    color: #ffd100;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .capstone-titles {
+    font-size: 1.0rem;
+    color: #1a2a4a;
+    font-weight: 700;
+  }
+  .math-title { color: #1a2a4a; }
+  .stem-title { color: #c2362c; }
+  .arrow { color: #B8860B; padding: 0 8px; font-size: 1.1rem; }
+
+  .shared-deliverable {
+    background: #fef3c7;
+    border-left: 3px solid #B8860B;
+    padding: 12px 14px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+  }
+  .shared-deliverable h4 {
+    font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: #92400e; font-weight: 800; margin-bottom: 4px;
+  }
+  .shared-deliverable p { font-size: 0.88rem; color: #2d3748; line-height: 1.5; }
+
+  .rubric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .rubric-card { padding: 0; }
+  .rubric-card h4 {
+    font-size: 0.84rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 6px 6px 0 0;
+  }
+  .rubric-math h4 { background: #1a2a4a; color: #fff; }
+  .rubric-stem h4 { background: #B8860B; color: #fff; }
+  .rubric-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+  }
+  .rubric-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #f0f4fc;
+    vertical-align: top;
+    line-height: 1.45;
+  }
+  .rubric-table tr:last-child td { border-bottom: none; }
+  .rubric-table .crit-letter {
+    width: 38%;
+    font-weight: 700;
+    font-size: 0.78rem;
+    border-right: 1px solid #e2e8f0;
+  }
+
+  .coord-note {
+    background: #ecfdf5;
+    border-left: 3px solid #059669;
+    padding: 12px 14px;
+    border-radius: 6px;
+  }
+  .coord-note h4 {
+    font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: #065f46; font-weight: 800; margin-bottom: 4px;
+  }
+  .coord-note p { font-size: 0.86rem; color: #064e3b; line-height: 1.5; }
+
+  .pure-math-companion {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e0;
+    border-radius: 0 0 10px 10px;
+    padding: 10px 22px;
+    font-size: 0.82rem;
+    color: #4a5568;
+  }
+  .pm-label {
+    text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800;
+    color: #1a2a4a; margin-right: 6px; font-size: 0.74rem;
+  }
+  .pm-title { font-weight: 600; color: #253a77; }
+
+  .calendar-section {
+    margin-top: 32px;
+    background: #f8fafc;
+    border: 1px solid #d8dee9;
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+  .calendar-section h2 {
+    font-size: 1.1rem; color: #1a2a4a; margin-bottom: 12px; font-weight: 700;
+  }
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+  }
+  .calendar-table th {
+    background: #1a2a4a;
+    color: #fff;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.78rem;
+  }
+  .calendar-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #2d3748;
+  }
+  .cal-q {
+    background: #FFD100;
+    color: #1a2a4a;
+    text-align: center;
+    font-weight: 800;
+    width: 50px;
+  }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #888;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .page { box-shadow: none; padding: 14px 18px; }
+    .quarter-section { page-break-inside: avoid; }
+    .back-btn { display: none; }
+  }
+  @media (max-width: 800px) {
+    .rubric-grid { grid-template-columns: 1fr; }
+    .capstone-titles { font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="titleblock">
+      <h1>Math 6 &middot; Co-Assessment Map</h1>
+      <p>Joint capstone projects with STEM &middot; Glencoe Math Course 2 (Volume 1 &amp; 2) &middot; SY 2026&ndash;2027</p>
+    </div>
+    <a href="msos-math-6.html#syllabus" class="back-btn">&larr; Back to syllabus</a>
+  </header>
+
+  <div class="intro">
+    <strong>Interdisciplinary Co-Assessment.</strong> Four times a year, one project
+    is graded by both teachers using their own subject's rubric. Students submit one
+    deliverable; it earns one grade in math and one in STEM. The math rubric measures
+    mathematical correctness, problem-solving process, and quantitative reasoning. The
+    STEM rubric measures scientific understanding, inquiry &amp; design, processing,
+    and reflection on impacts. <em>Same project, two grades, two perspectives.</em>
+  </div>
+
+  <div class="legend">
+    <span class="legend-item"><b>📐</b> Math project name &amp; rubric (navy)</span>
+    <span class="legend-item"><b>🔬</b> STEM project name &amp; rubric (gold)</span>
+    <span class="legend-item"><b>📦</b> Shared deliverable (one artifact)</span>
+    <span class="legend-item"><b>🤝</b> Teacher coordination notes</span>
+  </div>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q1</span>
+      <div class="qhead-text">
+        <h2>Lab Math &amp; Density</h2>
+        <span class="qwindow">Mid-September submission</span>
+      </div>
+    </div>
+
+    <div class="capstone-card">
+      <div class="capstone-header">
+        <span class="capstone-label">JOINT CAPSTONE</span>
+        <div class="capstone-titles">
+          <span class="math-title">📐 Hawaiian Rock Density Lab + Field Notebook</span>
+          <span class="arrow">↔</span>
+          <span class="stem-title">🔬 STEM Density Lab</span>
+        </div>
+      </div>
+
+      <div class="shared-deliverable">
+        <h4>📦 Shared Deliverable</h4>
+        <p>A single field notebook documenting rock collection, mass &amp; volume measurements, density calculations with KHDUdcm conversions and percent error, and rock-type identification.</p>
+      </div>
+
+      <div class="rubric-grid">
+        <div class="rubric-card rubric-math">
+          <h4>🧮 Math Rubric</h4>
+      <table class="rubric-table">
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">A — Knowing &amp; Understanding</td><td>Correctly applies D = m/V; KHDUdcm unit conversion; significant-figure rules in computation.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">B — Inquiring &amp; Designing</td><td>Selects appropriate measurement method (displacement); plans for repeated measurement to reduce error.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">C — Processing &amp; Evaluating</td><td>Arithmetic is correct; percent error |measured − accepted|/accepted × 100% computed accurately for all samples.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">D — Communicating</td><td>Tables and calculations use consistent units; written explanation of each rock's identification follows logically from data.</td></tr>
+      </table>
+        </div>
+        <div class="rubric-card rubric-stem">
+          <h4>🔬 STEM Rubric</h4>
+      <table class="rubric-table">
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">A — Knowing &amp; Understanding</td><td>Explains density as an intensive material property; understands why density identifies a material.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">B — Inquiring &amp; Designing</td><td>Lab procedure documented step-by-step; potential sources of error anticipated before measurement.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">C — Processing &amp; Evaluating</td><td>Data collection rigor; observed error sources reflected on; identifies whether observed percent error is &quot;good&quot; (under 10%).</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">D — Reflecting on Impacts</td><td>Connects density measurement to real-world applications: mineral exploration, material quality testing.</td></tr>
+      </table>
+        </div>
+      </div>
+
+      <div class="coord-note">
+        <h4>🤝 Teacher Coordination</h4>
+        <p>Math class introduces D = m/V, KHDUdcm, and percent error in early September. STEM class supervises the lab measurements in the second week of September. Both teachers grade the single deliverable.</p>
+      </div>
+    </div>
+
+    <div class="pure-math-companion">
+      <span class="pm-label">PURE-MATH COMPANION (math grade only):</span>
+      <span class="pm-title">Lūʻau for 50 — Recipe Scaling Project</span>
+    </div>
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q2</span>
+      <div class="qhead-text">
+        <h2>Numbers at Universe Scale</h2>
+        <span class="qwindow">Mid-November submission</span>
+      </div>
+    </div>
+
+    <div class="capstone-card">
+      <div class="capstone-header">
+        <span class="capstone-label">JOINT CAPSTONE</span>
+        <div class="capstone-titles">
+          <span class="math-title">📐 Solar System Hallway Scale Model</span>
+          <span class="arrow">↔</span>
+          <span class="stem-title">🔬 The Great Pluto Debate</span>
+        </div>
+      </div>
+
+      <div class="shared-deliverable">
+        <h4>📦 Shared Deliverable</h4>
+        <p>A physical hallway installation showing scaled planet positions, a printed scale-map handout, and a 1-page Pluto-classification position paper using IAU criteria.</p>
+      </div>
+
+      <div class="rubric-grid">
+        <div class="rubric-card rubric-math">
+          <h4>🧮 Math Rubric</h4>
+      <table class="rubric-table">
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">A — Knowing &amp; Understanding</td><td>Correctly uses scientific notation; computes scaled distances using ratios.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">B — Inquiring &amp; Designing</td><td>Chooses appropriate scale factors; recognizes that distance and diameter cannot share a single scale.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">C — Processing &amp; Evaluating</td><td>Scaled distances and diameters are computed correctly; coordinate-plane map is accurate.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">D — Communicating</td><td>Scale handout is clear; mathematical work shown for at least three planets.</td></tr>
+      </table>
+        </div>
+        <div class="rubric-card rubric-stem">
+          <h4>🔬 STEM Rubric</h4>
+      <table class="rubric-table">
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">A — Knowing &amp; Understanding</td><td>Understands the IAU definition of a planet; explains why Pluto was reclassified.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">B — Inquiring &amp; Designing</td><td>Evidence-based argument structure; cites observational and orbital data.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">C — Processing &amp; Evaluating</td><td>Counter-arguments addressed; data accurately interpreted.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">D — Reflecting on Impacts</td><td>Considers how definitions in science evolve as knowledge grows.</td></tr>
+      </table>
+        </div>
+      </div>
+
+      <div class="coord-note">
+        <h4>🤝 Teacher Coordination</h4>
+        <p>Math leads scale-factor calculations in October. STEM hosts the in-class debate the week before submission. Both teachers grade the physical installation and the position paper.</p>
+      </div>
+    </div>
+
+    <div class="pure-math-companion">
+      <span class="pm-label">PURE-MATH COMPANION (math grade only):</span>
+      <span class="pm-title">Hawai‘i Energy Mix Infographic</span>
+    </div>
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q3</span>
+      <div class="qhead-text">
+        <h2>Reading the Earth</h2>
+        <span class="qwindow">Mid-February submission</span>
+      </div>
+    </div>
+
+    <div class="capstone-card">
+      <div class="capstone-header">
+        <span class="capstone-label">JOINT CAPSTONE</span>
+        <div class="capstone-titles">
+          <span class="math-title">📐 Radiometric Rock Dating Lab</span>
+          <span class="arrow">↔</span>
+          <span class="stem-title">🔬 Ages of the Earth Presentation</span>
+        </div>
+      </div>
+
+      <div class="shared-deliverable">
+        <h4>📦 Shared Deliverable</h4>
+        <p>Lab report with M&amp;M decay simulation, 5 dated rock samples computed using half-life formulas, and a presentation placing those samples on the geologic timeline.</p>
+      </div>
+
+      <div class="rubric-grid">
+        <div class="rubric-card rubric-math">
+          <h4>🧮 Math Rubric</h4>
+      <table class="rubric-table">
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">A — Knowing &amp; Understanding</td><td>Correctly applies N = N₀(1/2)^(t/T); fluent with powers of 10.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">B — Inquiring &amp; Designing</td><td>M&amp;M simulation set up correctly; data graphed and fit to exponential decay.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">C — Processing &amp; Evaluating</td><td>Half-life calculations yield correct ages in scientific notation; comparison to known Hawaiian rock ages is reasoned.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">D — Communicating</td><td>Math notation is consistent; calculations clearly shown.</td></tr>
+      </table>
+        </div>
+        <div class="rubric-card rubric-stem">
+          <h4>🔬 STEM Rubric</h4>
+      <table class="rubric-table">
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">A — Knowing &amp; Understanding</td><td>Understands the geologic time scale and radiometric dating principles.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">B — Inquiring &amp; Designing</td><td>Distinguishes between different radiometric methods and their appropriate sample types.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">C — Processing &amp; Evaluating</td><td>Places dated samples accurately on a geologic timeline; interprets implications.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">D — Reflecting on Impacts</td><td>Connects deep-time understanding to evolution, climate history, or Hawaiian geology.</td></tr>
+      </table>
+        </div>
+      </div>
+
+      <div class="coord-note">
+        <h4>🤝 Teacher Coordination</h4>
+        <p>Math teaches half-life math in January using the candy simulation. STEM provides the rock-sample data sheets and supervises the timeline presentation in February.</p>
+      </div>
+    </div>
+
+    <div class="pure-math-companion">
+      <span class="pm-label">PURE-MATH COMPANION (math grade only):</span>
+      <span class="pm-title">Trail Slope Field Guide</span>
+    </div>
+  </section>
+
+
+  <section class="quarter-section">
+    <div class="quarter-banner">
+      <span class="qbadge">Q4</span>
+      <div class="qhead-text">
+        <h2>Climate Data &amp; Geometry</h2>
+        <span class="qwindow">Mid-May submission</span>
+      </div>
+    </div>
+
+    <div class="capstone-card">
+      <div class="capstone-header">
+        <span class="capstone-label">JOINT CAPSTONE</span>
+        <div class="capstone-titles">
+          <span class="math-title">📐 30-Year Honolulu Climate Dashboard</span>
+          <span class="arrow">↔</span>
+          <span class="stem-title">🔬 Sources of Energy Presentation</span>
+        </div>
+      </div>
+
+      <div class="shared-deliverable">
+        <h4>📦 Shared Deliverable</h4>
+        <p>Interactive spreadsheet dashboard analyzing 30 years of Honolulu climate data + an infographic/presentation linking observed climate change to Hawai‘i energy choices and a recommended path forward.</p>
+      </div>
+
+      <div class="rubric-grid">
+        <div class="rubric-card rubric-math">
+          <h4>🧮 Math Rubric</h4>
+      <table class="rubric-table">
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">A — Knowing &amp; Understanding</td><td>Correctly computes mean, median, range, IQR; calculates percent change.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">B — Inquiring &amp; Designing</td><td>Data sources documented; appropriate baseline year chosen.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">C — Processing &amp; Evaluating</td><td>Inequality analysis identifies threshold-exceeding years correctly; trends interpreted from charts.</td></tr>
+        <tr><td class="crit-letter" style="background:#253a77;color:#fff;">D — Communicating</td><td>Dashboard is readable; statistical claims are accurately stated.</td></tr>
+      </table>
+        </div>
+        <div class="rubric-card rubric-stem">
+          <h4>🔬 STEM Rubric</h4>
+      <table class="rubric-table">
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">A — Knowing &amp; Understanding</td><td>Explains greenhouse-gas effect and climate-energy linkage.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">B — Inquiring &amp; Designing</td><td>Comparison of energy sources is balanced; criteria for &quot;best mix&quot; are clear.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">C — Processing &amp; Evaluating</td><td>Energy and climate data are processed accurately.</td></tr>
+        <tr><td class="crit-letter" style="background:#B8860B;color:#fff;">D — Reflecting on Impacts</td><td>Recommendation considers Hawaiian context, equity, and feasibility.</td></tr>
+      </table>
+        </div>
+      </div>
+
+      <div class="coord-note">
+        <h4>🤝 Teacher Coordination</h4>
+        <p>Math owns the statistical analysis through April. STEM facilitates the energy-mix research and the final presentation in early May.</p>
+      </div>
+    </div>
+
+    <div class="pure-math-companion">
+      <span class="pm-label">PURE-MATH COMPANION (math grade only):</span>
+      <span class="pm-title">Sustainable Hale Design Project (word-problem capstone)</span>
+    </div>
+  </section>
+
+
+
+  <section class="calendar-section">
+    <h2>📅 At-a-Glance Calendar</h2>
+    <table class="calendar-table">
+      <thead>
+        <tr><th>Q</th><th>Window</th><th>Math Project</th><th>STEM Project</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="cal-q">Q1</td><td>Mid-September submission</td><td>Hawaiian Rock Density Lab + Field Notebook</td><td>STEM Density Lab</td></tr>
+        <tr><td class="cal-q">Q2</td><td>Mid-November submission</td><td>Solar System Hallway Scale Model</td><td>The Great Pluto Debate</td></tr>
+        <tr><td class="cal-q">Q3</td><td>Mid-February submission</td><td>Radiometric Rock Dating Lab</td><td>Ages of the Earth Presentation</td></tr>
+        <tr><td class="cal-q">Q4</td><td>Mid-May submission</td><td>30-Year Honolulu Climate Dashboard</td><td>Sources of Energy Presentation</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <footer>
+    Dr. Peter Park (Math) &middot; <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a>
+    &middot; Math 6 Co-Assessment Map &middot; SY 2026&ndash;2027
+  </footer>
+</div>
+</body>
+</html>
