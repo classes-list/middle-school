@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 7 &middot; Cross-Curricular Projects &middot; Mary, Star of the Sea</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+    color: #253a77;
+    padding: 28px 22px;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+    padding: 28px 32px 36px;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #253a77;
+    padding-bottom: 14px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .titleblock h1 {
+    font-size: 1.55rem; color: #253a77; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .titleblock p {
+    font-size: 0.92rem; color: #555; margin-top: 4px; font-style: italic;
+  }
+  .back-btn {
+    display:inline-block; background:#FFD100; color:#1a2a4a; padding:7px 14px;
+    border-radius:6px; text-decoration:none; font-weight:700; font-size:0.82rem;
+    border:1.5px solid #d4ad00; box-shadow:0 2px 6px rgba(212,173,0,0.3);
+  }
+  .back-btn:hover { background:#ffc400; }
+
+  .intro {
+    background: #f0f4fc;
+    border-left: 4px solid #253a77;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: #2d3748;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .project-card {
+    border: 1.5px solid #d8dee9;
+    border-left: 5px solid #253a77;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    overflow: hidden;
+  }
+  .project-header {
+    background: linear-gradient(90deg, #f0f4fc 0%, #fff 100%);
+    border-bottom: 1px solid #d8dee9;
+    padding: 14px 22px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 12px;
+  }
+  .subject-chip {
+    display: inline-block;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .project-header h3 {
+    color: #1a2a4a;
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+  .pair-line {
+    font-size: 0.78rem;
+    color: #4a5568;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .chip-time { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+
+  .project-body {
+    padding: 14px 22px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .block-steps, .block-deliverable { grid-column: 1 / -1; }
+  .block {
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 12px 14px;
+    border-left: 3px solid #253a77;
+  }
+  .block-math       { background: #f0f4fc; border-left-color: #253a77; }
+  .block-subject    { background: #fdf4ff; }
+  .block-materials  { background: #fffefa; border-left-color: #FFD100; }
+  .block-steps      { background: #f7fafc; border-left-color: #38b2ac; }
+  .block-deliverable { background: #fef3c7; border-left-color: #B8860B; }
+
+  .block h4 {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 800;
+    color: #1a2a4a;
+    margin-bottom: 8px;
+  }
+  .block-materials h4  { color: #B8860B; }
+  .block-steps h4      { color: #0f766e; }
+  .block-deliverable h4 { color: #92400e; }
+
+  .block ul, .block ol {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .block li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #2d3748;
+    padding: 3px 0;
+  }
+  .block ol li { padding: 5px 0; }
+  .block-deliverable p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #2d3748;
+    font-weight: 500;
+  }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #888;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .page { box-shadow: none; padding: 14px 18px; }
+    .project-card { page-break-inside: avoid; }
+    .back-btn { display: none; }
+  }
+  @media (max-width: 800px) {
+    .project-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="titleblock">
+      <h1>Math 7 &middot; Cross-Curricular Projects</h1>
+      <p>Glencoe Math Accelerated (Pre-Algebra) &middot; Mary, Star of the Sea School &middot; SY 2026&ndash;2027</p>
+    </div>
+    <a href="msos-math-7.html#syllabus" class="back-btn">&larr; Back to syllabus</a>
+  </header>
+
+  <div class="intro">Four cross-curricular capstone projects for Grade 7 math &mdash; one paired with each of the other middle-school subjects. Each project earns a math grade from the math teacher and a subject grade from the other teacher, scored against each subject's own MYP criteria. Same artifact, two perspectives.</div>
+
+
+  <div class="project-card" style="border-left:5px solid #7c2d12;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#7c2d12;">🏛️ SOCIAL STUDIES</span>
+        <h3>Navigating the Pacific &mdash; Magellan &amp; Cook by the Numbers</h3>
+        <div class="pair-line">Math 7 + Social Studies 7, Unit 2 (Age of Exploration)</div>
+      </div>
+      <span class="chip chip-time">⏱ 2 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Coordinate plane (latitude/longitude)</li>
+          <li>Rates (knots &harr; km/h &harr; mph)</li>
+          <li>Proportional reasoning</li>
+          <li>Average speed across long distances</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#7c2d12;">
+        <h4 style="color:#7c2d12;">🏛️ Social Studies Content</h4>
+        <ul>
+          <li>Age of Exploration history</li>
+          <li>Pacific Ocean geography</li>
+          <li>Comparing voyage routes &amp; their consequences</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>World map with lat/long grid</li>
+          <li>Ruler</li>
+          <li>Calculator</li>
+          <li>Reference: Magellan 1519&ndash;1522 route; Cook 1768&ndash;1771 route</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Plot Magellan's voyage.</b> Spain → South America → through the Strait → Philippines. Mark coordinates of 6 key waypoints.</li>
+          <li><b>Compute total distance.</b> Use the world map's scale or great-circle approximations. Express in km and in nautical miles (nm).</li>
+          <li><b>Look up duration.</b> Magellan's voyage took 1,082 days (most of it without him &mdash; he died in the Philippines).</li>
+          <li><b>Compute average speed.</b> Total nm ÷ total days = nm/day. Convert to knots (knot = nm/hour, assuming 24-hour sailing average).</li>
+          <li><b>Convert units.</b> Knots → km/h → mph using your unit-conversion skills.</li>
+          <li><b>Repeat for Cook's first voyage.</b> 1768&ndash;1771, ~3 years, around the world via Pacific.</li>
+          <li><b>Compare.</b> Which voyage was faster relative to its distance? Make a table.</li>
+          <li><b>Hawai‘i-centered map.</b> Plot both voyages on a coordinate plane with Honolulu as the origin. Compare distances from Hawai‘i.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>Annotated world map (with lat/long markers) + travel-speed comparison table + 2-page essay on what the math reveals about exploration risk.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #0c4a6e;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#0c4a6e;">📖 ENGLISH LANGUAGE ARTS</span>
+        <h3>Underground Railroad &mdash; Speed &amp; Distance of Freedom</h3>
+        <div class="pair-line">Math 7 + ELA 7, Unit 2 (Stealing Freedom)</div>
+      </div>
+      <span class="chip chip-time">⏱ 1.5 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Rates (mph, miles per night)</li>
+          <li>Distance = speed × time</li>
+          <li>Coordinate plane plotting</li>
+          <li>Proportional reasoning</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#0c4a6e;">
+        <h4 style="color:#0c4a6e;">📖 English Language Arts Content</h4>
+        <ul>
+          <li>Stealing Freedom novel</li>
+          <li>Harriet Tubman &amp; the historical Underground Railroad</li>
+          <li>Empathy through quantitative reflection</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>U.S. map with state borders</li>
+          <li>Ruler</li>
+          <li>Calculator</li>
+          <li>Reference: Harriet Tubman led ~70 enslaved people to freedom in 13 rescue trips</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Pull the historical facts.</b> Harriet Tubman walked at night (4&ndash;8 hours per night), at roughly 3&ndash;7 mph, for distances of 80&ndash;100 miles per trip.</li>
+          <li><b>Compute hours of walking per trip.</b> If trip is 90 miles at 5 mph, time = distance ÷ speed = 18 hours of actual walking.</li>
+          <li><b>Compute nights required.</b> Assuming 6 hours of safe walking per night, 18 ÷ 6 = 3 nights per trip.</li>
+          <li><b>Compute total distance traveled.</b> 13 trips × ~90 miles = 1,170+ miles on foot at night.</li>
+          <li><b>Plot on a coordinate plane.</b> Use a map with origin at Maryland; mark each major Underground Railroad stop (Wilmington, Philadelphia, New York, St. Catharines).</li>
+          <li><b>Compare routes.</b> Coastal route vs. Quaker route. Which had fewer miles? Which was safer? Math vs. risk.</li>
+          <li><b>Connect to the novel.</b> Reference specific moments from <i>Stealing Freedom</i> where speed, distance, or hiding time were dramatic stakes.</li>
+          <li><b>Write the reflection.</b> 2-page essay: how does the math of distance and time deepen your understanding of the courage involved?</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>Annotated U.S. map with Underground Railroad waypoints + travel-time calculation table + 2-page reflective essay.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #581c87;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#581c87;">✝️ RELIGION</span>
+        <h3>The Math of the Talents</h3>
+        <div class="pair-line">Math 7 + Religion 7, Unit 3 (Christian Life — Parables)</div>
+      </div>
+      <span class="chip chip-time">⏱ 1.5 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Exponential growth (doubling)</li>
+          <li>Percent return</li>
+          <li>Compound interest analogy</li>
+          <li>Scientific notation for large values</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#581c87;">
+        <h4 style="color:#581c87;">✝️ Religion Content</h4>
+        <ul>
+          <li>Matthew 25:14&ndash;30 Parable of the Talents</li>
+          <li>Stewardship theology</li>
+          <li>Distinguishing literal vs. spiritual meaning</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>Bible (Matthew 25:14&ndash;30)</li>
+          <li>Calculator</li>
+          <li>Spreadsheet software</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Read the parable.</b> Matthew 25:14&ndash;30. The master gives 5, 2, and 1 talent to three servants.</li>
+          <li><b>Identify the math.</b> Servant 1 doubles 5 → 10 (100% return). Servant 2 doubles 2 → 4 (100% return). Servant 3 buries 1 → 1 (0% return).</li>
+          <li><b>Project compounding.</b> If Servant 1 continued to double every year for 10 years, what would 5 talents become? Use 5 × 2^10.</li>
+          <li><b>Express in scientific notation.</b> 5 × 2^10 = 5,120 talents ≈ 5.12 × 10³.</li>
+          <li><b>Plot the growth curve</b> in a spreadsheet for years 0&ndash;15. Compare to Servant 3's flat line.</li>
+          <li><b>Real-world parallel.</b> What's the equivalent rate of return in modern investing? (Hint: 100%/year is wildly aggressive; typical stock market is 7%.)</li>
+          <li><b>Spiritual reflection.</b> What did the parable really mean? Talents = gifts of skill, time, faith. Was Servant 3's failure mathematical or spiritual?</li>
+          <li><b>Apply to your life.</b> Identify 3 personal &quot;talents&quot; (skills, time, blessings). Write 1 page on how to invest them.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>Spreadsheet exponential-growth model + 1-page spiritual reflection.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #065f46;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#065f46;">🌏 FOREIGN LANGUAGES</span>
+        <h3>ʻOhana Statistics &mdash; A Bilingual Class Study</h3>
+        <div class="pair-line">Math 7 + Foreign Languages 7 (Hawaiian values)</div>
+      </div>
+      <span class="chip chip-time">⏱ 1.5 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Survey design</li>
+          <li>Sampling &amp; bias</li>
+          <li>Mean, median, range, mode</li>
+          <li>Percent of a whole</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#065f46;">
+        <h4 style="color:#065f46;">🌏 Foreign Languages Content</h4>
+        <ul>
+          <li>Hawaiian family vocabulary (ʻohana, kupuna, makua, keiki, hanai)</li>
+          <li>Cultural concepts: kuleana, mālama, hanai</li>
+          <li>Bilingual presentation</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>Survey form (Google Form or paper)</li>
+          <li>Spreadsheet</li>
+          <li>Calculator</li>
+          <li>Hawaiian vocabulary reference</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Learn the ʻohana vocabulary.</b> ʻohana (family), kupuna (elder), makua (parent), keiki (child), hānai (adopted/chosen family), kuleana (responsibility).</li>
+          <li><b>Design a class survey.</b> 6 questions about family structure: ʻohana size, generations living together, % born in Hawai‘i, hānai relationships, weekly family time. Keep responses anonymous.</li>
+          <li><b>Translate questions bilingually.</b> Each question gets a Hawaiian word and an English explanation.</li>
+          <li><b>Administer to the class.</b> Compute response rate.</li>
+          <li><b>Compute statistics.</b> Mean ʻohana size, median, range, mode of generations living together.</li>
+          <li><b>Compare to mainland averages.</b> US Census shows average household ≈ 2.5; how does Hawai‘i differ? Why?</li>
+          <li><b>Identify cultural patterns.</b> Hawai‘i has higher multi-generational households and more hānai. What does that reveal about Hawaiian values?</li>
+          <li><b>Bilingual presentation.</b> 5-minute class presentation using Hawaiian phrases interwoven with statistics.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>Bilingual survey form + statistical analysis spreadsheet + 5-minute bilingual presentation.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <footer>
+    Dr. Peter Park (Math) &middot; <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a>
+    &middot; Math 7 Cross-Curricular Projects &middot; SY 2026&ndash;2027
+  </footer>
+</div>
+</body>
+</html>

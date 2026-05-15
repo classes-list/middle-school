@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 8 &middot; Cross-Curricular Projects &middot; Mary, Star of the Sea</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+    color: #253a77;
+    padding: 28px 22px;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+    padding: 28px 32px 36px;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #253a77;
+    padding-bottom: 14px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .titleblock h1 {
+    font-size: 1.55rem; color: #253a77; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .titleblock p {
+    font-size: 0.92rem; color: #555; margin-top: 4px; font-style: italic;
+  }
+  .back-btn {
+    display:inline-block; background:#FFD100; color:#1a2a4a; padding:7px 14px;
+    border-radius:6px; text-decoration:none; font-weight:700; font-size:0.82rem;
+    border:1.5px solid #d4ad00; box-shadow:0 2px 6px rgba(212,173,0,0.3);
+  }
+  .back-btn:hover { background:#ffc400; }
+
+  .intro {
+    background: #f0f4fc;
+    border-left: 4px solid #253a77;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: #2d3748;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .project-card {
+    border: 1.5px solid #d8dee9;
+    border-left: 5px solid #253a77;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    overflow: hidden;
+  }
+  .project-header {
+    background: linear-gradient(90deg, #f0f4fc 0%, #fff 100%);
+    border-bottom: 1px solid #d8dee9;
+    padding: 14px 22px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 12px;
+  }
+  .subject-chip {
+    display: inline-block;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .project-header h3 {
+    color: #1a2a4a;
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+  .pair-line {
+    font-size: 0.78rem;
+    color: #4a5568;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .chip-time { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+
+  .project-body {
+    padding: 14px 22px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .block-steps, .block-deliverable { grid-column: 1 / -1; }
+  .block {
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 12px 14px;
+    border-left: 3px solid #253a77;
+  }
+  .block-math       { background: #f0f4fc; border-left-color: #253a77; }
+  .block-subject    { background: #fdf4ff; }
+  .block-materials  { background: #fffefa; border-left-color: #FFD100; }
+  .block-steps      { background: #f7fafc; border-left-color: #38b2ac; }
+  .block-deliverable { background: #fef3c7; border-left-color: #B8860B; }
+
+  .block h4 {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 800;
+    color: #1a2a4a;
+    margin-bottom: 8px;
+  }
+  .block-materials h4  { color: #B8860B; }
+  .block-steps h4      { color: #0f766e; }
+  .block-deliverable h4 { color: #92400e; }
+
+  .block ul, .block ol {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .block li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #2d3748;
+    padding: 3px 0;
+  }
+  .block ol li { padding: 5px 0; }
+  .block-deliverable p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #2d3748;
+    font-weight: 500;
+  }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #888;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .page { box-shadow: none; padding: 14px 18px; }
+    .project-card { page-break-inside: avoid; }
+    .back-btn { display: none; }
+  }
+  @media (max-width: 800px) {
+    .project-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="titleblock">
+      <h1>Math 8 &middot; Cross-Curricular Projects</h1>
+      <p>Glencoe Algebra 1 &middot; Mary, Star of the Sea School &middot; SY 2026&ndash;2027</p>
+    </div>
+    <a href="msos-math-8.html#syllabus" class="back-btn">&larr; Back to syllabus</a>
+  </header>
+
+  <div class="intro">Four cross-curricular capstone projects for Grade 8 math &mdash; one paired with each of the other middle-school subjects. Each project earns a math grade from the math teacher and a subject grade from the other teacher, scored against each subject's own MYP criteria. Same artifact, two perspectives.</div>
+
+
+  <div class="project-card" style="border-left:5px solid #7c2d12;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#7c2d12;">🏛️ SOCIAL STUDIES</span>
+        <h3>Manhattan Project &mdash; Half-Life of Fallout</h3>
+        <div class="pair-line">Math 8 + Social Studies 8, Unit 3 (World War II)</div>
+      </div>
+      <span class="chip chip-time">⏱ 2 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Exponential decay (N = N₀ × (1/2)^(t/T))</li>
+          <li>Half-life formula</li>
+          <li>Scientific notation</li>
+          <li>Logarithmic interpretation (optional)</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#7c2d12;">
+        <h4 style="color:#7c2d12;">🏛️ Social Studies Content</h4>
+        <ul>
+          <li>WWII Manhattan Project history</li>
+          <li>Hiroshima &amp; Nagasaki</li>
+          <li>Ethics of weapons science</li>
+          <li>Long-term consequences of historical events</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>Calculator (scientific)</li>
+          <li>Graph paper or spreadsheet</li>
+          <li>Reference: Cs-137 half-life 30.17 yr; Sr-90 half-life 28.79 yr; I-131 half-life 8.02 days</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Research the bombs.</b> Hiroshima (Aug 6, 1945, ~64 kg uranium, 16 kt TNT yield). Nagasaki (Aug 9, 1945, ~6 kg plutonium, 21 kt yield).</li>
+          <li><b>Identify key isotopes in fallout.</b> Cesium-137, Strontium-90, Iodine-131. Look up half-lives.</li>
+          <li><b>Apply the decay formula.</b> N = N₀ × (1/2)^(t/T). Compute fraction remaining at t = 10, 30, 80, 200 years for each isotope.</li>
+          <li><b>Express results in scientific notation.</b> At t = 80 years (2025): Cs-137 fraction = (1/2)^(80/30.17) ≈ (1/2)^2.65 ≈ 0.16 or 1.6 × 10⁻¹.</li>
+          <li><b>Graph the decay curves.</b> One curve per isotope, on the same axes. Mark today (2025).</li>
+          <li><b>Compute &quot;safe&quot; threshold.</b> Typically &lt; 1% of original is considered low-risk. How many half-lives is that? When did each isotope reach that threshold?</li>
+          <li><b>Connect to history.</b> Hiroshima Peace Memorial: what does the math reveal about lasting consequences? Why did this lead to the Nuclear Non-Proliferation Treaty?</li>
+          <li><b>Write the report.</b> 3 pages with graphs, calculations, and a 1-page ethical reflection on the responsibility of scientists who unlock such power.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>3-page report with decay graphs + 1-page ethical-historical reflection.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #0c4a6e;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#0c4a6e;">📖 ENGLISH LANGUAGE ARTS</span>
+        <h3>The Pearl's Worth &mdash; A Linear Negotiation Model</h3>
+        <div class="pair-line">Math 8 + ELA 8, Unit 3 (The Pearl by Steinbeck)</div>
+      </div>
+      <span class="chip chip-time">⏱ 1.5 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Linear functions (y = mx + b)</li>
+          <li>Slope &amp; intercept</li>
+          <li>Percent error</li>
+          <li>Data interpretation</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#0c4a6e;">
+        <h4 style="color:#0c4a6e;">📖 English Language Arts Content</h4>
+        <ul>
+          <li>Steinbeck's novella The Pearl</li>
+          <li>Themes: greed, value, fate, family</li>
+          <li>Connecting math to moral arc of a story</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>A copy of <i>The Pearl</i></li>
+          <li>Graph paper or spreadsheet</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Track every offer.</b> Re-read the chapters where Kino negotiates the pearl. Record each appraisal value and the day it was offered.</li>
+          <li><b>Plot offers vs. day.</b> Create a scatter plot on graph paper or spreadsheet.</li>
+          <li><b>Identify the trend.</b> Do offers go up, down, or stay flat? Why does Steinbeck arrange it this way?</li>
+          <li><b>Fit a linear function.</b> y = mx + b, where y = pearl value and x = days from finding. Compute slope and y-intercept from the data.</li>
+          <li><b>Compute percent error.</b> What's the &quot;fair value&quot; (e.g., 1,500 pesos per Kino's research)? Each appraisal's percent error from that fair value.</li>
+          <li><b>Identify the cheaters.</b> Which buyer's offer had the highest percent error (most under-valued)?</li>
+          <li><b>Connect to the moral arc.</b> The pearl's monetary devaluation parallels Kino's spiritual unraveling. How does the math mirror the theme?</li>
+          <li><b>Write the analysis.</b> 2-page essay with citations from the novel, the linear equation you found, and one quote that captures the moment Kino realizes the math is rigged against him.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>Scatter plot with linear regression + percent-error table + 2-page literary-mathematical analysis.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #581c87;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#581c87;">✝️ RELIGION</span>
+        <h3>Gothic Cathedrals &mdash; Arch, Slope &amp; Stress</h3>
+        <div class="pair-line">Math 8 + Religion 8, Unit 3 (Age of Faith and Beauty)</div>
+      </div>
+      <span class="chip chip-time">⏱ 2 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Pythagorean theorem</li>
+          <li>Slope and rate of change</li>
+          <li>Linear functions (stress distribution)</li>
+          <li>Geometry of arches</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#581c87;">
+        <h4 style="color:#581c87;">✝️ Religion Content</h4>
+        <ul>
+          <li>Medieval Christianity &amp; cathedral building</li>
+          <li>Gothic vs. Romanesque architecture</li>
+          <li>Sacred geometry as a form of prayer</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>Photos of Notre Dame, Chartres, Sainte-Chapelle (online)</li>
+          <li>Cardstock or thick paper for arch model</li>
+          <li>Ruler</li>
+          <li>Protractor</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Compare arches.</b> Sketch a Romanesque (round) arch and a Gothic (pointed) arch on graph paper, same width. The pointed arch is taller for the same span.</li>
+          <li><b>Apply Pythagorean.</b> For the Gothic arch, the side stones make a triangle. If span is 4 m and rise is 5 m, what's the slant stone length? Use Pythagorean: √(2² + 5²) ≈ 5.39 m.</li>
+          <li><b>Compute slope of a flying buttress.</b> A buttress typically rises 8 m over a horizontal span of 4 m. Slope = rise/run = 2.</li>
+          <li><b>Model stress as a linear function.</b> Horizontal thrust on the buttress = (weight of roof × height of arch) / span. Plot stress vs. arch height.</li>
+          <li><b>Predict.</b> If you doubled the arch height, what happens to the thrust? Doubles. Why does this matter structurally?</li>
+          <li><b>Build a Gothic arch model.</b> Cut cardstock into 6 wedge stones following your geometry; assemble without glue (the wedges hold themselves up).</li>
+          <li><b>Spiritual reflection.</b> Gothic architects believed pointed arches symbolized hands praying. The math allowed taller, lighter, more luminous churches with stained glass. How does the math serve the prayer?</li>
+          <li><b>Final piece.</b> 2-page essay with cathedral photo references, your math, and the model.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>Cardstock Gothic-arch model + 1-page math worksheet (arches + buttresses) + 2-page architectural-spiritual essay.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #065f46;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#065f46;">🌏 FOREIGN LANGUAGES</span>
+        <h3>Lunar Calendar Mathematics &mdash; Three Calendars Compared</h3>
+        <div class="pair-line">Math 8 + Foreign Languages 8 (Hawaiian &amp; Mandarin cultural calendars)</div>
+      </div>
+      <span class="chip chip-time">⏱ 1.5 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Modular arithmetic</li>
+          <li>Ratios (lunar month ≈ 29.5 days vs. Gregorian 30.44)</li>
+          <li>Calendar conversion algorithms</li>
+          <li>Linear drift of lunar vs. solar</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#065f46;">
+        <h4 style="color:#065f46;">🌏 Foreign Languages Content</h4>
+        <ul>
+          <li>Hawaiian Kaulana Mahina (moon calendar with 30 named nights)</li>
+          <li>Chinese lunar calendar &amp; zodiac</li>
+          <li>Cultural significance of time-keeping</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>Reference: Hawaiian moon-night names (Hilo, Hoaka, Kū-Kahi…), Chinese months &amp; zodiac, Gregorian calendar</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Learn the 30 Hawaiian moon-night names.</b> Each represents a specific phase of the moon &amp; traditionally informs fishing, planting, prayer.</li>
+          <li><b>Learn the 12 Chinese lunar months &amp; zodiac.</b> Identify your birth year's zodiac.</li>
+          <li><b>Map one Hawaiian moon cycle (29.5 days) onto a Gregorian month (30 or 31 days).</b> What's the offset by the end of the year?</li>
+          <li><b>Compute the drift.</b> 12 Hawaiian lunar months × 29.5 days = 354 days. Gregorian year = 365.25 days. Drift = 11.25 days/year.</li>
+          <li><b>Find Chinese New Year for 3 years.</b> 2026, 2027, 2028. Look up the dates. Notice the drift relative to Gregorian.</li>
+          <li><b>Apply modular arithmetic.</b> If today's Gregorian date is day X of the lunar month, what's tomorrow? Day (X+1) mod 29.5.</li>
+          <li><b>Build a 3-calendar conversion chart.</b> For one month, list each day in Gregorian, the Hawaiian moon-night name, and the Chinese lunar day.</li>
+          <li><b>Reflect.</b> 1 page: how do different cultures' time systems shape worldview? Why might a fishing culture (Hawai‘i) use a moon calendar?</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>3-calendar conversion chart for one month + 1-page cultural-mathematical reflection.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <footer>
+    Dr. Peter Park (Math) &middot; <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a>
+    &middot; Math 8 Cross-Curricular Projects &middot; SY 2026&ndash;2027
+  </footer>
+</div>
+</body>
+</html>

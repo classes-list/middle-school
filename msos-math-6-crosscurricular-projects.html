@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 6 &middot; Cross-Curricular Projects &middot; Mary, Star of the Sea</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+    color: #253a77;
+    padding: 28px 22px;
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+    padding: 28px 32px 36px;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 3px solid #253a77;
+    padding-bottom: 14px; margin-bottom: 18px;
+    flex-wrap: wrap; gap: 14px;
+  }
+  .titleblock h1 {
+    font-size: 1.55rem; color: #253a77; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .titleblock p {
+    font-size: 0.92rem; color: #555; margin-top: 4px; font-style: italic;
+  }
+  .back-btn {
+    display:inline-block; background:#FFD100; color:#1a2a4a; padding:7px 14px;
+    border-radius:6px; text-decoration:none; font-weight:700; font-size:0.82rem;
+    border:1.5px solid #d4ad00; box-shadow:0 2px 6px rgba(212,173,0,0.3);
+  }
+  .back-btn:hover { background:#ffc400; }
+
+  .intro {
+    background: #f0f4fc;
+    border-left: 4px solid #253a77;
+    padding: 14px 16px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: #2d3748;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .project-card {
+    border: 1.5px solid #d8dee9;
+    border-left: 5px solid #253a77;
+    background: #fff;
+    border-radius: 10px;
+    margin-bottom: 22px;
+    overflow: hidden;
+  }
+  .project-header {
+    background: linear-gradient(90deg, #f0f4fc 0%, #fff 100%);
+    border-bottom: 1px solid #d8dee9;
+    padding: 14px 22px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 12px;
+  }
+  .subject-chip {
+    display: inline-block;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .project-header h3 {
+    color: #1a2a4a;
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+  .pair-line {
+    font-size: 0.78rem;
+    color: #4a5568;
+    font-style: italic;
+    margin-top: 4px;
+  }
+  .chip {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .chip-time { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+
+  .project-body {
+    padding: 14px 22px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .block-steps, .block-deliverable { grid-column: 1 / -1; }
+  .block {
+    background: #f8fafc;
+    border-radius: 6px;
+    padding: 12px 14px;
+    border-left: 3px solid #253a77;
+  }
+  .block-math       { background: #f0f4fc; border-left-color: #253a77; }
+  .block-subject    { background: #fdf4ff; }
+  .block-materials  { background: #fffefa; border-left-color: #FFD100; }
+  .block-steps      { background: #f7fafc; border-left-color: #38b2ac; }
+  .block-deliverable { background: #fef3c7; border-left-color: #B8860B; }
+
+  .block h4 {
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 800;
+    color: #1a2a4a;
+    margin-bottom: 8px;
+  }
+  .block-materials h4  { color: #B8860B; }
+  .block-steps h4      { color: #0f766e; }
+  .block-deliverable h4 { color: #92400e; }
+
+  .block ul, .block ol {
+    padding-left: 20px;
+    margin: 0;
+  }
+  .block li {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #2d3748;
+    padding: 3px 0;
+  }
+  .block ol li { padding: 5px 0; }
+  .block-deliverable p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: #2d3748;
+    font-weight: 500;
+  }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.78rem;
+    color: #888;
+    text-align: center;
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .page { box-shadow: none; padding: 14px 18px; }
+    .project-card { page-break-inside: avoid; }
+    .back-btn { display: none; }
+  }
+  @media (max-width: 800px) {
+    .project-body { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="titleblock">
+      <h1>Math 6 &middot; Cross-Curricular Projects</h1>
+      <p>Glencoe Math Course 2 &middot; Mary, Star of the Sea School &middot; SY 2026&ndash;2027</p>
+    </div>
+    <a href="msos-math-6.html#syllabus" class="back-btn">&larr; Back to syllabus</a>
+  </header>
+
+  <div class="intro">Four cross-curricular capstone projects for Grade 6 math &mdash; one paired with each of the other middle-school subjects. Each project earns a math grade from the math teacher and a subject grade from the other teacher, scored against each subject's own MYP criteria. Same artifact, two perspectives.</div>
+
+
+  <div class="project-card" style="border-left:5px solid #7c2d12;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#7c2d12;">🏛️ SOCIAL STUDIES</span>
+        <h3>Pyramid Math — Scaling the Great Pyramid</h3>
+        <div class="pair-line">Math 6 + Social Studies 6, Unit 2 (Ancient Egypt)</div>
+      </div>
+      <span class="chip chip-time">⏱ 2 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Ratios &amp; scale factor</li>
+          <li>Pythagorean theorem</li>
+          <li>Surface area of triangular faces</li>
+          <li>Volume of a square pyramid</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#7c2d12;">
+        <h4 style="color:#7c2d12;">🏛️ Social Studies Content</h4>
+        <ul>
+          <li>Ancient Egyptian civilization</li>
+          <li>Pyramid construction &amp; burial beliefs</li>
+          <li>Comparing world cultures (Egyptian &harr; Hawaiian heiau)</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>Cardstock or thick paper</li>
+          <li>Ruler</li>
+          <li>Protractor</li>
+          <li>Calculator</li>
+          <li>Reference: actual Great Pyramid dimensions (230.4 m base, 146.6 m original height)</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Research.</b> Look up the Great Pyramid of Khufu &mdash; base side, original height, number of stones. Express in scientific notation.</li>
+          <li><b>Choose a scale.</b> 1:1000 gives a 23 cm base, 14.7 cm tall pyramid &mdash; a workable model size.</li>
+          <li><b>Compute slant height.</b> Use Pythagorean: slant = √((base/2)² + height²). Show your work for both real and scaled dimensions.</li>
+          <li><b>Surface area.</b> Compute the area of one triangular face (½ × base × slant height) &times; 4 faces.</li>
+          <li><b>Volume.</b> V = (1/3) × base² × height. Express in m³ for real and cm³ for model.</li>
+          <li><b>Build the model.</b> Draw a net (4 triangles around a square base), cut out, fold and tape.</li>
+          <li><b>Compare to Hawaiian heiau.</b> Pu‘ukoholā Heiau is 67 m × 30 m, ~6 m high. Compute volume; how many times smaller than Khufu?</li>
+          <li><b>Essay.</b> 2 pages connecting pyramid geometry to Egyptian afterlife beliefs &mdash; why did they build it this way?</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>Physical 1:1000 paper pyramid model + 1-page math worksheet (with all calculations) + 2-page Egyptian-history essay.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #0c4a6e;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#0c4a6e;">📖 ENGLISH LANGUAGE ARTS</span>
+        <h3>Lemonade War Profit Analysis</h3>
+        <div class="pair-line">Math 6 + ELA 6, Unit 2 (The Lemonade War)</div>
+      </div>
+      <span class="chip chip-time">⏱ 1.5 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Rates ($ per cup)</li>
+          <li>Percent (profit margin)</li>
+          <li>Linear functions (revenue = price × cups)</li>
+          <li>Break-even analysis</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#0c4a6e;">
+        <h4 style="color:#0c4a6e;">📖 English Language Arts Content</h4>
+        <ul>
+          <li>Literary analysis of character motivation (Evan vs. Jessie)</li>
+          <li>Connecting fiction to economic reasoning</li>
+          <li>Persuasive writing</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>A copy of <i>The Lemonade War</i> by Jacqueline Davies</li>
+          <li>Spreadsheet software</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Re-read.</b> Find every pricing decision in the novel &mdash; Evan's $0.50/cup pricing, Jessie's bulk-pricing scheme, ingredient costs.</li>
+          <li><b>Build a cost table.</b> For each character: cup price, cost per cup, profit per cup.</li>
+          <li><b>Compute profit margin.</b> Profit ÷ revenue × 100% for each strategy.</li>
+          <li><b>Project earnings.</b> If each character sold 30 cups per day for 5 days, what would they earn? Build a linear function: revenue = price × cups.</li>
+          <li><b>Find the break-even.</b> How many cups must be sold to cover startup cost (lemons, sugar, sign)?</li>
+          <li><b>Identify the winner mathematically.</b> Which sibling's strategy was financially smarter?</li>
+          <li><b>Connect to character.</b> Why did each sibling choose their strategy? Did Jessie's analytical approach work because she's analytical?</li>
+          <li><b>Write the analysis.</b> 2-page literary-economic essay arguing your case with both math and textual evidence.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>Spreadsheet model + 2-page literary-economic analysis with citations from the novel.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #581c87;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#581c87;">✝️ RELIGION</span>
+        <h3>Noah's Ark — Volume, Cubits &amp; Capacity</h3>
+        <div class="pair-line">Math 6 + Religion 6, Unit 2 (Old Testament Covenants)</div>
+      </div>
+      <span class="chip chip-time">⏱ 1.5 weeks</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Unit conversion (cubits to meters)</li>
+          <li>Volume of a rectangular prism</li>
+          <li>Ratios &amp; proportions</li>
+          <li>Scale models</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#581c87;">
+        <h4 style="color:#581c87;">✝️ Religion Content</h4>
+        <ul>
+          <li>Genesis 6&ndash;9 narrative</li>
+          <li>Covenant theology (the rainbow promise)</li>
+          <li>Ark as type of Christ / Church</li>
+          <li>Reflection on faith &amp; scale</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>Bible (Genesis 6:15)</li>
+          <li>Cardboard or cardstock for model</li>
+          <li>Ruler</li>
+          <li>Calculator</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Read Genesis 6:15.</b> Identify the dimensions in cubits: 300 × 50 × 30.</li>
+          <li><b>Convert to meters.</b> 1 royal cubit ≈ 0.45 m. Compute: ark is ≈ 135 m × 22.5 m × 13.5 m.</li>
+          <li><b>Compute volume.</b> V = l × w × h in cubic meters.</li>
+          <li><b>Estimate capacity.</b> Assume small animal needs 1 m³, medium 5 m³, large 30 m³. How many of each could fit?</li>
+          <li><b>Compare to modern ships.</b> A modern container ship has volume ≈ 50,000 m³. How many arks would fit inside?</li>
+          <li><b>Build a 1:300 scale model.</b> 45 cm × 7.5 cm × 4.5 cm in cardboard.</li>
+          <li><b>Reflection.</b> Write 1 page: what does the math reveal about the story? What does it not reveal? Both perspectives matter &mdash; ancient narrative used numbers symbolically (300 was a large round number for &quot;huge&quot;) and we honor that.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>1:300 scale cardboard model + 1-page math worksheet + 1-page theological reflection.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-card" style="border-left:5px solid #065f46;">
+    <div class="project-header">
+      <div>
+        <span class="subject-chip" style="background:#065f46;">🌏 FOREIGN LANGUAGES</span>
+        <h3>Numbers in Four Languages</h3>
+        <div class="pair-line">Math 6 + Foreign Languages 6 (Hawaiian, French, Spanish, Mandarin)</div>
+      </div>
+      <span class="chip chip-time">⏱ 1 week</span>
+    </div>
+    <div class="project-body">
+      <div class="block block-math">
+        <h4>🧮 Math Content</h4>
+        <ul>
+          <li>Place value</li>
+          <li>Comparing base systems</li>
+          <li>Pattern recognition in number formation</li>
+        </ul>
+      </div>
+      <div class="block block-subject" style="border-left-color:#065f46;">
+        <h4 style="color:#065f46;">🌏 Foreign Languages Content</h4>
+        <ul>
+          <li>Counting 1&ndash;100 in 4 languages</li>
+          <li>Cultural number expressions</li>
+          <li>Pronunciation practice</li>
+          <li>Cross-language pattern recognition</li>
+        </ul>
+      </div>
+      <div class="block block-materials">
+        <h4>📋 Materials</h4>
+        <ul>
+          <li>Pronunciation references</li>
+          <li>Cardstock for poster</li>
+          <li>Audio resources (Duolingo, etc.)</li>
+        </ul>
+      </div>
+      <div class="block block-steps">
+        <h4>👣 Step-by-Step</h4>
+        <ol>
+          <li><b>Learn 1&ndash;10 in each language.</b> Hawaiian, French, Spanish, Mandarin. Practice pronunciation.</li>
+          <li><b>Extend to 11&ndash;100.</b> Look for patterns in each language.</li>
+          <li><b>Build a comparison chart.</b> For numbers 11, 20, 50, 80, 100, write the spelling and how it's literally constructed.</li>
+          <li><b>Mark the math structure.</b> Hawaiian ʻumikūmākahi = &quot;ten and one&quot; (clean). French quatre-vingts = &quot;four twenties&quot; (vigesimal!). Spanish veintiuno = &quot;twenty-one&quot; (compound). Mandarin 二十 = &quot;two ten&quot; (cleanest).</li>
+          <li><b>Rank by mathematical cleanness.</b> Which language has the most logical number system? Defend your choice.</li>
+          <li><b>Learn ordinal numbers</b> (1st, 2nd, 3rd) in each language.</li>
+          <li><b>Build a 4-language number poster.</b> 1&ndash;30 in each, with pronunciation marks.</li>
+          <li><b>Oral presentation.</b> Count from 1 to 30 in one chosen language for the class.</li>
+        </ol>
+      </div>
+      <div class="block block-deliverable">
+        <h4>📦 Deliverable</h4>
+        <p>4-language number poster (1&ndash;30) + comparison-and-ranking writeup (1 page) + 2-minute oral presentation.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <footer>
+    Dr. Peter Park (Math) &middot; <a href="mailto:ppark@starofthesea.org">ppark@starofthesea.org</a>
+    &middot; Math 6 Cross-Curricular Projects &middot; SY 2026&ndash;2027
+  </footer>
+</div>
+</body>
+</html>
