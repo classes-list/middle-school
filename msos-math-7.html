@@ -1081,7 +1081,13 @@ function showQuiz() {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('quiz-screen').classList.add('active');
   const quiz = QUIZZES[currentUnit];
-  let html = '';
+  let html = `
+    <div style="background:#f0f4ff;padding:14px;border-radius:8px;margin-bottom:15px;border-left:4px solid #1B3A8A;">
+      <label style="display:block;font-weight:600;color:#1B3A8A;margin-bottom:6px;">Student Name:</label>
+      <input type="text" id="student-name" placeholder="Type your full name"
+        style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;font-size:14px;" />
+    </div>
+  `;
   quiz.forEach((q, idx) => {
     html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${q.q}</p>`;
     q.opts.forEach((opt, optIdx) => {
@@ -1092,20 +1098,95 @@ function showQuiz() {
   document.getElementById('quiz-content').innerHTML = html;
 }
 
+// Quiz results stored at the latest submission so the email button can use them.
+let lastQuizResults = null;
+
 function submitQuiz() {
   const quiz = QUIZZES[currentUnit];
+  const studentName = (document.getElementById('student-name')?.value || '').trim();
   let score = 0;
+  const breakdown = [];
   quiz.forEach((q, idx) => {
     const selected = document.querySelector(`input[name="q${idx}"]:checked`);
-    if (selected && parseInt(selected.value) === q.ans) score++;
+    const selectedIdx = selected ? parseInt(selected.value) : -1;
+    const isCorrect = selectedIdx === q.ans;
+    if (isCorrect) score++;
+    breakdown.push({
+      n: idx + 1,
+      question: q.q,
+      studentAnswer: selectedIdx >= 0 ? q.opts[selectedIdx] : '(no answer)',
+      correctAnswer: q.opts[q.ans],
+      correct: isCorrect
+    });
   });
   const percent = Math.round((score / quiz.length) * 100);
   completedUnits[currentUnit] = true;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('certificate-screen').classList.add('active');
-  document.getElementById('cert-content').innerHTML = `<p style="font-size: 24px; margin: 20px;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p><p>Congratulations on completing this unit!</p>`;
+
+  // Find unit title for display
+  const unitObj = UNITS.find(u => u.id === currentUnit);
+  const unitTitle = unitObj ? unitObj.title : currentUnit;
+
+  lastQuizResults = { studentName, unitTitle, score, total: quiz.length, pct: percent, breakdown };
+
+  const nameLine = studentName
+    ? `<p><strong>Student:</strong> ${studentName}</p>`
+    : `<p style="color:#b91c1c;"><em>Tip: type your name on the quiz screen before submitting so your teacher knows who you are.</em></p>`;
+
+  document.getElementById('cert-content').innerHTML = `
+    <div style="padding: 20px;">
+      ${nameLine}
+      <p><strong>Unit:</strong> ${unitTitle}</p>
+      <p style="font-size: 24px; margin: 20px 0;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p>
+      <p>${percent === 100 ? "Perfect! 🌟" : percent >= 67 ? "Nice work! Keep practicing." : "Good try! Review the lesson and try again."}</p>
+      <div style="margin-top:18px;">
+        <button class="btn" onclick="emailResults()" style="background:#1B3A8A;color:white;padding:10px 18px;font-size:14px;border:none;border-radius:6px;cursor:pointer;">
+          📧 Send Results to Dr. Park
+        </button>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:#666;">
+        Tapping the button opens Gmail with the score and answers filled in. Just press Send.
+      </p>
+    </div>
+  `;
   renderSidebar();
   updateProgress();
+}
+
+function emailResults() {
+  if (!lastQuizResults) return;
+  const r = lastQuizResults;
+  const lines = [];
+  lines.push(`Aloha Dr. Park,`);
+  lines.push(``);
+  lines.push(`A 7th-grade math quiz was just submitted.`);
+  lines.push(``);
+  lines.push(`Student: ${r.studentName || '(name not provided)'}`);
+  lines.push(`Unit: ${r.unitTitle}`);
+  lines.push(`Score: ${r.score} out of ${r.total} (${r.pct}%)`);
+  lines.push(``);
+  lines.push(`--- Detailed Answers ---`);
+  r.breakdown.forEach(b => {
+    lines.push(``);
+    lines.push(`Q${b.n}. ${b.question}`);
+    lines.push(`   Student's answer: ${b.studentAnswer}`);
+    lines.push(`   Correct answer:   ${b.correctAnswer}`);
+    lines.push(`   ${b.correct ? '✓ Correct' : '✗ Incorrect'}`);
+  });
+  lines.push(``);
+  lines.push(`Mahalo,`);
+  lines.push(`Mary, Star of the Sea School — Grade 7 Math`);
+
+  const subject = `Grade 7 Math Quiz Result — ${r.studentName || 'Student'} — ${r.unitTitle} — ${r.pct}%`;
+  const body = lines.join('\n');
+  const to = 'ppark@starofthesea.org';
+
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&tf=1`
+    + `&to=${encodeURIComponent(to)}`
+    + `&su=${encodeURIComponent(subject)}`
+    + `&body=${encodeURIComponent(body)}`;
+  window.open(gmailUrl, '_blank');
 }
 
 function updateProgress() {
