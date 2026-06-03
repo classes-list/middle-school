@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea &mdash; Cooking Class: Plate Lunch Around the World</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      line-height: 1.55;
+    }
+
+    /* Top bar (matches math pages) */
+    .topbar {
+      border-bottom: 4px solid #FFD100;
+      background: #1B3A8A;
+      color: white;
+      padding: 14px 30px;
+      font-size: 17px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .back-index-btn {
+      background: #FFD100; color: #1a2a4a;
+      text-decoration: none; font-size: 13px; font-weight: 700;
+      padding: 8px 14px; border-radius: 6px;
+      transition: all 0.18s; display: inline-block;
+    }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      overflow: hidden; display: inline-flex;
+      align-items: center; justify-content: flex-start; flex-shrink: 0;
+    }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    .logo-circle.msos { background: #1a2a4a; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%);
+      color: white;
+      padding: 48px 30px 40px;
+      text-align: center;
+    }
+    .hero .kicker {
+      display: inline-block;
+      background: rgba(255,209,0,0.18);
+      color: #FFD100;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .hero .tagline {
+      font-size: 1.15rem;
+      opacity: 0.95;
+      font-style: italic;
+      margin-bottom: 22px;
+      color: #FFD100;
+    }
+    .hero-facts {
+      display: flex; gap: 22px; flex-wrap: wrap; justify-content: center;
+      margin-top: 16px;
+    }
+    .hero-fact {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 18px;
+      border-radius: 8px;
+      min-width: 140px;
+    }
+    .hero-fact .label {
+      display: block; font-size: 0.7rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #FFD100; font-weight: 700; margin-bottom: 4px;
+    }
+    .hero-fact .value { font-size: 0.95rem; font-weight: 600; }
+
+    /* Page container */
+    .page { max-width: 1100px; margin: 0 auto; padding: 36px 24px 60px; }
+
+    /* Section headers */
+    .syl-section { margin-bottom: 38px; }
+    .syl-section h2 {
+      color: #1B3A8A; font-size: 1.5rem; font-weight: 800;
+      margin-bottom: 14px; padding-bottom: 8px;
+      border-bottom: 3px solid #FFD100; display: inline-block;
+    }
+    .syl-section .lead {
+      font-size: 1rem; color: #374151; margin-bottom: 14px;
+      line-height: 1.65;
+    }
+
+    /* Cards */
+    .info-card {
+      background: white; border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      border-top: 4px solid #1B3A8A;
+      margin-bottom: 14px;
+    }
+    .info-card h3 {
+      color: #1B3A8A; font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .info-card ul, .info-card ol { padding-left: 22px; }
+    .info-card li { font-size: 0.92rem; color: #374151; margin-bottom: 6px; line-height: 1.55; }
+
+    /* Quarter labels */
+    .quarter-banner {
+      background: linear-gradient(90deg, #FFD100 0%, #ffc400 100%);
+      color: #1a2a4a;
+      border-radius: 10px;
+      padding: 16px 22px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 26px 0 16px;
+      box-shadow: 0 3px 10px rgba(255,209,0,0.25);
+      display: flex; align-items: center; gap: 14px;
+      flex-wrap: wrap;
+    }
+    .quarter-banner .q-tag {
+      background: #1a2a4a; color: #FFD100;
+      padding: 5px 11px; border-radius: 999px;
+      font-size: 0.78rem; letter-spacing: 0.1em;
+    }
+    .quarter-banner .q-desc {
+      font-weight: 600; font-size: 0.92rem; opacity: 0.9; font-style: italic;
+    }
+
+    /* Session cards */
+    .session-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+    }
+    .session {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      border: 1px solid #e2e8f0;
+    }
+    .session-head {
+      background: #1B3A8A;
+      color: white;
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .session-head .num {
+      background: #FFD100; color: #1a2a4a;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .session-head .flag { font-size: 1.4rem; line-height: 1; }
+    .session-head .title { font-size: 1rem; font-weight: 700; flex: 1; }
+    .session-body { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .session-meta {
+      display: grid; grid-template-columns: max-content 1fr;
+      gap: 6px 14px; font-size: 0.85rem;
+    }
+    .session-meta .key {
+      color: #1B3A8A; font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.7rem; letter-spacing: 0.08em;
+      padding-top: 2px;
+    }
+    .session-meta .val { color: #374151; line-height: 1.5; }
+    .session-objectives {
+      background: #f8fafc;
+      border-left: 3px solid #FFD100;
+      padding: 10px 14px;
+      border-radius: 4px;
+    }
+    .session-objectives .h {
+      color: #1a2a4a; font-size: 0.75rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
+    }
+    .session-objectives ul { padding-left: 18px; margin: 0; }
+    .session-objectives li {
+      font-size: 0.86rem; color: #374151;
+      margin-bottom: 4px; line-height: 1.45;
+    }
+    .session-notes {
+      font-size: 0.82rem; color: #6b5b00;
+      background: #fffbe6;
+      border-radius: 6px; padding: 8px 12px;
+      font-style: italic;
+    }
+    .session-notes strong { color: #1B3A8A; font-style: normal; }
+
+    /* Assessment table */
+    .grade-table {
+      width: 100%; border-collapse: collapse;
+      background: white; border-radius: 10px; overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    }
+    .grade-table th {
+      background: #1B3A8A; color: white;
+      padding: 12px 14px; text-align: left; font-size: 0.88rem;
+    }
+    .grade-table td {
+      padding: 12px 14px; font-size: 0.92rem;
+      border-bottom: 1px solid #eef2f7; color: #374151;
+    }
+    .grade-table tr:last-child td { border-bottom: none; }
+    .grade-table .weight {
+      font-weight: 800; color: #1B3A8A; text-align: center; width: 90px;
+    }
+
+    /* Showcase callout */
+    .culminator {
+      background: linear-gradient(135deg, #fffbe6 0%, #fff 100%);
+      border-left: 5px solid #FFD100;
+      border-radius: 10px;
+      padding: 16px 22px;
+      margin-bottom: 18px;
+      font-size: 0.95rem;
+      color: #1a2a4a;
+      font-style: italic;
+    }
+    .culminator strong { color: #1B3A8A; font-style: normal; }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 24px 12px;
+      font-size: 0.85rem;
+      color: #888;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8rem; }
+      .hero .tagline { font-size: 1rem; }
+      .topbar { font-size: 14px; padding: 12px 18px; }
+      .logo-circle { width: 36px; height: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="msos-electives-index.html" class="back-index-btn">&larr; All Electives</a>
+      <span>Plate Lunch Around the World</span>
+    </div>
+    <div class="topbar-logos">
+      <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+      <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       SYLLABUS ANCHOR — linked from the Cooking Class card pill
+       ========================================================= -->
+  <section class="hero" id="syllabus">
+    <span class="kicker">COOKING CLASS &middot; SYLLABUS</span>
+    <h1>Plate Lunch Around the World</h1>
+    <p class="tagline">Life skills through world cuisines &mdash; with aloha at the center.</p>
+    <div class="hero-facts">
+      <div class="hero-fact"><span class="label">Instructor</span><span class="value">Dr. Peter Park</span></div>
+      <div class="hero-fact"><span class="label">Grades</span><span class="value">6 &ndash; 8</span></div>
+      <div class="hero-fact"><span class="label">Duration</span><span class="value">Two Quarters &middot; 18 Sessions</span></div>
+      <div class="hero-fact"><span class="label">Class Length</span><span class="value">45 &ndash; 55 minutes</span></div>
+    </div>
+  </section>
+
+  <div class="page">
+
+    <!-- Course overview -->
+    <section class="syl-section">
+      <h2>Course Overview</h2>
+      <p class="lead">
+        This two-quarter elective builds practical life skills through global and local food culture. <strong>Quarter 2</strong> takes students on a culinary journey across 9 countries &mdash; exploring recipes, traditions, and techniques from around the world. <strong>Quarter 4</strong> dedicates a full 9 sessions to Hawaiian culture, tracing the islands&rsquo; food story from ancient Native Hawaiian traditions to today&rsquo;s multicultural &lsquo;local food&rsquo; identity. Every session connects cooking to real-world life skills students will carry well beyond the classroom.
+      </p>
+    </section>
+
+    <!-- Life skills -->
+    <section class="syl-section">
+      <h2>Core Life Skills Woven Throughout</h2>
+      <div class="info-card">
+        <ul>
+          <li><strong>Kitchen &amp; food safety</strong> &mdash; hygiene, knife safety, heat awareness</li>
+          <li><strong>Measurement and math</strong> &mdash; fractions, conversions, doubling/halving recipes</li>
+          <li><strong>Reading and following instructions</strong> &mdash; recipes as step-by-step procedures</li>
+          <li><strong>Teamwork and communication</strong> &mdash; working in small cooking groups</li>
+          <li><strong>Time management</strong> &mdash; preparing multiple components to finish together</li>
+          <li><strong>Cultural literacy and respect</strong> &mdash; history, geography, and traditions behind each dish</li>
+          <li><strong>Budgeting basics</strong> &mdash; cost-per-serving calculations in select lessons</li>
+          <li><strong>Clean-up and responsibility</strong> &mdash; leaving the kitchen as you found it</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Course structure -->
+    <section class="syl-section">
+      <h2>Course Structure</h2>
+      <p class="lead">
+        The course runs over School Quarters 2 and 4, with 9 sessions each quarter (approximately 45&ndash;55 minutes per session). Each quarter concludes with a culminating <em>showcase session</em> where students present and share a dish of their choosing.
+      </p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- QUARTER 2 -->
+    <!-- ============================================ -->
+    <div class="quarter-banner">
+      <span class="q-tag">QUARTER 2</span>
+      <span>Foundations &amp; Flavors</span>
+      <span class="q-desc">From the Americas, Europe &amp; Asia</span>
+    </div>
+
+    <div class="session-grid">
+
+      <!-- 1 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">1</span><span class="flag">🇺🇸</span>
+          <span class="title">Welcome to the Kitchen</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">American &middot; Universal</span>
+            <span class="key">Life Skill</span><span class="val">Kitchen safety, hygiene, and tool identification</span>
+            <span class="key">Recipe</span><span class="val">Classic Grilled Cheese Sandwich</span>
+            <span class="key">Concepts</span><span class="val">Kitchen safety rules, food handling basics, tool names</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Identify and safely use basic kitchen tools (knives, cutting boards, pans)</li>
+              <li>Practice proper handwashing and food hygiene</li>
+              <li>Read a recipe from start to finish before beginning</li>
+              <li>Cook a simple stovetop recipe using butter and heat control</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Establish group norms; assign kitchen roles (chef, sous chef, cleaner, presenter).</p>
+        </div>
+      </article>
+
+      <!-- 2 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">2</span><span class="flag">🇲🇽</span>
+          <span class="title">Flavors of Mexico</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Mexico</span>
+            <span class="key">Life Skill</span><span class="val">Knife skills &mdash; chopping, dicing, mincing safely</span>
+            <span class="key">Recipe</span><span class="val">Fresh Tomato Salsa &amp; Guacamole</span>
+            <span class="key">Concepts</span><span class="val">Knife safety, flavor balancing, cultural geography</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Practice the &lsquo;claw grip&rsquo; knife technique for safe chopping</li>
+              <li>Understand how acid (lime juice) affects flavor and texture</li>
+              <li>Learn about Mexican culinary history and the role of corn and chili</li>
+              <li>Taste and adjust seasoning &mdash; salt, acid, heat</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> No-cook recipe great for building confidence early in the course.</p>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">3</span><span class="flag">🇮🇹</span>
+          <span class="title">Pasta Night in Italy</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Italy</span>
+            <span class="key">Life Skill</span><span class="val">Measuring accurately; boiling water safely</span>
+            <span class="key">Recipe</span><span class="val">Cold Pasta Primavera Salad with Italian Dressing</span>
+            <span class="key">Concepts</span><span class="val">Measurement (fractions, ml/cups), stovetop safety, Mediterranean diet</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Measure dry and liquid ingredients using standard and metric units</li>
+              <li>Safely boil pasta and test for doneness</li>
+              <li>Explore Italy&rsquo;s regional food traditions and the Mediterranean diet</li>
+              <li>Practice draining hot liquids safely using a colander</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Tie in math &mdash; doubling the recipe for a class of 30 vs. 15.</p>
+        </div>
+      </article>
+
+      <!-- 4 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">4</span><span class="flag">🇯🇵</span>
+          <span class="title">Rice Culture in Japan</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Japan</span>
+            <span class="key">Life Skill</span><span class="val">Rice cooking ratios; precise portioning and shaping</span>
+            <span class="key">Recipe</span><span class="val">Onigiri (Japanese Rice Balls) with Furikake</span>
+            <span class="key">Concepts</span><span class="val">Ratios, portions, Japanese food culture</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Cook rice using the absorption method (water-to-rice ratios)</li>
+              <li>Shape and portion rice balls by hand using wet and salted hands</li>
+              <li>Learn the cultural significance of onigiri in Japanese daily life</li>
+              <li>Discuss umami as the &lsquo;fifth taste.&rsquo;</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Students can fill with tuna-mayo or pickled plum (umeboshi).</p>
+        </div>
+      </article>
+
+      <!-- 5 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">5</span><span class="flag">🇮🇳</span>
+          <span class="title">Spices &amp; Bread from India</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">India</span>
+            <span class="key">Life Skill</span><span class="val">Kneading dough; understanding spice blends</span>
+            <span class="key">Recipe</span><span class="val">Chapati Flatbread &amp; Mango Lassi</span>
+            <span class="key">Concepts</span><span class="val">Dough chemistry basics, dry heat cooking, Indian geography</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Mix and knead dough to the correct consistency</li>
+              <li>Cook flatbread on a dry skillet, recognizing visual doneness cues</li>
+              <li>Blend a yogurt-based drink (lassi) &mdash; explore dairy and probiotics</li>
+              <li>Learn how spices like turmeric and cumin have historical trade value</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Great lesson on gluten development &mdash; connect to science.</p>
+        </div>
+      </article>
+
+      <!-- 6 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">6</span><span class="flag">🇨🇳</span>
+          <span class="title">Wok Cooking in China</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">China</span>
+            <span class="key">Life Skill</span><span class="val">High-heat cooking; mise en place</span>
+            <span class="key">Recipe</span><span class="val">Vegetable Fried Rice</span>
+            <span class="key">Concepts</span><span class="val">Mise en place, high-heat safety, Chinese food culture</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Practice mise en place &mdash; all ingredients prepped before heat goes on</li>
+              <li>Use high heat and quick tossing techniques safely</li>
+              <li>Learn the Chinese culinary philosophy of balance (yin and yang in cooking)</li>
+              <li>Understand why day-old rice works best for fried rice (moisture content)</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Prepare rice the day before if possible. Great teamwork session.</p>
+        </div>
+      </article>
+
+      <!-- 7 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">7</span><span class="flag">🇫🇷</span>
+          <span class="title">The Art of French Cr&ecirc;pes</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">France</span>
+            <span class="key">Life Skill</span><span class="val">Batter consistency; pan temperature control</span>
+            <span class="key">Recipe</span><span class="val">Sweet Cr&ecirc;pes with Strawberry Jam &amp; Powdered Sugar</span>
+            <span class="key">Concepts</span><span class="val">Batter mixing, heat management, French culture</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Whisk a smooth, lump-free batter and rest it before cooking</li>
+              <li>Control pan temperature to avoid burning thin batter</li>
+              <li>Learn about French culinary traditions (Mardi Gras cr&ecirc;pe traditions)</li>
+              <li>Practice flipping &mdash; patience and wrist technique</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Allow students to experiment with fillings &mdash; a class favorite.</p>
+        </div>
+      </article>
+
+      <!-- 8 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">8</span><span class="flag">🇪🇹</span>
+          <span class="title">Ethiopian Stew &amp; Flatbread</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Ethiopia</span>
+            <span class="key">Life Skill</span><span class="val">Slow cooking and layering flavors over time</span>
+            <span class="key">Recipe</span><span class="val">Red Lentil Stew (Misir Wat) with Injera-Style Flatbread</span>
+            <span class="key">Concepts</span><span class="val">Spice blooming, legume cooking, East African food culture</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Build flavor by blooming spices in oil (berbere spice blend)</li>
+              <li>Cook lentils from dry to tender &mdash; observe texture changes</li>
+              <li>Learn about injera (teff flatbread) and communal eating in Ethiopian culture</li>
+              <li>Discuss protein sources in plant-based diets</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Simulated injera can be made with buckwheat or whole wheat flour.</p>
+        </div>
+      </article>
+
+      <!-- 9 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">9</span><span class="flag">🌍</span>
+          <span class="title">Quarter 2 Food Festival</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Student Choice</span>
+            <span class="key">Life Skill</span><span class="val">Planning, presenting, and explaining a dish to an audience</span>
+            <span class="key">Recipe</span><span class="val">Student-selected dish from any Q2 culture</span>
+            <span class="key">Concepts</span><span class="val">Culminating performance task &mdash; all Q2 skills</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Independently (or in pairs) prepare a dish from Quarter 2</li>
+              <li>Write a 3-sentence cultural summary to share with the class</li>
+              <li>Practice plating and presentation techniques</li>
+              <li>Reflect: <em>What life skill did you grow the most this quarter?</em></li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Invite parents or other classes if space allows. Students vote on favorite dish.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ============================================ -->
+    <!-- QUARTER 4 -->
+    <!-- ============================================ -->
+    <div class="quarter-banner">
+      <span class="q-tag">QUARTER 4</span>
+      <span>Aloha Kitchen</span>
+      <span class="q-desc">Hawaiian Culture &amp; Cuisine &mdash; from traditional roots to modern local food</span>
+    </div>
+
+    <div class="session-grid">
+
+      <!-- 10 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">10</span><span class="flag">🌺</span>
+          <span class="title">Aloha &amp; the Roots of Hawaiian Food</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Traditional Hawaii (Native Hawaiian)</span>
+            <span class="key">Life Skill</span><span class="val">Kitchen safety review; food as culture and identity</span>
+            <span class="key">Recipe</span><span class="val">Poi (Taro Paste) Tasting &amp; Fresh Fruit Platter with Haupia Dipping Sauce</span>
+            <span class="key">Concepts</span><span class="val">Native Hawaiian history, taro/poi cultural significance, fermentation basics</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Learn about taro (kalo) as the sacred foundation of Native Hawaiian culture and diet</li>
+              <li>Understand &lsquo;&#257;ina (land) and its connection to food sovereignty</li>
+              <li>Taste poi and discuss how fermentation changes flavor over time</li>
+              <li>Make a simple haupia (coconut pudding) sauce &mdash; practice stovetop stirring and heat control</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Set a respectful, curious tone for the unit. Invite students to share any Hawaiian connections they have.</p>
+        </div>
+      </article>
+
+      <!-- 11 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">11</span><span class="flag">🌺</span>
+          <span class="title">The Imu &amp; Kalua Cooking</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Traditional Hawaii</span>
+            <span class="key">Life Skill</span><span class="val">Understanding slow cooking and heat transfer</span>
+            <span class="key">Recipe</span><span class="val">Slow-Cooker Kalua Pork with Cabbage &amp; Steamed White Rice</span>
+            <span class="key">Concepts</span><span class="val">Heat transfer methods, slow cooking, Hawaiian luau traditions</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Learn about the traditional imu (underground oven) and how it uses steam and heat</li>
+              <li>Use a slow cooker as a classroom analogy for imu cooking &mdash; low heat over long time</li>
+              <li>Understand how salt, liquid smoke, and time transform a tough cut of meat</li>
+              <li>Connect to the luau tradition &mdash; food in Hawaiian celebrations and community</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Start slow cooker at the beginning of class so it&rsquo;s ready to taste by end. Prepare rice separately.</p>
+        </div>
+      </article>
+
+      <!-- 12 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">12</span><span class="flag">🌺</span>
+          <span class="title">Poke &mdash; Hawaii&rsquo;s Original Bowl</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Traditional &amp; Modern Hawaii</span>
+            <span class="key">Life Skill</span><span class="val">Knife skills &mdash; precise dicing; food safety with fresh fish</span>
+            <span class="key">Recipe</span><span class="val">Shoyu Ahi Poke Bowl with Sushi Rice &amp; Toppings</span>
+            <span class="key">Concepts</span><span class="val">Knife skills, raw fish safety, Hawaiian fishing culture, food globalization</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Dice ahi tuna (or tofu) into uniform cubes &mdash; reinforce knife precision and safety</li>
+              <li>Make a shoyu-sesame marinade and understand how it flavors the fish</li>
+              <li>Learn how poke evolved from a traditional Hawaiian fishermen&rsquo;s snack to a global food trend</li>
+              <li>Discuss food safety: temperature, freshness, and safe handling of raw fish</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Use sushi-grade ahi if budget allows; firm tofu works as a safe, delicious alternative.</p>
+        </div>
+      </article>
+
+      <!-- 13 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">13</span><span class="flag">🏝️</span>
+          <span class="title">Spam Musubi &amp; the Local Food Story</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Local Hawaii (WWII Era to Present)</span>
+            <span class="key">Life Skill</span><span class="val">Shaping and forming food; food history and cultural adaptation</span>
+            <span class="key">Recipe</span><span class="val">Spam Musubi with Furikake &amp; Soy Glaze</span>
+            <span class="key">Concepts</span><span class="val">Food history (WWII), cultural adaptation, Hawaii&rsquo;s multicultural identity</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Cook and glaze Spam slices &mdash; manage browning with a sweet soy sauce</li>
+              <li>Mold musubi using a musubi press or DIY cardboard mold</li>
+              <li>Learn the history of Spam in Hawaii &mdash; WWII military rations and local adoption</li>
+              <li>Discuss how immigrant and military cultures shaped Hawaii&rsquo;s unique &lsquo;local food&rsquo; identity</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> One of the most beloved local snacks &mdash; fun, easy, and universally enjoyed.</p>
+        </div>
+      </article>
+
+      <!-- 14 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">14</span><span class="flag">🏝️</span>
+          <span class="title">The Plate Lunch &mdash; Hawaii&rsquo;s Comfort Food</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Local Hawaii (Japanese, Korean, Chinese, Portuguese influences)</span>
+            <span class="key">Life Skill</span><span class="val">Balanced meal planning; understanding portion sizes</span>
+            <span class="key">Recipe</span><span class="val">Loco Moco (Rice, Hamburger Patty, Egg &amp; Brown Gravy)</span>
+            <span class="key">Concepts</span><span class="val">Safe meat cooking temperatures, roux-based sauces, Hawaii food history</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Cook a hamburger patty to safe internal temperature &mdash; use a meat thermometer</li>
+              <li>Make a simple brown gravy from scratch (roux method)</li>
+              <li>Fry an egg to over-easy &mdash; practice gentle heat and timing</li>
+              <li>Learn about the loco moco&rsquo;s origin in Hilo, Hawaii and the plate lunch tradition</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Great session for discussing balanced nutrition vs. comfort food &mdash; both have a place.</p>
+        </div>
+      </article>
+
+      <!-- 15 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">15</span><span class="flag">🏝️</span>
+          <span class="title">Saimin &mdash; Hawaii&rsquo;s Soul Noodle Soup</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Local Hawaii (Japanese, Chinese, Filipino origins)</span>
+            <span class="key">Life Skill</span><span class="val">Broth-making and layering umami; managing multiple components</span>
+            <span class="key">Recipe</span><span class="val">Saimin Noodle Soup with Char Siu, Fishcake &amp; Green Onion</span>
+            <span class="key">Concepts</span><span class="val">Broth-making, noodle cooking, plantation era history, cultural fusion</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Build a dashi-style broth with dried ingredients &mdash; understand umami depth</li>
+              <li>Cook fresh saimin noodles and time them with the broth</li>
+              <li>Learn how saimin was born from the blending of Japanese, Chinese, and Filipino noodle traditions on sugar plantations</li>
+              <li>Discuss Hawaii&rsquo;s plantation era and how it shaped the islands&rsquo; multicultural food scene</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Saimin is uniquely Hawaiian &mdash; not found anywhere else. A great pride moment for the unit.</p>
+        </div>
+      </article>
+
+      <!-- 16 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">16</span><span class="flag">🏝️</span>
+          <span class="title">Shave Ice, Malasadas &amp; Hawaiian Sweets</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Local Hawaii (Portuguese &amp; Japanese influences)</span>
+            <span class="key">Life Skill</span><span class="val">Simple syrup making; frying dough safely; flavor combinations</span>
+            <span class="key">Recipe</span><span class="val">Malasadas (Portuguese Fried Doughnuts) with Homemade Flavored Simple Syrups</span>
+            <span class="key">Concepts</span><span class="val">Yeast dough, deep frying safety, Portuguese immigration history, Japanese influence</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Make a yeast dough, let it rise, and fry malasadas &mdash; observe gluten and yeast activity</li>
+              <li>Cook simple syrups in different flavors (passion fruit, strawberry, coconut)</li>
+              <li>Learn about the Portuguese contribution to Hawaii&rsquo;s food culture (plantation worker immigration)</li>
+              <li>Discuss shave ice as a Japanese-inspired treat transformed into a Hawaiian icon</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> If frying is not available, malasadas can be baked. Simple syrups can be used on ice as a shave-ice substitute.</p>
+        </div>
+      </article>
+
+      <!-- 17 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">17</span><span class="flag">🌺</span>
+          <span class="title">Hawaiian Gardens &mdash; Taro, Sweet Potato &amp; More</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Traditional &amp; Modern Hawaii</span>
+            <span class="key">Life Skill</span><span class="val">Roasting and steaming root vegetables; farm-to-table</span>
+            <span class="key">Recipe</span><span class="val">Roasted Hawaiian Sweet Potato (Okinawan Purple) &amp; Taro Chips with Hawaiian Sea Salt</span>
+            <span class="key">Concepts</span><span class="val">Root vegetable cooking, Hawaiian agriculture, food sovereignty, farm-to-table</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Roast and steam Hawaiian root vegetables &mdash; observe texture and color changes</li>
+              <li>Make taro chips: slice thin, season, and bake or fry to crispy</li>
+              <li>Learn about the diversity of Hawaiian agriculture &mdash; Okinawan sweet potato, breadfruit, banana</li>
+              <li>Discuss the importance of local farming and food sovereignty in Hawaii today</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Okinawan purple sweet potato is a stunning visual &mdash; students love the color reveal when sliced.</p>
+        </div>
+      </article>
+
+      <!-- 18 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">18</span><span class="flag">🌺</span>
+          <span class="title">Aloha Feast &mdash; Q4 Hawaiian Showcase</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Region</span><span class="val">Hawaii &mdash; All Traditions</span>
+            <span class="key">Life Skill</span><span class="val">Meal planning, presentation, cultural storytelling, aloha spirit</span>
+            <span class="key">Recipe</span><span class="val">Student-selected Hawaiian dish from any Q4 session</span>
+            <span class="key">Concepts</span><span class="val">Culminating performance task &mdash; all Q4 Hawaiian culture and cooking skills</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Independently or in pairs, prepare a dish from Quarter 4</li>
+              <li>Write a recipe card and a cultural reflection: <em>what does this dish mean to Hawaiian culture?</em></li>
+              <li>Present dish to class in the spirit of a luau &mdash; share, celebrate, and give thanks</li>
+              <li>Reflect: <em>What did you learn about Hawaii that surprised you most?</em></li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Decorate the space, play Hawaiian music, and end the year with aloha. Award course completion certificates.</p>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Assessment -->
+    <section class="syl-section" style="margin-top: 48px;">
+      <h2>Assessment &amp; Grading</h2>
+      <p class="lead">
+        Because this is a life skills elective, assessment focuses on growth, participation, and real-world skill demonstration &mdash; not traditional tests.
+      </p>
+      <table class="grade-table">
+        <thead>
+          <tr><th>Category</th><th class="weight">Weight</th><th>How It&rsquo;s Measured</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Participation &amp; Teamwork</strong></td>
+            <td class="weight">30%</td>
+            <td>Engages actively in cooking group; supports teammates; cleans up</td>
+          </tr>
+          <tr>
+            <td><strong>Skills Demonstrations</strong></td>
+            <td class="weight">30%</td>
+            <td>Correctly applies each session&rsquo;s target skill (knife grip, measuring, heat control, etc.)</td>
+          </tr>
+          <tr>
+            <td><strong>Recipe Reflection</strong></td>
+            <td class="weight">20%</td>
+            <td>Brief written or verbal reflection after each session &mdash; what did I learn? what would I do differently?</td>
+          </tr>
+          <tr>
+            <td><strong>Food Festival / Showcase</strong></td>
+            <td class="weight">20%</td>
+            <td>Quarterly culminating task &mdash; dish quality, cultural summary, and presentation</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Rules -->
+    <section class="syl-section">
+      <h2>Classroom Kitchen Rules &amp; Safety</h2>
+      <div class="info-card">
+        <ul>
+          <li>Always wash hands with soap for 20 seconds before handling any food.</li>
+          <li>Long hair must be tied back; loose clothing should be secured before approaching heat.</li>
+          <li>Never leave heat unattended &mdash; assign a dedicated &lsquo;heat monitor&rsquo; in each group.</li>
+          <li>Knives go on the cutting board, never the edge of the counter or in a sink.</li>
+          <li>Report all cuts, burns, or spills to the instructor immediately.</li>
+          <li>Taste food with a clean spoon &mdash; never double-dip.</li>
+          <li>Clean as you go &mdash; wipe counters, wash tools, and sweep before the session ends.</li>
+          <li>Respect dietary restrictions and allergies of every classmate &mdash; always ask before sharing.</li>
+          <li>No running, horseplay, or distractions near hot surfaces or sharp tools.</li>
+          <li>Food made in class is for everyone &mdash; be generous and inclusive.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Materials -->
+    <section class="syl-section">
+      <h2>Materials &amp; Supply Notes</h2>
+      <p class="lead">
+        Each session requires approximately <strong>$20&ndash;$40</strong> in ingredients for a class of 20&ndash;25 students. Below are essential equipment items needed for the course.
+      </p>
+      <div class="info-card">
+        <ul>
+          <li>Chef&rsquo;s knives (1 per 2 students) and cutting boards (color-coded by use)</li>
+          <li>Medium and large mixing bowls</li>
+          <li>Measuring cups and measuring spoons (dry and liquid sets)</li>
+          <li>12&Prime; non-stick skillets / frying pans (at least 4&ndash;6 for class)</li>
+          <li>Medium saucepans with lids</li>
+          <li>Colanders, graters, and whisks</li>
+          <li>Baking sheets and oven mitts</li>
+          <li>Rice cooker or stovetop pot for rice sessions</li>
+          <li>Blender or immersion blender (for smoothies and sauces)</li>
+          <li>Aprons and disposable gloves</li>
+          <li>Basic pantry: olive oil, salt, pepper, soy sauce, rice, pasta, canned tomatoes</li>
+        </ul>
+        <p style="font-size: 0.85rem; color: #6b7280; font-style: italic; margin-top: 12px;">
+          Ingredient lists for each individual session are available as separate handouts.
+        </p>
+      </div>
+    </section>
+
+    <div class="culminator">
+      <strong>Mary, Star of the Sea School</strong> &mdash; Prepared by Dr. Peter Park, Middle School Electives.
+      All recipes adaptable for common allergies and dietary preferences &mdash; please coordinate with the instructor at the start of each quarter.
+    </div>
+
+    <footer>
+      &copy; Mary, Star of the Sea School &middot; SY 2026-2027
+    </footer>
+
+  </div>
+
+</body>
+</html>
