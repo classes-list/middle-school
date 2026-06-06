@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mary, Star of the Sea &mdash; How To: Practical Skills for Real Life</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      line-height: 1.55;
+    }
+
+    /* Top bar */
+    .topbar {
+      border-bottom: 4px solid #FFD100;
+      background: #1B3A8A;
+      color: white;
+      padding: 14px 30px;
+      font-size: 17px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .back-index-btn {
+      background: #FFD100; color: #1a2a4a;
+      text-decoration: none; font-size: 13px; font-weight: 700;
+      padding: 8px 14px; border-radius: 6px;
+      transition: all 0.18s; display: inline-block;
+    }
+    .back-index-btn:hover { background: #ffc400; transform: translateX(-2px); }
+    .topbar-logos { display: flex; gap: 10px; align-items: center; }
+    .logo-circle {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      overflow: hidden; display: inline-flex;
+      align-items: center; justify-content: flex-start; flex-shrink: 0;
+    }
+    .logo-circle img { display: block; }
+    .logo-circle.msos img { height: 100%; width: auto; }
+    .logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+    .logo-circle.msos { background: #1a2a4a; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #1B3A8A 0%, #1a2a4a 100%);
+      color: white;
+      padding: 48px 30px 40px;
+      text-align: center;
+    }
+    .hero .kicker {
+      display: inline-block;
+      background: rgba(255,209,0,0.18);
+      color: #FFD100;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .hero .tagline {
+      font-size: 1.15rem;
+      opacity: 0.95;
+      font-style: italic;
+      margin-bottom: 22px;
+      color: #FFD100;
+    }
+    .hero-facts {
+      display: flex; gap: 22px; flex-wrap: wrap; justify-content: center;
+      margin-top: 16px;
+    }
+    .hero-fact {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 18px;
+      border-radius: 8px;
+      min-width: 140px;
+    }
+    .hero-fact .label {
+      display: block; font-size: 0.7rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #FFD100; font-weight: 700; margin-bottom: 4px;
+    }
+    .hero-fact .value { font-size: 0.95rem; font-weight: 600; }
+
+    /* Page container */
+    .page { max-width: 1100px; margin: 0 auto; padding: 36px 24px 60px; }
+
+    /* Section headers */
+    .syl-section { margin-bottom: 38px; }
+    .syl-section h2 {
+      color: #1B3A8A; font-size: 1.5rem; font-weight: 800;
+      margin-bottom: 14px; padding-bottom: 8px;
+      border-bottom: 3px solid #FFD100; display: inline-block;
+    }
+    .syl-section .lead {
+      font-size: 1rem; color: #374151; margin-bottom: 14px;
+      line-height: 1.65;
+    }
+
+    /* Cards */
+    .info-card {
+      background: white; border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      border-top: 4px solid #1B3A8A;
+      margin-bottom: 14px;
+    }
+    .info-card h3 {
+      color: #1B3A8A; font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .info-card ul, .info-card ol { padding-left: 22px; }
+    .info-card li { font-size: 0.92rem; color: #374151; margin-bottom: 6px; line-height: 1.55; }
+
+    /* Quarter banner */
+    .quarter-banner {
+      background: linear-gradient(90deg, #FFD100 0%, #ffc400 100%);
+      color: #1a2a4a;
+      border-radius: 10px;
+      padding: 16px 22px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin: 26px 0 16px;
+      box-shadow: 0 3px 10px rgba(255,209,0,0.25);
+      display: flex; align-items: center; gap: 14px;
+      flex-wrap: wrap;
+    }
+    .quarter-banner .q-tag {
+      background: #1a2a4a; color: #FFD100;
+      padding: 5px 11px; border-radius: 999px;
+      font-size: 0.78rem; letter-spacing: 0.1em;
+    }
+    .quarter-banner .q-desc {
+      font-weight: 600; font-size: 0.92rem; opacity: 0.9; font-style: italic;
+    }
+
+    /* Session cards */
+    .session-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+    }
+    .session {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      border: 1px solid #e2e8f0;
+    }
+    .session-head {
+      background: #1B3A8A;
+      color: white;
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .session-head .num {
+      background: #FFD100; color: #1a2a4a;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .session-head .flag { font-size: 1.4rem; line-height: 1; }
+    .session-head .title { font-size: 1rem; font-weight: 700; flex: 1; }
+    .session-body { padding: 16px 18px 18px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .session-meta {
+      display: grid; grid-template-columns: max-content 1fr;
+      gap: 6px 14px; font-size: 0.85rem;
+    }
+    .session-meta .key {
+      color: #1B3A8A; font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.7rem; letter-spacing: 0.08em;
+      padding-top: 2px;
+    }
+    .session-meta .val { color: #374151; line-height: 1.5; }
+    .session-objectives {
+      background: #f8fafc;
+      border-left: 3px solid #FFD100;
+      padding: 10px 14px;
+      border-radius: 4px;
+    }
+    .session-objectives .h {
+      color: #1a2a4a; font-size: 0.75rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
+    }
+    .session-objectives ul { padding-left: 18px; margin: 0; }
+    .session-objectives li {
+      font-size: 0.86rem; color: #374151;
+      margin-bottom: 4px; line-height: 1.45;
+    }
+    .session-notes {
+      font-size: 0.82rem; color: #6b5b00;
+      background: #fffbe6;
+      border-radius: 6px; padding: 8px 12px;
+      font-style: italic;
+    }
+    .session-notes strong { color: #1B3A8A; font-style: normal; }
+
+    /* Assessment table */
+    .grade-table {
+      width: 100%; border-collapse: collapse;
+      background: white; border-radius: 10px; overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    }
+    .grade-table th {
+      background: #1B3A8A; color: white;
+      padding: 12px 14px; text-align: left; font-size: 0.88rem;
+    }
+    .grade-table td {
+      padding: 12px 14px; font-size: 0.92rem;
+      border-bottom: 1px solid #eef2f7; color: #374151;
+    }
+    .grade-table tr:last-child td { border-bottom: none; }
+    .grade-table .weight {
+      font-weight: 800; color: #1B3A8A; text-align: center; width: 90px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 24px 12px;
+      font-size: 0.85rem;
+      color: #888;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 1.8rem; }
+      .hero .tagline { font-size: 1rem; }
+      .topbar { font-size: 14px; padding: 12px 18px; }
+      .logo-circle { width: 36px; height: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="msos-electives-index.html" class="back-index-btn">&larr; All Electives</a>
+      <span>How To &mdash; Practical Skills for Real Life</span>
+    </div>
+    <div class="topbar-logos">
+      <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
+      <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+    </div>
+  </div>
+
+  <section class="hero" id="syllabus">
+    <span class="kicker">HOW TO &middot; SYLLABUS</span>
+    <h1>How To</h1>
+    <p class="tagline">Hands-on skills you&rsquo;ll use every week of your life.</p>
+    <div class="hero-facts">
+      <div class="hero-fact"><span class="label">Instructor</span><span class="value">Dr. Peter Park</span></div>
+      <div class="hero-fact"><span class="label">Grades</span><span class="value">6 &ndash; 8</span></div>
+      <div class="hero-fact"><span class="label">Offered</span><span class="value">Quarters 2 &amp; 4</span></div>
+      <div class="hero-fact"><span class="label">Sessions</span><span class="value">10 per Quarter &middot; 45&ndash;55 min</span></div>
+    </div>
+  </section>
+
+  <div class="page">
+
+    <!-- Course overview -->
+    <section class="syl-section">
+      <h2>Course Overview</h2>
+      <p class="lead">
+        <strong>How To</strong> is a hands-on elective built around the practical skills middle schoolers will use every week &mdash; at home, on the go, and into adulthood. Across <strong>10 sessions</strong>, students learn to do laundry the right way, fix small things around the house, sew on a button, manage their money, cook a simple meal, plan their time, and communicate with adults. Each session focuses on <em>one skill</em>, with hands-on practice, so students walk away ready to do it again on their own.
+      </p>
+      <p class="lead">
+        The course is offered <strong>twice a year</strong> &mdash; once in <strong>Quarter 2</strong> and again in <strong>Quarter 4</strong> &mdash; so students can elect it in whichever window fits their schedule.
+      </p>
+    </section>
+
+    <!-- Core themes -->
+    <section class="syl-section">
+      <h2>Core Themes Woven Throughout</h2>
+      <div class="info-card">
+        <ul>
+          <li><strong>Safety first</strong> &mdash; using tools and materials without injuring yourself or others</li>
+          <li><strong>Confidence through repetition</strong> &mdash; doing it once with help, then doing it alone</li>
+          <li><strong>Reading instructions</strong> &mdash; care labels, recipes, manuals, package directions</li>
+          <li><strong>Problem-solving</strong> &mdash; what to try when the first attempt doesn&rsquo;t work</li>
+          <li><strong>Money and resource awareness</strong> &mdash; using what you have, choosing what you buy</li>
+          <li><strong>Asking for help</strong> &mdash; recognizing when a job is beyond DIY</li>
+          <li><strong>Independence</strong> &mdash; doing for yourself what others used to do for you</li>
+          <li><strong>Pride in workmanship</strong> &mdash; finishing what you start, and finishing it cleanly</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Course structure -->
+    <section class="syl-section">
+      <h2>Course Structure</h2>
+      <p class="lead">
+        Each session runs about <strong>45&ndash;55 minutes</strong> and follows the same flow: short introduction, instructor demonstration, hands-on practice, and a brief reflection. Students take home a one-page <em>&ldquo;skills card&rdquo;</em> after each session &mdash; a quick reference they can pin on the fridge or tuck into a backpack for later use.
+      </p>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- Sessions -->
+    <!-- ============================================ -->
+    <div class="quarter-banner">
+      <span class="q-tag">SYLLABUS</span>
+      <span>10 Sessions &middot; 10 Practical Skills</span>
+      <span class="q-desc">Offered in Quarter 2 and Quarter 4</span>
+    </div>
+
+    <div class="session-grid">
+
+      <!-- 1 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">1</span><span class="flag">🧺</span>
+          <span class="title">Laundry Done Right</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Household</span>
+            <span class="key">Life Skill</span><span class="val">Sort fabrics, decode care labels, run a wash, treat stains</span>
+            <span class="key">Hands-on</span><span class="val">Wash, dry, and fold a load of mixed clothes; treat 4 common stain samples</span>
+            <span class="key">Concepts</span><span class="val">Care label symbols, water temperatures, detergent dosing, stain chemistry</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Read and interpret care labels on different fabrics</li>
+              <li>Sort laundry by color, weight, and care requirements</li>
+              <li>Operate a washer and dryer with the correct cycle and temperature</li>
+              <li>Treat grease, blood, grass, and ink stains using household products</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Pre-stage stained fabric samples in zip bags. Bring a real care-label cheat sheet.</p>
+        </div>
+      </article>
+
+      <!-- 2 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">2</span><span class="flag">🧹</span>
+          <span class="title">Clean Like a Pro</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Household</span>
+            <span class="key">Life Skill</span><span class="val">Systematic cleaning of kitchen and bathroom; choosing the right product</span>
+            <span class="key">Hands-on</span><span class="val">Deep-clean a mock kitchen station and bathroom station</span>
+            <span class="key">Concepts</span><span class="val">All-purpose vs. specialized cleaners, top-down order, microfiber, &ldquo;clean as you go&rdquo;</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Identify which cleaning products belong in which rooms</li>
+              <li>Apply the &ldquo;top-down&rdquo; cleaning order to a room</li>
+              <li>Clean a kitchen station (counter, sink, appliance) without streaks</li>
+              <li>Adopt &ldquo;clean as you go&rdquo; as a daily habit</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Pre-stage stations with intentional mess (food smudges, water spots, soap scum stand-ins).</p>
+        </div>
+      </article>
+
+      <!-- 3 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">3</span><span class="flag">🧵</span>
+          <span class="title">Sewing &amp; Mending</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Household</span>
+            <span class="key">Life Skill</span><span class="val">Hand-sew basic repairs that save clothes</span>
+            <span class="key">Hands-on</span><span class="val">Thread a needle, sew on a button, hem a cuff, patch a small hole</span>
+            <span class="key">Concepts</span><span class="val">Running stitch, whip stitch, secure knots, fabric types</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Thread a needle and tie a secure starting knot</li>
+              <li>Sew a 4-hole button using the cross-stitch method</li>
+              <li>Hem a cuff using a basic running stitch</li>
+              <li>Assemble a starter sewing kit to take home</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Provide pre-cut practice squares with deliberate tears and missing buttons.</p>
+        </div>
+      </article>
+
+      <!-- 4 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">4</span><span class="flag">🔧</span>
+          <span class="title">Tools 101 &amp; Small Fixes</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Home Maintenance</span>
+            <span class="key">Life Skill</span><span class="val">Use basic hand tools safely and confidently</span>
+            <span class="key">Hands-on</span><span class="val">Hang a picture or small shelf on a practice board; tighten loose furniture</span>
+            <span class="key">Concepts</span><span class="val">Phillips vs. flat-head, drywall anchors, stud finder, &ldquo;righty tighty, lefty loosey&rdquo;</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Identify and select the right tool for a given job</li>
+              <li>Measure and mark accurately with a tape measure</li>
+              <li>Use a level to ensure straight installation</li>
+              <li>Hang a picture or small shelf securely, using anchors when needed</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Use foam board or scrap drywall as a practice wall. Stock multiple anchor types.</p>
+        </div>
+      </article>
+
+      <!-- 5 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">5</span><span class="flag">🛠️</span>
+          <span class="title">Patch Drywall &amp; Touch Up Paint</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Home Maintenance</span>
+            <span class="key">Life Skill</span><span class="val">Repair small wall damage and refresh paint</span>
+            <span class="key">Hands-on</span><span class="val">Fill a nail hole; patch a fist-sized hole with a kit; sand smooth; touch up paint</span>
+            <span class="key">Concepts</span><span class="val">Spackle vs. drywall mud, mesh tape, primer, color matching</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Patch a nail hole using spackle and a putty knife</li>
+              <li>Repair a fist-sized hole with a drywall patch kit</li>
+              <li>Sand a patched area smooth before painting</li>
+              <li>Color-match and touch up paint without visible blends</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Pre-cut holes of varying sizes in scrap drywall. Use a non-toxic, low-odor primer for indoor practice.</p>
+        </div>
+      </article>
+
+      <!-- 6 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">6</span><span class="flag">🚿</span>
+          <span class="title">Plumbing Basics &mdash; Unclog a Drain</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Home Maintenance</span>
+            <span class="key">Life Skill</span><span class="val">Clear common clogs and prevent future ones</span>
+            <span class="key">Hands-on</span><span class="val">Use a plunger and drain snake; install a hair trap</span>
+            <span class="key">Concepts</span><span class="val">P-trap, drainpipe, what shouldn&rsquo;t go down a drain, when to call a plumber</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Understand how a sink drain works (P-trap and drainpipe)</li>
+              <li>Use a plunger correctly to clear a basic clog</li>
+              <li>Use a drain snake to remove hair and debris</li>
+              <li>Recognize when a clog is beyond DIY and a plumber should be called</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> A clear acrylic mock drain (DIY or purchased) makes the inner workings visible &mdash; a major aha moment.</p>
+        </div>
+      </article>
+
+      <!-- 7 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">7</span><span class="flag">💰</span>
+          <span class="title">Money 101</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Financial</span>
+            <span class="key">Life Skill</span><span class="val">Budget, save, and make smart money decisions</span>
+            <span class="key">Hands-on</span><span class="val">Build a one-week budget; compare two purchase decisions side-by-side</span>
+            <span class="key">Concepts</span><span class="val">Needs vs. wants, savings goals, compound interest, checking vs. savings accounts</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Build a simple weekly budget that balances spending and saving</li>
+              <li>Differentiate between needs, wants, and savings goals</li>
+              <li>Explain how checking and savings accounts differ</li>
+              <li>Estimate how savings grow with compound interest over 1, 5, and 10 years</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Use realistic middle-school examples: allowance, gifts, lunches, snacks, savings goals like a phone or a trip.</p>
+        </div>
+      </article>
+
+      <!-- 8 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">8</span><span class="flag">🍳</span>
+          <span class="title">Cooking Essentials</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Household / Self-Care</span>
+            <span class="key">Life Skill</span><span class="val">Cook simple, safe meals from a recipe</span>
+            <span class="key">Hands-on</span><span class="val">Prepare 2 simple meals (scrambled eggs, grilled cheese, or pasta with sauce)</span>
+            <span class="key">Concepts</span><span class="val">Kitchen safety, &ldquo;claw grip&rdquo; knife technique, heat control, reading a recipe</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Wash hands, set up a clean prep area, and identify kitchen tools safely</li>
+              <li>Use the &ldquo;claw grip&rdquo; knife technique for safe cutting</li>
+              <li>Cook one stovetop meal start to finish</li>
+              <li>Read a recipe top to bottom before starting; clean as you go</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Choose recipes that finish in 15&ndash;20 minutes. Reuse cooking-class equipment where available.</p>
+        </div>
+      </article>
+
+      <!-- 9 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">9</span><span class="flag">🗓️</span>
+          <span class="title">Time Management &amp; Personal Organization</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Self-Management</span>
+            <span class="key">Life Skill</span><span class="val">Plan, prioritize, and organize daily life</span>
+            <span class="key">Hands-on</span><span class="val">Set up a weekly calendar; build a study plan; organize a real backpack</span>
+            <span class="key">Concepts</span><span class="val">Calendars, to-do lists, urgent vs. important, focus blocks (Pomodoro)</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Set up a weekly calendar combining school, activities, and chores</li>
+              <li>Build a daily to-do list prioritized by urgent and important</li>
+              <li>Organize a backpack, locker, or desk so essentials are findable in 5 seconds</li>
+              <li>Use a focus technique (Pomodoro) to start a hard task</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Ask students to bring their actual backpacks and a planner. Provide printable calendar templates.</p>
+        </div>
+      </article>
+
+      <!-- 10 -->
+      <article class="session">
+        <header class="session-head">
+          <span class="num">10</span><span class="flag">🤝</span>
+          <span class="title">Communication &amp; Etiquette</span>
+        </header>
+        <div class="session-body">
+          <div class="session-meta">
+            <span class="key">Domain</span><span class="val">Social</span>
+            <span class="key">Life Skill</span><span class="val">Communicate effectively in person, by phone, and by email</span>
+            <span class="key">Hands-on</span><span class="val">Make a real phone call to an adult; write an email and a thank-you note</span>
+            <span class="key">Concepts</span><span class="val">Tone, formality levels, professional vs. casual, body language and eye contact</span>
+          </div>
+          <div class="session-objectives">
+            <div class="h">Learning Objectives</div>
+            <ul>
+              <li>Make a phone call to an adult, introducing yourself and stating your purpose</li>
+              <li>Write a professional email with proper subject, greeting, body, and sign-off</li>
+              <li>Write a handwritten thank-you note for a gift or a favor</li>
+              <li>Introduce yourself in person with eye contact and a confident handshake</li>
+            </ul>
+          </div>
+          <p class="session-notes"><strong>Instructor note:</strong> Set up stations &mdash; phone (real or simulator), email (laptops), thank-you notes (stationery and pens), in-person intros (mirror or partner).</p>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Assessment -->
+    <section class="syl-section" style="margin-top: 48px;">
+      <h2>Assessment &amp; Grading</h2>
+      <p class="lead">
+        Because this is a life-skills elective, assessment focuses on growth, participation, and real-world skill demonstration &mdash; not traditional tests.
+      </p>
+      <table class="grade-table">
+        <thead>
+          <tr><th>Category</th><th class="weight">Weight</th><th>How It&rsquo;s Measured</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Participation &amp; Teamwork</strong></td>
+            <td class="weight">30%</td>
+            <td>Engages actively in each session; supports classmates; cleans up after themselves</td>
+          </tr>
+          <tr>
+            <td><strong>Skill Demonstrations</strong></td>
+            <td class="weight">40%</td>
+            <td>Correctly applies each session&rsquo;s target skill in hands-on practice</td>
+          </tr>
+          <tr>
+            <td><strong>Session Reflections</strong></td>
+            <td class="weight">20%</td>
+            <td>Brief written or verbal reflection after each session &mdash; what worked, what would I try differently?</td>
+          </tr>
+          <tr>
+            <td><strong>Real-World Application</strong></td>
+            <td class="weight">10%</td>
+            <td>Apply 3 skills at home over the quarter; document with a photo or short note from a family member</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Rules -->
+    <section class="syl-section">
+      <h2>Classroom Rules &amp; Safety</h2>
+      <div class="info-card">
+        <ul>
+          <li>Listen to safety instructions before starting any hands-on task.</li>
+          <li>Use tools and materials only as demonstrated &mdash; no horseplay around sharp, heavy, or hot items.</li>
+          <li>Wear safe clothing &mdash; tied hair, no loose sleeves near tools or heat, closed-toe shoes.</li>
+          <li>Eye protection and gloves are provided as needed &mdash; use them when asked.</li>
+          <li>Respect tools and materials &mdash; return them clean and to their assigned place.</li>
+          <li>Ask before borrowing or using something that isn&rsquo;t yours.</li>
+          <li>Help classmates without doing the work for them &mdash; teaching is part of learning.</li>
+          <li>Clean your station before the session ends. The next class deserves a clean kitchen, bench, or table.</li>
+          <li>Report any cuts, spills, or broken tools to the instructor immediately.</li>
+          <li>Phones away unless they&rsquo;re being used for a specific session task.</li>
+          <li>Practice patience &mdash; most skills take more than one try. That&rsquo;s the point.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Materials -->
+    <section class="syl-section">
+      <h2>Materials &amp; Supplies</h2>
+      <p class="lead">
+        The course rotates across several skill stations. The school provides shared equipment; students bring a small notebook and (for Session 9) their actual backpack.
+      </p>
+      <div class="info-card">
+        <ul>
+          <li><strong>Hand tools:</strong> Phillips and flat-head screwdrivers, hammers, levels, tape measures, stud finder</li>
+          <li><strong>Sewing kits:</strong> needles, threads, buttons, small scissors, practice fabric squares</li>
+          <li><strong>Drywall repair:</strong> spackle, putty knives, drywall patch kits, sandpaper, primer, sample paint</li>
+          <li><strong>Plumbing demo:</strong> plunger, drain snake, hair trap (optional clear acrylic drain demo)</li>
+          <li><strong>Cleaning supplies:</strong> all-purpose cleaner, glass cleaner, disinfectant spray, microfiber cloths, sponges</li>
+          <li><strong>Laundry samples:</strong> fabric squares with care labels; pre-prepared stain samples</li>
+          <li><strong>Cooking essentials:</strong> eggs, bread, butter, cheese, pasta, sauce, salt, pepper, plus a hot plate and skillet per group</li>
+          <li><strong>Money 101:</strong> printed budget templates and side-by-side comparison worksheets</li>
+          <li><strong>Time management:</strong> planner pages, sticky notes, colored pens</li>
+          <li><strong>Communication:</strong> a working phone (or simulator app), stationery, envelopes, stamps</li>
+          <li><strong>Safety:</strong> safety glasses, work gloves, first-aid kit on hand at every session</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      &copy; Mary, Star of the Sea School &middot; SY 2026-2027
+    </footer>
+
+  </div>
+
+</body>
+</html>
