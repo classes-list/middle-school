@@ -49,8 +49,6 @@
     .btn:hover { background: #162E70; }
     .btn-secondary { background: #6b7280; }
     .btn-secondary:hover { background: #4b5563; }
-    .btn-ixl { display: inline-block; padding: 10px 15px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
-    .btn-ixl:hover { background: #2563eb; }
     .btn-yt { display: inline-block; padding: 10px 15px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
     .btn-yt:hover { background: #dc2626; }
     .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
@@ -100,10 +98,10 @@
     <div class="main">
       <div class="topbar">
         <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
-          <a href="msos-math-index.html" class="back-index-btn" title="Back to Math Classes">← All Math</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
+          <a href="MSOS Math Index.html" class="back-index-btn" title="Back to Math Classes">← All Math</a><button class="home-btn" onclick="showHome()">🏠 HOME</button>
           <div class="topbar-logos">
-            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
-            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
+            <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="MSOS Logo.svg" alt="Mary, Star of the Sea Logo"></span>
+            <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="NUI Logo.png" alt="Nurture-Unite-Inspire Logo"></span>
           </div>
           <span id="topbar-title">Exploring the World with Math</span>
         </div>
@@ -163,24 +161,24 @@
 
   <script>
 const UNITS = [
-  { id:'place-value', title:'Place Value & Rounding', icon:'🔢', cc:'5.NBT.1-4', desc:'Understand place value in decimals and whole numbers; round to any place.', ixlUrl:'https://www.ixl.com/math/grade-5/place-values', ytSearch:'khan academy 5th grade place value decimals rounding' },
-  { id:'add-subtract', title:'Addition & Subtraction', icon:'➕', cc:'5.NBT.5', desc:'Fluently add and subtract multi-digit whole numbers using the standard algorithm.', ixlUrl:'https://www.ixl.com/math/grade-5/add-and-subtract-whole-numbers', ytSearch:'khan academy 5th grade addition subtraction multi-digit' },
-  { id:'mult-div', title:'Multiplication & Division', icon:'✖️', cc:'5.NBT.5-6', desc:'Multiply multi-digit whole numbers and divide with up to 4-digit dividends.', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-by-2-digit-numbers', ytSearch:'khan academy 5th grade multi-digit multiplication long division', phetUrl:'https://phet.colorado.edu/en/simulations/arithmetic' },
-  { id:'order-ops', title:'Order of Operations', icon:'📋', cc:'5.OA.1', desc:'Use parentheses, brackets, and the order of operations (PEMDAS) to evaluate expressions.', ixlUrl:'https://www.ixl.com/math/grade-5/evaluate-numerical-expressions', ytSearch:'khan academy 5th grade order of operations PEMDAS' },
-  { id:'frac-add-sub', title:'Fractions — Add/Subtract', icon:'➗', cc:'5.NF.1-2', desc:'Add and subtract fractions with unlike denominators using common denominators.', ixlUrl:'https://www.ixl.com/math/grade-5/add-and-subtract-fractions-with-unlike-denominators', ytSearch:'khan academy 5th grade add subtract fractions unlike denominators', phetUrl:'https://phet.colorado.edu/en/simulations/build-a-fraction' },
-  { id:'frac-mult-div', title:'Fractions — Multiply/Divide', icon:'🥧', cc:'5.NF.3-7', desc:'Multiply fractions by fractions and divide unit fractions by whole numbers.', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-two-fractions-using-models', ytSearch:'khan academy 5th grade multiplying dividing fractions', phetUrl:'https://phet.colorado.edu/en/simulations/fractions-intro' },
-  { id:'frac-convert', title:'Fractions — Converting', icon:'🔁', cc:'5.NF.3', desc:'Convert between improper fractions and mixed numbers; simplify fractions.', ixlUrl:'https://www.ixl.com/math/grade-5/convert-between-improper-fractions-and-mixed-numbers', ytSearch:'khan academy 5th grade improper fractions mixed numbers converting', phetUrl:'https://phet.colorado.edu/en/simulations/fraction-matcher' },
-  { id:'frac-vs-dec', title:'Fractions vs Decimals', icon:'🔀', cc:'5.NF/5.NBT', desc:'Convert fractions to decimals and decimals to fractions; compare forms.', ixlUrl:'https://www.ixl.com/math/grade-5/convert-fractions-to-decimals', ytSearch:'khan academy 5th grade fractions decimals converting', phetUrl:'https://phet.colorado.edu/en/simulations/fractions-intro' },
-  { id:'dec-add-sub', title:'Decimals — Add/Subtract', icon:'💯', cc:'5.NBT.7', desc:'Add and subtract decimals to the hundredths using concrete models and strategies.', ixlUrl:'https://www.ixl.com/math/grade-5/add-and-subtract-decimal-numbers', ytSearch:'khan academy 5th grade add subtract decimals' },
-  { id:'dec-mult', title:'Decimals — Multiplication', icon:'✖️', cc:'5.NBT.7', desc:'Multiply decimals to the hundredths and understand the placement of the decimal point.', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-decimals', ytSearch:'khan academy 5th grade multiply decimals', phetUrl:'https://phet.colorado.edu/en/simulations/area-model-decimals' },
-  { id:'dec-div', title:'Decimals — Division', icon:'➗', cc:'5.NBT.7', desc:'Divide decimals to the hundredths using models, place value, and properties of operations.', ixlUrl:'https://www.ixl.com/math/grade-5/divide-decimals', ytSearch:'khan academy 5th grade divide decimals' },
-  { id:'measurement', title:'Measurement', icon:'📏', cc:'5.MD.1', desc:'Convert among different-sized measurement units (in/ft/yd, mm/cm/m/km, oz/lb, mL/L).', ixlUrl:'https://www.ixl.com/math/grade-5/convert-mixed-customary-units', ytSearch:'khan academy 5th grade measurement conversion customary metric' },
-  { id:'geometry', title:'Geometry', icon:'🔷', cc:'5.G.1-4', desc:'Classify 2D figures in a hierarchy; graph points on the coordinate plane.', ixlUrl:'https://www.ixl.com/math/grade-5/classify-quadrilaterals', ytSearch:'khan academy 5th grade geometry quadrilaterals classification', phetUrl:'https://phet.colorado.edu/en/simulations/area-builder' },
-  { id:'factoring', title:'Factoring', icon:'🧮', cc:'5.OA / prep for 6.NS.4', desc:'Find factors and multiples of whole numbers; identify prime and composite numbers.', ixlUrl:'https://www.ixl.com/math/grade-5/prime-and-composite-numbers', ytSearch:'khan academy prime composite factors multiples 5th grade' },
-  { id:'exponents', title:'Exponents', icon:'🔬', cc:'5.NBT.2', desc:'Use whole-number exponents to denote powers of 10; explain patterns in zeros.', ixlUrl:'https://www.ixl.com/math/grade-5/understanding-exponents', ytSearch:'khan academy 5th grade powers of 10 exponents' },
-  { id:'data-graphing', title:'Data & Graphing', icon:'📊', cc:'5.MD.2', desc:'Make line plots to display a data set of measurements in fractions of a unit; read and create graphs.', ixlUrl:'https://www.ixl.com/math/grade-5/create-line-plots', ytSearch:'khan academy 5th grade line plots data graphing', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability' },
-  { id:'integers', title:'Integers', icon:'➕➖', cc:'prep for 6.NS.5-6', desc:'Understand positive and negative numbers on the number line; compare integers in real-world contexts.', ixlUrl:'https://www.ixl.com/math/grade-5/understanding-integers', ytSearch:'khan academy integers introduction negative numbers 5th grade', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-integers' },
-  { id:'algebra', title:'Algebra', icon:'🔣', cc:'5.OA.2-3', desc:'Write and interpret numerical expressions; generate and analyze patterns with two rules.', ixlUrl:'https://www.ixl.com/math/grade-5/write-variable-expressions', ytSearch:'khan academy 5th grade algebra introduction expressions patterns', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' }
+  { id:'place-value', title:'Place Value & Rounding', icon:'🔢', cc:'5.NBT.1-4', desc:'Understand place value in decimals and whole numbers; round to any place.', ytSearch:'khan academy 5th grade place value decimals rounding' },
+  { id:'add-subtract', title:'Addition & Subtraction', icon:'➕', cc:'5.NBT.5', desc:'Fluently add and subtract multi-digit whole numbers using the standard algorithm.', ytSearch:'khan academy 5th grade addition subtraction multi-digit' },
+  { id:'mult-div', title:'Multiplication & Division', icon:'✖️', cc:'5.NBT.5-6', desc:'Multiply multi-digit whole numbers and divide with up to 4-digit dividends.', ytSearch:'khan academy 5th grade multi-digit multiplication long division', phetUrl:'https://phet.colorado.edu/en/simulations/arithmetic' },
+  { id:'order-ops', title:'Order of Operations', icon:'📋', cc:'5.OA.1', desc:'Use parentheses, brackets, and the order of operations (PEMDAS) to evaluate expressions.', ytSearch:'khan academy 5th grade order of operations PEMDAS' },
+  { id:'frac-add-sub', title:'Fractions — Add/Subtract', icon:'➗', cc:'5.NF.1-2', desc:'Add and subtract fractions with unlike denominators using common denominators.', ytSearch:'khan academy 5th grade add subtract fractions unlike denominators', phetUrl:'https://phet.colorado.edu/en/simulations/build-a-fraction' },
+  { id:'frac-mult-div', title:'Fractions — Multiply/Divide', icon:'🥧', cc:'5.NF.3-7', desc:'Multiply fractions by fractions and divide unit fractions by whole numbers.', ytSearch:'khan academy 5th grade multiplying dividing fractions', phetUrl:'https://phet.colorado.edu/en/simulations/fractions-intro' },
+  { id:'frac-convert', title:'Fractions — Converting', icon:'🔁', cc:'5.NF.3', desc:'Convert between improper fractions and mixed numbers; simplify fractions.', ytSearch:'khan academy 5th grade improper fractions mixed numbers converting', phetUrl:'https://phet.colorado.edu/en/simulations/fraction-matcher' },
+  { id:'frac-vs-dec', title:'Fractions vs Decimals', icon:'🔀', cc:'5.NF/5.NBT', desc:'Convert fractions to decimals and decimals to fractions; compare forms.', ytSearch:'khan academy 5th grade fractions decimals converting', phetUrl:'https://phet.colorado.edu/en/simulations/fractions-intro' },
+  { id:'dec-add-sub', title:'Decimals — Add/Subtract', icon:'💯', cc:'5.NBT.7', desc:'Add and subtract decimals to the hundredths using concrete models and strategies.', ytSearch:'khan academy 5th grade add subtract decimals' },
+  { id:'dec-mult', title:'Decimals — Multiplication', icon:'✖️', cc:'5.NBT.7', desc:'Multiply decimals to the hundredths and understand the placement of the decimal point.', ytSearch:'khan academy 5th grade multiply decimals', phetUrl:'https://phet.colorado.edu/en/simulations/area-model-decimals' },
+  { id:'dec-div', title:'Decimals — Division', icon:'➗', cc:'5.NBT.7', desc:'Divide decimals to the hundredths using models, place value, and properties of operations.', ytSearch:'khan academy 5th grade divide decimals' },
+  { id:'measurement', title:'Measurement', icon:'📏', cc:'5.MD.1', desc:'Convert among different-sized measurement units (in/ft/yd, mm/cm/m/km, oz/lb, mL/L).', ytSearch:'khan academy 5th grade measurement conversion customary metric' },
+  { id:'geometry', title:'Geometry', icon:'🔷', cc:'5.G.1-4', desc:'Classify 2D figures in a hierarchy; graph points on the coordinate plane.', ytSearch:'khan academy 5th grade geometry quadrilaterals classification', phetUrl:'https://phet.colorado.edu/en/simulations/area-builder' },
+  { id:'factoring', title:'Factoring', icon:'🧮', cc:'5.OA / prep for 6.NS.4', desc:'Find factors and multiples of whole numbers; identify prime and composite numbers.', ytSearch:'khan academy prime composite factors multiples 5th grade' },
+  { id:'exponents', title:'Exponents', icon:'🔬', cc:'5.NBT.2', desc:'Use whole-number exponents to denote powers of 10; explain patterns in zeros.', ytSearch:'khan academy 5th grade powers of 10 exponents' },
+  { id:'data-graphing', title:'Data & Graphing', icon:'📊', cc:'5.MD.2', desc:'Make line plots to display a data set of measurements in fractions of a unit; read and create graphs.', ytSearch:'khan academy 5th grade line plots data graphing', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability' },
+  { id:'integers', title:'Integers', icon:'➕➖', cc:'prep for 6.NS.5-6', desc:'Understand positive and negative numbers on the number line; compare integers in real-world contexts.', ytSearch:'khan academy integers introduction negative numbers 5th grade', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-integers' },
+  { id:'algebra', title:'Algebra', icon:'🔣', cc:'5.OA.2-3', desc:'Write and interpret numerical expressions; generate and analyze patterns with two rules.', ytSearch:'khan academy 5th grade algebra introduction expressions patterns', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' }
 ];
 
 const LESSONS = {
@@ -1095,10 +1093,9 @@ let completedUnits = {};
 let currentUnit = null;
 
 function resourceCardHTML(unit) {
-  const ixlBtn = unit.ixlUrl ? `<a class="btn-ixl" href="${unit.ixlUrl}" target="_blank">📘 IXL Practice</a>` : '';
   const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
   const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
-  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${ixlBtn}${phetBtn}${ytBtn}</div></div>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${ytBtn}</div></div>`;
 }
 
 function renderHome() {
@@ -1119,7 +1116,6 @@ function renderHome() {
       <div class="unit-card-desc">${unit.desc}</div>
       <div class="unit-card-pills">
         <div class="pill">📖 Lesson</div>
-        ${unit.ixlUrl?'<div class="pill">📘 IXL</div>':''}
         <div class="pill">📋 Worksheet</div>
         <div class="pill">▶️ YouTube</div>
       </div>`;
@@ -1233,7 +1229,7 @@ function showHandout() {
   const answerKeyHtml = akFile ? `
       <div style="background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:14px;margin:14px 0;">
         <strong style="color:#1B3A8A;">📗 Answer Key (for self-check):</strong>
-        <a href="answerkeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
+        <a href="AnswerKeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
         <div style="font-size:0.9rem;color:#555;margin-top:6px;">Completed workbook with all formulas, charts, and real-world data. Open in Excel or upload to Google Sheets (<em>File → Import → Upload</em>) to compare with your own work after you finish.</div>
       </div>` : '';
   document.getElementById('handout-content').innerHTML = `
