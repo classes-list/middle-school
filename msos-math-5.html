@@ -186,7 +186,8 @@ const UNITS = [
   { id:'exponents', title:'Exponents', icon:'🔬', cc:'5.NBT.2', desc:'Use whole-number exponents to denote powers of 10; explain patterns in zeros.', ytSearch:'khan academy 5th grade powers of 10 exponents' },
   { id:'data-graphing', title:'Data & Graphing', icon:'📊', cc:'5.MD.2', desc:'Make line plots to display a data set of measurements in fractions of a unit; read and create graphs.', ytSearch:'khan academy 5th grade line plots data graphing', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability' },
   { id:'integers', title:'Integers', icon:'➕➖', cc:'prep for 6.NS.5-6', desc:'Understand positive and negative numbers on the number line; compare integers in real-world contexts.', ytSearch:'khan academy integers introduction negative numbers 5th grade', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-integers' },
-  { id:'algebra', title:'Algebra', icon:'🔣', cc:'5.OA.2-3', desc:'Write and interpret numerical expressions; generate and analyze patterns with two rules.', ytSearch:'khan academy 5th grade algebra introduction expressions patterns', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' }
+  { id:'algebra', title:'Algebra', icon:'🔣', cc:'5.OA.2-3', desc:'Write and interpret numerical expressions; generate and analyze patterns with two rules.', ytSearch:'khan academy 5th grade algebra introduction expressions patterns', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' },
+  { id:'vex-vr', title:'VEX VR Robot Math', icon:'🤖', cc:'5.NBT.7 / 5.OA.3 / 5.G.1 / 5.MD.2', desc:'Program a virtual robot at vr.vex.com to practice decimal arithmetic, polygon angles, coordinates, and patterns — math IS the code.', ytSearch:'vex vr math activities elementary 5th grade' }
 ];
 
 const LESSONS = {
@@ -416,7 +417,46 @@ const LESSONS = {
 </ul>
 <p><strong>Evaluating expressions:</strong> Substitute the value for the variable.</p>
 <p><strong>Example:</strong> Evaluate 3x + 4 when x = 5 → 3(5) + 4 = 15 + 4 = <strong>19</strong></p>
-<p><strong>Patterns with two rules:</strong> Given rules "add 3" for x and "add 6" for y, starting at (0, 0): (0,0), (3,6), (6,12), (9,18)… Graph these and you'll see a straight line!</p>`
+<p><strong>Patterns with two rules:</strong> Given rules "add 3" for x and "add 6" for y, starting at (0, 0): (0,0), (3,6), (6,12), (9,18)… Graph these and you'll see a straight line!</p>`,
+
+  'vex-vr': `<h2>🤖 VEX VR Robot Math</h2>
+<p><strong>VEX VR</strong> is a free browser-based virtual robotics environment at <a href="https://vr.vex.com" target="_blank">vr.vex.com</a>. You drag &amp; drop blocks (or write Python) to program a virtual robot that drives, turns, and uses sensors. Every command takes a <strong>number</strong> — so every program is a math problem in disguise. This unit shows you four big ways to put your 5th grade math to work.</p>
+
+<h3>1. Decimal arithmetic with distance</h3>
+<p>The robot's <code>drive forward</code> block takes a distance in <strong>millimeters</strong> (mm). One meter = 1000 mm. So when you write "drive forward 2.5 m," you really code <code>drive forward 2500 mm</code>. Now imagine a mission: "Drive 1.25 m, then 0.75 m, then 2 m." Total = 1.25 + 0.75 + 2 = <strong>4 m = 4000 mm</strong>. The robot will only land in the right spot if your decimal addition is correct.</p>
+<div class="example-box" style="background:#f0f9ff;border-left:5px solid #0284c7;padding:12px 16px;border-radius:6px;margin:10px 0;">
+  <strong>💡 Try it:</strong> Code the robot to drive forward 4500 mm, turn right, then drive 0.85 m. How far did it travel in total, in meters? <em>Answer: 4.5 + 0.85 = 5.35 m</em>.
+</div>
+
+<h3>2. Angles &amp; regular polygons — the 360÷N rule</h3>
+<p>The <code>turn right</code> block takes an angle in degrees. A right angle = 90°. To draw a SQUARE, you repeat <code>drive 300, turn 90</code> four times. To draw a triangle, you turn 120° three times. The pattern: <strong>angle = 360 ÷ N</strong>, where N is the number of sides.</p>
+<table style="margin:8px 0; border-collapse:collapse;">
+  <tr style="background:#fef3c7;"><th style="padding:6px 12px;border:1px solid #b8860b;">Shape</th><th style="padding:6px 12px;border:1px solid #b8860b;">Sides (N)</th><th style="padding:6px 12px;border:1px solid #b8860b;">Turn angle (360÷N)</th></tr>
+  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Triangle</td><td style="padding:6px 12px;border:1px solid #fde68a;">3</td><td style="padding:6px 12px;border:1px solid #fde68a;">120°</td></tr>
+  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Square</td><td style="padding:6px 12px;border:1px solid #fde68a;">4</td><td style="padding:6px 12px;border:1px solid #fde68a;">90°</td></tr>
+  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Pentagon</td><td style="padding:6px 12px;border:1px solid #fde68a;">5</td><td style="padding:6px 12px;border:1px solid #fde68a;">72°</td></tr>
+  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Hexagon</td><td style="padding:6px 12px;border:1px solid #fde68a;">6</td><td style="padding:6px 12px;border:1px solid #fde68a;">60°</td></tr>
+  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Octagon</td><td style="padding:6px 12px;border:1px solid #fde68a;">8</td><td style="padding:6px 12px;border:1px solid #fde68a;">45°</td></tr>
+</table>
+<p>This is genuine algebraic thinking — you discover a formula by trying examples, then use it to predict any case.</p>
+
+<h3>3. Coordinate plane navigation</h3>
+<p>VEX VR has a <strong>Number Grid Map</strong> playground designed for plotting points. The robot starts at (0, 0). To send it to (3, 5), you need to move <em>right</em> 3 tiles, then <em>up</em> 5 tiles. The first number is the <strong>x-coordinate</strong> (horizontal); the second is the <strong>y-coordinate</strong> (vertical). For 5th grade we stay in the first quadrant (positive x and y only).</p>
+<div class="example-box" style="background:#f0f9ff;border-left:5px solid #0284c7;padding:12px 16px;border-radius:6px;margin:10px 0;">
+  <strong>💡 Mission:</strong> From (0, 0), program the robot to visit (3, 0), then (3, 4), then back to origin. What shape did it trace? <em>Answer: A right triangle with legs 3 and 4.</em>
+</div>
+
+<h3>4. Patterns, loops, &amp; the mean</h3>
+<p>VEX VR has a <code>repeat</code> block — pure algebraic patterns. The code <code>repeat 5: drive 300, turn 72</code> draws a perfect regular pentagon. Change "5" to "6" and "72" to "60" — now it's a hexagon. You're generalizing.</p>
+<p>For statistics, have the robot run the same mission five times, using a distance sensor to measure how far it ended up. The five readings might be: 285, 290, 287, 291, 289 mm. The <strong>mean</strong> is their sum divided by 5: (285+290+287+291+289) ÷ 5 = 1442 ÷ 5 = <strong>288.4 mm</strong>. The mean tells you what's TYPICAL, smoothing out variation.</p>
+
+<div class="example-box" style="background:#dcfce7;border-left:5px solid #16a34a;padding:12px 16px;border-radius:6px;margin:10px 0;">
+  <strong>🎯 Common mistake:</strong> Mixing up units. The robot speaks <strong>millimeters and degrees</strong>. If you write "drive forward 2.5" (meaning 2.5 m), the robot only goes 2.5 mm — about the width of a pencil tip! Always convert: m → mm by ×1000, cm → mm by ×10.
+</div>
+
+<div class="example-box" style="background:#fef3c7;border-left:5px solid #FFD100;padding:12px 16px;border-radius:6px;margin:10px 0;">
+  <strong>🚀 Try it now:</strong> Open <a href="https://vr.vex.com" target="_blank">vr.vex.com</a>, pick the <strong>Number Grid Map</strong>, and program the robot to drive a 4×6 rectangle. Predict the perimeter (20 tiles) and area (24 tiles) before you run it!
+</div>`,
 };
 
 const WORKSHEETS = {
@@ -635,7 +675,19 @@ const WORKSHEETS = {
     { q: 'Write an expression for the perimeter of a square with side s.', answer: '4s' },
     { q: 'Evaluate x² + x when x = 3.', answer: '12' },
     { q: 'Two rules: x: add 2, y: add 4, starting at (0, 0). Next 3 ordered pairs?', answer: '(2, 4), (4, 8), (6, 12)' }
-  ]
+  ],
+  'vex-vr': [
+    { q: 'A VEX VR robot drives 1.5 m forward, then 2.75 m forward. Total distance in meters?', answer: '4.25 m' },
+    { q: 'Convert that total to millimeters (mm).', answer: '4,250 mm' },
+    { q: 'The robot must travel exactly 3,750 mm. Write that distance in meters as a decimal.', answer: '3.75 m' },
+    { q: 'To draw a regular pentagon (5-sided), what angle should the robot turn each time?', answer: '72° (because 360 ÷ 5 = 72)' },
+    { q: 'To draw a regular octagon (8-sided), what angle should the robot turn each time?', answer: '45° (because 360 ÷ 8 = 45)' },
+    { q: 'The robot turns 30° each time. How many sides will the shape have?', answer: '12 sides (since 360 ÷ 30 = 12)' },
+    { q: 'On the Number Grid Map, the robot starts at (0, 0). It drives to (4, 0), then to (4, 3). What is the distance from (4, 3) back to (0, 0) in a straight line? (Hint: 3-4-5 right triangle.)', answer: '5 tiles' },
+    { q: 'List three coordinate points the robot would visit if it traced a square with side length 5, starting at (0, 0) and moving right then up.', answer: '(5, 0), (5, 5), (0, 5)' },
+    { q: 'The robot runs a mission 5 times and the distance sensor reads: 295, 298, 302, 296, 299 mm. What is the mean?', answer: '298 mm (sum 1490 ÷ 5)' },
+    { q: 'A code uses repeat 4: drive forward 250 mm, turn right 90°. What is the total distance the robot drives (in mm)?', answer: '1,000 mm (= 1 m)' }
+  ],
 };
 
 const QUIZZES = {
@@ -764,7 +816,19 @@ const QUIZZES = {
     { q: 'Evaluate 2y + 1 when y = 6.', opts: ['13', '12', '8', '26'], ans: 0 },
     { q: 'Next term in pattern: 5, 10, 15, 20, ___', opts: ['25', '30', '21', '24'], ans: 0 },
     { q: 'Which is the perimeter of a square with side s?', opts: ['4s', 's²', '2s', '4 + s'], ans: 0 }
-  ]
+  ],
+  'vex-vr': [
+    { q:'A VEX VR robot drives 1.25 m, then 0.875 m. Total distance in mm is:', options:['1,225 mm','2,125 mm','2,250 mm','11,250 mm'], correct:1 },
+    { q:'To make a regular hexagon (6 sides), the robot turn angle is:', options:['45°','60°','90°','120°'], correct:1 },
+    { q:'The robot turn angle is 40° each time. How many sides does the shape have?', options:['7','8','9','10'], correct:2 },
+    { q:'In the Number Grid Map starting at (0, 0), the robot drives to (5, 0) then (5, 4). What is the perimeter of the path if it returns directly to origin via (0, 0)?', options:['12 tiles','13 tiles','14 tiles','15 tiles'], correct:2 },
+    { q:'Convert 4.6 m to mm:', options:['46 mm','460 mm','4,600 mm','46,000 mm'], correct:2 },
+    { q:'The robot drives forward at 200 mm/sec for 6.5 seconds. Distance traveled:', options:['1,200 mm','1,300 mm','1,300 m','13,000 mm'], correct:1 },
+    { q:'Five distance-sensor readings: 320, 318, 322, 319, 321. The mean is:', options:['319','320','321','322'], correct:1 },
+    { q:'A regular polygon program uses repeat N: drive 300, turn 36. How many sides will it draw?', options:['8','9','10','12'], correct:2 },
+    { q:'The robot starts at (0, 0). After "drive forward 4, turn right 90, drive forward 3," its new coordinate is:', options:['(3, 4)','(4, 3)','(4, -3)','(3, -4)'], correct:2 },
+    { q:'A rectangle 6 tiles long × 4 tiles wide has area:', options:['10 tiles²','20 tiles²','24 tiles²','30 tiles²'], correct:2 }
+  ],
 };
 
 const HANDOUTS_5 = {
