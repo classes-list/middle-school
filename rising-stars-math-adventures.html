@@ -5005,8 +5005,17 @@ const LESSONS = [
         case 3: {
           const t=rand(1,9), h=rand(1,9), te=rand(0,9), o=rand(0,9);
           const n = t*1000 + h*100 + te*10 + o;
-          const words = `${t} thousand ${h} hundred ${te} ten ${o} one`;
-          return mcQ(`Write this in standard form: <strong>${t} thousand, ${h} hundred ${te}${te?"-":""}${te?["zero","one","two","three","four","five","six","seven","eight","nine"][o]:["zero","one","two","three","four","five","six","seven","eight","nine"][o]}</strong>`, [fmt(n), fmt(n+10), fmt(n-100), fmt(n*10)], fmt(n), `${t} thousand = ${t*1000}, plus ${h*100}, plus ${te*10}, plus ${o}.`);
+          const onesWord=["","one","two","three","four","five","six","seven","eight","nine"];
+          const teensWord=["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+          const tensWord=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+          let teOnesWord;
+          if (te === 0 && o === 0) teOnesWord = "";
+          else if (te === 0) teOnesWord = onesWord[o];
+          else if (te === 1) teOnesWord = teensWord[o];
+          else if (o === 0) teOnesWord = tensWord[te];
+          else teOnesWord = tensWord[te] + "-" + onesWord[o];
+          const wordForm = `${t} thousand, ${h} hundred${teOnesWord ? " " + teOnesWord : ""}`;
+          return mcQ(`Write this in standard form: <strong>${wordForm}</strong>`, [fmt(n), fmt(n+10), fmt(n-100), fmt(n*10)], fmt(n), `${t} thousand = ${t*1000}, plus ${h*100}, plus ${te*10}, plus ${o}.`);
         }
         case 4: {
           const n=rand(1000,9999);
