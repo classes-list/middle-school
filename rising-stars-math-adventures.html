@@ -4992,814 +4992,766 @@ const gcd = (a, b) => b === 0 ? a : gcd(b, a % b);
 // LESSON METADATA + GENERATORS
 // ═══════════════════════════════════════════════════════════════════
 const LESSONS = [
-  { week:1, day:1, theme:"ocean", icon:"🏝️", title:"Counting the Shipwreck Supplies",
-    tag:"WEEK 1 · DAY 1 · LOST ISLAND", skill:"Place value through thousands",
+  { week:1, day:1, theme:"ocean", icon:"🏝️", title:"Understanding Place Value",
+    tag:"WEEK 1 · MONDAY · LOST ISLAND", skill:"Read &amp; write large numbers; identify digit values",
     supply:{icon:"🥥",name:"Coconut Counter"}, badge:"Counter",
-    story:"🌊 Your ship has crashed onto a mysterious island. Coconuts, barrels, and ropes are scattered everywhere. To survive, you have to <em>count</em>.",
-    teach:`<div class="teach-step"><strong>Every digit has a place.</strong> Look at <strong>3,482</strong>: the 3 is in the thousands place, the 4 is hundreds, the 8 is tens, the 2 is ones.<div class="place-value-table" style="margin-top:8px;"><div class="pv-cell"><div class="num">3</div><div class="lbl">1,000s</div></div><div class="pv-cell"><div class="num">4</div><div class="lbl">100s</div></div><div class="pv-cell"><div class="num">8</div><div class="lbl">10s</div></div><div class="pv-cell"><div class="num">2</div><div class="lbl">1s</div></div></div></div><div class="teach-step green"><strong>Same digit, different value.</strong> The 4 in 3,482 means 400 — not just 4. Place tells you the SIZE.</div><div class="teach-step gold"><strong>Read big numbers</strong> by saying the thousands first: "Three thousand, four hundred eighty-two."</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> Look at <strong>5,217</strong>.<br>• The <strong>5</strong> is in thousands → worth <strong>5,000</strong>.<br>• The <strong>2</strong> is in hundreds → worth <strong>200</strong>.<br>• The <strong>1</strong> is in tens → worth <strong>10</strong>.<br>• The <strong>7</strong> is in ones → worth <strong>7</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏝️ Explorer's Connection:</strong> If you count 2 thousand coconuts and 350 more, you have 2,350. Place value tells you how many!</div>`,
+    story:"🌊 Captain Parker's logbook tracks every supply: ropes, coconuts, fish. To survive, every <em>place value</em> must be counted correctly.",
+    teach:`<div class="teach-step"><strong>Every digit has a PLACE.</strong> Look at <strong>43,521</strong>:<div class="place-value-table" style="margin-top:8px;"><div class="pv-cell"><div class="num">4</div><div class="lbl">10,000s</div></div><div class="pv-cell"><div class="num">3</div><div class="lbl">1,000s</div></div><div class="pv-cell"><div class="num">5</div><div class="lbl">100s</div></div><div class="pv-cell"><div class="num">2</div><div class="lbl">10s</div></div><div class="pv-cell"><div class="num">1</div><div class="lbl">1s</div></div></div></div><div class="teach-step green"><strong>Same digit, different value.</strong> A 4 in ten-thousands = 40,000. A 4 in hundreds = 400. Place tells you the SIZE.</div><div class="teach-step gold"><strong>Read big numbers in groups of three.</strong> 43,521 → "Forty-three thousand, five hundred twenty-one."</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> What is the value of the 7 in <strong>76,432</strong>?<br>The 7 is in the ten-thousands place → worth <strong>70,000</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏝️ Captain Parker's Log:</strong> Miscount by one digit and you ration too much (or too little). Place value = survival.</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
-          const places=[1000,100,10,1];
-          const names=["thousands","hundreds","tens","ones"];
-          const n=rand(1000,9999);
-          const idx=rand(0,3);
+          const places=[10000,1000,100,10,1];
+          const names=["ten-thousands","thousands","hundreds","tens","ones"];
+          const n=rand(10000,99999);
+          const idx=rand(0,4);
           const d=Number(String(n)[idx]);
           if (d===0) return LESSONS[0].gen(slot);
           if (String(n).split('').filter(x=>Number(x)===d).length !== 1) return LESSONS[0].gen(slot);
           const correct=d*places[idx];
-          const opts=[d, d*10, d*100, d*1000];
-          return mcQ(`What is the <strong>value</strong> of the ${d} in ${fmt(n)}?`, opts, correct, `The ${d} is in the ${names[idx]} place — worth ${fmt(correct)}.`);
+          const opts=[d, d*10, d*100, d*1000, d*10000].filter(v=>v>0);
+          return mcQ(`What is the <strong>value</strong> of the ${d} in ${fmt(n)}?`, opts.slice(0,4), correct, `The ${d} is in the ${names[idx]} place → worth ${fmt(correct)}.`);
         }
         case 1: {
-          const places=[1,10,100,1000];
-          const names=["ones","tens","hundreds","thousands"];
-          const n=rand(1000,9999);
-          const idx=rand(0,3);
+          const places=[1,10,100,1000,10000];
+          const names=["ones","tens","hundreds","thousands","ten-thousands"];
+          const n=rand(10000,99999);
+          const idx=rand(0,4);
           const d=Number(String(n).split('').reverse()[idx]);
           if (d===0) return LESSONS[0].gen(slot);
-          // Make sure the digit appears only ONCE in the number — otherwise the question has multiple correct answers
           if (String(n).split('').filter(x=>Number(x)===d).length !== 1) return LESSONS[0].gen(slot);
-          return mcQ(`What place is the <strong>${d}</strong> in for ${fmt(n)}?`, names.slice(0,4), names[idx], `Counting from the right: ones, tens, hundreds, thousands.`);
+          return mcQ(`What PLACE is the ${d} in for ${fmt(n)}?`, names, names[idx], `Count from the right: ones, tens, hundreds, thousands, ten-thousands.`);
         }
         case 2: {
-          const a=rand(1000,9999), b=rand(1000,9999);
+          const a=rand(10000,99999), b=rand(10000,99999);
           if (a===b) return LESSONS[0].gen(slot);
           const bigger=Math.max(a,b);
           return mcQ(`Which is GREATER: <strong>${fmt(a)}</strong> or <strong>${fmt(b)}</strong>?`, [fmt(a), fmt(b), "Equal"], fmt(bigger), `Compare digits from the left.`);
         }
         case 3: {
-          const t=rand(1,9), h=rand(1,9), te=rand(0,9), o=rand(0,9);
-          const n = t*1000 + h*100 + te*10 + o;
-          const onesWord=["","one","two","three","four","five","six","seven","eight","nine"];
-          const teensWord=["ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
-          const tensWord=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
-          let teOnesWord;
-          if (te === 0 && o === 0) teOnesWord = "";
-          else if (te === 0) teOnesWord = onesWord[o];
-          else if (te === 1) teOnesWord = teensWord[o];
-          else if (o === 0) teOnesWord = tensWord[te];
-          else teOnesWord = tensWord[te] + "-" + onesWord[o];
-          const wordForm = `${t} thousand, ${h} hundred${teOnesWord ? " " + teOnesWord : ""}`;
-          return mcQ(`Write this in standard form: <strong>${wordForm}</strong>`, [fmt(n), fmt(n+10), fmt(n-100), fmt(n*10)], fmt(n), `${t} thousand = ${t*1000}, plus ${h*100}, plus ${te*10}, plus ${o}.`);
+          const tt=rand(1,9), t=rand(1,9), h=rand(1,9), te=rand(1,9), o=rand(1,9);
+          const n = tt*10000 + t*1000 + h*100 + te*10 + o;
+          return mcQ(`What number equals <strong>${tt*10000} + ${t*1000} + ${h*100} + ${te*10} + ${o}</strong>?`, [fmt(n), fmt(n+1), fmt(n+10), fmt(n+100)], fmt(n), `Add: ${tt*10000} + ${t*1000} + ${h*100} + ${te*10} + ${o} = ${fmt(n)}.`);
         }
         case 4: {
-          // Expanded form → standard form
-          const t=rand(1,9), h=rand(1,9), te=rand(1,9), o=rand(1,9);
-          const n = t*1000 + h*100 + te*10 + o;
-          return mcQ(`What number equals <strong>${t*1000} + ${h*100} + ${te*10} + ${o}</strong>?`, [fmt(n), fmt(n+1), fmt(n+10), fmt(n+100)], fmt(n), `Add: ${t*1000} + ${h*100} + ${te*10} + ${o} = ${fmt(n)}.`);
+          const a=rand(10000,99999), b=rand(10000,99999);
+          if (a===b) return LESSONS[0].gen(slot);
+          const symbol = a > b ? ">" : "<";
+          return mcQ(`Fill in the symbol: ${fmt(a)} ___ ${fmt(b)}`, ["<", ">", "="], symbol, `Compare digits left to right.`);
         }
       }
     }
   },
-  { week:1, day:2, theme:"ocean", icon:"🌊", title:"Reading the Tide",
-    tag:"WEEK 1 · DAY 2 · LOST ISLAND", skill:"Rounding to nearest 10 and 100",
+  { week:1, day:2, theme:"ocean", icon:"🌊", title:"Rounding Numbers",
+    tag:"WEEK 1 · TUESDAY · LOST ISLAND", skill:"Round to the nearest 10, 100, 1,000, and 10,000",
     supply:{icon:"⭐",name:"Star Chart"}, badge:"Navigator",
-    story:"🌊 The tide moves in and out. To cross the rocks safely, you need to read the tide — and <em>round</em> the numbers in your head fast.",
-    teach:`<div class="teach-step"><strong>Rounding helps you estimate.</strong> Find the place you're rounding to, then look at the digit just to the RIGHT. If it's 5 or more, round UP. If it's 4 or less, round DOWN.</div><div class="teach-step green"><strong>Example — round 47 to the nearest 10:</strong><br>• The tens digit is 4.<br>• Look right: that's a 7 (5 or more!) → round UP.<br>• Answer: <strong>50</strong>.</div><div class="teach-step gold"><strong>Example — round 384 to the nearest 100:</strong><br>• The hundreds digit is 3.<br>• Look right: 8 (5 or more!) → round UP.<br>• Answer: <strong>400</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Tip:</strong> Underline the digit you're rounding TO. Look ONLY at the one to its right.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🌊 Explorer's Connection:</strong> The tide is 47 cm. Round to the nearest 10? That's 50 cm — easy to remember!</div>`,
+    story:"🌊 The tide rises and falls all day. The crew needs to <em>round</em> the readings fast to decide when to cross.",
+    teach:`<div class="teach-step"><strong>The 4 / 5 rule.</strong> Find the place you're rounding to. Look at the digit just to the RIGHT.<br>• 5 or more → round UP<br>• 4 or less → round DOWN</div><div class="teach-step green"><strong>Example — round 47 to nearest 10:</strong> Tens digit is 4. Look right: 7 (≥5) → round UP → <strong>50</strong>.</div><div class="teach-step gold"><strong>Example — round 4,632 to nearest 1,000:</strong> Thousands digit is 4. Look right: 6 (≥5) → round UP → <strong>5,000</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Tip:</strong> Underline the rounding digit. Look only at the digit to its right. Ignore the rest.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🌊 Captain Parker's Log:</strong> Tide is 3,672 mm? Round to the nearest 1,000 → 4,000. Too high. WAIT.</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
           const n=rand(11,99);
           const lo=Math.floor(n/10)*10;
           const correct = (n%10 >= 5) ? lo+10 : lo;
-          return mcQ(`Round ${n} to the nearest <strong>10</strong>.`, [lo, lo+10, lo+20, Math.max(0,lo-10)], correct, `Look at the ones digit. ${n%10>=5?"5 or more → round up":"4 or less → round down"}.`);
+          return mcQ(`Round ${n} to the nearest <strong>10</strong>.`, [correct, correct-10, correct+10, correct+20], correct, `Ones digit ${n%10>=5?"≥5 → round up":"<5 → round down"}.`);
         }
         case 1: {
           const n=rand(101,999);
           const lo=Math.floor(n/100)*100;
           const correct = (n%100 >= 50) ? lo+100 : lo;
-          return mcQ(`Round ${n} to the nearest <strong>100</strong>.`, [lo, lo+100, Math.max(0,lo-100), lo+50], correct, `Look at the tens digit. ${(n%100)>=50?"5 or more → round up":"4 or less → round down"}.`);
+          return mcQ(`Round ${n} to the nearest <strong>100</strong>.`, [correct, correct-100, correct+100, correct+200], correct, `Look at the tens digit.`);
         }
         case 2: {
-          const n=rand(101,999);
-          const lo10=Math.floor(n/10)*10;
-          const correct = (n%10 >= 5) ? lo10+10 : lo10;
-          return mcQ(`Round ${n} to the nearest <strong>10</strong>.`, [correct, correct-10, correct+10, correct+20], correct, `Look at the ones digit.`);
-        }
-        case 3: {
           const n=rand(1001,9999);
-          const lo=Math.floor(n/100)*100;
-          const correct = (n%100 >= 50) ? lo+100 : lo;
-          return mcQ(`Round ${fmt(n)} to the nearest <strong>100</strong>.`, [fmt(correct), fmt(correct-100), fmt(correct+100), fmt(correct+200)], fmt(correct), `Look at the tens digit.`);
+          const lo=Math.floor(n/1000)*1000;
+          const correct = (n%1000 >= 500) ? lo+1000 : lo;
+          return mcQ(`Round ${fmt(n)} to the nearest <strong>1,000</strong>.`, [fmt(correct), fmt(correct-1000), fmt(correct+1000), fmt(correct+2000)], fmt(correct), `Look at the hundreds digit.`);
+        }
+        case 3: {
+          const n=rand(10001,99999);
+          const lo=Math.floor(n/10000)*10000;
+          const correct = (n%10000 >= 5000) ? lo+10000 : lo;
+          return mcQ(`Round ${fmt(n)} to the nearest <strong>10,000</strong>.`, [fmt(correct), fmt(correct-10000), fmt(correct+10000), fmt(correct+20000)], fmt(correct), `Look at the thousands digit.`);
         }
         case 4: {
-          const target=choose([10,100]);
-          const n = (target===10) ? rand(11,99) : rand(101,999);
-          const div=target;
-          const lo=Math.floor(n/div)*div;
-          const halfDiv = div/2;
-          const correct = (n%div >= halfDiv) ? lo+div : lo;
-          return mcQ(`Round ${n} to the nearest <strong>${target}</strong>.`, [correct, correct-div, correct+div, n], correct, `Underline the ${target===10?"tens":"hundreds"} place; check the digit right of it.`);
+          const target=choose([10,100,1000]);
+          const n = (target===10) ? rand(11,99) : (target===100 ? rand(101,999) : rand(1001,9999));
+          const lo=Math.floor(n/target)*target;
+          const half=target/2;
+          const correct = (n%target >= half) ? lo+target : lo;
+          return mcQ(`Round ${fmt(n)} to the nearest <strong>${fmt(target)}</strong>.`, [correct, correct-target, correct+target, n].map(fmt), fmt(correct), `Underline the ${target===10?"tens":target===100?"hundreds":"thousands"} place; check the digit right of it.`);
         }
       }
     }
   },
-  { week:1, day:3, theme:"ocean", icon:"🪵", title:"Building the Shelter",
-    tag:"WEEK 1 · DAY 3 · LOST ISLAND", skill:"Addition and subtraction with regrouping",
+  { week:1, day:3, theme:"ocean", icon:"🪵", title:"Multi-Digit Addition",
+    tag:"WEEK 1 · WEDNESDAY · LOST ISLAND", skill:"Add multi-digit numbers (up to 6 digits) with regrouping",
     supply:{icon:"🪵",name:"Sturdy Logs"}, badge:"Builder",
-    story:"🪵 Night is coming. You need to build a shelter strong enough to survive. Add up the logs you have. Subtract the ones you need to chop down.",
-    teach:`<div class="teach-step"><strong>Line up the digits</strong> by place. Ones under ones, tens under tens, hundreds under hundreds.</div><div class="teach-step green"><strong>Adding with regrouping:</strong> When a column adds up to 10 or more, "carry" 1 to the next column.<br>Example: 348 + 567 = ?<br>8 + 7 = 15 → write 5, carry 1<br>1 + 4 + 6 = 11 → write 1, carry 1<br>1 + 3 + 5 = 9 → Answer: <strong>915</strong></div><div class="teach-step gold"><strong>Subtracting with regrouping:</strong> If you can't subtract, "borrow" 10 from the next column.<br>Example: 405 − 187 = ?<br>5 − 7? Can't! Borrow 10 → 15 − 7 = 8<br>9 − 8 = 1<br>3 − 1 = 2 → Answer: <strong>218</strong></div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Check your work:</strong> Adding the answer back should give you the original.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🪵 Explorer's Connection:</strong> You have 142 logs and need 348. How many more? 348 − 142 = 206 more!</div>`,
+    story:"🪵 The crew counts up logs, fish, ropes, coconuts. <em>Addition</em> totals every count — line up the digits, carry when needed.",
+    teach:`<div class="teach-step"><strong>Line up the digits.</strong> Ones under ones, tens under tens, hundreds under hundreds.</div><div class="teach-step green"><strong>Regroup ("carry") when a column hits 10+:</strong><br>&nbsp;&nbsp;&nbsp;348<br>+ 567<br>—————<br>&nbsp;&nbsp;&nbsp;915<br>8 + 7 = 15 → write 5, carry 1.<br>1 + 4 + 6 = 11 → write 1, carry 1.<br>1 + 3 + 5 = 9.</div><div class="teach-step gold"><strong>Same rule works for ANY size:</strong> 4-digit, 5-digit, 6-digit. Just line up and add column by column.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Check:</strong> Estimate first by rounding. 348 + 567 ≈ 350 + 600 = 950. Actual 915 — close enough!</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏝️ Captain Parker's Log:</strong> Add the day's catch: 1,247 + 953 + 488 + 312 = 3,000 — easy when you line them up.</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
-          const a=rand(100,500), b=rand(100,500);
-          return numQ(`${fmt(a)} + ${fmt(b)} = ?`, a+b, `Line up the digits and add column by column.`);
+          const a=rand(100,999), b=rand(100,999);
+          return numQ(`${fmt(a)} + ${fmt(b)} = ?`, a+b, `Line up the digits; carry when a column ≥ 10.`);
         }
         case 1: {
-          const a=rand(500,999), b=rand(100,499);
-          return numQ(`${fmt(a)} − ${fmt(b)} = ?`, a-b, `Line up the digits and subtract.`);
+          const a=rand(1000,9999), b=rand(1000,9999);
+          return numQ(`${fmt(a)} + ${fmt(b)} = ?`, a+b, `Line up the digits.`);
         }
         case 2: {
-          const a=rand(100,400), b=rand(100,400), c=rand(50,200);
-          return numQ(`${fmt(a)} + ${fmt(b)} + ${fmt(c)} = ?`, a+b+c, `Add them all up.`);
+          const a=rand(10000,99999), b=rand(10000,99999);
+          return numQ(`${fmt(a)} + ${fmt(b)} = ?`, a+b, `Line up the digits.`);
         }
         case 3: {
-          const have=rand(100,400), need=have+rand(50,400);
-          return numQ(`You have ${have} logs. You need ${need}. How many MORE logs do you need?`, need-have, `Subtract: ${need} − ${have}.`);
+          const have=rand(1000,4000), more=rand(1000,4000);
+          return numQ(`The crew has ${fmt(have)} fish. They catch ${fmt(more)} more. Total?`, have+more, `${fmt(have)} + ${fmt(more)}.`);
         }
         case 4: {
-          const start=rand(500,900), used=rand(100,400);
-          return numQ(`You start with ${start} coconuts. You eat ${used}. How many are left?`, start-used, `${start} − ${used}.`);
+          const a=rand(100,500), b=rand(100,500), c=rand(100,500);
+          return numQ(`${fmt(a)} + ${fmt(b)} + ${fmt(c)} = ?`, a+b+c, `Add all three.`);
         }
       }
     }
   },
-  { week:1, day:4, theme:"ocean", icon:"🦀", title:"Crab Catch Multiplication",
-    tag:"WEEK 1 · DAY 4 · LOST ISLAND", skill:"Multiplication facts to 10 × 10",
-    supply:{icon:"🦀",name:"Crab Trap"}, badge:"Trapper",
-    story:"🦀 The tidal pools are full of crabs. Each trap catches the same number, every time. <em>Multiplication</em> tells you how many you catch total.",
-    teach:`<div class="teach-step"><strong>Multiplication is fast adding.</strong> 4 × 6 means "4 groups of 6" — or 6 + 6 + 6 + 6 = 24.</div><div class="teach-step green"><strong>The big trick:</strong> Memorize times tables from 1 × 1 up to 10 × 10. They're the building blocks of all bigger multiplications.</div><div class="teach-step gold"><strong>Order doesn't matter.</strong> 3 × 8 = 8 × 3 = 24. Pick whichever way feels easier.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> You have 5 crab traps. Each catches 7 crabs.<br>Total: 5 × 7 = <strong>35 crabs</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🦀 Explorer's Connection:</strong> Multiplication helps you PREDICT. Know how many crabs PER trap, and you can plan how many traps to set.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const a=rand(2,9), b=rand(2,9);
-          return numQ(`${a} × ${b} = ?`, a*b, `${a} groups of ${b}.`);
-        }
-        case 1: {
-          const a=rand(3,10), b=rand(3,10);
-          return numQ(`${a} × ${b} = ?`, a*b, `Use the multiplication table.`);
-        }
-        case 2: {
-          const traps=rand(2,9), crabs=rand(3,9);
-          return numQ(`You set ${traps} traps. Each catches ${crabs} crabs. How many crabs total?`, traps*crabs, `Multiply: ${traps} × ${crabs}.`);
-        }
-        case 3: {
-          const a=rand(2,9), b=rand(2,9);
-          return mcQ(`Which equals ${a*b}?`, [`${a} × ${b}`, `${a} + ${b}`, `${a*b+1}`, `${a*b-1}`], `${a} × ${b}`, `${a} × ${b} = ${a*b}.`);
-        }
-        case 4: {
-          const product=choose([12,18,24,30,36,42,48,54,56,63,72,81]);
-          const pairs={12:["3×4","2×6"],18:["3×6","2×9"],24:["3×8","4×6"],30:["5×6","3×10"],36:["6×6","4×9"],42:["6×7","3×14"],48:["6×8","4×12"],54:["6×9","9×6"],56:["7×8","8×7"],63:["7×9","9×7"],72:["8×9","9×8"],81:["9×9","3×27"]};
-          const correct = pairs[product][0];
-          const others = [`${product+1}/2`, `${product+5}/2`, `${product-1}`];
-          return mcQ(`Which multiplication equals <strong>${product}</strong>?`, [correct, ...others], correct, `Think: what numbers multiply to ${product}?`);
-        }
-      }
-    }
-  },
-  { week:1, day:5, theme:"ocean", icon:"⚔", title:"The Compass Quest",
-    tag:"WEEK 1 · DAY 5 · BOSS CHALLENGE", skill:"BOSS — All Week 1 skills",
+  { week:1, day:4, theme:"ocean", icon:"⚔", title:"Multi-Digit Subtraction + Week 1 Quiz",
+    tag:"WEEK 1 · THURSDAY · LOST ISLAND", skill:"Subtract multi-digit numbers with regrouping &middot; Week 1 review",
     supply:{icon:"🧭",name:"Compass"}, badge:"Captain",
-    story:"⚔ Final challenge. To find the legendary compass and escape the island, use everything you learned this week.",
-    teach:`<div class="teach-step"><strong>This is BOSS DAY.</strong> Mix of place value, rounding, adding, subtracting, and multiplying. Take your time on each problem and use what you know!</div><div class="teach-step green"><strong>Strategy:</strong> Read each question twice. Find the math hiding inside. Then solve.</div><div class="teach-step gold"><strong>You've got this.</strong> Each skill is one you've already practiced.</div>`,
+    story:"⚔ Last day before the holiday! The crew rations supplies and faces a final Week 1 challenge — every skill they've learned this week, mixed together.",
+    teach:`<div class="teach-step"><strong>Subtraction with regrouping.</strong> When you can't subtract a column, "borrow" 10 from the next column.<br>&nbsp;&nbsp;&nbsp;405<br>− 187<br>—————<br>&nbsp;&nbsp;&nbsp;218<br>5 − 7? Borrow → 15 − 7 = 8. Now 9 − 8 = 1. Then 3 − 1 = 2.</div><div class="teach-step green"><strong>Borrow across zeros.</strong> 2,000 − 348? The zeros need help! Borrow chain: 2,000 → 1,9,9,10. Then subtract.</div><div class="teach-step gold"><strong>Check your work.</strong> Add the answer back. 218 + 187 = 405 ✓ matches!</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Week 1 Quiz:</strong> This lesson mixes place value, rounding, addition, AND subtraction — your full Week 1 toolbox.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏝️ Friday is a holiday. Enjoy your break!</strong> Captain Parker says: "Rest well, explorers. We sail at dawn on Monday."</div>`,
     gen: (slot) => {
       switch(slot) {
-        case 0: return LESSONS[0].gen(0); // place value
-        case 1: return LESSONS[1].gen(1); // rounding
-        case 2: return LESSONS[2].gen(0); // addition
-        case 3: return LESSONS[3].gen(0); // multiplication
+        case 0: {
+          const a=rand(500,999), b=rand(100,499);
+          return numQ(`${fmt(a)} − ${fmt(b)} = ?`, a-b, `Line up; borrow if needed.`);
+        }
+        case 1: {
+          const a=rand(5000,9999), b=rand(1000,4999);
+          return numQ(`${fmt(a)} − ${fmt(b)} = ?`, a-b, `Subtract column by column.`);
+        }
+        case 2: {
+          const a=rand(2000,9000), b=rand(100,1500);
+          return numQ(`${fmt(a)} − ${fmt(b)} = ?`, a-b, `Borrow across the columns.`);
+        }
+        case 3: {
+          // Week 1 mix — random skill review
+          return LESSONS[0].gen(0);
+        }
         case 4: {
-          const traps=rand(3,8), crabs=rand(4,9);
-          const total = traps*crabs;
-          const rounded = Math.round(total/10)*10;
-          return numQ(`${traps} traps × ${crabs} crabs each = how many crabs total?`, total, `Multiply: ${traps} × ${crabs}.`);
+          // Mix from rounding
+          return LESSONS[1].gen(2);
         }
       }
     }
   },
-  { week:2, day:1, theme:"temple", icon:"🏛️", title:"Discovering the Stones",
-    tag:"WEEK 2 · DAY 1 · TEMPLE OF FRACTIONS", skill:"Identifying simple fractions",
-    supply:{icon:"📜",name:"Sacred Scroll"}, badge:"Scribe",
-    story:"🏛️ Inside the temple, stones are carved with fractions. To open the first door, you must <em>name</em> each fraction correctly.",
-    teach:`<div class="teach-step"><strong>A fraction has two parts.</strong> The TOP number (numerator) tells how many pieces you have. The BOTTOM number (denominator) tells how many pieces the WHOLE is split into.</div><div class="teach-step green"><strong>Example:</strong> 3/4 means "3 pieces out of 4 total." Like 3 slices of a 4-slice pizza.</div><div class="teach-step gold"><strong>Common fractions to know:</strong> halves (1/2), thirds (1/3, 2/3), fourths (1/4, 2/4, 3/4), sixths, eighths.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A cake is cut into 8 equal slices. You eat 3. What fraction did you eat? <strong>3/8</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏛️ Explorer's Connection:</strong> The stones glow when you read them right. "Three out of eight" lights up the 3/8 stone!</div>`,
+  { week:2, day:1, theme:"market", icon:"🏪", title:"Multiplication Review &amp; Place Value Patterns",
+    tag:"WEEK 2 · MONDAY · MULTIPLICATION MARKETPLACE", skill:"Multiplication facts + patterns when multiplying by 10s",
+    supply:{icon:"🪙",name:"Trader's Pouch"}, badge:"Trader",
+    story:"🏪 Captain Parker leads the crew into the Multiplication Marketplace — where everything is sold in groups, batches, and rows.",
+    teach:`<div class="teach-step"><strong>Multiplication = fast adding.</strong> 4 × 6 means "4 groups of 6" → 6+6+6+6 = 24.</div><div class="teach-step green"><strong>Order doesn't matter.</strong> 3 × 8 = 8 × 3 = 24.</div><div class="teach-step gold"><strong>Place value patterns:</strong><br>• 3 × 10 = 30 (one zero added)<br>• 3 × 100 = 300 (two zeros)<br>• 3 × 1,000 = 3,000 (three zeros)<br>The rule: count the zeros in the 10/100/1000, then add that many zeros after the first number.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 7 × 80 = 7 × 8 × 10 = 56 × 10 = <strong>560</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏪 Marketplace tip:</strong> If 6 sacks each hold 50 coins, you have 6 × 50 = 300 coins.</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
-          const d=choose([2,3,4,5,6,8]);
-          const n=rand(1, d-1);
-          return mcQ(`A shape is split into <strong>${d}</strong> equal parts. <strong>${n}</strong> of them are colored. What fraction is colored?`, [`${n}/${d}`,`${d}/${n}`,`${n}/${n+d}`,`${d-n}/${d}`], `${n}/${d}`, `The TOP is how many colored. The BOTTOM is the total parts.`);
+          const a=rand(2,9), b=rand(2,9);
+          return numQ(`${a} × ${b} = ?`, a*b, `Times table fact.`);
         }
         case 1: {
-          const d=choose([2,3,4,5,6,8]);
+          const a=rand(2,9);
+          return numQ(`${a} × 10 = ?`, a*10, `Multiply by 10 → add a zero.`);
+        }
+        case 2: {
+          const a=rand(2,9);
+          return numQ(`${a} × 100 = ?`, a*100, `Multiply by 100 → add two zeros.`);
+        }
+        case 3: {
+          const a=rand(2,9), b=rand(2,9);
+          return numQ(`${a} × ${b*10} = ?`, a*b*10, `${a} × ${b} = ${a*b}, then × 10.`);
+        }
+        case 4: {
+          const groups=rand(3,8), each=rand(20,90);
+          if (each % 10 !== 0) return LESSONS[5].gen(slot);
+          return numQ(`${groups} sacks, each with ${each} coins. Total coins?`, groups*each, `${groups} × ${each}.`);
+        }
+      }
+    }
+  },
+  { week:2, day:2, theme:"market", icon:"📐", title:"Multi-Digit Multiplication (1-Digit Multiplier)",
+    tag:"WEEK 2 · TUESDAY · MULTIPLICATION MARKETPLACE", skill:"Multiply 2-, 3-, and 4-digit numbers by a 1-digit number",
+    supply:{icon:"📐",name:"Area Tile"}, badge:"Stall Owner",
+    story:"📐 The market sells coconut sacks in big stalls. To know the total in each stall, multiply <em>row by row</em>.",
+    teach:`<div class="teach-step"><strong>Area model (box method):</strong> Break the big number apart by place value.<br>For 24 × 6: split 24 into 20 + 4.<br>20 × 6 = 120<br>4 × 6 = 24<br>Total: 120 + 24 = <strong>144</strong>.</div><div class="teach-step green"><strong>Standard algorithm:</strong> Stack and multiply column by column, regrouping when needed.<br>&nbsp;&nbsp;&nbsp;347<br>×&nbsp;&nbsp;&nbsp;&nbsp;6<br>—————<br>&nbsp;2,082</div><div class="teach-step gold"><strong>Either method works!</strong> Use whichever you understand best.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 124 × 5 = (100 × 5) + (20 × 5) + (4 × 5) = 500 + 100 + 20 = <strong>620</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏪 Marketplace tip:</strong> 7 stalls × 84 coconuts each = 7 × 84 = 588 coconuts total.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const a=rand(11,99), b=rand(2,9);
+          return numQ(`${a} × ${b} = ?`, a*b, `Use the box method: split ${a} into tens + ones.`);
+        }
+        case 1: {
+          const a=rand(11,99), b=rand(2,9);
+          return numQ(`${a} × ${b} = ?`, a*b, `Multiply ones, then tens, then add.`);
+        }
+        case 2: {
+          const a=rand(100,499), b=rand(2,7);
+          return numQ(`${a} × ${b} = ?`, a*b, `Standard algorithm. Watch for regrouping.`);
+        }
+        case 3: {
+          const stalls=rand(3,9), each=rand(11,99);
+          return numQ(`${stalls} stalls. Each has ${each} coconuts. Total?`, stalls*each, `${stalls} × ${each}.`);
+        }
+        case 4: {
+          const a=rand(100,400), b=rand(3,7);
+          return numQ(`${a} × ${b} = ?`, a*b, `Break ${a} into hundreds, tens, ones.`);
+        }
+      }
+    }
+  },
+  { week:2, day:3, theme:"market", icon:"📊", title:"Multi-Digit Multiplication (2-Digit Multiplier)",
+    tag:"WEEK 2 · WEDNESDAY · MULTIPLICATION MARKETPLACE", skill:"Multiply 2-digit × 2-digit using partial products",
+    supply:{icon:"📊",name:"Grid Mat"}, badge:"Master Trader",
+    story:"📊 Bigger orders today! 23 stalls × 45 sacks each. Use the <em>grid method</em> to keep every part straight.",
+    teach:`<div class="teach-step"><strong>Grid method for 23 × 45:</strong><br>Split: 23 = 20 + 3; 45 = 40 + 5.<br>Make a 2×2 box:<br>&bull; 20 × 40 = 800<br>&bull; 20 × 5 = 100<br>&bull; 3 × 40 = 120<br>&bull; 3 × 5 = 15<br>Sum: 800 + 100 + 120 + 15 = <strong>1,035</strong>.</div><div class="teach-step green"><strong>Standard algorithm:</strong> Multiply by the ones, then by the tens (with a zero in the ones spot), then add.</div><div class="teach-step gold"><strong>Always check by estimating:</strong> 23 × 45 ≈ 20 × 50 = 1,000. Actual 1,035 — close!</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 18 × 27. Estimate: 20 × 30 = 600. Calculate: (10×27) + (8×27) = 270 + 216 = <strong>486</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏪 Marketplace tip:</strong> Wrong by a place? Recheck where the zeros go.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const a=rand(11,29), b=rand(11,29);
+          return numQ(`${a} × ${b} = ?`, a*b, `Grid method: split into tens + ones.`);
+        }
+        case 1: {
+          const a=rand(20,49), b=rand(11,29);
+          return numQ(`${a} × ${b} = ?`, a*b, `(${a}×ones) + (${a}×tens).`);
+        }
+        case 2: {
+          const a=rand(15,40), b=rand(15,40);
+          return numQ(`${a} × ${b} = ?`, a*b, `Make a 2×2 grid. Sum the 4 parts.`);
+        }
+        case 3: {
+          const stalls=rand(12,25), each=rand(15,30);
+          return numQ(`${stalls} stalls × ${each} items each = ? total`, stalls*each, `${stalls} × ${each}.`);
+        }
+        case 4: {
+          const a=rand(11,30), b=rand(11,30);
+          const opts=[a*b, a+b, a*b+10, a*b-10];
+          return mcQ(`${a} × ${b} = ?`, opts, a*b, `Multiply, don't add!`);
+        }
+      }
+    }
+  },
+  { week:2, day:4, theme:"market", icon:"🛒", title:"Multiplication Word Problems",
+    tag:"WEEK 2 · THURSDAY · MULTIPLICATION MARKETPLACE", skill:"Use multiplication in shopping and budgeting scenarios",
+    supply:{icon:"🛒",name:"Shopping Cart"}, badge:"Shopkeeper",
+    story:"🛒 Today's mission: stock the market. Multiplication powers every shopping decision.",
+    teach:`<div class="teach-step"><strong>Find the math hidden in words.</strong> Look for clues:<br>• "<em>each</em>" + a quantity → MULTIPLY<br>• "<em>per</em>" + a quantity → MULTIPLY<br>• "<em>in total</em>" → add or multiply</div><div class="teach-step green"><strong>4-step plan:</strong><br>1. UNDERSTAND: what is asked?<br>2. PLAN: what operation(s)?<br>3. SOLVE.<br>4. CHECK: is it reasonable?</div><div class="teach-step gold"><strong>Two-step problems:</strong> Often multiply first, then add or subtract.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> Each crate has 24 coconuts. You buy 6 crates. How many coconuts?<br>6 × 24 = <strong>144 coconuts</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🛒 Shopping tip:</strong> Apples cost $3 each. You buy 8. Cost: 8 × $3 = $24.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const each=rand(3,9), groups=rand(5,12);
+          return numQ(`Each box has ${each} mangoes. You buy ${groups} boxes. Mangoes total?`, each*groups, `${groups} × ${each}.`);
+        }
+        case 1: {
+          const cost=rand(3,9), qty=rand(4,12);
+          return numQ(`A pineapple costs $${cost}. You buy ${qty}. Total cost in dollars?`, cost*qty, `$${cost} × ${qty}.`);
+        }
+        case 2: {
+          const each=rand(15,30), qty=rand(4,8);
+          return numQ(`A coconut costs ${each}¢. You buy ${qty}. Total in cents?`, each*qty, `${qty} × ${each}.`);
+        }
+        case 3: {
+          const each=rand(8,15), qty=rand(6,15);
+          return numQ(`Each crate holds ${each} fish. ${qty} crates total. How many fish?`, each*qty, `${qty} × ${each}.`);
+        }
+        case 4: {
+          const cost=rand(2,5), qty=rand(6,12), extra=rand(5,15);
+          return numQ(`${qty} mangoes at $${cost} each, plus a tip of $${extra}. Total cost in $?`, qty*cost+extra, `(${qty} × ${cost}) + ${extra}.`);
+        }
+      }
+    }
+  },
+  { week:2, day:5, theme:"market", icon:"🏆", title:"Multiplication Review &amp; Quiz",
+    tag:"WEEK 2 · FRIDAY · BOSS DAY", skill:"Week 2 quiz — all multiplication skills",
+    supply:{icon:"🏆",name:"Market Trophy"}, badge:"Market Champion",
+    story:"🏆 Market Day finale. Every multiplication skill from this week, side by side.",
+    teach:`<div class="teach-step"><strong>BOSS DAY.</strong> Times tables, 1-digit multipliers, 2-digit multipliers, word problems.</div><div class="teach-step green"><strong>Strategy:</strong> Name the type first. "Is this a fact, a multi-digit, or a word problem?" Then pick the move.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: return LESSONS[4].gen(0);
+        case 1: return LESSONS[5].gen(0);
+        case 2: return LESSONS[6].gen(0);
+        case 3: return LESSONS[7].gen(0);
+        case 4: return LESSONS[6].gen(2);
+      }
+    }
+  },
+  { week:3, day:1, theme:"cave", icon:"💎", title:"Division Concepts",
+    tag:"WEEK 3 · MONDAY · CAVE OF CALCULATIONS", skill:"Division as sharing &amp; grouping",
+    supply:{icon:"⛏️",name:"Pickaxe"}, badge:"Miner",
+    story:"💎 The crew finds a chest of treasure deep in the cave. To share fairly, you must <em>divide</em>.",
+    teach:`<div class="teach-step"><strong>Division has two meanings:</strong><br>• <strong>Sharing:</strong> 12 ÷ 3 = "share 12 among 3 friends" → 4 each.<br>• <strong>Grouping:</strong> 12 ÷ 3 = "make groups of 3 from 12" → 4 groups.</div><div class="teach-step green"><strong>Division is the OPPOSITE of multiplication.</strong> If 4 × 3 = 12, then 12 ÷ 3 = 4 AND 12 ÷ 4 = 3.</div><div class="teach-step gold"><strong>Vocabulary:</strong> In 12 ÷ 3 = 4:<br>• 12 = <em>dividend</em><br>• 3 = <em>divisor</em><br>• 4 = <em>quotient</em></div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 24 ÷ 6: think "6 × what = 24?" → 6 × 4 = 24, so 24 ÷ 6 = <strong>4</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Cave Mission:</strong> 48 gems, 8 explorers. Each gets 48 ÷ 8 = 6 gems.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const ans=rand(2,9), b=rand(2,9);
+          const a=ans*b;
+          return numQ(`${a} ÷ ${b} = ?`, ans, `Think: ${b} × ? = ${a}.`);
+        }
+        case 1: {
+          const ans=rand(2,9), b=rand(2,9);
+          const total=ans*b;
+          return numQ(`${total} gems shared by ${b} explorers. Each gets ?`, ans, `${total} ÷ ${b}.`);
+        }
+        case 2: {
+          const each=rand(3,9), groups=rand(2,9);
+          const total=each*groups;
+          return numQ(`${total} gems make groups of ${each}. How many groups?`, groups, `${total} ÷ ${each}.`);
+        }
+        case 3: {
+          const a=rand(2,9), b=rand(2,9);
+          const opts=[`${a*b} ÷ ${a} = ${b}`, `${a+b}`, `${a*b}`, `${a-b}`];
+          return mcQ(`If ${a} × ${b} = ${a*b}, then ${a*b} ÷ ${a} = ?`, opts, `${a*b} ÷ ${a} = ${b}`, `Division undoes multiplication.`);
+        }
+        case 4: {
+          const ans=rand(5,9), b=rand(4,8);
+          const a=ans*b;
+          return numQ(`${a} ÷ ${b} = ?`, ans, `Think times tables in reverse.`);
+        }
+      }
+    }
+  },
+  { week:3, day:2, theme:"cave", icon:"⚙️", title:"Long Division (1-Digit Divisor)",
+    tag:"WEEK 3 · TUESDAY · CAVE OF CALCULATIONS", skill:"Long division of multi-digit numbers by 1-digit numbers",
+    supply:{icon:"⚙️",name:"Mining Gear"}, badge:"Driller",
+    story:"⚙️ Deeper into the cave. Bigger treasures, bigger divisions. Time to learn the <em>long division</em> algorithm.",
+    teach:`<div class="teach-step"><strong>Long division steps:</strong> <em>D</em>ivide, <em>M</em>ultiply, <em>S</em>ubtract, <em>B</em>ring down, repeat.</div><div class="teach-step green"><strong>Example: 84 ÷ 4</strong><br>• 8 ÷ 4 = 2. Write 2 above the 8.<br>• 2 × 4 = 8. Subtract: 8 − 8 = 0.<br>• Bring down the 4. 4 ÷ 4 = 1.<br>• Answer: <strong>21</strong>.</div><div class="teach-step gold"><strong>Example: 132 ÷ 3</strong><br>• 1 ÷ 3? No (too small). Look at 13 ÷ 3 = 4 R 1.<br>• Write 4. Multiply 4 × 3 = 12. Subtract 13 − 12 = 1.<br>• Bring down 2 → 12. 12 ÷ 3 = 4. Done!<br>• Answer: <strong>44</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Tip:</strong> If a digit is too small, COMBINE it with the next.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Cave Mission:</strong> 168 gems ÷ 6 miners = 28 each.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const b=rand(2,5);
+          const ans=rand(11,25);
+          const a=ans*b;
+          return numQ(`${a} ÷ ${b} = ?`, ans, `Long division: divide, multiply, subtract, bring down.`);
+        }
+        case 1: {
+          const b=rand(2,8);
+          const ans=rand(20,99);
+          const a=ans*b;
+          return numQ(`${a} ÷ ${b} = ?`, ans, `Divide each digit step by step.`);
+        }
+        case 2: {
+          const b=rand(3,9);
+          const ans=rand(50,200);
+          const a=ans*b;
+          return numQ(`${fmt(a)} ÷ ${b} = ?`, ans, `Long division. Take it one place at a time.`);
+        }
+        case 3: {
+          const b=rand(2,6);
+          const ans=rand(100,300);
+          const a=ans*b;
+          return numQ(`${fmt(a)} ÷ ${b} = ?`, ans, `Divide hundreds, then tens, then ones.`);
+        }
+        case 4: {
+          const b=rand(3,7), ans=rand(15,40);
+          const total=ans*b;
+          return numQ(`A treasure of ${fmt(total)} gems split among ${b} miners. Each miner gets ?`, ans, `${total} ÷ ${b}.`);
+        }
+      }
+    }
+  },
+  { week:3, day:3, theme:"cave", icon:"🔮", title:"Division with Remainders",
+    tag:"WEEK 3 · WEDNESDAY · CAVE OF CALCULATIONS", skill:"Interpret remainders in real-world division",
+    supply:{icon:"🔮",name:"Crystal Orb"}, badge:"Interpreter",
+    story:"🔮 Sometimes treasure doesn't divide evenly. What about the leftover? That's the <em>remainder</em>.",
+    teach:`<div class="teach-step"><strong>Remainder = what's left over.</strong> 17 ÷ 5 = 3 R 2 (three groups of 5, plus 2 left over).</div><div class="teach-step green"><strong>Interpret remainders carefully:</strong><br>• <em>"How many full groups?"</em> → Use the quotient (drop the remainder).<br>• <em>"How many groups needed, even if not full?"</em> → Round UP the quotient.<br>• <em>"How many leftover?"</em> → Use the remainder.</div><div class="teach-step gold"><strong>Worked Example:</strong> 23 cookies, 4 friends. Each gets 23 ÷ 4 = 5 R 3. Each friend gets 5 cookies and 3 are left over.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Trick:</strong> Verify by multiplying. quotient × divisor + remainder = dividend. 5 × 4 + 3 = 23 ✓.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Cave Mission:</strong> 27 gems ÷ 4 miners = 6 R 3. Each gets 6, with 3 extra to put back in the chest.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const b=rand(3,7);
+          const q=rand(5,15), r=rand(1, b-1);
+          const a=q*b+r;
+          return mcQ(`${a} ÷ ${b} = ?`, [`${q} R ${r}`, `${q+1} R ${r-1}`, `${q-1} R ${r+1}`, `${q} R ${b-r}`], `${q} R ${r}`, `${b} × ${q} = ${b*q}. Add ${r} to get ${a}.`);
+        }
+        case 1: {
+          const b=rand(3,8);
+          const q=rand(10,30), r=rand(1, b-1);
+          const a=q*b+r;
+          return numQ(`What is the REMAINDER of ${a} ÷ ${b}?`, r, `${b} × ${q} = ${b*q}; ${a} − ${b*q} = ${r}.`);
+        }
+        case 2: {
+          const b=rand(3,6);
+          const q=rand(5,12), r=rand(1, b-1);
+          const a=q*b+r;
+          return numQ(`What is the QUOTIENT (whole part) of ${a} ÷ ${b}?`, q, `Largest multiple of ${b} not over ${a} is ${b*q}.`);
+        }
+        case 3: {
+          const cookies=rand(15,30), friends=rand(3,6);
+          const q=Math.floor(cookies/friends);
+          const r=cookies%friends;
+          if (r===0) return LESSONS[12].gen(slot);
+          return numQ(`${cookies} cookies shared by ${friends} friends. How many cookies does each get (full only)?`, q, `${cookies} ÷ ${friends} = ${q} R ${r}.`);
+        }
+        case 4: {
+          const items=rand(20,40), per=rand(3,6);
+          const q=Math.floor(items/per);
+          const r=items%per;
+          if (r===0) return LESSONS[12].gen(slot);
+          return numQ(`${items} apples packed in boxes of ${per}. How many apples are LEFT OVER?`, r, `${items} ÷ ${per} = ${q} R ${r}.`);
+        }
+      }
+    }
+  },
+  { week:3, day:4, theme:"cave", icon:"🟦", title:"Area of Rectangles",
+    tag:"WEEK 3 · THURSDAY · CAVE OF CALCULATIONS", skill:"Calculate area using length × width",
+    supply:{icon:"📐",name:"Measuring Rope"}, badge:"Surveyor",
+    story:"🟦 The cave has rectangular chambers. To map them, you need <em>area</em> — length times width.",
+    teach:`<div class="teach-step"><strong>Area is the SPACE INSIDE a shape.</strong> Measured in square units (cm², m², etc.).</div><div class="teach-step green"><strong>For a rectangle:</strong> Area = length × width.<br>A 5 × 3 rectangle has area 5 × 3 = <strong>15 square units</strong>.</div><div class="teach-step gold"><strong>Why × works:</strong> Imagine the rectangle filled with 1-unit squares. Length tells how many in a row, width tells how many rows. Multiply to count all squares.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A chamber is 8 m by 6 m. Area = 8 × 6 = <strong>48 m²</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Cave Mission:</strong> A treasure room is 12 m × 9 m = 108 m². Big enough for the whole crew!</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const l=rand(3,9), w=rand(3,9);
+          return numQ(`A rectangle is ${l} long, ${w} wide. Area in square units?`, l*w, `${l} × ${w}.`);
+        }
+        case 1: {
+          const s=rand(3,9);
+          return numQ(`A square has side ${s}. Area?`, s*s, `Side × side = ${s} × ${s}.`);
+        }
+        case 2: {
+          const l=rand(10,20), w=rand(3,9);
+          return numQ(`A ${l} m × ${w} m chamber. Area in m²?`, l*w, `${l} × ${w}.`);
+        }
+        case 3: {
+          const a=rand(2,10), area=rand(3,8)*a;
+          return numQ(`A rectangle has area ${area} and width ${a}. What is its length?`, area/a, `Area ÷ width = length.`);
+        }
+        case 4: {
+          const l=rand(4,12), w=rand(4,12);
+          return mcQ(`Area of ${l} × ${w}?`, [l*w, l+w, 2*(l+w), l*w+5], l*w, `Multiply.`);
+        }
+      }
+    }
+  },
+  { week:3, day:5, theme:"cave", icon:"🏛️", title:"Composite Figures &amp; Week 3 Quiz",
+    tag:"WEEK 3 · FRIDAY · BOSS DAY", skill:"Area of L-shapes &middot; Week 3 review",
+    supply:{icon:"🏛️",name:"Master Map"}, badge:"Cave Master",
+    story:"🏛️ The cave's strangest vault is L-shaped. Break it into rectangles to find the area!",
+    teach:`<div class="teach-step"><strong>Composite figure = made of more than one rectangle.</strong></div><div class="teach-step green"><strong>Strategy:</strong><br>1. DECOMPOSE: draw lines to split into rectangles.<br>2. Find each area.<br>3. ADD them up.</div><div class="teach-step gold"><strong>Worked Example:</strong> An L-shape: one 6×4 part + one 3×2 part.<br>Areas: 24 + 6 = <strong>30 square units</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 BOSS DAY:</strong> Mix of division, remainders, area, and composite figures.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const a=rand(3,8), b=rand(3,8), c=rand(2,5), d=rand(2,5);
+          return numQ(`An L-shape splits into a ${a}×${b} rectangle plus a ${c}×${d} rectangle. Total area?`, a*b + c*d, `${a*b} + ${c*d}.`);
+        }
+        case 1: return LESSONS[9].gen(0);
+        case 2: return LESSONS[10].gen(0);
+        case 3: return LESSONS[11].gen(0);
+        case 4: return LESSONS[12].gen(0);
+      }
+    }
+  },
+  { week:4, day:1, theme:"temple", icon:"🏛️", title:"Fraction Concepts Review",
+    tag:"WEEK 4 · MONDAY · TEMPLE OF FRACTIONS", skill:"Identify numerator/denominator; compare basic fractions",
+    supply:{icon:"📜",name:"Sacred Scroll"}, badge:"Scribe",
+    story:"🏛️ The temple's stones are carved with fractions. To enter, you must read every fraction correctly.",
+    teach:`<div class="teach-step"><strong>Top &amp; bottom:</strong><br>• <em>Numerator</em> (TOP) = how many pieces you have.<br>• <em>Denominator</em> (BOTTOM) = how many pieces the whole is split into.</div><div class="teach-step green"><strong>Example:</strong> 3/4 = "3 of 4 equal pieces" — like 3 slices of a 4-slice pizza.</div><div class="teach-step gold"><strong>Compare fractions with same bottom:</strong> bigger top wins. 5/8 > 3/8.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A pie has 6 slices. Eaten 4. Fraction eaten = <strong>4/6</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏛️ Temple Mission:</strong> Read each stone correctly to glow it!</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const d=choose([4,5,6,8]);
           const n=rand(1, d-1);
-          return mcQ(`In the fraction <strong>${n}/${d}</strong>, what does the BOTTOM number (${d}) mean?`, ["Total equal parts in the whole", "How many parts you have", "How many you took away", "The size of one part"], "Total equal parts in the whole", "The denominator (bottom) = total parts.");
+          return mcQ(`A shape has <strong>${d}</strong> equal parts. <strong>${n}</strong> are colored. Fraction colored?`, [`${n}/${d}`,`${d}/${n}`,`${d-n}/${d}`,`${n}/${n+d}`], `${n}/${d}`, `Top = colored. Bottom = total parts.`);
+        }
+        case 1: {
+          const d=choose([4,5,6,8]);
+          const n=rand(1, d-1);
+          return numQ(`In ${n}/${d}, what is the DENOMINATOR (bottom)?`, d, `Bottom = total pieces.`);
         }
         case 2: {
           const d=choose([4,6,8,10]);
-          const n=rand(1, d-1);
-          return numQ(`In ${n}/${d}, what is the numerator (top number)?`, n, `The top is the numerator.`);
+          const a=rand(1, d-1), b=rand(1, d-1);
+          if (a===b) return LESSONS[15].gen(slot);
+          const bigger = a>b ? `${a}/${d}` : `${b}/${d}`;
+          return mcQ(`Which is GREATER: ${a}/${d} or ${b}/${d}?`, [`${a}/${d}`,`${b}/${d}`,"Equal"], bigger, `Same bottom — bigger top wins.`);
         }
         case 3: {
-          const d=choose([3,4,5,6,8]);
-          const total=d;
-          const eaten=rand(1, d-1);
-          return mcQ(`A pizza has <strong>${total}</strong> slices. You eat <strong>${eaten}</strong>. What fraction did you eat?`, [`${eaten}/${total}`,`${total}/${eaten}`,`${eaten}/${eaten+1}`,`${total-eaten}/${total}`], `${eaten}/${total}`, `${eaten} out of ${total} = ${eaten}/${total}.`);
+          const total=choose([6,8,10,12]), eaten=rand(2, total-1);
+          return mcQ(`A pizza has ${total} slices. You eat ${eaten}. Fraction eaten?`, [`${eaten}/${total}`,`${total}/${eaten}`,`${total-eaten}/${total}`,`${eaten}/${eaten+1}`], `${eaten}/${total}`, `Eaten ÷ total.`);
         }
         case 4: {
-          const d=choose([2,4,6,8]);
-          const half=d/2;
-          return mcQ(`Which fraction equals <strong>one-half</strong> (1/2)?`, [`${half}/${d}`,`${half+1}/${d}`,`1/${d}`,`${d}/${half}`], `${half}/${d}`, `Half means TOP is half of BOTTOM.`);
+          const d=choose([4,5,6,8]);
+          const a=rand(1, d-1), b=rand(1, d-1);
+          if (a===b) return LESSONS[15].gen(slot);
+          const symbol = a>b ? ">" : "<";
+          return mcQ(`Fill in: ${a}/${d} ___ ${b}/${d}`, ["<", ">", "="], symbol, `Same bottom — compare tops.`);
         }
       }
     }
   },
-  { week:2, day:2, theme:"temple", icon:"🪞", title:"Hall of Mirrors — Equivalent Stones",
-    tag:"WEEK 2 · DAY 2 · TEMPLE OF FRACTIONS", skill:"Simple equivalent fractions",
+  { week:4, day:2, theme:"temple", icon:"🪞", title:"Equivalent Fractions",
+    tag:"WEEK 4 · TUESDAY · TEMPLE OF FRACTIONS", skill:"Generate equivalent fractions by multiplying or dividing",
     supply:{icon:"🪞",name:"Magic Mirror"}, badge:"Mirror Reader",
-    story:"🪞 The Hall of Mirrors shows the same fraction in different ways. Match them up to reveal the path forward.",
-    teach:`<div class="teach-step"><strong>Equivalent fractions look different but ARE the same.</strong> 1/2 = 2/4 = 3/6 = 4/8. Different numbers, same amount!</div><div class="teach-step green"><strong>The rule:</strong> Multiply (or divide) the TOP and the BOTTOM by the SAME number. The fraction stays equal.<br>1/2 × 2/2 = 2/4 ✓<br>1/2 × 3/3 = 3/6 ✓</div><div class="teach-step gold"><strong>Visual:</strong> Half a pizza = 2 slices of 4 = 3 slices of 6 = 4 slices of 8. Always the same amount of pizza!</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> What is 1/3 with sixths? Multiply top and bottom by 2: 1/3 = <strong>2/6</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🪞 Explorer's Connection:</strong> The mirror shows your reflection a hundred ways — it's still you. Equivalent fractions are the same idea.</div>`,
+    story:"🪞 Mirrors show the same fraction in different ways. Match them to open the path.",
+    teach:`<div class="teach-step"><strong>Equivalent fractions look different but ARE equal.</strong> 1/2 = 2/4 = 3/6 = 4/8.</div><div class="teach-step green"><strong>Rule:</strong> Multiply (or divide) TOP and BOTTOM by the same number.<br>1/2 × 3/3 = 3/6. ✓</div><div class="teach-step gold"><strong>Simplify:</strong> Divide top and bottom by their common factor.<br>6/8 ÷ 2/2 = 3/4.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 2/3 with sixths? Multiply top &amp; bottom by 2: 4/6.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🪞 Mirror Trick:</strong> If the top : bottom RATIO stays the same, the fraction stays the same.</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
-          const base=choose([[1,2],[1,3],[1,4],[2,3],[3,4]]);
+          const base=choose([[1,2],[1,3],[1,4],[2,3],[3,4],[2,5]]);
           const mult=rand(2,4);
           const top=base[0]*mult, bot=base[1]*mult;
-          return mcQ(`Which equals <strong>${base[0]}/${base[1]}</strong>?`, [`${top}/${bot}`,`${top+1}/${bot}`,`${top}/${bot+1}`,`${base[0]+1}/${base[1]+1}`], `${top}/${bot}`, `Multiply top and bottom by ${mult}.`);
+          return mcQ(`Which equals <strong>${base[0]}/${base[1]}</strong>?`, [`${top}/${bot}`,`${top+1}/${bot}`,`${top}/${bot+1}`,`${base[0]+1}/${base[1]+1}`], `${top}/${bot}`, `× top and bottom by ${mult}.`);
         }
         case 1: {
-          const base=choose([[1,2],[1,3],[1,4]]);
-          const mult=rand(2,3);
+          const base=choose([[1,2],[1,3],[1,4],[2,3],[3,5]]);
+          const mult=rand(2,4);
           const newBot=base[1]*mult;
           const correctTop=base[0]*mult;
-          return numQ(`${base[0]}/${base[1]} = ?/${newBot}. What is the top number?`, correctTop, `Bottom went from ${base[1]} to ${newBot} — multiplied by ${mult}. Do the same to the top.`);
+          return numQ(`${base[0]}/${base[1]} = ?/${newBot}. What is the top?`, correctTop, `Bottom × ${mult}. Do the same to the top.`);
         }
         case 2: {
-          const denom=choose([4,6,8]);
+          const factor=rand(2,4);
+          const num=choose([1,2,3])*factor;
+          const den=choose([4,6,8])*factor;
+          const gcd_val = (() => { let a=num, b=den; while(b){[a,b]=[b,a%b];} return a; })();
+          if (gcd_val===1) return LESSONS[16].gen(slot);
+          return mcQ(`Simplify ${num}/${den}:`, [`${num/gcd_val}/${den/gcd_val}`,`${num-1}/${den-1}`,`${num+1}/${den+1}`,`${num/2}/${den/2}`], `${num/gcd_val}/${den/gcd_val}`, `Divide top and bottom by their common factor.`);
+        }
+        case 3: {
+          const denom=choose([4,6,8,10]);
           const half=denom/2;
-          return mcQ(`Which fraction equals <strong>1/2</strong>?`, [`${half}/${denom}`,`1/${denom}`,`${denom}/${half}`,`${half+1}/${denom}`], `${half}/${denom}`, `Half means TOP × 2 = BOTTOM.`);
-        }
-        case 3: {
-          const a=[1,2], b=[2,4], c=[3,6], d=[4,8];
-          const correct=choose([a,b,c,d]);
-          const wrong=[[1,3],[2,3],[3,4]][rand(0,2)];
-          return mcQ(`Are <strong>${correct[0]}/${correct[1]}</strong> and <strong>1/2</strong> equivalent?`, ["Yes, they are equivalent","No, different amounts"], "Yes, they are equivalent", `${correct[0]} is half of ${correct[1]}, so it equals 1/2.`);
+          return mcQ(`Which fraction equals <strong>1/2</strong>?`, [`${half}/${denom}`,`1/${denom}`,`${denom}/${half}`,`${half-1}/${denom}`], `${half}/${denom}`, `Top × 2 = bottom.`);
         }
         case 4: {
-          const base=choose([[2,4],[3,6],[4,8],[2,6],[3,9]]);
-          const reduced = (() => { const g=gcd(base[0], base[1]); return [base[0]/g, base[1]/g]; })();
-          return mcQ(`Which is <strong>${base[0]}/${base[1]}</strong> in simplest form?`, [`${reduced[0]}/${reduced[1]}`,`${base[0]+1}/${base[1]+1}`,`${reduced[0]+1}/${reduced[1]+1}`,`${base[0]-1}/${base[1]-1}`], `${reduced[0]}/${reduced[1]}`, `Divide top and bottom by their common factor.`);
+          const a=choose([2,3,4]), b=choose([6,8,12]);
+          const mult=b/a;
+          if (!Number.isInteger(mult) || mult < 2) return LESSONS[16].gen(slot);
+          return numQ(`1/${a} = ?/${b}. Find the top.`, mult, `Bottom went × ${mult}.`);
         }
       }
     }
   },
-  { week:2, day:3, theme:"temple", icon:"⚖️", title:"Weighing the Sacred Stones",
-    tag:"WEEK 2 · DAY 3 · TEMPLE OF FRACTIONS", skill:"Comparing fractions (same denominator)",
-    supply:{icon:"⚖️",name:"Sacred Scale"}, badge:"Judge",
-    story:"⚖️ Two stones are placed on the scale. Tell which is heavier — but they're labeled with fractions. <em>Comparing fractions</em> is your tool.",
-    teach:`<div class="teach-step"><strong>When two fractions have the SAME bottom number,</strong> just look at the top. The bigger top wins.<br>3/5 vs 4/5? Both are out of 5, so 4 is more. <strong>4/5 wins.</strong></div><div class="teach-step green"><strong>Symbols to know:</strong><br>&gt; means "greater than"<br>&lt; means "less than"<br>= means "equal to"</div><div class="teach-step gold"><strong>Visual:</strong> Think of pizza slices. 5 slices of 8 is more pizza than 3 slices of 8. Same size slices — just more of them.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 3/4 vs 1/4? Same bottom (4). 3 &gt; 1. So <strong>3/4 &gt; 1/4</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>⚖️ Explorer's Connection:</strong> The temple opens its next door when you weigh fractions correctly!</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const d=choose([4,5,6,8]);
-          const a=rand(1, d-1);
-          let b=rand(1, d-1);
-          while(b===a) b=rand(1, d-1);
-          const bigger=Math.max(a,b);
-          return mcQ(`Which is GREATER: <strong>${a}/${d}</strong> or <strong>${b}/${d}</strong>?`, [`${a}/${d}`,`${b}/${d}`,"Equal"], `${bigger}/${d}`, `Same bottom — bigger top wins.`);
-        }
-        case 1: {
-          const d=choose([4,5,6,8]);
-          const a=rand(1, d-1);
-          let b=rand(1, d-1);
-          while(b===a) b=rand(1, d-1);
-          const symbol = a > b ? ">" : "<";
-          return mcQ(`Fill in: <strong>${a}/${d} ___ ${b}/${d}</strong>`, ["<", ">", "="], symbol, `Same denominators — compare the tops.`);
-        }
-        case 2: {
-          const d=choose([4,5,6,8]);
-          return mcQ(`Order from SMALLEST to LARGEST: 2/${d}, 5/${d}, 1/${d}`, [`1/${d}, 2/${d}, 5/${d}`, `5/${d}, 2/${d}, 1/${d}`, `2/${d}, 1/${d}, 5/${d}`, `1/${d}, 5/${d}, 2/${d}`], `1/${d}, 2/${d}, 5/${d}`, `Same bottom — smallest top first.`);
-        }
-        case 3: {
-          const d=choose([4,5,6,8]);
-          const a=rand(1, d-1);
-          let b=rand(1, d-1);
-          while(b===a) b=rand(1, d-1);
-          const bigger = a > b ? `${a}/${d}` : `${b}/${d}`;
-          return mcQ(`You ate ${a}/${d} of a pie. Your friend ate ${b}/${d}. Who ate MORE?`, ["You", "Your friend", "Same amount"], a > b ? "You" : "Your friend", `Bigger top means more pie.`);
-        }
-        case 4: {
-          const d=choose([3,4,6,8]);
-          const a=rand(1, d-1);
-          return mcQ(`What about ${a}/${d} compared to <strong>${d}/${d}</strong>?`, [`${a}/${d} < ${d}/${d}`, `${a}/${d} > ${d}/${d}`, `${a}/${d} = ${d}/${d}`], `${a}/${d} < ${d}/${d}`, `${d}/${d} = 1 whole. ${a}/${d} is less than the whole.`);
-        }
-      }
-    }
-  },
-  { week:2, day:4, theme:"temple", icon:"💧", title:"Filling the Sacred Pool",
-    tag:"WEEK 2 · DAY 4 · TEMPLE OF FRACTIONS", skill:"Adding fractions (same denominator)",
-    supply:{icon:"💧",name:"Water Drop"}, badge:"Pourer",
-    story:"💧 The sacred pool only opens the next door when filled to exactly the right level. Add fractions to pour the right amount.",
-    teach:`<div class="teach-step"><strong>When bottoms match,</strong> just add the tops. The bottom stays the same.<br>2/5 + 1/5 = <strong>3/5</strong>.</div><div class="teach-step green"><strong>Why?</strong> Both fractions are pieces of the same-size whole. You're just counting how many pieces total.</div><div class="teach-step gold"><strong>⚠️ Common mistake:</strong> Don't add the bottoms! 2/5 + 1/5 is NOT 3/10. It's 3/5.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 3/8 + 4/8 = 7/8. Just add 3 and 4.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💧 Explorer's Connection:</strong> 1/4 of the pool plus 2/4 more = 3/4 full. Pour carefully!</div>`,
+  { week:4, day:3, theme:"temple", icon:"💧", title:"Adding Fractions with Like Denominators",
+    tag:"WEEK 4 · WEDNESDAY · TEMPLE OF FRACTIONS", skill:"Add fractions with the same denominator",
+    supply:{icon:"💧",name:"Sacred Water"}, badge:"Pourer",
+    story:"💧 Fill the sacred pool to exactly the right level. Add fractions to pour correctly.",
+    teach:`<div class="teach-step"><strong>When bottoms match, just add the tops.</strong> Bottom stays the same.<br>2/5 + 1/5 = <strong>3/5</strong>.</div><div class="teach-step green"><strong>Why?</strong> They're pieces of the same-size whole. You're counting how many pieces total.</div><div class="teach-step gold"><strong>⚠️ Common mistake:</strong> Don't add the bottoms! 2/5 + 1/5 ≠ 3/10. It's 3/5.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 3/8 + 4/8 = <strong>7/8</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💧 Temple Pool:</strong> 1/4 + 2/4 = 3/4 full. Open the door!</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
           const d=choose([4,5,6,8]);
           const a=rand(1,d-2), b=rand(1, d-a);
-          return mcQ(`${a}/${d} + ${b}/${d} = ?`, [`${a+b}/${d}`,`${a+b}/${d*2}`,`${a*b}/${d}`,`${a+b}/${a+d}`], `${a+b}/${d}`, `Same bottom — just add the tops.`);
+          return mcQ(`${a}/${d} + ${b}/${d} = ?`, [`${a+b}/${d}`,`${a+b}/${d*2}`,`${a*b}/${d}`,`${a+b}/${a+d}`], `${a+b}/${d}`, `Same bottom — add the tops.`);
         }
         case 1: {
           const d=choose([4,5,6,8,10]);
-          const a=rand(1,d-2);
+          const a=rand(1, d-2);
           const b=rand(1, d-a);
-          return numQ(`${a}/${d} + ${b}/${d} = ?/${d}. Type the top number.`, a+b, `Add ${a} + ${b}.`);
+          return numQ(`${a}/${d} + ${b}/${d} = ?/${d}. Type the top number.`, a+b, `${a} + ${b}.`);
         }
         case 2: {
           const d=choose([4,6,8]);
-          const a=rand(1,d-2), b=rand(1, d-a);
-          return mcQ(`You drank ${a}/${d} of a cup of water, then ${b}/${d} more. How much did you drink total?`, [`${a+b}/${d}`,`${a+b}/${d+d}`,`${a*b}/${d}`,`${a+b}/${a+b}`], `${a+b}/${d}`, `Add: ${a}/${d} + ${b}/${d} = ${a+b}/${d}.`);
+          const a=rand(1, d-2), b=rand(1, d-a);
+          return mcQ(`You ate ${a}/${d} of a pie + ${b}/${d} more. Total eaten?`, [`${a+b}/${d}`,`${a+b}/${d+d}`,`${a*b}/${d}`,`${a+b}/${a+b}`], `${a+b}/${d}`, `${a}/${d} + ${b}/${d}.`);
         }
         case 3: {
-          const d=choose([5,6,8]);
-          const target=d;
+          const d=choose([5,6,8,10]);
           const a=rand(1, d-1);
-          const need=target-a;
-          return mcQ(`${a}/${d} + ?/${d} = ${target}/${d} = 1 whole. What's the missing top?`, [`${need}`,`${need+1}`,`${need-1}`,`${target}`], `${need}`, `${a} + ${need} = ${target}.`);
+          const need=d-a;
+          return mcQ(`${a}/${d} + ?/${d} = ${d}/${d} (= 1 whole). What's the missing top?`, [`${need}`,`${need+1}`,`${need-1}`,`${d}`], `${need}`, `${a} + ${need} = ${d}.`);
         }
         case 4: {
-          const d=choose([6,8,10]);
+          const d=choose([8,10,12]);
           const a=rand(1,3), b=rand(1,3), c=rand(1,3);
-          if (a+b+c >= d) return LESSONS[8].gen(slot);
-          return mcQ(`${a}/${d} + ${b}/${d} + ${c}/${d} = ?`, [`${a+b+c}/${d}`,`${a*b*c}/${d}`,`${a+b+c}/${d*3}`,`${a+b+c}/${a+b+c}`], `${a+b+c}/${d}`, `Add all three tops, keep the bottom.`);
+          if (a+b+c >= d) return LESSONS[17].gen(slot);
+          return mcQ(`${a}/${d} + ${b}/${d} + ${c}/${d} = ?`, [`${a+b+c}/${d}`,`${a*b*c}/${d}`,`${a+b+c}/${d*3}`,`${a+b+c}/${a+b+c}`], `${a+b+c}/${d}`, `Add all three tops.`);
         }
       }
     }
   },
-  { week:2, day:5, theme:"temple", icon:"💎", title:"The Sacred Relic",
-    tag:"WEEK 2 · DAY 5 · BOSS CHALLENGE", skill:"BOSS — All Week 2 fraction skills",
+  { week:4, day:4, theme:"temple", icon:"⚗️", title:"Subtracting Fractions with Like Denominators",
+    tag:"WEEK 4 · THURSDAY · TEMPLE OF FRACTIONS", skill:"Subtract fractions with the same denominator",
+    supply:{icon:"⚗️",name:"Alchemy Vial"}, badge:"Alchemist",
+    story:"⚗️ Remove exact amounts from sacred vessels. Subtraction with matching bottoms!",
+    teach:`<div class="teach-step"><strong>Same denominator → subtract the tops.</strong> Bottom stays.<br>7/8 − 3/8 = <strong>4/8</strong> (or 1/2).</div><div class="teach-step green"><strong>Verify:</strong> 4/8 + 3/8 = 7/8 ✓.</div><div class="teach-step gold"><strong>Subtract from a whole:</strong> Rewrite 1 with the matching bottom. 1 − 3/5 = 5/5 − 3/5 = <strong>2/5</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 9/10 − 4/10 = <strong>5/10</strong> = 1/2.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>⚗️ Temple Tip:</strong> Always check by adding back!</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const d=choose([4,5,6,8]);
+          const a=rand(2, d-1), b=rand(1, a-1);
+          return mcQ(`${a}/${d} − ${b}/${d} = ?`, [`${a-b}/${d}`,`${a-b}/${d-1}`,`${a+b}/${d}`,`${a*b}/${d}`], `${a-b}/${d}`, `Subtract tops; keep the bottom.`);
+        }
+        case 1: {
+          const d=choose([5,6,8,10]);
+          const a=rand(2, d-1), b=rand(1, a-1);
+          return numQ(`${a}/${d} − ${b}/${d} = ?/${d}. Type the top.`, a-b, `${a} − ${b}.`);
+        }
+        case 2: {
+          const d=choose([4,5,6,8]);
+          const a=rand(1, d-1);
+          return mcQ(`1 − ${a}/${d} = ?`, [`${d-a}/${d}`,`${a}/${d}`,`${d}/${d-a}`,`${d-a}/${d-1}`], `${d-a}/${d}`, `1 = ${d}/${d}. Then subtract.`);
+        }
+        case 3: {
+          const d=choose([6,8,10]);
+          const start=rand(3,d-1), eaten=rand(1, start-1);
+          return numQ(`Pizza was ${start}/${d}. You ate ${eaten}/${d}. What's left? Type the top.`, start-eaten, `${start} − ${eaten}.`);
+        }
+        case 4: {
+          const d=choose([5,6,8]);
+          const total=d, a=rand(2, d-2), b=rand(1, a-1);
+          return mcQ(`${a}/${d} − ${b}/${d} = ?`, [`${a-b}/${d}`,`${a-b}/${d*2}`,`${a+b}/${d}`,`${(a-b)*2}/${d}`], `${a-b}/${d}`, `Subtract the tops.`);
+        }
+      }
+    }
+  },
+  { week:4, day:5, theme:"temple", icon:"💎", title:"Add/Subtract Unlike Denominators + Quiz",
+    tag:"WEEK 4 · FRIDAY · BOSS DAY", skill:"Find a common denominator, then +/− &middot; Week 4 review",
     supply:{icon:"💎",name:"Sacred Relic"}, badge:"Temple Master",
-    story:"💎 The Relic is the most ancient treasure in the temple. Combine all the fraction skills you learned to claim it.",
-    teach:`<div class="teach-step"><strong>BOSS DAY.</strong> Mix of identifying, equivalents, comparing, and adding fractions. You've learned each piece — combine them now.</div><div class="teach-step green"><strong>Strategy:</strong> Read the question first. Ask: "Identifying? Comparing? Adding? Equivalents?" Pick the move.</div><div class="teach-step gold"><strong>You can do this!</strong></div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: return LESSONS[5].gen(0);
-        case 1: return LESSONS[6].gen(0);
-        case 2: return LESSONS[7].gen(0);
-        case 3: return LESSONS[8].gen(0);
-        case 4: return LESSONS[5].gen(3);
-      }
-    }
-  },
-  { week:3, day:1, theme:"cave", icon:"🪙", title:"Counting the Crystal Coins",
-    tag:"WEEK 3 · DAY 1 · CAVE OF CRYSTALS", skill:"Counting mixed coins",
-    supply:{icon:"🪙",name:"Coin Pouch"}, badge:"Coin Counter",
-    story:"🪙 The cave is full of magic coins — pennies, nickels, dimes, and quarters. Count them up to power the lanterns.",
-    teach:`<div class="teach-step"><strong>Coin values to memorize:</strong><br>• Penny = 1¢<br>• Nickel = 5¢<br>• Dime = 10¢<br>• Quarter = 25¢</div><div class="teach-step green"><strong>To count mixed coins:</strong> Start with the biggest. Add quarters first, then dimes, then nickels, then pennies.</div><div class="teach-step gold"><strong>Trick:</strong> Skip-count by quarters (25, 50, 75, 100), then add the smaller coins.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 2 quarters + 3 dimes + 4 pennies = 50 + 30 + 4 = <strong>84¢</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Explorer's Connection:</strong> Each coin powers a crystal — but only if you know how many ¢ you have!</div>`,
+    story:"💎 The final altar. Different denominators must become THE SAME first.",
+    teach:`<div class="teach-step"><strong>Step 1: Find a common denominator.</strong> Easiest way: multiply the bottoms together (or find the smallest common multiple).</div><div class="teach-step green"><strong>Step 2: Rewrite each fraction with that new bottom.</strong> Multiply both top &amp; bottom by what's needed.</div><div class="teach-step gold"><strong>Step 3: Add or subtract the tops</strong> (now that bottoms match).</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 1/2 + 1/3?<br>Common bottom: 6. 1/2 = 3/6; 1/3 = 2/6.<br>3/6 + 2/6 = <strong>5/6</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 BOSS DAY:</strong> All Week 4 skills, plus this new unlike-denominator move!</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
-          const q=rand(0,4), d=rand(0,5), n=rand(0,5), p=rand(0,9);
-          const total = q*25 + d*10 + n*5 + p;
-          return numQ(`${q} quarters + ${d} dimes + ${n} nickels + ${p} pennies = ? ¢`, total, `Quarters=25, dimes=10, nickels=5, pennies=1.`);
+          const easy=choose([[1,2,1,4,3,4],[1,2,1,3,5,6],[1,4,1,2,3,4],[2,3,1,6,5,6]]);
+          const ans=easy[4]+"/"+easy[5];
+          return mcQ(`${easy[0]}/${easy[1]} + ${easy[2]}/${easy[3]} = ?`, [ans,`${easy[0]+easy[2]}/${easy[1]+easy[3]}`,`${easy[0]+easy[2]}/${easy[5]}`,`${easy[0]*easy[2]}/${easy[1]*easy[3]}`], ans, `Common bottom first, then add.`);
         }
-        case 1: {
-          const q=rand(1,4);
-          return numQ(`${q} quarters = ? ¢`, q*25, `Each quarter is 25¢.`);
-        }
-        case 2: {
-          const d=rand(2,8);
-          return numQ(`${d} dimes = ? ¢`, d*10, `Each dime is 10¢.`);
-        }
-        case 3: {
-          const q=rand(1,3), d=rand(1,5);
-          return numQ(`${q} quarters + ${d} dimes = ? ¢`, q*25 + d*10, `${q*25} + ${d*10}.`);
-        }
-        case 4: {
-          const q=rand(2,4);
-          const dollars = q*25;
-          return mcQ(`${q} quarters equals how much in dollars?`, [`$${(q*25/100).toFixed(2)}`,`$${q}.00`,`$${q*5}.00`,`${q*25}¢`], `$${(q*25/100).toFixed(2)}`, `100¢ = $1. ${q*25}¢ = $${(q*25/100).toFixed(2)}.`);
-        }
+        case 1: return LESSONS[15].gen(0);
+        case 2: return LESSONS[16].gen(0);
+        case 3: return LESSONS[17].gen(0);
+        case 4: return LESSONS[18].gen(0);
       }
     }
   },
-  { week:3, day:2, theme:"cave", icon:"💰", title:"Making Change at the Crystal Stall",
-    tag:"WEEK 3 · DAY 2 · CAVE OF CRYSTALS", skill:"Making change (subtracting money)",
-    supply:{icon:"💰",name:"Change Purse"}, badge:"Trader",
-    story:"💰 You pay for crystal stones with bills. The shopkeeper owes you change. <em>Subtraction</em> is how you check.",
-    teach:`<div class="teach-step"><strong>To find change:</strong> Subtract the cost from the money you paid.<br>Paid $1.00. Cost 65¢. Change = $1.00 − 0.65 = <strong>$0.35</strong> (or 35¢).</div><div class="teach-step green"><strong>Quick mental math:</strong> Count UP from the cost to the money you paid.<br>From 65¢: + 5 = 70, + 30 = 100. Total counted up: 35¢. That's the change!</div><div class="teach-step gold"><strong>Money rule:</strong> $1.00 = 100¢. $5.00 = 500¢. Keep them straight!</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> Paid $5.00, cost $3.45. Change = 5.00 − 3.45 = <strong>$1.55</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💰 Explorer's Connection:</strong> Wrong change = wrong crystals. Get it right and you can power the lantern!</div>`,
+  { week:5, day:1, theme:"galaxy", icon:"🌌", title:"Understanding Powers of Ten",
+    tag:"WEEK 5 · MONDAY · DECIMAL GALAXY", skill:"Recognize patterns: × 10, × 100, × 1,000 and 10^n notation",
+    supply:{icon:"🌟",name:"Power Star"}, badge:"Power Holder",
+    story:"🌌 Captain Parker enters the Decimal Galaxy. Every distance multiplies by powers of ten — millions of kilometers fast.",
+    teach:`<div class="teach-step"><strong>Multiplying by 10s shifts digits LEFT.</strong><br>• 3 × 10 = 30 (1 zero)<br>• 3 × 100 = 300 (2 zeros)<br>• 3 × 1,000 = 3,000 (3 zeros)</div><div class="teach-step green"><strong>Powers of 10 in exponent form:</strong><br>• 10¹ = 10<br>• 10² = 100<br>• 10³ = 1,000<br>• 10⁴ = 10,000<br>The exponent = number of zeros.</div><div class="teach-step gold"><strong>Worked Example:</strong> 4 × 10³ = 4 × 1,000 = <strong>4,000</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Pattern:</strong> Every × 10 → digit slides one place LEFT.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🌌 Galaxy Mission:</strong> Earth to Moon ≈ 4 × 10⁵ km.</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
-          const cost=rand(20,95);
-          return numQ(`You pay $1.00 (100¢) for an item costing ${cost}¢. Change = ? ¢`, 100-cost, `100 − ${cost}.`);
+          const a=rand(2,9), exp=rand(1,4);
+          const power=Math.pow(10,exp);
+          return numQ(`${a} × ${fmt(power)} = ?`, a*power, `Add ${exp} zero${exp>1?'s':''}.`);
         }
         case 1: {
-          const cost=rand(150,475);
-          return numQ(`You pay $5.00 (500¢) for an item costing ${cost}¢. Change = ? ¢`, 500-cost, `500 − ${cost}.`);
+          const exp=rand(1,4);
+          const power=Math.pow(10,exp);
+          return mcQ(`10^${exp} = ?`, [fmt(power), fmt(power*10), fmt(power/10), fmt(power+10)], fmt(power), `Exponent = number of zeros.`);
         }
         case 2: {
-          const cost=rand(35,85);
-          const opts = [100-cost, 100-cost-5, 100-cost+5, 100-cost-10];
-          return mcQ(`You pay $1.00 for a snack that costs ${cost}¢. Your change is:`, opts.map(c => `${c}¢`), `${100-cost}¢`, `Subtract from 100.`);
+          const a=rand(2,9), exp=rand(2,4);
+          return numQ(`${a} × 10^${exp} = ?`, a*Math.pow(10,exp), `${a} followed by ${exp} zeros.`);
         }
         case 3: {
-          const cost=rand(125,400);
-          const paid=500;
-          return numQ(`Pay $5.00, item costs $${(cost/100).toFixed(2)}. Change in cents?`, paid-cost, `500 − ${cost} cents.`);
+          const num=rand(2,9)*Math.pow(10,rand(1,4));
+          const exp = String(num).length - String(Math.floor(num/Math.pow(10, String(num).length-1))).length;
+          return mcQ(`${fmt(num)} written as ___ × 10^___`, [`${num/Math.pow(10,exp)} × 10^${exp}`,`${num} × 10^1`,`${num/10} × 10^${exp-1}`,`${num*10} × 10^${exp}`], `${num/Math.pow(10,exp)} × 10^${exp}`, `Count zeros.`);
         }
         case 4: {
-          const cost=rand(45,95);
-          const paid=100;
-          const change=paid-cost;
-          return numQ(`You buy a crystal for ${cost}¢ with $1. How much change in cents?`, change, `$1 = 100¢. 100 − ${cost} = ${change}.`);
+          const exp=rand(2,5);
+          return numQ(`How many ZEROS does 10^${exp} have?`, exp, `Exponent equals the zero count.`);
         }
       }
     }
   },
-  { week:3, day:3, theme:"cave", icon:"💎", title:"Reading the Crystal Weights",
-    tag:"WEEK 3 · DAY 3 · CAVE OF CRYSTALS", skill:"Decimals as money (tenths and hundredths)",
-    supply:{icon:"📜",name:"Crystal Catalog"}, badge:"Crystal Reader",
-    story:"💎 Each crystal has a weight written with a decimal: 1.5, 2.3, 0.75. Learn to read decimals like money to weigh them right.",
-    teach:`<div class="teach-step"><strong>Decimals are like money.</strong> $1.50 has the dot to separate dollars from cents.<br>The 5 in $1.50 means 5 dimes = 50 cents.</div><div class="teach-step green"><strong>After the decimal:</strong><br>• 1st place = tenths (one-tenth, or like dimes)<br>• 2nd place = hundredths (one-hundredth, or like pennies)</div><div class="teach-step gold"><strong>Examples:</strong><br>0.5 = "five tenths" = $0.50 = half a dollar<br>0.25 = "twenty-five hundredths" = a quarter<br>1.75 = "1 and seventy-five hundredths" = $1.75</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> Which is bigger, 0.5 or 0.3? Think of money: $0.50 vs $0.30. Fifty cents is more! 0.5 wins.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Explorer's Connection:</strong> Each crystal weight is in special units. Read the decimal correctly to balance the scale.</div>`,
+  { week:5, day:2, theme:"galaxy", icon:"✨", title:"Decimals &amp; Place Value",
+    tag:"WEEK 5 · TUESDAY · DECIMAL GALAXY", skill:"Identify tenths, hundredths, and thousandths",
+    supply:{icon:"✨",name:"Decimal Lens"}, badge:"Decimal Reader",
+    story:"✨ Decimals show finer detail — slices of a whole. Read them like place value going RIGHT of the decimal point.",
+    teach:`<div class="teach-step"><strong>Decimal place values (after the dot):</strong><br>• 1st place = TENTHS (1/10)<br>• 2nd place = HUNDREDTHS (1/100)<br>• 3rd place = THOUSANDTHS (1/1000)</div><div class="teach-step green"><strong>Read 4.305:</strong><br>• 4 ones<br>• 3 tenths<br>• 0 hundredths<br>• 5 thousandths<br>"Four and three hundred five thousandths."</div><div class="teach-step gold"><strong>Money connection:</strong> $0.5 = 5 dimes = 50¢. $0.05 = 5 pennies = 5¢. Decimals work like money!</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Expanded form:</strong> 2.45 = 2 + 0.4 + 0.05.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🌌 Galaxy Mission:</strong> Each decimal place opens a new precision lens.</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
           const d=rand(1,9);
-          return mcQ(`Which decimal equals "${d} dimes" (or $0.${d}0)?`, [`0.${d}`,`${d}.0`,`0.0${d}`,`${d}/10`], `0.${d}`, `${d} dimes = ${d} tenths = 0.${d}.`);
+          return mcQ(`What place is the digit in <strong>0.${d}</strong>?`, ["tenths","hundredths","thousandths","ones"], "tenths", `First place after the dot.`);
         }
         case 1: {
-          const cents=choose([25,50,75,10,20,30,60,80,90]);
-          return mcQ(`Write ${cents}¢ as a decimal (dollars):`, [`0.${cents<10?'0':''}${cents}`, `${cents}.0`, `0.${cents}0`, `0.${Math.floor(cents/10)}`], `0.${cents<10?'0':''}${cents}`, `$1 = 100¢. ${cents}¢ = 0.${cents<10?'0':''}${cents} dollars.`);
+          const d=rand(1,9);
+          return mcQ(`What place is the digit in <strong>0.0${d}</strong>?`, ["tenths","hundredths","thousandths","ones"], "hundredths", `Second place after the dot.`);
+        }
+        case 2: {
+          const a=rand(1,9), b=rand(0,9), c=rand(1,9);
+          const dec = `${a}.${b}${c}`;
+          return mcQ(`In ${dec}, what place is the ${c}?`, ["tenths","hundredths","thousandths","ones"], "hundredths", `Count places after the dot.`);
+        }
+        case 3: {
+          const whole=rand(1,9), t=rand(1,9);
+          return mcQ(`Write "${whole} and ${t} tenths" as a decimal.`, [`${whole}.${t}`,`${whole}.0${t}`,`${whole}${t}`,`${whole}.${t}0`], `${whole}.${t}`, `Tenths = first place after the dot.`);
+        }
+        case 4: {
+          const cents=choose([25,50,75,40,60,80]);
+          return mcQ(`$0.${cents} written as a fraction is:`, [`${cents}/100`,`${cents}/10`,`${cents}/1000`,`${cents}/${cents}`], `${cents}/100`, `Two decimal places = hundredths.`);
+        }
+      }
+    }
+  },
+  { week:5, day:3, theme:"galaxy", icon:"🚀", title:"Multiplying Decimals by Powers of Ten",
+    tag:"WEEK 5 · WEDNESDAY · DECIMAL GALAXY", skill:"Multiply decimals by 10, 100, 1,000",
+    supply:{icon:"🚀",name:"Hyperdrive"}, badge:"Hyperdriver",
+    story:"🚀 To scale up distances, multiply by powers of ten. Watch the decimal point SLIDE.",
+    teach:`<div class="teach-step"><strong>Multiplying by 10 slides the decimal point RIGHT by 1.</strong><br>3.45 × 10 = 34.5</div><div class="teach-step green"><strong>By 100 → slide RIGHT by 2.</strong><br>3.45 × 100 = 345</div><div class="teach-step gold"><strong>By 1,000 → slide RIGHT by 3.</strong><br>3.45 × 1,000 = 3,450 (added a zero!)</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Trick:</strong> Count the zeros. That's how many places the decimal moves.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🚀 Galaxy Mission:</strong> 0.4 × 100 = 40. The decimal slid TWO places right!</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const a=rand(1,9), b=rand(1,9);
+          return numQ(`${a}.${b} × 10 = ?`, parseFloat(`${a}${b}`), `Decimal slides 1 place right.`);
+        }
+        case 1: {
+          const a=rand(1,9), b=rand(1,9), c=rand(1,9);
+          return numQ(`${a}.${b}${c} × 100 = ?`, parseFloat(`${a}${b}${c}`), `Slide 2 places right.`);
         }
         case 2: {
           const a=rand(1,9), b=rand(1,9);
-          const da=a/10, db=b/10;
-          if (a===b) return LESSONS[12].gen(slot);
-          const bigger = a > b ? da : db;
-          return mcQ(`Which is GREATER: <strong>0.${a}</strong> or <strong>0.${b}</strong>?`, [`0.${a}`,`0.${b}`,"Equal"], bigger.toString(), `Compare the tenths digit — like dimes.`);
+          return numQ(`0.${a}${b} × 100 = ?`, parseFloat(`${a}${b}`), `Slide 2 places right.`);
         }
         case 3: {
-          const dollars=rand(1,4), tenths=rand(1,9);
-          return numQ(`Write "${dollars} and ${tenths} tenths" as a decimal.`, dollars + tenths/10, `${dollars}.${tenths}`);
+          const a=rand(1,9);
+          return numQ(`0.${a} × 1000 = ?`, a*100, `Slide 3 right. Add zeros if needed.`);
         }
         case 4: {
-          const a=rand(10,99);
-          return mcQ(`What is 0.${a} written as a fraction?`, [`${a}/100`, `${a}/10`, `${a}/1000`, `${a}/${a}`], `${a}/100`, `Two decimal places = hundredths.`);
+          const a=rand(1,9), b=rand(1,9);
+          return mcQ(`${a}.${b} × 100 = ?`, [`${a}${b}0`, `${a}${b}`, `${a}.${b}00`, `${a}${b}00`].map(Number), Number(`${a}${b}0`), `Slide 2 places right.`);
         }
       }
     }
   },
-  { week:3, day:4, theme:"cave", icon:"⚖️", title:"Comparing Crystal Values",
-    tag:"WEEK 3 · DAY 4 · CAVE OF CRYSTALS", skill:"Comparing decimal money amounts",
-    supply:{icon:"⚖️",name:"Crystal Scale"}, badge:"Appraiser",
-    story:"⚖️ Two crystals on a scale. Which is worth more? Compare their decimal values just like comparing money.",
-    teach:`<div class="teach-step"><strong>Comparing decimals:</strong> Line up the decimal points. Then compare the WHOLE numbers first, then tenths, then hundredths.</div><div class="teach-step green"><strong>Watch out!</strong> 0.5 is NOT smaller than 0.45 just because 5 looks small. Think money:<br>$0.50 vs $0.45 — fifty cents is more than forty-five cents!<br>So <strong>0.5 &gt; 0.45</strong>.</div><div class="teach-step gold"><strong>Add zeros to match length:</strong> 0.5 = 0.50. Now compare 0.50 vs 0.45 → 50 &gt; 45. Same answer, less confusing.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> $2.30 vs $2.05? Same dollars, so compare cents: 30¢ &gt; 5¢. <strong>$2.30 wins.</strong></div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>⚖️ Explorer's Connection:</strong> Pick the bigger crystal — but only if you read the decimal right!</div>`,
+  { week:5, day:4, theme:"galaxy", icon:"🛸", title:"Dividing Decimals by Powers of Ten",
+    tag:"WEEK 5 · THURSDAY · DECIMAL GALAXY", skill:"Divide decimals by 10, 100, 1,000",
+    supply:{icon:"🛸",name:"Tractor Beam"}, badge:"Precision Pilot",
+    story:"🛸 Now zoom IN. Divide by 10s — the decimal slides LEFT.",
+    teach:`<div class="teach-step"><strong>Dividing by 10 slides the decimal LEFT by 1.</strong><br>45.6 ÷ 10 = 4.56</div><div class="teach-step green"><strong>By 100 → slide LEFT by 2.</strong><br>45.6 ÷ 100 = 0.456</div><div class="teach-step gold"><strong>By 1,000 → slide LEFT by 3.</strong><br>45.6 ÷ 1,000 = 0.0456</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Trick:</strong> Same as multiplying — but OPPOSITE direction. Count zeros, slide left.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🛸 Galaxy Mission:</strong> 6 ÷ 100 = 0.06. Slid 2 places left (filled with zero).</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
-          const a=rand(10,99), b=rand(10,99);
-          if (a===b) return LESSONS[13].gen(slot);
-          const da=a/100, db=b/100;
-          const bigger=Math.max(da,db);
-          return mcQ(`Which is GREATER: <strong>$${da.toFixed(2)}</strong> or <strong>$${db.toFixed(2)}</strong>?`, [`$${da.toFixed(2)}`,`$${db.toFixed(2)}`,"Equal"], `$${bigger.toFixed(2)}`, `Compare the cents.`);
+          const a=rand(2,9), b=rand(1,9);
+          return mcQ(`${a}${b}.0 ÷ 10 = ?`, [`${a}.${b}`,`${a}${b}`,`0.${a}${b}`,`${a}.${b}0`], `${a}.${b}`, `Slide left by 1.`);
         }
         case 1: {
-          const tenth=rand(1,9);
-          const hund=rand(10,49);
-          const isTenthBigger = (tenth * 10) > hund;
-          const correct = isTenthBigger ? `0.${tenth}` : `0.${hund<10?"0":""}${hund}`;
-          return mcQ(`Which is GREATER: <strong>0.${tenth}</strong> or <strong>0.${hund}</strong>?`, [`0.${tenth}`,`0.${hund}`,"Equal"], correct, `Think of money: 0.${tenth} = $0.${tenth}0 = ${tenth*10}¢. 0.${hund} = ${hund}¢.`);
+          const a=rand(2,9), b=rand(1,9);
+          return mcQ(`${a}${b} ÷ 100 = ?`, [`0.${a}${b}`,`${a}.${b}`,`${a}${b}.0`,`0.0${a}${b}`], `0.${a}${b}`, `Slide left by 2.`);
         }
         case 2: {
-          const dollar=rand(2,5), cent=rand(10,99);
-          return mcQ(`Order from LEAST to GREATEST: $${dollar}.05, $${dollar}.${cent}, $${dollar}.00`, [`$${dollar}.00, $${dollar}.05, $${dollar}.${cent}`, `$${dollar}.${cent}, $${dollar}.05, $${dollar}.00`, `$${dollar}.05, $${dollar}.00, $${dollar}.${cent}`, `$${dollar}.00, $${dollar}.${cent}, $${dollar}.05`], `$${dollar}.00, $${dollar}.05, $${dollar}.${cent}`, `Same dollars — compare cents.`);
+          const a=rand(1,9);
+          return mcQ(`${a} ÷ 100 = ?`, [`0.0${a}`,`0.${a}`,`${a}.0`,`0.00${a}`], `0.0${a}`, `Slide left by 2 (need a zero).`);
         }
         case 3: {
-          const tenth=rand(1,9);
-          return mcQ(`Which equals 0.${tenth}?`, [`0.${tenth}0`,`${tenth}0`,`0.0${tenth}`,`${tenth}/100`], `0.${tenth}0`, `Adding a zero at the end doesn't change a decimal's value.`);
+          const a=rand(2,9), b=rand(1,9);
+          return mcQ(`${a}${b} ÷ 10 = ?`, [`${a}.${b}`,`0.${a}${b}`,`${a}${b}.0`,`0.0${a}${b}`], `${a}.${b}`, `Slide left by 1.`);
         }
         case 4: {
-          const a=rand(100,500), b=rand(100,500);
-          if (a===b) return LESSONS[13].gen(slot);
-          const da=(a/100).toFixed(2), db=(b/100).toFixed(2);
-          return mcQ(`You have $${da}. Your friend has $${db}. Who has MORE?`, ["You", "Your friend", "Same"], a>b?"You":"Your friend", `Compare the dollar amounts.`);
+          const a=rand(2,9);
+          return mcQ(`${a*100} ÷ 1000 = ?`, [`0.${a}`,`${a}.0`,`0.0${a}`,`${a}00`], `0.${a}`, `Slide left by 3.`);
         }
       }
     }
   },
-  { week:3, day:5, theme:"cave", icon:"❤️", title:"The Crystal Heart",
-    tag:"WEEK 3 · DAY 5 · BOSS CHALLENGE", skill:"BOSS — All Week 3 money & decimal skills",
-    supply:{icon:"❤️",name:"Crystal Heart"}, badge:"Crystal Hero",
-    story:"❤️ The Crystal Heart pulses at the cave's deepest point. Combine your money + decimal skills to reach it.",
-    teach:`<div class="teach-step"><strong>BOSS DAY.</strong> Counting coins, making change, reading decimals, and comparing money — all in one!</div><div class="teach-step green"><strong>Trick:</strong> Always think of decimals as money. $0.30 makes more sense than "thirty hundredths." Same number, easier brain.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: return LESSONS[10].gen(0);
-        case 1: return LESSONS[11].gen(0);
-        case 2: return LESSONS[12].gen(0);
-        case 3: return LESSONS[13].gen(0);
-        case 4: return LESSONS[10].gen(2);
-      }
-    }
-  },
-  { week:4, day:1, theme:"sky", icon:"🏗️", title:"Cloud Architects",
-    tag:"WEEK 4 · DAY 1 · SKY KINGDOM", skill:"Perimeter of rectangles",
-    supply:{icon:"📐",name:"Sky Ruler"}, badge:"Architect",
-    story:"🏗️ The cloud kingdom needs fences to hold sky-sheep. Perimeter tells you how much fence to make.",
-    teach:`<div class="teach-step"><strong>Perimeter is the distance ALL the way around a shape.</strong> For a rectangle, add up all 4 sides.</div><div class="teach-step green"><strong>Quick formula for rectangles:</strong><br>Perimeter = (length × 2) + (width × 2)<br>OR<br>Perimeter = 2 × (length + width)</div><div class="teach-step gold"><strong>Example:</strong> A rectangle that is 4 long and 3 wide.<br>Perimeter = 4 + 3 + 4 + 3 = <strong>14</strong>.<br>Or: 2 × (4 + 3) = 2 × 7 = <strong>14</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Squares are easy:</strong> All 4 sides are equal. Perimeter = side × 4.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>☁️ Explorer's Connection:</strong> Get the perimeter wrong and the sky-sheep escape!</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const l=rand(3,9), w=rand(3,9);
-          return numQ(`A rectangle is ${l} long and ${w} wide. What is the perimeter?`, 2*(l+w), `Add: ${l} + ${w} + ${l} + ${w}.`);
-        }
-        case 1: {
-          const s=rand(3,12);
-          return numQ(`A square has side length ${s}. What is the perimeter?`, s*4, `Square: side × 4.`);
-        }
-        case 2: {
-          const l=rand(4,10), w=rand(4,10);
-          return mcQ(`Perimeter of a ${l} × ${w} rectangle?`, [2*(l+w), l*w, l+w, 2*(l*w)], 2*(l+w), `Perimeter = 2 × (length + width).`);
-        }
-        case 3: {
-          const p=rand(12,40);
-          const s=p/4;
-          if (!Number.isInteger(s)) return LESSONS[15].gen(slot);
-          return numQ(`A square has perimeter ${p}. What is the length of one side?`, s, `${p} ÷ 4.`);
-        }
-        case 4: {
-          const sides=[rand(3,7), rand(3,7), rand(3,7), rand(3,7), rand(3,7)];
-          const total=sides.reduce((a,b)=>a+b,0);
-          return numQ(`A 5-sided shape has sides: ${sides.join(", ")}. What is the perimeter?`, total, `Add all 5 sides.`);
-        }
-      }
-    }
-  },
-  { week:4, day:2, theme:"sky", icon:"🌥️", title:"Sky Pastures",
-    tag:"WEEK 4 · DAY 2 · SKY KINGDOM", skill:"Area of rectangles",
-    supply:{icon:"🐑",name:"Sheep Counter"}, badge:"Shepherd",
-    story:"🐑 Your sheep need grass — but how much grass? That's area. Multiply length by width to find the answer.",
-    teach:`<div class="teach-step"><strong>Area is the space INSIDE a shape.</strong> Measured in square units (like sq cm, sq m).</div><div class="teach-step green"><strong>For a rectangle:</strong><br>Area = length × width</div><div class="teach-step gold"><strong>Why?</strong> Imagine the rectangle made of unit squares. Length tells you the row width, width tells you how many rows. Multiply to count all squares.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A 5 × 3 rectangle: 5 squares per row, 3 rows = 15 squares = <strong>15 square units</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>☁️ Explorer's Connection:</strong> A bigger pasture feeds more sheep. Knowing area tells you how much.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const l=rand(3,9), w=rand(3,9);
-          return numQ(`A rectangle is ${l} long and ${w} wide. What is the area in square units?`, l*w, `Length × Width = ${l} × ${w}.`);
-        }
-        case 1: {
-          const s=rand(3,9);
-          return numQ(`A square has side ${s}. What is its area?`, s*s, `Square: side × side = ${s} × ${s}.`);
-        }
-        case 2: {
-          const l=rand(2,10), w=rand(2,10);
-          return mcQ(`Area of a ${l} × ${w} rectangle?`, [l*w, l+w, 2*(l+w), l*w+1], l*w, `Multiply length × width.`);
-        }
-        case 3: {
-          const w=rand(2,8);
-          const area=w*rand(3,8);
-          const l=area/w;
-          if (!Number.isInteger(l)) return LESSONS[16].gen(slot);
-          return numQ(`A rectangle has area ${area} sq units and width ${w}. What is the length?`, l, `Area ÷ width = length.`);
-        }
-        case 4: {
-          const l=rand(4,9), w=rand(2,5);
-          return mcQ(`A pasture is ${l} m by ${w} m. Each sq meter holds 2 sheep. How many sheep fit?`, [l*w*2, l*w, (l+w)*2, l+w], l*w*2, `Area = ${l*w}. Then × 2.`);
-        }
-      }
-    }
-  },
-  { week:4, day:3, theme:"sky", icon:"🐦", title:"Angle Birds",
-    tag:"WEEK 4 · DAY 3 · SKY KINGDOM", skill:"Classifying angles (acute, right, obtuse)",
-    supply:{icon:"🦅",name:"Sky Bird"}, badge:"Angle Spotter",
-    story:"🐦 Birds tilt their wings at different angles. Spot the acute, right, and obtuse angles to guide them home.",
-    teach:`<div class="teach-step"><strong>Three main angles to know:</strong><br>• <strong>Acute</strong> = LESS than 90° (sharp, narrow)<br>• <strong>Right</strong> = EXACTLY 90° (perfect corner, like a book)<br>• <strong>Obtuse</strong> = MORE than 90° but less than 180° (wider, open)</div><div class="teach-step green"><strong>Bonus:</strong> A straight angle = 180° (flat line).</div><div class="teach-step gold"><strong>Trick:</strong> Use the corner of a piece of paper. If the angle is smaller than that corner → acute. Same → right. Bigger → obtuse.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A 45° angle is acute (less than 90°). A 110° angle is obtuse (more than 90°).</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🐦 Explorer's Connection:</strong> Birds fly differently for different wing angles. Recognize them and you can guide the flock!</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const angle=choose([15,30,45,60,80]);
-          return mcQ(`A ${angle}° angle is:`, ["Acute", "Right", "Obtuse", "Straight"], "Acute", `Less than 90° = acute.`);
-        }
-        case 1: {
-          const angle=choose([95,110,135,150,170]);
-          return mcQ(`A ${angle}° angle is:`, ["Acute", "Right", "Obtuse", "Straight"], "Obtuse", `More than 90° but less than 180° = obtuse.`);
-        }
-        case 2: {
-          return mcQ(`What kind of angle is exactly 90°?`, ["Acute", "Right", "Obtuse", "Straight"], "Right", `90° = right angle. Like a square corner.`);
-        }
-        case 3: {
-          const angle=choose([45,60,90,120,135,170]);
-          let type;
-          if (angle < 90) type="Acute";
-          else if (angle === 90) type="Right";
-          else type="Obtuse";
-          return mcQ(`Classify this angle: ${angle}°`, ["Acute","Right","Obtuse"], type, `${angle}° → ${type.toLowerCase()}.`);
-        }
-        case 4: {
-          return mcQ(`Two angles together make a straight line. One is 50°. The other is:`, ["130°","30°","90°","180°"], "130°", `A straight line = 180°. So 180 − 50 = 130°.`);
-        }
-      }
-    }
-  },
-  { week:4, day:4, theme:"sky", icon:"🦋", title:"Lines of Symmetry",
-    tag:"WEEK 4 · DAY 4 · SKY KINGDOM", skill:"Finding lines of symmetry",
-    supply:{icon:"🪞",name:"Mirror Wing"}, badge:"Symmetry Seeker",
-    story:"🦋 Butterflies in the sky kingdom have perfectly symmetric wings. Find their lines of symmetry to unlock the next path.",
-    teach:`<div class="teach-step"><strong>A line of symmetry</strong> divides a shape so both sides look like mirror images.</div><div class="teach-step green"><strong>Common examples:</strong><br>• Square: 4 lines of symmetry (vertical, horizontal, two diagonals)<br>• Rectangle: 2 lines (vertical, horizontal)<br>• Circle: infinite lines<br>• Triangle (equilateral): 3 lines<br>• Letter "A": 1 line (vertical down the middle)</div><div class="teach-step gold"><strong>Test:</strong> Fold the shape along the line. Do both halves match perfectly? Then it IS a line of symmetry.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> The letter H has 2 lines of symmetry. Vertical (middle up-down) and horizontal (middle side-side).</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🦋 Explorer's Connection:</strong> Butterflies, faces, flowers, snowflakes — symmetry is everywhere in nature!</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          return mcQ(`How many lines of symmetry does a SQUARE have?`, [4, 2, 1, 0], 4, `Vertical, horizontal, and two diagonals.`);
-        }
-        case 1: {
-          return mcQ(`How many lines of symmetry does a RECTANGLE (not a square) have?`, [2, 4, 1, 0], 2, `Vertical and horizontal only — not the diagonals.`);
-        }
-        case 2: {
-          const letter=choose(["A","H","T","M","O","X"]);
-          const lines={A:1, H:2, T:1, M:1, O:2, X:2};
-          return numQ(`How many lines of symmetry does the letter "${letter}" have?`, lines[letter], `Try folding it!`);
-        }
-        case 3: {
-          return mcQ(`Which shape has 3 lines of symmetry?`, ["Equilateral triangle", "Rectangle", "Square", "Parallelogram"], "Equilateral triangle", `Three equal sides = 3 lines.`);
-        }
-        case 4: {
-          return mcQ(`A regular hexagon has how many lines of symmetry?`, [6, 3, 4, 2], 6, `A regular shape has as many lines as it has sides.`);
-        }
-      }
-    }
-  },
-  { week:4, day:5, theme:"sky", icon:"🌉", title:"The Sky Bridge",
-    tag:"WEEK 4 · DAY 5 · BOSS CHALLENGE", skill:"BOSS — All Week 4 geometry skills",
-    supply:{icon:"🌉",name:"Bridge Plans"}, badge:"Sky Architect",
-    story:"🌉 To cross from the Sky Kingdom to the Space Station, build a bridge. Use perimeter, area, angles, and symmetry to make it strong.",
-    teach:`<div class="teach-step"><strong>BOSS DAY.</strong> Geometry mix: perimeter, area, angle types, symmetry.</div><div class="teach-step green"><strong>Strategy:</strong> Draw the problem if you can! Geometry loves a sketch.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: return LESSONS[15].gen(0);
-        case 1: return LESSONS[16].gen(0);
-        case 2: return LESSONS[17].gen(0);
-        case 3: return LESSONS[18].gen(0);
-        case 4: return LESSONS[15].gen(2);
-      }
-    }
-  },
-  { week:5, day:1, theme:"space", icon:"📊", title:"Stellar Tally",
-    tag:"WEEK 5 · DAY 1 · SPACE STATION", skill:"Reading bar graphs and pictographs",
-    supply:{icon:"📊",name:"Data Pad"}, badge:"Data Reader",
-    story:"📊 The space station logs how many stars they see each day. Read the graph to find patterns.",
-    teach:`<div class="teach-step"><strong>A bar graph</strong> shows data with rectangles. Taller bars = more.</div><div class="teach-step green"><strong>To read a bar graph:</strong><br>1. Look at the label at the bottom (categories)<br>2. Look at the side (numbers)<br>3. See where the top of each bar lines up with a number<br>4. That's the value!</div><div class="teach-step gold"><strong>A pictograph</strong> uses symbols. Each symbol = a certain number. Always check the KEY (legend).</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A pictograph where 🌟 = 5 stars. If Monday has 4 🌟, that's 4 × 5 = <strong>20 stars</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🚀 Explorer's Connection:</strong> Real scientists use graphs to spot patterns. Trends jump out instantly!</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const days=[rand(3,9),rand(3,9),rand(3,9),rand(3,9),rand(3,9)];
-          const labels=["Mon","Tue","Wed","Thu","Fri"];
-          const idx=rand(0,4);
-          return numQ(`Bar graph shows: Mon=${days[0]}, Tue=${days[1]}, Wed=${days[2]}, Thu=${days[3]}, Fri=${days[4]} stars. How many on ${labels[idx]}?`, days[idx], `Just read the value.`);
-        }
-        case 1: {
-          const each=choose([2,5,10]);
-          const count=rand(3,7);
-          return numQ(`On a pictograph, 🌟 = ${each} stars. Monday shows ${count} stars. How many stars?`, each*count, `${count} × ${each}.`);
-        }
-        case 2: {
-          const values=[rand(2,8),rand(2,8),rand(2,8),rand(2,8)];
-          const labels=["A","B","C","D"];
-          const total=values.reduce((s,v)=>s+v,0);
-          return numQ(`Bar graph: A=${values[0]}, B=${values[1]}, C=${values[2]}, D=${values[3]}. Total across all 4 bars?`, total, `Add all bars.`);
-        }
-        case 3: {
-          const values=[rand(2,8),rand(2,8),rand(2,8)];
-          const maxIdx = values.indexOf(Math.max(...values));
-          const labels=["Stars","Planets","Comets"];
-          return mcQ(`Bar graph: Stars=${values[0]}, Planets=${values[1]}, Comets=${values[2]}. Which has the MOST?`, labels, labels[maxIdx], `Find the tallest bar.`);
-        }
-        case 4: {
-          const each=choose([5,10]);
-          const a=rand(3,6), b=rand(2,4);
-          return numQ(`Pictograph: 🚀 = ${each} ships. Tuesday shows ${a} 🚀. Wednesday shows ${b} 🚀. How many MORE ships on Tuesday?`, (a-b)*each, `(${a} - ${b}) × ${each}.`);
-        }
-      }
-    }
-  },
-  { week:5, day:2, theme:"space", icon:"✨", title:"Constellation Patterns",
-    tag:"WEEK 5 · DAY 2 · SPACE STATION", skill:"Number patterns (find the next term)",
-    supply:{icon:"✨",name:"Star Decoder"}, badge:"Pattern Hunter",
-    story:"✨ Stars form patterns. Spot the rule, predict what comes next, and unlock the constellation map.",
-    teach:`<div class="teach-step"><strong>A number pattern follows a RULE.</strong> Find the rule, and you can predict any number in the sequence.</div><div class="teach-step green"><strong>Common rules:</strong><br>• ADD: 2, 5, 8, 11... (add 3 each time)<br>• SUBTRACT: 50, 45, 40... (subtract 5 each time)<br>• MULTIPLY: 2, 4, 8, 16... (double each time)</div><div class="teach-step gold"><strong>To find the rule:</strong> Look at two numbers in a row. What changed? Then check that change between other pairs to be sure.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 4, 7, 10, 13, ___. Difference is +3. Next: 13 + 3 = <strong>16</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🚀 Explorer's Connection:</strong> Stars in constellations follow patterns. Decode them and you become a master navigator.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const start=rand(2,10), step=rand(2,5);
-          const seq=[start, start+step, start+2*step, start+3*step];
-          return numQ(`Pattern: ${seq.join(", ")}, ___. What is the next number?`, seq[3]+step, `Each number goes UP by ${step}.`);
-        }
-        case 1: {
-          const start=rand(40,90), step=rand(3,7);
-          const seq=[start, start-step, start-2*step, start-3*step];
-          if (seq[3] - step < 0) return LESSONS[21].gen(slot);
-          return numQ(`Pattern: ${seq.join(", ")}, ___. What is the next number?`, seq[3]-step, `Each number goes DOWN by ${step}.`);
-        }
-        case 2: {
-          const start=rand(2,4);
-          const seq=[start, start*2, start*4, start*8];
-          return numQ(`Pattern: ${seq.join(", ")}, ___. What is the next number?`, seq[3]*2, `Each number DOUBLES.`);
-        }
-        case 3: {
-          const start=rand(5,15), step=rand(2,5);
-          const seq=[start, start+step, start+2*step];
-          return mcQ(`What is the rule? Pattern: ${seq.join(", ")}, ...`, [`Add ${step}`, `Subtract ${step}`, `Multiply by ${step}`, `Divide by ${step}`], `Add ${step}`, `${seq[0]} + ${step} = ${seq[1]}.`);
-        }
-        case 4: {
-          const start=rand(3,8), step=rand(2,4);
-          const seq=[start, start+step, start+2*step, start+3*step, start+4*step];
-          const missing_idx=rand(1,3);
-          const seqDisplay=seq.map((v,i)=>i===missing_idx?"___":v).join(", ");
-          return numQ(`Fill in the blank: ${seqDisplay}`, seq[missing_idx], `Rule: add ${step} each time.`);
-        }
-      }
-    }
-  },
-  { week:5, day:3, theme:"space", icon:"🌌", title:"Galactic Comparisons",
-    tag:"WEEK 5 · DAY 3 · SPACE STATION", skill:"Comparing 4-digit numbers",
-    supply:{icon:"🌌",name:"Cosmic Map"}, badge:"Galaxy Sorter",
-    story:"🌌 The galaxy is full of distances and populations. Order them from smallest to largest to chart the way home.",
-    teach:`<div class="teach-step"><strong>To compare numbers,</strong> start from the LEFT. The first place where they differ tells you which is bigger.</div><div class="teach-step green"><strong>Step by step:</strong><br>• Compare thousands first<br>• If equal, compare hundreds<br>• Then tens, then ones</div><div class="teach-step gold"><strong>Example:</strong> 4,287 vs 4,298?<br>Thousands: both 4 (tie)<br>Hundreds: both 2 (tie)<br>Tens: 8 vs 9 → 9 wins!<br>So <strong>4,298 &gt; 4,287</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> Order 3,500 - 3,050 - 3,505 from smallest. Smallest has fewest hundreds: 3,050, then 3,500, then 3,505.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🚀 Explorer's Connection:</strong> Need to sort spaceships by speed? Real-world comparison saves lives.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const a=rand(1000,9999), b=rand(1000,9999);
-          if (a===b) return LESSONS[22].gen(slot);
-          const bigger=Math.max(a,b);
-          return mcQ(`Which is GREATER: <strong>${fmt(a)}</strong> or <strong>${fmt(b)}</strong>?`, [fmt(a), fmt(b), "Equal"], fmt(bigger), `Compare digits from left.`);
-        }
-        case 1: {
-          const a=rand(1000,9999), b=rand(1000,9999);
-          if (a===b) return LESSONS[22].gen(slot);
-          const symbol = a > b ? ">" : "<";
-          return mcQ(`Fill in: <strong>${fmt(a)} ___ ${fmt(b)}</strong>`, ["<", ">", "="], symbol, `Use < or > to show which is bigger.`);
-        }
-        case 2: {
-          const base=rand(2,8);
-          const a=base*1000 + rand(0,999);
-          const b=base*1000 + rand(0,999);
-          const c=base*1000 + rand(0,999);
-          const sorted=[a,b,c].sort((x,y)=>x-y);
-          return mcQ(`Order from LEAST to GREATEST: ${fmt(a)}, ${fmt(b)}, ${fmt(c)}`, [sorted.map(fmt).join(", "), [a,b,c].map(fmt).join(", "), [...sorted].reverse().map(fmt).join(", "), `${fmt(a)}, ${fmt(c)}, ${fmt(b)}`], sorted.map(fmt).join(", "), `Compare each number digit by digit.`);
-        }
-        case 3: {
-          const n=rand(2000,8999);
-          return numQ(`What number is 100 MORE than ${fmt(n)}?`, n+100, `Add 100.`);
-        }
-        case 4: {
-          const n=rand(1000,9999);
-          return mcQ(`Round ${fmt(n)} to the nearest 1,000.`, [fmt(Math.round(n/1000)*1000), fmt(Math.round(n/1000)*1000 + 1000), fmt(Math.round(n/1000)*1000 - 1000), fmt(n+100)], fmt(Math.round(n/1000)*1000), `Look at the hundreds digit.`);
-        }
-      }
-    }
-  },
-  { week:5, day:4, theme:"space", icon:"🛰️", title:"Mission Calculations",
-    tag:"WEEK 5 · DAY 4 · SPACE STATION", skill:"Two-step word problems",
-    supply:{icon:"🛸",name:"Engine Plans"}, badge:"Mission Planner",
-    story:"🛰️ Mission Control needs answers. Multi-step problems: read carefully, solve one step at a time.",
-    teach:`<div class="teach-step"><strong>Word problems have HIDDEN math.</strong> Find the operation by reading carefully.</div><div class="teach-step green"><strong>Clue words:</strong><br>• "in all" / "total" → ADD<br>• "left" / "how many more" → SUBTRACT<br>• "each" with a quantity → MULTIPLY<br>• "share equally" / "split" → DIVIDE</div><div class="teach-step gold"><strong>Two-step problems:</strong> Do ONE step first. Get an answer. Then use that answer for the next step.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A ship carries 4 boxes of 25 fuel cells each. 30 are used. How many remain?<br>Step 1: 4 × 25 = 100 cells.<br>Step 2: 100 − 30 = <strong>70 cells left</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🚀 Explorer's Connection:</strong> Real missions need real math. Get it right and the crew comes home.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const boxes=rand(3,8), perBox=rand(5,9);
-          return numQ(`A spaceship has ${boxes} boxes. Each box holds ${perBox} fuel cells. Total cells?`, boxes*perBox, `${boxes} × ${perBox}.`);
-        }
-        case 1: {
-          const start=rand(50,150), used=rand(20,40);
-          return numQ(`You start with ${start} oxygen tanks. You use ${used}. How many left?`, start-used, `${start} − ${used}.`);
-        }
-        case 2: {
-          const boxes=rand(3,6), perBox=rand(5,10), used=rand(10,30);
-          const total=boxes*perBox;
-          return numQ(`A ship has ${boxes} crates with ${perBox} parts each. ${used} are used. How many left?`, total-used, `Step 1: ${boxes} × ${perBox} = ${total}. Step 2: ${total} − ${used}.`);
-        }
-        case 3: {
-          const a=rand(20,50), b=rand(20,50), c=rand(5,20);
-          return numQ(`Sun has ${a} stars, Moon has ${b}, Comet has ${c}. Total stars?`, a+b+c, `Add all three.`);
-        }
-        case 4: {
-          const total=rand(60,120), groups=rand(3,6);
-          if (total % groups !== 0) return LESSONS[23].gen(slot);
-          return numQ(`${total} astronauts split into ${groups} ships, equally. How many on each ship?`, total/groups, `Divide: ${total} ÷ ${groups}.`);
-        }
-      }
-    }
-  },
-  { week:5, day:5, theme:"space", icon:"🏆", title:"Return Home",
-    tag:"WEEK 5 · DAY 5 · FINAL BOSS", skill:"FINAL BOSS — All 5 weeks combined",
+  { week:5, day:5, theme:"galaxy", icon:"🏆", title:"Comprehensive Review &amp; Final Assessment",
+    tag:"WEEK 5 · FRIDAY · FINAL BOSS", skill:"ALL 5-WEEK SKILLS — final mixed-skills test",
     supply:{icon:"🏆",name:"Captain's Badge"}, badge:"Captain",
-    story:"🏆 The journey is over. To return home, use every skill from every week. You've earned this!",
-    teach:`<div class="teach-step"><strong>FINAL BOSS DAY.</strong> One problem from every week. Place value. Fractions. Money. Geometry. Data.</div><div class="teach-step green"><strong>Strategy:</strong> Read each problem. Name the skill. Pick the move. Solve.</div><div class="teach-step gold"><strong>You did it!</strong> Five weeks. Twenty-five missions. You're a CAPTAIN now.</div>`,
+    story:"🏆 The journey is over. Captain Parker, Timo, Mackenzie, and Nelly use every skill to return home.",
+    teach:`<div class="teach-step"><strong>FINAL ASSESSMENT.</strong> One problem from each week:<br>• W1: Place value / rounding<br>• W2: Multiplication<br>• W3: Division<br>• W4: Fractions<br>• W5: Decimals</div><div class="teach-step green"><strong>Strategy:</strong> Read each problem. Name the skill. Pick the move. Solve.</div><div class="teach-step gold"><strong>🏆 You did it!</strong> 5 weeks. 24 missions. You're a CAPTAIN.</div>`,
     gen: (slot) => {
       switch(slot) {
-        case 0: return LESSONS[0].gen(0); // place value
-        case 1: return LESSONS[5].gen(0); // fractions
-        case 2: return LESSONS[10].gen(0); // money
-        case 3: return LESSONS[15].gen(0); // perimeter
-        case 4: return LESSONS[20].gen(0); // bar graphs
+        case 0: return LESSONS[0].gen(0);
+        case 1: return LESSONS[5].gen(0);
+        case 2: return LESSONS[9].gen(0);
+        case 3: return LESSONS[15].gen(0);
+        case 4: return LESSONS[20].gen(0);
       }
     }
   }
