@@ -4955,8 +4955,34 @@ const choose = a => a[rand(0, a.length - 1)];
 const shuffleA = a => { for (let i = a.length - 1; i > 0; i--) { const j = rand(0, i); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const fmt = n => Number.isInteger(n) ? n.toLocaleString() : String(n);
 const mcQ = (q, opts, correct, hint) => {
-  const shuffled = shuffleA([...opts]);
-  return { type: "mc", q, opts: shuffled.map(String), ans: shuffled.indexOf(correct), hint };
+  // Dedupe options (preserving order) — prevents duplicate answer choices
+  const seen = new Set();
+  const unique = [];
+  for (const o of opts) {
+    const s = String(o);
+    if (!seen.has(s)) { seen.add(s); unique.push(s); }
+  }
+  // Ensure correct answer is always present
+  const strCorrect = String(correct);
+  if (!seen.has(strCorrect)) {
+    unique.unshift(strCorrect);
+    seen.add(strCorrect);
+  }
+  // Pad to 4 options if we dropped duplicates and correct is numeric
+  const correctNum = Number(correct);
+  if (!Number.isNaN(correctNum) && Number.isInteger(correctNum)) {
+    let delta = 1;
+    while (unique.length < 4 && delta < 50) {
+      for (const sign of [1, -1]) {
+        const cand = correctNum + sign * delta;
+        const s = String(cand);
+        if (cand > 0 && !seen.has(s)) { seen.add(s); unique.push(s); if (unique.length >= 4) break; }
+      }
+      delta++;
+    }
+  }
+  const shuffled = shuffleA(unique);
+  return { type: "mc", q, opts: shuffled, ans: shuffled.indexOf(strCorrect), hint };
 };
 const mcFixed = (q, opts, ansIdx, hint) => ({ type: "mc", q, opts, ans: ansIdx, hint });
 const numQ = (q, ans, hint) => ({ type: "num", q, ans, hint });
@@ -5018,8 +5044,10 @@ const LESSONS = [
           return mcQ(`Write this in standard form: <strong>${wordForm}</strong>`, [fmt(n), fmt(n+10), fmt(n-100), fmt(n*10)], fmt(n), `${t} thousand = ${t*1000}, plus ${h*100}, plus ${te*10}, plus ${o}.`);
         }
         case 4: {
-          const n=rand(1000,9999);
-          return mcQ(`How many <strong>hundreds</strong> are in ${fmt(n)}?`, [Math.floor(n/100), Math.floor(n/10), Math.floor(n/1000), n], Math.floor(n/100), `Drop the last two digits.`);
+          // Expanded form → standard form
+          const t=rand(1,9), h=rand(1,9), te=rand(1,9), o=rand(1,9);
+          const n = t*1000 + h*100 + te*10 + o;
+          return mcQ(`What number equals <strong>${t*1000} + ${h*100} + ${te*10} + ${o}</strong>?`, [fmt(n), fmt(n+1), fmt(n+10), fmt(n+100)], fmt(n), `Add: ${t*1000} + ${h*100} + ${te*10} + ${o} = ${fmt(n)}.`);
         }
       }
     }
