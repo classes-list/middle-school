@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Function Joystick · Drive Through f(x)</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --navy:#1a2a4a; --navy-deep:#0c1633;
+    --gold:#FFD100; --gold-deep:#b8860b;
+    --paper:#fef3c7; --cream:#fffdf2;
+    --ocean:#0d9488; --ocean-deep:#134e4a;
+    --purple:#7c3aed; --purple-deep:#4c1d95;
+    --good:#16a34a; --bad:#dc2626;
+    --ink:#1f2937; --dim:#64748b;
+  }
+  body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:linear-gradient(135deg, #0c1633 0%, #1a2a4a 50%, #4c1d95 100%);
+    color:#fff; min-height:100vh; padding:24px;
+  }
+  .container { max-width:1100px; margin:0 auto; }
+
+  header { text-align:center; margin-bottom:24px; }
+  h1 {
+    font-size:2.2rem; font-weight:900; line-height:1.1;
+    background:linear-gradient(90deg, var(--gold), #fff);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:6px;
+  }
+  .tagline { color:rgba(255,255,255,0.8); font-size:1rem; }
+
+  .panel {
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,209,0,0.15);
+    border-radius:14px; padding:18px 22px; margin-bottom:18px;
+    backdrop-filter:blur(8px);
+  }
+  .panel h2 {
+    font-size:.78rem; color:var(--gold); text-transform:uppercase;
+    letter-spacing:.1em; margin-bottom:10px; font-weight:800;
+  }
+
+  .input-row {
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  }
+  .input-row label { font-weight:700; font-size:1.15rem; color:var(--gold); }
+  .fx-input {
+    flex:1; min-width:220px;
+    background:rgba(0,0,0,0.3); color:#fff;
+    border:2px solid rgba(255,209,0,0.3); border-radius:8px;
+    padding:10px 14px; font-family:'Courier New', monospace;
+    font-size:1.05rem; transition:all .15s ease;
+  }
+  .fx-input:focus { outline:none; border-color:var(--gold); background:rgba(0,0,0,0.5); }
+  .fx-input.error { border-color:var(--bad); }
+  .update-btn {
+    background:var(--gold); color:var(--navy);
+    border:none; padding:10px 22px; border-radius:8px;
+    font-weight:800; font-size:.95rem; cursor:pointer;
+    transition:all .15s ease;
+  }
+  .update-btn:hover { background:#ffea4a; transform:translateY(-1px); }
+
+  .examples {
+    display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;
+  }
+  .example-btn {
+    background:rgba(124,58,237,0.3); color:#e0d4ff;
+    border:1px solid rgba(124,58,237,0.5); border-radius:6px;
+    padding:6px 12px; font-size:.82rem; font-family:'Courier New', monospace;
+    cursor:pointer; transition:all .15s ease;
+  }
+  .example-btn:hover { background:rgba(124,58,237,0.5); color:#fff; }
+
+  .stats-grid {
+    display:grid; grid-template-columns:repeat(3,1fr); gap:14px;
+  }
+  .stat-box {
+    background:rgba(0,0,0,0.3); border-radius:10px;
+    padding:12px 16px; text-align:center;
+    border:1px solid rgba(255,209,0,0.15);
+  }
+  .stat-box .label {
+    font-size:.7rem; color:rgba(255,255,255,0.6);
+    letter-spacing:.1em; text-transform:uppercase; font-weight:800;
+  }
+  .stat-box .value {
+    font-family:'Courier New', monospace; font-size:1.8rem;
+    color:var(--gold); font-weight:900; margin-top:4px;
+  }
+  .stat-box .value.error { color:var(--bad); font-size:1.2rem; }
+
+  .canvas-wrap {
+    background:#0c1633; border-radius:14px;
+    padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.4);
+    border:1px solid rgba(255,209,0,0.2);
+    position:relative;
+  }
+  canvas {
+    display:block; width:100%; height:auto;
+    background:#0c1633; border-radius:8px;
+  }
+
+  .controls-row {
+    display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+    margin-top:14px;
+  }
+  .control {
+    display:flex; align-items:center; gap:8px;
+    color:rgba(255,255,255,0.9); font-size:.92rem;
+  }
+  .control label { font-weight:600; }
+  .control input[type="range"] {
+    width:120px; cursor:pointer;
+  }
+  .control .value {
+    color:var(--gold); font-weight:800; min-width:40px;
+    font-family:'Courier New', monospace;
+  }
+  .control-btn {
+    background:rgba(255,255,255,0.1); color:#fff;
+    border:1px solid rgba(255,209,0,0.3); border-radius:6px;
+    padding:8px 14px; font-size:.85rem; font-weight:700; cursor:pointer;
+    transition:all .15s ease;
+  }
+  .control-btn:hover { background:rgba(255,209,0,0.2); border-color:var(--gold); }
+
+  .joystick-hint {
+    display:flex; gap:14px; align-items:center; justify-content:center;
+    margin-top:14px; padding:12px 18px;
+    background:rgba(255,209,0,0.1); border-radius:10px;
+    border:1px dashed rgba(255,209,0,0.4);
+  }
+  .key {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:38px; height:38px;
+    background:rgba(255,255,255,0.15); border-radius:6px;
+    border:2px solid rgba(255,209,0,0.4);
+    font-size:1.3rem; font-weight:900; color:var(--gold);
+    box-shadow:0 2px 0 rgba(0,0,0,0.3);
+    transition:all .1s ease;
+  }
+  .key.active {
+    background:var(--gold); color:var(--navy);
+    transform:translateY(2px);
+    box-shadow:0 0 0 rgba(0,0,0,0.3);
+  }
+  .joystick-hint .label {
+    font-size:.9rem; color:rgba(255,255,255,0.85);
+  }
+
+  footer {
+    text-align:center; margin-top:24px; padding:12px;
+    color:rgba(255,255,255,0.5); font-size:.85rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>📈 Function Joystick</h1>
+    <p class="tagline">Type any function. Use ↑ / ↓ arrow keys to drive through it.</p>
+  </header>
+
+  <!-- ═══════ FUNCTION INPUT ═══════ -->
+  <div class="panel">
+    <h2>Step 1 · Type your function</h2>
+    <div class="input-row">
+      <label>f(x) =</label>
+      <input id="fxInput" class="fx-input" type="text" value="x" autocomplete="off" spellcheck="false">
+      <button class="update-btn" onclick="updateFunction()">Update ▶</button>
+    </div>
+    <div class="examples">
+      <button class="example-btn" onclick="setFunction('x')">x</button>
+      <button class="example-btn" onclick="setFunction('2*x + 1')">2x + 1</button>
+      <button class="example-btn" onclick="setFunction('x^2')">x²</button>
+      <button class="example-btn" onclick="setFunction('x^2 - 4')">x² − 4</button>
+      <button class="example-btn" onclick="setFunction('-x^2 + 5')">−x² + 5</button>
+      <button class="example-btn" onclick="setFunction('x^3 / 5')">x³ / 5</button>
+      <button class="example-btn" onclick="setFunction('abs(x)')">|x|</button>
+      <button class="example-btn" onclick="setFunction('sqrt(x)')">√x</button>
+      <button class="example-btn" onclick="setFunction('sin(x)')">sin(x)</button>
+      <button class="example-btn" onclick="setFunction('cos(x) * 3')">3·cos(x)</button>
+      <button class="example-btn" onclick="setFunction('1/x')">1/x</button>
+      <button class="example-btn" onclick="setFunction('2^x')">2ˣ</button>
+    </div>
+  </div>
+
+  <!-- ═══════ LIVE STATS ═══════ -->
+  <div class="panel">
+    <h2>Step 2 · Drive with arrow keys</h2>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="label">x position</div>
+        <div class="value" id="xValue">0.00</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">y = f(x)</div>
+        <div class="value" id="yValue">0.00</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">f(x) =</div>
+        <div class="value" id="currentFn" style="font-size:1.2rem; color:#7dd3fc;">x</div>
+      </div>
+    </div>
+    <div class="joystick-hint">
+      <span class="label">Press &amp; hold:</span>
+      <span class="key" id="upKey">↑</span>
+      <span class="label">x goes UP</span>
+      <span class="key" id="downKey">↓</span>
+      <span class="label">x goes DOWN</span>
+    </div>
+  </div>
+
+  <!-- ═══════ CANVAS ═══════ -->
+  <div class="canvas-wrap">
+    <canvas id="graph" width="1040" height="600"></canvas>
+  </div>
+
+  <!-- ═══════ CONTROLS ═══════ -->
+  <div class="panel" style="margin-top:18px;">
+    <div class="controls-row">
+      <div class="control">
+        <label>Speed:</label>
+        <input id="speedSlider" type="range" min="0.5" max="10" step="0.1" value="3">
+        <span class="value" id="speedValue">3.0</span>
+      </div>
+      <div class="control">
+        <label>Zoom:</label>
+        <input id="zoomSlider" type="range" min="5" max="50" step="1" value="15">
+        <span class="value" id="zoomValue">15</span>
+      </div>
+      <button class="control-btn" onclick="resetX()">⟲ Reset to x=0</button>
+      <button class="control-btn" onclick="clearTrail()">🧹 Clear trail</button>
+    </div>
+  </div>
+
+  <footer>
+    🌟 Function Joystick · Use <strong>x</strong> as the variable · supports <code>+ − × ÷ ^ sqrt abs sin cos tan exp log</code>
+  </footer>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// FUNCTION PARSING — safe-ish using Function constructor
+// ═══════════════════════════════════════════════════════════════════
+function parseFn(expr) {
+  if (!expr || !expr.trim()) return null;
+  // Normalize: ^ → **, implicit multiplication (2x → 2*x, x(x+1) → x*(x+1))
+  let s = expr.trim()
+    .replace(/\^/g, '**')
+    .replace(/(\d)([a-zA-Z(])/g, '$1*$2')
+    .replace(/([a-zA-Z\d\)])(\()/g, function(m, a, b) {
+      // Don't insert * before function call (sin( cos( etc)
+      const fnNames = ['sin','cos','tan','asin','acos','atan','sqrt','abs','exp','log','log10','log2','ln','min','max','pow','floor','ceil','round'];
+      // Look backwards from this paren to find the word
+      return m;
+    });
+
+  try {
+    // Build a sandboxed function with Math methods unprefixed
+    const fn = new Function('x',
+      'const {sin,cos,tan,asin,acos,atan,sqrt,abs,exp,log,log2,log10,floor,ceil,round,pow,PI,E,min,max} = Math; const ln = Math.log;' +
+      'return (' + s + ');'
+    );
+    // Test it
+    const test = fn(1);
+    if (typeof test !== 'number') return null;
+    return fn;
+  } catch (e) {
+    return null;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+let currentFn = parseFn('x');
+let currentExpr = 'x';
+let x = 0;
+let speed = 3;
+let zoom = 15; // half-range of x axis shown
+let upPressed = false;
+let downPressed = false;
+let lastFrame = performance.now();
+let trail = []; // array of {x, y}
+
+// ═══════════════════════════════════════════════════════════════════
+// CANVAS
+// ═══════════════════════════════════════════════════════════════════
+const canvas = document.getElementById('graph');
+const ctx = canvas.getContext('2d');
+
+function fitCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', fitCanvas);
+
+// Math-coord → screen-coord
+function mathToScreen(mx, my) {
+  const w = canvas.getBoundingClientRect().width;
+  const h = canvas.getBoundingClientRect().height;
+  const cx = w / 2;
+  const cy = h / 2;
+  const scaleX = (w / 2) / zoom;
+  const scaleY = (h / 2) / zoom;
+  return [cx + mx * scaleX, cy - my * scaleY];
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// DRAW
+// ═══════════════════════════════════════════════════════════════════
+function draw() {
+  const w = canvas.getBoundingClientRect().width;
+  const h = canvas.getBoundingClientRect().height;
+
+  // Background
+  ctx.fillStyle = '#0c1633';
+  ctx.fillRect(0, 0, w, h);
+
+  // Grid (minor)
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (let i = -zoom; i <= zoom; i++) {
+    const [sx, _] = mathToScreen(i, 0);
+    ctx.moveTo(sx, 0); ctx.lineTo(sx, h);
+  }
+  for (let j = -zoom; j <= zoom; j++) {
+    const [_, sy] = mathToScreen(0, j);
+    ctx.moveTo(0, sy); ctx.lineTo(w, sy);
+  }
+  ctx.stroke();
+
+  // Grid (major every 5)
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (let i = -zoom; i <= zoom; i += 5) {
+    const [sx, _] = mathToScreen(i, 0);
+    ctx.moveTo(sx, 0); ctx.lineTo(sx, h);
+  }
+  for (let j = -zoom; j <= zoom; j += 5) {
+    const [_, sy] = mathToScreen(0, j);
+    ctx.moveTo(0, sy); ctx.lineTo(w, sy);
+  }
+  ctx.stroke();
+
+  // Axes
+  ctx.strokeStyle = 'rgba(255,209,0,0.8)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  const [_, originY] = mathToScreen(0, 0);
+  const [originX, __] = mathToScreen(0, 0);
+  ctx.moveTo(0, originY); ctx.lineTo(w, originY); // x-axis
+  ctx.moveTo(originX, 0); ctx.lineTo(originX, h); // y-axis
+  ctx.stroke();
+
+  // Axis labels (every 5)
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  ctx.font = '11px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  for (let i = -zoom; i <= zoom; i += 5) {
+    if (i === 0) continue;
+    const [sx, sy] = mathToScreen(i, 0);
+    ctx.fillText(i, sx, sy + 4);
+  }
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  for (let j = -zoom; j <= zoom; j += 5) {
+    if (j === 0) continue;
+    const [sx, sy] = mathToScreen(0, j);
+    ctx.fillText(j, sx - 4, sy);
+  }
+  // Origin label
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'top';
+  ctx.fillText('0', originX - 4, originY + 4);
+
+  // Function curve
+  if (currentFn) {
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    let started = false;
+    let prevY = null;
+    const steps = Math.round(w);
+    for (let i = 0; i <= steps; i++) {
+      const mx = -zoom + (i / steps) * (2 * zoom);
+      let my;
+      try {
+        my = currentFn(mx);
+        if (!isFinite(my)) { started = false; continue; }
+      } catch (e) {
+        started = false; continue;
+      }
+      const [sx, sy] = mathToScreen(mx, my);
+      if (!started || (prevY !== null && Math.abs(my - prevY) > zoom)) {
+        ctx.moveTo(sx, sy);
+        started = true;
+      } else {
+        ctx.lineTo(sx, sy);
+      }
+      prevY = my;
+    }
+    ctx.stroke();
+  }
+
+  // Trail
+  if (trail.length > 1) {
+    ctx.strokeStyle = 'rgba(255,209,0,0.5)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    for (let i = 0; i < trail.length; i++) {
+      const [sx, sy] = mathToScreen(trail[i].x, trail[i].y);
+      if (i === 0) ctx.moveTo(sx, sy);
+      else ctx.lineTo(sx, sy);
+    }
+    ctx.stroke();
+  }
+
+  // Current point
+  if (currentFn) {
+    let y;
+    try { y = currentFn(x); } catch (e) { y = NaN; }
+    if (isFinite(y)) {
+      const [sx, sy] = mathToScreen(x, y);
+      // Vertical drop line to x-axis
+      ctx.strokeStyle = 'rgba(255,209,0,0.4)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      const [oxs, oys] = mathToScreen(x, 0);
+      ctx.moveTo(sx, sy); ctx.lineTo(oxs, oys);
+      // Horizontal drop line to y-axis
+      const [oys2, oxs2] = mathToScreen(0, y);
+      ctx.moveTo(sx, sy); ctx.lineTo(oys2, oxs2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // The dot itself (glowing)
+      ctx.fillStyle = 'rgba(255,209,0,0.3)';
+      ctx.beginPath();
+      ctx.arc(sx, sy, 14, 0, Math.PI*2);
+      ctx.fill();
+
+      ctx.fillStyle = '#FFD100';
+      ctx.beginPath();
+      ctx.arc(sx, sy, 7, 0, Math.PI*2);
+      ctx.fill();
+
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// ANIMATION LOOP
+// ═══════════════════════════════════════════════════════════════════
+function loop(now) {
+  const dt = Math.min((now - lastFrame) / 1000, 0.1);
+  lastFrame = now;
+
+  if (upPressed) x += speed * dt;
+  if (downPressed) x -= speed * dt;
+
+  // Clamp x to visible range
+  if (x > zoom * 1.2) x = zoom * 1.2;
+  if (x < -zoom * 1.2) x = -zoom * 1.2;
+
+  // Update display
+  document.getElementById('xValue').textContent = x.toFixed(2);
+  if (currentFn) {
+    let y;
+    try { y = currentFn(x); } catch (e) { y = NaN; }
+    const yEl = document.getElementById('yValue');
+    if (isFinite(y)) {
+      yEl.textContent = y.toFixed(2);
+      yEl.classList.remove('error');
+      // Add to trail
+      const last = trail[trail.length - 1];
+      if (!last || Math.abs(last.x - x) > 0.05 || Math.abs(last.y - y) > 0.05) {
+        trail.push({x, y});
+        if (trail.length > 200) trail.shift();
+      }
+    } else {
+      yEl.textContent = '⚠ undef';
+      yEl.classList.add('error');
+    }
+  }
+
+  draw();
+  requestAnimationFrame(loop);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════════════
+function setFunction(expr) {
+  document.getElementById('fxInput').value = expr;
+  updateFunction();
+}
+
+function updateFunction() {
+  const expr = document.getElementById('fxInput').value;
+  const fn = parseFn(expr);
+  const input = document.getElementById('fxInput');
+  if (fn) {
+    currentFn = fn;
+    currentExpr = expr;
+    input.classList.remove('error');
+    document.getElementById('currentFn').textContent = expr;
+    trail = []; // reset trail on function change
+  } else {
+    input.classList.add('error');
+  }
+}
+
+function resetX() { x = 0; trail = []; }
+function clearTrail() { trail = []; }
+
+document.getElementById('speedSlider').addEventListener('input', e => {
+  speed = parseFloat(e.target.value);
+  document.getElementById('speedValue').textContent = speed.toFixed(1);
+});
+document.getElementById('zoomSlider').addEventListener('input', e => {
+  zoom = parseFloat(e.target.value);
+  document.getElementById('zoomValue').textContent = zoom;
+});
+
+window.addEventListener('keydown', e => {
+  if (document.activeElement === document.getElementById('fxInput')) {
+    if (e.key === 'Enter') updateFunction();
+    return; // don't capture arrows while typing
+  }
+  if (e.key === 'ArrowUp') {
+    upPressed = true;
+    document.getElementById('upKey').classList.add('active');
+    e.preventDefault();
+  } else if (e.key === 'ArrowDown') {
+    downPressed = true;
+    document.getElementById('downKey').classList.add('active');
+    e.preventDefault();
+  }
+});
+window.addEventListener('keyup', e => {
+  if (e.key === 'ArrowUp') {
+    upPressed = false;
+    document.getElementById('upKey').classList.remove('active');
+  } else if (e.key === 'ArrowDown') {
+    downPressed = false;
+    document.getElementById('downKey').classList.remove('active');
+  }
+});
+
+// Allow Enter in input field to update
+document.getElementById('fxInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') updateFunction();
+});
+
+// Boot
+fitCanvas();
+requestAnimationFrame(loop);
+</script>
+
+</body>
+</html>
