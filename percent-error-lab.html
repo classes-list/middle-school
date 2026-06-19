@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percent Error Lab · Guess &amp; Measure</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --navy:#1a2a4a; --navy-deep:#0c1633;
+    --gold:#FFD100; --gold-deep:#b8860b;
+    --paper:#fef3c7; --cream:#fffdf2;
+    --ocean:#0d9488; --ocean-deep:#134e4a;
+    --good:#16a34a; --warn:#f59e0b; --bad:#dc2626;
+    --ink:#1f2937; --dim:#64748b;
+  }
+  body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:linear-gradient(135deg, #fef3c7 0%, #fdf6e3 50%, #d1fae5 100%);
+    color:var(--ink); min-height:100vh; padding:24px 16px;
+  }
+  .container { max-width:1100px; margin:0 auto; }
+
+  header { text-align:center; margin-bottom:24px; }
+  h1 {
+    font-size:2.2rem; font-weight:900; line-height:1.1;
+    color:var(--navy); margin-bottom:6px;
+  }
+  h1 .accent { color:var(--gold-deep); }
+  .tagline { color:var(--dim); font-size:1rem; max-width:620px; margin:0 auto; }
+
+  .panel {
+    background:#fff; border-radius:14px;
+    padding:18px 22px; margin-bottom:18px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+  }
+  .panel h2 {
+    font-size:.78rem; color:var(--navy); text-transform:uppercase;
+    letter-spacing:.1em; margin-bottom:10px; font-weight:800;
+  }
+
+  /* Controls */
+  .controls-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:14px;
+  }
+  .control-group {
+    background:var(--cream); padding:14px 16px; border-radius:10px;
+    border-left:4px solid var(--gold-deep);
+  }
+  .control-group .label {
+    font-size:.7rem; color:var(--gold-deep);
+    letter-spacing:.1em; text-transform:uppercase; font-weight:800;
+    margin-bottom:6px;
+  }
+  .opt-row { display:flex; gap:6px; flex-wrap:wrap; }
+  .opt-btn {
+    background:#fff; border:2px solid #d1d5db; color:var(--navy);
+    padding:6px 12px; border-radius:6px;
+    font-size:.85rem; font-weight:700; cursor:pointer;
+    transition:all .15s ease;
+  }
+  .opt-btn:hover { border-color:var(--gold); }
+  .opt-btn.active {
+    background:var(--gold); border-color:var(--gold-deep); color:var(--navy);
+    box-shadow:0 2px 6px rgba(184,134,11,0.3);
+  }
+
+  .generate-btn {
+    background:var(--ocean); color:#fff; border:none;
+    padding:14px 26px; border-radius:10px;
+    font-size:1.05rem; font-weight:800; cursor:pointer;
+    transition:all .15s ease; width:100%; margin-top:14px;
+    box-shadow:0 4px 12px rgba(13,148,136,0.3);
+  }
+  .generate-btn:hover { background:var(--ocean-deep); transform:translateY(-2px); }
+
+  /* Canvas */
+  .canvas-wrap {
+    background:#0c1633; border-radius:14px;
+    padding:14px; box-shadow:0 8px 30px rgba(0,0,0,0.4);
+    border:1px solid var(--gold);
+    position:relative;
+  }
+  canvas {
+    display:block; width:100%; height:auto;
+    background:#fefae0; border-radius:8px;
+    cursor:crosshair;
+  }
+  .canvas-overlay {
+    position:absolute; top:30px; left:30px;
+    background:rgba(26,42,74,0.85); color:#fff;
+    padding:6px 14px; border-radius:6px;
+    font-weight:700; font-size:.88rem;
+    backdrop-filter:blur(8px);
+    border:1px solid rgba(255,209,0,0.3);
+  }
+  .canvas-overlay .secret {
+    color:var(--gold); font-family:'Courier New', monospace;
+  }
+  .timer-overlay {
+    position:absolute; top:30px; right:30px;
+    background:rgba(13,148,136,0.95); color:#fff;
+    padding:10px 20px; border-radius:10px;
+    font-weight:900; font-size:1.5rem;
+    backdrop-filter:blur(8px);
+    border:2px solid rgba(255,209,0,0.4);
+    font-family:'Courier New', monospace;
+    min-width:90px; text-align:center;
+    transition:all .25s ease;
+    display:none;
+  }
+  .timer-overlay.show { display:block; }
+  .timer-overlay.warning { background:rgba(245,158,11,0.95); }
+  .timer-overlay.danger {
+    background:rgba(220,38,38,0.95);
+    animation:pulse 0.6s infinite;
+  }
+  .timer-overlay.expired {
+    background:#000; color:var(--bad);
+    animation:none;
+  }
+  @keyframes pulse {
+    0%, 100% { transform:scale(1); }
+    50% { transform:scale(1.08); }
+  }
+
+  /* Reference panel */
+  .ref-panel {
+    background:#fff; border-radius:14px;
+    padding:18px 22px; margin-bottom:18px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+    display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+    border-left:5px solid var(--ocean);
+  }
+  .ref-panel.hidden { display:none; }
+  .ref-panel .ref-title {
+    flex-basis:100%; font-size:.78rem; color:var(--ocean-deep);
+    text-transform:uppercase; letter-spacing:.1em; font-weight:800;
+    margin-bottom:4px;
+  }
+  .ref-package {
+    flex:0 0 auto; display:flex; align-items:center; justify-content:center;
+    background:var(--cream); border-radius:10px; padding:10px;
+    min-width:340px; min-height:160px;
+  }
+  .ref-package svg { max-width:100%; height:auto; display:block; }
+  .ref-info {
+    flex:1; min-width:180px;
+    font-size:.92rem; color:var(--ink); line-height:1.55;
+  }
+  .ref-info strong { color:var(--ocean-deep); }
+
+  /* Guess form */
+  .guess-row {
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  }
+  .guess-row label {
+    font-weight:800; font-size:1.05rem; color:var(--navy);
+  }
+  .guess-input {
+    flex:1; min-width:180px;
+    background:#fffdf2; color:var(--ink);
+    border:2px solid var(--gold-deep); border-radius:8px;
+    padding:12px 16px; font-family:'Courier New', monospace;
+    font-size:1.4rem; font-weight:800; text-align:center;
+    transition:all .15s ease;
+  }
+  .guess-input:focus { outline:none; border-color:var(--gold); background:#fff; }
+  .check-btn {
+    background:var(--gold); color:var(--navy);
+    border:1px solid var(--gold-deep); padding:14px 28px;
+    border-radius:10px; font-weight:900; font-size:1.05rem;
+    cursor:pointer; transition:all .15s ease;
+  }
+  .check-btn:hover { background:#ffea4a; transform:translateY(-1px); }
+  .check-btn:disabled { opacity:0.5; cursor:not-allowed; }
+
+  /* Result panel */
+  .result-panel {
+    background:#fff; border-radius:14px; padding:24px 28px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08); margin-bottom:18px;
+    display:none;
+  }
+  .result-panel.show { display:block; animation:fadeIn .4s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  .result-banner {
+    text-align:center; padding:18px; border-radius:10px;
+    margin-bottom:18px; font-size:1.3rem; font-weight:900;
+  }
+  .result-banner.good { background:#dcfce7; color:var(--good); }
+  .result-banner.warn { background:#fef3c7; color:var(--gold-deep); }
+  .result-banner.bad { background:#fee2e2; color:var(--bad); }
+
+  .stats-grid {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+    gap:14px; margin-bottom:18px;
+  }
+  .stat-box {
+    background:var(--cream); padding:14px 16px; border-radius:10px;
+    text-align:center; border-left:4px solid var(--gold-deep);
+  }
+  .stat-box .label {
+    font-size:.7rem; color:var(--gold-deep);
+    letter-spacing:.1em; text-transform:uppercase; font-weight:800;
+  }
+  .stat-box .value {
+    font-family:'Courier New', monospace; font-size:1.8rem;
+    color:var(--navy); font-weight:900; margin-top:4px;
+  }
+  .stat-box .value.error-color { color:var(--bad); }
+
+  .formula-box {
+    background:#f0fdfa; border-left:5px solid var(--ocean);
+    padding:16px 20px; border-radius:8px;
+    font-size:.95rem; line-height:1.7;
+  }
+  .formula-box strong { color:var(--ocean-deep); }
+  .formula-line {
+    font-family:'Courier New', monospace; font-size:1.05rem;
+    background:#fff; padding:8px 14px; border-radius:6px;
+    margin:6px 0; border:1px dashed var(--ocean);
+  }
+
+  /* History */
+  .history-list {
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+    gap:8px; margin-top:10px;
+  }
+  .history-item {
+    background:var(--cream); padding:10px 14px; border-radius:8px;
+    font-size:.88rem; display:flex; justify-content:space-between;
+    align-items:center;
+  }
+  .history-item .err {
+    font-family:'Courier New', monospace; font-weight:800;
+  }
+  .history-item .err.good { color:var(--good); }
+  .history-item .err.warn { color:var(--gold-deep); }
+  .history-item .err.bad { color:var(--bad); }
+  .clear-btn {
+    background:transparent; color:var(--dim); border:1px solid var(--dim);
+    padding:6px 12px; border-radius:6px; font-size:.8rem;
+    cursor:pointer; margin-top:10px;
+  }
+  .clear-btn:hover { background:var(--bad); color:#fff; border-color:var(--bad); }
+
+  footer {
+    text-align:center; margin-top:24px; padding:12px;
+    color:var(--dim); font-size:.85rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🎯 Percent Error Lab</h1>
+    <p class="tagline">Guess the number of items. The lab reveals the truth and shows your percent error — like a real scientist measuring against actual values.</p>
+  </header>
+
+  <!-- Controls -->
+  <div class="panel">
+    <h2>Step 1 · Set up the experiment</h2>
+    <div class="controls-grid">
+      <div class="control-group">
+        <div class="label">Difficulty</div>
+        <div class="opt-row" id="difficultyOpts">
+          <button class="opt-btn active" data-difficulty="easy">Easy (20–50)</button>
+          <button class="opt-btn" data-difficulty="medium">Medium (50–150)</button>
+          <button class="opt-btn" data-difficulty="hard">Hard (150–400)</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="label">Item Type</div>
+        <div class="opt-row" id="itemOpts">
+          <button class="opt-btn active" data-item="ticTac">🟢 Tic Tacs</button>
+          <button class="opt-btn" data-item="raisin">🍇 Raisins</button>
+          <button class="opt-btn" data-item="mm">🟤 M&amp;Ms</button>
+          <button class="opt-btn" data-item="candy">🍬 Candies</button>
+          <button class="opt-btn" data-item="gummy">🐻 Gummy Bears</button>
+          <button class="opt-btn" data-item="popcorn">🍿 Popcorn</button>
+          <button class="opt-btn" data-item="coconut">🥥 Coconuts</button>
+          <button class="opt-btn" data-item="shell">🐚 Shells</button>
+          <button class="opt-btn" data-item="star">⭐ Stars</button>
+          <button class="opt-btn" data-item="coin">🪙 Coins</button>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="label">Timer ⏱️</div>
+        <div class="opt-row" id="timerOpts">
+          <button class="opt-btn active" data-timer="off">Off (practice)</button>
+          <button class="opt-btn" data-timer="auto">Auto by level</button>
+          <button class="opt-btn" data-timer="20">20s</button>
+          <button class="opt-btn" data-timer="30">30s</button>
+          <button class="opt-btn" data-timer="40">40s</button>
+        </div>
+        <div style="font-size:.78rem; color:var(--dim); margin-top:6px;">
+          <em>Auto:</em> 20s Easy · 30s Medium · 40s Hard
+        </div>
+      </div>
+    </div>
+    <button class="generate-btn" onclick="generatePile()">🎲 Generate New Pile</button>
+  </div>
+
+  <!-- Canvas -->
+  <div class="canvas-wrap">
+    <canvas id="pile" width="1040" height="500"></canvas>
+    <div class="canvas-overlay">Pile #<span id="pileNumber">0</span> · <span id="itemLabel">Coconuts</span></div>
+    <div class="timer-overlay" id="timerOverlay">⏱️ <span id="timerValue">10</span>s</div>
+  </div>
+
+  <!-- Real-World Reference -->
+  <div class="ref-panel" id="refPanel" style="margin-top:18px;">
+    <div class="ref-title">📦 Real-World Reference</div>
+    <div class="ref-package" id="refPackage"></div>
+  </div>
+
+  <!-- Guess Form -->
+  <div class="panel" style="margin-top:18px;">
+    <h2>Step 2 · Make your guess</h2>
+    <div class="guess-row">
+      <label for="guess">How many?</label>
+      <input id="guess" class="guess-input" type="number" min="0" placeholder="Enter your guess" autocomplete="off">
+      <button class="check-btn" onclick="checkGuess()">✓ Check My Guess</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="result-panel" id="resultPanel">
+    <h2 style="font-size:.78rem; color:var(--navy); text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; font-weight:800;">📊 RESULTS</h2>
+    <div id="resultBanner" class="result-banner"></div>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="label">Your Guess</div>
+        <div class="value" id="statGuess">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Actual Count</div>
+        <div class="value" id="statActual">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Difference</div>
+        <div class="value" id="statDiff">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Percent Error</div>
+        <div class="value error-color" id="statError">—</div>
+      </div>
+    </div>
+    <div class="formula-box">
+      <strong>📐 How we calculated it:</strong><br>
+      <div class="formula-line" id="formulaLine">% Error = |measured − actual| ÷ actual × 100%</div>
+      <p style="margin-top:8px;">
+        <strong>Percent error</strong> measures how far off your measurement is from the real value, as a percentage.
+        Real scientists report percent error to show the precision of their experiments. Under <strong>5%</strong> is excellent; under <strong>10%</strong> is good; over <strong>25%</strong> means you need a better method!
+      </p>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="panel">
+    <h2>📜 Your scoreboard</h2>
+    <p style="font-size:.88rem; color:var(--dim); margin-bottom:8px;">Each guess gets logged here. Lowest percent error wins!</p>
+    <div class="history-list" id="historyList">
+      <div style="grid-column:1/-1; text-align:center; color:var(--dim); padding:12px; font-size:.9rem;">No guesses yet. Make your first attempt above!</div>
+    </div>
+    <button class="clear-btn" onclick="clearHistory()">🗑 Clear scoreboard</button>
+  </div>
+
+  <footer>
+    🌟 Percent Error Lab · Designed for STEM &amp; Math class · Formula: |measured − actual| ÷ actual × 100%
+  </footer>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+let difficulty = 'easy';
+let itemType = 'ticTac';
+let timerSetting = 'off';
+let actualCount = 0;
+let pileNumber = 0;
+let items = []; // [{x, y, r, rot}]
+let history = [];
+let currentRevealed = false;
+let timerSeconds = 0;
+let timerInterval = null;
+let timerStarted = 0;
+let timeUsed = 0;
+
+const autoTimerByDifficulty = { easy: 20, medium: 30, hard: 40 };
+
+// ═══════════════════════════════════════════════════════════════════
+// REAL-WORLD REFERENCE SVGs + CAPTIONS
+// ═══════════════════════════════════════════════════════════════════
+// SVG helper — wraps a package + true-scale single item + magnified view
+function refSvg(pkg, singleItem, magnified, caption, magCaption) {
+  return `<svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(20,10)">${pkg}</g>
+    <text x="55" y="148" text-anchor="middle" font-size="9" fill="#64748b" font-weight="700">${caption}</text>
+    <g transform="translate(140, 78)">
+      ${singleItem}
+      <text x="0" y="-22" text-anchor="middle" font-size="9" fill="#1a2a4a" font-weight="700">1 piece</text>
+      <text x="0" y="-12" text-anchor="middle" font-size="7" fill="#64748b">true size</text>
+      <text x="0" y="34" text-anchor="middle" font-size="8" fill="#64748b">↑ same scale</text>
+      <text x="0" y="44" text-anchor="middle" font-size="8" fill="#64748b">as package</text>
+    </g>
+    <text x="245" y="18" text-anchor="middle" font-size="10" fill="#0d9488" font-weight="700">🔍 zoomed in</text>
+    <g transform="translate(195, 28)">${magnified}</g>
+    <text x="245" y="120" text-anchor="middle" font-size="9" fill="#64748b">${magCaption}</text>
+  </svg>`;
+}
+
+const refData = {
+  ticTac: {
+    svg: refSvg(
+      // PACKAGE (transparent container with green lid, mints visible inside)
+      `<rect x="0" y="20" width="60" height="115" rx="6" fill="#fff" stroke="#444" stroke-width="1.5"/>
+       <ellipse cx="12" cy="42" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="30" cy="40" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="48" cy="44" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="18" cy="56" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="38" cy="58" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="12" cy="72" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="32" cy="76" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="48" cy="74" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="20" cy="92" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="42" cy="96" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="14" cy="110" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <ellipse cx="38" cy="115" rx="6" ry="3" fill="#fff" stroke="#aaa" stroke-width="0.6"/>
+       <rect x="0" y="60" width="60" height="14" fill="#fff" opacity="0.7"/>
+       <text x="30" y="70" text-anchor="middle" font-size="7" font-weight="900" fill="#16a34a" font-family="Arial">MINTS</text>
+       <rect x="5" y="8" width="50" height="14" rx="4" fill="#22c55e"/>
+       <rect x="14" y="12" width="32" height="6" rx="1" fill="#16a34a"/>`,
+      // TRUE-SCALE SINGLE (same size as items in the package)
+      `<ellipse cx="0" cy="0" rx="6" ry="3" fill="#fff" stroke="#444" stroke-width="1"/>`,
+      // MAGNIFIED
+      `<ellipse cx="50" cy="40" rx="40" ry="20" fill="#fff" stroke="#444" stroke-width="2"/>
+       <ellipse cx="50" cy="40" rx="40" ry="20" fill="none" stroke="#0d9488" stroke-width="0.8" stroke-dasharray="3,2"/>`,
+      'Real Tic Tac box',
+      '~10 mm long, 5 mm wide'
+    ),
+    info: 'A typical small mint container holds about <strong>60 mints</strong>. Notice how SMALL one mint is compared to the whole box!',
+  },
+  raisin: {
+    svg: refSvg(
+      `<rect x="0" y="20" width="80" height="100" rx="4" fill="#dc2626" stroke="#7f1d1d" stroke-width="1.5"/>
+       <rect x="0" y="20" width="80" height="25" fill="#fbbf24"/>
+       <text x="40" y="36" text-anchor="middle" font-size="10" font-weight="900" fill="#7f1d1d" font-family="Arial">SUNNY</text>
+       <text x="40" y="60" text-anchor="middle" font-size="9" font-weight="900" fill="#fef3c7" font-family="Arial">RAISINS</text>
+       <circle cx="12" cy="80" r="3" fill="#451a03"/>
+       <circle cx="22" cy="86" r="3" fill="#451a03"/>
+       <circle cx="33" cy="82" r="3" fill="#451a03"/>
+       <circle cx="44" cy="86" r="3" fill="#451a03"/>
+       <circle cx="55" cy="80" r="3" fill="#451a03"/>
+       <circle cx="65" cy="86" r="3" fill="#451a03"/>
+       <circle cx="18" cy="98" r="3" fill="#451a03"/>
+       <circle cx="35" cy="100" r="3" fill="#451a03"/>
+       <circle cx="50" cy="98" r="3" fill="#451a03"/>
+       <circle cx="62" cy="102" r="3" fill="#451a03"/>
+       <text x="40" y="116" text-anchor="middle" font-size="5" fill="#fef3c7" font-family="Arial">Net wt 1.5 oz</text>`,
+      `<circle cx="0" cy="0" r="3" fill="#451a03"/>`,
+      `<circle cx="50" cy="40" r="32" fill="#451a03"/>
+       <ellipse cx="42" cy="32" rx="8" ry="4" fill="#7c2d12" opacity="0.6"/>
+       <ellipse cx="55" cy="45" rx="10" ry="3" fill="#7c2d12" opacity="0.4"/>`,
+      'Real raisin box',
+      '~12 mm × 7 mm'
+    ),
+    info: 'A small <strong>1.5 oz raisin box</strong> typically holds <strong>70–100 raisins</strong>.',
+  },
+  mm: {
+    svg: refSvg(
+      `<path d="M 0 18 Q 5 8 40 8 Q 75 8 80 18 L 80 125 Q 80 130 75 130 L 5 130 Q 0 130 0 125 Z" fill="#fbbf24" stroke="#92400e" stroke-width="1.5"/>
+       <path d="M 0 18 L 80 18" stroke="#92400e" stroke-width="0.8" stroke-dasharray="2,1"/>
+       <text x="40" y="40" text-anchor="middle" font-size="10" font-weight="900" fill="#7f1d1d" font-family="Arial">CANDY</text>
+       <circle cx="14" cy="64" r="4" fill="#dc2626"/>
+       <circle cx="28" cy="60" r="4" fill="#22c55e"/>
+       <circle cx="42" cy="65" r="4" fill="#3b82f6"/>
+       <circle cx="56" cy="60" r="4" fill="#fbbf24" stroke="#92400e" stroke-width="0.5"/>
+       <circle cx="68" cy="66" r="4" fill="#a78bfa"/>
+       <circle cx="18" cy="78" r="4" fill="#a16207"/>
+       <circle cx="32" cy="82" r="4" fill="#f97316"/>
+       <circle cx="48" cy="80" r="4" fill="#ec4899"/>
+       <circle cx="62" cy="82" r="4" fill="#dc2626"/>
+       <circle cx="14" cy="96" r="4" fill="#22c55e"/>
+       <circle cx="28" cy="98" r="4" fill="#3b82f6"/>
+       <circle cx="44" cy="98" r="4" fill="#dc2626"/>
+       <circle cx="60" cy="100" r="4" fill="#fbbf24" stroke="#92400e" stroke-width="0.5"/>
+       <circle cx="22" cy="114" r="4" fill="#f97316"/>
+       <circle cx="40" cy="116" r="4" fill="#a78bfa"/>
+       <circle cx="58" cy="114" r="4" fill="#ec4899"/>`,
+      `<circle cx="0" cy="0" r="4" fill="#dc2626" stroke="#7f1d1d" stroke-width="0.6"/>`,
+      `<circle cx="50" cy="40" r="35" fill="#dc2626" stroke="#7f1d1d" stroke-width="2"/>
+       <text x="50" y="48" text-anchor="middle" font-size="22" font-weight="900" fill="#fff" font-family="Arial">m</text>`,
+      'Real candy bag',
+      '~13 mm wide, lentil-shaped'
+    ),
+    info: 'A <strong>fun-size candy bag</strong> typically holds <strong>15–25 candies</strong>; a snack bag holds <strong>30–50</strong>.',
+  },
+  candy: {
+    svg: refSvg(
+      `<ellipse cx="40" cy="128" rx="38" ry="6" fill="#94a3b8" opacity="0.3"/>
+       <path d="M 5 35 Q 5 130 40 130 Q 75 130 75 35 L 75 28 Q 75 24 72 24 L 8 24 Q 5 24 5 28 Z" fill="#cffafe" stroke="#0d9488" stroke-width="1.5" opacity="0.85"/>
+       <rect x="10" y="10" width="60" height="16" rx="3" fill="#dc2626" stroke="#7f1d1d" stroke-width="1.2"/>
+       <circle cx="18" cy="55" r="5" fill="#ec4899"/>
+       <circle cx="32" cy="50" r="5" fill="#fbbf24"/>
+       <circle cx="48" cy="58" r="5" fill="#22c55e"/>
+       <circle cx="62" cy="52" r="5" fill="#3b82f6"/>
+       <circle cx="22" cy="72" r="5" fill="#f97316"/>
+       <circle cx="40" cy="68" r="5" fill="#a78bfa"/>
+       <circle cx="58" cy="74" r="5" fill="#dc2626"/>
+       <circle cx="16" cy="90" r="5" fill="#22c55e"/>
+       <circle cx="35" cy="88" r="5" fill="#fbbf24"/>
+       <circle cx="55" cy="92" r="5" fill="#ec4899"/>
+       <circle cx="68" cy="88" r="5" fill="#3b82f6"/>
+       <circle cx="22" cy="108" r="5" fill="#f97316"/>
+       <circle cx="42" cy="112" r="5" fill="#dc2626"/>
+       <circle cx="60" cy="110" r="5" fill="#22c55e"/>`,
+      `<circle cx="0" cy="0" r="5" fill="#ec4899" stroke="#7f1d1d" stroke-width="0.6"/>`,
+      `<circle cx="50" cy="40" r="35" fill="#ec4899" stroke="#7f1d1d" stroke-width="2"/>
+       <path d="M 25 40 Q 50 50 75 40" fill="none" stroke="#fff" stroke-width="2" opacity="0.6"/>
+       <path d="M 25 40 Q 50 30 75 40" fill="none" stroke="#fff" stroke-width="2" opacity="0.6"/>`,
+      'Real candy jar',
+      '~15 mm wrapped candy'
+    ),
+    info: 'A small candy jar typically holds <strong>50–80 wrapped candies</strong>.',
+  },
+  gummy: {
+    svg: refSvg(
+      `<path d="M 0 18 Q 8 8 40 8 Q 72 8 80 18 L 80 125 Q 80 130 75 130 L 5 130 Q 0 130 0 125 Z" fill="#fef9c3" stroke="#a16207" stroke-width="1.5" opacity="0.7"/>
+       <text x="40" y="34" text-anchor="middle" font-size="9" font-weight="900" fill="#7f1d1d" font-family="Arial">GUMMIES</text>
+       <text x="10" y="62" font-size="14">🐻</text>
+       <text x="30" y="58" font-size="14">🐻</text>
+       <text x="50" y="64" font-size="14">🐻</text>
+       <text x="12" y="84" font-size="14">🐻</text>
+       <text x="34" y="80" font-size="14">🐻</text>
+       <text x="54" y="86" font-size="14">🐻</text>
+       <text x="8" y="106" font-size="14">🐻</text>
+       <text x="32" y="108" font-size="14">🐻</text>
+       <text x="54" y="106" font-size="14">🐻</text>
+       <text x="18" y="126" font-size="14">🐻</text>
+       <text x="46" y="126" font-size="14">🐻</text>`,
+      `<text x="-7" y="5" font-size="14">🐻</text>`,
+      `<text x="20" y="68" font-size="60">🐻</text>`,
+      'Real gummy bag',
+      '~20 mm tall, soft &amp; chewy'
+    ),
+    info: 'A <strong>snack-size gummy bag</strong> typically holds <strong>20–40 gummies</strong>.',
+  },
+  popcorn: {
+    svg: refSvg(
+      `<path d="M 0 30 L 90 30 L 82 130 Q 82 134 78 134 L 12 134 Q 8 134 8 130 Z" fill="#fff" stroke="#444" stroke-width="1.5"/>
+       <path d="M 9 30 L 13 134" stroke="#dc2626" stroke-width="7" opacity="0.85"/>
+       <path d="M 28 30 L 30 134" stroke="#dc2626" stroke-width="7" opacity="0.85"/>
+       <path d="M 47 30 L 47 134" stroke="#dc2626" stroke-width="7" opacity="0.85"/>
+       <path d="M 66 30 L 64 134" stroke="#dc2626" stroke-width="7" opacity="0.85"/>
+       <path d="M 85 30 L 81 134" stroke="#dc2626" stroke-width="7" opacity="0.85"/>
+       <text x="14" y="24" font-size="14">🍿</text>
+       <text x="32" y="20" font-size="14">🍿</text>
+       <text x="50" y="22" font-size="14">🍿</text>
+       <text x="66" y="18" font-size="14">🍿</text>
+       <text x="45" y="68" text-anchor="middle" font-size="10" font-weight="900" fill="#fff" font-family="Arial" stroke="#7f1d1d" stroke-width="0.5">POPCORN</text>`,
+      `<text x="-7" y="5" font-size="14">🍿</text>`,
+      `<text x="20" y="68" font-size="60">🍿</text>`,
+      'Real popcorn bucket',
+      '~10 mm puffy kernel'
+    ),
+    info: 'A small movie-theater bucket holds <strong>several hundred</strong> popped kernels — much more than the canvas shows!',
+  },
+  coconut: {
+    svg: refSvg(
+      `<rect x="10" y="100" width="80" height="34" rx="4" fill="#92400e" stroke="#451a03" stroke-width="1.5"/>
+       <text x="22" y="98" font-size="22">🥥</text>
+       <text x="50" y="95" font-size="22">🥥</text>
+       <text x="22" y="80" font-size="22">🥥</text>
+       <text x="50" y="78" font-size="22">🥥</text>
+       <text x="36" y="68" font-size="22">🥥</text>`,
+      `<text x="-10" y="8" font-size="22">🥥</text>`,
+      `<text x="20" y="68" font-size="60">🥥</text>`,
+      'Roadside stand',
+      '~15 cm diameter'
+    ),
+    info: 'A <strong>pile of coconuts</strong> at a Hawaiian roadside stand might hold 30–80 fresh nuts.',
+  },
+  shell: {
+    svg: refSvg(
+      `<rect x="0" y="100" width="100" height="34" rx="2" fill="#fef3c7"/>
+       <ellipse cx="50" cy="100" rx="50" ry="4" fill="#fde68a"/>
+       <text x="8" y="96" font-size="20">🐚</text>
+       <text x="32" y="98" font-size="20">🐚</text>
+       <text x="56" y="96" font-size="20">🐚</text>
+       <text x="76" y="98" font-size="20">🐚</text>
+       <text x="20" y="120" font-size="14">🐚</text>
+       <text x="50" y="124" font-size="14">🐚</text>
+       <text x="74" y="120" font-size="14">🐚</text>`,
+      `<text x="-10" y="8" font-size="20">🐚</text>`,
+      `<text x="20" y="70" font-size="60">🐚</text>`,
+      'Beach scene',
+      'Varies: 1–10 cm'
+    ),
+    info: 'A <strong>beachcomber\'s bucket</strong> after a good morning might hold 40–150 shells.',
+  },
+  star: {
+    svg: refSvg(
+      `<rect x="0" y="0" width="100" height="135" rx="6" fill="#0c1633"/>
+       <text x="10" y="22" font-size="10" fill="#FFD100">⭐</text>
+       <text x="40" y="18" font-size="10" fill="#FFD100">⭐</text>
+       <text x="65" y="28" font-size="10" fill="#FFD100">⭐</text>
+       <text x="85" y="20" font-size="10" fill="#FFD100">⭐</text>
+       <text x="20" y="45" font-size="10" fill="#FFD100">⭐</text>
+       <text x="48" y="50" font-size="10" fill="#FFD100">⭐</text>
+       <text x="78" y="48" font-size="10" fill="#FFD100">⭐</text>
+       <text x="12" y="70" font-size="10" fill="#FFD100">⭐</text>
+       <text x="42" y="76" font-size="10" fill="#FFD100">⭐</text>
+       <text x="70" y="70" font-size="10" fill="#FFD100">⭐</text>
+       <text x="18" y="95" font-size="10" fill="#FFD100">⭐</text>
+       <text x="50" y="100" font-size="10" fill="#FFD100">⭐</text>
+       <text x="80" y="95" font-size="10" fill="#FFD100">⭐</text>
+       <text x="25" y="120" font-size="10" fill="#FFD100">⭐</text>
+       <text x="60" y="122" font-size="10" fill="#FFD100">⭐</text>`,
+      `<text x="-7" y="6" font-size="14" fill="#FFD100">⭐</text>`,
+      `<text x="22" y="68" font-size="56">⭐</text>`,
+      'Night sky panel',
+      'Distant points of light'
+    ),
+    info: 'On a clear night, you can see <strong>2,000–3,000 stars</strong> with the naked eye — far more than the canvas shows!',
+  },
+  coin: {
+    svg: refSvg(
+      `<path d="M 10 40 Q 10 24 30 22 Q 50 20 70 22 Q 90 24 90 40 L 90 120 Q 90 130 80 132 Q 50 138 20 132 Q 10 130 10 120 Z" fill="#a16207" stroke="#451a03" stroke-width="1.5"/>
+       <ellipse cx="50" cy="32" rx="40" ry="8" fill="#7c2d12"/>
+       <text x="50" y="36" text-anchor="middle" font-size="7" font-weight="900" fill="#fef3c7" font-family="Arial">COINS</text>
+       <text x="18" y="68" font-size="14">🪙</text>
+       <text x="40" y="62" font-size="14">🪙</text>
+       <text x="62" y="70" font-size="14">🪙</text>
+       <text x="20" y="92" font-size="14">🪙</text>
+       <text x="46" y="96" font-size="14">🪙</text>
+       <text x="68" y="92" font-size="14">🪙</text>
+       <text x="32" y="118" font-size="14">🪙</text>
+       <text x="58" y="120" font-size="14">🪙</text>`,
+      `<text x="-7" y="5" font-size="14">🪙</text>`,
+      `<text x="22" y="68" font-size="56">🪙</text>`,
+      'Coin pouch',
+      '~24 mm (a US quarter)'
+    ),
+    info: 'A <strong>small coin purse or piggy bank</strong> might hold 50–200 coins.',
+  },
+};
+
+function updateReference() {
+  const data = refData[itemType];
+  if (!data) {
+    document.getElementById('refPanel').classList.add('hidden');
+    return;
+  }
+  document.getElementById('refPanel').classList.remove('hidden');
+  document.getElementById('refPackage').innerHTML = data.svg;
+}
+
+const itemConfig = {
+  ticTac:  { emoji: '🟢', label: 'Tic Tacs',     size: 14 },
+  raisin:  { emoji: '🍇', label: 'Raisins',      size: 18 },
+  mm:      { emoji: '🟤', label: 'M&Ms',         size: 16 },
+  candy:   { emoji: '🍬', label: 'Candies',      size: 22 },
+  gummy:   { emoji: '🐻', label: 'Gummy Bears',  size: 22 },
+  popcorn: { emoji: '🍿', label: 'Popcorn',      size: 22 },
+  coconut: { emoji: '🥥', label: 'Coconuts',     size: 24 },
+  shell:   { emoji: '🐚', label: 'Shells',       size: 22 },
+  star:    { emoji: '⭐', label: 'Stars',        size: 22 },
+  coin:    { emoji: '🪙', label: 'Coins',        size: 24 },
+};
+
+const ranges = {
+  easy:   [20, 50],
+  medium: [50, 150],
+  hard:   [150, 400],
+};
+
+// ═══════════════════════════════════════════════════════════════════
+// CANVAS
+// ═══════════════════════════════════════════════════════════════════
+const canvas = document.getElementById('pile');
+const ctx = canvas.getContext('2d');
+
+function fitCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', () => { fitCanvas(); drawPile(); });
+
+function rand(a, b) { return a + Math.random() * (b - a); }
+function randint(a, b) { return Math.floor(rand(a, b + 1)); }
+
+function generatePile() {
+  const [min, max] = ranges[difficulty];
+  actualCount = randint(min, max);
+  pileNumber++;
+  document.getElementById('pileNumber').textContent = pileNumber;
+  document.getElementById('itemLabel').textContent = itemConfig[itemType].label;
+  document.getElementById('guess').value = '';
+  document.getElementById('guess').disabled = false;
+  document.getElementById('guess').focus();
+  document.getElementById('resultPanel').classList.remove('show');
+  currentRevealed = false;
+
+  // Start timer
+  stopTimer();
+  if (timerSetting !== 'off') {
+    const sec = timerSetting === 'auto' ? autoTimerByDifficulty[difficulty] : parseInt(timerSetting);
+    startTimer(sec);
+  } else {
+    document.getElementById('timerOverlay').classList.remove('show');
+  }
+
+  // Place items randomly, avoiding overlap
+  fitCanvas();
+  const W = canvas.getBoundingClientRect().width;
+  const H = canvas.getBoundingClientRect().height;
+  const size = itemConfig[itemType].size;
+  const padding = size * 0.6;
+
+  items = [];
+  let attempts = 0;
+  while (items.length < actualCount && attempts < actualCount * 30) {
+    attempts++;
+    const x = rand(padding, W - padding);
+    const y = rand(padding, H - padding);
+    // Check overlap (some overlap allowed for harder mode)
+    const minDist = difficulty === 'hard' ? size * 0.5 : size * 0.7;
+    let ok = true;
+    for (const it of items) {
+      const dx = it.x - x, dy = it.y - y;
+      if (Math.sqrt(dx*dx + dy*dy) < minDist) { ok = false; break; }
+    }
+    if (ok) items.push({ x, y, rot: rand(-0.4, 0.4) });
+  }
+  // If we couldn't place all, just allow overlap
+  while (items.length < actualCount) {
+    items.push({
+      x: rand(padding, W - padding),
+      y: rand(padding, H - padding),
+      rot: rand(-0.4, 0.4),
+    });
+  }
+  drawPile();
+}
+
+function drawPile() {
+  const W = canvas.getBoundingClientRect().width;
+  const H = canvas.getBoundingClientRect().height;
+  ctx.fillStyle = '#fefae0';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle grid
+  ctx.strokeStyle = 'rgba(184,134,11,0.08)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  for (let x = 0; x < W; x += 40) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
+  for (let y = 0; y < H; y += 40) { ctx.moveTo(0, y); ctx.lineTo(W, y); }
+  ctx.stroke();
+
+  // Draw items as emoji
+  const size = itemConfig[itemType].size;
+  const emoji = itemConfig[itemType].emoji;
+  ctx.font = `${size}px serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (const it of items) {
+    ctx.save();
+    ctx.translate(it.x, it.y);
+    ctx.rotate(it.rot);
+    ctx.fillText(emoji, 0, 0);
+    ctx.restore();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// GUESS / RESULT
+// ═══════════════════════════════════════════════════════════════════
+function checkGuess(forcedByTimer) {
+  const guess = parseInt(document.getElementById('guess').value);
+  if (isNaN(guess) || guess < 0) {
+    if (!forcedByTimer) { document.getElementById('guess').focus(); return; }
+  }
+  if (actualCount === 0) {
+    alert('Generate a pile first!');
+    return;
+  }
+  if (currentRevealed) return; // prevent re-checking same pile
+
+  // Stop the timer if running
+  if (timerInterval) stopTimer();
+
+  const diff = Math.abs(guess - actualCount);
+  const pctError = (diff / actualCount) * 100;
+  currentRevealed = true;
+
+  // Update result panel
+  document.getElementById('statGuess').textContent = guess;
+  document.getElementById('statActual').textContent = actualCount;
+  document.getElementById('statDiff').textContent = diff;
+  document.getElementById('statError').textContent = pctError.toFixed(1) + '%';
+
+  // Color-code the error
+  const errorEl = document.getElementById('statError');
+  errorEl.classList.remove('error-color');
+  let banner, bannerClass;
+  if (pctError < 5) {
+    banner = '🎯 EXCELLENT — Lab-grade accuracy!';
+    bannerClass = 'good';
+    errorEl.style.color = 'var(--good)';
+  } else if (pctError < 10) {
+    banner = '✨ GREAT — Solid measurement!';
+    bannerClass = 'good';
+    errorEl.style.color = 'var(--good)';
+  } else if (pctError < 25) {
+    banner = '👌 OK — A scientist would refine the method.';
+    bannerClass = 'warn';
+    errorEl.style.color = 'var(--gold-deep)';
+  } else {
+    banner = '⚠️ HIGH ERROR — Try a better counting strategy!';
+    bannerClass = 'bad';
+    errorEl.style.color = 'var(--bad)';
+  }
+  const bannerEl = document.getElementById('resultBanner');
+  bannerEl.textContent = banner;
+  bannerEl.className = 'result-banner ' + bannerClass;
+
+  // Formula breakdown
+  document.getElementById('formulaLine').innerHTML =
+    `% Error = |<strong>${guess}</strong> − <strong>${actualCount}</strong>| ÷ <strong>${actualCount}</strong> × 100% = <strong>${diff}</strong> ÷ <strong>${actualCount}</strong> × 100% = <strong style="color:var(--ocean-deep);">${pctError.toFixed(1)}%</strong>`;
+
+  document.getElementById('resultPanel').classList.add('show');
+
+  // Save to history (include time used if there was a timer)
+  history.push({
+    pile: pileNumber,
+    item: itemConfig[itemType].label,
+    difficulty,
+    guess,
+    actual: actualCount,
+    error: pctError,
+    time: timerSetting !== 'off' ? Math.round(timeUsed * 10) / 10 : null,
+    forcedByTimer: !!forcedByTimer,
+  });
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  if (history.length === 0) {
+    list.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:var(--dim); padding:12px; font-size:.9rem;">No guesses yet. Make your first attempt above!</div>';
+    return;
+  }
+  list.innerHTML = '';
+  const sorted = [...history].sort((a, b) => a.error - b.error);
+  // Show in reverse order (newest first)
+  for (let i = history.length - 1; i >= 0; i--) {
+    const h = history[i];
+    const cls = h.error < 10 ? 'good' : h.error < 25 ? 'warn' : 'bad';
+    const isBest = h === sorted[0];
+    const div = document.createElement('div');
+    div.className = 'history-item';
+    const timeBadge = h.time !== null
+      ? `<span style="font-size:.75rem; color:var(--ocean-deep); margin-left:6px;">⏱️${h.time}s${h.forcedByTimer ? ' ⛔' : ''}</span>`
+      : '';
+    div.innerHTML = `
+      <div>
+        <strong>Pile #${h.pile}</strong> · ${h.guess} / ${h.actual}
+        ${isBest ? '<span style="color:var(--gold-deep);">👑</span>' : ''}
+        ${timeBadge}
+      </div>
+      <span class="err ${cls}">${h.error.toFixed(1)}%</span>
+    `;
+    list.appendChild(div);
+  }
+}
+
+function clearHistory() {
+  if (history.length === 0) return;
+  if (confirm('Clear all guesses from the scoreboard?')) {
+    history = [];
+    renderHistory();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════════════════════════════════
+function startTimer(seconds) {
+  timerSeconds = seconds;
+  timerStarted = Date.now();
+  const overlay = document.getElementById('timerOverlay');
+  const valueEl = document.getElementById('timerValue');
+  overlay.classList.add('show');
+  overlay.classList.remove('warning', 'danger', 'expired');
+  valueEl.textContent = seconds;
+
+  timerInterval = setInterval(() => {
+    const elapsed = (Date.now() - timerStarted) / 1000;
+    const remaining = Math.max(0, timerSeconds - elapsed);
+    valueEl.textContent = remaining.toFixed(1);
+
+    overlay.classList.remove('warning', 'danger');
+    const pct = remaining / timerSeconds;
+    if (pct < 0.3) overlay.classList.add('danger');
+    else if (pct < 0.5) overlay.classList.add('warning');
+
+    if (remaining <= 0) {
+      stopTimer();
+      timeUp();
+    }
+  }, 100);
+}
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    timeUsed = (Date.now() - timerStarted) / 1000;
+  }
+}
+
+function timeUp() {
+  const overlay = document.getElementById('timerOverlay');
+  overlay.classList.remove('warning', 'danger');
+  overlay.classList.add('expired');
+  document.getElementById('timerValue').textContent = "⛔";
+  // Auto-submit (or count empty guess as 0)
+  if (!currentRevealed) {
+    const input = document.getElementById('guess');
+    if (input.value === '') input.value = '0';
+    input.disabled = true;
+    setTimeout(() => checkGuess(true), 200);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════════════════════
+document.getElementById('difficultyOpts').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#difficultyOpts .opt-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  difficulty = e.target.dataset.difficulty;
+});
+document.getElementById('itemOpts').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#itemOpts .opt-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  itemType = e.target.dataset.item;
+  updateReference();
+});
+document.getElementById('timerOpts').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#timerOpts .opt-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  timerSetting = e.target.dataset.timer;
+});
+document.getElementById('guess').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkGuess();
+});
+
+// Boot
+updateReference();
+generatePile();
+</script>
+
+</body>
+</html>

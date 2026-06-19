@@ -80,6 +80,8 @@
     .btn-yt:hover { background: #dc2626; }
     .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
     .btn-phet:hover { background: #6d28d9; }
+    .btn-lab { display: inline-block; padding: 10px 15px; background: #0d9488; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
+    .btn-lab:hover { background: #134e4a; }
     .btn-joystick { display: inline-block; padding: 10px 15px; background: #FFD100; color: #1a2a4a; border: 1px solid #b8860b; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; border-radius: 4px; }
     .btn-joystick:hover { background: #b8860b; color: #fff; }
     .resource-card { background: #f3f4f6; border-radius: 8px; padding: 15px; margin: 20px 0; }
@@ -365,7 +367,7 @@
 
   <script>
 const UNITS = [
-  { id:'percent-error', title:'Percent Error', icon:'⚠️', cc:'8.NS + Science', desc:'In real labs, scientists report percent error alongside their measurements. Use percent error |measured − actual| ÷ actual × 100% with rational, decimal, and scientific-notation values, and connect it to significant figures and accuracy in experimental design.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'percent error formula 8th grade science significant figures' },
+  { id:'percent-error', title:'Percent Error', icon:'⚠️', cc:'8.NS + Science', desc:'In real labs, scientists report percent error alongside their measurements. Use percent error |measured − actual| ÷ actual × 100% with rational, decimal, and scientific-notation values, and connect it to significant figures and accuracy in experimental design.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'percent error formula 8th grade science significant figures', labUrl:'percent-error-lab.html' },
   { id:'unit-conversions', title:'Unit Conversions (KHDUdcm)', icon:'📏', cc:'8.EE + Physical Science', desc:'Convert between metric units using the KHDUdcm staircase — Kilo, Hecto, Deca, Unit, deci, centi, milli.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-factors-and-multiples', ytSearch:'metric unit conversions KHDUdcm staircase kilo hecto deca unit deci centi milli' },
   { id:'scientific-notation', title:'Scientific Notation', icon:'🔬', cc:'8.EE.3-4', desc:'Write very large and small numbers in scientific notation and compute with them.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy 8th grade scientific notation' },
   { id:'real-numbers', title:'Real Numbers', icon:'🔢', cc:'8.NS.1-2', desc:'Distinguish rational from irrational numbers and approximate square roots.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy 8th grade rational irrational numbers square roots' },
@@ -888,8 +890,9 @@ let currentUnit = null;
 function resourceCardHTML(unit) {
   const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
   const joystickBtn = unit.joystickUrl ? `<a class="btn-joystick" href="${unit.joystickUrl}" target="_blank">📈 Function Joystick</a>` : '';
+  const labBtn = unit.labUrl ? `<a class="btn-lab" href="${unit.labUrl}" target="_blank">🎯 Percent Error Lab</a>` : '';
   const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
-  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${joystickBtn}${ytBtn}</div></div>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${joystickBtn}${ytBtn}${labBtn}</div></div>`;
 }
 
 function renderHome() {
