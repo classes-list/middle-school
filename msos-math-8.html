@@ -80,6 +80,8 @@
     .btn-yt:hover { background: #dc2626; }
     .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
     .btn-phet:hover { background: #6d28d9; }
+    .btn-graph { display: inline-block; padding: 10px 15px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
+    .btn-graph:hover { background: #3730a3; }
     .btn-lab { display: inline-block; padding: 10px 15px; background: #0d9488; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
     .btn-lab:hover { background: #134e4a; }
     .btn-joystick { display: inline-block; padding: 10px 15px; background: #FFD100; color: #1a2a4a; border: 1px solid #b8860b; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; border-radius: 4px; }
@@ -386,7 +388,7 @@ const UNITS = [
   { id:'optics', title:"Optics & Snell's Law", icon:'🔭', cc:"8.G + Physical Science Trig Preview", desc:"Light bends when it crosses from one material to another. Snell's Law (n₁sinθ₁ = n₂sinθ₂) uses trigonometry you've already learned — apply SOH-CAH-TOA to optics and discover how lenses work.", kaUrl:'https://www.khanacademy.org/science/ap-physics-1/geometric-optics', ytSearch:"snell's law refraction optics trigonometry 8th grade physical science", phetUrl:'https://phet.colorado.edu/en/simulations/bending-light' },
   { id:'keplers-laws', title:"Kepler's Laws & Orbital Mechanics", icon:'🪐', cc:'8.EE + Physical Science', desc:"Kepler's Third Law states T² ∝ r³ — orbital period squared is proportional to orbital radius cubed. Use proportional reasoning and exponent rules with real planetary data to predict orbital periods.", kaUrl:'https://www.khanacademy.org/science/physics/centripetal-force-and-gravitation', ytSearch:"kepler's third law T squared r cubed proportional reasoning 8th grade physics", phetUrl:'https://phet.colorado.edu/en/simulations/gravity-and-orbits' },
   { id:'volume', title:'Volume', icon:'🧊', cc:'8.G.9', desc:'Find volume of cylinders, cones, and spheres using formulas.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-geometry', ytSearch:'khan academy 8th grade volume cylinders cones spheres', phetUrl:'https://phet.colorado.edu/en/simulations/density' },
-  { id:'scatter-plots', title:'Scatter Plots', icon:'📊', cc:'8.SP.1-3', desc:'Construct scatter plots, identify associations, and draw lines of best fit.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-data', ytSearch:'khan academy 8th grade scatter plots line of best fit', phetUrl:'https://phet.colorado.edu/en/simulations/least-squares-regression' },
+  { id:'scatter-plots', title:'Scatter Plots', icon:'📊', cc:'8.SP.1-3', desc:'Construct scatter plots, identify associations, and draw lines of best fit.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-data', ytSearch:'khan academy 8th grade scatter plots line of best fit', phetUrl:'https://phet.colorado.edu/en/simulations/least-squares-regression', graphLabUrl:'graphing-lab.html' },
   { id:'two-way-tables', title:'Two-Way Tables', icon:'📋', cc:'8.SP.4', desc:'Construct and interpret two-way frequency tables for categorical data.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-data', ytSearch:'khan academy 8th grade two-way frequency tables' },
   { id:'word-problems', title:'Word Problems', icon:'📝', cc:'mixed', desc:'Solve multi-step real-world problems across all 8th grade math domains.', kaUrl:null, ytSearch:'khan academy 8th grade word problems' }
 ];
@@ -891,8 +893,9 @@ function resourceCardHTML(unit) {
   const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
   const joystickBtn = unit.joystickUrl ? `<a class="btn-joystick" href="${unit.joystickUrl}" target="_blank">📈 Function Joystick</a>` : '';
   const labBtn = unit.labUrl ? `<a class="btn-lab" href="${unit.labUrl}" target="_blank">🎯 Percent Error Lab</a>` : '';
+  const graphBtn = unit.graphLabUrl ? `<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank">📊 Graphing Lab</a>` : '';
   const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
-  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${joystickBtn}${ytBtn}${labBtn}</div></div>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${joystickBtn}${ytBtn}${labBtn}${graphBtn}</div></div>`;
 }
 
 function renderHome() {

@@ -80,6 +80,8 @@
     .btn-yt:hover { background: #dc2626; }
     .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
     .btn-phet:hover { background: #6d28d9; }
+    .btn-graph { display: inline-block; padding: 10px 15px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
+    .btn-graph:hover { background: #3730a3; }
     .btn-lab { display: inline-block; padding: 10px 15px; background: #0d9488; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
     .btn-lab:hover { background: #134e4a; }
     .resource-card { background: #f3f4f6; border-radius: 8px; padding: 15px; margin: 20px 0; }
@@ -382,7 +384,7 @@ const UNITS = [
   { id:'radioactive-decay', title:'Radioactive Decay & Half-Life', icon:'⚛️', cc:'6.NS + Earth Science', desc:'Radioactive elements lose half their atoms in each half-life period. Use fractions and patterns to model this process — the same math geologists use to date rocks billions of years old.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-factors-and-multiples', ytSearch:'radioactive decay half life math fractions 6th grade geology' },
   { id:'alg-expressions', title:'Algebraic Expressions', icon:'🔣', cc:'6.EE.1-4', desc:'Write, evaluate, and simplify algebraic expressions with variables.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-expressions-and-variables', ytSearch:'khan academy 6th grade algebraic expressions variables', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' },
   { id:'equations', title:'Equations', icon:'⚖', cc:'6.EE.5-7', desc:'Write and solve one-step equations using inverse operations.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-equations-and-inequalities', ytSearch:'khan academy 6th grade solving equations', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer' },
-  { id:'statistics-data', title:'Statistics & Data', icon:'📈', cc:'6.SP.1-5', desc:'Summarize data sets using mean, median, mode, range, and displays.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-data-statistics', ytSearch:'khan academy 6th grade statistics mean median mode range', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability' },
+  { id:'statistics-data', title:'Statistics & Data', icon:'📈', cc:'6.SP.1-5', desc:'Summarize data sets using mean, median, mode, range, and displays.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-data-statistics', ytSearch:'khan academy 6th grade statistics mean median mode range', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability', graphLabUrl:'graphing-lab.html' },
   { id:'inequalities', title:'Inequalities', icon:'📏', cc:'6.EE.5,8', desc:'Write, solve, and graph inequalities on the number line.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-equations-and-inequalities', ytSearch:'khan academy 6th grade inequalities number line', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer' },
   { id:'variables-relationships', title:'Variables & Relationships', icon:'📊', cc:'6.EE.9', desc:'Identify independent and dependent variables and analyze relationships.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-expressions-and-variables', ytSearch:'khan academy 6th grade dependent independent variables', phetUrl:'https://phet.colorado.edu/en/simulations/function-builder' },
   { id:'area-polygons', title:'Area of Polygons', icon:'🔷', cc:'6.G.1', desc:'Find area of triangles, quadrilaterals, and composite figures.', kaUrl:'https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-geometry-topic', ytSearch:'khan academy 6th grade area polygons triangles', phetUrl:'https://phet.colorado.edu/en/simulations/area-builder' },
@@ -927,7 +929,8 @@ function resourceCardHTML(unit) {
   const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
   const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
   const labBtn = unit.labUrl ? `<a class="btn-lab" href="${unit.labUrl}" target="_blank">🎯 Percent Error Lab</a>` : '';
-  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${ytBtn}${labBtn}</div></div>`;
+  const graphBtn = unit.graphLabUrl ? `<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank">📊 Graphing Lab</a>` : '';
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${ytBtn}${labBtn}${graphBtn}</div></div>`;
 }
 
 function renderHome() {

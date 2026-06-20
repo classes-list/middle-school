@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphing Lab · Tables &amp; Charts in Google Sheets</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --navy:#1a2a4a; --navy-deep:#0c1633;
+    --gold:#FFD100; --gold-deep:#b8860b;
+    --paper:#fef3c7; --cream:#fffdf2;
+    --ocean:#0d9488; --ocean-deep:#134e4a;
+    --sheets-green:#0F9D58;
+    --bar-blue:#3b82f6;
+    --pie-orange:#f97316;
+    --scatter-purple:#7c3aed;
+    --good:#16a34a; --warn:#f59e0b; --bad:#dc2626;
+    --ink:#1f2937; --dim:#64748b;
+  }
+  body {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #d1fae5 100%);
+    color:var(--ink); min-height:100vh; padding:24px 16px;
+    line-height:1.55;
+  }
+  .container { max-width:1080px; margin:0 auto; }
+
+  header { text-align:center; margin-bottom:30px; position:relative; }
+  .back-btn {
+    position:absolute; left:0; top:6px;
+    background:var(--gold); color:var(--navy);
+    border:1px solid var(--gold-deep); padding:8px 16px;
+    border-radius:8px; font-weight:800; font-size:.9rem;
+    cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+    box-shadow:0 2px 6px rgba(184,134,11,0.25);
+    transition:all .15s ease;
+  }
+  .back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+  @media (max-width:600px) {
+    .back-btn { position:static; margin-bottom:10px; display:inline-flex; }
+  }
+  h1 {
+    font-size:2.4rem; font-weight:900; line-height:1.1;
+    color:var(--navy); margin-bottom:6px;
+  }
+  .tagline { color:var(--dim); font-size:1rem; max-width:680px; margin:0 auto; }
+
+  /* TABS */
+  .tabs {
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;
+    margin-bottom:24px;
+  }
+  .tab {
+    background:#fff; padding:18px 20px; border-radius:14px;
+    cursor:pointer; transition:all .2s ease;
+    box-shadow:0 3px 12px rgba(0,0,0,0.06);
+    border:3px solid transparent;
+    text-align:center;
+  }
+  .tab .tab-icon { font-size:2.2rem; line-height:1; margin-bottom:6px; }
+  .tab .tab-title { font-size:1.05rem; font-weight:900; color:var(--navy); margin-bottom:3px; }
+  .tab .tab-sub { font-size:.78rem; color:var(--dim); font-weight:600; }
+  .tab.active {
+    transform:translateY(-3px);
+    box-shadow:0 6px 20px rgba(0,0,0,0.12);
+  }
+  .tab.active.bar { border-color:var(--bar-blue); }
+  .tab.active.pie { border-color:var(--pie-orange); }
+  .tab.active.scatter { border-color:var(--scatter-purple); }
+  .tab.bar.active .tab-title { color:var(--bar-blue); }
+  .tab.pie.active .tab-title { color:var(--pie-orange); }
+  .tab.scatter.active .tab-title { color:var(--scatter-purple); }
+
+  /* TUTORIAL SECTION */
+  .tutorial { display:none; }
+  .tutorial.active { display:block; animation:fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  .lesson-header {
+    background:#fff; border-radius:14px 14px 0 0;
+    padding:24px 28px; border-bottom:4px solid;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+  }
+  .lesson-header.bar { border-bottom-color:var(--bar-blue); }
+  .lesson-header.pie { border-bottom-color:var(--pie-orange); }
+  .lesson-header.scatter { border-bottom-color:var(--scatter-purple); }
+  .lesson-header h2 {
+    font-size:1.6rem; font-weight:900; color:var(--navy); margin-bottom:4px;
+  }
+  .lesson-header .purpose {
+    font-size:.95rem; color:var(--ink); margin-top:8px;
+    padding:12px 16px; background:#f8fafc; border-radius:8px;
+  }
+  .lesson-header .purpose strong { color:var(--navy); }
+
+  .step {
+    background:#fff; padding:24px 28px;
+    border-bottom:1px solid #e2e8f0;
+    box-shadow:0 4px 18px rgba(0,0,0,0.08);
+  }
+  .step:last-child { border-radius:0 0 14px 14px; border-bottom:none; }
+  .step-num {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:36px; height:36px; border-radius:50%;
+    background:var(--navy); color:var(--gold);
+    font-weight:900; font-size:1.05rem; margin-right:12px;
+    vertical-align:middle;
+  }
+  .step h3 {
+    display:inline; font-size:1.15rem; font-weight:800; color:var(--navy);
+    vertical-align:middle;
+  }
+  .step .step-body { margin-top:12px; padding-left:48px; }
+  .step p { margin-bottom:10px; }
+  .step ul, .step ol { margin-left:22px; margin-bottom:10px; }
+  .step li { padding:4px 0; }
+
+  /* SHEETS MOCKUP */
+  .sheets-mockup {
+    background:#fff; border:1px solid #c4c4c4; border-radius:6px;
+    overflow:hidden; margin:12px 0; box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    max-width:480px;
+  }
+  .sheets-header {
+    background:#f1f3f4; padding:6px 10px;
+    display:flex; gap:6px; align-items:center;
+    border-bottom:1px solid #c4c4c4;
+    font-size:.78rem; color:var(--ink);
+  }
+  .sheets-header::before {
+    content:""; width:18px; height:18px; border-radius:3px;
+    background:var(--sheets-green); flex-shrink:0;
+  }
+  .sheets-toolbar {
+    background:#fff; padding:4px 8px; border-bottom:1px solid #e0e0e0;
+    font-size:.7rem; color:var(--dim);
+  }
+  .sheets-table {
+    width:100%; border-collapse:collapse; font-size:.85rem;
+  }
+  .sheets-table th, .sheets-table td {
+    padding:7px 12px; border:1px solid #e0e0e0; text-align:left;
+  }
+  .sheets-table th {
+    background:#f8f9fa; font-weight:700; color:var(--navy);
+  }
+  .sheets-table .col-letter {
+    background:#f1f3f4; color:var(--dim); font-size:.7rem;
+    text-align:center; padding:3px; width:32px;
+  }
+  .sheets-table .row-num {
+    background:#f1f3f4; color:var(--dim); font-size:.7rem;
+    text-align:center; padding:3px; width:28px;
+    font-weight:400;
+  }
+  .sheets-table td.header-cell {
+    background:#dbeafe; font-weight:700; color:#1e3a8a;
+  }
+  .sheets-table td.selected {
+    background:rgba(15,157,88,0.15);
+    box-shadow:inset 0 0 0 2px var(--sheets-green);
+  }
+
+  /* CHART PREVIEWS */
+  .chart-preview {
+    background:#fff; border:2px solid #e2e8f0; border-radius:10px;
+    padding:18px; margin:12px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  }
+  .chart-preview .chart-title {
+    text-align:center; font-weight:900; color:var(--navy);
+    margin-bottom:8px; font-size:1rem;
+  }
+  .chart-preview svg { width:100%; height:auto; display:block; }
+
+  /* CALLOUTS */
+  .tip-box {
+    background:#dcfce7; border-left:5px solid var(--good);
+    padding:14px 18px; border-radius:8px; margin:14px 0;
+    font-size:.93rem;
+  }
+  .tip-box strong { color:var(--good); }
+  .warning-box {
+    background:#fef3c7; border-left:5px solid var(--gold-deep);
+    padding:14px 18px; border-radius:8px; margin:14px 0;
+    font-size:.93rem;
+  }
+  .warning-box strong { color:#7a5f00; }
+  .mistake-box {
+    background:#fee2e2; border-left:5px solid var(--bad);
+    padding:14px 18px; border-radius:8px; margin:14px 0;
+    font-size:.93rem;
+  }
+  .mistake-box strong { color:var(--bad); }
+
+  .keyword {
+    background:#e0f2fe; padding:1px 8px; border-radius:4px;
+    font-family:'Courier New', monospace; font-size:.92em;
+    color:#0c4a6e; font-weight:700;
+  }
+
+  /* TWO-COLUMN LAYOUT */
+  .two-col {
+    display:grid; grid-template-columns:1fr 1fr; gap:18px;
+    margin:14px 0;
+  }
+  @media (max-width:700px) {
+    .two-col { grid-template-columns:1fr; }
+  }
+  .two-col h4 {
+    font-size:.78rem; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--dim); font-weight:800; margin-bottom:6px;
+  }
+
+  /* YOUTUBE LINKS */
+  .youtube-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .yt-btn {
+    background:#fff; border:1.5px solid #dc2626; color:#dc2626;
+    padding:7px 14px; border-radius:8px; font-size:.84rem;
+    font-weight:700; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+    transition:all .15s ease;
+  }
+  .yt-btn:hover { background:#dc2626; color:#fff; }
+
+  footer {
+    text-align:center; margin-top:30px; padding:18px;
+    color:var(--dim); font-size:.85rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <button class="back-btn" onclick="goBack()">← Back</button>
+    <h1>📊 Graphing Lab</h1>
+    <p class="tagline">Learn to make professional charts in Google Sheets. Bar graphs compare. Pie charts show parts. Scatter plots reveal relationships. Pick a tutorial below.</p>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab bar active" onclick="showTab('bar')" data-tab="bar">
+      <div class="tab-icon">📊</div>
+      <div class="tab-title">Bar Graph</div>
+      <div class="tab-sub">Comparison</div>
+    </div>
+    <div class="tab pie" onclick="showTab('pie')" data-tab="pie">
+      <div class="tab-icon">🥧</div>
+      <div class="tab-title">Circle Graph</div>
+      <div class="tab-sub">Parts of a whole</div>
+    </div>
+    <div class="tab scatter" onclick="showTab('scatter')" data-tab="scatter">
+      <div class="tab-icon">📈</div>
+      <div class="tab-title">Scatter Plot</div>
+      <div class="tab-sub">Relationships</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- BAR GRAPH TUTORIAL -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="tutorial active" id="tab-bar">
+    <div class="lesson-header bar">
+      <h2>📊 Bar Graph — Compare Categories</h2>
+      <div class="purpose">
+        <strong>Use a bar graph when</strong> you want to compare DIFFERENT GROUPS to each other. For example: votes for favorite ice cream flavor, populations of cities, or test scores by class period.
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">1</span><h3>Build the table in Google Sheets</h3>
+      <div class="step-body">
+        <p>A bar graph needs <strong>two columns</strong>: a CATEGORY column (what you're comparing) and a NUMBER column (the count or measurement).</p>
+        <p>Include <strong>units</strong> in the header — "Number of Students" not just "Number."</p>
+        <div class="sheets-mockup">
+          <div class="sheets-header">Ice Cream Survey — Class 4B</div>
+          <div class="sheets-toolbar">File · Edit · View · Insert</div>
+          <table class="sheets-table">
+            <tr>
+              <td class="col-letter"></td>
+              <td class="col-letter">A</td>
+              <td class="col-letter">B</td>
+            </tr>
+            <tr>
+              <td class="row-num">1</td>
+              <td class="header-cell">Flavor</td>
+              <td class="header-cell">Number of Students</td>
+            </tr>
+            <tr><td class="row-num">2</td><td>Chocolate</td><td>12</td></tr>
+            <tr><td class="row-num">3</td><td>Vanilla</td><td>8</td></tr>
+            <tr><td class="row-num">4</td><td>Strawberry</td><td>5</td></tr>
+            <tr><td class="row-num">5</td><td>Mint</td><td>4</td></tr>
+            <tr><td class="row-num">6</td><td>Cookie Dough</td><td>9</td></tr>
+          </table>
+        </div>
+        <div class="tip-box">
+          <strong>💡 Tip:</strong> Sort your data from largest to smallest BEFORE making the chart — it makes patterns jump out instantly.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">2</span><h3>Select the data and insert a chart</h3>
+      <div class="step-body">
+        <ol>
+          <li>Click cell <span class="keyword">A1</span> and drag down to <span class="keyword">B6</span> (selecting ALL the data INCLUDING the headers)</li>
+          <li>Click <strong>Insert</strong> menu → <strong>Chart</strong></li>
+          <li>In the Chart editor panel that opens on the right, choose <strong>"Column chart"</strong> for vertical bars (or "Bar chart" for horizontal)</li>
+        </ol>
+        <p>Google Sheets will guess the chart type. If it picks something else (like a pie chart), change it in the dropdown.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">3</span><h3>Label the axes and add a title</h3>
+      <div class="step-body">
+        <p>A chart with no labels is useless. In the Chart editor, go to <strong>Customize → Chart &amp; axis titles</strong>:</p>
+        <ul>
+          <li><strong>Chart title:</strong> "Favorite Ice Cream Flavors — Class 4B"</li>
+          <li><strong>Horizontal axis title:</strong> "Flavor" (the categories on x-axis)</li>
+          <li><strong>Vertical axis title:</strong> "Number of Students" (the y-axis count, with units)</li>
+        </ul>
+        <p>The result should look like this:</p>
+        <div class="chart-preview">
+          <div class="chart-title">Favorite Ice Cream Flavors — Class 4B</div>
+          <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
+            <text x="20" y="160" transform="rotate(-90 20 160)" font-size="11" fill="#1a2a4a" font-weight="700" text-anchor="middle">Number of Students</text>
+            <line x1="55" y1="20" x2="55" y2="230" stroke="#444" stroke-width="1.5"/>
+            <line x1="55" y1="230" x2="485" y2="230" stroke="#444" stroke-width="1.5"/>
+            <line x1="55" y1="50" x2="485" y2="50" stroke="#e2e8f0" stroke-dasharray="2,3"/>
+            <line x1="55" y1="95" x2="485" y2="95" stroke="#e2e8f0" stroke-dasharray="2,3"/>
+            <line x1="55" y1="140" x2="485" y2="140" stroke="#e2e8f0" stroke-dasharray="2,3"/>
+            <line x1="55" y1="185" x2="485" y2="185" stroke="#e2e8f0" stroke-dasharray="2,3"/>
+            <text x="48" y="234" font-size="10" fill="#444" text-anchor="end">0</text>
+            <text x="48" y="189" font-size="10" fill="#444" text-anchor="end">3</text>
+            <text x="48" y="144" font-size="10" fill="#444" text-anchor="end">6</text>
+            <text x="48" y="99" font-size="10" fill="#444" text-anchor="end">9</text>
+            <text x="48" y="54" font-size="10" fill="#444" text-anchor="end">12</text>
+            <rect x="75" y="50" width="60" height="180" fill="#3b82f6"/>
+            <text x="105" y="225" font-size="9" fill="#fff" text-anchor="middle" font-weight="900">12</text>
+            <rect x="155" y="110" width="60" height="120" fill="#3b82f6"/>
+            <text x="185" y="225" font-size="9" fill="#fff" text-anchor="middle" font-weight="900">8</text>
+            <rect x="235" y="155" width="60" height="75" fill="#3b82f6"/>
+            <text x="265" y="225" font-size="9" fill="#fff" text-anchor="middle" font-weight="900">5</text>
+            <rect x="315" y="170" width="60" height="60" fill="#3b82f6"/>
+            <text x="345" y="225" font-size="9" fill="#fff" text-anchor="middle" font-weight="900">4</text>
+            <rect x="395" y="95" width="60" height="135" fill="#3b82f6"/>
+            <text x="425" y="225" font-size="9" fill="#fff" text-anchor="middle" font-weight="900">9</text>
+            <text x="105" y="250" font-size="11" fill="#444" text-anchor="middle">Chocolate</text>
+            <text x="185" y="250" font-size="11" fill="#444" text-anchor="middle">Vanilla</text>
+            <text x="265" y="250" font-size="11" fill="#444" text-anchor="middle">Strawberry</text>
+            <text x="345" y="250" font-size="11" fill="#444" text-anchor="middle">Mint</text>
+            <text x="425" y="250" font-size="11" fill="#444" text-anchor="middle">Cookie Dough</text>
+            <text x="270" y="273" font-size="11" fill="#1a2a4a" font-weight="700" text-anchor="middle">Flavor</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">4</span><h3>Read the graph correctly</h3>
+      <div class="step-body">
+        <p>To read a bar graph:</p>
+        <ul>
+          <li>Find the bar of interest (e.g., "Chocolate")</li>
+          <li>Look at the TOP of the bar</li>
+          <li>Trace LEFT to the y-axis to read the value</li>
+        </ul>
+        <p>Above: Chocolate was the favorite with 12 votes. Mint was last with 4. You can also see that Chocolate had 3× more votes than Mint (12 ÷ 4).</p>
+        <div class="mistake-box">
+          <strong>⚠️ Common mistake:</strong> Forgetting units. "Chocolate = 12" means nothing without "12 STUDENTS." Always include units in the axis label.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">5</span><h3>Watch &amp; Learn</h3>
+      <div class="step-body">
+        <p>Watch a video walkthrough to see this in action:</p>
+        <div class="youtube-row">
+          <a class="yt-btn" href="https://www.youtube.com/results?search_query=how+to+make+a+bar+graph+in+google+sheets" target="_blank">▶ How to make a bar graph in Google Sheets</a>
+          <a class="yt-btn" href="https://www.youtube.com/results?search_query=label+axes+google+sheets+chart" target="_blank">▶ Labeling axes &amp; titles</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- CIRCLE GRAPH / PIE CHART TUTORIAL -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="tutorial" id="tab-pie">
+    <div class="lesson-header pie">
+      <h2>🥧 Circle Graph (Pie Chart) — Parts of a Whole</h2>
+      <div class="purpose">
+        <strong>Use a circle graph when</strong> you want to show how PARTS make up a WHOLE. For example: how you spend a 24-hour day, what fraction of your budget goes to each expense, or types of trash in a landfill.
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">1</span><h3>Build the table in Google Sheets</h3>
+      <div class="step-body">
+        <p>A pie chart needs <strong>two columns</strong>: a CATEGORY column and a VALUE column. The values must add up to the WHOLE.</p>
+        <div class="sheets-mockup">
+          <div class="sheets-header">How I Spend My Day</div>
+          <div class="sheets-toolbar">File · Edit · View · Insert</div>
+          <table class="sheets-table">
+            <tr>
+              <td class="col-letter"></td>
+              <td class="col-letter">A</td>
+              <td class="col-letter">B</td>
+            </tr>
+            <tr>
+              <td class="row-num">1</td>
+              <td class="header-cell">Activity</td>
+              <td class="header-cell">Hours per Day</td>
+            </tr>
+            <tr><td class="row-num">2</td><td>Sleep</td><td>9</td></tr>
+            <tr><td class="row-num">3</td><td>School</td><td>7</td></tr>
+            <tr><td class="row-num">4</td><td>Activities</td><td>3</td></tr>
+            <tr><td class="row-num">5</td><td>Family</td><td>3</td></tr>
+            <tr><td class="row-num">6</td><td>Free Time</td><td>2</td></tr>
+            <tr><td class="row-num">7</td><td>TOTAL</td><td>=SUM(B2:B6)</td></tr>
+          </table>
+        </div>
+        <div class="tip-box">
+          <strong>💡 Tip:</strong> Add a TOTAL row using <span class="keyword">=SUM(B2:B6)</span> to double-check your numbers add to the expected whole (24 hours in a day).
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">2</span><h3>Insert the pie chart</h3>
+      <div class="step-body">
+        <ol>
+          <li>Select cells <span class="keyword">A1:B6</span> (do NOT include the TOTAL row — it would mess up the chart)</li>
+          <li>Click <strong>Insert → Chart</strong></li>
+          <li>In the Chart editor, choose <strong>"Pie chart"</strong> from the dropdown</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">3</span><h3>Customize for clarity</h3>
+      <div class="step-body">
+        <p>In Chart editor → <strong>Customize → Pie chart</strong>:</p>
+        <ul>
+          <li><strong>Slice label:</strong> Choose "Percentage" so each slice shows %</li>
+          <li><strong>Slice border:</strong> Add a white border so slices are easier to see</li>
+        </ul>
+        <p>In <strong>Chart &amp; axis titles</strong>:</p>
+        <ul>
+          <li><strong>Chart title:</strong> "How I Spend My 24-Hour Day"</li>
+        </ul>
+        <p>Your chart should look like this:</p>
+        <div class="chart-preview">
+          <div class="chart-title">How I Spend My 24-Hour Day</div>
+          <svg viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
+            <!-- Pie chart at center-left -->
+            <g transform="translate(140,140)">
+              <!-- Sleep 9/24 = 37.5%, 135° -->
+              <path d="M 0 0 L 0 -100 A 100 100 0 0 1 70.7 70.7 Z" fill="#1e40af" stroke="#fff" stroke-width="2"/>
+              <text x="35" y="-25" font-size="12" font-weight="900" fill="#fff" text-anchor="middle">37.5%</text>
+              <!-- School 7/24 = 29.2%, 105° from previous -->
+              <path d="M 0 0 L 70.7 70.7 A 100 100 0 0 1 -88.3 47 Z" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+              <text x="-12" y="50" font-size="12" font-weight="900" fill="#fff" text-anchor="middle">29.2%</text>
+              <!-- Activities 3/24 = 12.5%, 45° -->
+              <path d="M 0 0 L -88.3 47 A 100 100 0 0 1 -100 0 Z" fill="#ec4899" stroke="#fff" stroke-width="2"/>
+              <text x="-70" y="30" font-size="10" font-weight="900" fill="#fff" text-anchor="middle">12.5%</text>
+              <!-- Family 3/24 = 12.5%, 45° -->
+              <path d="M 0 0 L -100 0 A 100 100 0 0 1 -70.7 -70.7 Z" fill="#f97316" stroke="#fff" stroke-width="2"/>
+              <text x="-65" y="-30" font-size="10" font-weight="900" fill="#fff" text-anchor="middle">12.5%</text>
+              <!-- Free Time 2/24 = 8.3%, 30° -->
+              <path d="M 0 0 L -70.7 -70.7 A 100 100 0 0 1 0 -100 Z" fill="#22c55e" stroke="#fff" stroke-width="2"/>
+              <text x="-30" y="-70" font-size="10" font-weight="900" fill="#fff" text-anchor="middle">8.3%</text>
+            </g>
+            <!-- Legend at right -->
+            <g transform="translate(305, 70)">
+              <rect x="0" y="0" width="14" height="14" fill="#1e40af"/>
+              <text x="20" y="11" font-size="12" fill="#1a2a4a">Sleep (9 hr)</text>
+              <rect x="0" y="22" width="14" height="14" fill="#7c3aed"/>
+              <text x="20" y="33" font-size="12" fill="#1a2a4a">School (7 hr)</text>
+              <rect x="0" y="44" width="14" height="14" fill="#ec4899"/>
+              <text x="20" y="55" font-size="12" fill="#1a2a4a">Activities (3 hr)</text>
+              <rect x="0" y="66" width="14" height="14" fill="#f97316"/>
+              <text x="20" y="77" font-size="12" fill="#1a2a4a">Family (3 hr)</text>
+              <rect x="0" y="88" width="14" height="14" fill="#22c55e"/>
+              <text x="20" y="99" font-size="12" fill="#1a2a4a">Free Time (2 hr)</text>
+            </g>
+          </svg>
+        </div>
+        <div class="warning-box">
+          <strong>📐 Math check:</strong> Each slice should be sized based on its FRACTION of the whole. 9 hours of sleep out of 24 hours = 9/24 = 37.5% of the circle. The slice's angle = 360° × (9/24) = 135°.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">4</span><h3>Read the graph correctly</h3>
+      <div class="step-body">
+        <p>To read a pie chart:</p>
+        <ul>
+          <li>Each slice represents a FRACTION of the whole (the whole is always 100%)</li>
+          <li>Bigger slice = bigger fraction</li>
+          <li>Use the LEGEND (the color key) to know which slice means what</li>
+        </ul>
+        <p>From the chart above: I spend the biggest chunk of my day SLEEPING (37.5%), about a third on SCHOOL (29%), and only 8% on FREE TIME.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">5</span><h3>Common Mistakes</h3>
+      <div class="step-body">
+        <div class="mistake-box">
+          <strong>⚠️ Too many slices:</strong> If you have more than 6–7 categories, the pie becomes unreadable. Group small ones into "Other."
+        </div>
+        <div class="mistake-box">
+          <strong>⚠️ Parts don't add to whole:</strong> Pie charts only work when categories add to 100%. If kids "vote for multiple flavors," a pie chart is WRONG (use bar instead).
+        </div>
+        <div class="mistake-box">
+          <strong>⚠️ No legend:</strong> Without a legend, colored slices mean nothing. Always include it.
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">6</span><h3>Watch &amp; Learn</h3>
+      <div class="step-body">
+        <div class="youtube-row">
+          <a class="yt-btn" href="https://www.youtube.com/results?search_query=how+to+make+pie+chart+google+sheets" target="_blank">▶ How to make a pie chart in Google Sheets</a>
+          <a class="yt-btn" href="https://www.youtube.com/results?search_query=pie+chart+percentages+google+sheets" target="_blank">▶ Adding percentages to pie chart</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- TREND LINE / SCATTER PLOT TUTORIAL -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="tutorial" id="tab-scatter">
+    <div class="lesson-header scatter">
+      <h2>📈 Scatter Plot (with Trend Line) — Describe Relationships</h2>
+      <div class="purpose">
+        <strong>Use a scatter plot when</strong> you want to see HOW TWO THINGS ARE RELATED. For example: hours studied vs. test score, plant height over time, or sleep hours vs. mood rating. A trend line tells you the pattern.
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">1</span><h3>Build the table in Google Sheets</h3>
+      <div class="step-body">
+        <p>A scatter plot needs <strong>two numeric columns</strong>:</p>
+        <ul>
+          <li>The <strong>x-axis</strong> column — the INDEPENDENT variable (what you control / change)</li>
+          <li>The <strong>y-axis</strong> column — the DEPENDENT variable (the result you measure)</li>
+        </ul>
+        <p>Include <strong>units</strong> in each header.</p>
+        <div class="sheets-mockup">
+          <div class="sheets-header">Study Time vs Test Score</div>
+          <div class="sheets-toolbar">File · Edit · View · Insert</div>
+          <table class="sheets-table">
+            <tr>
+              <td class="col-letter"></td>
+              <td class="col-letter">A</td>
+              <td class="col-letter">B</td>
+            </tr>
+            <tr>
+              <td class="row-num">1</td>
+              <td class="header-cell">Hours Studied</td>
+              <td class="header-cell">Test Score (%)</td>
+            </tr>
+            <tr><td class="row-num">2</td><td>1</td><td>55</td></tr>
+            <tr><td class="row-num">3</td><td>2</td><td>62</td></tr>
+            <tr><td class="row-num">4</td><td>2.5</td><td>72</td></tr>
+            <tr><td class="row-num">5</td><td>3</td><td>78</td></tr>
+            <tr><td class="row-num">6</td><td>4</td><td>82</td></tr>
+            <tr><td class="row-num">7</td><td>5</td><td>88</td></tr>
+            <tr><td class="row-num">8</td><td>6</td><td>92</td></tr>
+            <tr><td class="row-num">9</td><td>7</td><td>95</td></tr>
+          </table>
+        </div>
+        <div class="tip-box">
+          <strong>💡 X comes first:</strong> Put the INDEPENDENT variable in column A (becomes the x-axis). The DEPENDENT variable goes in column B (becomes the y-axis).
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">2</span><h3>Insert a scatter plot</h3>
+      <div class="step-body">
+        <ol>
+          <li>Select cells <span class="keyword">A1:B9</span></li>
+          <li>Click <strong>Insert → Chart</strong></li>
+          <li>In the Chart editor, choose <strong>"Scatter chart"</strong> from the chart type dropdown</li>
+        </ol>
+        <p>You'll see dots scattered across the graph — one dot per data point.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">3</span><h3>Add a trend line</h3>
+      <div class="step-body">
+        <p>A scatter plot WITHOUT a trend line just shows dots. The trend line reveals the PATTERN.</p>
+        <ol>
+          <li>In Chart editor → <strong>Customize → Series</strong></li>
+          <li>Scroll down and check the <strong>"Trendline"</strong> box</li>
+          <li>Choose type: <strong>"Linear"</strong> (a straight line through the data)</li>
+        </ol>
+        <p>Don't forget axis titles in <strong>Chart &amp; axis titles</strong>:</p>
+        <ul>
+          <li><strong>Horizontal axis:</strong> "Hours Studied"</li>
+          <li><strong>Vertical axis:</strong> "Test Score (%)"</li>
+          <li><strong>Chart title:</strong> "Study Time vs Test Score"</li>
+        </ul>
+        <div class="chart-preview">
+          <div class="chart-title">Study Time vs Test Score</div>
+          <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+            <text x="20" y="160" transform="rotate(-90 20 160)" font-size="11" fill="#1a2a4a" font-weight="700" text-anchor="middle">Test Score (%)</text>
+            <line x1="60" y1="20" x2="60" y2="240" stroke="#444" stroke-width="1.5"/>
+            <line x1="60" y1="240" x2="475" y2="240" stroke="#444" stroke-width="1.5"/>
+            <!-- Y gridlines -->
+            <line x1="60" y1="60" x2="475" y2="60" stroke="#e2e8f0" stroke-dasharray="2,3"/>
+            <line x1="60" y1="105" x2="475" y2="105" stroke="#e2e8f0" stroke-dasharray="2,3"/>
+            <line x1="60" y1="150" x2="475" y2="150" stroke="#e2e8f0" stroke-dasharray="2,3"/>
+            <line x1="60" y1="195" x2="475" y2="195" stroke="#e2e8f0" stroke-dasharray="2,3"/>
+            <text x="52" y="245" font-size="10" text-anchor="end" fill="#444">40</text>
+            <text x="52" y="199" font-size="10" text-anchor="end" fill="#444">55</text>
+            <text x="52" y="154" font-size="10" text-anchor="end" fill="#444">70</text>
+            <text x="52" y="109" font-size="10" text-anchor="end" fill="#444">85</text>
+            <text x="52" y="64" font-size="10" text-anchor="end" fill="#444">100</text>
+            <!-- X labels -->
+            <text x="110" y="258" font-size="10" text-anchor="middle" fill="#444">1</text>
+            <text x="160" y="258" font-size="10" text-anchor="middle" fill="#444">2</text>
+            <text x="210" y="258" font-size="10" text-anchor="middle" fill="#444">3</text>
+            <text x="260" y="258" font-size="10" text-anchor="middle" fill="#444">4</text>
+            <text x="310" y="258" font-size="10" text-anchor="middle" fill="#444">5</text>
+            <text x="360" y="258" font-size="10" text-anchor="middle" fill="#444">6</text>
+            <text x="410" y="258" font-size="10" text-anchor="middle" fill="#444">7</text>
+            <text x="265" y="285" font-size="11" font-weight="700" fill="#1a2a4a" text-anchor="middle">Hours Studied</text>
+            <!-- Trend line (proper least-squares regression through middle of dots) -->
+            <line x1="80" y1="194" x2="440" y2="50" stroke="#7c3aed" stroke-width="2.5" stroke-dasharray="5,4" opacity="0.85"/>
+            <!-- Data points -->
+            <circle cx="110" cy="195" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+            <circle cx="160" cy="174" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+            <circle cx="185" cy="144" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+            <circle cx="210" cy="126" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+            <circle cx="260" cy="114" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+            <circle cx="310" cy="96" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+            <circle cx="360" cy="84" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+            <circle cx="410" cy="75" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>
+            <!-- Trend label -->
+            <text x="380" y="55" font-size="10" fill="#7c3aed" font-weight="700">↑ trend line</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">4</span><h3>Interpret the trend line</h3>
+      <div class="step-body">
+        <p>The trend line shows the OVERALL pattern. Three possibilities:</p>
+        <div class="two-col">
+          <div>
+            <h4>📈 POSITIVE</h4>
+            <p>Line goes UP from left to right. <strong>As x increases, y increases.</strong> Example: more study → higher score.</p>
+          </div>
+          <div>
+            <h4>📉 NEGATIVE</h4>
+            <p>Line goes DOWN from left to right. <strong>As x increases, y decreases.</strong> Example: more screen time → lower test score.</p>
+          </div>
+        </div>
+        <div>
+          <h4>➡️ NO CORRELATION</h4>
+          <p>Dots scattered randomly, line is roughly flat. <strong>No relationship.</strong> Example: shoe size vs. IQ.</p>
+        </div>
+        <p>In our example above, the trend is <strong>POSITIVE</strong> — every extra hour of studying tends to add ~6 points to the score.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">5</span><h3>Common Mistakes</h3>
+      <div class="step-body">
+        <div class="mistake-box">
+          <strong>⚠️ Switching X and Y:</strong> Independent variable goes in column A (x-axis). Dependent goes in B (y-axis). Reversing them gives a weird-looking chart.
+        </div>
+        <div class="mistake-box">
+          <strong>⚠️ Connecting the dots:</strong> Don't connect dots with a zig-zag line — use a TREND LINE instead. The dots are individual observations; the trend line is the pattern.
+        </div>
+        <div class="mistake-box">
+          <strong>⚠️ "Correlation = causation":</strong> Just because two things trend together doesn't mean one CAUSES the other. Ice cream sales and shark attacks both go up in summer — but ice cream doesn't cause shark attacks!
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <span class="step-num">6</span><h3>Watch &amp; Learn</h3>
+      <div class="step-body">
+        <div class="youtube-row">
+          <a class="yt-btn" href="https://www.youtube.com/results?search_query=scatter+plot+google+sheets+trendline" target="_blank">▶ Scatter plot + trendline in Google Sheets</a>
+          <a class="yt-btn" href="https://www.youtube.com/results?search_query=positive+negative+correlation+scatter+plot" target="_blank">▶ Positive vs negative correlation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    📊 <strong>Graphing Lab</strong> · Tables &amp; charts in Google Sheets · Built for Math 6, 7, 8
+  </footer>
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.tab[data-tab="${name}"]`).classList.add('active');
+  document.querySelectorAll('.tutorial').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = 'msos-math-index.html';
+  }
+}
+</script>
+
+</body>
+</html>
