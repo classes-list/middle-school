@@ -719,11 +719,18 @@ function showTab(name) {
 }
 
 function goBack() {
+  // 1. If we came from a Math 6/7/8 grade page, go straight back to its topics grid
+  if (document.referrer && /msos-math-[678]\.html/.test(document.referrer)) {
+    window.location.href = document.referrer.replace(/#.*$/, '').replace(/\?.*$/, '');
+    return;
+  }
+  // 2. Otherwise try browser history (same-tab navigation)
   if (window.history.length > 1) {
     window.history.back();
-  } else {
-    window.location.href = 'msos-math-index.html';
+    return;
   }
+  // 3. Last resort — math department index
+  window.location.href = 'msos-math-index.html';
 }
 </script>
 
