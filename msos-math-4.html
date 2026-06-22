@@ -210,10 +210,14 @@ const UNITS = [
     "cc": "4.NBT.5",
     "desc": "Multiply a multi-digit whole number by a 1-digit or 2-digit number using the standard algorithm.",
     "ytSearch": "khan academy 4th grade multi-digit multiplication standard algorithm",
-    "phetUrl": "https://phet.colorado.edu/en/simulations/arithmetic",
+    "phetSims": [
+      { "name": "Arithmetic", "url": "https://phet.colorado.edu/en/simulations/arithmetic" },
+      { "name": "Balancing Act", "url": "https://phet.colorado.edu/en/simulations/balancing-act" }
+    ],
     "games": [
       { "name": "Cave Run Multiplication", "emoji": "⛏️", "url": "https://www.multiplication.com/games/play/cave-run-multiplication" },
-      { "name": "Times Tables Games", "emoji": "🎮", "url": "https://www.timestables.com/multiplication-games" }
+      { "name": "Times Tables Games", "emoji": "🎮", "url": "https://www.timestables.com/multiplication-games" },
+      { "name": "Cool Math 4 Kids", "emoji": "🧊", "url": "https://www.coolmath4kids.com/" }
     ]
   },
   {
@@ -523,10 +527,12 @@ let completedUnits = {};
 let currentUnit = null;
 
 function resourceCardHTML(unit) {
-  const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
+  // Support BOTH legacy phetUrl (string) AND new phetSims (array)
+  const phetSims = unit.phetSims || (unit.phetUrl ? [{ name: 'Simulation', url: unit.phetUrl }] : []);
+  const phetBtns = phetSims.map(s => `<a class="btn-phet" href="${s.url}" target="_blank" rel="noopener">🧪 PhET ${s.name}</a>`).join('');
   const gameBtns = (unit.games || []).map(g => `<a class="btn-game" href="${g.url}" target="_blank" rel="noopener">${g.emoji || '🎮'} ${g.name}</a>`).join('');
   const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
-  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${gameBtns}${ytBtn}</div></div>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtns}${gameBtns}${ytBtn}</div></div>`;
 }
 
 function renderHome() {
