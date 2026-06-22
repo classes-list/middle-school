@@ -210,14 +210,12 @@ const UNITS = [
     "cc": "4.NBT.5",
     "desc": "Multiply a multi-digit whole number by a 1-digit or 2-digit number using the standard algorithm.",
     "ytSearch": "khan academy 4th grade multi-digit multiplication standard algorithm",
-    "phetSims": [
-      { "name": "Arithmetic", "url": "https://phet.colorado.edu/en/simulations/arithmetic" },
-      { "name": "Balancing Act", "url": "https://phet.colorado.edu/en/simulations/balancing-act" }
-    ],
-    "games": [
-      { "name": "Cave Run Multiplication", "emoji": "⛏️", "url": "https://www.multiplication.com/games/play/cave-run-multiplication" },
-      { "name": "Times Tables Games", "emoji": "🎮", "url": "https://www.timestables.com/multiplication-games" },
-      { "name": "Cool Math 4 Kids", "emoji": "🧊", "url": "https://www.coolmath4kids.com/" }
+    "resources": [
+      { "type": "phet", "name": "Arithmetic", "url": "https://phet.colorado.edu/en/simulations/arithmetic" },
+      { "type": "game", "name": "Cave Run Multiplication", "emoji": "⛏️", "url": "https://www.multiplication.com/games/play/cave-run-multiplication" },
+      { "type": "game", "name": "Times Tables Games", "emoji": "🎮", "url": "https://www.timestables.com/multiplication-games" },
+      { "type": "phet", "name": "Balancing Act", "url": "https://phet.colorado.edu/en/simulations/balancing-act" },
+      { "type": "game", "name": "Cool Math 4 Kids", "emoji": "🧊", "url": "https://www.coolmath4kids.com/" }
     ]
   },
   {
@@ -527,12 +525,24 @@ let completedUnits = {};
 let currentUnit = null;
 
 function resourceCardHTML(unit) {
-  // Support BOTH legacy phetUrl (string) AND new phetSims (array)
-  const phetSims = unit.phetSims || (unit.phetUrl ? [{ name: 'Simulation', url: unit.phetUrl }] : []);
-  const phetBtns = phetSims.map(s => `<a class="btn-phet" href="${s.url}" target="_blank" rel="noopener">🧪 PhET ${s.name}</a>`).join('');
-  const gameBtns = (unit.games || []).map(g => `<a class="btn-game" href="${g.url}" target="_blank" rel="noopener">${g.emoji || '🎮'} ${g.name}</a>`).join('');
+  let btns = '';
+
+  // Ordered resources array (preferred — user controls button order)
+  if (unit.resources && unit.resources.length) {
+    btns = unit.resources.map(r => {
+      if (r.type === 'phet') return `<a class="btn-phet" href="${r.url}" target="_blank" rel="noopener">🧪 PhET ${r.name}</a>`;
+      if (r.type === 'game') return `<a class="btn-game" href="${r.url}" target="_blank" rel="noopener">${r.emoji || '🎮'} ${r.name}</a>`;
+      return '';
+    }).join('');
+  } else {
+    // Backward-compat: legacy phetUrl / phetSims / games fields
+    const phetSims = unit.phetSims || (unit.phetUrl ? [{ name: 'Simulation', url: unit.phetUrl }] : []);
+    btns += phetSims.map(s => `<a class="btn-phet" href="${s.url}" target="_blank" rel="noopener">🧪 PhET ${s.name}</a>`).join('');
+    btns += (unit.games || []).map(g => `<a class="btn-game" href="${g.url}" target="_blank" rel="noopener">${g.emoji || '🎮'} ${g.name}</a>`).join('');
+  }
+
   const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
-  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtns}${gameBtns}${ytBtn}</div></div>`;
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${btns}${ytBtn}</div></div>`;
 }
 
 function renderHome() {
