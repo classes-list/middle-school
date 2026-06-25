@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSOS Math 8 · Curriculum Map 2026–2027</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background:#F1F5F9; color:#1F2937; line-height:1.5; padding:20px; }
+    .container { max-width: 1400px; margin: 0 auto; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); overflow:hidden; }
+    .header { background:linear-gradient(135deg,#1F4E78 0%,#2E6BA8 100%); color:#fff; padding:24px 28px; position:relative; }
+    .header h1 { font-size:1.6rem; margin-bottom:6px; }
+    .header .sub { font-size:0.95rem; opacity:0.92; }
+    .header .back-btn { position:absolute; top:20px; right:24px; background:rgba(255,255,255,0.18); color:#fff; border:1.5px solid rgba(255,255,255,0.4); padding:8px 16px; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.85rem; cursor:pointer; }
+    .header .back-btn:hover { background:rgba(255,255,255,0.28); }
+    .tabs { display:flex; background:#F8FAFC; border-bottom:2px solid #E2E8F0; padding:0 28px; }
+    .tab { background:transparent; border:none; padding:14px 22px; font-size:0.95rem; font-weight:600; color:#64748B; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.15s; }
+    .tab:hover { color:#1F4E78; }
+    .tab.active { color:#1F4E78; border-bottom-color:#1F4E78; }
+    .panel { display:none; padding:24px 28px; }
+    .panel.active { display:block; }
+    .panel h2 { font-size:1.25rem; color:#1F4E78; margin-bottom:18px; }
+    .panel .note { font-size:0.85rem; color:#64748B; margin-bottom:14px; font-style:italic; }
+
+    /* Curriculum Map table */
+    .map-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+    .map-table th { background:#1F4E78; color:#fff; padding:10px 8px; text-align:left; font-weight:600; border:1px solid #1F4E78; }
+    .map-table td { padding:10px 8px; border:1px solid #CBD5E1; vertical-align:top; }
+    .map-table .unit-name { font-weight:700; color:#1F4E78; width:170px; }
+    .map-table .standards { width:60px; text-align:center; font-weight:600; }
+    .map-table .cc-codes { font-family:"Courier New",monospace; font-size:0.78rem; color:#0c4a6e; font-weight:600; width:200px; }
+    .map-table .pacing { font-weight:600; color:#5B21B6; width:150px; }
+
+    /* Unit Calendar Gantt */
+    .gantt-wrap { overflow-x:auto; }
+    .gantt-table { border-collapse:collapse; font-size:0.72rem; }
+    .gantt-table th, .gantt-table td { border:1px solid #CBD5E1; padding:4px 6px; }
+    .gantt-table .unit-cell { width:240px; font-weight:600; color:#1F4E78; background:#F8FAFC; padding:8px; font-size:0.85rem; }
+    .gantt-table .weeks-cell { width:50px; text-align:center; font-weight:600; background:#F8FAFC; font-size:0.85rem; }
+    .gantt-table .week-th { width:28px; text-align:center; background:#1F4E78; color:#fff; font-weight:600; font-size:0.7rem; }
+    .gantt-table .qtr-banner { padding:8px; text-align:center; font-weight:700; font-size:0.85rem; }
+    .gantt-table .qtr-1 { background:#BDD7EE; color:#1F4E78; }
+    .gantt-table .qtr-2 { background:#C6E0B4; color:#365B27; }
+    .gantt-table .qtr-3 { background:#FFE699; color:#7A5F00; }
+    .gantt-table .qtr-4 { background:#F4B084; color:#7B3D14; }
+    .gantt-table .gantt-cell { width:28px; height:32px; background:#fff; }
+    .gantt-table .gantt-cell.filled { }
+    .gantt-table .corner-cell { background:#F1F5F9; }
+
+    .notes-box { margin-top:24px; padding:16px 20px; background:#FFF8E1; border-left:4px solid #FFD100; border-radius:6px; }
+    .notes-box h3 { font-size:1rem; color:#7A5F00; margin-bottom:10px; }
+    .notes-box ul { list-style:none; padding:0; }
+    .notes-box li { padding:4px 0; font-size:0.9rem; color:#4A4A4A; }
+    .notes-box li::before { content:"📌  "; }
+
+    @media (max-width:768px) {
+      .header h1 { font-size:1.2rem; }
+      .map-table { font-size:0.72rem; }
+      .tab { padding:10px 14px; font-size:0.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📅 Grade 8 Math · Curriculum Map 2026–2027</h1>
+      <div class="sub">Mary, Star of the Sea School &middot; Teacher: Peter Park &middot; Grade 8 Math</div>
+      <a class="back-btn" onclick="goBack()">← Back</a>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="map">📚 Curriculum Map</button>
+      <button class="tab" data-tab="calendar">📅 Unit Calendar (Gantt)</button>
+    </div>
+
+    <div id="map" class="panel active">
+      <h2>Curriculum Map by Quarter</h2>
+      <p class="note">Each unit lists its CC standards, learning objectives, content, pacing, assessments, and resources.</p>
+      <div style="overflow-x:auto">
+        <table class="map-table">
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Standards</th>
+              <th>Standards Reference #</th>
+              <th>Learning Objectives</th>
+              <th>Essential Content &amp; Skills</th>
+              <th>Sequencing &amp; Pacing</th>
+              <th>Assessments</th>
+              <th>Resources Used</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="unit-name" style="background:#DBEAFE"><strong>Beginning of School - Lab Math & Number Foundations</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">8.NS.A.1 (Rational vs. irrational); 8.NS.A.2 (Approximate irrationals); 8.EE.A.1 (Integer exponent rules); 8.EE.A.2 (Square root & cube root symbols); 8.EE.A.3 (Scientific notation for large/small); 8.EE.A.4 (Operations with scientific notation)</td>
+          <td>1. Use sig figs and percent error in lab measurements; 2. Convert metric units with multi-step rate conversions; 3. Multiply and divide numbers in scientific notation; 4. Classify rationals vs. irrationals; 5. Apply integer-exponent rules.</td>
+          <td>Significant Figures, Percent Error, Unit Conversions (KHDUdcm staircase), Scientific Notation (operations), Rational vs. Irrational Numbers, Square Roots & Cube Roots, Exponent Laws (product, quotient, power, negative, zero).</td>
+          <td class="pacing">Quarter 1: 5 Weeks (8/3-9/4)</td>
+          <td>1. Sig figs & percent error quiz; 2. Scientific notation operations quiz; 3. Real number system quiz; 4. Exponent laws quiz; 5. Lab Math Bootcamp report.</td>
+          <td>PhET: Estimation, Build an Atom. MSOS Math 8 site: Lab Math & Number Foundations units. Hands-on: digital scales, calculators.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#DBEAFE"><strong>Lines & Slopes</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">8.EE.B.5 (Graph proportional relationships, interpret slope); 8.EE.B.6 (Slope using similar triangles; y=mx and y=mx+b); 8.EE.C.7 (Solve linear equations); 8.EE.C.7b (Variables on both sides)</td>
+          <td>1. Compute slope from graphs, tables, equations, and two points; 2. Write linear equations in slope-intercept form; 3. Solve multi-step linear equations (variables both sides, special solutions); 4. Rearrange formulas to solve for a given variable.</td>
+          <td>Slope (rise/run), Slope from Two Points, Slope-Intercept Form (y = mx + b), Standard Form, Point-Slope Form, Multi-Step Linear Equations, Special Solution Cases (no solution, infinitely many), Rearranging Formulas (Density, Speed, Ohm's Law).</td>
+          <td class="pacing">Quarter 1: 4 Weeks (9/8-10/2)</td>
+          <td>1. Slope quiz; 2. Slope-intercept form quiz; 3. Multi-step equations quiz; 4. Rearranging formulas quiz; 5. Quarter 1 test.</td>
+          <td>PhET: Graphing Lines, Graphing Slope-Intercept, Equation Grapher. MSOS Math 8 site: Lines & Slopes unit. Function Joystick interactive.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#DCFCE7"><strong>Systems of Equations & Stoichiometry</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">8.EE.C.8 (Pairs of simultaneous linear equations); 8.EE.C.8a (Solutions correspond to intersection); 8.EE.C.8b (Solve by inspection, graphing, algebra); 8.EE.C.8c (Real-world problems); 8.NS.A.1 (Weighted averages with rationals)</td>
+          <td>1. Solve systems of equations by graphing, substitution, elimination; 2. Identify systems with 0, 1, or infinite solutions; 3. Apply systems to chemistry stoichiometry; 4. Compute weighted averages for isotope abundance.</td>
+          <td>Systems of Equations (graphing, substitution, elimination), Number of Solutions, Real-World Systems Problems, Weighted Averages (Atomic Mass), Percent & Weighted Means, Chemistry Stoichiometry connection. Project: Element Babybook.</td>
+          <td class="pacing">Quarter 2: 9 Weeks (10/19-12/18)</td>
+          <td>1. Systems by graphing quiz; 2. Substitution quiz; 3. Elimination quiz; 4. Weighted averages quiz; 5. Element Babybook project; 6. Quarter 2 test.</td>
+          <td>PhET: Graphing Lines, Reactants Products and Leftovers, Balancing Chemical Equations. MSOS Math 8 site: Systems & Stoichiometry units. Hands-on: M&M isotope activity.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#FEF3C7"><strong>Functions, Motion & Pythagorean Theorem</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">8.F.A.1 (Function as rule); 8.F.A.2 (Compare functions); 8.F.A.3 (y=mx+b is linear); 8.F.B.4 (Model linear relationship); 8.F.B.5 (Describe function behavior); 8.G.A.1-4 (Transformations & similarity); 8.G.A.5 (Angle sum, exterior angles); 8.G.B.6-8 (Pythagorean theorem & distance); 8.EE.C.7 (Linear equations)</td>
+          <td>1. Define functions and use function notation; 2. Distinguish linear from nonlinear functions; 3. Construct linear functions to model physical motion; 4. Apply the Pythagorean Theorem in 2D and 3D; 5. Perform rigid transformations and dilations on the coordinate plane.</td>
+          <td>Function Definition, Linear vs. Nonlinear, Function Notation, Physics Equations of Motion (v = d/t, d = ½at²), Pythagorean Theorem (a² + b² = c²), Distance Formula, Intro Trigonometry (SOH-CAH-TOA), Transformations (translation, reflection, rotation, dilation), Angle Relationships (parallel lines & transversals, triangle angle sum, exterior angle).</td>
+          <td class="pacing">Quarter 3: 9 Weeks (1/7-3/12)</td>
+          <td>1. Functions quiz; 2. Physics Motion Lab; 3. Pythagorean theorem quiz; 4. Trig intro quiz; 5. Transformations quiz; 6. Angle relationships quiz; 7. Quarter 3 test.</td>
+          <td>PhET: Function Builder, Vector Addition, Projectile Motion, Pythagorean Theorem. MSOS Math 8 site: Linear Function unit, Function Joystick. Hands-on: projectile lab setup.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#FCE7F3"><strong>Electricity, Waves & Optics</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">8.EE.B.5 (Proportional relationships in physics); 8.EE.A.4 (Scientific notation in physical calculations); 8.G.B.7 (Pythagorean Theorem in 2D/3D applied to Snell's Law geometry)</td>
+          <td>1. Apply Ohm's Law (V = IR) using linear functions; 2. Analyze series and parallel circuits; 3. Use v = fλ to relate wave speed, frequency, wavelength; 4. Apply Snell's Law to refraction problems.</td>
+          <td>Ohm's Law as Linear Function, Series Circuits, Parallel Circuits, Equivalent Resistance, Wave Speed (v = fλ), Frequency & Wavelength (inverse variation), Snell's Law (n₁sin θ₁ = n₂sin θ₂), Refraction Angle problems. Lab: Bulbs & Batteries; Ripple Tank.</td>
+          <td class="pacing">Quarter 4: 5 Weeks (3/29-4/30)</td>
+          <td>1. Ohm's Law quiz; 2. Circuits lab; 3. Wave equation quiz; 4. Snell's Law quiz; 5. Optics project.</td>
+          <td>PhET: Circuit Construction Kit, Waves on a String, Wave Interference, Bending Light. MSOS Math 8 site: Electricity & Optics units.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#FCE7F3"><strong>Cosmos, Geometry & Capstone</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">8.EE.A.2 (Square & cube roots applied to Kepler's Laws); 8.G.C.9 (Volume of cylinders, cones, spheres); 8.SP.A.4 (Two-way tables); 8.EE.C.8 (Word problems with systems)</td>
+          <td>1. Apply Kepler's Third Law (T² ∝ r³) to predict orbital periods; 2. Compute volume of cylinders, cones, spheres; 3. Construct and interpret two-way frequency tables; 4. Solve multi-step real-world problems integrating year content.</td>
+          <td>Kepler's Laws of Planetary Motion, Orbital Mechanics, Volume Formulas (V_cyl = πr²h, V_cone = ⅓πr²h, V_sphere = ⁴⁄₃πr³), Two-Way Frequency Tables, Joint/Marginal/Conditional Frequencies, Capstone Multi-Step Problems. Final project: Mission to Mars planning.</td>
+          <td class="pacing">Quarter 4: 4 Weeks (5/3-6/3)</td>
+          <td>1. Kepler's Laws project; 2. Volume quiz; 3. Two-way tables quiz; 4. Year-end capstone test.</td>
+          <td>PhET: Gravity and Orbits, My Solar System. NASA JPL educator resources. MSOS Math 8 site: Cosmos unit. Hands-on: ball & string orbit demo.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="calendar" class="panel">
+      <h2>Week-by-Week Unit Calendar</h2>
+      <p class="note">Color-coded bars show which weeks each unit occupies. Quarter blocks: Q1 blue · Q2 green · Q3 gold · Q4 orange.</p>
+      <div class="gantt-wrap">
+        <table class="gantt-table">
+          <thead>
+            <tr>
+              <th class="corner-cell" rowspan="2" style="background:#F1F5F9;">Unit</th>
+              <th class="corner-cell" rowspan="2" style="background:#F1F5F9;">Wks</th>
+              <th class="qtr-banner qtr-1" colspan="9">1st Qtr 8/3-10/2</th><th class="qtr-banner qtr-2" colspan="9">2nd Qtr 10/19-12/18</th><th class="qtr-banner qtr-3" colspan="9">3rd Qtr 1/7-3/12</th><th class="qtr-banner qtr-4" colspan="9">4th Qtr 3/29-6/3</th>
+            </tr>
+            <tr>
+              <th class="week-th">W1</th><th class="week-th">W2</th><th class="week-th">W3</th><th class="week-th">W4</th><th class="week-th">W5</th><th class="week-th">W6</th><th class="week-th">W7</th><th class="week-th">W8</th><th class="week-th">W9</th><th class="week-th">W10</th><th class="week-th">W11</th><th class="week-th">W12</th><th class="week-th">W13</th><th class="week-th">W14</th><th class="week-th">W15</th><th class="week-th">W16</th><th class="week-th">W17</th><th class="week-th">W18</th><th class="week-th">W19</th><th class="week-th">W20</th><th class="week-th">W21</th><th class="week-th">W22</th><th class="week-th">W23</th><th class="week-th">W24</th><th class="week-th">W25</th><th class="week-th">W26</th><th class="week-th">W27</th><th class="week-th">W28</th><th class="week-th">W29</th><th class="week-th">W30</th><th class="week-th">W31</th><th class="week-th">W32</th><th class="week-th">W33</th><th class="week-th">W34</th><th class="week-th">W35</th><th class="week-th">W36</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="unit-cell"><strong>Beginning of School - Lab Math & Number Foundations</strong></td>
+          <td class="weeks-cell">5</td>
+          <td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Lines & Slopes</strong></td>
+          <td class="weeks-cell">4</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Systems of Equations & Stoichiometry</strong></td>
+          <td class="weeks-cell">9</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Functions, Motion & Pythagorean Theorem</strong></td>
+          <td class="weeks-cell">9</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Electricity, Waves & Optics</strong></td>
+          <td class="weeks-cell">5</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Cosmos, Geometry & Capstone</strong></td>
+          <td class="weeks-cell">4</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notes-box">
+        <h3>📌 Key Calendar Dates (2026–2027)</h3>
+        <ul>
+          <li>First Day of School: Aug. 3, 2026</li>
+          <li>Fall Break: Oct. 5 – Oct. 16, 2026 (two-week intersession)</li>
+          <li>Winter Break: Dec. 21, 2026 – Jan. 6, 2027</li>
+          <li>Spring Break: Mar. 15 – Mar. 26, 2027 (two-week intersession)</li>
+          <li>Grade 8 Graduation: May 28, 2027</li>
+          <li>Last Day of School: Jun. 3, 2027</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+    function goBack() {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = 'msos-math-8.html';
+      }
+    }
+  </script>
+</body>
+</html>

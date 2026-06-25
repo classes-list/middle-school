@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSOS Math 7 · Curriculum Map 2026–2027</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; background:#F1F5F9; color:#1F2937; line-height:1.5; padding:20px; }
+    .container { max-width: 1400px; margin: 0 auto; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); overflow:hidden; }
+    .header { background:linear-gradient(135deg,#1F4E78 0%,#2E6BA8 100%); color:#fff; padding:24px 28px; position:relative; }
+    .header h1 { font-size:1.6rem; margin-bottom:6px; }
+    .header .sub { font-size:0.95rem; opacity:0.92; }
+    .header .back-btn { position:absolute; top:20px; right:24px; background:rgba(255,255,255,0.18); color:#fff; border:1.5px solid rgba(255,255,255,0.4); padding:8px 16px; border-radius:6px; text-decoration:none; font-weight:600; font-size:0.85rem; cursor:pointer; }
+    .header .back-btn:hover { background:rgba(255,255,255,0.28); }
+    .tabs { display:flex; background:#F8FAFC; border-bottom:2px solid #E2E8F0; padding:0 28px; }
+    .tab { background:transparent; border:none; padding:14px 22px; font-size:0.95rem; font-weight:600; color:#64748B; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.15s; }
+    .tab:hover { color:#1F4E78; }
+    .tab.active { color:#1F4E78; border-bottom-color:#1F4E78; }
+    .panel { display:none; padding:24px 28px; }
+    .panel.active { display:block; }
+    .panel h2 { font-size:1.25rem; color:#1F4E78; margin-bottom:18px; }
+    .panel .note { font-size:0.85rem; color:#64748B; margin-bottom:14px; font-style:italic; }
+
+    /* Curriculum Map table */
+    .map-table { width:100%; border-collapse:collapse; font-size:0.82rem; }
+    .map-table th { background:#1F4E78; color:#fff; padding:10px 8px; text-align:left; font-weight:600; border:1px solid #1F4E78; }
+    .map-table td { padding:10px 8px; border:1px solid #CBD5E1; vertical-align:top; }
+    .map-table .unit-name { font-weight:700; color:#1F4E78; width:170px; }
+    .map-table .standards { width:60px; text-align:center; font-weight:600; }
+    .map-table .cc-codes { font-family:"Courier New",monospace; font-size:0.78rem; color:#0c4a6e; font-weight:600; width:200px; }
+    .map-table .pacing { font-weight:600; color:#5B21B6; width:150px; }
+
+    /* Unit Calendar Gantt */
+    .gantt-wrap { overflow-x:auto; }
+    .gantt-table { border-collapse:collapse; font-size:0.72rem; }
+    .gantt-table th, .gantt-table td { border:1px solid #CBD5E1; padding:4px 6px; }
+    .gantt-table .unit-cell { width:240px; font-weight:600; color:#1F4E78; background:#F8FAFC; padding:8px; font-size:0.85rem; }
+    .gantt-table .weeks-cell { width:50px; text-align:center; font-weight:600; background:#F8FAFC; font-size:0.85rem; }
+    .gantt-table .week-th { width:28px; text-align:center; background:#1F4E78; color:#fff; font-weight:600; font-size:0.7rem; }
+    .gantt-table .qtr-banner { padding:8px; text-align:center; font-weight:700; font-size:0.85rem; }
+    .gantt-table .qtr-1 { background:#BDD7EE; color:#1F4E78; }
+    .gantt-table .qtr-2 { background:#C6E0B4; color:#365B27; }
+    .gantt-table .qtr-3 { background:#FFE699; color:#7A5F00; }
+    .gantt-table .qtr-4 { background:#F4B084; color:#7B3D14; }
+    .gantt-table .gantt-cell { width:28px; height:32px; background:#fff; }
+    .gantt-table .gantt-cell.filled { }
+    .gantt-table .corner-cell { background:#F1F5F9; }
+
+    .notes-box { margin-top:24px; padding:16px 20px; background:#FFF8E1; border-left:4px solid #FFD100; border-radius:6px; }
+    .notes-box h3 { font-size:1rem; color:#7A5F00; margin-bottom:10px; }
+    .notes-box ul { list-style:none; padding:0; }
+    .notes-box li { padding:4px 0; font-size:0.9rem; color:#4A4A4A; }
+    .notes-box li::before { content:"📌  "; }
+
+    @media (max-width:768px) {
+      .header h1 { font-size:1.2rem; }
+      .map-table { font-size:0.72rem; }
+      .tab { padding:10px 14px; font-size:0.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📅 Grade 7 Math · Curriculum Map 2026–2027</h1>
+      <div class="sub">Mary, Star of the Sea School &middot; Teacher: Peter Park &middot; Grade 7 Math</div>
+      <a class="back-btn" onclick="goBack()">← Back</a>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="map">📚 Curriculum Map</button>
+      <button class="tab" data-tab="calendar">📅 Unit Calendar (Gantt)</button>
+    </div>
+
+    <div id="map" class="panel active">
+      <h2>Curriculum Map by Quarter</h2>
+      <p class="note">Each unit lists its CC standards, learning objectives, content, pacing, assessments, and resources.</p>
+      <div style="overflow-x:auto">
+        <table class="map-table">
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Standards</th>
+              <th>Standards Reference #</th>
+              <th>Learning Objectives</th>
+              <th>Essential Content &amp; Skills</th>
+              <th>Sequencing &amp; Pacing</th>
+              <th>Assessments</th>
+              <th>Resources Used</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="unit-name" style="background:#DBEAFE"><strong>Beginning of School - Lab Math Refresher</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">7.RP.A.3 (Multi-step ratio & percent problems); 7.EE.A.1 (Add/subtract/factor/expand expressions); 7.RP.A.1 (Unit rates with ratios of fractions); 7.NS.A.3 (Real-world problems with rational numbers)</td>
+          <td>1. Calculate percent error to evaluate measurement accuracy; 2. Use scientific notation with negative exponents for microscopic quantities; 3. Convert between metric units, including rate conversions (km/h ↔ m/s); 4. Distinguish accuracy from precision in lab data.</td>
+          <td>Percent Error, Scientific Notation (positive & negative exponents), Metric Unit Conversions (multi-step rate conversions), Accuracy vs. Precision. Lab: Lab Math Diagnostic — measure, record, and evaluate.</td>
+          <td class="pacing">Quarter 1: 5 Weeks (8/3-9/4)</td>
+          <td>1. Diagnostic pre-assessment; 2. Percent error quiz; 3. Scientific notation quiz; 4. Unit conversions quiz; 5. Lab Math Bootcamp report.</td>
+          <td>PhET: Estimation, Number Line: Integers. MSOS Math 7 site: Lab Math units. Khan Academy: 7th grade rates & conversions. Hands-on: lab tools.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#DBEAFE"><strong>Proportional Relationships & Rates</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">7.RP.A.1 (Unit rates with ratios of fractions); 7.RP.A.2 (Represent proportional relationships); 7.RP.A.3 (Multi-step ratio & percent problems)</td>
+          <td>1. Compute unit rates from ratios of fractions; 2. Identify proportional relationships from tables, graphs, equations; 3. Find the constant of proportionality (k = y/x); 4. Solve multi-step ratio, rate, and percent problems.</td>
+          <td>Unit Rates, Constant of Proportionality (k), Proportional Relationships (tables, graphs y = kx, equations), Percent Change, Tax & Tip problems, Distance-Time graphs. Activity: Density-as-rate Lab (g/cm³).</td>
+          <td class="pacing">Quarter 1: 4 Weeks (9/8-10/2)</td>
+          <td>1. Unit rates quiz; 2. Proportional relationships quiz; 3. Multi-step percent problems quiz; 4. Density Lab report; 5. Quarter 1 test.</td>
+          <td>PhET: Ratio & Proportion, Graphing Lines. MSOS Math 7 site: Ratios & Proportional Relationships unit. Hands-on: density blocks, balance scales.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#DCFCE7"><strong>Brain Data: Percents, Statistics & Sampling</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">7.RP.A.3 (Multi-step percent problems); 7.SP.A.1 (Statistics involves sampling); 7.SP.A.2 (Random sampling for inferences); 7.SP.B.3 (Compare data distributions); 7.SP.B.4 (Measures of center & variability)</td>
+          <td>1. Calculate percent change (increase/decrease) and percent error in survey data; 2. Distinguish biased from unbiased samples; 3. Design and analyze a representative survey; 4. Compare data distributions using mean, median, MAD.</td>
+          <td>Percent Increase/Decrease, Percent Change in real-world data, Sampling & Bias, Survey Design, Mean Absolute Deviation (MAD), Box Plots, Comparing Data Sets. Activity: Tech & Perception survey — design, run, analyze.</td>
+          <td class="pacing">Quarter 2: 4 Weeks (10/19-11/13)</td>
+          <td>1. Percent change quiz; 2. Sampling & bias quiz; 3. Brain Data essay/project; 4. Statistics summary quiz.</td>
+          <td>PhET: Plinko Probability. MSOS Math 7 site: Statistics unit. Survey tools (Google Forms). Hands-on: survey instruments.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#DCFCE7"><strong>Rational Numbers & Algebraic Reasoning</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">7.NS.A.1 (Add/subtract rationals); 7.NS.A.2 (Multiply/divide rationals); 7.EE.A.1 (Properties to add, subtract, factor, expand); 7.EE.A.2 (Rewrite expressions); 7.EE.B.3 (Multi-step problems); 7.EE.B.4 (Construct & solve equations); 7.EE.B.4a (Solve px+q=r, p(x+q)=r)</td>
+          <td>1. Add, subtract, multiply, divide rational numbers (including negatives); 2. Add, subtract, factor, and expand linear expressions; 3. Solve two-step equations; 4. Rearrange formulas to solve for any variable (e.g., D = m/V → m = DV).</td>
+          <td>Rational Number Operations (+, −, ×, ÷ with negatives, fractions, decimals), Linear Expressions (combining like terms, distributive property), Two-Step Equations, Rearranging Formulas (Density, Speed, Area). Activity: Surface-Area-to-Volume ratio investigation.</td>
+          <td class="pacing">Quarter 2: 5 Weeks (11/16-12/18)</td>
+          <td>1. Rational ops quiz; 2. Algebraic expressions quiz; 3. Two-step equations quiz; 4. Rearranging formulas quiz; 5. Cell Model project; 6. Quarter 2 test.</td>
+          <td>PhET: Expression Exchange, Equation Grapher. MSOS Math 7 site: Algebraic Reasoning unit. Hands-on: algebra tiles.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#FEF3C7"><strong>Geometry, Inequalities & Probability</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">7.G.A.1 (Scale drawings); 7.G.A.2 (Draw shapes with given conditions); 7.G.A.3 (Cross-sections of 3D figures); 7.G.B.4 (Circles: circumference & area); 7.G.B.5 (Angle relationships); 7.G.B.6 (Area, volume, surface area); 7.EE.B.4b (Multi-step inequalities); 7.SP.C.5-8 (Probability)</td>
+          <td>1. Solve problems with scale drawings; 2. Find area, surface area, volume of triangles, quadrilaterals, prisms, cylinders; 3. Use the circumference and area formulas of circles; 4. Solve multi-step inequalities and graph solutions; 5. Compute theoretical and experimental probabilities of compound events.</td>
+          <td>Scale Drawings, Triangles (constructions, angle sum), Circles (C = 2πr, A = πr²), Area of Composite Figures, Surface Area & Volume of Prisms, Cylinders, Pyramids, Angle Relationships (complementary, supplementary, vertical), Inequalities (multi-step, graphing), Probability (theoretical & experimental, compound events).</td>
+          <td class="pacing">Quarter 3: 9 Weeks (1/7-3/12)</td>
+          <td>1. Triangles & angles quiz; 2. Circles quiz; 3. Surface area & volume quiz; 4. Inequalities quiz; 5. Probability quiz; 6. Quarter 3 test.</td>
+          <td>PhET: Area Builder, Reactants Products & Leftovers (ratios), Plinko Probability. MSOS Math 7 site: Geometry & Probability units. Hands-on: protractors, compasses, dice, spinners.</td>
+        </tr>
+        <tr>
+          <td class="unit-name" style="background:#FCE7F3"><strong>Genetics: Probability, Statistics & Scale</strong></td>
+          <td class="standards">CCSS</td>
+          <td class="cc-codes">7.SP.C.7 (Develop probability models); 7.SP.C.8 (Compound events); 7.RP.A.3 (Percent problems); 7.EE.B.3 (Multi-step problems with rational numbers); 7.SP.A.2 (Random sampling); 7.G.A.1 (Scale drawings)</td>
+          <td>1. Use Punnett squares to predict offspring traits; 2. Model linear vs. exponential population growth; 3. Apply exponential decay to pharmacokinetics (drug half-life); 4. Compute biodiversity indices; 5. Convert actual measurements to scale drawings.</td>
+          <td>Punnett Squares, Compound Probability (independent & dependent events), Population Growth (linear vs. exponential), Drug Half-Life Decay (exponential), Biodiversity Index, Scale Drawings of organisms & habitats. Capstone: Multi-step real-world problems.</td>
+          <td class="pacing">Quarter 4: 9 Weeks (3/29-6/3)</td>
+          <td>1. Punnett squares quiz; 2. Population growth project; 3. Pharmacokinetics quiz; 4. Biodiversity project; 5. Year-end capstone test.</td>
+          <td>PhET: Natural Selection, Gene Machine. MSOS Math 7 site: Genetics math unit. Hands-on: paper Punnett squares, M&M genetics activity.</td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="calendar" class="panel">
+      <h2>Week-by-Week Unit Calendar</h2>
+      <p class="note">Color-coded bars show which weeks each unit occupies. Quarter blocks: Q1 blue · Q2 green · Q3 gold · Q4 orange.</p>
+      <div class="gantt-wrap">
+        <table class="gantt-table">
+          <thead>
+            <tr>
+              <th class="corner-cell" rowspan="2" style="background:#F1F5F9;">Unit</th>
+              <th class="corner-cell" rowspan="2" style="background:#F1F5F9;">Wks</th>
+              <th class="qtr-banner qtr-1" colspan="9">1st Qtr 8/3-10/2</th><th class="qtr-banner qtr-2" colspan="9">2nd Qtr 10/19-12/18</th><th class="qtr-banner qtr-3" colspan="9">3rd Qtr 1/7-3/12</th><th class="qtr-banner qtr-4" colspan="9">4th Qtr 3/29-6/3</th>
+            </tr>
+            <tr>
+              <th class="week-th">W1</th><th class="week-th">W2</th><th class="week-th">W3</th><th class="week-th">W4</th><th class="week-th">W5</th><th class="week-th">W6</th><th class="week-th">W7</th><th class="week-th">W8</th><th class="week-th">W9</th><th class="week-th">W10</th><th class="week-th">W11</th><th class="week-th">W12</th><th class="week-th">W13</th><th class="week-th">W14</th><th class="week-th">W15</th><th class="week-th">W16</th><th class="week-th">W17</th><th class="week-th">W18</th><th class="week-th">W19</th><th class="week-th">W20</th><th class="week-th">W21</th><th class="week-th">W22</th><th class="week-th">W23</th><th class="week-th">W24</th><th class="week-th">W25</th><th class="week-th">W26</th><th class="week-th">W27</th><th class="week-th">W28</th><th class="week-th">W29</th><th class="week-th">W30</th><th class="week-th">W31</th><th class="week-th">W32</th><th class="week-th">W33</th><th class="week-th">W34</th><th class="week-th">W35</th><th class="week-th">W36</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td class="unit-cell"><strong>Beginning of School - Lab Math Refresher</strong></td>
+          <td class="weeks-cell">5</td>
+          <td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Proportional Relationships & Rates</strong></td>
+          <td class="weeks-cell">4</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell filled" style="background:#BDD7EE"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Brain Data: Percents, Statistics & Sampling</strong></td>
+          <td class="weeks-cell">4</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Rational Numbers & Algebraic Reasoning</strong></td>
+          <td class="weeks-cell">5</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell filled" style="background:#C6E0B4"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Geometry, Inequalities & Probability</strong></td>
+          <td class="weeks-cell">9</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell filled" style="background:#FFE699"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td>
+        </tr>
+        <tr>
+          <td class="unit-cell"><strong>Genetics: Probability, Statistics & Scale</strong></td>
+          <td class="weeks-cell">9</td>
+          <td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td><td class="gantt-cell filled" style="background:#F4B084"></td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notes-box">
+        <h3>📌 Key Calendar Dates (2026–2027)</h3>
+        <ul>
+          <li>First Day of School: Aug. 3, 2026</li>
+          <li>Fall Break: Oct. 5 – Oct. 16, 2026 (two-week intersession)</li>
+          <li>Winter Break: Dec. 21, 2026 – Jan. 6, 2027</li>
+          <li>Spring Break: Mar. 15 – Mar. 26, 2027 (two-week intersession)</li>
+          <li>Grade 8 Graduation: May 28, 2027</li>
+          <li>Last Day of School: Jun. 3, 2027</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+    function goBack() {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = 'msos-math-7.html';
+      }
+    }
+  </script>
+</body>
+</html>
