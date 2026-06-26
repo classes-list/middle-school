@@ -5296,255 +5296,51 @@ const LESSONS = [
       }
     }
   },
-  { week:3, day:1, theme:"cave", icon:"💎", title:"Division Concepts",
-    tag:"WEEK 3 · MONDAY · CAVE OF CALCULATIONS", skill:"Division as sharing &amp; grouping",
-    supply:{icon:"⛏️",name:"Pickaxe"}, badge:"Miner",
-    story:"💎 The crew finds a chest of treasure deep in the cave. To share fairly, you must <em>divide</em>.",
-    teach:`<div class="teach-step"><strong>Division has two meanings:</strong><br>• <strong>Sharing:</strong> 12 ÷ 3 = "share 12 among 3 friends" → 4 each.<br>• <strong>Grouping:</strong> 12 ÷ 3 = "make groups of 3 from 12" → 4 groups.</div><div class="teach-step green"><strong>Division is the OPPOSITE of multiplication.</strong> If 4 × 3 = 12, then 12 ÷ 3 = 4 AND 12 ÷ 4 = 3.</div><div class="teach-step gold"><strong>Vocabulary:</strong> In 12 ÷ 3 = 4:<br>• 12 = <em>dividend</em><br>• 3 = <em>divisor</em><br>• 4 = <em>quotient</em></div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 24 ÷ 6: think "6 × what = 24?" → 6 × 4 = 24, so 24 ÷ 6 = <strong>4</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Cave Mission:</strong> 48 gems, 8 explorers. Each gets 48 ÷ 8 = 6 gems.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const ans=rand(2,9), b=rand(2,9);
-          const a=ans*b;
-          return numQ(`${a} ÷ ${b} = ?`, ans, `Think: ${b} × ? = ${a}.`);
-        }
-        case 1: {
-          const ans=rand(2,9), b=rand(2,9);
-          const total=ans*b;
-          return numQ(`${total} gems shared by ${b} explorers. Each gets ?`, ans, `${total} ÷ ${b}.`);
-        }
-        case 2: {
-          const each=rand(3,9), groups=rand(2,9);
-          const total=each*groups;
-          return numQ(`${total} gems make groups of ${each}. How many groups?`, groups, `${total} ÷ ${each}.`);
-        }
-        case 3: {
-          const a=rand(2,9), b=rand(2,9);
-          const opts=[`${a*b} ÷ ${a} = ${b}`, `${a+b}`, `${a*b}`, `${a-b}`];
-          return mcQ(`If ${a} × ${b} = ${a*b}, then ${a*b} ÷ ${a} = ?`, opts, `${a*b} ÷ ${a} = ${b}`, `Division undoes multiplication.`);
-        }
-        case 4: {
-          const ans=rand(5,9), b=rand(4,8);
-          const a=ans*b;
-          return numQ(`${a} ÷ ${b} = ?`, ans, `Think times tables in reverse.`);
-        }
-      }
-    }
-  },
-  { week:3, day:2, theme:"cave", icon:"⚙️", title:"Long Division (1-Digit Divisor)",
-    tag:"WEEK 3 · TUESDAY · CAVE OF CALCULATIONS", skill:"Long division of multi-digit numbers by 1-digit numbers",
-    supply:{icon:"⚙️",name:"Mining Gear"}, badge:"Driller",
-    story:"⚙️ Deeper into the cave. Bigger treasures, bigger divisions. Time to learn the <em>long division</em> algorithm.",
-    teach:`<div class="teach-step"><strong>Long division steps:</strong> <em>D</em>ivide, <em>M</em>ultiply, <em>S</em>ubtract, <em>B</em>ring down, repeat.</div><div class="teach-step green"><strong>Example: 84 ÷ 4</strong><br>• 8 ÷ 4 = 2. Write 2 above the 8.<br>• 2 × 4 = 8. Subtract: 8 − 8 = 0.<br>• Bring down the 4. 4 ÷ 4 = 1.<br>• Answer: <strong>21</strong>.</div><div class="teach-step gold"><strong>Example: 132 ÷ 3</strong><br>• 1 ÷ 3? No (too small). Look at 13 ÷ 3 = 4 R 1.<br>• Write 4. Multiply 4 × 3 = 12. Subtract 13 − 12 = 1.<br>• Bring down 2 → 12. 12 ÷ 3 = 4. Done!<br>• Answer: <strong>44</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Tip:</strong> If a digit is too small, COMBINE it with the next.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Cave Mission:</strong> 168 gems ÷ 6 miners = 28 each.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const b=rand(2,5);
-          const ans=rand(11,25);
-          const a=ans*b;
-          return numQ(`${a} ÷ ${b} = ?`, ans, `Long division: divide, multiply, subtract, bring down.`);
-        }
-        case 1: {
-          const b=rand(2,8);
-          const ans=rand(20,99);
-          const a=ans*b;
-          return numQ(`${a} ÷ ${b} = ?`, ans, `Divide each digit step by step.`);
-        }
-        case 2: {
-          const b=rand(3,9);
-          const ans=rand(50,200);
-          const a=ans*b;
-          return numQ(`${fmt(a)} ÷ ${b} = ?`, ans, `Long division. Take it one place at a time.`);
-        }
-        case 3: {
-          const b=rand(2,6);
-          const ans=rand(100,300);
-          const a=ans*b;
-          return numQ(`${fmt(a)} ÷ ${b} = ?`, ans, `Divide hundreds, then tens, then ones.`);
-        }
-        case 4: {
-          const b=rand(3,7), ans=rand(15,40);
-          const total=ans*b;
-          return numQ(`A treasure of ${fmt(total)} gems split among ${b} miners. Each miner gets ?`, ans, `${total} ÷ ${b}.`);
-        }
-      }
-    }
-  },
-  { week:3, day:3, theme:"cave", icon:"🔮", title:"Division with Remainders",
-    tag:"WEEK 3 · WEDNESDAY · CAVE OF CALCULATIONS", skill:"Interpret remainders in real-world division",
-    supply:{icon:"🔮",name:"Crystal Orb"}, badge:"Interpreter",
-    story:"🔮 Sometimes treasure doesn't divide evenly. What about the leftover? That's the <em>remainder</em>.",
-    teach:`<div class="teach-step"><strong>Remainder = what's left over.</strong> 17 ÷ 5 = 3 R 2 (three groups of 5, plus 2 left over).</div><div class="teach-step green"><strong>Interpret remainders carefully:</strong><br>• <em>"How many full groups?"</em> → Use the quotient (drop the remainder).<br>• <em>"How many groups needed, even if not full?"</em> → Round UP the quotient.<br>• <em>"How many leftover?"</em> → Use the remainder.</div><div class="teach-step gold"><strong>Worked Example:</strong> 23 cookies, 4 friends. Each gets 23 ÷ 4 = 5 R 3. Each friend gets 5 cookies and 3 are left over.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Trick:</strong> Verify by multiplying. quotient × divisor + remainder = dividend. 5 × 4 + 3 = 23 ✓.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Cave Mission:</strong> 27 gems ÷ 4 miners = 6 R 3. Each gets 6, with 3 extra to put back in the chest.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const b=rand(3,7);
-          const q=rand(5,15), r=rand(1, b-1);
-          const a=q*b+r;
-          return mcQ(`${a} ÷ ${b} = ?`, [`${q} R ${r}`, `${q+1} R ${r-1}`, `${q-1} R ${r+1}`, `${q} R ${b-r}`], `${q} R ${r}`, `${b} × ${q} = ${b*q}. Add ${r} to get ${a}.`);
-        }
-        case 1: {
-          const b=rand(3,8);
-          const q=rand(10,30), r=rand(1, b-1);
-          const a=q*b+r;
-          return numQ(`What is the REMAINDER of ${a} ÷ ${b}?`, r, `${b} × ${q} = ${b*q}; ${a} − ${b*q} = ${r}.`);
-        }
-        case 2: {
-          const b=rand(3,6);
-          const q=rand(5,12), r=rand(1, b-1);
-          const a=q*b+r;
-          return numQ(`What is the QUOTIENT (whole part) of ${a} ÷ ${b}?`, q, `Largest multiple of ${b} not over ${a} is ${b*q}.`);
-        }
-        case 3: {
-          const cookies=rand(15,30), friends=rand(3,6);
-          const q=Math.floor(cookies/friends);
-          const r=cookies%friends;
-          if (r===0) return LESSONS[12].gen(slot);
-          return numQ(`${cookies} cookies shared by ${friends} friends. How many cookies does each get (full only)?`, q, `${cookies} ÷ ${friends} = ${q} R ${r}.`);
-        }
-        case 4: {
-          const items=rand(20,40), per=rand(3,6);
-          const q=Math.floor(items/per);
-          const r=items%per;
-          if (r===0) return LESSONS[12].gen(slot);
-          return numQ(`${items} apples packed in boxes of ${per}. How many apples are LEFT OVER?`, r, `${items} ÷ ${per} = ${q} R ${r}.`);
-        }
-      }
-    }
-  },
-  { week:3, day:4, theme:"cave", icon:"🟦", title:"Area of Rectangles",
-    tag:"WEEK 3 · THURSDAY · CAVE OF CALCULATIONS", skill:"Calculate area using length × width",
-    supply:{icon:"📐",name:"Measuring Rope"}, badge:"Surveyor",
-    story:"🟦 The cave has rectangular chambers. To map them, you need <em>area</em> — length times width.",
-    teach:`<div class="teach-step"><strong>Area is the SPACE INSIDE a shape.</strong> Measured in square units (cm², m², etc.).</div><div class="teach-step green"><strong>For a rectangle:</strong> Area = length × width.<br>A 5 × 3 rectangle has area 5 × 3 = <strong>15 square units</strong>.</div><div class="teach-step gold"><strong>Why × works:</strong> Imagine the rectangle filled with 1-unit squares. Length tells how many in a row, width tells how many rows. Multiply to count all squares.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A chamber is 8 m by 6 m. Area = 8 × 6 = <strong>48 m²</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 Cave Mission:</strong> A treasure room is 12 m × 9 m = 108 m². Big enough for the whole crew!</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const l=rand(3,9), w=rand(3,9);
-          return numQ(`A rectangle is ${l} long, ${w} wide. Area in square units?`, l*w, `${l} × ${w}.`);
-        }
-        case 1: {
-          const s=rand(3,9);
-          return numQ(`A square has side ${s}. Area?`, s*s, `Side × side = ${s} × ${s}.`);
-        }
-        case 2: {
-          const l=rand(10,20), w=rand(3,9);
-          return numQ(`A ${l} m × ${w} m chamber. Area in m²?`, l*w, `${l} × ${w}.`);
-        }
-        case 3: {
-          const a=rand(2,10), area=rand(3,8)*a;
-          return numQ(`A rectangle has area ${area} and width ${a}. What is its length?`, area/a, `Area ÷ width = length.`);
-        }
-        case 4: {
-          const l=rand(4,12), w=rand(4,12);
-          return mcQ(`Area of ${l} × ${w}?`, [l*w, l+w, 2*(l+w), l*w+5], l*w, `Multiply.`);
-        }
-      }
-    }
-  },
-  { week:3, day:5, theme:"cave", icon:"🏛️", title:"Composite Figures &amp; Week 3 Quiz",
-    tag:"WEEK 3 · FRIDAY · BOSS DAY", skill:"Area of L-shapes &middot; Week 3 review",
-    supply:{icon:"🏛️",name:"Master Map"}, badge:"Cave Master",
-    story:"🏛️ The cave's strangest vault is L-shaped. Break it into rectangles to find the area!",
-    teach:`<div class="teach-step"><strong>Composite figure = made of more than one rectangle.</strong></div><div class="teach-step green"><strong>Strategy:</strong><br>1. DECOMPOSE: draw lines to split into rectangles.<br>2. Find each area.<br>3. ADD them up.</div><div class="teach-step gold"><strong>Worked Example:</strong> An L-shape: one 6×4 part + one 3×2 part.<br>Areas: 24 + 6 = <strong>30 square units</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 BOSS DAY:</strong> Mix of division, remainders, area, and composite figures.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
-          const a=rand(3,8), b=rand(3,8), c=rand(2,5), d=rand(2,5);
-          return numQ(`An L-shape splits into a ${a}×${b} rectangle plus a ${c}×${d} rectangle. Total area?`, a*b + c*d, `${a*b} + ${c*d}.`);
-        }
-        case 1: return LESSONS[9].gen(0);
-        case 2: return LESSONS[10].gen(0);
-        case 3: return LESSONS[11].gen(0);
-        case 4: return LESSONS[12].gen(0);
-      }
-    }
-  },
-  { week:4, day:1, theme:"temple", icon:"🏛️", title:"Fraction Concepts Review",
-    tag:"WEEK 4 · MONDAY · TEMPLE OF FRACTIONS", skill:"Identify numerator/denominator; compare basic fractions",
-    supply:{icon:"📜",name:"Sacred Scroll"}, badge:"Scribe",
-    story:"🏛️ The temple's stones are carved with fractions. To enter, you must read every fraction correctly.",
-    teach:`<div class="teach-step"><strong>Top &amp; bottom:</strong><br>• <em>Numerator</em> (TOP) = how many pieces you have.<br>• <em>Denominator</em> (BOTTOM) = how many pieces the whole is split into.</div><div class="teach-step green"><strong>Example:</strong> 3/4 = "3 of 4 equal pieces" — like 3 slices of a 4-slice pizza.</div><div class="teach-step gold"><strong>Compare fractions with same bottom:</strong> bigger top wins. 5/8 > 3/8.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> A pie has 6 slices. Eaten 4. Fraction eaten = <strong>4/6</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🏛️ Temple Mission:</strong> Read each stone correctly to glow it!</div>`,
+  { week:3, day:1, theme:"bakery", icon:"🥧", title:"Fraction Concepts",
+    tag:"WEEK 3 · MONDAY · PIE BAKERY", skill:"Identify numerator/denominator; equivalent fractions",
+    supply:{icon:"🥧",name:"Pie Pan"}, badge:"Pie Apprentice",
+    story:"🥧 The crew enters a magical bakery where every pie is sliced into perfect pieces. To work here, you must read fractions.",
+    teach:`<div class="teach-step"><strong>A fraction = part of a whole.</strong><br>• <em>Numerator</em> (TOP) = pieces you have.<br>• <em>Denominator</em> (BOTTOM) = pieces in the whole.</div><div class="teach-step green"><strong>Example:</strong> 3/4 = "3 of 4 equal pieces" — like 3 slices of a 4-slice pizza.</div><div class="teach-step gold"><strong>Equivalent fractions</strong> look different but ARE equal: 1/2 = 2/4 = 3/6.<br>Multiply (or divide) top AND bottom by the same number.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 1/2 = ?/8 → multiply both by 4: <strong>4/8</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🥧 Bakery Mission:</strong> Read each pie correctly to earn your first apprentice token!</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
           const d=choose([4,5,6,8]);
           const n=rand(1, d-1);
-          return mcQ(`A shape has <strong>${d}</strong> equal parts. <strong>${n}</strong> are colored. Fraction colored?`, [`${n}/${d}`,`${d}/${n}`,`${d-n}/${d}`,`${n}/${n+d}`], `${n}/${d}`, `Top = colored. Bottom = total parts.`);
+          return mcQ(`A pie is cut into <strong>${d}</strong> equal slices. <strong>${n}</strong> are eaten. Fraction eaten?`, [`${n}/${d}`,`${d}/${n}`,`${d-n}/${d}`,`${n}/${n+d}`], `${n}/${d}`, `Eaten ÷ total slices.`);
         }
         case 1: {
-          const d=choose([4,5,6,8]);
-          const n=rand(1, d-1);
-          return numQ(`In ${n}/${d}, what is the DENOMINATOR (bottom)?`, d, `Bottom = total pieces.`);
-        }
-        case 2: {
           const d=choose([4,6,8,10]);
           const a=rand(1, d-1), b=rand(1, d-1);
-          if (a===b) return LESSONS[15].gen(slot);
+          if (a===b) return LESSONS[10].gen(slot);
           const bigger = a>b ? `${a}/${d}` : `${b}/${d}`;
-          return mcQ(`Which is GREATER: ${a}/${d} or ${b}/${d}?`, [`${a}/${d}`,`${b}/${d}`,"Equal"], bigger, `Same bottom — bigger top wins.`);
+          return mcQ(`Which pie has MORE eaten: ${a}/${d} or ${b}/${d}?`, [`${a}/${d}`,`${b}/${d}`,"Equal"], bigger, `Same bottom — bigger top wins.`);
         }
-        case 3: {
-          const total=choose([6,8,10,12]), eaten=rand(2, total-1);
-          return mcQ(`A pizza has ${total} slices. You eat ${eaten}. Fraction eaten?`, [`${eaten}/${total}`,`${total}/${eaten}`,`${total-eaten}/${total}`,`${eaten}/${eaten+1}`], `${eaten}/${total}`, `Eaten ÷ total.`);
-        }
-        case 4: {
-          const d=choose([4,5,6,8]);
-          const a=rand(1, d-1), b=rand(1, d-1);
-          if (a===b) return LESSONS[15].gen(slot);
-          const symbol = a>b ? ">" : "<";
-          return mcQ(`Fill in: ${a}/${d} ___ ${b}/${d}`, ["<", ">", "="], symbol, `Same bottom — compare tops.`);
-        }
-      }
-    }
-  },
-  { week:4, day:2, theme:"temple", icon:"🪞", title:"Equivalent Fractions",
-    tag:"WEEK 4 · TUESDAY · TEMPLE OF FRACTIONS", skill:"Generate equivalent fractions by multiplying or dividing",
-    supply:{icon:"🪞",name:"Magic Mirror"}, badge:"Mirror Reader",
-    story:"🪞 Mirrors show the same fraction in different ways. Match them to open the path.",
-    teach:`<div class="teach-step"><strong>Equivalent fractions look different but ARE equal.</strong> 1/2 = 2/4 = 3/6 = 4/8.</div><div class="teach-step green"><strong>Rule:</strong> Multiply (or divide) TOP and BOTTOM by the same number.<br>1/2 × 3/3 = 3/6. ✓</div><div class="teach-step gold"><strong>Simplify:</strong> Divide top and bottom by their common factor.<br>6/8 ÷ 2/2 = 3/4.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 2/3 with sixths? Multiply top &amp; bottom by 2: 4/6.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🪞 Mirror Trick:</strong> If the top : bottom RATIO stays the same, the fraction stays the same.</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
+        case 2: {
           const base=choose([[1,2],[1,3],[1,4],[2,3],[3,4],[2,5]]);
           const mult=rand(2,4);
           const top=base[0]*mult, bot=base[1]*mult;
-          return mcQ(`Which equals <strong>${base[0]}/${base[1]}</strong>?`, [`${top}/${bot}`,`${top+1}/${bot}`,`${top}/${bot+1}`,`${base[0]+1}/${base[1]+1}`], `${top}/${bot}`, `× top and bottom by ${mult}.`);
+          return mcQ(`Which equals <strong>${base[0]}/${base[1]}</strong>?`, [`${top}/${bot}`,`${top+1}/${bot}`,`${top}/${bot+1}`,`${base[0]+1}/${base[1]+1}`], `${top}/${bot}`, `Multiply top and bottom by ${mult}.`);
         }
-        case 1: {
-          const base=choose([[1,2],[1,3],[1,4],[2,3],[3,5]]);
+        case 3: {
+          const base=choose([[1,2],[1,3],[1,4],[2,3]]);
           const mult=rand(2,4);
           const newBot=base[1]*mult;
           const correctTop=base[0]*mult;
           return numQ(`${base[0]}/${base[1]} = ?/${newBot}. What is the top?`, correctTop, `Bottom × ${mult}. Do the same to the top.`);
         }
-        case 2: {
-          const factor=rand(2,4);
-          const num=choose([1,2,3])*factor;
-          const den=choose([4,6,8])*factor;
-          const gcd_val = (() => { let a=num, b=den; while(b){[a,b]=[b,a%b];} return a; })();
-          if (gcd_val===1) return LESSONS[16].gen(slot);
-          return mcQ(`Simplify ${num}/${den}:`, [`${num/gcd_val}/${den/gcd_val}`,`${num-1}/${den-1}`,`${num+1}/${den+1}`,`${num/2}/${den/2}`], `${num/gcd_val}/${den/gcd_val}`, `Divide top and bottom by their common factor.`);
-        }
-        case 3: {
+        case 4: {
           const denom=choose([4,6,8,10]);
           const half=denom/2;
-          return mcQ(`Which fraction equals <strong>1/2</strong>?`, [`${half}/${denom}`,`1/${denom}`,`${denom}/${half}`,`${half-1}/${denom}`], `${half}/${denom}`, `Top × 2 = bottom.`);
-        }
-        case 4: {
-          const a=choose([2,3,4]), b=choose([6,8,12]);
-          const mult=b/a;
-          if (!Number.isInteger(mult) || mult < 2) return LESSONS[16].gen(slot);
-          return numQ(`1/${a} = ?/${b}. Find the top.`, mult, `Bottom went × ${mult}.`);
+          return mcQ(`Which slice equals <strong>1/2</strong> of the pie?`, [`${half}/${denom}`,`1/${denom}`,`${denom}/${half}`,`${half-1}/${denom}`], `${half}/${denom}`, `Top × 2 = bottom.`);
         }
       }
     }
   },
-  { week:4, day:3, theme:"temple", icon:"💧", title:"Adding Fractions with Like Denominators",
-    tag:"WEEK 4 · WEDNESDAY · TEMPLE OF FRACTIONS", skill:"Add fractions with the same denominator",
-    supply:{icon:"💧",name:"Sacred Water"}, badge:"Pourer",
-    story:"💧 Fill the sacred pool to exactly the right level. Add fractions to pour correctly.",
-    teach:`<div class="teach-step"><strong>When bottoms match, just add the tops.</strong> Bottom stays the same.<br>2/5 + 1/5 = <strong>3/5</strong>.</div><div class="teach-step green"><strong>Why?</strong> They're pieces of the same-size whole. You're counting how many pieces total.</div><div class="teach-step gold"><strong>⚠️ Common mistake:</strong> Don't add the bottoms! 2/5 + 1/5 ≠ 3/10. It's 3/5.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 3/8 + 4/8 = <strong>7/8</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💧 Temple Pool:</strong> 1/4 + 2/4 = 3/4 full. Open the door!</div>`,
+  { week:3, day:2, theme:"bakery", icon:"🥄", title:"Adding &amp; Subtracting Fractions",
+    tag:"WEEK 3 · TUESDAY · PIE BAKERY", skill:"Add and subtract fractions",
+    supply:{icon:"🥄",name:"Mixing Spoon"}, badge:"Pie Mixer",
+    story:"🥄 The baker is mixing ingredients. Add fractions to fill bowls; subtract fractions to scoop out portions.",
+    teach:`<div class="teach-step"><strong>Same bottom? Just add (or subtract) the tops.</strong><br>2/5 + 1/5 = <strong>3/5</strong>. Bottom stays.</div><div class="teach-step green"><strong>Different bottoms?</strong> Find a common denominator first, then add the tops.<br>1/2 + 1/3: common bottom 6. → 3/6 + 2/6 = <strong>5/6</strong>.</div><div class="teach-step gold"><strong>⚠️ Common mistake:</strong> Don't add the bottoms! 2/5 + 1/5 ≠ 3/10. It's 3/5.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Subtracting:</strong> Same rule. 7/8 − 3/8 = <strong>4/8</strong> (= 1/2).</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🥄 Bakery Mission:</strong> 1/4 cup sugar + 2/4 cup sugar = 3/4 cup. Mix it in!</div>`,
     gen: (slot) => {
       switch(slot) {
         case 0: {
@@ -5553,47 +5349,9 @@ const LESSONS = [
           return mcQ(`${a}/${d} + ${b}/${d} = ?`, [`${a+b}/${d}`,`${a+b}/${d*2}`,`${a*b}/${d}`,`${a+b}/${a+d}`], `${a+b}/${d}`, `Same bottom — add the tops.`);
         }
         case 1: {
-          const d=choose([4,5,6,8,10]);
-          const a=rand(1, d-2);
-          const b=rand(1, d-a);
-          return numQ(`${a}/${d} + ${b}/${d} = ?/${d}. Type the top number.`, a+b, `${a} + ${b}.`);
-        }
-        case 2: {
-          const d=choose([4,6,8]);
-          const a=rand(1, d-2), b=rand(1, d-a);
-          return mcQ(`You ate ${a}/${d} of a pie + ${b}/${d} more. Total eaten?`, [`${a+b}/${d}`,`${a+b}/${d+d}`,`${a*b}/${d}`,`${a+b}/${a+b}`], `${a+b}/${d}`, `${a}/${d} + ${b}/${d}.`);
-        }
-        case 3: {
-          const d=choose([5,6,8,10]);
-          const a=rand(1, d-1);
-          const need=d-a;
-          return mcQ(`${a}/${d} + ?/${d} = ${d}/${d} (= 1 whole). What's the missing top?`, [`${need}`,`${need+1}`,`${need-1}`,`${d}`], `${need}`, `${a} + ${need} = ${d}.`);
-        }
-        case 4: {
-          const d=choose([8,10,12]);
-          const a=rand(1,3), b=rand(1,3), c=rand(1,3);
-          if (a+b+c >= d) return LESSONS[17].gen(slot);
-          return mcQ(`${a}/${d} + ${b}/${d} + ${c}/${d} = ?`, [`${a+b+c}/${d}`,`${a*b*c}/${d}`,`${a+b+c}/${d*3}`,`${a+b+c}/${a+b+c}`], `${a+b+c}/${d}`, `Add all three tops.`);
-        }
-      }
-    }
-  },
-  { week:4, day:4, theme:"temple", icon:"⚗️", title:"Subtracting Fractions with Like Denominators",
-    tag:"WEEK 4 · THURSDAY · TEMPLE OF FRACTIONS", skill:"Subtract fractions with the same denominator",
-    supply:{icon:"⚗️",name:"Alchemy Vial"}, badge:"Alchemist",
-    story:"⚗️ Remove exact amounts from sacred vessels. Subtraction with matching bottoms!",
-    teach:`<div class="teach-step"><strong>Same denominator → subtract the tops.</strong> Bottom stays.<br>7/8 − 3/8 = <strong>4/8</strong> (or 1/2).</div><div class="teach-step green"><strong>Verify:</strong> 4/8 + 3/8 = 7/8 ✓.</div><div class="teach-step gold"><strong>Subtract from a whole:</strong> Rewrite 1 with the matching bottom. 1 − 3/5 = 5/5 − 3/5 = <strong>2/5</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 9/10 − 4/10 = <strong>5/10</strong> = 1/2.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>⚗️ Temple Tip:</strong> Always check by adding back!</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
           const d=choose([4,5,6,8]);
           const a=rand(2, d-1), b=rand(1, a-1);
           return mcQ(`${a}/${d} − ${b}/${d} = ?`, [`${a-b}/${d}`,`${a-b}/${d-1}`,`${a+b}/${d}`,`${a*b}/${d}`], `${a-b}/${d}`, `Subtract tops; keep the bottom.`);
-        }
-        case 1: {
-          const d=choose([5,6,8,10]);
-          const a=rand(2, d-1), b=rand(1, a-1);
-          return numQ(`${a}/${d} − ${b}/${d} = ?/${d}. Type the top.`, a-b, `${a} − ${b}.`);
         }
         case 2: {
           const d=choose([4,5,6,8]);
@@ -5601,34 +5359,234 @@ const LESSONS = [
           return mcQ(`1 − ${a}/${d} = ?`, [`${d-a}/${d}`,`${a}/${d}`,`${d}/${d-a}`,`${d-a}/${d-1}`], `${d-a}/${d}`, `1 = ${d}/${d}. Then subtract.`);
         }
         case 3: {
-          const d=choose([6,8,10]);
-          const start=rand(3,d-1), eaten=rand(1, start-1);
-          return numQ(`Pizza was ${start}/${d}. You ate ${eaten}/${d}. What's left? Type the top.`, start-eaten, `${start} − ${eaten}.`);
-        }
-        case 4: {
-          const d=choose([5,6,8]);
-          const total=d, a=rand(2, d-2), b=rand(1, a-1);
-          return mcQ(`${a}/${d} − ${b}/${d} = ?`, [`${a-b}/${d}`,`${a-b}/${d*2}`,`${a+b}/${d}`,`${(a-b)*2}/${d}`], `${a-b}/${d}`, `Subtract the tops.`);
-        }
-      }
-    }
-  },
-  { week:4, day:5, theme:"temple", icon:"💎", title:"Add/Subtract Unlike Denominators + Quiz",
-    tag:"WEEK 4 · FRIDAY · BOSS DAY", skill:"Find a common denominator, then +/− &middot; Week 4 review",
-    supply:{icon:"💎",name:"Sacred Relic"}, badge:"Temple Master",
-    story:"💎 The final altar. Different denominators must become THE SAME first.",
-    teach:`<div class="teach-step"><strong>Step 1: Find a common denominator.</strong> Easiest way: multiply the bottoms together (or find the smallest common multiple).</div><div class="teach-step green"><strong>Step 2: Rewrite each fraction with that new bottom.</strong> Multiply both top &amp; bottom by what's needed.</div><div class="teach-step gold"><strong>Step 3: Add or subtract the tops</strong> (now that bottoms match).</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 1/2 + 1/3?<br>Common bottom: 6. 1/2 = 3/6; 1/3 = 2/6.<br>3/6 + 2/6 = <strong>5/6</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>💎 BOSS DAY:</strong> All Week 4 skills, plus this new unlike-denominator move!</div>`,
-    gen: (slot) => {
-      switch(slot) {
-        case 0: {
           const easy=choose([[1,2,1,4,3,4],[1,2,1,3,5,6],[1,4,1,2,3,4],[2,3,1,6,5,6]]);
           const ans=easy[4]+"/"+easy[5];
           return mcQ(`${easy[0]}/${easy[1]} + ${easy[2]}/${easy[3]} = ?`, [ans,`${easy[0]+easy[2]}/${easy[1]+easy[3]}`,`${easy[0]+easy[2]}/${easy[5]}`,`${easy[0]*easy[2]}/${easy[1]*easy[3]}`], ans, `Common bottom first, then add.`);
         }
-        case 1: return LESSONS[15].gen(0);
-        case 2: return LESSONS[16].gen(0);
-        case 3: return LESSONS[17].gen(0);
-        case 4: return LESSONS[18].gen(0);
+        case 4: {
+          const d=choose([5,6,8,10]);
+          const a=rand(1, d-1);
+          const need=d-a;
+          return mcQ(`${a}/${d} + ?/${d} = ${d}/${d} (1 whole). What's the missing top?`, [`${need}`,`${need+1}`,`${need-1}`,`${d}`], `${need}`, `${a} + ${need} = ${d}.`);
+        }
+      }
+    }
+  },
+  { week:3, day:3, theme:"bakery", icon:"✖️", title:"Multiplying Fractions",
+    tag:"WEEK 3 · WEDNESDAY · PIE BAKERY", skill:"Multiply a fraction by a whole number or another fraction",
+    supply:{icon:"📒",name:"Recipe Card"}, badge:"Recipe Tripler",
+    story:"✖️ Make the recipe bigger! Multiplying fractions means making more of the same.",
+    teach:`<div class="teach-step"><strong>Whole × fraction:</strong> Multiply the top, keep the bottom.<br>4 × 1/3 = 4/3 (or 1 1/3).</div><div class="teach-step green"><strong>Fraction × fraction:</strong> Multiply the TOPS together. Multiply the BOTTOMS together.<br>1/2 × 1/3 = (1×1)/(2×3) = <strong>1/6</strong>.</div><div class="teach-step gold"><strong>Think of "of" as "×":</strong> "Half of a third" = 1/2 × 1/3 = 1/6.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 2/3 × 3/4 = (2×3)/(3×4) = 6/12 = <strong>1/2</strong>.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>✖️ Bakery Mission:</strong> The recipe calls for 1/2 cup. Make 3 batches. Need 3 × 1/2 = <strong>3/2 = 1 1/2 cups</strong>.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const w=rand(2,9), d=choose([3,4,5,6,8]);
+          return mcQ(`${w} × 1/${d} = ?`, [`${w}/${d}`,`1/${d*w}`,`${w}/${d*w}`,`${w+1}/${d}`], `${w}/${d}`, `Multiply the top by ${w}. Bottom stays.`);
+        }
+        case 1: {
+          const w=rand(2,6), n=rand(1,3), d=choose([4,5,6,8]);
+          if (n>=d) return LESSONS[12].gen(slot);
+          return numQ(`${w} × ${n}/${d} = ?/${d}. Type the top.`, w*n, `${w} × ${n} = ${w*n}.`);
+        }
+        case 2: {
+          const a=choose([1,2,3]), b=choose([3,4,5,6]);
+          const c=choose([1,2]), d=choose([3,4,5,6]);
+          if (a>=b || c>=d) return LESSONS[12].gen(slot);
+          const top=a*c, bot=b*d;
+          return mcQ(`${a}/${b} × ${c}/${d} = ?`, [`${top}/${bot}`,`${a+c}/${b+d}`,`${a*c}/${b+d}`,`${a+c}/${b*d}`], `${top}/${bot}`, `Tops × tops, bottoms × bottoms.`);
+        }
+        case 3: {
+          const d=choose([4,6,8]);
+          return mcQ(`What is 1/2 OF 1/${d}?`, [`1/${2*d}`,`1/${d-1}`,`2/${d}`,`1/${d+2}`], `1/${2*d}`, `"Of" means multiply: 1/2 × 1/${d}.`);
+        }
+        case 4: {
+          const a=choose([1,2,3]), b=choose([3,4,5,6]);
+          if (a>=b) return LESSONS[12].gen(slot);
+          const w=rand(2,5);
+          return numQ(`A batch needs ${a}/${b} cup. Make ${w} batches. Top of the total fraction?`, w*a, `${w} × ${a}/${b} = ${w*a}/${b}.`);
+        }
+      }
+    }
+  },
+  { week:3, day:4, theme:"bakery", icon:"🔪", title:"Dividing Fractions",
+    tag:"WEEK 3 · THURSDAY · PIE BAKERY", skill:"Divide a whole or fraction by a fraction",
+    supply:{icon:"🔪",name:"Pastry Knife"}, badge:"Pie Slicer",
+    story:"🔪 Cut the pie into smaller pieces. Dividing fractions tells you how many pieces fit.",
+    teach:`<div class="teach-step"><strong>Whole ÷ fraction:</strong> How many of that fraction FIT inside the whole?<br>2 ÷ 1/4 = 8 (eight quarters fit in 2 wholes).</div><div class="teach-step green"><strong>Trick — KEEP, CHANGE, FLIP:</strong><br>1. KEEP the first fraction.<br>2. CHANGE ÷ to ×.<br>3. FLIP the second fraction (swap top and bottom).</div><div class="teach-step gold"><strong>Example:</strong> 1/2 ÷ 1/4 → 1/2 × 4/1 = 4/2 = <strong>2</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Worked Example:</strong> 3 ÷ 1/2 → 3 × 2/1 = <strong>6</strong>. Six halves fit in 3 wholes.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🔪 Bakery Mission:</strong> 1 pie cut into 1/8 slices = 1 ÷ 1/8 = 8 slices.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const w=rand(2,5), d=choose([2,3,4,5,6]);
+          return numQ(`${w} ÷ 1/${d} = ?`, w*d, `Keep, change, flip: ${w} × ${d} = ${w*d}.`);
+        }
+        case 1: {
+          const d=choose([4,6,8,10,12]);
+          return mcQ(`1 ÷ 1/${d} = ? (How many 1/${d} pieces fit in 1?)`, [`${d}`,`1/${d}`,`${d-1}`,`${d+1}`], `${d}`, `1 = ${d}/${d}. ${d}/${d} ÷ 1/${d} = ${d}.`);
+        }
+        case 2: {
+          const a=choose([1,2,3]), b=choose([2,3,4,6]);
+          if (a>=b) return LESSONS[13].gen(slot);
+          return mcQ(`${a}/${b} ÷ 1/2 = ?`, [`${a*2}/${b}`,`${a}/${b*2}`,`${a+2}/${b}`,`${a-1}/${b}`], `${a*2}/${b}`, `Keep ${a}/${b}, change ÷ to ×, flip 1/2 to 2/1: (${a}×2)/${b}.`);
+        }
+        case 3: {
+          const d=choose([2,3,4,5,6]);
+          return numQ(`A baker cuts 1 pie into 1/${d} slices. How many slices?`, d, `1 ÷ 1/${d} = ${d}.`);
+        }
+        case 4: {
+          const a=choose([1,2,3]), b=choose([2,3,4,6]);
+          const c=choose([1,2]), e=choose([2,3,4,6]);
+          if (a>=b || c>=e) return LESSONS[13].gen(slot);
+          const top=a*e, bot=b*c;
+          return mcQ(`${a}/${b} ÷ ${c}/${e} = ?`, [`${top}/${bot}`,`${a*c}/${b*e}`,`${a+e}/${b+c}`,`${a-c}/${b-e}`], `${top}/${bot}`, `Keep ${a}/${b}, change to ×, flip ${c}/${e} to ${e}/${c}.`);
+        }
+      }
+    }
+  },
+  { week:3, day:5, theme:"bakery", icon:"🎂", title:"Master Baker's Test &amp; Week 3 Quiz",
+    tag:"WEEK 3 · FRIDAY · BOSS DAY", skill:"All fraction skills &middot; Week 3 review",
+    supply:{icon:"🎂",name:"Master Cake"}, badge:"Master Baker",
+    story:"🎂 The Master Baker watches as the crew handles every fraction skill of the week. Pass and earn the title!",
+    teach:`<div class="teach-step"><strong>BOSS DAY.</strong> Mix of all Week 3 skills: concepts, +/−, ×, ÷.</div><div class="teach-step green"><strong>Strategy:</strong> Name the TYPE first. "Is this concepts, +/−, ×, or ÷?" Then pick the right move.</div><div class="teach-step gold"><strong>Reminders:</strong><br>• Same bottom → just add/subtract tops.<br>• × → tops × tops, bottoms × bottoms.<br>• ÷ → keep, change, flip.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Read each problem carefully.</strong></div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🎂 BOSS DAY:</strong> All Week 3 fraction skills!</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: return LESSONS[10].gen(0);
+        case 1: return LESSONS[11].gen(0);
+        case 2: return LESSONS[12].gen(0);
+        case 3: return LESSONS[13].gen(0);
+        case 4: return LESSONS[11].gen(3);
+      }
+    }
+  },
+  { week:4, day:1, theme:"sky", icon:"🪵", title:"Perimeter of Rectangles",
+    tag:"WEEK 4 · MONDAY · SKY KINGDOM", skill:"Find perimeter of rectangles and squares",
+    supply:{icon:"🪵",name:"Cloud Fence Post"}, badge:"Fence Builder",
+    story:"🪵 The Sky Lord needs his cloud fields fenced. Calculate the distance AROUND each field.",
+    teach:`<div class="teach-step"><strong>Perimeter = the distance AROUND a shape.</strong> Add up all the sides.</div><div class="teach-step green"><strong>Rectangle:</strong> P = 2 × (length + width).<br>A 9 × 5 rectangle: P = 2 × (9 + 5) = 2 × 14 = <strong>28 units</strong>.</div><div class="teach-step gold"><strong>Square:</strong> P = 4 × side.<br>A square with side 7: P = 4 × 7 = <strong>28 units</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Real-world clue:</strong> If you're building a FENCE or wrapping RIBBON, you need PERIMETER.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🪵 Sky Mission:</strong> A cloud field is 12 × 7. Fence needed: 2 × (12 + 7) = <strong>38 units</strong>.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const l=rand(3,12), w=rand(3,12);
+          return numQ(`Perimeter of a ${l} × ${w} rectangle?`, 2*(l+w), `2 × (${l} + ${w}).`);
+        }
+        case 1: {
+          const s=rand(3,15);
+          return numQ(`Perimeter of a square with side ${s}?`, 4*s, `4 × ${s}.`);
+        }
+        case 2: {
+          const l=rand(5,15), w=rand(3,9);
+          return mcQ(`Perimeter of ${l} m × ${w} m field?`, [2*(l+w), l+w, l*w, 4*(l+w)], 2*(l+w), `2 × (${l} + ${w}).`);
+        }
+        case 3: {
+          const p=rand(20,40)*2, w=rand(3,9);
+          const l = p/2 - w;
+          if (l<=0) return LESSONS[15].gen(slot);
+          return numQ(`A rectangle has perimeter ${p} and width ${w}. What is its length?`, l, `${p} ÷ 2 = ${p/2}; ${p/2} − ${w} = ${l}.`);
+        }
+        case 4: {
+          const l=rand(4,14), w=rand(3,10);
+          return mcQ(`To build a fence around a ${l}×${w} yard, you need…`, [`Perimeter: ${2*(l+w)}`,`Area: ${l*w}`,`Sum: ${l+w}`,`Half: ${(l+w)/2}`], `Perimeter: ${2*(l+w)}`, `Fences use perimeter (distance around).`);
+        }
+      }
+    }
+  },
+  { week:4, day:2, theme:"sky", icon:"🧮", title:"Area of Rectangles",
+    tag:"WEEK 4 · TUESDAY · SKY KINGDOM", skill:"Calculate area using length × width",
+    supply:{icon:"🧮",name:"Tile Counter"}, badge:"Field Tiler",
+    story:"🧮 The Sky Lord needs his fields tiled with cloud tiles. How many tiles cover each field?",
+    teach:`<div class="teach-step"><strong>Area = the SPACE INSIDE a shape.</strong> Measured in SQUARE units (m², cm², ft²).</div><div class="teach-step green"><strong>Rectangle:</strong> Area = length × width.<br>A 9 × 5 rectangle: A = 9 × 5 = <strong>45 square units</strong>.</div><div class="teach-step gold"><strong>Square:</strong> A = side × side.<br>A square with side 7: A = 7 × 7 = <strong>49 square units</strong>.</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Real-world clue:</strong> Carpeting, painting, or sodding? You need AREA.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🧮 Sky Mission:</strong> A cloud field 12 m × 7 m has area 12 × 7 = <strong>84 m²</strong>.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const l=rand(3,9), w=rand(3,9);
+          return numQ(`Area of a ${l} × ${w} rectangle?`, l*w, `${l} × ${w}.`);
+        }
+        case 1: {
+          const s=rand(3,12);
+          return numQ(`Area of a square with side ${s}?`, s*s, `${s} × ${s}.`);
+        }
+        case 2: {
+          const l=rand(10,20), w=rand(3,9);
+          return numQ(`A ${l} m × ${w} m floor. Area in m²?`, l*w, `${l} × ${w}.`);
+        }
+        case 3: {
+          const w=rand(3,8), l=rand(4,12);
+          const area=l*w;
+          return numQ(`A rectangle has area ${area} and width ${w}. What is its length?`, l, `Area ÷ width = ${area} ÷ ${w} = ${l}.`);
+        }
+        case 4: {
+          const l=rand(4,10), w=rand(4,10);
+          return mcQ(`To carpet a ${l}×${w} room, you need…`, [`Area: ${l*w} sq units`,`Perimeter: ${2*(l+w)} units`,`Sum: ${l+w}`,`Half: ${(l+w)/2}`], `Area: ${l*w} sq units`, `Carpet covers the inside — use area.`);
+        }
+      }
+    }
+  },
+  { week:4, day:3, theme:"sky", icon:"📐", title:"Angles",
+    tag:"WEEK 4 · WEDNESDAY · SKY KINGDOM", skill:"Identify acute, right, obtuse, and straight angles",
+    supply:{icon:"📐",name:"Sky Protractor"}, badge:"Angle Reader",
+    story:"📐 The sky birds form different angles in their flight. Classify each one!",
+    teach:`<div class="teach-step"><strong>Four angle types:</strong><br>• <strong>Right</strong> = exactly 90° (like a corner of a book).<br>• <strong>Acute</strong> = LESS than 90° (sharp).<br>• <strong>Obtuse</strong> = MORE than 90° but less than 180° (wide).<br>• <strong>Straight</strong> = exactly 180° (a flat line).</div><div class="teach-step green"><strong>Trick:</strong> The smaller the angle, the more "pointy." Right angle = corner.</div><div class="teach-step gold"><strong>Examples:</strong><br>• 45° = acute<br>• 90° = right<br>• 120° = obtuse<br>• 180° = straight</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 In triangles:</strong> Sum of angles = 180°. So if two angles are 50° and 70°, the third is 60°.</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>📐 Sky Mission:</strong> A bird's wings make a 110° angle. That's OBTUSE.</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          const deg=choose([30,45,60,75]);
+          return mcQ(`A ${deg}° angle is ___.`, ["Acute","Right","Obtuse","Straight"], "Acute", `Less than 90° = acute.`);
+        }
+        case 1: {
+          return mcQ(`A 90° angle is ___.`, ["Acute","Right","Obtuse","Straight"], "Right", `Exactly 90° = right.`);
+        }
+        case 2: {
+          const deg=choose([100,120,135,150]);
+          return mcQ(`A ${deg}° angle is ___.`, ["Acute","Right","Obtuse","Straight"], "Obtuse", `Between 90° and 180° = obtuse.`);
+        }
+        case 3: {
+          return mcQ(`A 180° angle is ___.`, ["Acute","Right","Obtuse","Straight"], "Straight", `180° = flat line = straight.`);
+        }
+        case 4: {
+          const a=rand(30,60), b=rand(40,80);
+          const c=180-a-b;
+          if (c<=0 || c>=180) return LESSONS[17].gen(slot);
+          return numQ(`Two angles in a triangle are ${a}° and ${b}°. What is the third angle (in degrees)?`, c, `Triangle angles sum to 180°. ${a} + ${b} + ? = 180.`);
+        }
+      }
+    }
+  },
+  { week:4, day:4, theme:"sky", icon:"🪞", title:"Lines of Symmetry",
+    tag:"WEEK 4 · THURSDAY · SKY KINGDOM", skill:"Identify lines of symmetry in shapes",
+    supply:{icon:"🪞",name:"Mirror Stone"}, badge:"Symmetry Spotter",
+    story:"🪞 At Mirror Mountain, each rock has a line of symmetry. Find them all!",
+    teach:`<div class="teach-step"><strong>Line of symmetry</strong> = a line you could FOLD along so both halves match perfectly.</div><div class="teach-step green"><strong>Common shape lines of symmetry:</strong><br>• Square: <strong>4</strong> (horizontal, vertical, 2 diagonals)<br>• Rectangle (non-square): <strong>2</strong> (horizontal, vertical)<br>• Equilateral triangle: <strong>3</strong> (one through each vertex)<br>• Circle: <strong>infinite</strong> (any diameter)<br>• Letter "H": <strong>2</strong></div><div class="teach-step gold"><strong>Quadrilaterals:</strong><br>• Square = 4 equal sides AND 4 right angles<br>• Rectangle = opposite sides equal, 4 right angles<br>• Rhombus = 4 equal sides<br>• Parallelogram = opposite sides parallel</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Test it:</strong> Imagine folding the shape along the line. Do the halves match? If yes, symmetry!</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🪞 Sky Mission:</strong> A square has 4 lines of symmetry. Rotate the mirror to find each!</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: {
+          return numQ(`How many lines of symmetry does a SQUARE have?`, 4, `Horizontal, vertical, and 2 diagonals.`);
+        }
+        case 1: {
+          return numQ(`How many lines of symmetry does an EQUILATERAL TRIANGLE have?`, 3, `One through each vertex.`);
+        }
+        case 2: {
+          return numQ(`How many lines of symmetry does a NON-SQUARE RECTANGLE have?`, 2, `Horizontal and vertical only.`);
+        }
+        case 3: {
+          return mcQ(`A quadrilateral with 4 right angles AND 4 equal sides is a ___.`, ["Square","Rectangle","Rhombus","Trapezoid"], "Square", `Square has both: equal sides + right angles.`);
+        }
+        case 4: {
+          return mcQ(`Which quadrilateral has 4 right angles but NOT 4 equal sides?`, ["Rectangle","Square","Rhombus","Trapezoid"], "Rectangle", `Rectangle: right angles, only opposite sides equal.`);
+        }
+      }
+    }
+  },
+  { week:4, day:5, theme:"sky", icon:"🌉", title:"Bridge Builder Quest &amp; Week 4 Quiz",
+    tag:"WEEK 4 · FRIDAY · BOSS DAY", skill:"All geometry skills &middot; Week 4 review",
+    supply:{icon:"🌉",name:"Bridge Plans"}, badge:"Sky Architect",
+    story:"🌉 Design a bridge across the floating islands. All geometry skills needed: perimeter, area, angles, and symmetry.",
+    teach:`<div class="teach-step"><strong>BOSS DAY.</strong> Mix of all Week 4 geometry: perimeter, area, angles, symmetry.</div><div class="teach-step green"><strong>Strategy:</strong> Read each problem and identify the type first.<br>• Distance around → Perimeter<br>• Space inside → Area<br>• Sharp/wide corner → Angle classification<br>• Mirror halves → Symmetry</div><div class="teach-step gold"><strong>Units reminder:</strong> Perimeter uses regular units (m, ft). Area uses SQUARE units (m², ft²).</div><div class="teach-step" style="background:#fef3c7;border-left-color:#FFD100;"><strong>💡 Last check:</strong> Did you answer the right question?</div><div class="teach-step" style="background:#dcfce7;border-left-color:#16a34a;"><strong>🌉 BOSS DAY:</strong> All Week 4 geometry skills!</div>`,
+    gen: (slot) => {
+      switch(slot) {
+        case 0: return LESSONS[15].gen(0);
+        case 1: return LESSONS[16].gen(0);
+        case 2: return LESSONS[17].gen(0);
+        case 3: return LESSONS[18].gen(0);
+        case 4: return LESSONS[15].gen(4);
       }
     }
   },
