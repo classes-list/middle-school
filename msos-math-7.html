@@ -13,6 +13,8 @@
     .sidebar-item { padding: 10px; margin: 5px 0; background: #111d35; border-radius: 4px; cursor: pointer; font-size: 13px; }
     .sidebar-item:hover { background: #a78bfa; }
     .sidebar-item.active { background: #a78bfa; }
+    .sidebar-quarter { margin: 20px 0 8px; padding: 6px 10px; color: #FFD100; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-top: 1px solid #444; padding-top: 12px; }
+    .sidebar-quarter:first-child { margin-top: 0; padding-top: 0; border-top: none; }
     .main { flex: 1; display: flex; flex-direction: column; }
     .home-btn { background: rgba(0,0,0,0.2); border: none; color: white; cursor: pointer; font-size: 14px; font-weight: 600; padding: 8px 14px; border-radius: 6px; margin-right: 16px; }
     .home-btn:hover { background: rgba(0,0,0,0.35); }
@@ -1064,7 +1066,18 @@ function renderHome() {
 function renderSidebar() {
   const sidebar = document.getElementById('sidebar-content');
   sidebar.innerHTML = '';
+  const Q_MAP = { 'percent-error': 1, 'scientific-notation': 1, 'unit-conversions': 1, 'proportional': 1, 'ratios-rates': 1, 'percents': 2, 'add-sub-rational': 2, 'mult-div-rational': 2, 'alg-expressions': 2, 'equations': 2, 'rearranging-formulas': 2, 'surface-area-volume-ratio': 3, 'triangles': 3, 'circles': 3, 'area-polygons': 3, 'surface-area-volume': 3, 'angles': 3, 'inequalities': 3, 'probability': 3, 'genetics-probability': 4, 'population-growth': 4, 'pharmacokinetics': 4, 'statistics': 4, 'scale-drawings': 4, 'biodiversity': 4, 'word-problems': 4, 'graphing-lab': 4 };
+  const Q_LABELS = { 1: 'Q1 · Lab Math · Proportional Relationships', 2: 'Q2 · Percents · Rational Numbers · Algebra', 3: 'Q3 · Geometry · Inequalities · Probability', 4: 'Q4 · Genetics · Statistics · Scale' };
+  let lastQ = 0;
   UNITS.forEach((unit, idx) => {
+    const q = Q_MAP[unit.id] || 0;
+    if (q !== lastQ && Q_LABELS[q]) {
+      const hdr = document.createElement('div');
+      hdr.className = 'sidebar-quarter';
+      hdr.textContent = Q_LABELS[q];
+      sidebar.appendChild(hdr);
+      lastQ = q;
+    }
     const item = document.createElement('div');
     item.className = 'sidebar-item' + (currentUnit === unit.id ? ' active' : '');
     item.textContent = `${idx + 1}. ${unit.title}${completedUnits[unit.id]?' ✅':''}`;
