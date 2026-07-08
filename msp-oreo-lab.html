@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oreo Cookie Lab</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --navy-deep:#0c1633;
+  --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --cream:#fffdf2;
+  --ocean:#0d9488; --purple:#7c3aed; --coral:#ef4444;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#059669;
+  --accent-deep:#065f46;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #d1fae5 0%, #fef3c7 50%, #e0e7ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px;
+  line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:30px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  transition:all .15s ease;
+}
+.back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+h1 { font-size:2.2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:8px; }
+.tagline { color:var(--dim); font-size:1rem; max-width:720px; margin:0 auto; font-style:italic; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card {
+  background:#fff; border-radius:14px;
+  padding:22px 26px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  border-top:4px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.35rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:16px 0 6px; }
+section.card p { margin-bottom:10px; color:var(--ink); }
+section.card ul, section.card ol { margin:6px 0 12px 24px; }
+section.card li { margin-bottom:4px; color:var(--ink); }
+section.card li strong { color:var(--accent-deep); }
+.callout {
+  background:var(--paper); border-left:4px solid var(--gold-deep);
+  padding:14px 18px; border-radius:6px; margin:12px 0;
+  font-size:.98rem;
+}
+.callout strong { color:var(--navy); }
+.formula {
+  background:var(--navy); color:var(--gold);
+  padding:14px 18px; border-radius:8px;
+  font-family:'Courier New', monospace; font-size:1.1rem; font-weight:800;
+  text-align:center; margin:12px 0;
+  letter-spacing:.02em;
+}
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:14px; margin-top:10px; }
+.tile {
+  background:var(--cream); border:2px solid var(--accent);
+  border-radius:10px; padding:14px 16px;
+}
+.tile h4 { color:var(--accent-deep); font-size:1rem; font-weight:800; margin-bottom:6px; }
+.tile p { font-size:.9rem; color:var(--ink); margin:0; }
+.staircase {
+  display:grid; grid-template-columns:repeat(7, 1fr); gap:0;
+  border:2px solid var(--accent-deep); border-radius:8px; overflow:hidden;
+  margin:16px 0;
+}
+.staircase div {
+  padding:12px 6px; text-align:center;
+  font-weight:800; font-size:.9rem;
+  background:var(--cream);
+  border-right:1px solid var(--accent);
+}
+.staircase div:last-child { border-right:none; }
+.staircase div.unit { background:var(--gold); color:var(--navy); }
+.staircase .letter { font-size:1.4rem; color:var(--accent-deep); }
+.staircase .word { font-size:.72rem; color:var(--dim); font-style:italic; }
+.staircase .power { font-size:.72rem; color:var(--ink); font-weight:600; }
+table.data { width:100%; border-collapse:collapse; margin:12px 0; font-size:.92rem; }
+table.data th, table.data td { border:1px solid #d1d5db; padding:8px 10px; text-align:left; }
+table.data th { background:var(--accent); color:#fff; font-weight:800; }
+table.data tr:nth-child(even) td { background:#f8fafc; }
+.steps { counter-reset:step; }
+.step-item {
+  position:relative; padding-left:44px; margin-bottom:16px;
+  min-height:36px;
+}
+.step-item::before {
+  counter-increment:step;
+  content:counter(step);
+  position:absolute; left:0; top:0;
+  width:32px; height:32px;
+  background:var(--accent); color:#fff;
+  border-radius:50%;
+  font-weight:800; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+}
+footer { text-align:center; margin-top:36px; color:var(--dim); font-size:.85rem; padding-top:20px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="metrics-scientific-process.html">&larr; Back to Unit Hub</a>
+  <div class="eyebrow">Lab 06 &middot; Metrics &amp; Sci Process</div>
+  <h1>Oreo Cookie Lab</h1>
+  <p class="tagline">Do Double Stuf Oreos really have twice the crème? Test it.</p>
+</header>
+<main>
+
+<div style="text-align:center;margin-bottom:-8px;">
+  <svg viewBox="0 0 260 130" width="220" height="110" xmlns="http://www.w3.org/2000/svg" aria-label="Sandwich cookie: two dark chocolate wafers with a cream filling between them" role="img">
+    <defs>
+      <radialGradient id="oreoWafer" cx="0.35" cy="0.35" r="0.85">
+        <stop offset="0%" stop-color="#4a2e1e"/>
+        <stop offset="55%" stop-color="#2c1810"/>
+        <stop offset="100%" stop-color="#1a0e08"/>
+      </radialGradient>
+      <linearGradient id="oreoCream" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="0%" stop-color="#fffef6"/>
+        <stop offset="100%" stop-color="#f3ead0"/>
+      </linearGradient>
+    </defs>
+    <ellipse cx="130" cy="105" rx="105" ry="18" fill="url(#oreoWafer)" stroke="#150807" stroke-width="1.2"/>
+    <rect x="25" y="60" width="210" height="30" fill="url(#oreoCream)" stroke="#c9bd8a" stroke-width="0.8"/>
+    <ellipse cx="130" cy="60" rx="105" ry="10" fill="url(#oreoCream)" stroke="#c9bd8a" stroke-width="0.8"/>
+    <ellipse cx="130" cy="90" rx="105" ry="10" fill="#e8dfb8"/>
+    <ellipse cx="130" cy="52" rx="105" ry="18" fill="url(#oreoWafer)" stroke="#150807" stroke-width="1.2"/>
+    <ellipse cx="130" cy="46" rx="90" ry="12" fill="none" stroke="#5c3921" stroke-width="0.6" opacity="0.65"/>
+    <g fill="#5c3921" opacity="0.6">
+      <circle cx="70" cy="46" r="1.6"/><circle cx="88" cy="42" r="1.6"/><circle cx="108" cy="40" r="1.6"/>
+      <circle cx="130" cy="39" r="1.6"/><circle cx="152" cy="40" r="1.6"/><circle cx="172" cy="42" r="1.6"/>
+      <circle cx="190" cy="46" r="1.6"/><circle cx="100" cy="52" r="1.4"/>
+      <circle cx="130" cy="50" r="1.4"/><circle cx="160" cy="52" r="1.4"/>
+    </g>
+    <ellipse cx="105" cy="40" rx="35" ry="4" fill="#7a4c2b" opacity="0.35"/>
+  </svg>
+</div>
+<section class="card">
+  <h2>❓ The Big Question</h2>
+  <p>The name &quot;Double Stuf Oreo&quot; makes a claim. Let&#39;s test it.</p>
+  <div class="callout"><strong>Essential Question:</strong> Do Double Stuf Oreos really have <em>twice</em> as much crème as regular Oreos?</div>
+</section>
+
+<section class="card">
+  <h2>🎯 Objectives</h2>
+  <ul>
+    <li>Practice the full scientific method on a real product claim.</li>
+    <li>Use a digital scale (and the TARE function) to measure mass in grams.</li>
+    <li>Identify independent, dependent, and control variables.</li>
+    <li>Enter data in a spreadsheet and build a bar graph.</li>
+    <li>Draw a conclusion supported by the data.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🧪 Materials (per lab group)</h2>
+  <ul>
+    <li>Digital scale (with TARE function)</li>
+    <li>Regular Oreo cookies (~5)</li>
+    <li>Double Stuf Oreo cookies (~5)</li>
+    <li>Paper towels (for a clean work surface)</li>
+    <li>Lab report / data sheet</li>
+    <li>Computer with Google Sheets or Excel</li>
+  </ul>
+  <div class="callout"><strong>Safety:</strong> No safety concerns. If kept clean, the cookies can be eaten at the end!</div>
+</section>
+
+<section class="card">
+  <h2>🔬 Variables &amp; Hypothesis</h2>
+  <ul>
+    <li><strong>Independent variable:</strong> Type of Oreo (regular vs Double Stuf)</li>
+    <li><strong>Dependent variable:</strong> Mass of crème filling (grams)</li>
+    <li><strong>Controls:</strong> Same brand, same size cookies, same balance, same technique</li>
+  </ul>
+  <div class="formula">If type of Oreo is related to mass of crème, then Double Stuf will have ______ the crème of a regular Oreo.</div>
+  <p>Fill in your prediction &mdash; then test it.</p>
+</section>
+
+<section class="card">
+  <h2>🧭 Procedure</h2>
+  <div class="steps">
+    <div class="step-item">Turn on the digital scale and let it settle to <strong>0.0 g</strong>. Place a weigh boat or clean paper towel on the pan, then press <strong>TARE</strong> to zero it out.</div>
+    <div class="step-item">Weigh <strong>one whole regular Oreo</strong>. Record the mass.</div>
+    <div class="step-item">Gently twist off both wafers. Scrape off ALL the crème from each wafer onto the balance pan.</div>
+    <div class="step-item">Weigh the crème alone. Record the mass.</div>
+    <div class="step-item">Weigh the two clean wafers together. Record the mass. (Check: wafers + crème should ≈ whole cookie.)</div>
+    <div class="step-item">Repeat steps 2–5 for the other regular Oreos.</div>
+    <div class="step-item">Repeat the whole thing for the Double Stuf Oreos.</div>
+    <div class="step-item">Calculate the <strong>average</strong> crème mass for each type.</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📊 Data Table</h2>
+  <table class="data">
+    <tr><th>Trial</th><th>Whole cookie (g)</th><th>Crème (g)</th><th>Wafers (g)</th></tr>
+    <tr><td>Regular #1</td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Regular #2</td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Regular #3</td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Regular #4</td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Regular #5</td><td> </td><td> </td><td> </td></tr>
+    <tr><td><strong>Regular AVERAGE</strong></td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Double Stuf #1</td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Double Stuf #2</td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Double Stuf #3</td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Double Stuf #4</td><td> </td><td> </td><td> </td></tr>
+    <tr><td>Double Stuf #5</td><td> </td><td> </td><td> </td></tr>
+    <tr><td><strong>Double Stuf AVERAGE</strong></td><td> </td><td> </td><td> </td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📈 Analysis</h2>
+  <ol>
+    <li>Enter your data into Google Sheets.</li>
+    <li>Build a <strong>bar graph</strong> comparing average regular crème mass vs. average Double Stuf crème mass. (See the Graphing Lab if you need a refresher.)</li>
+    <li>Calculate the ratio: <strong>Double Stuf crème ÷ Regular crème</strong>. Is it exactly 2? Bigger? Smaller?</li>
+    <li>Compare your group&#39;s data with the whole class&#39;s data. Which do you trust more, and why?</li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>🧠 Conclusion</h2>
+  <p>Write two or three sentences answering:</p>
+  <ol>
+    <li>Did the data support your hypothesis? (Not &quot;was I right&quot; &mdash; but &quot;does the evidence match my prediction?&quot;)</li>
+    <li>Do Double Stuf Oreos truly have twice the crème? What ratio did you actually find?</li>
+    <li>What might cause the difference between your ratio and 2.0? (Measurement error, scraping technique, cookie-to-cookie variation.)</li>
+  </ol>
+  <div class="callout"><strong>Reflection:</strong> If your hypothesis wasn&#39;t supported, that&#39;s OK. Real scientists learn as much from a &quot;no&quot; as from a &quot;yes.&quot;</div>
+</section>
+
+<section class="card">
+  <h2>📚 Standards</h2>
+  <ul>
+    <li>SC.7.1.1 &mdash; Design and safely conduct a scientific investigation to answer a question or test a hypothesis</li>
+    <li>SC.7.1.2 &mdash; Explain the importance of replicable trials</li>
+    <li>SC.7.1.3 &mdash; Explain the need to revise conclusions and explanations based on new scientific evidence</li>
+  </ul>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Metrics &amp; Scientific Process</footer>
+</div>
+</body>
+</html>

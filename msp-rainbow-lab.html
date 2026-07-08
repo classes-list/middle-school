@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rainbow Lab</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --navy-deep:#0c1633;
+  --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --cream:#fffdf2;
+  --ocean:#0d9488; --purple:#7c3aed; --coral:#ef4444;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#f97316;
+  --accent-deep:#9a3412;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #ffedd5 0%, #fef3c7 50%, #e0f2fe 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px;
+  line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:30px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  transition:all .15s ease;
+}
+.back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+h1 { font-size:2.2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:8px; }
+.tagline { color:var(--dim); font-size:1rem; max-width:720px; margin:0 auto; font-style:italic; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card {
+  background:#fff; border-radius:14px;
+  padding:22px 26px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  border-top:4px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.35rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:16px 0 6px; }
+section.card p { margin-bottom:10px; color:var(--ink); }
+section.card ul, section.card ol { margin:6px 0 12px 24px; }
+section.card li { margin-bottom:4px; color:var(--ink); }
+section.card li strong { color:var(--accent-deep); }
+.callout {
+  background:var(--paper); border-left:4px solid var(--gold-deep);
+  padding:14px 18px; border-radius:6px; margin:12px 0;
+  font-size:.98rem;
+}
+.callout strong { color:var(--navy); }
+.formula {
+  background:var(--navy); color:var(--gold);
+  padding:14px 18px; border-radius:8px;
+  font-family:'Courier New', monospace; font-size:1.1rem; font-weight:800;
+  text-align:center; margin:12px 0;
+  letter-spacing:.02em;
+}
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:14px; margin-top:10px; }
+.tile {
+  background:var(--cream); border:2px solid var(--accent);
+  border-radius:10px; padding:14px 16px;
+}
+.tile h4 { color:var(--accent-deep); font-size:1rem; font-weight:800; margin-bottom:6px; }
+.tile p { font-size:.9rem; color:var(--ink); margin:0; }
+.staircase {
+  display:grid; grid-template-columns:repeat(7, 1fr); gap:0;
+  border:2px solid var(--accent-deep); border-radius:8px; overflow:hidden;
+  margin:16px 0;
+}
+.staircase div {
+  padding:12px 6px; text-align:center;
+  font-weight:800; font-size:.9rem;
+  background:var(--cream);
+  border-right:1px solid var(--accent);
+}
+.staircase div:last-child { border-right:none; }
+.staircase div.unit { background:var(--gold); color:var(--navy); }
+.staircase .letter { font-size:1.4rem; color:var(--accent-deep); }
+.staircase .word { font-size:.72rem; color:var(--dim); font-style:italic; }
+.staircase .power { font-size:.72rem; color:var(--ink); font-weight:600; }
+table.data { width:100%; border-collapse:collapse; margin:12px 0; font-size:.92rem; }
+table.data th, table.data td { border:1px solid #d1d5db; padding:8px 10px; text-align:left; }
+table.data th { background:var(--accent); color:#fff; font-weight:800; }
+table.data tr:nth-child(even) td { background:#f8fafc; }
+.steps { counter-reset:step; }
+.step-item {
+  position:relative; padding-left:44px; margin-bottom:16px;
+  min-height:36px;
+}
+.step-item::before {
+  counter-increment:step;
+  content:counter(step);
+  position:absolute; left:0; top:0;
+  width:32px; height:32px;
+  background:var(--accent); color:#fff;
+  border-radius:50%;
+  font-weight:800; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+}
+footer { text-align:center; margin-top:36px; color:var(--dim); font-size:.85rem; padding-top:20px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="metrics-scientific-process.html">&larr; Back to Unit Hub</a>
+  <div class="eyebrow">Lab 04 &middot; Metrics &amp; Sci Process</div>
+  <h1>🌈 Rainbow Lab</h1>
+  <p class="tagline">Mix three primary colors with precise pipette measurements to build all six colors of the rainbow.</p>
+</header>
+<main>
+
+<section class="card">
+  <h2>🌈 The Big Question</h2>
+  <p>Starting with only <strong>red, yellow, and blue</strong> colored water, can you use precise volume measurements to create all six colors of the rainbow (red, orange, yellow, green, blue, purple)?</p>
+  <div class="callout"><strong>Essential Question:</strong> How carefully do we have to measure to get color mixing right?</div>
+</section>
+
+<section class="card">
+  <h2>🎯 Objectives</h2>
+  <ul>
+    <li>Accurately measure volumes of liquid using a pipette and graduated cylinder.</li>
+    <li>Practice using metric units (mL).</li>
+    <li>Practice safe laboratory technique &mdash; especially <strong>avoiding cross-contamination</strong>.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>⚠️ Safety First</h2>
+  <ul>
+    <li><strong>Clear your table</strong> before you begin.</li>
+    <li><strong>Rinse everything</strong> when switching colors &mdash; the graduated cylinder and pipette must be clean and empty before touching a new liquid. Cross-contamination will ruin your rainbow.</li>
+    <li>Handle glass test tubes and the graduated cylinder carefully.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🧪 Materials (per lab group)</h2>
+  <ul>
+    <li>6 test tubes in a test tube rack</li>
+    <li>1 &times; 50 mL graduated cylinder</li>
+    <li>1 pipette</li>
+    <li>Water cup or sink for rinsing</li>
+    <li>1 cup with <strong>RED</strong> liquid</li>
+    <li>1 cup with <strong>YELLOW</strong> liquid</li>
+    <li>1 cup with <strong>BLUE</strong> liquid</li>
+    <li>Paper towels</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🧭 Procedure</h2>
+  <p>Label the six test tubes in order: <strong>A, B, C, D, E, F</strong>. Between every step, rinse the graduated cylinder and pipette until they are completely empty. Then follow the steps below in order.</p>
+  <div class="steps">
+    <div class="step-item">Into test tube <strong>A</strong>, measure and add <strong>10 mL of RED</strong> liquid using the graduated cylinder and pipette.</div>
+    <div class="step-item">Into test tube <strong>C</strong>, measure and add <strong>17 mL of YELLOW</strong> liquid.</div>
+    <div class="step-item">Into test tube <strong>E</strong>, measure and add <strong>15 mL of BLUE</strong> liquid.</div>
+    <div class="step-item">From test tube <strong>C</strong>, use the pipette to measure <strong>4 mL</strong> and pour into test tube <strong>D</strong>.</div>
+    <div class="step-item">From test tube <strong>E</strong>, measure <strong>6 mL</strong> and pour into test tube <strong>D</strong>. <em>Swirl.</em></div>
+    <div class="step-item">From test tube <strong>E</strong>, measure <strong>2 mL</strong> and pour into test tube <strong>F</strong>.</div>
+    <div class="step-item">From test tube <strong>A</strong>, measure <strong>2 mL</strong> and pour into test tube <strong>F</strong>. <em>Swirl.</em></div>
+    <div class="step-item">From test tube <strong>A</strong>, measure <strong>4 mL</strong> and pour into test tube <strong>B</strong>.</div>
+    <div class="step-item">From test tube <strong>C</strong>, measure <strong>3 mL</strong> and pour into test tube <strong>B</strong>. <em>Swirl.</em></div>
+    <div class="step-item">Save your results to show your teacher. Once you are checked off, clean your station and complete the Post-Lab worksheet.</div>
+  </div>
+  <div class="callout"><strong>Tip:</strong> If you skip a rinse, colors will mix in the wrong places and your rainbow will look muddy. Slow down. Rinse. Empty. Then move on.</div>
+</section>
+
+<section class="card">
+  <h2>🌈 Expected Result</h2>
+  <p>If you followed the procedure correctly, your test tube rack should look like this:</p>
+  <div style="background:#f8fafc;border-radius:10px;padding:16px;margin:14px 0;text-align:center;overflow-x:auto;">
+    <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;" role="img" aria-label="Six test tubes in a wooden rack, filled left to right with red, orange, yellow, green, blue, purple">
+      <!-- top plank -->
+      <rect x="20" y="40" width="600" height="34" fill="#c8965b" stroke="#8a6335" stroke-width="1.5"/>
+      <rect x="20" y="40" width="600" height="6" fill="#e0b880" opacity="0.6"/>
+      <!-- bottom plank -->
+      <rect x="20" y="252" width="600" height="34" fill="#c8965b" stroke="#8a6335" stroke-width="1.5"/>
+      <rect x="20" y="252" width="600" height="6" fill="#e0b880" opacity="0.6"/>
+      <!-- Six test tubes: A (short red), B (mid orange), C (tall yellow), D (tall green), E (mid blue), F (short purple) -->
+      <!-- Heights represent volumes: 4 / 7 / 10 / 10 / 7 / 4 mL -->
+      <g>
+        <!-- A: RED, 4 mL - short fill -->
+        <path d="M 60,40 L 60,225 A 22 22 0 0 0 104,225 L 104,40 Z" fill="none" stroke="#8fb4c2" stroke-width="1.5"/>
+        <path d="M 62,175 L 62,225 A 20 20 0 0 0 102,225 L 102,175 Z" fill="#ef4444"/>
+        <ellipse cx="82" cy="175" rx="20" ry="4" fill="#ef4444" stroke="#b91c1c" stroke-width="0.5"/>
+        <text x="82" y="24" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#1a2a4a">A</text>
+      </g>
+      <g>
+        <!-- B: ORANGE, 7 mL -->
+        <path d="M 156,40 L 156,225 A 22 22 0 0 0 200,225 L 200,40 Z" fill="none" stroke="#8fb4c2" stroke-width="1.5"/>
+        <path d="M 158,130 L 158,225 A 20 20 0 0 0 198,225 L 198,130 Z" fill="#f97316"/>
+        <ellipse cx="178" cy="130" rx="20" ry="4" fill="#f97316" stroke="#c2410c" stroke-width="0.5"/>
+        <text x="178" y="24" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#1a2a4a">B</text>
+      </g>
+      <g>
+        <!-- C: YELLOW, 10 mL - tall fill -->
+        <path d="M 252,40 L 252,225 A 22 22 0 0 0 296,225 L 296,40 Z" fill="none" stroke="#8fb4c2" stroke-width="1.5"/>
+        <path d="M 254,90 L 254,225 A 20 20 0 0 0 294,225 L 294,90 Z" fill="#facc15"/>
+        <ellipse cx="274" cy="90" rx="20" ry="4" fill="#facc15" stroke="#a16207" stroke-width="0.5"/>
+        <text x="274" y="24" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#1a2a4a">C</text>
+      </g>
+      <g>
+        <!-- D: GREEN, 10 mL - tall fill -->
+        <path d="M 348,40 L 348,225 A 22 22 0 0 0 392,225 L 392,40 Z" fill="none" stroke="#8fb4c2" stroke-width="1.5"/>
+        <path d="M 350,90 L 350,225 A 20 20 0 0 0 390,225 L 390,90 Z" fill="#22c55e"/>
+        <ellipse cx="370" cy="90" rx="20" ry="4" fill="#22c55e" stroke="#15803d" stroke-width="0.5"/>
+        <text x="370" y="24" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#1a2a4a">D</text>
+      </g>
+      <g>
+        <!-- E: BLUE, 7 mL -->
+        <path d="M 444,40 L 444,225 A 22 22 0 0 0 488,225 L 488,40 Z" fill="none" stroke="#8fb4c2" stroke-width="1.5"/>
+        <path d="M 446,130 L 446,225 A 20 20 0 0 0 486,225 L 486,130 Z" fill="#2563eb"/>
+        <ellipse cx="466" cy="130" rx="20" ry="4" fill="#2563eb" stroke="#1e40af" stroke-width="0.5"/>
+        <text x="466" y="24" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#1a2a4a">E</text>
+      </g>
+      <g>
+        <!-- F: PURPLE, 4 mL - short fill -->
+        <path d="M 540,40 L 540,225 A 22 22 0 0 0 584,225 L 584,40 Z" fill="none" stroke="#8fb4c2" stroke-width="1.5"/>
+        <path d="M 542,175 L 542,225 A 20 20 0 0 0 582,225 L 582,175 Z" fill="#6b21a8"/>
+        <ellipse cx="562" cy="175" rx="20" ry="4" fill="#6b21a8" stroke="#4c1d95" stroke-width="0.5"/>
+        <text x="562" y="24" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="13" font-weight="800" fill="#1a2a4a">F</text>
+      </g>
+    </svg>
+    <p style="font-size:.85rem;color:#64748b;font-style:italic;margin-top:4px;">Six test tubes A–F showing red, orange, yellow, green, blue, purple &mdash; volumes 4, 7, 10, 10, 7, 4 mL.</p>
+  </div>
+  <p>Notice the tube heights <strong>mirror</strong> across the middle: A and F are the shortest (4 mL), B and E are middle (7 mL), C and D are tallest (10 mL). Symmetry is a good sign that you measured accurately.</p>
+  <table class="data">
+    <tr><th>Tube</th><th>Color</th><th>How it was made</th><th>Final volume</th></tr>
+    <tr><td>A</td><td>🔴 RED</td><td>Original red (10 mL start &minus; 2 mL to F &minus; 4 mL to B)</td><td>4 mL</td></tr>
+    <tr><td>B</td><td>🟠 ORANGE</td><td>4 mL RED (from A) + 3 mL YELLOW (from C)</td><td>7 mL</td></tr>
+    <tr><td>C</td><td>🟡 YELLOW</td><td>Original yellow (17 mL start &minus; 4 mL to D &minus; 3 mL to B)</td><td>10 mL</td></tr>
+    <tr><td>D</td><td>🟢 GREEN</td><td>4 mL YELLOW (from C) + 6 mL BLUE (from E)</td><td>10 mL</td></tr>
+    <tr><td>E</td><td>🔵 BLUE</td><td>Original blue (15 mL start &minus; 6 mL to D &minus; 2 mL to F)</td><td>7 mL</td></tr>
+    <tr><td>F</td><td>🟣 PURPLE</td><td>2 mL BLUE (from E) + 2 mL RED (from A)</td><td>4 mL</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>📝 Post-Lab Worksheet (17 pts)</h2>
+  <p><strong>Hint:</strong> When comparing values (numbers 8 &amp; 9), it&#39;s easier if you use <em>KHDUDCM</em> to convert everything to the same unit first.</p>
+
+  <h3>Metric tools &amp; base units</h3>
+  <ol>
+    <li>Circle the tool used to measure <strong>mass</strong>: meter stick / digital scale / graduated cylinder</li>
+    <li>What is the base unit for mass? _______________</li>
+    <li>Circle the tool used to measure <strong>length</strong>: meter stick / digital scale / graduated cylinder</li>
+    <li>What is the base unit for length? _______________</li>
+    <li>Circle the tool used to measure <strong>volume</strong>: meter stick / digital scale / graduated cylinder</li>
+    <li>What is the base unit for volume? _______________</li>
+    <li>What unit of volume is measured using the tool in #5? _______________</li>
+  </ol>
+
+  <h3>Comparing measurements</h3>
+  <p><strong>8.</strong> For each letter, circle the value that is <em>larger</em>:</p>
+  <ul>
+    <li>a. 10 kg &nbsp;&nbsp; or &nbsp;&nbsp; 10,000 mg</li>
+    <li>b. 4 mL &nbsp;&nbsp; or &nbsp;&nbsp; 2 L</li>
+    <li>c. 14 m &nbsp;&nbsp; or &nbsp;&nbsp; 500 mm</li>
+  </ul>
+  <p><strong>9.</strong> For each letter, circle the value that is <em>NOT equal</em> to the others:</p>
+  <ul>
+    <li>a. 10 g &nbsp;&nbsp; 0.01 kg &nbsp;&nbsp; 100 cg &nbsp;&nbsp; 10,000 mg</li>
+    <li>b. 400 mm &nbsp;&nbsp; 40 cm &nbsp;&nbsp; 0.004 Hm &nbsp;&nbsp; 0.04 m</li>
+  </ul>
+
+  <h3>Practice with lab tools</h3>
+  <p><strong>10.</strong> For each mass below, describe the steps you would take on a digital scale to measure that mass into an empty beaker. Be sure to include when and why you would press the TARE button.</p>
+  <ul>
+    <li>a. 430 g of salt</li>
+    <li>b. 26 g of sugar</li>
+    <li>c. 59 g of water</li>
+  </ul>
+  <p><strong>11.</strong> Read the volume shown on the graduated cylinders provided by your teacher and record the value.</p>
+</section>
+
+<section class="card">
+  <h2>💭 Discussion</h2>
+  <ol>
+    <li>Which two tubes were the hardest to get right? Why do you think so?</li>
+    <li>What would happen to tube <strong>D</strong> if you forgot to rinse the pipette between yellow and blue?</li>
+    <li>Why is the graduated cylinder a better tool for measuring these volumes than a beaker?</li>
+    <li>Where do you see color mixing like this in the real world? (Printing, painting, stage lighting?)</li>
+  </ol>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Metrics &amp; Scientific Process</footer>
+</div>
+</body>
+</html>

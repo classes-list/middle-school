@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percent Error &middot; Counting Raisins</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --navy-deep:#0c1633;
+  --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --cream:#fffdf2;
+  --ocean:#0d9488; --purple:#7c3aed; --coral:#ef4444;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#ea580c;
+  --accent-deep:#7c2d12;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #fed7aa 0%, #fef3c7 50%, #fce7f3 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px;
+  line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:30px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  transition:all .15s ease;
+}
+.back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+h1 { font-size:2.2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:8px; }
+.tagline { color:var(--dim); font-size:1rem; max-width:720px; margin:0 auto; font-style:italic; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card {
+  background:#fff; border-radius:14px;
+  padding:22px 26px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  border-top:4px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.35rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:16px 0 6px; }
+section.card p { margin-bottom:10px; color:var(--ink); }
+section.card ul, section.card ol { margin:6px 0 12px 24px; }
+section.card li { margin-bottom:4px; color:var(--ink); }
+section.card li strong { color:var(--accent-deep); }
+.callout {
+  background:var(--paper); border-left:4px solid var(--gold-deep);
+  padding:14px 18px; border-radius:6px; margin:12px 0;
+  font-size:.98rem;
+}
+.callout strong { color:var(--navy); }
+.formula {
+  background:var(--navy); color:var(--gold);
+  padding:14px 18px; border-radius:8px;
+  font-family:'Courier New', monospace; font-size:1.1rem; font-weight:800;
+  text-align:center; margin:12px 0;
+  letter-spacing:.02em;
+}
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:14px; margin-top:10px; }
+.tile {
+  background:var(--cream); border:2px solid var(--accent);
+  border-radius:10px; padding:14px 16px;
+}
+.tile h4 { color:var(--accent-deep); font-size:1rem; font-weight:800; margin-bottom:6px; }
+.tile p { font-size:.9rem; color:var(--ink); margin:0; }
+.staircase {
+  display:grid; grid-template-columns:repeat(7, 1fr); gap:0;
+  border:2px solid var(--accent-deep); border-radius:8px; overflow:hidden;
+  margin:16px 0;
+}
+.staircase div {
+  padding:12px 6px; text-align:center;
+  font-weight:800; font-size:.9rem;
+  background:var(--cream);
+  border-right:1px solid var(--accent);
+}
+.staircase div:last-child { border-right:none; }
+.staircase div.unit { background:var(--gold); color:var(--navy); }
+.staircase .letter { font-size:1.4rem; color:var(--accent-deep); }
+.staircase .word { font-size:.72rem; color:var(--dim); font-style:italic; }
+.staircase .power { font-size:.72rem; color:var(--ink); font-weight:600; }
+table.data { width:100%; border-collapse:collapse; margin:12px 0; font-size:.92rem; }
+table.data th, table.data td { border:1px solid #d1d5db; padding:8px 10px; text-align:left; }
+table.data th { background:var(--accent); color:#fff; font-weight:800; }
+table.data tr:nth-child(even) td { background:#f8fafc; }
+.steps { counter-reset:step; }
+.step-item {
+  position:relative; padding-left:44px; margin-bottom:16px;
+  min-height:36px;
+}
+.step-item::before {
+  counter-increment:step;
+  content:counter(step);
+  position:absolute; left:0; top:0;
+  width:32px; height:32px;
+  background:var(--accent); color:#fff;
+  border-radius:50%;
+  font-weight:800; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+}
+footer { text-align:center; margin-top:36px; color:var(--dim); font-size:.85rem; padding-top:20px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="metrics-scientific-process.html">&larr; Back to Unit Hub</a>
+  <div class="eyebrow">Lab 05 &middot; Metrics &amp; Sci Process</div>
+  <h1>🍇 Percent Error: Counting Raisins</h1>
+  <p class="tagline">Estimate first, count second, and see how close you got.</p>
+</header>
+<main>
+
+<section class="card">
+  <h2>🎯 The Big Question</h2>
+  <p>Every measurement has some error &mdash; even careful ones. <strong>Percent error</strong> tells you <em>how close</em> your measurement came to the true value.</p>
+  <div class="callout"><strong>Essential Question:</strong> How accurate was our estimate of the number of raisins in the box?</div>
+</section>
+
+<section class="card">
+  <h2>📖 Vocabulary</h2>
+  <table class="data">
+    <tr><th>Term</th><th>What it is</th><th>How you get it</th></tr>
+    <tr><td><strong>Experimental Value</strong></td><td>What YOU measured or estimated.</td><td>Estimate the # of raisins in the box (take 10 out to get an idea of size).</td></tr>
+    <tr><td><strong>Accepted Value</strong></td><td>The theoretical or true value.</td><td>Count how many raisins are actually in the box.</td></tr>
+    <tr><td><strong>Error</strong></td><td>How far your value was from the true one.</td><td>| experimental − accepted |</td></tr>
+    <tr><td><strong>Percent Error</strong></td><td>How accurate your data was, as a percentage.</td><td>(error ÷ accepted) × 100</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>🧮 The Formulas</h2>
+  <div class="formula">error = | experimental − accepted |</div>
+  <div class="formula">% error = (error ÷ accepted) × 100</div>
+  <p>Notice that <strong>error is always positive</strong> (that&#39;s what the absolute-value bars mean). You&#39;re just measuring the <em>distance</em> from the true value, not the direction.</p>
+</section>
+
+<section class="card">
+  <h2>🍇 The Raisin Lab</h2>
+  <h3>Materials (per group)</h3>
+  <ul>
+    <li>One small box of raisins</li>
+    <li>Data sheet + pencil</li>
+    <li>Optional: a small paper plate for counting</li>
+  </ul>
+  <h3>Procedure</h3>
+  <div class="steps">
+    <div class="step-item">Pour 10 raisins out onto the plate. Look at how much space they take up.</div>
+    <div class="step-item">Look at the box. Without pouring anything else out yet, <strong>estimate</strong> how many raisins are in the whole box. This is your <em>experimental value</em>.</div>
+    <div class="step-item">Now count every single raisin in the box. This is your <em>accepted value</em>.</div>
+    <div class="step-item">Calculate <strong>error</strong> using the formula above.</div>
+    <div class="step-item">Calculate <strong>percent error</strong>.</div>
+    <div class="step-item">Compare with other groups. Whose estimate was closest?</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📊 Data Sheet</h2>
+  <table class="data">
+    <tr><th>Experimental Value (your estimate)</th><th>Accepted Value (actual count)</th><th>Error</th><th>Percent Error</th></tr>
+    <tr><td> </td><td> </td><td> </td><td> %</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>💭 Worked Example</h2>
+  <p>You estimated <strong>60 raisins</strong>. You counted <strong>72 raisins</strong>.</p>
+  <ul>
+    <li>error = | 60 − 72 | = <strong>12 raisins</strong></li>
+    <li>% error = (12 ÷ 72) × 100 = <strong>16.7%</strong></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>💬 Discussion</h2>
+  <ol>
+    <li>Was your percent error less than 10%, 25%, or more? What does that tell you about your estimating skills?</li>
+    <li>Would percent error be more useful, or less useful, if the accepted value were very small? (Try it: what happens to % error when accepted = 2?)</li>
+    <li>Why do scientists use <em>percent</em> error instead of just plain error?</li>
+    <li>Where else in real life do you see percent error &mdash; election polls, weather forecasts, sports predictions?</li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>🎮 Extra Practice: Percent Error Lab</h2>
+  <p>Want more percent-error practice? Try the interactive <a href="percent-error-lab.html" style="color:var(--accent-deep);font-weight:800;">🎯 Percent Error Lab</a> &mdash; guess the number of items in a jar, then see how you did.</p>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Metrics &amp; Scientific Process</footer>
+</div>
+</body>
+</html>

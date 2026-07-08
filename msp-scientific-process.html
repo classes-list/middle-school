@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Scientific Process</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --navy-deep:#0c1633;
+  --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --cream:#fffdf2;
+  --ocean:#0d9488; --purple:#7c3aed; --coral:#ef4444;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#7c3aed;
+  --accent-deep:#4c1d95;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #ede9fe 0%, #fef3c7 50%, #e0f2fe 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px;
+  line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:30px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  transition:all .15s ease;
+}
+.back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+h1 { font-size:2.2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:8px; }
+.tagline { color:var(--dim); font-size:1rem; max-width:720px; margin:0 auto; font-style:italic; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card {
+  background:#fff; border-radius:14px;
+  padding:22px 26px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  border-top:4px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.35rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:16px 0 6px; }
+section.card p { margin-bottom:10px; color:var(--ink); }
+section.card ul, section.card ol { margin:6px 0 12px 24px; }
+section.card li { margin-bottom:4px; color:var(--ink); }
+section.card li strong { color:var(--accent-deep); }
+.callout {
+  background:var(--paper); border-left:4px solid var(--gold-deep);
+  padding:14px 18px; border-radius:6px; margin:12px 0;
+  font-size:.98rem;
+}
+.callout strong { color:var(--navy); }
+.formula {
+  background:var(--navy); color:var(--gold);
+  padding:14px 18px; border-radius:8px;
+  font-family:'Courier New', monospace; font-size:1.1rem; font-weight:800;
+  text-align:center; margin:12px 0;
+  letter-spacing:.02em;
+}
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:14px; margin-top:10px; }
+.tile {
+  background:var(--cream); border:2px solid var(--accent);
+  border-radius:10px; padding:14px 16px;
+}
+.tile h4 { color:var(--accent-deep); font-size:1rem; font-weight:800; margin-bottom:6px; }
+.tile p { font-size:.9rem; color:var(--ink); margin:0; }
+.staircase {
+  display:grid; grid-template-columns:repeat(7, 1fr); gap:0;
+  border:2px solid var(--accent-deep); border-radius:8px; overflow:hidden;
+  margin:16px 0;
+}
+.staircase div {
+  padding:12px 6px; text-align:center;
+  font-weight:800; font-size:.9rem;
+  background:var(--cream);
+  border-right:1px solid var(--accent);
+}
+.staircase div:last-child { border-right:none; }
+.staircase div.unit { background:var(--gold); color:var(--navy); }
+.staircase .letter { font-size:1.4rem; color:var(--accent-deep); }
+.staircase .word { font-size:.72rem; color:var(--dim); font-style:italic; }
+.staircase .power { font-size:.72rem; color:var(--ink); font-weight:600; }
+table.data { width:100%; border-collapse:collapse; margin:12px 0; font-size:.92rem; }
+table.data th, table.data td { border:1px solid #d1d5db; padding:8px 10px; text-align:left; }
+table.data th { background:var(--accent); color:#fff; font-weight:800; }
+table.data tr:nth-child(even) td { background:#f8fafc; }
+.steps { counter-reset:step; }
+.step-item {
+  position:relative; padding-left:44px; margin-bottom:16px;
+  min-height:36px;
+}
+.step-item::before {
+  counter-increment:step;
+  content:counter(step);
+  position:absolute; left:0; top:0;
+  width:32px; height:32px;
+  background:var(--accent); color:#fff;
+  border-radius:50%;
+  font-weight:800; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+}
+footer { text-align:center; margin-top:36px; color:var(--dim); font-size:.85rem; padding-top:20px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="metrics-scientific-process.html">&larr; Back to Unit Hub</a>
+  <div class="eyebrow">Lesson 02 &middot; Metrics &amp; Sci Process</div>
+  <h1>The Scientific Process</h1>
+  <p class="tagline">Question &rarr; Hypothesis &rarr; Experiment &rarr; Data &rarr; Analyze &rarr; Conclusion.</p>
+</header>
+<main>
+
+<section class="card">
+  <h2>🧐 Skepticism &amp; Reliable Sources</h2>
+  <p>An old saying: <em>&quot;Believe nothing that you hear and only half of what you see.&quot;</em> Scientists don&#39;t chase opinions or perspectives &mdash; they chase <strong>facts</strong>, things that can be shown to be true <em>repeatedly</em>.</p>
+  <p>Have you seen headlines like &quot;New study shows coffee is good for you&quot; on Monday, and &quot;New study shows coffee is bad for you&quot; on Friday? So &mdash; does coffee kill you, save you, or both?</p>
+  <div class="callout"><strong>The answer lies in your sources.</strong> Don&#39;t believe the first thing you hear. Always check whether the study is reliable and replicable.</div>
+</section>
+
+<section class="card">
+  <h2>🔍 What Makes a Study Reliable?</h2>
+  <ul>
+    <li><strong>Testable hypothesis</strong> &mdash; something you can actually measure</li>
+    <li><strong>Well-designed experiment</strong> &mdash; procedures clear enough for others to repeat</li>
+    <li><strong>Controlled environment</strong> &mdash; keep everything the same except one thing</li>
+    <li><strong>Change only ONE variable</strong> &mdash; otherwise you don&#39;t know what caused the result</li>
+    <li><strong>Do multiple trials</strong> &mdash; one result isn&#39;t enough</li>
+    <li><strong>Remove researcher bias</strong> &mdash; don&#39;t &quot;see what you want to see&quot;</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🔄 The Scientific Process</h2>
+  <p>Every real experiment follows this six-step loop:</p>
+  <div class="grid-2">
+    <div class="tile"><h4>1 · Question</h4><p>Ask something you&#39;re curious about.</p></div>
+    <div class="tile"><h4>2 · Hypothesis</h4><p>Make an educated guess about the answer.</p></div>
+    <div class="tile"><h4>3 · Experiment</h4><p>Put your hypothesis to the test.</p></div>
+    <div class="tile"><h4>4 · Collect Data</h4><p>Record what actually happens.</p></div>
+    <div class="tile"><h4>5 · Analyze</h4><p>Look at the results with graphs and math.</p></div>
+    <div class="tile"><h4>6 · Conclusion</h4><p>Was the hypothesis supported? Report your findings.</p></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>❓ Step 1: Ask a Testable Question</h2>
+  <p>Your question has to be measurable. Words like <em>better</em>, <em>best</em>, or <em>tastier</em> aren&#39;t measurable &mdash; they&#39;re opinions.</p>
+  <h3>Weak → Strong</h3>
+  <table class="data">
+    <tr><th>Weak (opinion)</th><th>Strong (testable)</th></tr>
+    <tr><td>What tastes better, Oreos or Chips Ahoy?</td><td>Do fingers wrinkle faster in cold or hot water?</td></tr>
+    <tr><td>Which laundry detergent is better?</td><td>Which detergent, Tide or All, removes a grass stain with the least amount used?</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>💡 Step 2: Hypothesis &mdash; the &quot;If–Then&quot; Statement</h2>
+  <p>A hypothesis is an educated guess about the answer to your question, written as a prediction:</p>
+  <div class="formula">If [DV] is related to [IV], then [prediction].</div>
+  <p><strong>Important:</strong> If your data proves your hypothesis wrong, <em>don&#39;t</em> go back and change your hypothesis. A wrong hypothesis is not a failure &mdash; scientists learn just as much from a disproved hypothesis as from a proved one.</p>
+</section>
+
+<section class="card">
+  <h2>🧪 Step 3: Design a Controlled Experiment</h2>
+  <p>A controlled experiment compares two groups:</p>
+  <div class="grid-2">
+    <div class="tile"><h4>Control Group</h4><p>NOT exposed to the change you&#39;re testing. This is your baseline.</p></div>
+    <div class="tile"><h4>Experimental Group</h4><p>IS exposed to the change. Compare this against the control.</p></div>
+  </div>
+  <h3>Three Types of Variables</h3>
+  <ul>
+    <li><strong>Independent Variable (IV)</strong> &mdash; the one you <em>change</em> (&quot;I change&quot;). Goes on the X-axis.</li>
+    <li><strong>Dependent Variable (DV)</strong> &mdash; the one you <em>measure</em>. Goes on the Y-axis.</li>
+    <li><strong>Controlled Variables</strong> &mdash; everything else, kept the same.</li>
+  </ul>
+  <div class="callout"><strong>Golden Rule:</strong> Change ONE thing, measure ONE thing.</div>
+</section>
+
+<section class="card">
+  <h2>📊 Step 4 &amp; 5: Collect and Analyze Data</h2>
+  <ul>
+    <li>Record every measurement carefully &mdash; don&#39;t skip trials.</li>
+    <li>Organize data in a table before you graph.</li>
+    <li>When graphing: <strong>Independent variable on X, Dependent variable on Y.</strong></li>
+    <li>Look for patterns. Calculate error and percent error.</li>
+  </ul>
+  <p>Head to the <strong>Graphing Lab</strong> to learn how to make clean charts in Google Sheets.</p>
+</section>
+
+<section class="card">
+  <h2>📝 Step 6: Conclusion</h2>
+  <p>State whether the data supports your hypothesis, and describe the relationship between your variables:</p>
+  <div class="callout">&quot;As A increases, B ___________.&quot;</div>
+  <p>Write it so someone else could pick up your report, repeat the experiment, and get the same result.</p>
+</section>
+
+<section class="card">
+  <h2>🔦 Everyday Example</h2>
+  <table class="data">
+    <tr><th>Step</th><th>Answer</th></tr>
+    <tr><td>Question</td><td>Why is this flashlight not working?</td></tr>
+    <tr><td>Hypothesis</td><td>If I replace the batteries, then the flashlight will work.</td></tr>
+    <tr><td>Experiment</td><td>Change the batteries and turn the flashlight on.</td></tr>
+    <tr><td>Data</td><td>Does the light come on? Yes / No</td></tr>
+    <tr><td>Analyze</td><td>Compare result to hypothesis.</td></tr>
+    <tr><td>Conclusion</td><td>Report on findings. If it still doesn&#39;t work, propose a new hypothesis.</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <h2>✅ Practice: Identify the Variables</h2>
+  <h3>Question A</h3>
+  <p>Does wheel size affect how fast a skateboard travels down a ramp?</p>
+  <ul>
+    <li>IV: ___________</li>
+    <li>DV: ___________</li>
+    <li>Controls: ___________</li>
+    <li>Hypothesis: If _____ is related to _____, then _____.</li>
+  </ul>
+  <h3>Question B</h3>
+  <p>Does warm water freeze faster than cold water?</p>
+  <ul>
+    <li>IV: ___________</li>
+    <li>DV: ___________</li>
+    <li>Controls: ___________</li>
+    <li>Hypothesis: If _____ is related to _____, then _____.</li>
+  </ul>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Metrics &amp; Scientific Process</footer>
+</div>
+</body>
+</html>

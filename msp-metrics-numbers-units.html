@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metrics, Numbers &amp; Unit Analysis</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --navy-deep:#0c1633;
+  --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --cream:#fffdf2;
+  --ocean:#0d9488; --purple:#7c3aed; --coral:#ef4444;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#0d9488;
+  --accent-deep:#134e4a;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #ccfbf1 0%, #fef3c7 50%, #e0e7ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px;
+  line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:30px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  transition:all .15s ease;
+}
+.back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+h1 { font-size:2.2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:8px; }
+.tagline { color:var(--dim); font-size:1rem; max-width:720px; margin:0 auto; font-style:italic; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card {
+  background:#fff; border-radius:14px;
+  padding:22px 26px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  border-top:4px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.35rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:16px 0 6px; }
+section.card p { margin-bottom:10px; color:var(--ink); }
+section.card ul, section.card ol { margin:6px 0 12px 24px; }
+section.card li { margin-bottom:4px; color:var(--ink); }
+section.card li strong { color:var(--accent-deep); }
+.callout {
+  background:var(--paper); border-left:4px solid var(--gold-deep);
+  padding:14px 18px; border-radius:6px; margin:12px 0;
+  font-size:.98rem;
+}
+.callout strong { color:var(--navy); }
+.formula {
+  background:var(--navy); color:var(--gold);
+  padding:14px 18px; border-radius:8px;
+  font-family:'Courier New', monospace; font-size:1.1rem; font-weight:800;
+  text-align:center; margin:12px 0;
+  letter-spacing:.02em;
+}
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:14px; margin-top:10px; }
+.tile {
+  background:var(--cream); border:2px solid var(--accent);
+  border-radius:10px; padding:14px 16px;
+}
+.tile h4 { color:var(--accent-deep); font-size:1rem; font-weight:800; margin-bottom:6px; }
+.tile p { font-size:.9rem; color:var(--ink); margin:0; }
+.staircase {
+  display:grid; grid-template-columns:repeat(7, 1fr); gap:0;
+  border:2px solid var(--accent-deep); border-radius:8px; overflow:hidden;
+  margin:16px 0;
+}
+.staircase div {
+  padding:12px 6px; text-align:center;
+  font-weight:800; font-size:.9rem;
+  background:var(--cream);
+  border-right:1px solid var(--accent);
+}
+.staircase div:last-child { border-right:none; }
+.staircase div.unit { background:var(--gold); color:var(--navy); }
+.staircase .letter { font-size:1.4rem; color:var(--accent-deep); }
+.staircase .word { font-size:.72rem; color:var(--dim); font-style:italic; }
+.staircase .power { font-size:.72rem; color:var(--ink); font-weight:600; }
+table.data { width:100%; border-collapse:collapse; margin:12px 0; font-size:.92rem; }
+table.data th, table.data td { border:1px solid #d1d5db; padding:8px 10px; text-align:left; }
+table.data th { background:var(--accent); color:#fff; font-weight:800; }
+table.data tr:nth-child(even) td { background:#f8fafc; }
+.steps { counter-reset:step; }
+.step-item {
+  position:relative; padding-left:44px; margin-bottom:16px;
+  min-height:36px;
+}
+.step-item::before {
+  counter-increment:step;
+  content:counter(step);
+  position:absolute; left:0; top:0;
+  width:32px; height:32px;
+  background:var(--accent); color:#fff;
+  border-radius:50%;
+  font-weight:800; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+}
+footer { text-align:center; margin-top:36px; color:var(--dim); font-size:.85rem; padding-top:20px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="metrics-scientific-process.html">&larr; Back to Unit Hub</a>
+  <div class="eyebrow">Lesson 01 &middot; Metrics &amp; Sci Process</div>
+  <h1>Metrics, Numbers &amp; Unit Analysis</h1>
+  <p class="tagline">SI units, KHDUDCM, scientific notation, and unit-analysis conversions.</p>
+</header>
+<main>
+
+<section class="card">
+  <h2>🌍 Why the Metric System?</h2>
+  <p>Only three countries in the world &mdash; the United States, Liberia, and Myanmar &mdash; don&#39;t use the metric system every day. But scientists <em>everywhere</em> use it. Scientists in Tokyo, Berlin, and Honolulu need to compare data using the same set of units. Those units are called <strong>SI units</strong>, and they are metric.</p>
+  <div class="callout"><strong>Big Idea:</strong> Numbers are the language of science. To compare data around the world, we all need to speak the same language.</div>
+</section>
+
+<section class="card">
+  <h2>📏 The Base Units</h2>
+  <div class="grid-2">
+    <div class="tile"><h4>Mass</h4><p>gram (g)</p></div>
+    <div class="tile"><h4>Length / Distance</h4><p>meter (m)</p></div>
+    <div class="tile"><h4>Volume</h4><p>liter (L)</p></div>
+    <div class="tile"><h4>Time</h4><p>second (s)</p></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🪜 KHDUDCM &mdash; The Metric Staircase</h2>
+  <p>The metric system is built on powers of 10, so converting between units is as easy as moving a decimal point. Remember the order with:</p>
+  <div class="callout"><strong>King Henry Doesn&#39;t Usually Drink Chocolate Milk</strong></div>
+  <div class="staircase">
+    <div><span class="letter">K</span><div class="word">King</div><div class="power">×1000</div></div>
+    <div><span class="letter">H</span><div class="word">Henry</div><div class="power">×100</div></div>
+    <div><span class="letter">D</span><div class="word">Doesn&#39;t</div><div class="power">×10</div></div>
+    <div class="unit"><span class="letter">U</span><div class="word">Usually</div><div class="power">×1 (base)</div></div>
+    <div><span class="letter">d</span><div class="word">Drink</div><div class="power">÷10</div></div>
+    <div><span class="letter">c</span><div class="word">Chocolate</div><div class="power">÷100</div></div>
+    <div><span class="letter">m</span><div class="word">Milk</div><div class="power">÷1000</div></div>
+  </div>
+  <p>The <strong>U</strong> stands for &quot;Unit&quot; &mdash; whichever base unit you&#39;re working with (grams, meters, or liters).</p>
+</section>
+
+<section class="card">
+  <h2>➡️ Simple Conversions</h2>
+  <p>To convert one metric unit to another, just count how many steps you move on the KHDUDCM staircase &mdash; that&#39;s how many places the decimal point slides.</p>
+  <h3>Example 1: 500 centimeters → meters</h3>
+  <ul>
+    <li>Start at <strong>c</strong>, move to <strong>U</strong> = 2 steps <em>left</em></li>
+    <li>Slide the decimal 2 places <em>left</em>: 500. → 5.00</li>
+    <li>Answer: <strong>5 m</strong></li>
+  </ul>
+  <h3>Example 2: 4,000 m → km</h3>
+  <ul><li>m → k = 3 steps left → 4.000 → <strong>4 km</strong></li></ul>
+  <h3>Example 3: 45.5 L → mL</h3>
+  <ul><li>L → mL = 3 steps right → 45,500 → <strong>45,500 mL</strong></li></ul>
+  <div class="callout"><strong>Warning:</strong> This decimal-slide trick only works for regular units. For units that are squared (cm²) or cubed (cm³), use unit analysis instead.</div>
+</section>
+
+<section class="card">
+  <h2>🔢 Precision &amp; Significant Digits</h2>
+  <p>Which number is <em>most precise</em>?</p>
+  <ul>
+    <li>0.2</li>
+    <li>0.21</li>
+    <li>0.20788</li>
+    <li>0.20787958</li>
+  </ul>
+  <p>The bottom one <em>looks</em> the most precise &mdash; but we can only accept that precision if the tool we used was actually that precise. If you measured with a ruler that only shows tenths, then 0.2 is your real answer. Don&#39;t just copy every digit your calculator gives you.</p>
+  <div class="callout"><strong>Rule:</strong> Round your final answer to the precision of your least precise measurement (usually the thousandths place is plenty for a middle school science lab).</div>
+</section>
+
+<section class="card">
+  <h2>🔬 Scientific Notation</h2>
+  <p>Scientists sometimes deal with very large or very small numbers &mdash; the distance from Oahu to the Big Island (~300,000 m) or the mass of a mosquito (~0.00000003 g). Scientific notation lets us write them cleanly.</p>
+  <div class="formula">3.0 × 10⁵ m = 300,000 m</div>
+  <p>Positive exponent → move the decimal <em>right</em> (big number). Negative exponent → move the decimal <em>left</em> (small number).</p>
+  <div class="formula">3.0 × 10⁻⁸ g = 0.00000003 g</div>
+  <p>If your calculator shows <code>4.587E4</code>, that means <strong>4.587 × 10⁴ = 45,870</strong>. Never write &quot;E&quot; on your paper &mdash; convert it first.</p>
+</section>
+
+<section class="card">
+  <h2>🧮 Unit Analysis (Factor-Label)</h2>
+  <p>Unit analysis is the universal way to convert between units. It works for <em>any</em> units &mdash; metric or not, squared or cubed, English to metric, whatever &mdash; because it uses fractions equal to 1.</p>
+  <p>Any equality (like <em>60 minutes = 1 hour</em>) can be written as a fraction that equals 1:</p>
+  <div class="formula">60 min / 1 hr = 1  &nbsp;&nbsp;OR&nbsp;&nbsp;  1 hr / 60 min = 1</div>
+
+  <h3>The Recipe</h3>
+  <div class="steps">
+    <div class="step-item"><strong>Start with what you have</strong>, including its units.</div>
+    <div class="step-item"><strong>Multiply</strong> by one or more &quot;unit factors&quot; (fractions equal to 1).</div>
+    <div class="step-item"><strong>Flip</strong> each fraction so the unit you don&#39;t want <em>cancels</em>.</div>
+    <div class="step-item"><strong>The unit you keep</strong> is the one you want.</div>
+  </div>
+
+  <h3>Example: How many minutes in 2 hours?</h3>
+  <div class="formula">2 hr × (60 min / 1 hr) = 120 min</div>
+  <p>The &quot;hr&quot; on top cancels the &quot;hr&quot; on the bottom, leaving minutes. ✓</p>
+
+  <h3>Example: How many cm in a mile?</h3>
+  <p>Given: 1 inch = 2.54 cm; 1609 m = 1 mile</p>
+  <div class="formula">1 mile × (1609 m / 1 mi) × (100 cm / 1 m) = 160,900 cm</div>
+</section>
+
+<section class="card">
+  <h2>✅ Check Your Understanding</h2>
+  <ol>
+    <li>What are the 4 SI base units for mass, length, volume, and time?</li>
+    <li>Convert 6,000,000 mg to kg using KHDUDCM.</li>
+    <li>Write 0.00045 in scientific notation.</li>
+    <li>Use unit analysis to convert 3 feet to centimeters. (1 in = 2.54 cm; 12 in = 1 ft)</li>
+  </ol>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Metrics &amp; Scientific Process</footer>
+</div>
+</body>
+</html>

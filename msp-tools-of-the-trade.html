@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tools of the Trade</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --navy-deep:#0c1633;
+  --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --cream:#fffdf2;
+  --ocean:#0d9488; --purple:#7c3aed; --coral:#ef4444;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#dc2626;
+  --accent-deep:#7f1d1d;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #fee2e2 0%, #fef3c7 50%, #e0f2fe 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px;
+  line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:30px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  transition:all .15s ease;
+}
+.back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+h1 { font-size:2.2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:8px; }
+.tagline { color:var(--dim); font-size:1rem; max-width:720px; margin:0 auto; font-style:italic; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card {
+  background:#fff; border-radius:14px;
+  padding:22px 26px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  border-top:4px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.35rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:16px 0 6px; }
+section.card p { margin-bottom:10px; color:var(--ink); }
+section.card ul, section.card ol { margin:6px 0 12px 24px; }
+section.card li { margin-bottom:4px; color:var(--ink); }
+section.card li strong { color:var(--accent-deep); }
+.callout {
+  background:var(--paper); border-left:4px solid var(--gold-deep);
+  padding:14px 18px; border-radius:6px; margin:12px 0;
+  font-size:.98rem;
+}
+.callout strong { color:var(--navy); }
+.formula {
+  background:var(--navy); color:var(--gold);
+  padding:14px 18px; border-radius:8px;
+  font-family:'Courier New', monospace; font-size:1.1rem; font-weight:800;
+  text-align:center; margin:12px 0;
+  letter-spacing:.02em;
+}
+.grid-2 { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:14px; margin-top:10px; }
+.tile {
+  background:var(--cream); border:2px solid var(--accent);
+  border-radius:10px; padding:14px 16px;
+}
+.tile h4 { color:var(--accent-deep); font-size:1rem; font-weight:800; margin-bottom:6px; }
+.tile p { font-size:.9rem; color:var(--ink); margin:0; }
+.staircase {
+  display:grid; grid-template-columns:repeat(7, 1fr); gap:0;
+  border:2px solid var(--accent-deep); border-radius:8px; overflow:hidden;
+  margin:16px 0;
+}
+.staircase div {
+  padding:12px 6px; text-align:center;
+  font-weight:800; font-size:.9rem;
+  background:var(--cream);
+  border-right:1px solid var(--accent);
+}
+.staircase div:last-child { border-right:none; }
+.staircase div.unit { background:var(--gold); color:var(--navy); }
+.staircase .letter { font-size:1.4rem; color:var(--accent-deep); }
+.staircase .word { font-size:.72rem; color:var(--dim); font-style:italic; }
+.staircase .power { font-size:.72rem; color:var(--ink); font-weight:600; }
+table.data { width:100%; border-collapse:collapse; margin:12px 0; font-size:.92rem; }
+table.data th, table.data td { border:1px solid #d1d5db; padding:8px 10px; text-align:left; }
+table.data th { background:var(--accent); color:#fff; font-weight:800; }
+table.data tr:nth-child(even) td { background:#f8fafc; }
+.steps { counter-reset:step; }
+.step-item {
+  position:relative; padding-left:44px; margin-bottom:16px;
+  min-height:36px;
+}
+.step-item::before {
+  counter-increment:step;
+  content:counter(step);
+  position:absolute; left:0; top:0;
+  width:32px; height:32px;
+  background:var(--accent); color:#fff;
+  border-radius:50%;
+  font-weight:800; font-size:1rem;
+  display:flex; align-items:center; justify-content:center;
+}
+footer { text-align:center; margin-top:36px; color:var(--dim); font-size:.85rem; padding-top:20px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="metrics-scientific-process.html">&larr; Back to Unit Hub</a>
+  <div class="eyebrow">Lesson 03 &middot; Metrics &amp; Sci Process</div>
+  <h1>Tools of the Trade</h1>
+  <p class="tagline">How to use every measurement tool in the lab, correctly.</p>
+</header>
+<main>
+
+<section class="card">
+  <h2>📏 Meter Stick &mdash; Distance / Length</h2>
+  <p><strong>Units:</strong> millimeters (mm), centimeters (cm), meters (m)</p>
+  <h3>Estimation Tricks (Your Body as a Ruler)</h3>
+  <ul>
+    <li><strong>Millimeter</strong> &mdash; the width of a whisker</li>
+    <li><strong>Centimeter</strong> &mdash; the width of your pinky</li>
+    <li><strong>Meter</strong> &mdash; nose to the tip of your outstretched arm</li>
+  </ul>
+  <div class="callout"><strong>You must have a metric ruler.</strong> Not an inches-only ruler &mdash; a real metric ruler with mm markings.</div>
+  <h3>Reading Practice</h3>
+  <p>When you measure, always read to <em>one</em> decimal place beyond the smallest tick mark. If a ruler is marked in cm and mm, record your answer in cm to the tenths (e.g., <strong>12.3 cm</strong>).</p>
+</section>
+
+<section class="card">
+  <h2>⚖️ Digital Scale &mdash; Mass</h2>
+  <p><strong>Units:</strong> grams (g); switchable to kilograms (kg) or milligrams (mg) on most models.</p>
+  <div style="text-align:center;background:#f8fafc;border-radius:10px;padding:16px;margin:14px 0;">
+    <svg viewBox="0 0 320 200" width="280" height="175" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Modern digital scale with weighing pan, LCD display showing 0.0 g, and tare/zero buttons">
+      <defs>
+        <linearGradient id="scaleBody" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#e5e7eb"/>
+          <stop offset="100%" stop-color="#94a3b8"/>
+        </linearGradient>
+        <linearGradient id="scalePan" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#f1f5f9"/>
+          <stop offset="100%" stop-color="#cbd5e1"/>
+        </linearGradient>
+        <linearGradient id="lcd" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#0f766e"/>
+          <stop offset="100%" stop-color="#065f46"/>
+        </linearGradient>
+      </defs>
+      <!-- Shadow under scale -->
+      <ellipse cx="160" cy="188" rx="130" ry="6" fill="#000" opacity="0.14"/>
+      <!-- Base body -->
+      <rect x="30" y="90" width="260" height="85" rx="14" fill="url(#scaleBody)" stroke="#64748b" stroke-width="1.4"/>
+      <!-- Feet -->
+      <rect x="50" y="175" width="18" height="8" rx="2" fill="#475569"/>
+      <rect x="252" y="175" width="18" height="8" rx="2" fill="#475569"/>
+      <!-- Weighing pan on top -->
+      <ellipse cx="160" cy="90" rx="120" ry="14" fill="url(#scalePan)" stroke="#64748b" stroke-width="1.2"/>
+      <ellipse cx="160" cy="86" rx="120" ry="14" fill="url(#scalePan)" stroke="#64748b" stroke-width="1.2"/>
+      <!-- LCD display -->
+      <rect x="80" y="108" width="160" height="34" rx="4" fill="url(#lcd)" stroke="#0c4a44" stroke-width="1.4"/>
+      <text x="228" y="135" text-anchor="end" font-family="'Courier New', monospace" font-size="24" font-weight="800" fill="#a7f3d0">0.0 g</text>
+      <!-- "TARE" indicator on the display, top-left -->
+      <text x="90" y="118" font-family="'Segoe UI', sans-serif" font-size="8" font-weight="800" fill="#a7f3d0" opacity="0.75">TARE</text>
+      <!-- Buttons -->
+      <g>
+        <rect x="80" y="150" width="52" height="18" rx="4" fill="#1e293b" stroke="#0f172a" stroke-width="1"/>
+        <text x="106" y="163" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" font-weight="800" fill="#f1f5f9">TARE</text>
+      </g>
+      <g>
+        <rect x="140" y="150" width="40" height="18" rx="4" fill="#1e293b" stroke="#0f172a" stroke-width="1"/>
+        <text x="160" y="163" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" font-weight="800" fill="#f1f5f9">ON/OFF</text>
+      </g>
+      <g>
+        <rect x="188" y="150" width="52" height="18" rx="4" fill="#1e293b" stroke="#0f172a" stroke-width="1"/>
+        <text x="214" y="163" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="9" font-weight="800" fill="#f1f5f9">UNIT</text>
+      </g>
+    </svg>
+    <p style="font-size:.82rem;color:#64748b;font-style:italic;margin-top:2px;">A digital scale displays mass directly on its LCD.</p>
+  </div>
+  <div class="callout"><strong>Important:</strong> A digital scale measures <strong>MASS</strong>, not weight. Mass is how much matter is in an object; it doesn&#39;t change with gravity. On the moon, your mass is the same &mdash; but you would weigh less.</div>
+
+  <h3>🎯 The Tare Button &mdash; Your Best Friend</h3>
+  <p>The <strong>TARE</strong> button (sometimes labeled &quot;ZERO&quot;) tells the scale to <em>reset the display to 0.0 g</em>, even if there is already something on the pan.</p>
+  <p>This is how you measure liquids, powders, or anything that needs to sit in a container:</p>
+  <div class="steps">
+    <div class="step-item">Turn the scale on. Wait for the display to read <strong>0.0 g</strong>.</div>
+    <div class="step-item">Place your empty container (beaker, weigh boat, cup) on the pan. The display will show the container&#39;s mass.</div>
+    <div class="step-item">Press <strong>TARE</strong>. The display resets to <strong>0.0 g</strong> &mdash; but the container is still there!</div>
+    <div class="step-item">Add your sample to the container. The display now shows only the mass of your sample.</div>
+    <div class="step-item">Record the reading in grams (with the correct decimal places for your scale&#39;s precision).</div>
+  </div>
+  <div class="callout"><strong>Why it&#39;s brilliant:</strong> Without TARE you&#39;d have to weigh the container empty, then full, and subtract. TARE does the subtraction for you, automatically. No math, no rounding error.</div>
+
+  <h3>Best Practices</h3>
+  <ul>
+    <li>Place the scale on a <strong>flat, level, stable surface</strong> &mdash; away from breezes or vibrations.</li>
+    <li>Let it warm up for 30 seconds after turning on.</li>
+    <li>Never exceed the <strong>maximum capacity</strong> (usually printed on the scale). Overloading damages the sensor.</li>
+    <li>Wipe up spills immediately and keep the pan clean between samples.</li>
+    <li>When done, remove the sample, tare back to 0.0, and power off.</li>
+  </ul>
+
+  <h3>Reading Examples</h3>
+  <ul>
+    <li>Display shows <strong>342.0 g</strong> &rarr; the sample&#39;s mass is 342 g.</li>
+    <li>Display shows <strong>159.2 g</strong> after taring &rarr; 159.2 g of sample was added.</li>
+    <li>Display shows <strong>&minus;3.4 g</strong> &rarr; something has been <em>removed</em> since the last tare. Investigate!</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🧪 Graduated Cylinder &mdash; Volume</h2>
+  <p><strong>Units:</strong> milliliters (mL)</p>
+  <div style="text-align:center;background:#fff;border-radius:10px;padding:20px 12px;margin:14px 0;border:1px solid #e2e8f0;overflow-x:auto;">
+    <svg viewBox="0 0 520 300" width="480" height="278" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Graduated cylinder with a 'Meniscus' label and red arrow pointing to the meniscus from the left, and an eye on the right at the same height with a black arrow also pointing at the meniscus.">
+      <!-- ─── "Meniscus" label + red arrow (left) ─── -->
+      <text x="20" y="129" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="600" fill="#1f2937">Meniscus</text>
+      <!-- red arrow from label to bottom of meniscus curve (y=125) -->
+      <line x1="120" y1="125" x2="205" y2="125" stroke="#dc2626" stroke-width="2.4"/>
+      <polygon points="205,125 196,120 196,130" fill="#dc2626"/>
+
+      <!-- ─── Graduated cylinder ─── -->
+      <!-- outer body -->
+      <rect x="200" y="60" width="120" height="180" fill="none" stroke="#374151" stroke-width="2.2"/>
+      <!-- blue liquid: top edge follows the concave meniscus curve (no fill above the curve) -->
+      <path d="M 202,118 Q 260,132 318,118 L 318,238 L 202,238 Z" fill="#3b82f6"/>
+      <!-- meniscus rim outline -->
+      <path d="M 202,118 Q 260,132 318,118" fill="none" stroke="#1e3a8a" stroke-width="1.4"/>
+
+      <!-- tick marks on the right side of the cylinder -->
+      <g stroke="#374151" stroke-width="1.4">
+        <line x1="308" y1="130" x2="320" y2="130"/>
+        <line x1="312" y1="140" x2="320" y2="140"/>
+        <line x1="312" y1="150" x2="320" y2="150"/>
+        <line x1="312" y1="160" x2="320" y2="160"/>
+        <line x1="312" y1="170" x2="320" y2="170"/>
+        <line x1="308" y1="180" x2="320" y2="180"/>
+        <line x1="312" y1="190" x2="320" y2="190"/>
+        <line x1="312" y1="200" x2="320" y2="200"/>
+        <line x1="312" y1="210" x2="320" y2="210"/>
+        <line x1="312" y1="220" x2="320" y2="220"/>
+        <line x1="308" y1="230" x2="320" y2="230"/>
+      </g>
+
+      <!-- ─── Black arrow from eye to bottom of meniscus curve (y=125) ─── -->
+      <line x1="405" y1="125" x2="316" y2="125" stroke="#111827" stroke-width="2.4"/>
+      <polygon points="316,125 325,120 325,130" fill="#111827"/>
+
+      <!-- ─── EYE (right side, at exact meniscus height y=125) ─── -->
+      <g transform="translate(440,125)">
+        <!-- almond eye outline -->
+        <path d="M -28,0 Q 0,-16 28,0 Q 0,16 -28,0 Z" fill="#fff" stroke="#111827" stroke-width="2"/>
+        <!-- upper lid crease line -->
+        <path d="M -28,0 Q 0,-16 28,0" fill="none" stroke="#111827" stroke-width="2.2"/>
+        <!-- eyelashes -->
+        <line x1="-22" y1="-9" x2="-25" y2="-15" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="-12" y1="-13" x2="-14" y2="-19" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="-2"  y1="-15" x2="-3"  y2="-22" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="8"   y1="-14" x2="10"  y2="-21" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="18"  y1="-11" x2="21"  y2="-17" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+        <line x1="24"  y1="-6"  x2="28"  y2="-11" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
+        <!-- green iris -->
+        <circle cx="0" cy="0" r="10" fill="#059669" stroke="#065f46" stroke-width="1.2"/>
+        <!-- pupil -->
+        <circle cx="0" cy="0" r="4.2" fill="#0c0c0c"/>
+        <!-- highlight -->
+        <circle cx="-2.5" cy="-2.5" r="1.4" fill="#fff"/>
+      </g>
+    </svg>
+    <p style="font-size:.85rem;color:#64748b;font-style:italic;margin-top:8px;">Line up your eye with the bottom of the meniscus &mdash; not above it, not below it.</p>
+  </div>
+  <h3>The Meniscus</h3>
+  <p>Water in a graduated cylinder forms a curved surface called a <strong>meniscus</strong> &mdash; the glass sides pull the water up. Always read the volume at the <strong>bottom of the meniscus</strong>, with your eye at the <strong>same level</strong> as that curve.</p>
+  <div class="callout"><strong>Why eye level matters:</strong> If you look down from above, the meniscus appears higher than it really is and you&#39;ll read too much. If you look up from below, it appears lower and you&#39;ll read too little. This is called <em>parallax error</em>. Lower your head or raise the cylinder until your eye lines up with the bottom of the curve.</div>
+  <h3>Reading Steps</h3>
+  <div class="steps">
+    <div class="step-item">Place the cylinder on a flat surface.</div>
+    <div class="step-item">Bend down so the meniscus is at eye level.</div>
+    <div class="step-item">Identify the value of each marked line (2 mL, 1 mL, 0.5 mL, etc.).</div>
+    <div class="step-item">Read the volume at the bottom of the curve.</div>
+  </div>
+  <h3>Practice Readings</h3>
+  <ul>
+    <li>Meniscus at the &quot;24&quot; line → <strong>24 mL</strong></li>
+    <li>Meniscus at the &quot;38&quot; line → <strong>38 mL</strong></li>
+    <li>Small cylinder, meniscus between 2.6 and 2.7 → <strong>2.65 mL</strong></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🍶 Beakers &amp; Test Tubes</h2>
+  <div class="grid-2">
+    <div class="tile" style="text-align:center;">
+      <div style="background:#fff;border-radius:8px;padding:10px;margin-bottom:10px;">
+        <svg viewBox="0 0 180 200" width="140" height="155" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Glass beaker with a pour spout, tick marks on the side, and blue liquid inside filled to about the 100 mL mark.">
+          <defs>
+            <linearGradient id="beakerGlass" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0%" stop-color="#e0f2fe" stop-opacity="0.4"/>
+              <stop offset="50%" stop-color="#ffffff" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#e0f2fe" stop-opacity="0.4"/>
+            </linearGradient>
+            <linearGradient id="beakerLiquid" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#38bdf8"/>
+              <stop offset="100%" stop-color="#0284c7"/>
+            </linearGradient>
+          </defs>
+          <!-- Pour spout (top left) -->
+          <path d="M 26,32 L 40,20 L 50,20 L 46,34 Z" fill="url(#beakerGlass)" stroke="#0369a1" stroke-width="1.6"/>
+          <!-- Beaker body: straight walls, wide -->
+          <path d="M 30,30 L 30,175 L 150,175 L 150,30" fill="url(#beakerGlass)" stroke="#0369a1" stroke-width="2"/>
+          <!-- Base shadow -->
+          <ellipse cx="90" cy="180" rx="65" ry="4" fill="#0369a1" opacity="0.15"/>
+          <!-- Liquid inside with slightly flat top (no meniscus emphasis - it's a beaker) -->
+          <path d="M 32,90 L 148,90 L 148,173 L 32,173 Z" fill="url(#beakerLiquid)"/>
+          <!-- Subtle rim on liquid top -->
+          <path d="M 32,90 Q 90,94 148,90" fill="none" stroke="#0284c7" stroke-width="1.2"/>
+          <!-- Tick marks on right side -->
+          <g stroke="#0369a1" stroke-width="1.2" font-family="Segoe UI, sans-serif" font-size="9" fill="#0369a1" font-weight="700">
+            <line x1="140" y1="60" x2="150" y2="60"/><text x="122" y="63" text-anchor="end">150</text>
+            <line x1="140" y1="90" x2="150" y2="90"/><text x="122" y="93" text-anchor="end">100</text>
+            <line x1="140" y1="120" x2="150" y2="120"/><text x="122" y="123" text-anchor="end">50</text>
+          </g>
+          <text x="90" y="45" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="10" font-weight="700" fill="#0369a1">mL</text>
+          <!-- Glass highlight -->
+          <rect x="36" y="40" width="3" height="130" rx="1.5" fill="#ffffff" opacity="0.6"/>
+        </svg>
+      </div>
+      <h4>Beaker</h4>
+      <p>For stirring, mixing, and holding liquids. <strong>Not accurate for measuring volume</strong> &mdash; use a graduated cylinder for that.</p>
+    </div>
+
+    <div class="tile" style="text-align:center;">
+      <div style="background:#fff;border-radius:8px;padding:10px;margin-bottom:10px;">
+        <svg viewBox="0 0 120 220" width="90" height="165" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Test tube: a thin glass tube with a rounded closed bottom and open top, held in a wire test-tube clamp, with liquid inside.">
+          <defs>
+            <linearGradient id="tubeGlass" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0%" stop-color="#e0f2fe" stop-opacity="0.4"/>
+              <stop offset="50%" stop-color="#ffffff" stop-opacity="0.85"/>
+              <stop offset="100%" stop-color="#e0f2fe" stop-opacity="0.4"/>
+            </linearGradient>
+            <linearGradient id="tubeLiquid" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#7c3aed"/>
+            </linearGradient>
+          </defs>
+          <!-- Small lip/rim at top -->
+          <ellipse cx="60" cy="18" rx="24" ry="4" fill="none" stroke="#0369a1" stroke-width="1.8"/>
+          <!-- Test tube body: straight walls, rounded bottom (closed) -->
+          <path d="M 36,18 L 36,180 Q 36,204 60,204 Q 84,204 84,180 L 84,18"
+                fill="url(#tubeGlass)" stroke="#0369a1" stroke-width="2"/>
+          <!-- Liquid inside -->
+          <path d="M 38,110 L 82,110 L 82,180 Q 82,202 60,202 Q 38,202 38,180 Z" fill="url(#tubeLiquid)"/>
+          <!-- Rim on liquid top -->
+          <path d="M 38,110 Q 60,114 82,110" fill="none" stroke="#5b21b6" stroke-width="1.2"/>
+          <!-- Glass highlight -->
+          <path d="M 42,30 L 42,180 Q 42,196 50,200" fill="none" stroke="#ffffff" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h4>Test Tube</h4>
+      <p>Thin glass tube closed at one end. Holds small amounts of material for testing or observation. <strong>Not for measuring.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>💧 Pipette</h2>
+  <p>A small tube for transferring or delivering measured amounts of liquid.</p>
+  <div style="text-align:center;background:#f1f5f9;border-radius:10px;padding:20px 12px;margin:14px 0;border:1px solid #e2e8f0;">
+    <svg viewBox="0 0 240 350" width="200" height="290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A one-piece clear plastic transfer pipette with a squeezable bulb, thin stem with 1 mL markings, a tapered tip, and a droplet forming at the end.">
+      <defs>
+        <linearGradient id="plasticBody" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+          <stop offset="45%" stop-color="#ffffff" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#ffffff" stop-opacity="0.5"/>
+        </linearGradient>
+        <linearGradient id="pipetteLiquid" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#38bdf8"/>
+          <stop offset="100%" stop-color="#0284c7"/>
+        </linearGradient>
+      </defs>
+
+      <!-- ─── ONE-PIECE PLASTIC PIPETTE (bulb + neck + stem + tip, all clear plastic) ─── -->
+      <path d="
+          M 120,28
+          C 136,28 140,42 140,58
+          C 140,72 136,82 132,84
+          L 132,94
+          L 132,286
+          L 126,318
+          L 114,318
+          L 108,286
+          L 108,94
+          L 108,84
+          C 104,82 100,72 100,58
+          C 100,42 104,28 120,28
+          Z"
+        fill="url(#plasticBody)"
+        stroke="#94a3b8" stroke-width="1.6"/>
+
+      <!-- Subtle inner outline on the stem for a "hollow tube" cue -->
+      <line x1="112" y1="96" x2="112" y2="284" stroke="#cbd5e1" stroke-width="0.8"/>
+      <line x1="128" y1="96" x2="128" y2="284" stroke="#cbd5e1" stroke-width="0.8"/>
+
+      <!-- Highlights (glossy plastic sheen) -->
+      <ellipse cx="110" cy="52" rx="3" ry="9" fill="#ffffff" opacity="0.85"/>
+      <rect x="112" y="110" width="3" height="170" rx="1.5" fill="#ffffff" opacity="0.55"/>
+
+      <!-- ─── LIQUID inside stem (fills from tip up to about the 6 mL mark) ─── -->
+      <rect x="112" y="160" width="16" height="126" fill="url(#pipetteLiquid)"/>
+      <path d="M 112,160 Q 120,166 128,160 L 128,162 Q 120,168 112,162 Z" fill="#0284c7"/>
+      <!-- Liquid inside the tapered tip -->
+      <path d="M 114,286 L 126,286 L 123,314 L 117,314 Z" fill="url(#pipetteLiquid)"/>
+
+      <!-- ─── VOLUME MARKINGS (printed on the plastic, small tick marks + numbers) ─── -->
+      <g stroke="#0c4a6e" stroke-width="1.1" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#0c4a6e" font-weight="700">
+        <line x1="132" y1="110" x2="140" y2="110"/><text x="146" y="114">1</text>
+        <line x1="134" y1="130" x2="140" y2="130"/>
+        <line x1="132" y1="150" x2="140" y2="150"/><text x="146" y="154">3</text>
+        <line x1="134" y1="170" x2="140" y2="170"/>
+        <line x1="132" y1="190" x2="140" y2="190"/><text x="146" y="194">5</text>
+        <line x1="134" y1="210" x2="140" y2="210"/>
+        <line x1="132" y1="230" x2="140" y2="230"/><text x="146" y="234">7</text>
+        <line x1="134" y1="250" x2="140" y2="250"/>
+        <line x1="132" y1="270" x2="140" y2="270"/><text x="146" y="274">9</text>
+      </g>
+      <text x="146" y="102" font-family="Segoe UI, sans-serif" font-size="10" fill="#0c4a6e" font-weight="800">mL</text>
+
+      <!-- ─── DROPLET at the tip ─── -->
+      <ellipse cx="120" cy="326" rx="6" ry="8" fill="#38bdf8" stroke="#0284c7" stroke-width="1.2"/>
+      <ellipse cx="118" cy="323" rx="1.5" ry="2.5" fill="#fff" opacity="0.7"/>
+
+      <!-- Labels -->
+      <text x="152" y="62" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#334155">bulb</text>
+      <line x1="149" y1="58" x2="140" y2="58" stroke="#334155" stroke-width="1.2"/>
+      <text x="8" y="200" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#334155">stem</text>
+      <line x1="42" y1="198" x2="108" y2="198" stroke="#334155" stroke-width="1.2"/>
+      <text x="8" y="308" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="700" fill="#334155">tip</text>
+      <line x1="30" y1="305" x2="115" y2="305" stroke="#334155" stroke-width="1.2"/>
+    </svg>
+    <p style="font-size:.85rem;color:#64748b;font-style:italic;margin-top:6px;">A one-piece clear plastic transfer pipette. Squeeze the bulb to draw liquid up; release slowly to dispense drop by drop.</p>
+  </div>
+  <h3>How to Use It</h3>
+  <ol>
+    <li>Squeeze the rubber bulb <strong>before</strong> putting the tip in the liquid &mdash; never squeeze while the tip is already submerged, or air bubbles will get sucked in.</li>
+    <li>Dip the tip into the liquid, then slowly release the bulb to draw liquid up into the tube.</li>
+    <li>Move the pipette to the target container.</li>
+    <li>Gently squeeze the bulb again to release the liquid, one drop at a time.</li>
+  </ol>
+  <ul><li>Each line on a common pipette = <strong>1 mL</strong></li></ul>
+</section>
+
+<section class="card">
+  <h2>⏱️ Timer &mdash; Time</h2>
+  <p><strong>Units:</strong> seconds (s), minutes (min)</p>
+  <h3>Reading Examples</h3>
+  <ul>
+    <li>00:12.85 → <strong>12.85 s</strong></li>
+    <li>01:06.09 → <strong>1 min, 6.09 s</strong></li>
+    <li>01:27.97 → <strong>1 min, 27.97 s</strong></li>
+    <li>00:05.94 → <strong>5.94 s</strong></li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🧱 Mass Sets</h2>
+  <p>A set of standardized <strong>masses</strong> (not weights) used to calibrate balances and check other measurements.</p>
+  <p><strong>Units:</strong> grams (g). A 1,000 g mass = 1 kg.</p>
+</section>
+
+<section class="card">
+  <h2>✅ Quick Check</h2>
+  <ol>
+    <li>Would you measure the volume of water in a beaker or a graduated cylinder? Why?</li>
+    <li>What&#39;s the difference between mass and weight?</li>
+    <li>Where on the meniscus do you read the volume?</li>
+    <li>What must you do to the balance before AND after using it?</li>
+  </ol>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Metrics &amp; Scientific Process</footer>
+</div>
+</body>
+</html>
