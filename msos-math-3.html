@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mary, Star of the Sea — 3rd Grade Math</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%); color: #253a77; min-height: 100vh; }
+.container { display: flex; min-height: 100vh; }
+.sidebar { width: 280px; background: #1a2a4a; color: #fff; padding: 24px 20px; overflow-y: auto; }
+.sidebar h2 { color: #FFD100; font-size: 1.05rem; }
+.sidebar-quarter { margin-top: 20px; padding-top: 10px; border-top: 1px solid #253a77; color: #FFD100; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.sidebar-unit { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: 4px 0; background: #253a77; border-radius: 6px; cursor: pointer; transition: all 0.15s; font-size: 0.88rem; }
+.sidebar-unit:hover { background: #FFD100; color: #253a77; }
+.sidebar-unit.completed { background: #4a8c3a; }
+.sidebar-unit.active { background: #FFD100; color: #253a77; font-weight: 700; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: #fff; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #eee; flex-wrap: wrap; gap: 10px; }
+.topbar-logos { display: flex; gap: 10px; }
+.logo-circle { width: 46px; height: 46px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(37,58,119,0.15); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+.logo-circle img { display: block; }
+.logo-circle.msos img { height: 100%; width: auto; }
+.logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+.logo-circle.msos { background: #1a2a4a; }
+.summer-home-btn { background: #253a77; color: #fff; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 0.85rem; }
+.summer-home-btn:hover { background: #1a2a4a; }
+.topbar-right { color: #666; font-size: 0.85rem; font-weight: 600; }
+.content { flex: 1; padding: 24px; overflow-y: auto; }
+.screen { display: none; }
+.screen.active { display: block; }
+.units-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.unit-card { background: #fff; padding: 22px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; border-left: 4px solid #1a5490; }
+.unit-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+.unit-icon { font-size: 2rem; margin-bottom: 6px; }
+.unit-title { font-weight: 700; color: #253a77; font-size: 1rem; margin-bottom: 4px; line-height: 1.2; }
+.unit-cc { font-size: 0.72rem; color: #7a5f00; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.unit-desc { font-size: 0.85rem; color: #666; line-height: 1.4; }
+.btn { background: #253a77; color: #fff; padding: 10px 16px; text-decoration: none; border-radius: 6px; font-weight: 700; border: none; cursor: pointer; font-size: 0.9rem; margin-right: 8px; margin-bottom: 8px; }
+.btn:hover { background: #1a2a4a; }
+.back-btn { background: #6b7280; }
+.back-btn:hover { background: #4b5563; }
+.lesson-content h2 { color: #253a77; margin-bottom: 12px; }
+.lesson-content h3 { color: #1a5490; margin: 16px 0 6px; font-size: 1.1rem; padding: 6px 12px; background: linear-gradient(90deg, #eef4ff 0%, transparent 100%); border-left: 3px solid #1a5490; }
+.lesson-content p { margin-bottom: 10px; line-height: 1.6; }
+.lesson-content ul { margin: 8px 0 12px 20px; }
+.lesson-content li { margin-bottom: 4px; }
+.lesson-content strong { color: #253a77; }
+.nav-buttons { margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee; }
+.problem { background: #fff; padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.problem h4 { color: #253a77; font-size: 0.9rem; margin-bottom: 6px; }
+.problem p { line-height: 1.5; }
+.problem textarea { width: 100%; min-height: 45px; margin-top: 6px; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+.answer-key { background: #e8f5e9; border-left: 3px solid #4a8c3a; padding: 8px 12px; margin-top: 8px; border-radius: 4px; font-size: 0.9rem; }
+.quiz-question { background: #fff; padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.quiz-question label { display: block; padding: 6px 10px; margin: 3px 0; background: #f0f4ff; border-radius: 4px; cursor: pointer; }
+.quiz-question label:hover { background: #dde5f5; }
+.quiz-question input[type=radio] { margin-right: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 12px 0;color:#888;font-size:0.78rem;">3rd Grade Math · enVision Topics 1-16</p>
+    <div id="sidebar-content"></div>
+    <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 0.75rem; color: #999;">
+      Progress: <span id="progress-text">0/16</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+        <a href="3a-won.html" class="summer-home-btn">← Back to Class</a>
+        <a href="msos-math-3-curriculum-map.html" class="summer-home-btn" style="background:#B45309;">📅 Curriculum Map</a>
+        <div class="topbar-logos">
+          <span class="logo-circle msos"><img src="msos-logo.svg" alt="MSOS Logo"></span>
+          <span class="logo-circle nui"><img src="nui-logo.png" alt="NUI Logo"></span>
+        </div>
+        <span id="topbar-title" style="font-weight:600;">Math 3 · enVisionMATH 2.0</span>
+      </div>
+      <div class="topbar-right">Math · Grade 3</div>
+    </div>
+    <div class="content">
+      <div id="home-screen" class="screen active">
+        <div id="units-grid" class="units-grid"></div>
+      </div>
+      <div id="lesson-screen" class="screen">
+        <button class="btn back-btn" onclick="showHome()">← Back to Units</button>
+        <div id="lesson-content" class="lesson-content"></div>
+        <div class="nav-buttons">
+          <button class="btn back-btn" onclick="showHome()">← Back</button>
+          <a id="yt-btn" class="btn" style="background:#c4302b;text-decoration:none;display:inline-block;" href="#" target="_blank" rel="noopener">📺 YouTube Tutorial</a>
+          <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+        </div>
+      </div>
+      <div id="worksheet-screen" class="screen">
+        <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+        <h2 style="margin: 20px 0;">📋 Worksheet</h2>
+        <div id="worksheet-content"></div>
+        <div class="nav-buttons">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back</button>
+          <button class="btn" onclick="checkWorksheet()">Check Answers</button>
+          <button class="btn" onclick="showQuiz()">Quiz →</button>
+        </div>
+      </div>
+      <div id="quiz-screen" class="screen">
+        <button class="btn back-btn" onclick="showWorksheet()">← Back to Worksheet</button>
+        <h2 style="margin: 20px 0;">📝 Quiz</h2>
+        <div style="background:#f0f4ff;padding:12px 16px;border-radius:8px;margin-bottom:15px;border-left:4px solid #1B3A8A;">
+          <label style="display:block;font-weight:600;color:#1B3A8A;margin-bottom:6px;">Student Name:</label>
+          <input type="text" id="student-name" placeholder="Type your full name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;font-size:14px;" />
+        </div>
+        <div id="quiz-content"></div>
+        <div class="nav-buttons">
+          <button class="btn back-btn" onclick="showWorksheet()">← Back</button>
+          <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+        </div>
+      </div>
+      <div id="certificate-screen" class="screen">
+        <div style="text-align:center;padding:40px;">
+          <h2 style="color:#253a77;">🎓 Certificate of Completion</h2>
+          <div id="cert-content"></div>
+          <button class="btn" onclick="showHome()" style="margin-top:20px;">← Back to Units</button>
+          <button class="btn" id="email-btn" onclick="emailResults()" style="background:#FFD100;color:#253a77;">📧 Email Results to Mrs. Won</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let completedUnits = {};
+
+const UNITS = [
+  { id:'t01-understand-mult', title:"Topic 1: Understand Multiplication", icon:'✖️', cc:'3.OA.1', q:'Q1', desc:"Multiplication as equal groups. Arrays and skip counting.", yt:"https://www.youtube.com/results?search_query=khan+academy+3rd+grade+multiplication+equal+groups" },
+  { id:'t02-mult-facts-patterns', title:"Topic 2: Multiplication Facts \u2014 Patterns", icon:'🔢', cc:'3.OA.7', q:'Q1', desc:"Facts for 2, 5, 9, 10 using patterns.", yt:"https://www.youtube.com/results?search_query=3rd+grade+multiplication+facts+patterns+2+5+9+10" },
+  { id:'t03-mult-facts-properties', title:"Topic 3: Multiplication Facts \u2014 Properties", icon:'🧮', cc:'3.OA.5', q:'Q1', desc:"Apply commutative, associative, distributive properties for 3, 4, 6, 7, 8.", yt:"https://www.youtube.com/results?search_query=khan+academy+distributive+property+multiplication+3rd+grade" },
+  { id:'t04-use-mult-divide', title:"Topic 4: Use Multiplication to Divide", icon:'➗', cc:'3.OA.6', q:'Q2', desc:"Division as unknown-factor multiplication. Fact families.", yt:"https://www.youtube.com/results?search_query=khan+academy+3rd+grade+division+as+unknown+factor" },
+  { id:'t05-fluent-mult-div', title:"Topic 5: Fluently Multiply &amp; Divide within 100", icon:'⚡', cc:'3.OA.7', q:'Q2', desc:"Fluent mastery of multiplication and division within 100.", yt:"https://www.youtube.com/results?search_query=3rd+grade+multiplication+division+facts+fluency" },
+  { id:'t06-area', title:"Topic 6: Connect Area to Multiplication", icon:'📐', cc:'3.MD.7', q:'Q2', desc:"Area of rectangles by counting squares and by L \u00d7 W.", yt:"https://www.youtube.com/results?search_query=khan+academy+area+rectangles+3rd+grade" },
+  { id:'t07-data', title:"Topic 7: Represent &amp; Interpret Data", icon:'📊', cc:'3.MD.3-4', q:'Q2', desc:"Bar graphs, picture graphs, and line plots.", yt:"https://www.youtube.com/results?search_query=3rd+grade+bar+graph+picture+graph+line+plot" },
+  { id:'t08-add-sub-strategies', title:"Topic 8: Add &amp; Subtract Strategies", icon:'➕', cc:'3.NBT.2', q:'Q3', desc:"Place-value strategies to add and subtract.", yt:"https://www.youtube.com/results?search_query=3rd+grade+addition+subtraction+strategies+place+value" },
+  { id:'t09-fluent-add-sub', title:"Topic 9: Fluently Add &amp; Subtract within 1,000", icon:'💯', cc:'3.NBT.2', q:'Q3', desc:"Fluent addition and subtraction within 1,000 using algorithms.", yt:"https://www.youtube.com/results?search_query=khan+academy+add+subtract+within+1000+3rd+grade" },
+  { id:'t10-mult-multiples-10', title:"Topic 10: Multiply by Multiples of 10", icon:'🔟', cc:'3.NBT.3', q:'Q3', desc:"Multiply single digits by 10, 20, 30, ..., 90.", yt:"https://www.youtube.com/results?search_query=khan+academy+multiply+multiples+of+10+3rd+grade" },
+  { id:'t11-word-problems', title:"Topic 11: Operations Word Problems", icon:'📝', cc:'3.OA.8', q:'Q3', desc:"Two-step word problems using all four operations.", yt:"https://www.youtube.com/results?search_query=3rd+grade+two+step+word+problems+all+operations" },
+  { id:'t15-2d-shapes', title:"Topic 15: Attributes of 2D Shapes", icon:'🔷', cc:'3.G.1', q:'Q3', desc:"Classify quadrilaterals by attributes.", yt:"https://www.youtube.com/results?search_query=3rd+grade+quadrilaterals+attributes+shapes" },
+  { id:'t12-fractions-intro', title:"Topic 12: Understand Fractions as Numbers", icon:'½', cc:'3.NF.1', q:'Q4', desc:"Fractions as parts of a whole; fractions on a number line.", yt:"https://www.youtube.com/results?search_query=khan+academy+introduction+fractions+3rd+grade" },
+  { id:'t13-fraction-equiv', title:"Topic 13: Fraction Equivalence &amp; Comparison", icon:'⚖️', cc:'3.NF.3', q:'Q4', desc:"Equivalent fractions; comparing fractions.", yt:"https://www.youtube.com/results?search_query=khan+academy+equivalent+fractions+3rd+grade" },
+  { id:'t14-time-cap-mass', title:"Topic 14: Time, Capacity, &amp; Mass", icon:'⏱️', cc:'3.MD.1-2', q:'Q4', desc:"Solve time, capacity (mL, L), and mass (g, kg) problems.", yt:"https://www.youtube.com/results?search_query=3rd+grade+time+capacity+mass+measurement" },
+  { id:'t16-perimeter', title:"Topic 16: Perimeter Problems", icon:'📏', cc:'3.MD.8', q:'Q4', desc:"Perimeter of polygons; missing side length.", yt:"https://www.youtube.com/results?search_query=khan+academy+perimeter+3rd+grade" },
+];
+
+const LESSONS = {
+  "t01-understand-mult": "<h2>✖️ Topic 1: Understand Multiplication</h2><h3>What is Multiplication?</h3><p>Multiplication is FAST ADDITION of equal groups. Instead of adding 4 + 4 + 4 + 4 + 4, we can write 5 × 4.</p><p>The two numbers are FACTORS. The answer is the PRODUCT.</p><h3>Equal Groups</h3><p>3 × 6 means 3 groups of 6 objects: 6 + 6 + 6 = 18.</p><h3>Arrays</h3><p>An ARRAY is a rectangle of dots in rows and columns. 3 rows × 6 columns = 18 dots.</p><h3>Skip Counting</h3><p>Skip count by the second factor: 6, 12, 18. That's 3 × 6 = 18.</p><h3>Try It</h3><p>Draw 4 groups of 5 dots. How many total? Skip count by 5s.</p>",
+  "t02-mult-facts-patterns": "<h2>🔢 Topic 2: Multiplication Facts — Patterns</h2><h3>Facts for 2</h3><p>×2 is DOUBLE. 2 × 7 = 14. Pattern: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20.</p><h3>Facts for 5</h3><p>×5 ends in 5 or 0. Pattern: 5, 10, 15, 20, 25, 30, 35, 40, 45, 50.</p><h3>Facts for 9</h3><p>×9 finger trick: hold up 10 fingers. For 9 × 4, fold down the 4th finger. Left of fold = 3 tens, right = 6 ones. Answer: 36.</p><p>Also: digits of 9 × n always add to 9. (9 × 4 = 36; 3 + 6 = 9.)</p><h3>Facts for 10</h3><p>×10: just add a 0. 10 × 7 = 70.</p><h3>Zero &amp; One</h3><p>Anything × 0 = 0. Anything × 1 = itself.</p>",
+  "t03-mult-facts-properties": "<h2>🧮 Topic 3: Multiplication Facts — Properties</h2><h3>Commutative Property</h3><p>4 × 7 = 7 × 4. Order of factors doesn't matter.</p><h3>Distributive Property (Break Apart)</h3><p>Break a hard fact into easier pieces.</p><p>8 × 7 = (5 × 7) + (3 × 7) = 35 + 21 = 56.</p><h3>Associative Property</h3><p>Group factors any way: 2 × 3 × 4 = (2 × 3) × 4 = 6 × 4 = 24.</p><h3>Facts for 3, 4, 6, 7, 8</h3><p>×3 = triple. ×4 = double + double. ×6 = 5 × n + n (add one group of n to your ×5 fact). ×8 = 4 × n doubled.</p><h3>Try It</h3><p>Solve 7 × 6 by breaking: (5 × 6) + (2 × 6) = 30 + 12 = 42.</p>",
+  "t04-use-mult-divide": "<h2>➗ Topic 4: Use Multiplication to Divide</h2><h3>What is Division?</h3><p>Division is EQUAL SHARING. 24 ÷ 4 asks: split 24 into 4 equal groups. Each group = 6.</p><h3>Division as Unknown-Factor</h3><p>24 ÷ 4 means: what × 4 = 24? Answer: 6.</p><p>Every division fact has a matching multiplication fact.</p><h3>Fact Families</h3><p>For 4, 6, 24: 4 × 6 = 24, 6 × 4 = 24, 24 ÷ 4 = 6, 24 ÷ 6 = 4.</p><h3>Vocabulary</h3><p>DIVIDEND ÷ DIVISOR = QUOTIENT.</p><h3>Two Kinds of Division</h3><p><strong>Sharing:</strong> 30 candies shared among 5 kids. Each gets 6.</p><p><strong>Grouping:</strong> 30 candies in bags of 5. How many bags? 6.</p>",
+  "t05-fluent-mult-div": "<h2>⚡ Topic 5: Fluent Multiplication &amp; Division within 100</h2><h3>Fluency Goals</h3><p>By end of Grade 3: know all products of two one-digit numbers by memory.</p><h3>Facts to Master</h3><p>0 × 0 through 10 × 10, and matching division facts.</p><h3>Fact Family Practice</h3><p>For every mult fact, know the 2 division facts. Example: 6 × 7 = 42 → 42 ÷ 6 = 7 and 42 ÷ 7 = 6.</p><h3>Missing-Factor Problems</h3><p>__ × 8 = 56. What is __? Since 7 × 8 = 56, answer is 7.</p><h3>Remainders (Preview)</h3><p>Not every division is exact. 25 ÷ 4 = 6 remainder 1 (because 6 × 4 = 24, and 25 − 24 = 1).</p>",
+  "t06-area": "<h2>📐 Topic 6: Connect Area to Multiplication</h2><h3>What is Area?</h3><p>Area = the amount of SPACE INSIDE a flat shape. Measured in SQUARE units.</p><h3>Counting Squares</h3><p>Cover a rectangle with 1-unit squares. Count them. That's the area.</p><h3>Area by Multiplication</h3><p><strong>Area = length × width.</strong></p><p>A rectangle 5 units by 3 units has area 5 × 3 = 15 square units.</p><h3>Why It Works</h3><p>The rectangle has 3 rows of 5 squares = 15 squares total. Area is an array.</p><h3>Composite Shapes</h3><p>L-shape: split into two rectangles. Area of each. Add them.</p><h3>Missing Side</h3><p>Area = 24, length = 6. Width = 24 ÷ 6 = 4.</p>",
+  "t07-data": "<h2>📊 Topic 7: Represent &amp; Interpret Data</h2><h3>Bar Graphs</h3><p>Bars compare categories. Bar height = the value. Choose a scale (1s, 2s, 5s, 10s).</p><h3>Picture Graphs</h3><p>Each picture stands for a value (e.g. one 🍎 = 4 apples). Multiply to find totals.</p><h3>Line Plots</h3><p>Mark X's above a number line to show how often each value happens.</p><h3>Parts of a Graph</h3><p>Every graph needs: title, axis labels, scale, and data.</p><h3>Ask Questions</h3><p>Which category has the most? The least? What is the difference? The total?</p>",
+  "t08-add-sub-strategies": "<h2>➕ Topic 8: Add &amp; Subtract Strategies</h2><h3>Place Value Break-Apart</h3><p>468 + 235 = (400 + 200) + (60 + 30) + (8 + 5) = 600 + 90 + 13 = 703.</p><h3>Compensation</h3><p>398 + 25: Add 400 + 25 = 425. Subtract the extra 2. Answer: 423.</p><h3>Counting On/Back</h3><p>530 − 175: count from 175 up to 530. 175 → 200 (+25); → 500 (+300); → 530 (+30). Total: 25 + 300 + 30 = 355.</p><h3>Estimate First</h3><p>Round each number to nearest 10 or 100 to estimate. Then compute exactly.</p><p>468 + 235 ≈ 470 + 240 = 710. Actual 703. Close!</p>",
+  "t09-fluent-add-sub": "<h2>💯 Topic 9: Fluent Add &amp; Subtract within 1,000</h2><h3>Column Addition</h3><p>Line up by place value. Add each column. Regroup if a column total ≥ 10.</p><h3>Column Subtraction</h3><p>Line up by place. Subtract each column. Borrow (regroup) from the next place if needed.</p><h3>Check Your Work</h3><p>Add to check subtraction: 468 − 275 = 193. Check: 193 + 275 = 468 ✓.</p><h3>Zero as Placeholder</h3><p>500 − 275: borrow from the 5 (hundreds place). Now 4 hundreds, 10 tens, 0 ones. Continue.</p><h3>Word Problems</h3><p>Read carefully. Identify what to find. Choose add or subtract. Solve. Check.</p>",
+  "t10-mult-multiples-10": "<h2>🔟 Topic 10: Multiply by Multiples of 10</h2><h3>Multiply by 10</h3><p>Rule: to multiply by 10, add a zero. 7 × 10 = 70. Every digit shifts one place LEFT.</p><h3>Multiply by 20, 30, 40, ..., 90</h3><p>Break into (single digit × 10). Example: 6 × 40 = 6 × 4 × 10 = 24 × 10 = 240.</p><h3>Practice</h3><p>5 × 60 = (5 × 6) × 10 = 30 × 10 = 300.</p><p>8 × 70 = (8 × 7) × 10 = 56 × 10 = 560.</p><h3>Multiply by 100, 1,000</h3><p>× 100 → add two zeros. × 1,000 → add three zeros.</p>",
+  "t11-word-problems": "<h2>📝 Topic 11: Operations Word Problems</h2><h3>Read the Whole Problem First</h3><p>Don't jump on the numbers. Read every sentence. Identify what's asked.</p><h3>Identify Given &amp; Unknown</h3><p>Write: WHAT I KNOW, WHAT I NEED.</p><h3>Choose Operations</h3><p><strong>Total</strong> → add. <strong>Difference</strong> → subtract. <strong>Groups</strong> → multiply. <strong>Share</strong> → divide.</p><h3>Two-Step Problems</h3><p><strong>Step 1:</strong> find a helper value. <strong>Step 2:</strong> use it to answer.</p><h3>Example</h3><p>\"A class has 6 rows of 5 desks. 8 kids are absent. How many students are here?\"</p><p>Step 1: 6 × 5 = 30 total desks. Step 2: 30 − 8 = 22 students present.</p><h3>Check Reasonableness</h3><p>Does the answer make sense? Not more than the total, not negative.</p>",
+  "t15-2d-shapes": "<h2>🔷 Topic 15: Attributes of 2D Shapes</h2><h3>Attributes</h3><p>Attributes describe a shape: number of sides, number of angles, right angles, parallel sides, equal sides.</p><h3>Quadrilaterals (4-sided shapes)</h3><p><strong>Square:</strong> 4 equal sides + 4 right angles.</p><p><strong>Rectangle:</strong> 4 right angles; opposite sides equal.</p><p><strong>Rhombus:</strong> 4 equal sides (angles not necessarily right).</p><p><strong>Parallelogram:</strong> 2 pairs of parallel sides.</p><p><strong>Trapezoid:</strong> exactly 1 pair of parallel sides.</p><h3>Hierarchy</h3><p>Every square is a rectangle. Every rectangle is a parallelogram.</p><h3>Non-Quadrilaterals</h3><p>Triangle (3 sides), pentagon (5), hexagon (6), octagon (8).</p>",
+  "t12-fractions-intro": "<h2>½ Topic 12: Understand Fractions as Numbers</h2><h3>What is a Fraction?</h3><p>A FRACTION shows part of a whole. Written as NUMERATOR / DENOMINATOR.</p><p>3/4 means \"3 of 4 equal parts.\" Numerator = 3 (parts you have). Denominator = 4 (total equal parts).</p><h3>Unit Fractions</h3><p>1/n is called a UNIT FRACTION. It's one piece of a whole cut into n equal parts.</p><h3>Fractions on a Number Line</h3><p>Divide the segment from 0 to 1 into equal ticks. Each tick is a unit fraction.</p><h3>Fractions of a Group</h3><p>Not just pizza slices — fractions describe groups too. 12 objects, 3 red → 3/12 red.</p><h3>Whole Numbers as Fractions</h3><p>1 = 2/2 = 3/3 = 4/4. Anything ÷ itself = 1.</p>",
+  "t13-fraction-equiv": "<h2>⚖️ Topic 13: Fraction Equivalence &amp; Comparison</h2><h3>Equivalent Fractions</h3><p>Two fractions are EQUIVALENT if they show the same amount.</p><p>1/2 = 2/4 = 3/6 = 4/8. Same amount, different form.</p><h3>Making Equivalents</h3><p>Multiply top and bottom by the same number.</p><p>2/3 = 2/3 × (3/3) = 6/9.</p><h3>Simplifying</h3><p>Divide top and bottom by the same number.</p><p>6/8 = 6/8 ÷ (2/2) = 3/4.</p><h3>Comparing Fractions</h3><p><strong>Same denominator:</strong> bigger numerator wins. 3/5 &gt; 2/5.</p><p><strong>Same numerator:</strong> smaller denominator wins. 1/2 &gt; 1/4.</p><p><strong>Different:</strong> convert to same denominator, then compare.</p>",
+  "t14-time-cap-mass": "<h2>⏱️ Topic 14: Time, Capacity, &amp; Mass</h2><h3>Time — Elapsed Time</h3><p>Elapsed = End − Start. Use a number line.</p><p>From 9:30 to 11:15: 9:30 + 1 hour = 10:30 + 1 hour = 11:30 (too far). Use 10:30 + 45 min = 11:15. So 1 hr + 45 min.</p><h3>Capacity — Liquid Volume</h3><p>Measure in <strong>milliliters (mL)</strong> and <strong>liters (L)</strong>.</p><p>1 L = 1,000 mL.</p><p>Reference: teaspoon ≈ 5 mL, juice box ≈ 200 mL, milk jug ≈ 4 L.</p><h3>Mass — How Heavy</h3><p>Measure in <strong>grams (g)</strong> and <strong>kilograms (kg)</strong>.</p><p>1 kg = 1,000 g.</p><p>Reference: paperclip ≈ 1 g, apple ≈ 100 g, textbook ≈ 1 kg.</p><h3>Solving Problems</h3><p>Add and subtract like normal, but keep units. Convert if needed.</p>",
+  "t16-perimeter": "<h2>📏 Topic 16: Perimeter Problems</h2><h3>What is Perimeter?</h3><p>PERIMETER = distance AROUND a shape. Add all sides.</p><h3>Rectangle</h3><p>P = 2(L + W). A rectangle 8 × 5 has perimeter 2(8+5) = 26.</p><h3>Square</h3><p>P = 4 × side. A square with side 7 has perimeter 28.</p><h3>Any Polygon</h3><p>Add all the sides. Triangle sides 3, 4, 5 → perimeter 12.</p><h3>Missing Side</h3><p>P = 20, and it's a rectangle with length 6. Find width.</p><p>2(6 + W) = 20 → 6 + W = 10 → W = 4.</p><h3>Perimeter vs Area</h3><p>Perimeter = distance around (linear units). Area = space inside (square units).</p><p>Two shapes can have the same perimeter but different area.</p>",
+};
+
+const WORKSHEETS = {
+  "t01-understand-mult": [{"q": "3 groups of 5 = ___", "answer": "15"}, {"q": "4 × 6 = ___", "answer": "24"}, {"q": "Skip count by 3s: 3, 6, __, __, __", "answer": "9, 12, 15"}, {"q": "How many in 5 × 4?", "answer": "20"}, {"q": "Array 3 rows × 8 cols = ___", "answer": "24"}, {"q": "2 groups of 9 = ___", "answer": "18"}, {"q": "Draw 4 groups of 3. Total?", "answer": "12"}, {"q": "What is 7 × 2?", "answer": "14"}, {"q": "8 groups of 5 = ___", "answer": "40"}, {"q": "Skip count by 4s: 4, 8, 12, __", "answer": "16"}, {"q": "Write 5 + 5 + 5 as multiplication.", "answer": "3 × 5 = 15"}, {"q": "Write 6 + 6 + 6 + 6 as multiplication.", "answer": "4 × 6 = 24"}, {"q": "A factor × factor = ?", "answer": "product"}, {"q": "What × 3 gives 12?", "answer": "4"}, {"q": "A row of 5 apples, 4 rows total. Apples?", "answer": "20"}, {"q": "6 × 2 = ___", "answer": "12"}, {"q": "3 × 9 = ___", "answer": "27"}, {"q": "How many dots in 5 rows of 3?", "answer": "15"}, {"q": "What multiplication is like 4 groups of 5?", "answer": "4 × 5 = 20"}, {"q": "Total of 5 groups of 6:", "answer": "30"}],
+  "t02-mult-facts-patterns": [{"q": "2 × 7 = ___", "answer": "14"}, {"q": "5 × 8 = ___", "answer": "40"}, {"q": "9 × 4 = ___", "answer": "36"}, {"q": "10 × 6 = ___", "answer": "60"}, {"q": "0 × 15 = ___", "answer": "0"}, {"q": "1 × 47 = ___", "answer": "47"}, {"q": "2 × 9 = ___", "answer": "18"}, {"q": "5 × 5 = ___", "answer": "25"}, {"q": "9 × 6 = ___", "answer": "54"}, {"q": "10 × 10 = ___", "answer": "100"}, {"q": "What is 2 × 12?", "answer": "24"}, {"q": "What is 5 × 9?", "answer": "45"}, {"q": "What is 9 × 9?", "answer": "81"}, {"q": "What is 10 × 8?", "answer": "80"}, {"q": "Fill in: 9 × __ = 63", "answer": "7"}, {"q": "Fill in: 5 × __ = 35", "answer": "7"}, {"q": "What × 2 = 16?", "answer": "8"}, {"q": "Digits of 9 × 4 add to what?", "answer": "9 (3+6)"}, {"q": "10 × 0 = ___", "answer": "0"}, {"q": "What is 1 × 100?", "answer": "100"}],
+  "t03-mult-facts-properties": [{"q": "4 × 7 = 7 × ? (property name)", "answer": "4 (commutative)"}, {"q": "8 × 7 = (5 × 7) + (3 × 7) = ___", "answer": "56"}, {"q": "2 × 3 × 4 = ___", "answer": "24"}, {"q": "6 × 7 = (5 × 7) + (1 × 7) = ___", "answer": "42"}, {"q": "8 × 6 = (4 × 6) + (4 × 6) = ___", "answer": "48"}, {"q": "3 × 8 = ___", "answer": "24"}, {"q": "4 × 8 = ___", "answer": "32"}, {"q": "7 × 6 = ___", "answer": "42"}, {"q": "8 × 8 = (4 × 8) + (4 × 8) = ___", "answer": "64"}, {"q": "7 × 7 = ___", "answer": "49"}, {"q": "6 × 6 = ___", "answer": "36"}, {"q": "7 × 8 = 8 × ___", "answer": "7"}, {"q": "Break 6 × 9 into (5×9)+(1×9) = ___", "answer": "54"}, {"q": "(3 × 4) × 2 = ___", "answer": "24"}, {"q": "Break 4 × 12 = (4×10)+(4×2) = ___", "answer": "48"}, {"q": "Which property: 5 × 6 × 2 = 5 × (6 × 2)?", "answer": "associative"}, {"q": "6 × 8 = ___", "answer": "48"}, {"q": "7 × 4 = ___", "answer": "28"}, {"q": "8 × 3 = ___", "answer": "24"}, {"q": "What is 6 × 6?", "answer": "36"}],
+  "t04-use-mult-divide": [{"q": "24 ÷ 4 = ___", "answer": "6"}, {"q": "30 ÷ 5 = ___", "answer": "6"}, {"q": "What × 4 = 32?", "answer": "8"}, {"q": "Fact family (3, 8, 24): write all 4.", "answer": "3×8=24, 8×3=24, 24÷3=8, 24÷8=3"}, {"q": "36 ÷ 6 = ___", "answer": "6"}, {"q": "40 ÷ 8 = ___", "answer": "5"}, {"q": "What × 7 = 42?", "answer": "6"}, {"q": "25 candies for 5 kids. Each?", "answer": "5"}, {"q": "20 apples in bags of 4. Bags?", "answer": "5"}, {"q": "Dividend of 30 ÷ 5 =", "answer": "30"}, {"q": "Divisor of 30 ÷ 5 =", "answer": "5"}, {"q": "Quotient of 30 ÷ 5 =", "answer": "6"}, {"q": "What × 9 = 63?", "answer": "7"}, {"q": "56 ÷ 8 = ___", "answer": "7"}, {"q": "27 ÷ 3 = ___", "answer": "9"}, {"q": "What × 6 = 48?", "answer": "8"}, {"q": "Fact family (5, 6, 30): all 4 facts:", "answer": "5×6=30, 6×5=30, 30÷5=6, 30÷6=5"}, {"q": "21 ÷ 7 = ___", "answer": "3"}, {"q": "54 ÷ 9 = ___", "answer": "6"}, {"q": "What × 8 = 72?", "answer": "9"}],
+  "t05-fluent-mult-div": [{"q": "7 × 6 = ___", "answer": "42"}, {"q": "8 × 9 = ___", "answer": "72"}, {"q": "42 ÷ 7 = ___", "answer": "6"}, {"q": "72 ÷ 9 = ___", "answer": "8"}, {"q": "What × 7 = 49?", "answer": "7"}, {"q": "25 ÷ 4 = ___ r ___", "answer": "6 r 1"}, {"q": "6 × 8 = ___", "answer": "48"}, {"q": "48 ÷ 6 = ___", "answer": "8"}, {"q": "What × 6 = 54?", "answer": "9"}, {"q": "23 ÷ 5 = ___ r ___", "answer": "4 r 3"}, {"q": "9 × 3 = ___", "answer": "27"}, {"q": "27 ÷ 9 = ___", "answer": "3"}, {"q": "8 × 7 = ___", "answer": "56"}, {"q": "56 ÷ 7 = ___", "answer": "8"}, {"q": "What × 8 = 64?", "answer": "8"}, {"q": "0 ÷ 5 = ___", "answer": "0"}, {"q": "7 ÷ 7 = ___", "answer": "1"}, {"q": "Any # ÷ 1 = ___", "answer": "itself"}, {"q": "8 × 6 = ___", "answer": "48"}, {"q": "36 ÷ 4 = ___", "answer": "9"}],
+  "t06-area": [{"q": "Area of 5 × 3 rectangle:", "answer": "15 sq units"}, {"q": "Area of 8 × 4 rectangle:", "answer": "32 sq units"}, {"q": "Area of 6 × 6 square:", "answer": "36 sq units"}, {"q": "Area 24, L = 6, W = ?", "answer": "4"}, {"q": "How many 1-ft tiles cover 7 × 5 floor?", "answer": "35"}, {"q": "Area of 9 × 4:", "answer": "36 sq units"}, {"q": "Area of L-shape: 3×4 + 2×5 =", "answer": "22 sq units"}, {"q": "Bigger area: 4×6 or 5×5?", "answer": "5×5 (25 &gt; 24)"}, {"q": "A room 10 × 12. Area?", "answer": "120 sq ft"}, {"q": "Area 45, L = 9, W = ?", "answer": "5"}, {"q": "Area 100, side = ? (square)", "answer": "10"}, {"q": "Area 63, L = 7, W = ?", "answer": "9"}, {"q": "Area 8 × 9 =", "answer": "72 sq units"}, {"q": "Split 6×7 into (6×5)+(6×2). Areas?", "answer": "30 + 12 = 42"}, {"q": "Which units for area?", "answer": "square units (sq ft, sq m, etc.)"}, {"q": "Area of 5 × 5 square:", "answer": "25 sq units"}, {"q": "Area of a 12 × 3 rectangle:", "answer": "36 sq units"}, {"q": "Area 6 × 8 =", "answer": "48"}, {"q": "Area 7 × 7 =", "answer": "49"}, {"q": "Area 10 × 10 =", "answer": "100"}],
+  "t07-data": [{"q": "Bar of height 8 on scale of 2s = value ___", "answer": "16"}, {"q": "Picture graph: 3 🍎 (each = 4). Total?", "answer": "12"}, {"q": "Line plot X's at 5,5,8,8,8,12. Mode?", "answer": "8"}, {"q": "Range of {40, 45, 50, 45, 42}:", "answer": "10"}, {"q": "A bar graph shows Mon 8, Tue 12, Wed 5. Total?", "answer": "25"}, {"q": "Difference between tallest and shortest of {5,8,12,15}?", "answer": "10"}, {"q": "Line plot has 3 X's at 4, 2 X's at 6. Total data?", "answer": "5"}, {"q": "Which is bigger: 2 × 4 (picture) or 15 (bar)?", "answer": "15"}, {"q": "A scale of 5s: bar height 6 = actual ___", "answer": "30"}, {"q": "Add data: {3, 5, 7, 5, 3}", "answer": "23"}, {"q": "Order small→large: {8, 3, 5, 12, 6}", "answer": "3, 5, 6, 8, 12"}, {"q": "Mode of {2, 3, 3, 5, 3, 6}:", "answer": "3"}, {"q": "What labels do bar graphs need?", "answer": "title, x-axis, y-axis, scale"}, {"q": "Best graph for how often each value appears:", "answer": "line plot"}, {"q": "Best graph for comparing categories:", "answer": "bar graph"}, {"q": "Line plot X above 7 means:", "answer": "one occurrence of 7"}, {"q": "Picture graph 5 stars (each=2) = ?", "answer": "10"}, {"q": "What is the range?", "answer": "max − min"}, {"q": "Bar heights: 4, 8, 6, 10. Sum?", "answer": "28"}, {"q": "Which day had most: bars Mon 5, Tue 9, Wed 4?", "answer": "Tuesday"}],
+  "t08-add-sub-strategies": [{"q": "468 + 235 = ___ (break apart)", "answer": "703"}, {"q": "398 + 25 = ___", "answer": "423"}, {"q": "530 − 175 = ___", "answer": "355"}, {"q": "Break 468 by place: ___", "answer": "400 + 60 + 8"}, {"q": "275 + 350 = ___", "answer": "625"}, {"q": "700 − 245 = ___", "answer": "455"}, {"q": "146 + 258 = ___", "answer": "404"}, {"q": "Estimate 468 + 235 by rounding to 10s:", "answer": "470 + 240 = 710"}, {"q": "620 − 195 = ___", "answer": "425"}, {"q": "350 + 275 = ___", "answer": "625"}, {"q": "999 + 1 = ___", "answer": "1,000"}, {"q": "645 − 320 = ___", "answer": "325"}, {"q": "Counting on: 275 → 500 needs ___", "answer": "225"}, {"q": "475 + 125 = ___", "answer": "600"}, {"q": "820 − 340 = ___", "answer": "480"}, {"q": "345 + 165 = ___", "answer": "510"}, {"q": "600 − 275 = ___", "answer": "325"}, {"q": "Estimate 675 − 348 (nearest 100):", "answer": "700 − 300 = 400"}, {"q": "145 + 138 = ___", "answer": "283"}, {"q": "490 − 165 = ___", "answer": "325"}],
+  "t09-fluent-add-sub": [{"q": "275 + 348 = ___", "answer": "623"}, {"q": "875 − 432 = ___", "answer": "443"}, {"q": "645 + 258 = ___", "answer": "903"}, {"q": "900 − 245 = ___", "answer": "655"}, {"q": "742 + 199 = ___", "answer": "941"}, {"q": "500 − 175 = ___", "answer": "325"}, {"q": "468 + 275 = ___", "answer": "743"}, {"q": "820 − 465 = ___", "answer": "355"}, {"q": "365 + 289 = ___", "answer": "654"}, {"q": "950 − 425 = ___", "answer": "525"}, {"q": "Check 468 − 275 by adding back:", "answer": "193 + 275 = 468 ✓"}, {"q": "184 + 236 = ___", "answer": "420"}, {"q": "750 − 285 = ___", "answer": "465"}, {"q": "605 − 178 = ___", "answer": "427"}, {"q": "298 + 456 = ___", "answer": "754"}, {"q": "800 − 258 = ___", "answer": "542"}, {"q": "647 + 253 = ___", "answer": "900"}, {"q": "505 − 267 = ___", "answer": "238"}, {"q": "378 + 245 = ___", "answer": "623"}, {"q": "810 − 435 = ___", "answer": "375"}],
+  "t10-mult-multiples-10": [{"q": "7 × 10 = ___", "answer": "70"}, {"q": "6 × 40 = ___", "answer": "240"}, {"q": "5 × 80 = ___", "answer": "400"}, {"q": "8 × 90 = ___", "answer": "720"}, {"q": "3 × 500 = ___", "answer": "1,500"}, {"q": "4 × 20 = ___", "answer": "80"}, {"q": "9 × 30 = ___", "answer": "270"}, {"q": "7 × 100 = ___", "answer": "700"}, {"q": "6 × 1,000 = ___", "answer": "6,000"}, {"q": "2 × 50 = ___", "answer": "100"}, {"q": "8 × 60 = ___", "answer": "480"}, {"q": "5 × 40 = ___", "answer": "200"}, {"q": "7 × 70 = ___", "answer": "490"}, {"q": "9 × 20 = ___", "answer": "180"}, {"q": "4 × 300 = ___", "answer": "1,200"}, {"q": "6 × 80 = ___", "answer": "480"}, {"q": "3 × 90 = ___", "answer": "270"}, {"q": "How many zeros in 7 × 100 answer?", "answer": "2"}, {"q": "How many zeros in 5 × 1,000?", "answer": "3"}, {"q": "8 × 40 = ___", "answer": "320"}],
+  "t11-word-problems": [{"q": "6 rows × 5 desks = ? Then − 8 absent = ___", "answer": "30 − 8 = 22"}, {"q": "A store sells 4 books for $6. 5 stores. Total revenue?", "answer": "$120"}, {"q": "A shipment: 8 boxes × 5 items. 12 broken. Left?", "answer": "40 − 12 = 28"}, {"q": "Ari has $50; spends $12 + $8. Left?", "answer": "$30"}, {"q": "12 kids each get 6 stickers. Total?", "answer": "72"}, {"q": "A garden 8 × 5 loses 6 flowers. Remaining?", "answer": "34"}, {"q": "25 apples in 5 baskets. Each basket has 3 more added. Total in one basket?", "answer": "8"}, {"q": "Class of 24 splits into groups of 4. Groups?", "answer": "6"}, {"q": "A team scores 8 pts × 5 quarters, then 12 bonus. Total?", "answer": "52"}, {"q": "Movie tickets: 7 × $8 = ? Then $10 popcorn added. Total?", "answer": "$66"}, {"q": "Library: 40 books; 15 checked out; 8 returned. Available?", "answer": "33"}, {"q": "Bake sale: 6 dozen cookies. Each dozen = 12. Total?", "answer": "72"}, {"q": "Party: 8 kids × 3 balloons each. 5 popped. Left?", "answer": "19"}, {"q": "A shelf has 5 rows × 8 books. 12 borrowed. Left?", "answer": "28"}, {"q": "A store: 100 apples; 45 sold Mon; 32 sold Tue. Left?", "answer": "23"}, {"q": "Bus: 9 rows × 4 seats. 12 empty. How many riders?", "answer": "24"}, {"q": "5 gift bags with 6 candies each. Give 2 bags to friend. Candies left?", "answer": "18"}, {"q": "Book: 240 pages; read 85 + 92. Left?", "answer": "63"}, {"q": "6 groups × 8 markers. 15 broken. Working?", "answer": "33"}, {"q": "Puzzle: 500 pieces; done 175 + 145. Left?", "answer": "180"}],
+  "t15-2d-shapes": [{"q": "A quadrilateral has ___ sides.", "answer": "4"}, {"q": "A square has ___ right angles.", "answer": "4"}, {"q": "A trapezoid has ___ pair(s) of parallel sides.", "answer": "1"}, {"q": "A parallelogram has ___ pairs of parallel sides.", "answer": "2"}, {"q": "A rhombus has ___ equal sides.", "answer": "4"}, {"q": "Every square is a ___", "answer": "rectangle"}, {"q": "A triangle has ___ sides.", "answer": "3"}, {"q": "A hexagon has ___ sides.", "answer": "6"}, {"q": "A pentagon has ___ sides.", "answer": "5"}, {"q": "True/false: every rectangle is a square.", "answer": "False"}, {"q": "True/false: every rhombus is a parallelogram.", "answer": "True"}, {"q": "A right angle looks like the letter:", "answer": "L"}, {"q": "A rectangle has ___ pairs of parallel sides.", "answer": "2"}, {"q": "What shape has 4 equal sides + 4 right angles?", "answer": "square"}, {"q": "What shape has 4 right angles, unequal sides?", "answer": "rectangle"}, {"q": "What shape has 4 equal sides, no right angles?", "answer": "rhombus"}, {"q": "An 8-sided shape:", "answer": "octagon"}, {"q": "Attributes of a shape:", "answer": "sides, angles, parallel sides"}, {"q": "How to test right angle:", "answer": "compare to corner of paper"}, {"q": "Number of sides in a quadrilateral:", "answer": "4"}],
+  "t12-fractions-intro": [{"q": "What is 1/4 of 8?", "answer": "2"}, {"q": "Write \"three-fourths\" as a fraction.", "answer": "3/4"}, {"q": "Numerator of 2/6:", "answer": "2"}, {"q": "Denominator of 2/6:", "answer": "6"}, {"q": "Shade 3 of 5 equal parts: fraction?", "answer": "3/5"}, {"q": "1/2 of 10:", "answer": "5"}, {"q": "1/3 of 9:", "answer": "3"}, {"q": "A pie in 8 pieces; 3 eaten. Fraction left?", "answer": "5/8"}, {"q": "12 objects; 3 red. Fraction red?", "answer": "3/12 = 1/4"}, {"q": "Which is a unit fraction: 1/5 or 3/5?", "answer": "1/5"}, {"q": "2/2 = ?", "answer": "1"}, {"q": "5/5 = ?", "answer": "1"}, {"q": "On a number line 0-1 divided into 4, 2nd tick is:", "answer": "2/4 = 1/2"}, {"q": "1/6 + 1/6 + 1/6 = ?", "answer": "3/6"}, {"q": "How many fourths in 1 whole?", "answer": "4"}, {"q": "A cake in 6 parts; 4 eaten. Fraction left?", "answer": "2/6 = 1/3"}, {"q": "Fraction shaded: 5 of 8 boxes:", "answer": "5/8"}, {"q": "Which is bigger piece: 1/3 or 1/6?", "answer": "1/3"}, {"q": "Whole = ? fraction of itself", "answer": "1 = n/n"}, {"q": "20 candies; 4 red. Fraction red?", "answer": "4/20 = 1/5"}],
+  "t13-fraction-equiv": [{"q": "1/2 = ?/4", "answer": "2/4"}, {"q": "1/2 = ?/6", "answer": "3/6"}, {"q": "2/3 = ?/9", "answer": "6/9"}, {"q": "Simplify 6/8:", "answer": "3/4"}, {"q": "Simplify 4/10:", "answer": "2/5"}, {"q": "Simplify 8/12:", "answer": "2/3"}, {"q": "Bigger: 3/5 or 2/5?", "answer": "3/5"}, {"q": "Bigger: 1/2 or 1/4?", "answer": "1/2"}, {"q": "Bigger: 2/3 or 3/4?", "answer": "3/4 (8/12 vs 9/12)"}, {"q": "Is 5/10 = 1/2?", "answer": "Yes"}, {"q": "Is 3/6 = 1/2?", "answer": "Yes"}, {"q": "2/4 in simplest form:", "answer": "1/2"}, {"q": "3/4 = ?/8", "answer": "6/8"}, {"q": "6/12 in simplest form:", "answer": "1/2"}, {"q": "Compare 1/3 vs 2/3 (same denom):", "answer": "2/3 bigger"}, {"q": "Compare 1/4 vs 1/3 (same num):", "answer": "1/3 bigger"}, {"q": "4/8 = ?/2", "answer": "1/2"}, {"q": "9/12 = ?/4", "answer": "3/4"}, {"q": "Simplify 10/15:", "answer": "2/3"}, {"q": "Which is bigger: 5/6 or 3/4?", "answer": "5/6 (10/12 vs 9/12)"}],
+  "t14-time-cap-mass": [{"q": "1 L = ___ mL", "answer": "1,000"}, {"q": "3 L = ___ mL", "answer": "3,000"}, {"q": "2,500 mL = ___ L", "answer": "2.5"}, {"q": "1 kg = ___ g", "answer": "1,000"}, {"q": "3 kg = ___ g", "answer": "3,000"}, {"q": "1,500 g = ___ kg", "answer": "1.5"}, {"q": "Elapsed 3:15 to 4:00:", "answer": "45 min"}, {"q": "Elapsed 9:30 to 11:15:", "answer": "1 hr 45 min"}, {"q": "2 hr = ___ min", "answer": "120"}, {"q": "90 min = ___ hr ___ min", "answer": "1 hr 30 min"}, {"q": "Add: 300 + 200 + 400 mL", "answer": "900 mL"}, {"q": "Add: 1 kg 500 g + 2 kg 300 g", "answer": "3 kg 800 g"}, {"q": "Which is heavier: 2 kg or 1,500 g?", "answer": "2 kg"}, {"q": "A juice box ≈ ___ mL", "answer": "200"}, {"q": "A textbook ≈ ___ kg", "answer": "1"}, {"q": "A milk jug ≈ ___ L", "answer": "4"}, {"q": "12:30 + 45 min = ___", "answer": "1:15"}, {"q": "From 8:00 AM to 3:15 PM = ___", "answer": "7 hr 15 min"}, {"q": "750 mL + 250 mL = ___", "answer": "1,000 mL or 1 L"}, {"q": "2 kg − 500 g = ___", "answer": "1 kg 500 g or 1,500 g"}],
+  "t16-perimeter": [{"q": "Rectangle 8 × 5 perim:", "answer": "26"}, {"q": "Square side 7 perim:", "answer": "28"}, {"q": "Triangle sides 3, 4, 5 perim:", "answer": "12"}, {"q": "P = 20, L = 6. W?", "answer": "4"}, {"q": "Rectangle 12 × 4 perim:", "answer": "32"}, {"q": "Pentagon 5 equal sides of 6 each. Perim?", "answer": "30"}, {"q": "Square perim 24, side?", "answer": "6"}, {"q": "Rectangle perim 30, L 10, W?", "answer": "5"}, {"q": "Hexagon 6 sides of 4. Perim?", "answer": "24"}, {"q": "Triangle 7, 8, 9. Perim?", "answer": "24"}, {"q": "A room 10 × 12. Perim?", "answer": "44"}, {"q": "Rectangle 15 × 3. Perim?", "answer": "36"}, {"q": "Square side 9. Perim?", "answer": "36"}, {"q": "Perim 40, square. Side?", "answer": "10"}, {"q": "Perim 20 rectangle, L 8, W?", "answer": "2"}, {"q": "Fencing around 6 × 9 garden:", "answer": "30"}, {"q": "Which is bigger perim: 4×6 or 5×5?", "answer": "4×6 (20 vs 20 — equal!)"}, {"q": "Perimeter units:", "answer": "linear (ft, cm, m)"}, {"q": "Area units:", "answer": "square (sq ft, sq m)"}, {"q": "L-shape sides 3,4,5,6,8,10. Perim?", "answer": "36"}],
+};
+
+const QUIZZES = {
+  "t01-understand-mult": [{"q": "3 groups of 5 = ___", "opts": ["8", "10", "12", "15"], "ans": 3}, {"q": "4 × 6 = ___", "opts": ["10", "20", "24", "30"], "ans": 2}, {"q": "5 × 4 = ___", "opts": ["9", "15", "20", "25"], "ans": 2}, {"q": "Skip count by 3s: 3, 6, 9, __", "opts": ["10", "11", "12", "13"], "ans": 2}, {"q": "Array 3 × 8 = ___", "opts": ["11", "24", "28", "32"], "ans": 1}, {"q": "What is 2 × 9?", "opts": ["11", "16", "18", "20"], "ans": 2}, {"q": "How many in 4 × 4?", "opts": ["8", "12", "16", "20"], "ans": 2}, {"q": "Skip count by 4s: 4, 8, __", "opts": ["10", "12", "14", "16"], "ans": 1}, {"q": "5 groups of 6 = ___", "opts": ["25", "28", "30", "35"], "ans": 2}, {"q": "A row of 5, 4 rows = ___", "opts": ["15", "18", "20", "25"], "ans": 2}, {"q": "A factor × factor = ?", "opts": ["sum", "product", "difference", "quotient"], "ans": 1}, {"q": "Write 4+4+4 as multiplication:", "opts": ["4×3", "4+3", "4-3", "12+3"], "ans": 0}, {"q": "6 × 3 = ___", "opts": ["12", "15", "18", "21"], "ans": 2}, {"q": "How many dots in 5 × 3?", "opts": ["12", "14", "15", "18"], "ans": 2}, {"q": "What × 4 = 12?", "opts": ["2", "3", "4", "5"], "ans": 1}],
+  "t02-mult-facts-patterns": [{"q": "2 × 7 = ___", "opts": ["9", "12", "14", "16"], "ans": 2}, {"q": "5 × 8 = ___", "opts": ["30", "35", "40", "45"], "ans": 2}, {"q": "9 × 4 = ___", "opts": ["32", "36", "40", "44"], "ans": 1}, {"q": "10 × 6 = ___", "opts": ["50", "55", "60", "65"], "ans": 2}, {"q": "0 × 15 = ___", "opts": ["0", "1", "15", "16"], "ans": 0}, {"q": "1 × 47 = ___", "opts": ["0", "1", "47", "48"], "ans": 2}, {"q": "What is 5 × 5?", "opts": ["15", "20", "25", "30"], "ans": 2}, {"q": "What is 9 × 9?", "opts": ["72", "80", "81", "90"], "ans": 2}, {"q": "What × 2 = 16?", "opts": ["6", "7", "8", "9"], "ans": 2}, {"q": "Fill in: 9 × __ = 63", "opts": ["6", "7", "8", "9"], "ans": 1}, {"q": "Digits of 9×4 add to:", "opts": ["7", "8", "9", "10"], "ans": 2}, {"q": "10 × 10 = ___", "opts": ["80", "90", "100", "110"], "ans": 2}, {"q": "5 × 9 = ___", "opts": ["40", "42", "45", "48"], "ans": 2}, {"q": "What × 5 = 45?", "opts": ["7", "8", "9", "10"], "ans": 2}, {"q": "2 × 12 = ___", "opts": ["22", "24", "26", "28"], "ans": 1}],
+  "t03-mult-facts-properties": [{"q": "6 × 8 = 8 × 6 is ___ property.", "opts": ["associative", "commutative", "distributive", "identity"], "ans": 1}, {"q": "7 × 8 = (5 × 8) + (2 × 8) = ___", "opts": ["48", "52", "56", "60"], "ans": 2}, {"q": "2 × 3 × 4 = ___", "opts": ["9", "18", "24", "30"], "ans": 2}, {"q": "6 × 9 = (5 × 9) + (1 × 9) = ___", "opts": ["48", "52", "54", "58"], "ans": 2}, {"q": "8 × 6 = (4 × 6) + (4 × 6) = ___", "opts": ["42", "44", "46", "48"], "ans": 3}, {"q": "7 × 7 = ___", "opts": ["42", "47", "49", "56"], "ans": 2}, {"q": "6 × 6 = ___", "opts": ["30", "32", "36", "42"], "ans": 2}, {"q": "8 × 8 = ___", "opts": ["56", "60", "64", "72"], "ans": 2}, {"q": "4 × 8 = ___", "opts": ["24", "28", "32", "36"], "ans": 2}, {"q": "7 × 6 = ___", "opts": ["36", "42", "48", "52"], "ans": 1}, {"q": "(3×4)×2 = ___", "opts": ["18", "21", "24", "27"], "ans": 2}, {"q": "Break 4×12=(4×10)+(4×2)=?", "opts": ["40", "44", "48", "52"], "ans": 2}, {"q": "6 × 8 = ___", "opts": ["42", "48", "54", "56"], "ans": 1}, {"q": "What × 7 = 63?", "opts": ["6", "7", "8", "9"], "ans": 2}, {"q": "8 × 3 = ___", "opts": ["21", "24", "27", "30"], "ans": 1}],
+  "t04-use-mult-divide": [{"q": "24 ÷ 4 = ___", "opts": ["4", "5", "6", "7"], "ans": 2}, {"q": "30 ÷ 5 = ___", "opts": ["5", "6", "7", "8"], "ans": 1}, {"q": "What × 4 = 32?", "opts": ["6", "7", "8", "9"], "ans": 2}, {"q": "Fact family (3,8,24) has 4 facts. Which is one?", "opts": ["3+8", "8-3", "8×3", "3-8"], "ans": 2}, {"q": "36 ÷ 6 = ___", "opts": ["4", "5", "6", "7"], "ans": 2}, {"q": "40 ÷ 8 = ___", "opts": ["4", "5", "6", "7"], "ans": 1}, {"q": "What × 7 = 42?", "opts": ["5", "6", "7", "8"], "ans": 1}, {"q": "25 candies for 5 kids. Each?", "opts": ["4", "5", "6", "7"], "ans": 1}, {"q": "Dividend of 30÷5:", "opts": ["5", "6", "30", "35"], "ans": 2}, {"q": "Divisor of 30÷5:", "opts": ["5", "6", "30", "35"], "ans": 0}, {"q": "Quotient of 30÷5:", "opts": ["5", "6", "30", "35"], "ans": 1}, {"q": "What × 9 = 63?", "opts": ["6", "7", "8", "9"], "ans": 1}, {"q": "21 ÷ 7 = ___", "opts": ["2", "3", "4", "5"], "ans": 1}, {"q": "54 ÷ 9 = ___", "opts": ["5", "6", "7", "8"], "ans": 1}, {"q": "What × 8 = 72?", "opts": ["7", "8", "9", "10"], "ans": 2}],
+  "t05-fluent-mult-div": [{"q": "7 × 6 = ___", "opts": ["36", "42", "48", "54"], "ans": 1}, {"q": "8 × 9 = ___", "opts": ["64", "72", "80", "81"], "ans": 1}, {"q": "42 ÷ 7 = ___", "opts": ["5", "6", "7", "8"], "ans": 1}, {"q": "72 ÷ 9 = ___", "opts": ["7", "8", "9", "10"], "ans": 1}, {"q": "25 ÷ 4 r ___", "opts": ["0", "1", "2", "3"], "ans": 1}, {"q": "6 × 8 = ___", "opts": ["42", "48", "52", "56"], "ans": 1}, {"q": "What × 6 = 54?", "opts": ["7", "8", "9", "10"], "ans": 2}, {"q": "27 ÷ 9 = ___", "opts": ["2", "3", "4", "5"], "ans": 1}, {"q": "8 × 7 = ___", "opts": ["48", "52", "56", "60"], "ans": 2}, {"q": "56 ÷ 7 = ___", "opts": ["6", "7", "8", "9"], "ans": 2}, {"q": "0 ÷ 5 = ___", "opts": ["0", "1", "5", "undefined"], "ans": 0}, {"q": "7 ÷ 7 = ___", "opts": ["0", "1", "7", "undefined"], "ans": 1}, {"q": "Any ÷ 1 = ___", "opts": ["1", "0", "itself", "undefined"], "ans": 2}, {"q": "36 ÷ 4 = ___", "opts": ["7", "8", "9", "10"], "ans": 2}, {"q": "8 × 8 = ___", "opts": ["56", "60", "64", "72"], "ans": 2}],
+  "t06-area": [{"q": "Area of 5 × 3:", "opts": ["8", "15", "20", "25"], "ans": 1}, {"q": "Area of 8 × 4:", "opts": ["12", "24", "32", "40"], "ans": 2}, {"q": "Area 24, L=6, W=?", "opts": ["3", "4", "5", "6"], "ans": 1}, {"q": "Area of 6×6 square:", "opts": ["12", "30", "36", "42"], "ans": 2}, {"q": "Tiles for 7×5 floor:", "opts": ["12", "30", "35", "40"], "ans": 2}, {"q": "Area 9×4:", "opts": ["24", "30", "36", "40"], "ans": 2}, {"q": "L-shape 3×4 + 2×5:", "opts": ["20", "22", "24", "26"], "ans": 1}, {"q": "Which bigger: 4×6 or 5×5?", "opts": ["4×6", "5×5", "equal", "can't say"], "ans": 1}, {"q": "Room 10×12:", "opts": ["112", "120", "122", "130"], "ans": 1}, {"q": "Area 45, L=9, W=?", "opts": ["4", "5", "6", "7"], "ans": 1}, {"q": "Area 100 square. Side?", "opts": ["8", "9", "10", "12"], "ans": 2}, {"q": "Area 63, L=7. W?", "opts": ["7", "8", "9", "10"], "ans": 2}, {"q": "Area 8×9:", "opts": ["64", "68", "72", "80"], "ans": 2}, {"q": "Area units:", "opts": ["linear", "square", "cubic", "none"], "ans": 1}, {"q": "Area 5×5:", "opts": ["15", "20", "25", "30"], "ans": 2}],
+  "t07-data": [{"q": "Bar height 8, scale 2 = ___", "opts": ["8", "12", "16", "20"], "ans": 2}, {"q": "Picture graph 3 apples each=4. Total:", "opts": ["7", "10", "12", "15"], "ans": 2}, {"q": "Mode of {5,5,8,8,8,12}:", "opts": ["5", "8", "10", "12"], "ans": 1}, {"q": "Range {40,45,50,45,42}:", "opts": ["5", "8", "10", "12"], "ans": 2}, {"q": "Bar sum {8,12,5}:", "opts": ["20", "22", "25", "28"], "ans": 2}, {"q": "Bar scale 5, height 6 = ___", "opts": ["15", "25", "30", "35"], "ans": 2}, {"q": "Line plot X above 7 means:", "opts": ["1 occurrence", "7 total", "no data", "none"], "ans": 0}, {"q": "Best for categories:", "opts": ["line plot", "bar graph", "list", "no graph"], "ans": 1}, {"q": "Best for frequency:", "opts": ["bar graph", "line plot", "table", "none"], "ans": 1}, {"q": "Order small→large {8,3,5}:", "opts": ["3,5,8", "8,5,3", "5,3,8", "8,3,5"], "ans": 0}, {"q": "Bar heights: 4,8,6,10. Sum:", "opts": ["24", "28", "30", "32"], "ans": 1}, {"q": "Mon 5, Tue 9, Wed 4. Most?", "opts": ["Mon", "Tue", "Wed", "equal"], "ans": 1}, {"q": "Range = max − ___", "opts": ["mid", "min", "avg", "mode"], "ans": 1}, {"q": "Picture 5 stars each=2 = ___", "opts": ["5", "7", "10", "12"], "ans": 2}, {"q": "Graph needs (choose all): title, axis, scale", "opts": ["none", "some", "all", "extra"], "ans": 2}],
+  "t08-add-sub-strategies": [{"q": "468 + 235 = ___", "opts": ["693", "703", "713", "723"], "ans": 1}, {"q": "398 + 25 = ___", "opts": ["403", "413", "423", "433"], "ans": 2}, {"q": "530 − 175 = ___", "opts": ["355", "365", "375", "385"], "ans": 0}, {"q": "Break 468: 400+60+___", "opts": ["4", "6", "8", "10"], "ans": 2}, {"q": "275 + 350 = ___", "opts": ["615", "625", "635", "645"], "ans": 1}, {"q": "700 − 245 = ___", "opts": ["445", "455", "465", "475"], "ans": 1}, {"q": "146 + 258 = ___", "opts": ["394", "404", "414", "424"], "ans": 1}, {"q": "Est. 468 + 235 to 10s:", "opts": ["690", "700", "710", "720"], "ans": 2}, {"q": "620 − 195 = ___", "opts": ["415", "425", "435", "445"], "ans": 1}, {"q": "350 + 275 = ___", "opts": ["615", "625", "635", "645"], "ans": 1}, {"q": "999 + 1 = ___", "opts": ["999", "1,000", "1,001", "1,100"], "ans": 1}, {"q": "645 − 320 = ___", "opts": ["315", "325", "335", "345"], "ans": 1}, {"q": "475 + 125 = ___", "opts": ["590", "600", "610", "620"], "ans": 1}, {"q": "820 − 340 = ___", "opts": ["470", "480", "490", "500"], "ans": 1}, {"q": "145 + 138 = ___", "opts": ["273", "283", "293", "303"], "ans": 1}],
+  "t09-fluent-add-sub": [{"q": "275 + 348 = ___", "opts": ["603", "613", "623", "633"], "ans": 2}, {"q": "875 − 432 = ___", "opts": ["433", "443", "453", "463"], "ans": 1}, {"q": "645 + 258 = ___", "opts": ["893", "903", "913", "923"], "ans": 1}, {"q": "900 − 245 = ___", "opts": ["635", "645", "655", "665"], "ans": 2}, {"q": "742 + 199 = ___", "opts": ["921", "931", "941", "951"], "ans": 2}, {"q": "500 − 175 = ___", "opts": ["315", "325", "335", "345"], "ans": 1}, {"q": "468 + 275 = ___", "opts": ["733", "743", "753", "763"], "ans": 1}, {"q": "820 − 465 = ___", "opts": ["345", "355", "365", "375"], "ans": 1}, {"q": "365 + 289 = ___", "opts": ["644", "654", "664", "674"], "ans": 1}, {"q": "950 − 425 = ___", "opts": ["515", "525", "535", "545"], "ans": 1}, {"q": "184 + 236 = ___", "opts": ["410", "420", "430", "440"], "ans": 1}, {"q": "750 − 285 = ___", "opts": ["455", "465", "475", "485"], "ans": 1}, {"q": "605 − 178 = ___", "opts": ["417", "427", "437", "447"], "ans": 1}, {"q": "298 + 456 = ___", "opts": ["744", "754", "764", "774"], "ans": 1}, {"q": "800 − 258 = ___", "opts": ["532", "542", "552", "562"], "ans": 1}],
+  "t10-mult-multiples-10": [{"q": "7 × 10 = ___", "opts": ["17", "70", "77", "700"], "ans": 1}, {"q": "6 × 40 = ___", "opts": ["46", "240", "400", "460"], "ans": 1}, {"q": "5 × 80 = ___", "opts": ["85", "300", "400", "500"], "ans": 2}, {"q": "8 × 90 = ___", "opts": ["720", "800", "810", "980"], "ans": 0}, {"q": "3 × 500 = ___", "opts": ["1,200", "1,500", "2,500", "3,500"], "ans": 1}, {"q": "4 × 20 = ___", "opts": ["60", "80", "100", "120"], "ans": 1}, {"q": "9 × 30 = ___", "opts": ["240", "270", "300", "330"], "ans": 1}, {"q": "7 × 100 = ___", "opts": ["70", "700", "7,000", "70,000"], "ans": 1}, {"q": "6 × 1,000 = ___", "opts": ["600", "6,000", "60,000", "600,000"], "ans": 1}, {"q": "8 × 60 = ___", "opts": ["420", "480", "520", "560"], "ans": 1}, {"q": "5 × 40 = ___", "opts": ["180", "200", "220", "240"], "ans": 1}, {"q": "7 × 70 = ___", "opts": ["420", "490", "560", "630"], "ans": 1}, {"q": "4 × 300 = ___", "opts": ["1,000", "1,200", "1,400", "1,600"], "ans": 1}, {"q": "3 × 90 = ___", "opts": ["240", "270", "300", "330"], "ans": 1}, {"q": "8 × 40 = ___", "opts": ["280", "320", "360", "400"], "ans": 1}],
+  "t11-word-problems": [{"q": "6×5 desks; 8 absent. Present?", "opts": ["20", "22", "24", "26"], "ans": 1}, {"q": "12 kids × 6 stickers each:", "opts": ["66", "72", "78", "84"], "ans": 1}, {"q": "Ari $50; spent $12+$8. Left?", "opts": ["$26", "$28", "$30", "$32"], "ans": 2}, {"q": "8×5 apples; 12 broken. Left?", "opts": ["26", "28", "30", "32"], "ans": 1}, {"q": "Class 24 in groups of 4. Groups?", "opts": ["4", "5", "6", "7"], "ans": 2}, {"q": "7×$8 tickets + $10 popcorn:", "opts": ["$56", "$60", "$66", "$70"], "ans": 2}, {"q": "40 books; 15 out; 8 back. Avail?", "opts": ["31", "33", "35", "37"], "ans": 1}, {"q": "6 dozen cookies = ___", "opts": ["60", "66", "72", "78"], "ans": 2}, {"q": "8×3 balloons; 5 popped. Left?", "opts": ["17", "19", "21", "23"], "ans": 1}, {"q": "5×8 books; 12 out. Left?", "opts": ["26", "28", "30", "32"], "ans": 1}, {"q": "100 apples; 45+32 sold. Left?", "opts": ["21", "23", "25", "27"], "ans": 1}, {"q": "9×4 seats; 12 empty. Riders?", "opts": ["22", "24", "26", "28"], "ans": 1}, {"q": "5 bags × 6 candies; give 2 bags. Left?", "opts": ["16", "18", "20", "22"], "ans": 1}, {"q": "240 pgs; read 85+92. Left?", "opts": ["61", "63", "65", "67"], "ans": 1}, {"q": "6×8 markers; 15 broken. Working?", "opts": ["31", "33", "35", "37"], "ans": 1}],
+  "t15-2d-shapes": [{"q": "Quadrilateral has ___ sides:", "opts": ["3", "4", "5", "6"], "ans": 1}, {"q": "Square right angles:", "opts": ["2", "3", "4", "5"], "ans": 2}, {"q": "Trapezoid parallel side pairs:", "opts": ["0", "1", "2", "3"], "ans": 1}, {"q": "Parallelogram parallel side pairs:", "opts": ["0", "1", "2", "3"], "ans": 2}, {"q": "Rhombus equal sides:", "opts": ["3", "4", "5", "none"], "ans": 1}, {"q": "Every square is a:", "opts": ["triangle", "rectangle", "pentagon", "hexagon"], "ans": 1}, {"q": "Triangle sides:", "opts": ["3", "4", "5", "6"], "ans": 0}, {"q": "Hexagon sides:", "opts": ["4", "5", "6", "7"], "ans": 2}, {"q": "Pentagon sides:", "opts": ["4", "5", "6", "7"], "ans": 1}, {"q": "Every rectangle is a square:", "opts": ["True", "False", "sometimes", "always"], "ans": 1}, {"q": "Rhombus is a parallelogram:", "opts": ["True", "False", "never", "maybe"], "ans": 0}, {"q": "Right angle:", "opts": ["acute", "L-shape", "curved", "wide"], "ans": 1}, {"q": "Rectangle parallel side pairs:", "opts": ["0", "1", "2", "3"], "ans": 2}, {"q": "4 equal sides + 4 right angles:", "opts": ["triangle", "square", "pentagon", "circle"], "ans": 1}, {"q": "8-sided shape:", "opts": ["pentagon", "hexagon", "septagon", "octagon"], "ans": 3}],
+  "t12-fractions-intro": [{"q": "1/4 of 8 = ___", "opts": ["1", "2", "3", "4"], "ans": 1}, {"q": "Three-fourths as fraction:", "opts": ["3/4", "4/3", "3/8", "1/3"], "ans": 0}, {"q": "Numerator of 2/6:", "opts": ["2", "4", "6", "8"], "ans": 0}, {"q": "Denominator of 2/6:", "opts": ["2", "4", "6", "8"], "ans": 2}, {"q": "Shade 3 of 5. Fraction?", "opts": ["3/5", "5/3", "2/5", "3/8"], "ans": 0}, {"q": "1/2 of 10:", "opts": ["3", "4", "5", "6"], "ans": 2}, {"q": "1/3 of 9:", "opts": ["1", "2", "3", "4"], "ans": 2}, {"q": "Pie 8 pieces; 3 eaten. Left?", "opts": ["3/8", "5/8", "6/8", "7/8"], "ans": 1}, {"q": "Unit fraction:", "opts": ["1/5", "3/5", "5/5", "5/1"], "ans": 0}, {"q": "5/5 =", "opts": ["0", "1", "5", "undefined"], "ans": 1}, {"q": "How many fourths in 1 whole?", "opts": ["2", "3", "4", "5"], "ans": 2}, {"q": "Cake 6 parts; 4 eaten. Left?", "opts": ["1/6", "2/6", "3/6", "4/6"], "ans": 1}, {"q": "Bigger: 1/3 or 1/6?", "opts": ["1/3", "1/6", "equal", "can't say"], "ans": 0}, {"q": "20 candies; 4 red. Fraction red?", "opts": ["4/16", "4/20", "4/24", "4/4"], "ans": 1}, {"q": "12 things; 3 red. Fraction red?", "opts": ["3/12", "3/9", "3/15", "1/12"], "ans": 0}],
+  "t13-fraction-equiv": [{"q": "1/2 = ?/4", "opts": ["1", "2", "3", "4"], "ans": 1}, {"q": "1/2 = ?/6", "opts": ["2", "3", "4", "5"], "ans": 1}, {"q": "2/3 = ?/9", "opts": ["4", "5", "6", "7"], "ans": 2}, {"q": "Simplify 6/8:", "opts": ["1/2", "2/3", "3/4", "5/6"], "ans": 2}, {"q": "Simplify 4/10:", "opts": ["1/5", "2/5", "3/5", "4/5"], "ans": 1}, {"q": "Bigger: 3/5 or 2/5?", "opts": ["3/5", "2/5", "equal", "can't"], "ans": 0}, {"q": "Bigger: 1/2 or 1/4?", "opts": ["1/2", "1/4", "equal", "can't"], "ans": 0}, {"q": "Bigger: 2/3 or 3/4?", "opts": ["2/3", "3/4", "equal", "can't"], "ans": 1}, {"q": "5/10 = 1/2?", "opts": ["Yes", "No", "sometimes", "can't"], "ans": 0}, {"q": "2/4 simplified:", "opts": ["1/2", "2/4", "1/4", "1/3"], "ans": 0}, {"q": "3/4 = ?/8", "opts": ["5", "6", "7", "8"], "ans": 1}, {"q": "6/12 simplified:", "opts": ["1/2", "1/3", "2/3", "3/4"], "ans": 0}, {"q": "Same-num compare 1/4 vs 1/3:", "opts": ["1/4", "1/3", "equal", "can't"], "ans": 1}, {"q": "4/8 = ?/2", "opts": ["1", "2", "3", "4"], "ans": 0}, {"q": "Bigger 5/6 or 3/4?", "opts": ["5/6", "3/4", "equal", "can't"], "ans": 0}],
+  "t14-time-cap-mass": [{"q": "1 L = ___ mL", "opts": ["10", "100", "1,000", "10,000"], "ans": 2}, {"q": "2,500 mL = ___ L", "opts": ["0.25", "2.5", "25", "250"], "ans": 1}, {"q": "1 kg = ___ g", "opts": ["10", "100", "1,000", "10,000"], "ans": 2}, {"q": "3 kg = ___ g", "opts": ["300", "3,000", "30,000", "300,000"], "ans": 1}, {"q": "Elapsed 3:15 to 4:00:", "opts": ["15", "30", "45", "60"], "ans": 2}, {"q": "Elapsed 9:30 to 11:15:", "opts": ["1h", "1h 15", "1h 45", "2h"], "ans": 2}, {"q": "2 hr = ___ min", "opts": ["30", "60", "90", "120"], "ans": 3}, {"q": "Add 300+200+400 mL:", "opts": ["800", "900", "1,000", "1,100"], "ans": 1}, {"q": "Heavier 2 kg or 1,500 g?", "opts": ["2 kg", "1,500 g", "equal", "can't"], "ans": 0}, {"q": "Juice box ≈ ___ mL", "opts": ["20", "200", "2,000", "20,000"], "ans": 1}, {"q": "Textbook ≈ ___ kg", "opts": ["0.1", "1", "10", "100"], "ans": 1}, {"q": "Milk jug ≈ ___ L", "opts": ["0.4", "4", "40", "400"], "ans": 1}, {"q": "12:30 + 45 min:", "opts": ["1:00", "1:15", "1:30", "1:45"], "ans": 1}, {"q": "90 min = ___", "opts": ["1h", "1h 15", "1h 30", "2h"], "ans": 2}, {"q": "750+250 mL:", "opts": ["1,000", "1,050", "1,100", "1,500"], "ans": 0}],
+  "t16-perimeter": [{"q": "Rect 8×5 perim:", "opts": ["20", "24", "26", "30"], "ans": 2}, {"q": "Square side 7 perim:", "opts": ["21", "24", "28", "32"], "ans": 2}, {"q": "Triangle 3+4+5:", "opts": ["8", "10", "12", "15"], "ans": 2}, {"q": "P=20, L=6, W=?", "opts": ["3", "4", "5", "6"], "ans": 1}, {"q": "Rect 12×4 perim:", "opts": ["28", "32", "36", "40"], "ans": 1}, {"q": "Pentagon 5×6:", "opts": ["20", "25", "30", "35"], "ans": 2}, {"q": "Square perim 24, side:", "opts": ["5", "6", "7", "8"], "ans": 1}, {"q": "Rect perim 30, L=10, W=?", "opts": ["3", "5", "7", "10"], "ans": 1}, {"q": "Hexagon sides 4:", "opts": ["20", "24", "28", "32"], "ans": 1}, {"q": "Triangle 7,8,9:", "opts": ["20", "22", "24", "26"], "ans": 2}, {"q": "Room 10×12 perim:", "opts": ["40", "44", "48", "52"], "ans": 1}, {"q": "Rect 15×3:", "opts": ["30", "32", "34", "36"], "ans": 3}, {"q": "Square side 9:", "opts": ["32", "34", "36", "40"], "ans": 2}, {"q": "Perim 40 square. Side:", "opts": ["8", "10", "12", "14"], "ans": 1}, {"q": "Perim units:", "opts": ["linear", "square", "cubic", "none"], "ans": 0}],
+};
+
+let currentUnit = null;
+let lastQuizResults = null;
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = UNITS.map(u => `
+    <div class="unit-card" onclick="showLesson('${u.id}')">
+      <div class="unit-icon">${u.icon}</div>
+      <div class="unit-cc">${u.q} · ${u.cc}</div>
+      <div class="unit-title">${u.title}</div>
+      <div class="unit-desc">${u.desc}</div>
+    </div>
+  `).join('');
+  // Sidebar
+  let sbHTML = '';
+  let lastQ = '';
+  UNITS.forEach(u => {
+    if (u.q !== lastQ) {
+      sbHTML += `<div class="sidebar-quarter">${u.q}</div>`;
+      lastQ = u.q;
+    }
+    const done = completedUnits[u.id] ? 'completed' : '';
+    sbHTML += `<div class="sidebar-unit ${done}" onclick="showLesson('${u.id}')">${u.icon} ${u.title}</div>`;
+  });
+  document.getElementById('sidebar-content').innerHTML = sbHTML;
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = done + '/' + UNITS.length;
+}
+
+function showHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  renderHome();
+}
+
+function showLesson(uid) {
+  currentUnit = uid;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('lesson-content').innerHTML = LESSONS[uid] || '<p>Lesson coming soon.</p>';
+  // Wire up YouTube button
+  const unit = UNITS.find(u => u.id === uid);
+  const ytBtn = document.getElementById('yt-btn');
+  if (unit && unit.yt) {
+    ytBtn.href = unit.yt;
+    ytBtn.style.display = 'inline-block';
+  } else {
+    ytBtn.style.display = 'none';
+  }
+}
+
+function showWorksheet() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const ws = WORKSHEETS[currentUnit] || [];
+  let html = '';
+  ws.forEach((p, idx) => {
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><textarea id="ans-${idx}" placeholder="Your answer..."></textarea></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function checkWorksheet() {
+  const ws = WORKSHEETS[currentUnit] || [];
+  let html = '';
+  ws.forEach((p, idx) => {
+    const user = document.getElementById(`ans-${idx}`).value;
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><div class="answer-key"><strong>Answer:</strong> ${p.answer}</div><p><strong>Your answer:</strong> ${user || '(no answer)'}</p></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function showQuiz() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  const q = QUIZZES[currentUnit] || [];
+  let html = '';
+  q.forEach((qq, idx) => {
+    html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${qq.q}</p>`;
+    qq.opts.forEach((opt, i) => {
+      html += `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function submitQuiz() {
+  const q = QUIZZES[currentUnit] || [];
+  const name = (document.getElementById('student-name')?.value || '').trim();
+  let score = 0;
+  const breakdown = [];
+  q.forEach((qq, idx) => {
+    const sel = document.querySelector(`input[name="q${idx}"]:checked`);
+    const si = sel ? parseInt(sel.value) : -1;
+    const ok = si === qq.ans;
+    if (ok) score++;
+    breakdown.push({ n: idx+1, question: qq.q, studentAnswer: si >= 0 ? qq.opts[si] : '(no answer)', correctAnswer: qq.opts[qq.ans], correct: ok });
+  });
+  const pct = Math.round((score / q.length) * 100);
+  completedUnits[currentUnit] = true;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('certificate-screen').classList.add('active');
+  const unit = UNITS.find(u => u.id === currentUnit);
+  lastQuizResults = { studentName: name, unitTitle: unit ? unit.title : currentUnit, score, total: q.length, pct, breakdown };
+  document.getElementById('cert-content').innerHTML = `
+    <p style="font-size:1.1rem;margin:16px 0;"><strong>${name || 'Student'}</strong></p>
+    <p>completed <strong>${unit ? unit.title : currentUnit}</strong></p>
+    <p style="font-size:1.4rem;color:${pct >= 70 ? '#4a8c3a' : '#c62828'};margin:16px 0;"><strong>${score} / ${q.length} correct (${pct}%)</strong></p>`;
+}
+
+function emailResults() {
+  if (!lastQuizResults) return;
+  const r = lastQuizResults;
+  const body = `Hello Mrs. Won,%0D%0A%0D%0A${r.studentName || 'A student'} completed the ${r.unitTitle} quiz.%0D%0A%0D%0AScore: ${r.score}/${r.total} (${r.pct}%%)%0D%0A%0D%0AThank you.`;
+  window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=ewon@starofthesea.org&su=${encodeURIComponent(r.unitTitle + ' Quiz Result')}&body=${body}`;
+}
+
+renderHome();
+</script>
+</body>
+</html>

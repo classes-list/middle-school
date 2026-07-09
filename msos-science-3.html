@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mary, Star of the Sea — 3rd Grade Science</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #e6f4ea 0%, #f8f9fa 100%); color: #253a77; min-height: 100vh; }
+.container { display: flex; min-height: 100vh; }
+.sidebar { width: 300px; background: #0f5132; color: #fff; padding: 24px 20px; overflow-y: auto; }
+.sidebar h2 { color: #FFD100; font-size: 1.05rem; }
+.sidebar-quarter { margin-top: 20px; padding-top: 10px; border-top: 1px solid #1a6b45; color: #FFD100; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.sidebar-unit { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: 4px 0; background: #1a6b45; border-radius: 6px; cursor: pointer; transition: all 0.15s; font-size: 0.88rem; }
+.sidebar-unit:hover { background: #FFD100; color: #253a77; }
+.sidebar-unit.completed { background: #4a8c3a; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: #fff; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #eee; flex-wrap: wrap; gap: 10px; }
+.topbar-logos { display: flex; gap: 10px; }
+.logo-circle { width: 46px; height: 46px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(37,58,119,0.15); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+.logo-circle img { display: block; }
+.logo-circle.msos img { height: 100%; width: auto; }
+.logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+.logo-circle.msos { background: #1a2a4a; }
+.summer-home-btn { background: #0f5132; color: #fff; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 0.85rem; }
+.summer-home-btn:hover { background: #084526; }
+.topbar-right { color: #666; font-size: 0.85rem; font-weight: 600; }
+.content { flex: 1; padding: 24px; overflow-y: auto; }
+.screen { display: none; }
+.screen.active { display: block; }
+.units-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.unit-card { background: #fff; padding: 22px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; border-left: 4px solid #0f5132; }
+.unit-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+.unit-icon { font-size: 2rem; margin-bottom: 6px; }
+.unit-title { font-weight: 700; color: #0f5132; font-size: 1rem; margin-bottom: 4px; line-height: 1.2; }
+.unit-cc { font-size: 0.72rem; color: #7a5f00; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.unit-desc { font-size: 0.85rem; color: #666; line-height: 1.4; }
+.btn { background: #0f5132; color: #fff; padding: 10px 16px; text-decoration: none; border-radius: 6px; font-weight: 700; border: none; cursor: pointer; font-size: 0.9rem; margin-right: 8px; margin-bottom: 8px; }
+.btn:hover { background: #084526; }
+.back-btn { background: #6b7280; }
+.back-btn:hover { background: #4b5563; }
+.lesson-content h2 { color: #0f5132; margin-bottom: 12px; }
+.lesson-content h3 { color: #1a6b45; margin: 16px 0 6px; font-size: 1.1rem; padding: 6px 12px; background: linear-gradient(90deg, #e6f4ea 0%, transparent 100%); border-left: 3px solid #0f5132; }
+.lesson-content p { margin-bottom: 10px; line-height: 1.6; }
+.lesson-content ul, .lesson-content ol { margin: 8px 0 12px 20px; }
+.lesson-content li { margin-bottom: 4px; }
+.lesson-content strong { color: #0f5132; }
+.nav-buttons { margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee; }
+.handout-card { background: #fff; padding: 22px; border-radius: 10px; border-left: 5px solid #B8860B; margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.handout-card h3 { color: #B8860B; margin-bottom: 4px; }
+.handout-mission { background: #fffbea; padding: 10px 14px; border-radius: 6px; margin: 10px 0; font-style: italic; color: #333; }
+.handout-steps { padding-left: 20px; margin: 10px 0; }
+.handout-steps li { margin-bottom: 6px; }
+.handout-reflect { background: #e6f4ea; padding: 10px 14px; border-radius: 6px; margin-top: 10px; }
+.handout-reflect ol { padding-left: 20px; }
+.problem { background: #fff; padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.problem h4 { color: #0f5132; font-size: 0.9rem; margin-bottom: 6px; }
+.problem p { line-height: 1.5; }
+.problem textarea { width: 100%; min-height: 45px; margin-top: 6px; padding: 6px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; }
+.answer-key { background: #e6f4ea; border-left: 3px solid #0f5132; padding: 8px 12px; margin-top: 8px; border-radius: 4px; font-size: 0.9rem; }
+.quiz-question { background: #fff; padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.quiz-question label { display: block; padding: 6px 10px; margin: 3px 0; background: #e6f4ea; border-radius: 4px; cursor: pointer; }
+.quiz-question label:hover { background: #cde6d5; }
+.quiz-question input[type=radio] { margin-right: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2><p style="margin:0 0 12px 0;color:#c8d5ce;font-size:0.78rem;">3rd Grade Science · NGSS + Hawaiiana</p>
+    <div id="sidebar-content"></div>
+    <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #444; font-size: 0.75rem; color: #c8d5ce;">
+      Progress: <span id="progress-text">0/8</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+        <a href="3a-won.html" class="summer-home-btn">← Back to Class</a>
+        <a href="msos-science-3-curriculum-map.html" class="summer-home-btn" style="background:#B45309;">📅 Curriculum Map</a>
+        <div class="topbar-logos">
+          <span class="logo-circle msos"><img src="msos-logo.svg" alt="MSOS Logo"></span>
+          <span class="logo-circle nui"><img src="nui-logo.png" alt="NUI Logo"></span>
+        </div>
+        <span id="topbar-title" style="font-weight:600;">Science 3 · NGSS + Hawaiiana</span>
+      </div>
+      <div class="topbar-right">Science · Grade 3</div>
+    </div>
+    <div class="content">
+      <div id="home-screen" class="screen active">
+        <div id="units-grid" class="units-grid"></div>
+      </div>
+      <div id="lesson-screen" class="screen">
+        <button class="btn back-btn" onclick="showHome()">← Back to Units</button>
+        <div id="lesson-content" class="lesson-content"></div>
+        <div class="nav-buttons">
+          <button class="btn back-btn" onclick="showHome()">← Back</button>
+          <button class="btn" onclick="showLab()">🔬 Lab Activity</button>
+          <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+        </div>
+      </div>
+      <div id="lab-screen" class="screen">
+        <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+        <h2 style="margin: 20px 0; color: #0f5132;">🔬 Lab Activity</h2>
+        <div id="lab-content"></div>
+        <div class="nav-buttons">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+          <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+        </div>
+      </div>
+      <div id="worksheet-screen" class="screen">
+        <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back to Lesson</button>
+        <h2 style="margin: 20px 0; color: #0f5132;">📋 Worksheet</h2>
+        <div id="worksheet-content"></div>
+        <div class="nav-buttons">
+          <button class="btn back-btn" onclick="showLesson(currentUnit)">← Back</button>
+          <button class="btn" onclick="checkWorksheet()">Check Answers</button>
+          <button class="btn" onclick="showQuiz()">Quiz →</button>
+        </div>
+      </div>
+      <div id="quiz-screen" class="screen">
+        <button class="btn back-btn" onclick="showWorksheet()">← Back to Worksheet</button>
+        <h2 style="margin: 20px 0; color: #0f5132;">📝 Quiz</h2>
+        <div style="background:#e6f4ea;padding:12px 16px;border-radius:8px;margin-bottom:15px;border-left:4px solid #0f5132;">
+          <label style="display:block;font-weight:600;color:#0f5132;margin-bottom:6px;">Student Name:</label>
+          <input type="text" id="student-name" placeholder="Type your full name" style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;font-size:14px;" />
+        </div>
+        <div id="quiz-content"></div>
+        <div class="nav-buttons">
+          <button class="btn back-btn" onclick="showWorksheet()">← Back</button>
+          <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+        </div>
+      </div>
+      <div id="certificate-screen" class="screen">
+        <div style="text-align:center;padding:40px;">
+          <h2 style="color:#0f5132;">🎓 Certificate of Completion</h2>
+          <div id="cert-content"></div>
+          <button class="btn" onclick="showHome()" style="margin-top:20px;">← Back to Units</button>
+          <button class="btn" id="email-btn" onclick="emailResults()" style="background:#FFD100;color:#0f5132;">📧 Email Results to Mrs. Won</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let completedUnits = {};
+
+const UNITS = [
+  { id:'q1-sci-method', title:"Scientific Method", icon:'🔬', cc:'Q1 · Engineering & Tech', q:'Q1', desc:"Ask questions, form a hypothesis, test, and draw conclusions." },
+  { id:'q1-eng-design', title:"Engineering Design & Technology", icon:'⚙️', cc:'Q1 · Engineering & Tech', q:'Q1', desc:"Design prototypes, test them, and improve using the engineering design process." },
+  { id:'q2-forces-motion', title:"Forces & Motion", icon:'🏎️', cc:'Q2 · 3-PS2', q:'Q2', desc:"Push, pull, gravity, and magnets \u2014 what makes things move." },
+  { id:'q2-simple-machines', title:"Simple Machines & Friction", icon:'🔧', cc:'Q2 · 3-PS2', q:'Q2', desc:"Levers, ramps, wheels, and pulleys. How friction affects motion." },
+  { id:'q3-life-cycles', title:"Life Cycles", icon:'🦋', cc:'Q3 · 3-LS1', q:'Q3', desc:"How plants and animals grow, reproduce, and die." },
+  { id:'q3-inherited-traits', title:"Inherited Traits", icon:'👨‍👩‍👧', cc:'Q3 · 3-LS3', q:'Q3', desc:"Traits passed from parents to offspring. Learned vs inherited." },
+  { id:'q3-hawaiian-eco', title:"Hawaiian Ecosystems (Hawaiiana Unit)", icon:'🌺', cc:'Q3 · 3-LS2, 3-LS4', q:'Q3', desc:"Native Hawaiian plants and animals. Endemic species and their habitats." },
+  { id:'q4-weather', title:"Weather Impacts", icon:'🌦️', cc:'Q4 · 3-ESS2, 3-ESS3', q:'Q4', desc:"Weather patterns, forecasting, storms, and how weather shapes our lives." },
+];
+
+const LESSONS = {
+  "q1-sci-method": "<h2>🔬 Scientific Method</h2><h3>What is the Scientific Method?</h3><p>The scientific method is how scientists find answers to their questions. It has 6 steps.</p><h3>The 6 Steps</h3><ol><li><strong>Question:</strong> What do you want to find out?</li><li><strong>Hypothesis:</strong> A smart, testable prediction of what will happen.</li><li><strong>Materials:</strong> What do you need for the experiment?</li><li><strong>Procedure:</strong> Step-by-step plan.</li><li><strong>Data:</strong> Record everything you observe. Measurements, counts, notes.</li><li><strong>Conclusion:</strong> Look at your data. Did the hypothesis hold up?</li></ol><h3>Fair Tests</h3><p>Change ONE thing at a time. Keep everything else the same. Do MULTIPLE trials.</p><h3>Vocabulary</h3><ul><li><strong>Observation</strong> — what you notice with your senses</li><li><strong>Inference</strong> — an explanation based on observation</li><li><strong>Data</strong> — numbers or notes you record</li><li><strong>Variable</strong> — the thing you change</li></ul><h3>🎮 PhET Interactive Simulation</h3><p><a href=\"https://phet.colorado.edu/sims/html/balancing-act/latest/balancing-act_en.html\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#6b46c1;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;\">⚖️ Balancing Act →</a></p><p style=\"font-size:0.9rem;color:#555;font-style:italic;margin-top:6px;\">Practice the scientific method: form a hypothesis about which side will tip, test it, and record your results.</p>",
+  "q1-eng-design": "<h2>⚙️ Engineering Design &amp; Technology</h2><h3>What is Engineering?</h3><p>Engineering is designing solutions to problems using science and math.</p><h3>The Engineering Design Process (6 Steps)</h3><ol><li><strong>Ask:</strong> What is the problem?</li><li><strong>Imagine:</strong> Brainstorm many ideas.</li><li><strong>Plan:</strong> Choose the best idea. Sketch it.</li><li><strong>Create:</strong> Build the prototype.</li><li><strong>Test:</strong> Does it work?</li><li><strong>Improve:</strong> Fix weaknesses.</li></ol><h3>What is Technology?</h3><p>Technology is anything humans make to solve a problem. Not just phones — a pencil is technology, a spoon is technology, a chair is technology.</p><h3>Iteration = Improvement</h3><p>Engineers rarely get it right on the first try. Failure teaches lessons. Version 2 is always better.</p><h3>Real-World Examples</h3><p>Skyscrapers, airplanes, medicine, water systems, and toys — all designed by engineers.</p><h3>🎮 PhET Interactive Simulation</h3><p><a href=\"https://phet.colorado.edu/sims/html/circuit-construction-kit-dc/latest/circuit-construction-kit-dc_en.html\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#6b46c1;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;\">🔌 Circuit Construction Kit →</a></p><p style=\"font-size:0.9rem;color:#555;font-style:italic;margin-top:6px;\">Design and test electrical circuits. Iterate to make bulbs brighter or motors spin faster — real engineering in action.</p>",
+  "q2-forces-motion": "<h2>🏎️ Forces &amp; Motion</h2><h3>What is a Force?</h3><p>A FORCE is a push or a pull. Forces make things move, stop, or change direction.</p><h3>Motion</h3><p>MOTION is a change in position. If an object is not moving, it is at rest.</p><h3>Speed</h3><p>SPEED = how far / how long. Fast = covers more distance in the same time.</p><h3>Gravity</h3><p>GRAVITY is a pull toward the Earth. It's why things fall down. It's what keeps you on the ground.</p><h3>Magnets</h3><p>Magnets have a NORTH and SOUTH pole. Opposite poles ATTRACT. Same poles REPEL.</p><p>Magnets only pull certain metals: iron, steel, nickel, cobalt.</p><h3>Balanced &amp; Unbalanced Forces</h3><p>Balanced = forces cancel; object stays still. Unbalanced = one wins; object moves.</p><h3>Vocabulary</h3><ul><li><strong>Force</strong> — a push or a pull</li><li><strong>Motion</strong> — change in position</li><li><strong>Gravity</strong> — pull toward Earth</li><li><strong>Magnetism</strong> — attraction between magnets and certain metals</li></ul><h3>🎮 PhET Interactive Simulation</h3><p><a href=\"https://phet.colorado.edu/sims/html/forces-and-motion-basics/latest/forces-and-motion-basics_en.html\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#6b46c1;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;\">🎯 Forces and Motion: Basics →</a></p><p style=\"font-size:0.9rem;color:#555;font-style:italic;margin-top:6px;\">Play tug-of-war, push objects with different forces, and watch friction slow things down. Perfect for exploring balanced vs unbalanced forces.</p>",
+  "q2-simple-machines": "<h2>🔧 Simple Machines &amp; Friction</h2><h3>Six Simple Machines</h3><ul><li><strong>Lever</strong> — a bar on a pivot (see-saw, crowbar)</li><li><strong>Wheel &amp; Axle</strong> — a wheel on a rod (car wheel, doorknob)</li><li><strong>Pulley</strong> — a wheel with a rope (flagpole)</li><li><strong>Inclined Plane</strong> — a ramp (wheelchair ramp)</li><li><strong>Wedge</strong> — a splitting tool (axe, knife)</li><li><strong>Screw</strong> — a twisted inclined plane (jar lid)</li></ul><h3>What Simple Machines Do</h3><p>Simple machines make work easier — they change the size or direction of a force.</p><h3>Friction</h3><p>FRICTION is a force that SLOWS moving objects when their surfaces rub. Rough surfaces have MORE friction. Smooth surfaces have LESS.</p><h3>Reducing Friction</h3><p>Oil, wax, or wheels reduce friction. Ice has almost no friction — that's why you slip.</p><h3>Increasing Friction</h3><p>Rubber tires, gripped shoes, and sandpaper INCREASE friction (helpful for grip and braking).</p><h3>🎮 Interactive Resources</h3><p><a href=\"https://edheads.org/game-page/simple-machines-interactive-educational-game/\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#0f5132;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;margin-right:6px;margin-bottom:6px;\">🕹️ Edheads Simple Machines Game →</a> <a href=\"https://phet.colorado.edu/sims/html/balancing-act/latest/balancing-act_en.html\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#6b46c1;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;margin-right:6px;margin-bottom:6px;\">⚖️ PhET Balancing Act (Lever) →</a> <a href=\"https://phet.colorado.edu/sims/html/friction/latest/friction_en.html\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#6b46c1;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;margin-right:6px;margin-bottom:6px;\">🔥 PhET Friction →</a></p><p style=\"font-size:0.9rem;color:#555;font-style:italic;margin-top:6px;\">Try Edheads to spot simple machines in a house. Use PhET Balancing Act as a lever exploration and PhET Friction to see how surfaces heat up as they rub.</p>",
+  "q3-life-cycles": "<h2>🦋 Life Cycles</h2><h3>What is a Life Cycle?</h3><p>Every living thing has a LIFE CYCLE: the stages it goes through from birth to death.</p><h3>Butterfly Life Cycle (Complete Metamorphosis)</h3><p><strong>Egg → Caterpillar (larva) → Chrysalis (pupa) → Adult butterfly.</strong></p><p>Metamorphosis = big change in body shape.</p><h3>Frog Life Cycle</h3><p><strong>Egg → Tadpole → Froglet → Adult frog.</strong> Tadpoles live in water and breathe with gills. Adult frogs breathe with lungs.</p><h3>Chicken Life Cycle</h3><p><strong>Egg → Chick → Adult chicken.</strong> No metamorphosis — the chick just grows.</p><h3>Plant Life Cycle</h3><p><strong>Seed → Sprout → Plant → Flower → New seeds.</strong></p><h3>What Living Things Need</h3><p>Food, water, air, shelter, and space.</p>",
+  "q3-inherited-traits": "<h2>👨‍👩‍👧 Inherited Traits</h2><h3>What is a Trait?</h3><p>A TRAIT is a feature of a living thing — its eye color, height, hair color, or leaf shape.</p><h3>Inherited vs Learned</h3><p><strong>INHERITED:</strong> Passed from parents to offspring. Examples: eye color, dimples, tongue-rolling.</p><p><strong>LEARNED:</strong> Not passed on. You have to learn them. Examples: riding a bike, reading, speaking Spanish.</p><h3>DNA &amp; Genes</h3><p>Instructions for inherited traits live in DNA, in every cell of your body. Genes are pieces of DNA.</p><h3>Traits in Plants</h3><p>Plants inherit traits too — flower color, leaf shape, height.</p><h3>Why Siblings Look Different</h3><p>Every child gets a different combination of genes from mom and dad. That's why siblings look similar but not identical.</p><h3>Vocabulary</h3><ul><li><strong>Trait</strong> — a feature of a living thing</li><li><strong>Inherited</strong> — passed from parents</li><li><strong>Learned</strong> — gained through practice or experience</li><li><strong>DNA</strong> — life’s instructions in every cell</li></ul><h3>🎮 PhET Interactive Simulation</h3><p><a href=\"https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_en.html\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#6b46c1;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;\">🐰 Natural Selection →</a></p><p style=\"font-size:0.9rem;color:#555;font-style:italic;margin-top:6px;\">Watch how bunny fur color (an inherited trait) affects survival in different environments. See which traits get passed on.</p>",
+  "q3-hawaiian-eco": "<h2>🌺 Hawaiian Ecosystems (Hawaiiana Unit)</h2><h3>Hawai‘i is Special</h3><p>Hawai‘i is the most isolated island chain on Earth. Many plants and animals here are ENDEMIC — found ONLY in Hawai‘i.</p><h3>Native Hawaiian Plants</h3><ul><li><strong>Koa</strong> — a large tree used for canoes and building</li><li><strong>ʻōhiʻa lehua</strong> — a flowering tree important to the forest</li><li><strong>Kukui</strong> — the state tree; oil for light and healing</li></ul><h3>Native Hawaiian Animals</h3><ul><li><strong>Nēnē</strong> (Hawaiian goose) — the state bird</li><li><strong>Honu</strong> (green sea turtle) — sacred; endangered</li><li><strong>Monk seal</strong> (ʻīlio holo i ka uaua) — critically endangered</li><li><strong>Honeycreepers</strong> — colorful native birds, many endangered</li></ul><h3>Threats to Native Species</h3><p>Invasive species (mongoose, cane toads, feral pigs), habitat loss, and climate change threaten native life.</p><h3>Malama ʻĀina</h3><p>Mālama ʻĀina means \"care for the land.\" Hawaiians have practiced sustainable land care for centuries.</p><h3>Ecosystems in Hawai‘i</h3><p>Reef · Rainforest · Coastal · Dry forest · Alpine (Mauna Kea)</p><h3>🎮 PhET Interactive Simulation</h3><p><a href=\"https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_en.html\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#6b46c1;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;\">🌿 Natural Selection →</a></p><p style=\"font-size:0.9rem;color:#555;font-style:italic;margin-top:6px;\">Explore how species adapt to their environment. Try adding wolves as predators — mirrors how invasive species change Hawaiian ecosystems.</p>",
+  "q4-weather": "<h2>🌦️ Weather Impacts</h2><h3>What is Weather?</h3><p>WEATHER is what's happening in the sky right now: temperature, wind, rain, sun, clouds. It changes every day.</p><h3>Weather vs Climate</h3><p>WEATHER = day-to-day. CLIMATE = the typical pattern over many years.</p><h3>Weather Tools</h3><ul><li><strong>Thermometer</strong> — temperature</li><li><strong>Rain gauge</strong> — rainfall</li><li><strong>Anemometer</strong> — wind speed</li><li><strong>Barometer</strong> — air pressure</li></ul><h3>The Water Cycle</h3><p>Evaporation → Condensation → Precipitation → Collection. The sun powers it.</p><h3>Clouds</h3><p><strong>Cumulus</strong> — fluffy, fair weather. <strong>Stratus</strong> — flat gray layers. <strong>Cirrus</strong> — thin, high, wispy.</p><h3>Storms</h3><p>Thunderstorms, hurricanes, tornadoes, blizzards. Each has different dangers.</p><h3>Weather in Hawai‘i</h3><p>Two seasons: kau (May-October, warm/dry) and hoʻoilo (November-April, cooler/wet). Trade winds are steady from the northeast.</p><h3>Staying Safe</h3><p>Watch forecasts. Have an emergency kit. Know evacuation routes.</p><h3>🎮 PhET Interactive Simulation</h3><p><a href=\"https://phet.colorado.edu/sims/html/greenhouse-effect/latest/greenhouse-effect_en.html\" target=\"_blank\" rel=\"noopener\" style=\"display:inline-block;background:#6b46c1;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:700;\">🌡️ The Greenhouse Effect →</a></p><p style=\"font-size:0.9rem;color:#555;font-style:italic;margin-top:6px;\">Explore how the sun&#39;s energy warms Earth. Adjust greenhouse gases and watch the temperature change. Great intro to climate.</p>",
+};
+
+const LABS = {
+  "q1-sci-method": {"title": "Bounce Ball Investigation", "mission": "Which ball bounces highest?", "steps": ["Choose 3 different balls (tennis, rubber, ping-pong).", "Write your hypothesis.", "Drop each ball from the SAME height (100 cm).", "Measure how high each bounces. Do 5 trials per ball.", "Compute averages. Which won?"], "deliverable": "Lab notebook with data table and conclusion.", "reflect": ["Was your hypothesis right?", "What could make this test fairer?"]},
+  "q1-eng-design": {"title": "Paper Tower Challenge", "mission": "Build the tallest paper tower.", "steps": ["Get 5 sheets of paper, 30 cm of tape.", "Sketch 3 possible tower designs.", "Pick one. Build it in 10 minutes.", "Measure the height.", "Redesign and rebuild. Was v2 taller?"], "deliverable": "Sketches + heights + improvement notes.", "reflect": ["What made v2 better?", "What would v3 look like?"]},
+  "q2-forces-motion": {"title": "Toy Car Track Test", "mission": "Which surface lets a car roll farthest?", "steps": ["Set up a ramp about 30 cm tall.", "Roll a toy car onto CARPET. Measure distance.", "Repeat on wood floor.", "Repeat on a smooth book.", "Rank surfaces from best to worst rolling."], "deliverable": "Data table with 3 surfaces + distances.", "reflect": ["Why did some surfaces let it roll farther?", "What is friction?"]},
+  "q2-simple-machines": {"title": "Ramp Lifting Lab", "mission": "Show how a ramp makes lifting easier.", "steps": ["Weigh a book on a scale. Note its weight.", "Lift it straight up 30 cm. How hard was it?", "Now use a ramp (angle a book on a stack).", "Slide it up. Easier?", "Explain why using words “inclined plane.”"], "deliverable": "Notes comparing lifting vs sliding.", "reflect": ["Why does a ramp help?", "Name 3 places you see ramps."]},
+  "q3-life-cycles": {"title": "Butterfly Life Cycle Poster", "mission": "Illustrate a life cycle.", "steps": ["Pick an animal: butterfly, frog, or chicken.", "Sketch each stage in order.", "Label the stages.", "Write 1 sentence describing each stage.", "Compare with a classmate’s different animal."], "deliverable": "A poster showing all life-cycle stages.", "reflect": ["What is metamorphosis?", "Which stage takes longest?"]},
+  "q3-inherited-traits": {"title": "Class Trait Survey", "mission": "Survey inherited traits in your class.", "steps": ["Pick 3 traits: eye color, dimples, tongue-rolling.", "Ask each classmate. Record with tally marks.", "Total each trait.", "Which trait was most common?", "Which is inherited vs learned?"], "deliverable": "Survey chart with totals.", "reflect": ["Why do we look like our parents?", "Would identical twins match on every trait?"]},
+  "q3-hawaiian-eco": {"title": "Native Species Report", "mission": "Research a native Hawaiian species.", "steps": ["Pick a native species: nēnē, honu, monk seal, koa, or ʻōhiʻa lehua.", "Find: habitat, diet, why endangered.", "Draw a picture.", "Write 3 facts.", "What can we do to protect it?"], "deliverable": "Species report page with drawing + facts.", "reflect": ["Why is Hawai‘i unique?", "How can we mālama ʻĀina?"]},
+  "q4-weather": {"title": "5-Day Weather Journal", "mission": "Track weather at home for 5 days.", "steps": ["Each morning at 8 AM: record temperature.", "Note cloud type (cumulus, stratus, cirrus, none).", "Record precipitation if any.", "Wind: calm, breezy, or windy?", "After 5 days, make a bar graph of temperatures."], "deliverable": "5-day weather log + temperature bar graph.", "reflect": ["Is Hawai‘i in kau or hoʻoilo?", "What patterns did you see?"]},
+};
+
+const WORKSHEETS = {
+  "q1-sci-method": [{"q": "Name the 6 steps of the scientific method.", "answer": "Question, Hypothesis, Materials, Procedure, Data, Conclusion"}, {"q": "What is a hypothesis?", "answer": "A testable prediction"}, {"q": "Why repeat trials?", "answer": "To make results reliable"}, {"q": "What is data?", "answer": "Recorded observations or measurements"}, {"q": "A conclusion answers what?", "answer": "The original question"}, {"q": "What is a variable?", "answer": "The thing you change in the experiment"}, {"q": "What is a fair test?", "answer": "One that changes only ONE variable at a time"}, {"q": "Give an example of an observation.", "answer": "The ball bounced 30 cm high"}, {"q": "Give an example of an inference.", "answer": "The ball bounces higher because it is more elastic"}, {"q": "Why must a hypothesis be testable?", "answer": "So it can be proven right or wrong with data"}, {"q": "What order do steps come in?", "answer": "Question → Hypothesis → Materials → Procedure → Data → Conclusion"}, {"q": "Why write down materials?", "answer": "So the experiment can be repeated"}, {"q": "What if data doesn't match your hypothesis?", "answer": "That's OK — revise the hypothesis"}, {"q": "What does \"repeating\" trials help avoid?", "answer": "Errors and chance results"}, {"q": "Name a tool for recording data.", "answer": "Notebook, chart, ruler, or thermometer"}],
+  "q1-eng-design": [{"q": "Name the 6 steps of engineering design.", "answer": "Ask, Imagine, Plan, Create, Test, Improve"}, {"q": "What is a prototype?", "answer": "A first version of a design"}, {"q": "What is technology?", "answer": "Anything humans make to solve a problem"}, {"q": "Give an example of everyday technology.", "answer": "pencil, spoon, chair, car, phone"}, {"q": "What does iterate mean?", "answer": "Repeat and improve"}, {"q": "Why is failure valuable?", "answer": "It teaches you what to fix"}, {"q": "What comes after Plan?", "answer": "Create"}, {"q": "What comes after Test?", "answer": "Improve"}, {"q": "Why sketch before building?", "answer": "Sketches are cheaper than mistakes"}, {"q": "What is v2?", "answer": "The second version of a prototype"}, {"q": "How is engineering different from science?", "answer": "Engineering solves problems; science answers questions"}, {"q": "Name one thing engineers design.", "answer": "bridge, robot, car, medicine, computer"}, {"q": "What tools do engineers use?", "answer": "ruler, sketch pad, computer, measuring tools"}, {"q": "Why work in teams?", "answer": "Many minds solve problems faster"}, {"q": "What is a constraint?", "answer": "A limit (time, materials, cost)"}],
+  "q2-forces-motion": [{"q": "What is a force?", "answer": "A push or a pull"}, {"q": "Give an example of a push.", "answer": "Closing a door"}, {"q": "Give an example of a pull.", "answer": "Opening a drawer"}, {"q": "What is motion?", "answer": "A change in position"}, {"q": "What is gravity?", "answer": "A pull toward Earth"}, {"q": "What is speed?", "answer": "How far something goes in a certain time"}, {"q": "What are the 2 poles of a magnet?", "answer": "North and South"}, {"q": "Same poles do what?", "answer": "Repel (push apart)"}, {"q": "Opposite poles do what?", "answer": "Attract"}, {"q": "Magnets pull which metals?", "answer": "iron, steel, nickel, cobalt"}, {"q": "What is friction?", "answer": "A force that slows movement between rubbing surfaces"}, {"q": "Which has more friction: carpet or ice?", "answer": "Carpet"}, {"q": "A ball rolls faster on ___.", "answer": "smooth (low-friction) surface"}, {"q": "Balanced forces cause what?", "answer": "No motion (object stays still)"}, {"q": "What causes rain to fall?", "answer": "Gravity"}],
+  "q2-simple-machines": [{"q": "Name the 6 simple machines.", "answer": "Lever, wheel & axle, pulley, inclined plane, wedge, screw"}, {"q": "A see-saw is a ___.", "answer": "lever"}, {"q": "A ramp is a ___.", "answer": "inclined plane"}, {"q": "An axe is a ___.", "answer": "wedge"}, {"q": "A jar lid is a ___.", "answer": "screw"}, {"q": "A flagpole rope-and-wheel is a ___.", "answer": "pulley"}, {"q": "A doorknob is a ___.", "answer": "wheel & axle"}, {"q": "How do simple machines help?", "answer": "Change the size or direction of a force"}, {"q": "What is friction?", "answer": "A force that slows motion between surfaces"}, {"q": "What reduces friction?", "answer": "oil, wax, wheels, smooth surfaces"}, {"q": "What increases friction?", "answer": "rubber, sandpaper, rough surfaces"}, {"q": "Why do cars have rubber tires?", "answer": "For grip (friction)"}, {"q": "Which is smoother: ice or carpet?", "answer": "Ice"}, {"q": "Why lubricate machines?", "answer": "To reduce friction and wear"}, {"q": "Why do brakes work?", "answer": "They use friction to stop wheels"}],
+  "q3-life-cycles": [{"q": "Name the 4 butterfly stages.", "answer": "Egg, caterpillar, chrysalis, adult"}, {"q": "Frog stage between egg and adult:", "answer": "Tadpole (and then froglet)"}, {"q": "What is metamorphosis?", "answer": "A big body change during a life cycle"}, {"q": "Do chickens go through metamorphosis?", "answer": "No — they just grow"}, {"q": "Plant life cycle order:", "answer": "Seed → sprout → plant → flower → new seeds"}, {"q": "Living things need:", "answer": "food, water, air, shelter, space"}, {"q": "What do tadpoles breathe with?", "answer": "Gills"}, {"q": "What do adult frogs breathe with?", "answer": "Lungs"}, {"q": "A young bird is called a ___.", "answer": "chick"}, {"q": "A baby cow is called a ___.", "answer": "calf"}, {"q": "True/false: all animals undergo metamorphosis.", "answer": "False"}, {"q": "What is a life cycle?", "answer": "The stages of life from birth to death"}, {"q": "Which insect has 4 life-cycle stages?", "answer": "butterfly, bee, beetle, ant"}, {"q": "Where does a butterfly egg become a caterpillar?", "answer": "On a leaf"}, {"q": "Why do plants make flowers?", "answer": "To make seeds for new plants"}],
+  "q3-inherited-traits": [{"q": "What is a trait?", "answer": "A feature of a living thing"}, {"q": "Traits passed from parents are ___.", "answer": "inherited"}, {"q": "Give 2 inherited human traits.", "answer": "eye color, hair color, height, dimples"}, {"q": "Give 2 learned behaviors.", "answer": "reading, biking, speaking a language"}, {"q": "Where are traits stored?", "answer": "in DNA (genes) in every cell"}, {"q": "Do plants inherit traits?", "answer": "Yes"}, {"q": "Why do siblings look different?", "answer": "They get different combinations of genes"}, {"q": "Identical twins share:", "answer": "the same DNA"}, {"q": "Do identical twins have same fingerprints?", "answer": "No — fingerprints are unique"}, {"q": "Genes come from:", "answer": "both parents"}, {"q": "Speaking Spanish is:", "answer": "learned"}, {"q": "Hair color is:", "answer": "inherited"}, {"q": "A dog's bark is:", "answer": "inherited (instinct)"}, {"q": "Doing math is:", "answer": "learned"}, {"q": "Can traits skip generations?", "answer": "Yes"}],
+  "q3-hawaiian-eco": [{"q": "What does endemic mean?", "answer": "Native only to one place"}, {"q": "Nēnē is a Hawaiian ___.", "answer": "goose"}, {"q": "Honu is a Hawaiian ___.", "answer": "green sea turtle"}, {"q": "Name a native Hawaiian tree.", "answer": "koa, ʻōhiʻa lehua, kukui"}, {"q": "Name a native Hawaiian bird.", "answer": "nēnē, honeycreeper, iʻiwi"}, {"q": "What is an invasive species?", "answer": "A non-native species that harms the ecosystem"}, {"q": "Give an invasive species example.", "answer": "mongoose, cane toad, feral pig"}, {"q": "What does mālama ʻāina mean?", "answer": "Care for the land"}, {"q": "Why are Hawaiian species vulnerable?", "answer": "Small isolated islands; can't escape threats"}, {"q": "Name a Hawaiian habitat.", "answer": "reef, rainforest, coastal, dry forest, alpine"}, {"q": "Why is Hawai‘i unique?", "answer": "Most isolated island chain on Earth"}, {"q": "What is the state bird of Hawai‘i?", "answer": "nēnē"}, {"q": "What is the state tree of Hawai‘i?", "answer": "kukui"}, {"q": "How can we protect native species?", "answer": "Protect habitats, remove invasives, educate"}, {"q": "What is a monk seal?", "answer": "A rare Hawaiian marine mammal (endangered)"}],
+  "q4-weather": [{"q": "What is weather?", "answer": "Day-to-day conditions in the sky"}, {"q": "What is climate?", "answer": "The typical weather pattern over years"}, {"q": "Tool for temperature:", "answer": "thermometer"}, {"q": "Tool for rain:", "answer": "rain gauge"}, {"q": "Tool for wind speed:", "answer": "anemometer"}, {"q": "Name a cloud type.", "answer": "cumulus, stratus, cirrus"}, {"q": "What powers the water cycle?", "answer": "The sun"}, {"q": "The 4 water cycle stages:", "answer": "evaporation, condensation, precipitation, collection"}, {"q": "Name a form of precipitation.", "answer": "rain, snow, sleet, hail"}, {"q": "Trade winds in Hawai‘i come from:", "answer": "the northeast"}, {"q": "Hawaiian rainy season is called:", "answer": "hoʻoilo"}, {"q": "Hawaiian dry season is called:", "answer": "kau"}, {"q": "What is a hurricane?", "answer": "A large rotating tropical storm"}, {"q": "How to prepare for a storm?", "answer": "Emergency kit, plan, listen to forecasts"}, {"q": "Why is climate change important?", "answer": "It affects weather patterns and ecosystems"}],
+};
+
+const QUIZZES = {
+  "q1-sci-method": [{"q": "First step of scientific method:", "opts": ["data", "question", "conclusion", "graph"], "ans": 1}, {"q": "A hypothesis is:", "opts": ["a fact", "a testable prediction", "a conclusion", "a graph"], "ans": 1}, {"q": "Recorded observations are:", "opts": ["data", "opinions", "guesses", "stories"], "ans": 0}, {"q": "Repeating trials makes results:", "opts": ["bigger", "more reliable", "faster", "shorter"], "ans": 1}, {"q": "Last step of scientific method:", "opts": ["question", "materials", "data", "conclusion"], "ans": 3}, {"q": "A variable is:", "opts": ["what stays same", "what you change", "a mistake", "a graph"], "ans": 1}, {"q": "A fair test changes:", "opts": ["everything", "nothing", "one thing at a time", "many things"], "ans": 2}, {"q": "Observation uses:", "opts": ["guessing", "senses", "magic", "sleep"], "ans": 1}, {"q": "Inference is:", "opts": ["a fact only", "an explanation from observation", "a wish", "a copy"], "ans": 1}, {"q": "A conclusion answers:", "opts": ["a guess", "the question", "the future", "nobody"], "ans": 1}, {"q": "Materials tell you:", "opts": ["answers", "what you need", "graphs", "trends"], "ans": 1}, {"q": "Data are:", "opts": ["stories", "recorded observations", "wishes", "opinions"], "ans": 1}, {"q": "If hypothesis is wrong:", "opts": ["delete data", "revise it", "stop trying", "panic"], "ans": 1}, {"q": "Why repeat trials?", "opts": ["for fun", "avoid errors", "looks pretty", "tradition"], "ans": 1}, {"q": "Science is:", "opts": ["stories", "testing questions", "opinions", "only rules"], "ans": 1}],
+  "q1-eng-design": [{"q": "First step of engineering:", "opts": ["Test", "Ask", "Create", "Sell"], "ans": 1}, {"q": "Last step of engineering:", "opts": ["Buy", "Improve", "Forget", "Ignore"], "ans": 1}, {"q": "A prototype is:", "opts": ["first version", "last version", "copy", "plan only"], "ans": 0}, {"q": "Technology is:", "opts": ["only phones", "anything made to solve", "magic", "nature"], "ans": 1}, {"q": "Iterate means:", "opts": ["ignore", "repeat & improve", "buy", "sell"], "ans": 1}, {"q": "Failure is:", "opts": ["bad", "a learning chance", "the end", "avoid"], "ans": 1}, {"q": "A blueprint is:", "opts": ["a drawing plan", "a food", "a car", "a rock"], "ans": 0}, {"q": "Sketching first is:", "opts": ["a waste", "cheaper than mistakes", "impossible", "optional"], "ans": 1}, {"q": "Which is engineered?", "opts": ["tree", "car", "cloud", "rain"], "ans": 1}, {"q": "Which is technology?", "opts": ["pencil", "tree", "wind", "sun"], "ans": 0}, {"q": "A design flaw is:", "opts": ["a strength", "a weakness", "a goal", "a graph"], "ans": 1}, {"q": "V2 (version 2) is:", "opts": ["the first", "improved second", "a copy", "worse"], "ans": 1}, {"q": "Engineers use:", "opts": ["only guesses", "tools/measure/sketch", "magic", "luck only"], "ans": 1}, {"q": "A constraint is:", "opts": ["a helper", "a limit", "a copy", "a bug"], "ans": 1}, {"q": "Team of engineers:", "opts": ["slow", "faster problem-solving", "pointless", "harmful"], "ans": 1}],
+  "q2-forces-motion": [{"q": "A force is a:", "opts": ["color", "push or pull", "sound", "shape"], "ans": 1}, {"q": "Motion means:", "opts": ["stopping", "change in position", "a color", "a sound"], "ans": 1}, {"q": "Gravity pulls things toward:", "opts": ["sun", "Earth", "moon", "stars"], "ans": 1}, {"q": "Magnets attract:", "opts": ["wood", "plastic", "iron", "paper"], "ans": 2}, {"q": "Same poles of magnets:", "opts": ["attract", "repel", "ignore", "freeze"], "ans": 1}, {"q": "Opposite poles:", "opts": ["repel", "attract", "ignore", "freeze"], "ans": 1}, {"q": "Poles of a magnet:", "opts": ["N & S", "A & B", "1 & 2", "H & C"], "ans": 0}, {"q": "Friction slows or speeds?", "opts": ["slows", "speeds", "both", "neither"], "ans": 0}, {"q": "More friction on:", "opts": ["ice", "carpet", "glass", "water"], "ans": 1}, {"q": "Less friction:", "opts": ["carpet", "ice", "sandpaper", "grass"], "ans": 1}, {"q": "Speed = distance ÷ ___", "opts": ["weight", "time", "force", "mass"], "ans": 1}, {"q": "A push away from you is:", "opts": ["pull", "push", "both", "neither"], "ans": 1}, {"q": "A pull toward you is:", "opts": ["pull", "push", "both", "neither"], "ans": 0}, {"q": "Bigger force means ___ motion.", "opts": ["less", "same", "more", "no"], "ans": 2}, {"q": "Balanced forces:", "opts": ["cause motion", "no motion", "fast motion", "slow motion"], "ans": 1}],
+  "q2-simple-machines": [{"q": "Simple machines make work:", "opts": ["harder", "easier", "impossible", "magical"], "ans": 1}, {"q": "See-saw is a:", "opts": ["ramp", "lever", "pulley", "wedge"], "ans": 1}, {"q": "Ramp is a:", "opts": ["lever", "wedge", "inclined plane", "pulley"], "ans": 2}, {"q": "Axe is a:", "opts": ["pulley", "wedge", "lever", "screw"], "ans": 1}, {"q": "Jar lid is a:", "opts": ["lever", "pulley", "screw", "wedge"], "ans": 2}, {"q": "Flagpole uses:", "opts": ["pulley", "wedge", "ramp", "lever"], "ans": 0}, {"q": "Doorknob is:", "opts": ["pulley", "wheel & axle", "wedge", "ramp"], "ans": 1}, {"q": "6 simple machines are:", "opts": ["4", "5", "6", "7"], "ans": 2}, {"q": "Friction is:", "opts": ["helpful only", "harmful only", "force that slows", "no force"], "ans": 2}, {"q": "Reduce friction with:", "opts": ["sandpaper", "oil", "rocks", "grass"], "ans": 1}, {"q": "Grip needs:", "opts": ["no friction", "more friction", "magic", "nothing"], "ans": 1}, {"q": "Brakes use:", "opts": ["no friction", "friction", "gravity only", "magnets only"], "ans": 1}, {"q": "Tires are rubber for:", "opts": ["looks", "grip", "sound", "flavor"], "ans": 1}, {"q": "Ice has ___ friction.", "opts": ["much", "little", "average", "strong"], "ans": 1}, {"q": "Lubricate to:", "opts": ["add friction", "reduce friction", "break machines", "none"], "ans": 1}],
+  "q3-life-cycles": [{"q": "Butterfly stage after caterpillar:", "opts": ["egg", "chrysalis", "adult", "tadpole"], "ans": 1}, {"q": "A young frog is called:", "opts": ["tadpole", "egg", "chick", "pup"], "ans": 0}, {"q": "Metamorphosis is:", "opts": ["staying same", "big body change", "a color", "a food"], "ans": 1}, {"q": "Chickens have how many life stages?", "opts": ["2", "3 (egg, chick, adult)", "4", "5"], "ans": 1}, {"q": "Plant life cycle starts with:", "opts": ["flower", "seed", "fruit", "stem"], "ans": 1}, {"q": "Living things need:", "opts": ["toys", "food/water/air", "TV", "magic"], "ans": 1}, {"q": "Tadpoles breathe with:", "opts": ["lungs", "gills", "skin", "wings"], "ans": 1}, {"q": "Adult frogs breathe with:", "opts": ["gills", "lungs", "wings", "fins"], "ans": 1}, {"q": "Baby bird:", "opts": ["chick", "pup", "joey", "calf"], "ans": 0}, {"q": "Baby cow:", "opts": ["pup", "joey", "calf", "chick"], "ans": 2}, {"q": "All animals undergo metamorphosis?", "opts": ["yes", "no", "sometimes", "always"], "ans": 1}, {"q": "Life cycle is:", "opts": ["stages of life", "one moment", "forever", "a machine"], "ans": 0}, {"q": "Which has 4 life stages?", "opts": ["dog", "butterfly", "human", "chicken"], "ans": 1}, {"q": "Where does a butterfly egg start?", "opts": ["pond", "leaf", "sky", "soil"], "ans": 1}, {"q": "Why do plants make flowers?", "opts": ["for fun", "to make seeds", "looks pretty", "no reason"], "ans": 1}],
+  "q3-inherited-traits": [{"q": "A trait is:", "opts": ["a color", "a feature", "a name", "a food"], "ans": 1}, {"q": "Inherited traits come from:", "opts": ["friends", "parents", "school", "TV"], "ans": 1}, {"q": "Which is INHERITED?", "opts": ["biking", "eye color", "reading", "writing"], "ans": 1}, {"q": "Which is LEARNED?", "opts": ["tongue rolling", "dimples", "swimming", "eye color"], "ans": 2}, {"q": "Traits stored in:", "opts": ["sky", "genes", "clouds", "trees"], "ans": 1}, {"q": "Plants have traits:", "opts": ["no", "yes", "only in fall", "only at night"], "ans": 1}, {"q": "Identical twins share:", "opts": ["different DNA", "same DNA", "no DNA", "half DNA"], "ans": 1}, {"q": "Genes come from:", "opts": ["only mother", "only father", "both parents", "friends"], "ans": 2}, {"q": "Speaking Spanish is:", "opts": ["inherited", "learned", "genetic", "a fossil"], "ans": 1}, {"q": "Hair color is:", "opts": ["learned", "inherited", "earned", "magic"], "ans": 1}, {"q": "DNA is:", "opts": ["a food", "a plant", "life's instructions", "a color"], "ans": 2}, {"q": "Can traits skip generations?", "opts": ["no", "yes", "never", "always"], "ans": 1}, {"q": "A dog barking is:", "opts": ["inherited", "learned", "random", "magic"], "ans": 0}, {"q": "Doing math is:", "opts": ["inherited", "learned", "random", "none"], "ans": 1}, {"q": "Siblings look different because:", "opts": ["different gene combos", "same genes", "magic", "age"], "ans": 0}],
+  "q3-hawaiian-eco": [{"q": "Endemic means:", "opts": ["everywhere", "only in one place", "tasty", "pretty"], "ans": 1}, {"q": "Nēnē is a Hawaiian:", "opts": ["fish", "goose", "turtle", "plant"], "ans": 1}, {"q": "Honu is a:", "opts": ["bird", "sea turtle", "fish", "goose"], "ans": 1}, {"q": "A native Hawaiian tree:", "opts": ["maple", "koa", "pine", "oak"], "ans": 1}, {"q": "Invasive species are:", "opts": ["native", "not native", "always good", "always small"], "ans": 1}, {"q": "Invasive example:", "opts": ["nēnē", "mongoose", "honu", "koa"], "ans": 1}, {"q": "Mālama ʻāina means:", "opts": ["ignore land", "care for land", "eat land", "pave land"], "ans": 1}, {"q": "Hawai‘i is:", "opts": ["most crowded", "most isolated island chain", "a desert", "a jungle only"], "ans": 1}, {"q": "State bird:", "opts": ["nēnē", "honu", "koa", "ʻōhiʻa"], "ans": 0}, {"q": "State tree:", "opts": ["koa", "kukui", "ʻōhiʻa", "pine"], "ans": 1}, {"q": "Monk seal is:", "opts": ["common", "rare & endangered", "a fish", "a plant"], "ans": 1}, {"q": "Native bird colorful and endangered:", "opts": ["pigeon", "honeycreeper", "crow", "sparrow"], "ans": 1}, {"q": "Hawaiian habitat:", "opts": ["desert only", "reef", "snow only", "tundra"], "ans": 1}, {"q": "Protection means:", "opts": ["ignore", "preserve", "remove", "sell"], "ans": 1}, {"q": "Kukui gives:", "opts": ["nothing", "oil/light", "fish", "music"], "ans": 1}],
+  "q4-weather": [{"q": "Weather is:", "opts": ["day-to-day sky", "yearly average", "stars", "magic"], "ans": 0}, {"q": "Climate is:", "opts": ["day-to-day", "years average", "one storm", "one day"], "ans": 1}, {"q": "Thermometer measures:", "opts": ["rain", "wind", "temp", "humidity"], "ans": 2}, {"q": "Rain gauge measures:", "opts": ["temp", "rain", "wind", "pressure"], "ans": 1}, {"q": "Anemometer measures:", "opts": ["temp", "wind speed", "pressure", "rain"], "ans": 1}, {"q": "Cumulus clouds are:", "opts": ["fluffy", "high thin", "flat gray", "storm"], "ans": 0}, {"q": "Cirrus clouds are:", "opts": ["low fluffy", "high wispy", "stormy", "flat gray"], "ans": 1}, {"q": "Water cycle powered by:", "opts": ["moon", "sun", "wind", "stars"], "ans": 1}, {"q": "Precipitation includes:", "opts": ["sunlight", "rain/snow", "wind", "stars"], "ans": 1}, {"q": "Trade winds from:", "opts": ["NE", "SW", "SE", "NW"], "ans": 0}, {"q": "Hawaiian rainy season:", "opts": ["kau", "hoʻoilo", "always", "never"], "ans": 1}, {"q": "Hawaiian dry season:", "opts": ["kau", "hoʻoilo", "always", "never"], "ans": 0}, {"q": "A hurricane is:", "opts": ["a snowstorm", "a rotating tropical storm", "a rainbow", "a clear day"], "ans": 1}, {"q": "Storm safety plan:", "opts": ["ignore", "emergency kit + plan", "panic", "nothing"], "ans": 1}, {"q": "Water freezes at:", "opts": ["0°F", "32°F", "60°F", "100°F"], "ans": 1}],
+};
+
+let currentUnit = null;
+let lastQuizResults = null;
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = UNITS.map(u => `
+    <div class="unit-card" onclick="showLesson('${u.id}')">
+      <div class="unit-icon">${u.icon}</div>
+      <div class="unit-cc">${u.q} · ${u.cc}</div>
+      <div class="unit-title">${u.title}</div>
+      <div class="unit-desc">${u.desc}</div>
+    </div>
+  `).join('');
+  let sbHTML = '';
+  let lastQ = '';
+  const Q_LABELS = {
+    'Q1': 'Q1 · Scientific Method, Engineering & Technology',
+    'Q2': 'Q2 · Physical Science',
+    'Q3': 'Q3 · Life Science',
+    'Q4': 'Q4 · Earth & Space Science'
+  };
+  UNITS.forEach(u => {
+    if (u.q !== lastQ) {
+      sbHTML += `<div class="sidebar-quarter">${Q_LABELS[u.q] || u.q}</div>`;
+      lastQ = u.q;
+    }
+    const done = completedUnits[u.id] ? 'completed' : '';
+    sbHTML += `<div class="sidebar-unit ${done}" onclick="showLesson('${u.id}')">${u.icon} ${u.title}</div>`;
+  });
+  document.getElementById('sidebar-content').innerHTML = sbHTML;
+  const done = Object.keys(completedUnits).length;
+  document.getElementById('progress-text').textContent = done + '/' + UNITS.length;
+}
+
+function showHome() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  renderHome();
+}
+
+function showLesson(uid) {
+  currentUnit = uid;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('lesson-content').innerHTML = LESSONS[uid] || '<p>Lesson coming soon.</p>';
+}
+
+function showLab() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lab-screen').classList.add('active');
+  const l = LABS[currentUnit];
+  if (!l) { document.getElementById('lab-content').innerHTML = '<p>Lab coming soon.</p>'; return; }
+  let steps = l.steps.map(s => `<li>${s}</li>`).join('');
+  let reflect = l.reflect.map(r => `<li>${r}</li>`).join('');
+  document.getElementById('lab-content').innerHTML = `
+    <div class="handout-card">
+      <h3>${l.title}</h3>
+      <div class="handout-mission">${l.mission}</div>
+      <strong>Steps:</strong><ol class="handout-steps">${steps}</ol>
+      <strong>Deliverable:</strong> ${l.deliverable}
+      <div class="handout-reflect"><strong>Reflect:</strong><ol>${reflect}</ol></div>
+    </div>`;
+}
+
+function showWorksheet() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worksheet-screen').classList.add('active');
+  const ws = WORKSHEETS[currentUnit] || [];
+  let html = '';
+  ws.forEach((p, idx) => {
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><textarea id="ans-${idx}" placeholder="Your answer..."></textarea></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function checkWorksheet() {
+  const ws = WORKSHEETS[currentUnit] || [];
+  let html = '';
+  ws.forEach((p, idx) => {
+    const user = document.getElementById(`ans-${idx}`).value;
+    html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><div class="answer-key"><strong>Answer:</strong> ${p.answer}</div><p><strong>Your answer:</strong> ${user || '(no answer)'}</p></div>`;
+  });
+  document.getElementById('worksheet-content').innerHTML = html;
+}
+
+function showQuiz() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('quiz-screen').classList.add('active');
+  const q = QUIZZES[currentUnit] || [];
+  let html = '';
+  q.forEach((qq, idx) => {
+    html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${qq.q}</p>`;
+    qq.opts.forEach((opt, i) => {
+      html += `<label><input type="radio" name="q${idx}" value="${i}"> ${opt}</label>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+function submitQuiz() {
+  const q = QUIZZES[currentUnit] || [];
+  const name = (document.getElementById('student-name')?.value || '').trim();
+  let score = 0;
+  const breakdown = [];
+  q.forEach((qq, idx) => {
+    const sel = document.querySelector(`input[name="q${idx}"]:checked`);
+    const si = sel ? parseInt(sel.value) : -1;
+    const ok = si === qq.ans;
+    if (ok) score++;
+    breakdown.push({ n: idx+1, question: qq.q, studentAnswer: si >= 0 ? qq.opts[si] : '(no answer)', correctAnswer: qq.opts[qq.ans], correct: ok });
+  });
+  const pct = Math.round((score / q.length) * 100);
+  completedUnits[currentUnit] = true;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('certificate-screen').classList.add('active');
+  const unit = UNITS.find(u => u.id === currentUnit);
+  lastQuizResults = { studentName: name, unitTitle: unit ? unit.title : currentUnit, score, total: q.length, pct, breakdown };
+  document.getElementById('cert-content').innerHTML = `
+    <p style="font-size:1.1rem;margin:16px 0;"><strong>${name || 'Student'}</strong></p>
+    <p>completed <strong>${unit ? unit.title : currentUnit}</strong></p>
+    <p style="font-size:1.4rem;color:${pct >= 70 ? '#4a8c3a' : '#c62828'};margin:16px 0;"><strong>${score} / ${q.length} correct (${pct}%)</strong></p>`;
+}
+
+function emailResults() {
+  if (!lastQuizResults) return;
+  const r = lastQuizResults;
+  const body = `Hello Mrs. Won,%0D%0A%0D%0A${r.studentName || 'A student'} completed the ${r.unitTitle} quiz.%0D%0A%0D%0AScore: ${r.score}/${r.total} (${r.pct}%%)%0D%0A%0D%0AThank you.`;
+  window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=ewon@starofthesea.org&su=${encodeURIComponent(r.unitTitle + ' Quiz Result')}&body=${body}`;
+}
+
+renderHome();
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mary, Star of the Sea — 3rd Grade Religion</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #fdf3ea 0%, #f8f9fa 100%); color: #253a77; min-height: 100vh; }
+.container { display: flex; min-height: 100vh; }
+.sidebar { width: 300px; background: #7c2d12; color: #fff; padding: 24px 20px; overflow-y: auto; }
+.sidebar h2 { color: #FFD100; font-size: 1.05rem; }
+.sidebar-sub { color: #d4c8b0; font-size: 0.78rem; margin: 0 0 12px 0; }
+.sidebar-quarter { margin-top: 20px; padding-top: 10px; border-top: 1px solid #a15c1d; color: #FFD100; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.sidebar-unit { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: 4px 0; background: #a15c1d; border-radius: 6px; cursor: pointer; transition: all 0.15s; font-size: 0.88rem; line-height: 1.25; }
+.sidebar-unit:hover { background: #FFD100; color: #253a77; }
+.sidebar-unit.active { background: #FFD100; color: #253a77; font-weight: 700; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: #fff; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #eee; flex-wrap: wrap; gap: 10px; }
+.topbar-logos { display: flex; gap: 10px; }
+.logo-circle { width: 46px; height: 46px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(37,58,119,0.15); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+.logo-circle img { display: block; }
+.logo-circle.msos img { height: 100%; width: auto; }
+.logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+.logo-circle.msos { background: #1a2a4a; }
+.summer-home-btn { background: #7c2d12; color: #fff; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 0.85rem; }
+.summer-home-btn:hover { background: #a15c1d; }
+.topbar-right { color: #666; font-size: 0.85rem; font-weight: 600; }
+.content { flex: 1; padding: 24px 32px; overflow-y: auto; max-width: 900px; }
+.screen { display: none; }
+.screen.active { display: block; }
+.units-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.unit-card { background: #fff; padding: 22px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; border-left: 4px solid #7c2d12; }
+.unit-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+.unit-icon { font-size: 2rem; margin-bottom: 6px; }
+.unit-title { font-weight: 700; color: #7c2d12; font-size: 1rem; margin-bottom: 4px; line-height: 1.2; }
+.unit-cc { font-size: 0.72rem; color: #7a5f00; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.lesson-content h2 { color: #7c2d12; margin-bottom: 12px; font-size: 1.5rem; padding-bottom: 8px; border-bottom: 3px solid #FFD100; }
+.lesson-content h3 { color: #a15c1d; margin: 20px 0 8px; font-size: 1.05rem; padding: 6px 12px; background: linear-gradient(90deg, #fdf3ea 0%, transparent 100%); border-left: 3px solid #a15c1d; }
+.lesson-content p { margin-bottom: 10px; line-height: 1.6; }
+.lesson-content ul, .lesson-content ol { margin: 8px 0 12px 22px; }
+.lesson-content li { margin-bottom: 6px; line-height: 1.5; }
+.lesson-content strong { color: #7c2d12; }
+.lesson-content .eq { background: #fffbea; border-left: 4px solid #B8860B; padding: 10px 14px; border-radius: 6px; margin: 10px 0 16px; font-style: italic; color: #333; }
+.lesson-content .vocab { background: #eef4ff; padding: 10px 14px; border-radius: 6px; margin: 14px 0; font-size: 0.9rem; }
+.lesson-content .vocab strong { color: #253a77; }
+.lesson-content .prayer { background: #e6f4ea; border-left: 3px solid #4a8c3a; padding: 10px 14px; border-radius: 6px; margin: 14px 0; }
+.lesson-content .prayer strong { color: #2e6329; }
+.back-to-home { margin-bottom: 16px; }
+.back-to-home button { background: #6b7280; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+.back-to-home button:hover { background: #4b5563; }
+.resources-box { margin-top: 30px; background: #fff; padding: 20px; border-radius: 10px; border-left: 5px solid #7c2d12; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.resources-box h2 { color: #7c2d12; font-size: 1.25rem; margin-bottom: 12px; padding: 0; border: none; }
+.res-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.res-link { background: #fdf3ea; padding: 12px; border-radius: 6px; text-decoration: none; color: #7c2d12; display: block; transition: all 0.2s; }
+.res-link:hover { background: #7c2d12; color: #fff; }
+.res-link-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 3px; }
+.res-link-desc { font-size: 0.78rem; opacity: 0.85; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2>
+    <p class="sidebar-sub">3rd Grade Religion · Mrs. Won</p>
+    <div id="sidebar-content"></div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+        <a href="3a-won.html" class="summer-home-btn">← Back to Class</a>
+        <a href="msos-religion-3-curriculum-map.html" class="summer-home-btn" style="background:#B45309;">📅 Curriculum Map</a>
+        <div class="topbar-logos">
+          <span class="logo-circle msos"><img src="msos-logo.svg" alt="MSOS Logo"></span>
+          <span class="logo-circle nui"><img src="nui-logo.png" alt="NUI Logo"></span>
+        </div>
+        <span style="font-weight:600;">3rd Grade Religion</span>
+      </div>
+      <div class="topbar-right">Religion · Grade 3</div>
+    </div>
+    <div class="content">
+      <div id="home-screen" class="screen active">
+        <h1 style="color:#7c2d12;margin-bottom:16px;">✝️ 3rd Grade Religion</h1>
+        <p style="color:#555;font-style:italic;margin-bottom:24px;">The Four Marks of the Church · SY 2026-2027</p>
+        <div id="units-grid" class="units-grid"></div>
+        <div class="resources-box">
+          <h2>🌟 Recommended Resources</h2>
+          <div class="res-links"><a class="res-link" href="https://www.usccb.org/beliefs-and-teachings" target="_blank" rel="noopener"><div class="res-link-title">USCCB Catholic Teaching</div><div class="res-link-desc">Official U.S. Bishops&#39; resources</div></a><a class="res-link" href="https://catechism.cc/" target="_blank" rel="noopener"><div class="res-link-title">Catechism for Kids</div><div class="res-link-desc">Age-appropriate catechism</div></a><a class="res-link" href="https://formed.org/" target="_blank" rel="noopener"><div class="res-link-title">FORMED</div><div class="res-link-desc">Catholic videos, saints, Bible</div></a><a class="res-link" href="https://www.catholicicing.com/" target="_blank" rel="noopener"><div class="res-link-title">Catholic Icing</div><div class="res-link-desc">Crafts and hands-on activities</div></a><a class="res-link" href="https://bible.usccb.org/" target="_blank" rel="noopener"><div class="res-link-title">Bible (USCCB)</div><div class="res-link-desc">Read Scripture online</div></a><a class="res-link" href="https://www.magnificat.com/kids/" target="_blank" rel="noopener"><div class="res-link-title">Magnifikid!</div><div class="res-link-desc">Sunday Mass companion</div></a></div>
+        </div>
+      </div>
+      <div id="lesson-screen" class="screen">
+        <div class="back-to-home"><button onclick="showHome()">← Back to Overview</button></div>
+        <div id="lesson-content" class="lesson-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const UNITS = [
+  { id:'u1-one', q:'Q1', icon:'✝️', title:"Unit 1: The Church is One", cc:"USCCB \u00b7 Diocesan" },
+  { id:'u2-holy', q:'Q2', icon:'😇', title:"Unit 2: The Church is Holy", cc:"USCCB \u00b7 Diocesan" },
+  { id:'u3-catholic', q:'Q3', icon:'🌐', title:"Unit 3: The Church is Catholic", cc:"USCCB \u00b7 Diocesan" },
+  { id:'u4-apostolic', q:'Q4', icon:'👑', title:"Unit 4: The Church is Apostolic", cc:"USCCB \u00b7 Diocesan" },
+  { id:'u5-mission', q:'Q4', icon:'🌟', title:"Unit 5: Mission to the World", cc:"USCCB \u00b7 Diocesan" },
+];
+
+const LESSONS = {
+  "u1-one": "<h2>✝️ Unit 1: The Church is One</h2><h3>Big Ideas</h3><ul><li>The Church is one Body, united in Christ</li><li>Jesus founded ONE Church, not many separate ones</li><li>Unity comes from shared faith, sacraments, and leadership</li></ul><h3>What Students Learn</h3><ul><li>The Trinity: Father, Son, and Holy Spirit</li><li>The Body of Christ (1 Cor 12)</li><li>How Baptism unites us into the Church</li><li>The role of the Pope as visible sign of unity</li><li>Ecumenism &mdash; working with other Christians</li></ul><div class='prayer'><strong>Prayer focus:</strong> Sign of the Cross · Our Father</div><h3>Assessments</h3><p>Unit 1 quiz · Sign-of-the-Cross reflection</p>",
+  "u2-holy": "<h2>😇 Unit 2: The Church is Holy</h2><h3>Big Ideas</h3><ul><li>The Church is holy because Christ is holy</li><li>The Holy Spirit makes us holy through the sacraments</li><li>Saints show us how to live holy lives</li></ul><h3>What Students Learn</h3><ul><li>The seven sacraments (focus: Baptism, Eucharist, Reconciliation)</li><li>The Holy Spirit&#39;s gifts and fruits</li><li>The Ten Commandments</li><li>The Beatitudes</li><li>Hawaiian saints: St. Damien of Molokai, St. Marianne Cope</li><li>Feast days and the liturgical calendar</li></ul><div class='prayer'><strong>Prayer focus:</strong> Hail Mary · Glory Be · Act of Contrition</div><h3>Assessments</h3><p>Unit 2 test · Saint biography project</p>",
+  "u3-catholic": "<h2>🌐 Unit 3: The Church is Catholic</h2><h3>Big Ideas</h3><ul><li>&quot;Catholic&quot; means universal &mdash; for all people, everywhere</li><li>The Church welcomes people of every language, culture, and place</li><li>Jesus calls all people to be his disciples</li></ul><h3>What Students Learn</h3><ul><li>The Great Commission (Matthew 28:19-20)</li><li>The Church across cultures &mdash; Africa, Asia, Americas, Europe</li><li>The role of missionaries throughout history</li><li>The universal call to holiness</li><li>Catholic Social Teaching principles</li><li>Introduction to the Mass and its universal structure</li></ul><div class='prayer'><strong>Prayer focus:</strong> Nicene Creed · Prayers in other languages</div><h3>Assessments</h3><p>Cultural Mass project · Unit 3 quiz</p>",
+  "u4-apostolic": "<h2>👑 Unit 4: The Church is Apostolic</h2><h3>Big Ideas</h3><ul><li>The Church was founded on the apostles by Jesus Christ</li><li>Apostolic succession &mdash; bishops trace their line back to the apostles</li><li>We receive faith from Jesus through the apostles and their successors</li></ul><h3>What Students Learn</h3><ul><li>The Twelve Apostles</li><li>St. Peter as the first Pope</li><li>The role of bishops, priests, and deacons today</li><li>How Scripture and Tradition together pass on the faith</li><li>The story of Pentecost (Acts 2)</li><li>Missionary journeys of St. Paul</li></ul><div class='prayer'><strong>Prayer focus:</strong> Apostles&#39; Creed · Come Holy Spirit</div><h3>Assessments</h3><p>Apostles chart · Unit 4 test</p>",
+  "u5-mission": "<h2>🌟 Unit 5: The Church Has a Mission to the World</h2><h3>Big Ideas</h3><ul><li>The Church exists to bring Christ&#39;s love to the world</li><li>Every Christian is called to be a missionary in daily life</li><li>Corporal and spiritual works of mercy shape our mission</li></ul><h3>What Students Learn</h3><ul><li>Corporal Works of Mercy (feed the hungry, clothe the naked, etc.)</li><li>Spiritual Works of Mercy (instruct, counsel, pray)</li><li>Service projects: how can 3rd graders help?</li><li>Stewardship of God&#39;s creation (Laudato Si&#39; for kids)</li><li>Being a witness at school, home, and community</li><li>Mary, Star of the Sea, as guide for our mission</li></ul><div class='prayer'><strong>Prayer focus:</strong> Prayer of St. Francis · Prayer to Mary, Star of the Sea</div><h3>Assessments</h3><p>Service-learning project reflection</p>",
+};
+
+let currentUnit = null;
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = UNITS.map(u => `
+    <div class="unit-card" onclick="showLesson('${u.id}')">
+      <div class="unit-icon">${u.icon}</div>
+      <div class="unit-cc">${u.q} · ${u.cc}</div>
+      <div class="unit-title">${u.title}</div>
+    </div>
+  `).join('');
+  let sbHTML = '';
+  let lastQ = '';
+  UNITS.forEach(u => {
+    if (u.q !== lastQ) {
+      sbHTML += `<div class="sidebar-quarter">${u.q}</div>`;
+      lastQ = u.q;
+    }
+    const active = u.id === currentUnit ? 'active' : '';
+    sbHTML += `<div class="sidebar-unit ${active}" onclick="showLesson('${u.id}')">${u.icon} ${u.title}</div>`;
+  });
+  document.getElementById('sidebar-content').innerHTML = sbHTML;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  renderHome();
+}
+
+function showLesson(uid) {
+  currentUnit = uid;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('lesson-content').innerHTML = LESSONS[uid] || '<p>Content coming soon.</p>';
+  renderHome();
+}
+
+renderHome();
+</script>
+</body>
+</html>

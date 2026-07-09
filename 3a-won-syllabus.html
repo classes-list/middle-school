@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Syllabus &mdash; Mrs. Won &middot; 3rd Grade A &middot; SY 2026-2027</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-index-btn {
+  position: fixed; top: 20px; left: 20px;
+  background: #253a77; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-index-btn:hover { background: #1a2a4a; transform: translateX(-2px); }
+.print-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: #B45309; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+  box-shadow: 0 3px 10px rgba(180,83,9,0.25);
+  z-index: 10;
+}
+.print-btn:hover { background: #92400e; }
+
+.syllabus-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid #FFD100;
+}
+
+.header-top {
+  display: flex; gap: 24px; align-items: center;
+  border-bottom: 2px solid #e2e8f0; padding-bottom: 22px; margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.header-info { flex: 1 1 260px; }
+.header-info h1 { color: #253a77; font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+.header-info .role { color: #7a5f00; font-style: italic; font-size: 0.95rem; margin-bottom: 6px; }
+.header-info .contact { font-size: 0.9rem; line-height: 1.7; color: #444; }
+.header-info .contact strong { color: #253a77; }
+.header-info .contact a { color: #253a77; text-decoration: none; }
+.header-info .contact a:hover { text-decoration: underline; }
+.year-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFD100 0%, #FFB800 100%);
+  color: #253a77;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(255,209,0,0.35);
+}
+
+.subject-banner {
+  background: linear-gradient(135deg, #253a77 0%, #3457B2 100%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.subject-banner .eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; opacity: 0.88; margin-bottom: 4px; }
+.subject-banner h2 { font-size: 1.55rem; font-weight: 800; margin-bottom: 4px; }
+.subject-banner .sub { font-size: 0.95rem; opacity: 0.92; }
+
+section { margin-top: 30px; }
+section > h3 {
+  color: #253a77;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #FFD100;
+  display: flex; align-items: center; gap: 8px;
+}
+section p { color: #2d3748; font-size: 0.98rem; line-height: 1.7; margin-bottom: 12px; }
+section ul { margin: 10px 0 12px 22px; }
+section ul li { padding: 4px 0; color: #2d3748; font-size: 0.95rem; line-height: 1.5; }
+section ul li strong { color: #253a77; }
+
+.welcome-box {
+  background: #f0f4fc;
+  border-left: 4px solid #253a77;
+  padding: 16px 20px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.welcome-box p { font-style: italic; color: #2d3748; }
+
+.mission-box {
+  background: #fff8e1;
+  border-left: 4px solid #FFD100;
+  padding: 14px 20px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  color: #2d3748;
+  line-height: 1.6;
+  margin-top: 6px;
+}
+
+.subject-block {
+  margin-top: 22px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+.subject-header {
+  padding: 12px 18px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex; align-items: center; gap: 10px;
+  letter-spacing: 0.02em;
+}
+.subject-header .icon { font-size: 1.35rem; }
+.subject-tag {
+  margin-left: auto;
+  font-size: 0.72rem;
+  background: rgba(255,255,255,0.22);
+  padding: 3px 10px; border-radius: 999px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+}
+.quarters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: #e2e8f0;
+}
+.quarter {
+  background: #fff;
+  padding: 14px 14px 16px;
+  font-size: 0.85rem;
+}
+.q-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7a5f00;
+  margin-bottom: 4px;
+}
+.q-title {
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: #253a77;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.q-subtitle {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-style: italic;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+.q-list { list-style: none; padding: 0; margin: 4px 0 0; font-size: 0.8rem; color: #2d3748; }
+.q-list li {
+  padding: 2px 0 2px 12px; position: relative; line-height: 1.4;
+}
+.q-list li::before {
+  content: "•";
+  position: absolute; left: 0; color: #FFB800; font-weight: 800;
+}
+.eq {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed #cbd5e1;
+  font-size: 0.78rem;
+  color: #475569;
+  line-height: 1.4;
+}
+.eq strong { color: #253a77; }
+
+@media (max-width: 900px) {
+  .quarters { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 500px) {
+  .quarters { grid-template-columns: 1fr; }
+  .syllabus-card { padding: 26px 20px; }
+}
+
+/* Subject color themes for headers */
+.subj-reading   { background: linear-gradient(135deg, #6b21a8, #8b5cf6); }
+.subj-writing   { background: linear-gradient(135deg, #9333ea, #a78bfa); }
+.subj-grammar   { background: linear-gradient(135deg, #db2777, #f472b6); }
+.subj-phonics   { background: linear-gradient(135deg, #be185d, #ec4899); }
+.subj-math      { background: linear-gradient(135deg, #253a77, #3457B2); }
+.subj-ss        { background: linear-gradient(135deg, #b45309, #d97706); }
+.subj-science   { background: linear-gradient(135deg, #0f5132, #14b8a6); }
+.subj-religion  { background: linear-gradient(135deg, #7c2d12, #c2410c); }
+
+footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center;
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+@media print {
+  body { background: #fff; padding: 0; }
+  .back-index-btn, .print-btn { display: none; }
+  .syllabus-card { box-shadow: none; border-radius: 0; padding: 20px; }
+  .subject-block { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<a href="3a-won.html" class="back-index-btn" title="Back to Mrs. Won's Class">&larr; Back to Class</a>
+<button class="print-btn" onclick="window.print()">🖨️ Print</button>
+
+<div class="container">
+  <div class="syllabus-card">
+    <div class="header-top">
+      <div class="header-info">
+        <div class="year-badge">School Year 2026-2027</div>
+        <h1>Class Syllabus &middot; Mrs. Won</h1>
+        <div class="role">3rd Grade A Teacher &middot; Mary, Star of the Sea School</div>
+        <div class="contact">
+          <strong>Email:</strong> <a href="mailto:ewon@starofthesea.org">ewon@starofthesea.org</a><br>
+          <strong>Room:</strong> 3rd Grade A Classroom
+        </div>
+      </div>
+    </div>
+
+    <div class="subject-banner">
+      <div class="eyebrow">2026-2027 Curriculum Map</div>
+      <h2>Welcome to 3rd Grade A</h2>
+      <div class="sub">Reading &middot; Writing &middot; Grammar &middot; Phonics &middot; Math &middot; Social Studies &middot; Science &middot; Religion</div>
+    </div>
+
+    <section>
+      <h3>👋 Welcome</h3>
+      <div class="welcome-box">
+        <p>Aloha families! Welcome to 3rd Grade A. This year we will read great books, write with confidence,
+        become fluent in multiplication and division, explore the world through science and social studies,
+        and grow in our Catholic faith together. This syllabus is a quarter-by-quarter map of the year ahead
+        so that families know what to expect and how to support learning at home.</p>
+      </div>
+    </section>
+
+    <section>
+      <h3>📚 Curriculum Overview</h3>
+      <p>Each subject follows a four-quarter arc built around Essential Questions (EQs). Below is what
+      students will study each quarter.</p>
+
+      <!-- ─────────── READING ─────────── -->
+      <div class="subject-block">
+        <div class="subject-header subj-reading">
+          <span class="icon">📖</span> Reading
+          <span class="subject-tag">4 Units</span>
+        </div>
+        <div class="quarters">
+          <div class="quarter">
+            <div class="q-label">Q1 &middot; Unit 1</div>
+            <div class="q-title">Routines &amp; Building a Reading Life</div>
+            <div class="q-subtitle">5 Basic Comprehension Strategies</div>
+            <ul class="q-list">
+              <li>Visualizing</li>
+              <li>Inferring</li>
+              <li>Predicting</li>
+              <li>Questioning</li>
+              <li>Summarizing</li>
+              <li><strong>Novels:</strong> <em>Muggie Maggie</em>; <em>James and the Giant Peach</em></li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How do readers create reading lives by building strong reading habits?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q2 &middot; Unit 2</div>
+            <div class="q-title">Reading to Learn</div>
+            <div class="q-subtitle">Grasping main ideas &amp; text structures (nonfiction)</div>
+            <ul class="q-list">
+              <li>Text structures in expository writing</li>
+              <li><strong>Novel:</strong> <em>What Was the First Thanksgiving?</em></li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How can we use text structure of expository texts to help us comprehend nonfiction?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q3 &middot; Unit 3</div>
+            <div class="q-title">Character Study</div>
+            <div class="q-subtitle">Story elements &middot; characters &middot; setting &middot; plot</div>
+            <ul class="q-list">
+              <li>Analyzing character traits &amp; motives</li>
+              <li><strong>Novel:</strong> <em>Family Under the Bridge</em></li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How can we use what we know about characters to find the big idea of a story?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q4 &middot; Unit 4</div>
+            <div class="q-title">Mystery: Skills in Disguise</div>
+            <div class="q-subtitle">Story details &middot; inferring &middot; predicting</div>
+            <ul class="q-list">
+              <li>Reading for clues in mystery stories</li>
+              <li><strong>Novel:</strong> A-Z Mysteries &mdash; <em>The White Wolf</em></li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How do mystery readers read for clues?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────── WRITING ─────────── -->
+      <div class="subject-block">
+        <div class="subject-header subj-writing">
+          <span class="icon">✍️</span> Writing
+          <span class="subject-tag">5 Units</span>
+        </div>
+        <div class="quarters">
+          <div class="quarter">
+            <div class="q-label">Q1 &middot; Units 1&ndash;2</div>
+            <div class="q-title">Launching Workshop &amp; Crafting True Stories</div>
+            <div class="eq"><strong>EQ:</strong> How do we craft true stories?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q2 &middot; Unit 3</div>
+            <div class="q-title">Informational Writing</div>
+            <div class="eq"><strong>EQ:</strong> How can we best inform our readers?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q3 &middot; Unit 4</div>
+            <div class="q-title">Persuasive Writing</div>
+            <div class="eq"><strong>EQ:</strong> How can we best persuade our readers?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q4 &middot; Units 4&ndash;5</div>
+            <div class="q-title">Poetry &amp; Adapting Fairy Tales</div>
+            <ul class="q-list">
+              <li><strong>Poetry:</strong> language, meaning, emotion</li>
+              <li><strong>Fairy Tales:</strong> adapting the classics</li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How do poets use language &mdash; and how do writers adapt classic fairy tales?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────── GRAMMAR ─────────── -->
+      <div class="subject-block">
+        <div class="subject-header subj-grammar">
+          <span class="icon">🔤</span> Grammar
+          <span class="subject-tag">4 Units</span>
+        </div>
+        <div class="quarters">
+          <div class="quarter">
+            <div class="q-label">Q1 &middot; Unit 1</div>
+            <div class="q-title">Nouns, Verbs &amp; Modifiers</div>
+            <ul class="q-list">
+              <li>Common &amp; Proper Nouns</li>
+              <li>Plural &amp; Abstract Nouns</li>
+              <li>Regular &amp; Irregular Verbs</li>
+              <li>Verb Tenses (past, present, future)</li>
+              <li>Adjectives &amp; Adverbs</li>
+            </ul>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q2 &middot; Unit 2</div>
+            <div class="q-title">Sentence Structure</div>
+            <ul class="q-list">
+              <li>Pronouns &amp; Antecedents</li>
+              <li>Helping &amp; Linking Verbs</li>
+              <li>Subject &amp; Predicate</li>
+              <li>Subject-Verb Agreement</li>
+              <li>Conjunctions</li>
+              <li>Simple, Compound &amp; Complex Sentences</li>
+            </ul>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q3 &middot; Unit 3</div>
+            <div class="q-title">Punctuation &amp; Possessives</div>
+            <ul class="q-list">
+              <li>Capitalizing Titles</li>
+              <li>Commas (parts 1 &amp; 2)</li>
+              <li>Quotations</li>
+              <li>Commas and Quotations</li>
+              <li>Possessive Nouns</li>
+              <li>Possessive Pronouns &amp; Adjectives</li>
+            </ul>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q4 &middot; Unit 4</div>
+            <div class="q-title">Word Study</div>
+            <ul class="q-list">
+              <li>Comparative &amp; Superlative</li>
+              <li>Prefixes &amp; Suffixes</li>
+              <li>Multiple-Meaning Words</li>
+              <li>Shades of Meaning</li>
+              <li>Dictionary Skills</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────── PHONICS ─────────── -->
+      <div class="subject-block">
+        <div class="subject-header subj-phonics">
+          <span class="icon">🔊</span> Phonics
+          <span class="subject-tag">4 Units</span>
+        </div>
+        <div class="quarters">
+          <div class="quarter">
+            <div class="q-label">Q1 &middot; Unit 1</div>
+            <div class="q-title">Long &amp; Short Vowels</div>
+            <ul class="q-list">
+              <li>Long A, E, I, O Patterns</li>
+              <li>Short e and a</li>
+              <li>Short Vowel Patterns</li>
+            </ul>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q2 &middot; Unit 2</div>
+            <div class="q-title">R-Controlled &amp; Blends</div>
+            <ul class="q-list">
+              <li>-er, -or, -ur, -ir</li>
+              <li>-ore, -oar, -air, -are, -ure</li>
+              <li>Contractions</li>
+              <li>-oy, -oi</li>
+              <li>pr, sh, th, pl blends</li>
+              <li>ck, ct, ft, ld, mp, nd endings</li>
+            </ul>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q3 &middot; Unit 3</div>
+            <div class="q-title">Consonant Clusters</div>
+            <ul class="q-list">
+              <li>ng, nk, nt, pt, sk, st</li>
+              <li>ch, -tch</li>
+              <li>spr, shr, str, squ, scr, spl, thr</li>
+              <li>gh, ph, f</li>
+              <li>Silent letter combos: mb, gn, wr, kn, stle</li>
+              <li>Hard/soft "g" &amp; "c"</li>
+            </ul>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q4 &middot; Unit 4</div>
+            <div class="q-title">Endings, Affixes &amp; Word Building</div>
+            <ul class="q-list">
+              <li>Endings: -ed, -ing</li>
+              <li>Suffixes: -ly, -less, -ness, -ful, -ily</li>
+              <li>Suffixes: -y, -al, -able, -ible</li>
+              <li>Suffixes: -tion, -sion, -ment, -er, -est</li>
+              <li>Prefixes: re-, dis-, un-, im-, in-</li>
+              <li>Plurals (regular &amp; irregular)</li>
+              <li>Compound Words &amp; Homonyms</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────── MATH ─────────── -->
+      <div class="subject-block">
+        <div class="subject-header subj-math">
+          <span class="icon">🧮</span> Math &middot; enVisionMATH 2.0
+          <span class="subject-tag">Topics 1&ndash;16</span>
+        </div>
+        <div class="quarters">
+          <div class="quarter">
+            <div class="q-label">Q1 &middot; Unit 1</div>
+            <div class="q-title">Multiplication Foundations</div>
+            <div class="q-subtitle">Topics 1&ndash;3</div>
+            <ul class="q-list">
+              <li>Understanding Multiplication</li>
+              <li>Multiplication Facts</li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How do we understand and use multiplication?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q2 &middot; Units 1&ndash;2</div>
+            <div class="q-title">Division &amp; Data</div>
+            <div class="q-subtitle">Topics 4&ndash;7</div>
+            <ul class="q-list">
+              <li>Using Multiplication to Divide</li>
+              <li>Division Facts</li>
+              <li>Represent &amp; Interpret Data</li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How is division related to multiplication?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q3 &middot; Units 3&ndash;4</div>
+            <div class="q-title">Addition, Subtraction &amp; Geometry</div>
+            <div class="q-subtitle">Topics 8&ndash;11, 15</div>
+            <ul class="q-list">
+              <li>Fluently Add &amp; Subtract Within 1,000</li>
+              <li>Operations &amp; Word Problems</li>
+              <li>Geometry</li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How can we solve problems with the four operations?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q4 &middot; Units 5&ndash;6</div>
+            <div class="q-title">Fractions &amp; Measurement</div>
+            <div class="q-subtitle">Topics 12&ndash;14, 16</div>
+            <ul class="q-list">
+              <li>Fractions</li>
+              <li>Measurement</li>
+            </ul>
+            <div class="eq"><strong>EQ:</strong> How do fractions and measurements describe our world?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────── SOCIAL STUDIES ─────────── -->
+      <div class="subject-block">
+        <div class="subject-header subj-ss">
+          <span class="icon">🌍</span> Social Studies
+          <span class="subject-tag">4 Units</span>
+        </div>
+        <div class="quarters">
+          <div class="quarter">
+            <div class="q-label">Q1 &middot; Civics</div>
+            <div class="q-title">Communities Build a Nation &amp; Leaders in Our World</div>
+            <div class="q-subtitle">Governments</div>
+            <div class="eq"><strong>EQ:</strong> How does our past affect our future?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q2 &middot; History</div>
+            <div class="q-title">Governments</div>
+            <div class="eq"><strong>EQ:</strong> How do people organize themselves?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q3 &middot; Economics</div>
+            <div class="q-title">Economics</div>
+            <div class="eq"><strong>EQ:</strong> How can we meet our needs in a changing world?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q4 &middot; Geography</div>
+            <div class="q-title">Earth's Resources &amp; Cultures Around the World</div>
+            <div class="eq"><strong>EQ:</strong> How do we live where we do?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────── SCIENCE ─────────── -->
+      <div class="subject-block">
+        <div class="subject-header subj-science">
+          <span class="icon">🔬</span> Science
+          <span class="subject-tag">NGSS + Hawaiiana</span>
+        </div>
+        <div class="quarters">
+          <div class="quarter">
+            <div class="q-label">Q1 &middot; Engineering &amp; Tech</div>
+            <div class="q-title">Scientific Method, Engineering &amp; Technology</div>
+            <div class="eq"><strong>EQ:</strong> How do engineers create a prototype and test it to see if it works?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q2 &middot; Physical Science</div>
+            <div class="q-title">Forces and Motion</div>
+            <div class="eq"><strong>EQ:</strong> How does force impact motion?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q3 &middot; Life Science</div>
+            <div class="q-title">Life Cycles &amp; Inherited Traits<br>Organisms &amp; Their Environment</div>
+            <div class="q-subtitle">Hawaiiana Unit</div>
+            <div class="eq"><strong>EQ:</strong> How do living things survive?</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q4 &middot; Earth &amp; Space</div>
+            <div class="q-title">Weather Impacts</div>
+            <div class="eq"><strong>EQ:</strong> How does climate influence our choices?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────── RELIGION ─────────── -->
+      <div class="subject-block">
+        <div class="subject-header subj-religion">
+          <span class="icon">✝️</span> Religion &middot; The Four Marks of the Church
+          <span class="subject-tag">5 Units</span>
+        </div>
+        <div class="quarters">
+          <div class="quarter">
+            <div class="q-label">Q1 &middot; Unit 1</div>
+            <div class="q-title">The Church is One</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q2 &middot; Unit 2</div>
+            <div class="q-title">The Church is Holy</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q3 &middot; Unit 3</div>
+            <div class="q-title">The Church is Catholic</div>
+          </div>
+          <div class="quarter">
+            <div class="q-label">Q4 &middot; Units 4&ndash;5</div>
+            <div class="q-title">The Church is Apostolic<br>+ The Church Has a Mission to the World</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3>🎯 Grading &amp; Assessment</h3>
+      <p>Student progress is reported quarterly. Grades are based on daily work,
+      formative and summative assessments, class participation, and project-based
+      learning aligned with each subject&#39;s Essential Questions.</p>
+      <ul>
+        <li><strong>Daily Work &amp; Practice</strong> &mdash; classwork, weekly practice</li>
+        <li><strong>Assessments</strong> &mdash; quizzes, chapter/unit tests, benchmark reads</li>
+        <li><strong>Projects</strong> &mdash; writing pieces, novels studies, science labs, social studies research</li>
+        <li><strong>Participation &amp; Effort</strong> &mdash; classroom discussions, prayer, service</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>🏫 Classroom Community &amp; Expectations</h3>
+      <p>Our classroom follows Mary, Star of the Sea School&#39;s values of respect,
+      kindness, responsibility, and faith. Students are expected to:</p>
+      <ul>
+        <li>Come to class prepared and ready to learn</li>
+        <li>Treat classmates, teachers, and school property with respect</li>
+        <li>Complete assignments on time and to their best ability</li>
+        <li>Participate in prayer and faith formation</li>
+        <li>Ask for help when needed &mdash; we are a learning community</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>🏠 Home &ndash; School Partnership</h3>
+      <p>Families are our most important partner in student success. To support
+      learning at home:</p>
+      <ul>
+        <li>Read together nightly (20+ minutes)</li>
+        <li>Practice multiplication and division facts</li>
+        <li>Review the week&#39;s Essential Question at dinner</li>
+        <li>Check FACTS/RenWeb weekly for grades and communications</li>
+        <li>Email Mrs. Won with questions at any time</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>📞 Communication</h3>
+      <p>The best way to reach Mrs. Won is by email at
+      <strong><a href="mailto:ewon@starofthesea.org">ewon@starofthesea.org</a></strong>.
+      Emails will be answered within one school day. Parent-teacher conferences
+      are held quarterly &mdash; families may also request additional meetings at any time.</p>
+    </section>
+
+    <footer>
+      Mary, Star of the Sea School &middot; SY 2026-2027 &middot; Mrs. Edlin Won &middot; 3rd Grade A
+    </footer>
+  </div>
+</div>
+</body>
+</html>

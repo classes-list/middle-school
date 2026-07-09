@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mary, Star of the Sea — 3rd Grade ELA</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f0ff 0%, #f8f9fa 100%); color: #253a77; min-height: 100vh; }
+.container { display: flex; min-height: 100vh; }
+.sidebar { width: 300px; background: #6b21a8; color: #fff; padding: 24px 20px; overflow-y: auto; }
+.sidebar h2 { color: #FFD100; font-size: 1.05rem; }
+.sidebar-sub { color: #d4c8b0; font-size: 0.78rem; margin: 0 0 12px 0; }
+.sidebar-quarter { margin-top: 20px; padding-top: 10px; border-top: 1px solid #7c3aed; color: #FFD100; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.sidebar-unit { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: 4px 0; background: #7c3aed; border-radius: 6px; cursor: pointer; transition: all 0.15s; font-size: 0.88rem; line-height: 1.25; }
+.sidebar-unit:hover { background: #FFD100; color: #253a77; }
+.sidebar-unit.active { background: #FFD100; color: #253a77; font-weight: 700; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: #fff; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #eee; flex-wrap: wrap; gap: 10px; }
+.topbar-logos { display: flex; gap: 10px; }
+.logo-circle { width: 46px; height: 46px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(37,58,119,0.15); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+.logo-circle img { display: block; }
+.logo-circle.msos img { height: 100%; width: auto; }
+.logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+.logo-circle.msos { background: #1a2a4a; }
+.summer-home-btn { background: #6b21a8; color: #fff; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 0.85rem; }
+.summer-home-btn:hover { background: #7c3aed; }
+.topbar-right { color: #666; font-size: 0.85rem; font-weight: 600; }
+.content { flex: 1; padding: 24px 32px; overflow-y: auto; max-width: 900px; }
+.screen { display: none; }
+.screen.active { display: block; }
+.units-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.unit-card { background: #fff; padding: 22px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; border-left: 4px solid #6b21a8; }
+.unit-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+.unit-icon { font-size: 2rem; margin-bottom: 6px; }
+.unit-title { font-weight: 700; color: #6b21a8; font-size: 1rem; margin-bottom: 4px; line-height: 1.2; }
+.unit-cc { font-size: 0.72rem; color: #7a5f00; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.lesson-content h2 { color: #6b21a8; margin-bottom: 12px; font-size: 1.5rem; padding-bottom: 8px; border-bottom: 3px solid #FFD100; }
+.lesson-content h3 { color: #7c3aed; margin: 20px 0 8px; font-size: 1.05rem; padding: 6px 12px; background: linear-gradient(90deg, #f5f0ff 0%, transparent 100%); border-left: 3px solid #7c3aed; }
+.lesson-content p { margin-bottom: 10px; line-height: 1.6; }
+.lesson-content ul, .lesson-content ol { margin: 8px 0 12px 22px; }
+.lesson-content li { margin-bottom: 6px; line-height: 1.5; }
+.lesson-content strong { color: #6b21a8; }
+.lesson-content .eq { background: #fffbea; border-left: 4px solid #B8860B; padding: 10px 14px; border-radius: 6px; margin: 10px 0 16px; font-style: italic; color: #333; }
+.lesson-content .vocab { background: #eef4ff; padding: 10px 14px; border-radius: 6px; margin: 14px 0; font-size: 0.9rem; }
+.lesson-content .vocab strong { color: #253a77; }
+.lesson-content .prayer { background: #e6f4ea; border-left: 3px solid #4a8c3a; padding: 10px 14px; border-radius: 6px; margin: 14px 0; }
+.lesson-content .prayer strong { color: #2e6329; }
+.back-to-home { margin-bottom: 16px; }
+.back-to-home button { background: #6b7280; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+.back-to-home button:hover { background: #4b5563; }
+.resources-box { margin-top: 30px; background: #fff; padding: 20px; border-radius: 10px; border-left: 5px solid #6b21a8; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.resources-box h2 { color: #6b21a8; font-size: 1.25rem; margin-bottom: 12px; padding: 0; border: none; }
+.res-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.res-link { background: #f5f0ff; padding: 12px; border-radius: 6px; text-decoration: none; color: #6b21a8; display: block; transition: all 0.2s; }
+.res-link:hover { background: #6b21a8; color: #fff; }
+.res-link-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 3px; }
+.res-link-desc { font-size: 0.78rem; opacity: 0.85; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2>
+    <p class="sidebar-sub">3rd Grade ELA · Mrs. Won</p>
+    <div id="sidebar-content"></div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+        <a href="3a-won.html" class="summer-home-btn">← Back to Class</a>
+        <a href="msos-ela-3-curriculum-map.html" class="summer-home-btn" style="background:#B45309;">📅 Curriculum Map</a>
+        <div class="topbar-logos">
+          <span class="logo-circle msos"><img src="msos-logo.svg" alt="MSOS Logo"></span>
+          <span class="logo-circle nui"><img src="nui-logo.png" alt="NUI Logo"></span>
+        </div>
+        <span style="font-weight:600;">3rd Grade English Language Arts</span>
+      </div>
+      <div class="topbar-right">ELA · Grade 3</div>
+    </div>
+    <div class="content">
+      <div id="home-screen" class="screen active">
+        <h1 style="color:#6b21a8;margin-bottom:16px;">📖 3rd Grade English Language Arts</h1>
+        <p style="color:#555;font-style:italic;margin-bottom:24px;">Reading · Writing · Grammar · Phonics · SY 2026-2027</p>
+        <div id="units-grid" class="units-grid"></div>
+        <div class="resources-box">
+          <h2>🌟 Recommended Resources</h2>
+          <div class="res-links"><a class="res-link" href="https://www.readingrockets.org/" target="_blank" rel="noopener"><div class="res-link-title">Reading Rockets</div><div class="res-link-desc">Strategies, books, support for readers</div></a><a class="res-link" href="https://www.commonlit.org/" target="_blank" rel="noopener"><div class="res-link-title">CommonLit</div><div class="res-link-desc">Free literature and nonfiction by grade</div></a><a class="res-link" href="https://www.readworks.org/" target="_blank" rel="noopener"><div class="res-link-title">ReadWorks</div><div class="res-link-desc">Passages, questions, vocabulary</div></a><a class="res-link" href="https://www.storylineonline.net/" target="_blank" rel="noopener"><div class="res-link-title">Storyline Online</div><div class="res-link-desc">Celebrities read children's books</div></a><a class="res-link" href="https://www.spellingcity.com/" target="_blank" rel="noopener"><div class="res-link-title">SpellingCity</div><div class="res-link-desc">Word-list practice</div></a><a class="res-link" href="https://www.getepic.com/" target="_blank" rel="noopener"><div class="res-link-title">Epic! Books for Kids</div><div class="res-link-desc">Digital library of leveled books</div></a></div>
+        </div>
+      </div>
+      <div id="lesson-screen" class="screen">
+        <div class="back-to-home"><button onclick="showHome()">← Back to Overview</button></div>
+        <div id="lesson-content" class="lesson-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const UNITS = [
+  { id:'q1-reading', q:'Q1', icon:'📚', title:"Reading: Building a Reading Life", cc:"RL.3.1-10 \u00b7 RF.3.4" },
+  { id:'q1-writing', q:'Q1', icon:'✏️', title:"Writing: Launching Workshop &amp; True Stories", cc:"W.3.3 \u00b7 L.3.1-3" },
+  { id:'q1-grammar', q:'Q1', icon:'🧩', title:"Grammar: Nouns, Verbs, Adjectives, Adverbs", cc:"L.3.1" },
+  { id:'q1-phonics', q:'Q1', icon:'🔤', title:"Phonics: Long Vowels &amp; Short Patterns", cc:"RF.3.3" },
+  { id:'q2-reading', q:'Q2', icon:'📚', title:"Reading: Reading to Learn (Nonfiction)", cc:"RI.3.1-10" },
+  { id:'q2-writing', q:'Q2', icon:'✏️', title:"Writing: Informational Writing", cc:"W.3.2 \u00b7 W.3.7-8" },
+  { id:'q2-grammar', q:'Q2', icon:'🧩', title:"Grammar: Pronouns &amp; Sentence Types", cc:"L.3.1" },
+  { id:'q2-phonics', q:'Q2', icon:'🔤', title:"Phonics: R-Controlled &amp; Blends", cc:"RF.3.3" },
+  { id:'q3-reading', q:'Q3', icon:'📚', title:"Reading: Character Study", cc:"RL.3.1-6" },
+  { id:'q3-writing', q:'Q3', icon:'✏️', title:"Writing: Persuasive Writing", cc:"W.3.1" },
+  { id:'q3-grammar', q:'Q3', icon:'🧩', title:"Grammar: Punctuation &amp; Possessives", cc:"L.3.2" },
+  { id:'q3-phonics', q:'Q3', icon:'🔤', title:"Phonics: Consonant Clusters &amp; Silent Letters", cc:"RF.3.3" },
+  { id:'q4-reading', q:'Q4', icon:'📚', title:"Reading: Mystery \u2014 Skills in Disguise", cc:"RL.3.1-3" },
+  { id:'q4-writing', q:'Q4', icon:'✏️', title:"Writing: Poetry &amp; Adapting Fairy Tales", cc:"W.3.3 \u00b7 L.3.5" },
+  { id:'q4-grammar', q:'Q4', icon:'🧩', title:"Grammar: Word Study", cc:"L.3.4-6" },
+  { id:'q4-phonics', q:'Q4', icon:'🔤', title:"Phonics: Endings &amp; Word Parts", cc:"RF.3.3" },
+];
+
+const LESSONS = {
+  "q1-reading": "<h2>📚 Reading Q1: Building a Reading Life</h2><div class='eq'>EQ: How do readers create reading lives by building strong reading habits?</div><h3>Focus</h3><ul><li>Reading routines and stamina</li><li>5 basic comprehension strategies: visualizing, inferring, predicting, questioning, summarizing</li><li>Sticky-note thinking; reader's notebook</li></ul><h3>Novels</h3><p><strong>Muggie Maggie</strong> by Beverly Cleary · <strong>James and the Giant Peach</strong> by Roald Dahl</p><h3>Assessments</h3><p>Reading journal · Novel comprehension test</p>",
+  "q1-writing": "<h2>✏️ Writing Q1: Launching Workshop &amp; True Stories</h2><div class='eq'>EQ: How do we craft true stories?</div><h3>Focus</h3><ul><li>Writing workshop routines</li><li>Small-moment personal narratives</li><li>Drafting, revising, editing</li><li>Author's craft: dialogue, details, feelings</li></ul><h3>Assessments</h3><p>Published personal narrative · Writing rubric</p>",
+  "q1-grammar": "<h2>🧩 Grammar Q1: Nouns, Verbs, Adjectives, Adverbs</h2><h3>Topics</h3><ul><li>Common &amp; proper nouns</li><li>Plural nouns; abstract nouns</li><li>Verbs (regular, irregular)</li><li>Verb tenses (past, present, future)</li><li>Adjectives &amp; adverbs</li></ul><h3>Assessments</h3><p>Weekly grammar quizzes</p>",
+  "q1-phonics": "<h2>🔤 Phonics Q1: Long Vowels &amp; Short Patterns</h2><h3>Topics</h3><ul><li>Long A patterns (ai, ay, a_e)</li><li>Long E patterns (ee, ea)</li><li>Long I patterns (i_e, igh, y)</li><li>Long O patterns (oa, ow)</li><li>Short e/a vowel patterns</li></ul><h3>Assessments</h3><p>Weekly phonics quizzes · Decoding checks</p>",
+  "q2-reading": "<h2>📚 Reading Q2: Reading to Learn (Nonfiction)</h2><div class='eq'>EQ: How can we use the text structure of expository texts to help us comprehend nonfiction?</div><h3>Focus</h3><ul><li>Grasping main ideas</li><li>Nonfiction text structures</li><li>Comparing accounts of the same event</li><li>Text features (headings, glossary, captions)</li></ul><h3>Novel</h3><p><strong>What Was the First Thanksgiving?</strong> by Joan Holub</p><h3>Assessments</h3><p>Nonfiction summary · Text structure quiz</p>",
+  "q2-writing": "<h2>✏️ Writing Q2: Informational Writing</h2><div class='eq'>EQ: How can we best inform our readers?</div><h3>Focus</h3><ul><li>Text features (headings, glossary)</li><li>Research skills</li><li>Topic sentences &amp; supporting details</li><li>All-About books</li></ul><h3>Assessments</h3><p>All-About book publication</p>",
+  "q2-grammar": "<h2>🧩 Grammar Q2: Pronouns &amp; Sentence Types</h2><h3>Topics</h3><ul><li>Pronouns &amp; antecedents</li><li>Helping &amp; linking verbs</li><li>Subject &amp; predicate</li><li>Subject-verb agreement</li><li>Conjunctions</li><li>Simple, compound, complex sentences</li></ul>",
+  "q2-phonics": "<h2>🔤 Phonics Q2: R-Controlled &amp; Blends</h2><h3>Topics</h3><ul><li>-er, -or, -ur, -ir</li><li>-ore, -oar, -air, -are, -ure</li><li>Contractions</li><li>-oy and -oi diphthongs</li><li>Blends: pr, sh, th, pl</li><li>Ends: ck, ct, ft, ld, mp, nd</li></ul>",
+  "q3-reading": "<h2>📚 Reading Q3: Character Study</h2><div class='eq'>EQ: How can we use what we know about characters to find the big idea of a story?</div><h3>Focus</h3><ul><li>Story elements (characters, setting, plot)</li><li>Analyzing character traits &amp; motives</li><li>Theme &amp; central message</li></ul><h3>Novel</h3><p><strong>Family Under the Bridge</strong> by Natalie Savage Carlson</p><h3>Assessments</h3><p>Character analysis essay · Novel test</p>",
+  "q3-writing": "<h2>✏️ Writing Q3: Persuasive Writing</h2><div class='eq'>EQ: How can we best persuade our readers?</div><h3>Focus</h3><ul><li>Opinion vs fact</li><li>Reasons and evidence</li><li>Persuasive letters &amp; ads</li><li>Linking words (because, so, therefore)</li></ul><h3>Assessments</h3><p>Persuasive letter · Ad poster project</p>",
+  "q3-grammar": "<h2>🧩 Grammar Q3: Punctuation &amp; Possessives</h2><h3>Topics</h3><ul><li>Capitalizing titles</li><li>Commas, parts 1 &amp; 2</li><li>Quotations</li><li>Commas with quotations</li><li>Possessive nouns</li><li>Possessive pronouns &amp; adjectives</li></ul>",
+  "q3-phonics": "<h2>🔤 Phonics Q3: Consonant Clusters &amp; Silent Letters</h2><h3>Topics</h3><ul><li>ng, nk, nt, pt, sk, st</li><li>ch, -tch</li><li>spr, shr, str, squ, scr, spl, thr</li><li>gh, ph, f (same sound)</li><li>mb, gn, wr, kn, stle (silent)</li><li>Soft/hard g and c</li></ul>",
+  "q4-reading": "<h2>📚 Reading Q4: Mystery — Skills in Disguise</h2><div class='eq'>EQ: How do mystery readers read for clues?</div><h3>Focus</h3><ul><li>Story details</li><li>Inferring &amp; predicting</li><li>Clue-tracking notebooks</li></ul><h3>Novel</h3><p><strong>A-Z Mysteries: The White Wolf</strong> by Ron Roy</p><h3>Assessments</h3><p>Clue journal · Mystery unit test</p>",
+  "q4-writing": "<h2>✏️ Writing Q4: Poetry &amp; Adapting Fairy Tales</h2><div class='eq'>EQ: How do poets use language to create meaning? How do writers adapt fairy tales?</div><h3>Focus</h3><ul><li>Rhyme, rhythm, alliteration</li><li>Metaphor &amp; simile</li><li>Free verse &amp; haiku</li><li>Fairy tale structure &amp; adaptation</li></ul><h3>Assessments</h3><p>Poetry anthology · Fairy-tale adaptation</p>",
+  "q4-grammar": "<h2>🧩 Grammar Q4: Word Study</h2><h3>Topics</h3><ul><li>Comparatives &amp; superlatives</li><li>Prefixes &amp; suffixes</li><li>Multiple-meaning words</li><li>Shades of meaning</li><li>Dictionary skills</li></ul>",
+  "q4-phonics": "<h2>🔤 Phonics Q4: Endings &amp; Word Parts</h2><h3>Topics</h3><ul><li>Endings -ed, -ing</li><li>Suffixes: -ly, -less, -ness, -ful, -ily</li><li>Suffixes: -y, -al, -able, -ible</li><li>Suffixes: -tion, -sion, -ment, -er, -est</li><li>Prefixes: re-, dis-, un-, im-, in-</li><li>Plurals, compound words, homonyms</li></ul>",
+};
+
+let currentUnit = null;
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = UNITS.map(u => `
+    <div class="unit-card" onclick="showLesson('${u.id}')">
+      <div class="unit-icon">${u.icon}</div>
+      <div class="unit-cc">${u.q} · ${u.cc}</div>
+      <div class="unit-title">${u.title}</div>
+    </div>
+  `).join('');
+  let sbHTML = '';
+  let lastQ = '';
+  UNITS.forEach(u => {
+    if (u.q !== lastQ) {
+      sbHTML += `<div class="sidebar-quarter">${u.q}</div>`;
+      lastQ = u.q;
+    }
+    const active = u.id === currentUnit ? 'active' : '';
+    sbHTML += `<div class="sidebar-unit ${active}" onclick="showLesson('${u.id}')">${u.icon} ${u.title}</div>`;
+  });
+  document.getElementById('sidebar-content').innerHTML = sbHTML;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  renderHome();
+}
+
+function showLesson(uid) {
+  currentUnit = uid;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('lesson-content').innerHTML = LESSONS[uid] || '<p>Content coming soon.</p>';
+  renderHome();
+}
+
+renderHome();
+</script>
+</body>
+</html>

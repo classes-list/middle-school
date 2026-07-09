@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mary, Star of the Sea — 3rd Grade Social Studies</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #fff8ec 0%, #f8f9fa 100%); color: #253a77; min-height: 100vh; }
+.container { display: flex; min-height: 100vh; }
+.sidebar { width: 300px; background: #b45309; color: #fff; padding: 24px 20px; overflow-y: auto; }
+.sidebar h2 { color: #FFD100; font-size: 1.05rem; }
+.sidebar-sub { color: #d4c8b0; font-size: 0.78rem; margin: 0 0 12px 0; }
+.sidebar-quarter { margin-top: 20px; padding-top: 10px; border-top: 1px solid #d97706; color: #FFD100; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.sidebar-unit { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin: 4px 0; background: #d97706; border-radius: 6px; cursor: pointer; transition: all 0.15s; font-size: 0.88rem; line-height: 1.25; }
+.sidebar-unit:hover { background: #FFD100; color: #253a77; }
+.sidebar-unit.active { background: #FFD100; color: #253a77; font-weight: 700; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: #fff; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #eee; flex-wrap: wrap; gap: 10px; }
+.topbar-logos { display: flex; gap: 10px; }
+.logo-circle { width: 46px; height: 46px; border-radius: 50%; background: #fff; box-shadow: 0 2px 6px rgba(37,58,119,0.15); overflow: hidden; display: inline-flex; align-items: center; justify-content: flex-start; flex-shrink: 0; }
+.logo-circle img { display: block; }
+.logo-circle.msos img { height: 100%; width: auto; }
+.logo-circle.nui img { width: 100%; height: 100%; object-fit: cover; }
+.logo-circle.msos { background: #1a2a4a; }
+.summer-home-btn { background: #b45309; color: #fff; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 0.85rem; }
+.summer-home-btn:hover { background: #d97706; }
+.topbar-right { color: #666; font-size: 0.85rem; font-weight: 600; }
+.content { flex: 1; padding: 24px 32px; overflow-y: auto; max-width: 900px; }
+.screen { display: none; }
+.screen.active { display: block; }
+.units-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.unit-card { background: #fff; padding: 22px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.2s; border-left: 4px solid #b45309; }
+.unit-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+.unit-icon { font-size: 2rem; margin-bottom: 6px; }
+.unit-title { font-weight: 700; color: #b45309; font-size: 1rem; margin-bottom: 4px; line-height: 1.2; }
+.unit-cc { font-size: 0.72rem; color: #7a5f00; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.lesson-content h2 { color: #b45309; margin-bottom: 12px; font-size: 1.5rem; padding-bottom: 8px; border-bottom: 3px solid #FFD100; }
+.lesson-content h3 { color: #d97706; margin: 20px 0 8px; font-size: 1.05rem; padding: 6px 12px; background: linear-gradient(90deg, #fff8ec 0%, transparent 100%); border-left: 3px solid #d97706; }
+.lesson-content p { margin-bottom: 10px; line-height: 1.6; }
+.lesson-content ul, .lesson-content ol { margin: 8px 0 12px 22px; }
+.lesson-content li { margin-bottom: 6px; line-height: 1.5; }
+.lesson-content strong { color: #b45309; }
+.lesson-content .eq { background: #fffbea; border-left: 4px solid #B8860B; padding: 10px 14px; border-radius: 6px; margin: 10px 0 16px; font-style: italic; color: #333; }
+.lesson-content .vocab { background: #eef4ff; padding: 10px 14px; border-radius: 6px; margin: 14px 0; font-size: 0.9rem; }
+.lesson-content .vocab strong { color: #253a77; }
+.lesson-content .prayer { background: #e6f4ea; border-left: 3px solid #4a8c3a; padding: 10px 14px; border-radius: 6px; margin: 14px 0; }
+.lesson-content .prayer strong { color: #2e6329; }
+.back-to-home { margin-bottom: 16px; }
+.back-to-home button { background: #6b7280; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.85rem; }
+.back-to-home button:hover { background: #4b5563; }
+.resources-box { margin-top: 30px; background: #fff; padding: 20px; border-radius: 10px; border-left: 5px solid #b45309; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.resources-box h2 { color: #b45309; font-size: 1.25rem; margin-bottom: 12px; padding: 0; border: none; }
+.res-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.res-link { background: #fff8ec; padding: 12px; border-radius: 6px; text-decoration: none; color: #b45309; display: block; transition: all 0.2s; }
+.res-link:hover { background: #b45309; color: #fff; }
+.res-link-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 3px; }
+.res-link-desc { font-size: 0.78rem; opacity: 0.85; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <h2 style="margin:0 0 4px 0;">Mary, Star of the Sea</h2>
+    <p class="sidebar-sub">3rd Grade Social Studies · Mrs. Won</p>
+    <div id="sidebar-content"></div>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
+        <a href="3a-won.html" class="summer-home-btn">← Back to Class</a>
+        <a href="msos-social-studies-3-curriculum-map.html" class="summer-home-btn" style="background:#B45309;">📅 Curriculum Map</a>
+        <div class="topbar-logos">
+          <span class="logo-circle msos"><img src="msos-logo.svg" alt="MSOS Logo"></span>
+          <span class="logo-circle nui"><img src="nui-logo.png" alt="NUI Logo"></span>
+        </div>
+        <span style="font-weight:600;">3rd Grade Social Studies</span>
+      </div>
+      <div class="topbar-right">Social Studies · Grade 3</div>
+    </div>
+    <div class="content">
+      <div id="home-screen" class="screen active">
+        <h1 style="color:#b45309;margin-bottom:16px;">🌍 3rd Grade Social Studies</h1>
+        <p style="color:#555;font-style:italic;margin-bottom:24px;">Civics · History · Economics · Geography · SY 2026-2027</p>
+        <div id="units-grid" class="units-grid"></div>
+        <div class="resources-box">
+          <h2>🌟 Recommended Resources</h2>
+          <div class="res-links"><a class="res-link" href="https://kids.nationalgeographic.com/" target="_blank" rel="noopener"><div class="res-link-title">National Geographic Kids</div><div class="res-link-desc">Geography, cultures, animals, maps</div></a><a class="res-link" href="https://www.brainpop.com/socialstudies/" target="_blank" rel="noopener"><div class="res-link-title">BrainPOP Social Studies</div><div class="res-link-desc">Videos and quizzes</div></a><a class="res-link" href="https://www.icivics.org/" target="_blank" rel="noopener"><div class="res-link-title">iCivics</div><div class="res-link-desc">Civics games from Justice O'Connor</div></a><a class="res-link" href="https://www.congressforkids.net/" target="_blank" rel="noopener"><div class="res-link-title">Congress for Kids</div><div class="res-link-desc">U.S. government kid-friendly</div></a><a class="res-link" href="https://www.moneyasyougrow.org/" target="_blank" rel="noopener"><div class="res-link-title">Money As You Grow</div><div class="res-link-desc">Age-appropriate financial literacy</div></a><a class="res-link" href="https://www.hawaiihistory.org/" target="_blank" rel="noopener"><div class="res-link-title">Hawaii History</div><div class="res-link-desc">Kingdom to Statehood</div></a></div>
+        </div>
+      </div>
+      <div id="lesson-screen" class="screen">
+        <div class="back-to-home"><button onclick="showHome()">← Back to Overview</button></div>
+        <div id="lesson-content" class="lesson-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const UNITS = [
+  { id:'q1-civics', q:'Q1', icon:'🏛️', title:"Civics: Communities Build a Nation", cc:"C3 D2.Civ.1, 6, 14" },
+  { id:'q2-history', q:'Q2', icon:'📜', title:"History: Governments", cc:"C3 D2.His.1-3" },
+  { id:'q3-economics', q:'Q3', icon:'💰', title:"Economics: Needs, Wants &amp; Trade", cc:"C3 D2.Eco.1-5" },
+  { id:'q4-geography', q:'Q4', icon:'🌍', title:"Geography: Earth&#39;s Resources &amp; Cultures", cc:"C3 D2.Geo.1-8" },
+];
+
+const LESSONS = {
+  "q1-civics": "<h2>🏛️ Civics: Communities Build a Nation</h2><div class='eq'>EQ: How does our past affect our future?</div><h3>Big Ideas</h3><ul><li>Communities are groups of people living, working, and celebrating together</li><li>Leaders help communities make decisions and solve problems</li><li>Rules and laws keep people safe and treat them fairly</li></ul><h3>What Students Learn</h3><ul><li>Types of communities: rural, suburban, urban</li><li>Roles of local leaders (mayor, police, teachers)</li><li>Rights and responsibilities of citizens</li><li>How governments are formed and why</li><li>Symbols of the United States (flag, eagle, monuments)</li></ul><div class='vocab'><strong>Key vocabulary:</strong> community, citizen, leader, rule, law, rights, responsibility, government</div><h3>Assessments</h3><p>Community leader interview · Civics quiz</p>",
+  "q2-history": "<h2>📜 History: Governments</h2><div class='eq'>EQ: How do people organize themselves?</div><h3>Big Ideas</h3><ul><li>People through history have formed governments to organize communities</li><li>Different governments (local, state, federal) have different jobs</li><li>The Constitution outlines the American plan of government</li></ul><h3>What Students Learn</h3><ul><li>Three branches of government (executive, legislative, judicial)</li><li>Purposes of the Constitution and Bill of Rights</li><li>How laws are made</li><li>Historic figures: Washington, Lincoln, King Kamehameha</li><li>Hawaiian government (kingdom to statehood)</li></ul><div class='vocab'><strong>Key vocabulary:</strong> constitution, branch, president, congress, judge, Bill of Rights, monarch, republic</div><h3>Assessments</h3><p>Branches-of-government project · Constitution quiz</p>",
+  "q3-economics": "<h2>💰 Economics: Needs, Wants &amp; Trade</h2><div class='eq'>EQ: How can we meet our needs in a changing world?</div><h3>Big Ideas</h3><ul><li>People need goods and services to live and thrive</li><li>Producers make goods; consumers buy them</li><li>Trade, money, and savings help meet needs</li></ul><h3>What Students Learn</h3><ul><li>Needs vs wants</li><li>Goods vs services</li><li>Producers and consumers</li><li>How money works (currency, coins, banking)</li><li>Saving, spending, and budgeting</li><li>Trade between local, national, and global markets</li><li>Scarcity: what happens when there isn&#39;t enough</li></ul><div class='vocab'><strong>Key vocabulary:</strong> economy, goods, services, producer, consumer, currency, trade, scarcity, budget</div><h3>Assessments</h3><p>Class mini-economy · Economics unit test</p>",
+  "q4-geography": "<h2>🌍 Geography: Earth&#39;s Resources &amp; Cultures Around the World</h2><div class='eq'>EQ: How do we live where we do?</div><h3>Big Ideas</h3><ul><li>Geography shapes how people live, eat, dress, and work</li><li>Earth&#39;s natural resources are limited and must be used wisely</li><li>Cultures around the world express identity through language, food, art, and traditions</li></ul><h3>What Students Learn</h3><ul><li>The seven continents and five oceans</li><li>Reading maps: compass, legend, scale</li><li>Landforms: mountains, plains, rivers, deserts</li><li>Climate zones and how they shape communities</li><li>Natural resources: water, forests, minerals, farmland</li><li>Conservation and renewable resources</li><li>Cultural diversity (3-4 in depth)</li><li>Hawaiian culture: geography, native traditions, moʻolelo</li></ul><div class='vocab'><strong>Key vocabulary:</strong> continent, ocean, landform, climate, resource, conservation, culture, tradition, indigenous</div><h3>Assessments</h3><p>Cultural report · Geography final</p>",
+};
+
+let currentUnit = null;
+
+function renderHome() {
+  const grid = document.getElementById('units-grid');
+  grid.innerHTML = UNITS.map(u => `
+    <div class="unit-card" onclick="showLesson('${u.id}')">
+      <div class="unit-icon">${u.icon}</div>
+      <div class="unit-cc">${u.q} · ${u.cc}</div>
+      <div class="unit-title">${u.title}</div>
+    </div>
+  `).join('');
+  let sbHTML = '';
+  let lastQ = '';
+  UNITS.forEach(u => {
+    if (u.q !== lastQ) {
+      sbHTML += `<div class="sidebar-quarter">${u.q}</div>`;
+      lastQ = u.q;
+    }
+    const active = u.id === currentUnit ? 'active' : '';
+    sbHTML += `<div class="sidebar-unit ${active}" onclick="showLesson('${u.id}')">${u.icon} ${u.title}</div>`;
+  });
+  document.getElementById('sidebar-content').innerHTML = sbHTML;
+}
+
+function showHome() {
+  currentUnit = null;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('home-screen').classList.add('active');
+  renderHome();
+}
+
+function showLesson(uid) {
+  currentUnit = uid;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('lesson-screen').classList.add('active');
+  document.getElementById('lesson-content').innerHTML = LESSONS[uid] || '<p>Content coming soon.</p>';
+  renderHome();
+}
+
+renderHome();
+</script>
+</body>
+</html>
