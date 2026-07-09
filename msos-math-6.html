@@ -322,9 +322,9 @@
           <div id="lesson-content" class="lesson-content"></div>
           <div class="nav-buttons">
             <button class="btn back-btn" onclick="showHome()">← Back</button>
-            <button class="btn" onclick="showHandout()">🔬 Science Connection</button>
+            <button class="btn" id="handout-btn" onclick="showHandout()">🔬 Science Connection</button>
             <button class="btn" id="realworld-btn" onclick="showRealWorld()">🎨 Real-World Project</button>
-            <button class="btn" onclick="showWorksheet()">Worksheet →</button>
+            <button class="btn" id="worksheet-btn" onclick="showWorksheet()">Worksheet →</button>
           </div>
         </div>
         <div id="worksheet-screen" class="screen">
@@ -1076,7 +1076,12 @@ function showLesson(unitId) {
   const unit = UNITS.find(u => u.id === unitId);
   document.getElementById('lesson-content').innerHTML = LESSONS[unitId] + resourceCardHTML(unit);
   const rwBtn = document.getElementById('realworld-btn');
-  if (rwBtn) rwBtn.style.display = (REALWORLD_6 && REALWORLD_6[unitId]) ? '' : 'none';
+  if (rwBtn) rwBtn.style.display = (typeof REALWORLD_6 !== 'undefined' && REALWORLD_6 && REALWORLD_6[unitId]) ? '' : 'none';
+  const hbtn = document.getElementById('handout-btn');
+  const wbtn = document.getElementById('worksheet-btn');
+  const hideExtras = (unitId === 'metrics-sci-process');
+  if (hbtn) hbtn.style.display = hideExtras ? 'none' : '';
+  if (wbtn) wbtn.style.display = hideExtras ? 'none' : '';
   renderSidebar();
   setTopbar();
 }
