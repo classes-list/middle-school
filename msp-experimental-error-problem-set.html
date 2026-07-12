@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experimental Error &middot; Problem Set</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#065A82; --navy-deep:#043a54;
+  --teal:#1C7293; --mid:#21295C;
+  --amber:#FFC107; --amber-deep:#b8860b;
+  --coral:#ea580c; --coral-deep:#7c2d12;
+  --cream:#F7F9FC; --paper:#fef9e7;
+  --ink:#1F2937; --dim:#64748b;
+}
+body {
+  font-family: Cambria, Georgia, 'Times New Roman', serif;
+  background: linear-gradient(135deg, #fed7aa 0%, #fef3c7 50%, #fce7f3 100%);
+  color: var(--ink); min-height:100vh; padding:24px 16px;
+  line-height:1.55;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:28px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--amber); color:var(--mid);
+  border:1px solid var(--amber-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  transition:all .15s ease;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+}
+.back-btn:hover { background:var(--amber-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+h1 { font-size:2.2rem; font-weight:900; line-height:1.1; color:var(--coral-deep); margin-bottom:8px; }
+.tagline { color:var(--dim); font-size:1rem; max-width:720px; margin:0 auto; font-style:italic;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; }
+.eyebrow { display:inline-block; background:var(--coral); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; }
+.dl-row { margin-top:14px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.dl-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px; border-radius:8px; text-decoration:none;
+  font-weight:700; font-size:0.88rem;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  border:none; cursor:pointer;
+}
+.dl-primary { background:var(--coral); color:#fff; box-shadow:0 3px 10px rgba(234,88,12,0.28); }
+.dl-secondary { background:#fff; color:var(--coral); border:1.5px solid var(--coral); }
+main { display:flex; flex-direction:column; gap:22px; }
+section.card {
+  background:#fff; border-radius:14px;
+  padding:24px 28px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  border-top:4px solid var(--coral);
+}
+section.card.solve { border-top-color:var(--navy); }
+section.card h2 { color:var(--coral-deep); font-size:1.5rem; font-weight:800; margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+section.card.solve h2 { color:var(--navy); }
+section.card p { margin-bottom:10px; color:var(--ink);
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; }
+.intro-note {
+  background:var(--cream); border-left:4px solid var(--amber);
+  padding:12px 16px; border-radius:6px; margin-bottom:16px;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  font-size:.96rem;
+}
+.intro-note strong { color:var(--navy); }
+.problem-list { counter-reset:prob; list-style:none; padding:0; }
+.problem-list li {
+  position:relative; padding-left:44px; margin-bottom:14px;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  font-size:1rem; color:var(--ink);
+  min-height:32px;
+}
+.problem-list li::before {
+  counter-increment:prob;
+  content:counter(prob) ".";
+  position:absolute; left:0; top:0;
+  width:32px; text-align:right;
+  font-weight:800; color:var(--coral);
+  font-size:1.05rem;
+}
+section.card.solve .problem-list li::before { color:var(--navy); }
+.formula-box {
+  background:var(--mid); color:#fff;
+  padding:18px 24px; border-radius:10px;
+  font-family: Cambria, Georgia, serif;
+  font-size:1.4rem; font-weight:800;
+  text-align:center; margin:16px 0;
+  letter-spacing:.01em;
+  box-shadow:0 4px 12px rgba(33,41,92,0.25);
+}
+.problem-block {
+  background:var(--cream); border:1.5px solid #cbd5e1;
+  border-radius:10px; padding:16px 18px 8px;
+  margin-top:14px;
+}
+.problem-block .stem {
+  font-weight:700; color:var(--navy-deep); margin-bottom:12px;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+}
+.solve-grid {
+  display:grid; grid-template-columns:repeat(5, 1fr);
+  border:2px solid var(--navy); border-radius:6px; overflow:hidden;
+  margin-bottom:16px; background:#fff;
+}
+.solve-grid > div {
+  padding:10px 8px; border-right:1px solid #cbd5e1; border-bottom:1px solid #cbd5e1;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  font-size:.85rem;
+  min-height:52px;
+}
+.solve-grid > div:nth-child(5n) { border-right:none; }
+.solve-grid > div.hd {
+  background:var(--navy); color:#fff; font-weight:800;
+  text-align:center; font-size:.82rem;
+  min-height:auto;
+}
+.solve-grid > div.given {
+  background:#f8fafc; font-weight:600; color:var(--navy-deep);
+}
+.solve-grid > div.given .sub { font-size:.7em; }
+.solve-grid > div.blank {
+  color:var(--dim); font-style:italic;
+}
+@media (max-width:720px) {
+  .solve-grid { grid-template-columns:1fr 1fr; font-size:.8rem; }
+  .solve-grid > div { border-right:1px solid #cbd5e1; }
+  .solve-grid > div:nth-child(2n) { border-right:none; }
+  .solve-grid > div:nth-child(5n) { border-right:1px solid #cbd5e1; }
+}
+footer { text-align:center; margin-top:36px; color:var(--dim); font-size:.85rem; padding-top:20px; border-top:1px dashed #cbd5e1;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; }
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .dl-row { display:none !important; }
+  section.card { box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="msp-percent-error-raisins.html" onclick="if(document.referrer&&history.length>1){history.back();return false;}">&larr; Back</a>
+  <div class="eyebrow">Experimental Error &middot; Homework</div>
+  <h1>🍇 Experimental Error &mdash; Problem Set</h1>
+  <p class="tagline">Complete the homework in your science notebook. Show <strong>all work</strong>. Make sure your final error calculations have the appropriate units.</p>
+  <div class="dl-row">
+    <a class="dl-btn dl-secondary" href="Experimental-Error-Problem-Set.pdf" target="_blank" rel="noopener">📄 Download PDF</a>
+    <button class="dl-btn dl-primary" onclick="window.print()">🖨️ Print</button>
+  </div>
+</header>
+<main>
+
+<section class="card">
+  <h2>📖 Conceptual Questions</h2>
+  <ol class="problem-list">
+    <li>When you do an experiment multiple times, what do <strong>statistics</strong> tell you about the data you collect?</li>
+    <li>How does doing an experiment multiple times increase the <strong>reliability</strong> of your data?</li>
+    <li>Explain what a <strong>trendline</strong> is and why you use it on a scatterplot.</li>
+    <li>Name the <strong>5 sources of error</strong>:</li>
+    <li>When analyzing data, you want <strong>precision</strong> and <strong>accuracy</strong>. What are they?</li>
+    <li>What is an <strong>&ldquo;outlier&rdquo;</strong> and what should you do if you get one in your experiment?</li>
+    <li>Why is <strong>percent error</strong> more useful than just error?</li>
+  </ol>
+</section>
+
+<section class="card solve">
+  <h2>🧮 Solve These 2 Problems</h2>
+  <p style="font-weight:700;">Use these equations to solve the following 2 problems:</p>
+  <div class="formula-box">
+    % Error &nbsp; = &nbsp; | measured &minus; actual | &nbsp; &divide; &nbsp; actual &nbsp; &times; &nbsp; 100%
+  </div>
+
+  <!-- Problem 8 -->
+  <div class="problem-block">
+    <div class="stem"><strong>8.</strong> You estimate the height of your teacher to be <strong>160 cm</strong>, but it is actually <strong>165 cm</strong>. What is your error? What is your % error?</div>
+
+    <!-- Row 1: Error -->
+    <div class="solve-grid">
+      <div class="hd">Identify what variables you have</div>
+      <div class="hd">Identify what variables you are looking for</div>
+      <div class="hd">Identify the equation you will use</div>
+      <div class="hd">Plug your variables in and solve</div>
+      <div class="hd">Answer with units</div>
+      <div class="given">Height<span class="sub">actual</span> = <br><br>Height<span class="sub">measured</span> = </div>
+      <div class="given">Error =</div>
+      <div class="blank">&nbsp;</div>
+      <div class="blank">&nbsp;</div>
+      <div class="blank">&nbsp;</div>
+    </div>
+
+    <!-- Row 2: % Error -->
+    <div class="solve-grid">
+      <div class="hd">Identify what variables you have</div>
+      <div class="hd">Identify what variables you are looking for</div>
+      <div class="hd">Identify the equation you will use</div>
+      <div class="hd">Plug your variables in and solve</div>
+      <div class="hd">Answer with units</div>
+      <div class="given">Height<span class="sub">actual</span> = <br><br>error = </div>
+      <div class="given">% Error =</div>
+      <div class="blank">&nbsp;</div>
+      <div class="blank">&nbsp;</div>
+      <div class="blank">&nbsp;</div>
+    </div>
+  </div>
+
+  <!-- Problem 9 -->
+  <div class="problem-block">
+    <div class="stem"><strong>9.</strong> A student measured the temperature of boiling water and got an experimental reading of <strong>97.5&deg;C</strong>. The actual temperature of water&#39;s boiling point is <strong>100&deg;C</strong>. What is the error? What is the percent error?</div>
+
+    <!-- Row 1: Error -->
+    <div class="solve-grid">
+      <div class="hd">Identify what variables you have</div>
+      <div class="hd">Identify what variables you are looking for</div>
+      <div class="hd">Identify the equation you will use</div>
+      <div class="hd">Plug your variables in and solve</div>
+      <div class="hd">Answer with units</div>
+      <div class="given">Temp<span class="sub">actual</span> = <br><br>Temp<span class="sub">measured</span> = </div>
+      <div class="given">Error =</div>
+      <div class="blank">&nbsp;</div>
+      <div class="blank">&nbsp;</div>
+      <div class="blank">&nbsp;</div>
+    </div>
+
+    <!-- Row 2: % Error -->
+    <div class="solve-grid">
+      <div class="hd">Identify what variables you have</div>
+      <div class="hd">Identify what variables you are looking for</div>
+      <div class="hd">Identify the equation you will use</div>
+      <div class="hd">Plug your variables in and solve</div>
+      <div class="hd">Answer with units</div>
+      <div class="given">Temp<span class="sub">actual</span> = <br><br>error = </div>
+      <div class="given">% Error =</div>
+      <div class="blank">&nbsp;</div>
+      <div class="blank">&nbsp;</div>
+      <div class="blank">&nbsp;</div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Metrics &amp; Scientific Process &middot; Experimental Error Homework</footer>
+</div>
+</body>
+</html>
