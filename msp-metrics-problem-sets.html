@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metrics &middot; Problem Sets</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#065A82; --navy-deep:#043a54;
+  --teal:#1C7293; --mid:#21295C;
+  --amber:#FFC107; --amber-deep:#b8860b;
+  --cream:#F7F9FC; --paper:#fef9e7;
+  --ink:#1F2937; --dim:#64748b;
+}
+body {
+  font-family: Cambria, Georgia, 'Times New Roman', serif;
+  background: linear-gradient(135deg, #e0f2fe 0%, #f7f9fc 55%, #fef3c7 100%);
+  color: var(--ink); min-height:100vh; padding:24px 16px;
+  line-height:1.55;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:28px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--amber); color:var(--mid);
+  border:1px solid var(--amber-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  transition:all .15s ease;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+}
+.back-btn:hover { background:var(--amber-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+h1 { font-size:2.2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:8px; }
+.tagline { color:var(--dim); font-size:1rem; max-width:720px; margin:0 auto; font-style:italic;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; }
+.eyebrow { display:inline-block; background:var(--teal); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; }
+.dl-row { margin-top:14px; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.dl-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 16px; border-radius:8px; text-decoration:none;
+  font-weight:700; font-size:0.88rem;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+}
+.dl-primary { background:var(--navy); color:#fff; box-shadow:0 3px 10px rgba(6,90,130,0.28); }
+.dl-secondary { background:#fff; color:var(--navy); border:1.5px solid var(--navy); }
+main { display:flex; flex-direction:column; gap:22px; }
+section.card {
+  background:#fff; border-radius:14px;
+  padding:24px 28px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+  border-top:4px solid var(--navy);
+}
+section.card.set-2 { border-top-color:var(--teal); }
+section.card h2 { color:var(--navy); font-size:1.5rem; font-weight:800; margin-bottom:14px; display:flex; align-items:center; gap:10px; }
+section.card.set-2 h2 { color:var(--teal); }
+section.card p { margin-bottom:10px; color:var(--ink);
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; }
+.intro-note {
+  background:var(--cream); border-left:4px solid var(--amber);
+  padding:12px 16px; border-radius:6px; margin-bottom:16px;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  font-size:.96rem;
+}
+.intro-note strong { color:var(--navy); }
+.problem-list { counter-reset:prob; list-style:none; padding:0; }
+.problem-list li {
+  position:relative; padding-left:44px; margin-bottom:14px;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  font-size:1rem; color:var(--ink);
+  min-height:32px;
+}
+.problem-list li::before {
+  counter-increment:prob;
+  content:counter(prob) ".";
+  position:absolute; left:0; top:0;
+  width:32px; text-align:right;
+  font-weight:800; color:var(--navy);
+  font-size:1.05rem;
+}
+section.card.set-2 .problem-list li::before { color:var(--teal); }
+.problem-list li strong { color:var(--navy-deep); }
+.arrow { font-weight:800; color:var(--amber-deep); }
+.equalities-box {
+  float:right; width:280px; margin:0 0 14px 20px;
+  background:#fff; border:2px solid var(--navy);
+  border-radius:8px; padding:14px 16px;
+  box-shadow:0 2px 8px rgba(6,90,130,0.15);
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+}
+.equalities-box h3 { color:var(--navy); font-size:1rem; font-weight:800; margin-bottom:8px;
+  font-family: Cambria, Georgia, serif; }
+.equalities-box ul { list-style:none; padding:0; margin:0; }
+.equalities-box li { padding:3px 0; font-size:.95rem; color:var(--ink); }
+.equalities-box .staircase-row { font-weight:800; letter-spacing:.12em; margin-top:6px; padding-top:8px; border-top:1px dashed #cbd5e1; color:var(--navy); }
+@media (max-width:640px) {
+  .equalities-box { float:none; width:100%; margin:0 0 14px 0; }
+}
+.cylinder-figure {
+  display:flex; justify-content:center; margin:16px 0 22px;
+}
+.cylinder-figure svg { max-width:100%; height:auto; }
+.figure-caption {
+  text-align:center; font-style:italic; color:var(--dim); font-size:.9rem;
+  margin-top:-6px; margin-bottom:14px;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+}
+.frac { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; font-size:.9em; margin:0 3px; }
+.frac span:first-child { border-bottom:1.5px solid var(--ink); padding:0 6px 1px; }
+.frac span:last-child { padding:1px 6px 0; }
+footer { text-align:center; margin-top:36px; color:var(--dim); font-size:.85rem; padding-top:20px; border-top:1px dashed #cbd5e1;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; }
+.print-btn {
+  display:inline-block; margin-top:8px; padding:8px 14px;
+  background:var(--teal); color:#fff;
+  border:none; border-radius:8px; font-weight:700; cursor:pointer;
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size:.9rem;
+}
+.print-btn:hover { background:var(--navy); }
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .dl-row, .print-btn { display:none !important; }
+  section.card { box-shadow:none; border:1px solid #ccc; break-inside:avoid; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="msp-metrics-numbers-units.html" onclick="if(document.referrer&&history.length>1){history.back();return false;}">&larr; Back</a>
+  <div class="eyebrow">Metrics &middot; Homework</div>
+  <h1>📏 Metrics &mdash; Problem Sets</h1>
+  <p class="tagline">Complete the homework in your notebook. Show all work &mdash; you will be expected to solve the problems on the whiteboard in class. Box or circle your final answer with units.</p>
+  <div class="dl-row">
+    <a class="dl-btn dl-secondary" href="Metrics-Problem-Sets.pdf" target="_blank" rel="noopener">📄 Download PDF</a>
+    <button class="print-btn" onclick="window.print()">🖨️ Print</button>
+  </div>
+</header>
+<main>
+
+<section class="card">
+  <h2>📐 Problem Set #1</h2>
+
+  <div class="equalities-box">
+    <h3>Important Equalities</h3>
+    <ul>
+      <li>1 mile = 1609 m</li>
+      <li>2.54 cm = 1 in</li>
+      <li>100 cm = 1 m</li>
+      <li>1000 m = 1 km</li>
+      <li class="staircase-row">K &nbsp; H &nbsp; D &nbsp; u &nbsp; d &nbsp; c &nbsp; m</li>
+    </ul>
+  </div>
+
+  <ol class="problem-list">
+    <li>Convert <strong>400 kg</strong> <span class="arrow">→</span> g</li>
+    <li>Convert <strong>365 mL</strong> <span class="arrow">→</span> cL</li>
+    <li>Convert <strong>543,210 km</strong> <span class="arrow">→</span> mm</li>
+    <li>How many meters are in <strong>350 km</strong>?</li>
+    <li>How many Liters are in <strong>430 mL</strong>?</li>
+    <li>Convert <strong>12 miles</strong> <span class="arrow">→</span> m</li>
+    <li>Convert <strong>3 days</strong> <span class="arrow">→</span> hours (you should know basic time equalities in your head)</li>
+    <li>Oahu is <strong>2,500 miles</strong> from California. What is that in meters?</li>
+    <li>The distance from Ewa Beach to Kailua is approximately <strong>48 km</strong>. How many miles is this?</li>
+    <li>Summer was <strong>79 glorious days</strong>. How many seconds is that?</li>
+  </ol>
+</section>
+
+<section class="card set-2">
+  <h2>🧪 Problem Set #2</h2>
+
+  <p><strong>1.</strong> In the image below, what volume does the graduated cylinder read (in mL)?</p>
+
+  <div class="cylinder-figure">
+    <img src="reading-meniscus.jpeg" alt="Reading the Meniscus at Eye Level — graduated cylinder with zoomed inset and eye at 70 mL level" style="max-width:100%; height:auto; max-height:520px;">
+  </div>
+
+  <ol class="problem-list" start="2" style="counter-reset:prob 1;">
+    <li>Convert the value you obtained in #1 to <strong>L</strong>.</li>
+    <li>Mr. Eachus and Dr. Park are arguing over who drinks more coffee each morning. Mr. Eachus says he drinks <strong>0.25 L</strong>. Dr. Park says he drinks <strong>250 mL</strong>. Who drinks more coffee? Explain.</li>
+    <li>Explain why it is useful to learn / understand the metric system (2&ndash;3 sentences).</li>
+    <li>If you are converting <strong>12 cm to inches</strong>, why would you use the unit factor <span class="frac"><span>1 in</span><span>2.54 cm</span></span> instead of <span class="frac"><span>2.54 cm</span><span>1 in</span></span>?</li>
+    <li>Which value is <strong>larger</strong>: 1000 g or 0.5 kg?</li>
+    <li>Which value is <strong>smaller</strong>: 25 cm or 2.5 m?</li>
+    <li>Explain how it is possible that <strong>500 cm is equal to 5 m</strong>.</li>
+  </ol>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Metrics &amp; Scientific Process &middot; Homework Problem Sets</footer>
+</div>
+</body>
+</html>
