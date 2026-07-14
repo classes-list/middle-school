@@ -59,6 +59,8 @@
     .btn-secondary:hover { background: #4b5563; }
     .btn-yt { display: inline-block; padding: 10px 15px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
     .btn-yt:hover { background: #dc2626; }
+    .btn-ixl { display: inline-block; padding: 10px 15px; background: #dc2626; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
+    .btn-ixl:hover { background: #b91c1c; }
     .btn-phet { display: inline-block; padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
     .btn-phet:hover { background: #6d28d9; }
     .resource-card { background: #f3f4f6; border-radius: 8px; padding: 15px; margin: 20px 0; }
@@ -106,7 +108,7 @@
     <div class="main">
       <div class="topbar">
         <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;">
-          <a href="rising-stars-math-adventures.html" class="summer-home-btn" title="Back to Rising Stars Math Adventures">🏠 Home</a>
+          <a href="index.html" class="summer-home-btn" title="Back to All Classes">← All Middle School Classes</a>
           <div class="topbar-logos">
             <span class="logo-circle msos" title="Mary, Star of the Sea"><img src="msos-logo.svg" alt="Mary, Star of the Sea Logo"></span>
             <span class="logo-circle nui" title="Nurture · Unite · Inspire"><img src="nui-logo.png" alt="Nurture-Unite-Inspire Logo"></span>
@@ -168,1006 +170,146 @@
   </div>
 
   <script>
+let completedUnits = {};
 const UNITS = [
-  { id:'place-value', title:'Place Value & Rounding', icon:'🔢', cc:'5.NBT.1-4', desc:'Understand place value in decimals and whole numbers; round to any place.', ytSearch:'khan academy 5th grade place value decimals rounding' },
-  { id:'add-subtract', title:'Addition & Subtraction', icon:'➕', cc:'5.NBT.5', desc:'Fluently add and subtract multi-digit whole numbers using the standard algorithm.', ytSearch:'khan academy 5th grade addition subtraction multi-digit' },
-  { id:'mult-div', title:'Multiplication & Division', icon:'✖️', cc:'5.NBT.5-6', desc:'Multiply multi-digit whole numbers and divide with up to 4-digit dividends.', ytSearch:'khan academy 5th grade multi-digit multiplication long division', phetUrl:'https://phet.colorado.edu/en/simulations/arithmetic' },
-  { id:'order-ops', title:'Order of Operations', icon:'📋', cc:'5.OA.1', desc:'Use parentheses, brackets, and the order of operations (PEMDAS) to evaluate expressions.', ytSearch:'khan academy 5th grade order of operations PEMDAS' },
-  { id:'frac-add-sub', title:'Fractions — Add/Subtract', icon:'➗', cc:'5.NF.1-2', desc:'Add and subtract fractions with unlike denominators using common denominators.', ytSearch:'khan academy 5th grade add subtract fractions unlike denominators', phetUrl:'https://phet.colorado.edu/en/simulations/build-a-fraction' },
-  { id:'frac-mult-div', title:'Fractions — Multiply/Divide', icon:'🥧', cc:'5.NF.3-7', desc:'Multiply fractions by fractions and divide unit fractions by whole numbers.', ytSearch:'khan academy 5th grade multiplying dividing fractions', phetUrl:'https://phet.colorado.edu/en/simulations/fractions-intro' },
-  { id:'frac-convert', title:'Fractions — Converting', icon:'🔁', cc:'5.NF.3', desc:'Convert between improper fractions and mixed numbers; simplify fractions.', ytSearch:'khan academy 5th grade improper fractions mixed numbers converting', phetUrl:'https://phet.colorado.edu/en/simulations/fraction-matcher' },
-  { id:'frac-vs-dec', title:'Fractions vs Decimals', icon:'🔀', cc:'5.NF/5.NBT', desc:'Convert fractions to decimals and decimals to fractions; compare forms.', ytSearch:'khan academy 5th grade fractions decimals converting', phetUrl:'https://phet.colorado.edu/en/simulations/fractions-intro' },
-  { id:'dec-add-sub', title:'Decimals — Add/Subtract', icon:'💯', cc:'5.NBT.7', desc:'Add and subtract decimals to the hundredths using concrete models and strategies.', ytSearch:'khan academy 5th grade add subtract decimals' },
-  { id:'dec-mult', title:'Decimals — Multiplication', icon:'✖️', cc:'5.NBT.7', desc:'Multiply decimals to the hundredths and understand the placement of the decimal point.', ytSearch:'khan academy 5th grade multiply decimals', phetUrl:'https://phet.colorado.edu/en/simulations/area-model-decimals' },
-  { id:'dec-div', title:'Decimals — Division', icon:'➗', cc:'5.NBT.7', desc:'Divide decimals to the hundredths using models, place value, and properties of operations.', ytSearch:'khan academy 5th grade divide decimals' },
-  { id:'measurement', title:'Measurement', icon:'📏', cc:'5.MD.1', desc:'Convert among different-sized measurement units (in/ft/yd, mm/cm/m/km, oz/lb, mL/L).', ytSearch:'khan academy 5th grade measurement conversion customary metric' },
-  { id:'geometry', title:'Geometry', icon:'🔷', cc:'5.G.1-4', desc:'Classify 2D figures in a hierarchy; graph points on the coordinate plane.', ytSearch:'khan academy 5th grade geometry quadrilaterals classification', phetUrl:'https://phet.colorado.edu/en/simulations/area-builder' },
-  { id:'factoring', title:'Factoring', icon:'🧮', cc:'5.OA / prep for 6.NS.4', desc:'Find factors and multiples of whole numbers; identify prime and composite numbers.', ytSearch:'khan academy prime composite factors multiples 5th grade' },
-  { id:'exponents', title:'Exponents', icon:'🔬', cc:'5.NBT.2', desc:'Use whole-number exponents to denote powers of 10; explain patterns in zeros.', ytSearch:'khan academy 5th grade powers of 10 exponents' },
-  { id:'data-graphing', title:'Data & Graphing', icon:'📊', cc:'5.MD.2', desc:'Make line plots to display a data set of measurements in fractions of a unit; read and create graphs.', ytSearch:'khan academy 5th grade line plots data graphing', phetUrl:'https://phet.colorado.edu/en/simulations/plinko-probability' },
-  { id:'integers', title:'Integers', icon:'➕➖', cc:'prep for 6.NS.5-6', desc:'Understand positive and negative numbers on the number line; compare integers in real-world contexts.', ytSearch:'khan academy integers introduction negative numbers 5th grade', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-integers' },
-  { id:'algebra', title:'Algebra', icon:'🔣', cc:'5.OA.2-3', desc:'Write and interpret numerical expressions; generate and analyze patterns with two rules.', ytSearch:'khan academy 5th grade algebra introduction expressions patterns', phetUrl:'https://phet.colorado.edu/en/simulations/expression-exchange' },
-  { id:'vex-vr', title:'VEX VR Robot Math', icon:'🤖', cc:'5.NBT.7 / 5.OA.3 / 5.G.1 / 5.MD.2', desc:'Program a virtual robot at vr.vex.com to practice decimal arithmetic, polygon angles, coordinates, and patterns — math IS the code.', ytSearch:'vex vr math activities elementary 5th grade' }
+  { id:'place-value', title:'Understand Place Value', icon:'🔢', cc:'5.NBT.1-4', desc:'Explore place value patterns, powers of 10, decimals to thousandths, and rounding.', ytSearch:'khan academy 5th grade place value decimals thousandths', ixlUrl:'https://www.ixl.com/math/grade-5/place-value' },
+  { id:'add-sub-decimals', title:'Add & Subtract Decimals', icon:'💯', cc:'5.NBT.7', desc:'Model, estimate, and compute sums and differences of decimals to the hundredths.', ytSearch:'khan academy 5th grade adding subtracting decimals', ixlUrl:'https://www.ixl.com/math/grade-5/add-and-subtract-decimal-numbers' },
+  { id:'mult-whole', title:'Multiply Multi-Digit Whole Numbers', icon:'✖️', cc:'5.NBT.5', desc:'Fluently multiply multi-digit whole numbers using the standard algorithm and estimation.', ytSearch:'khan academy 5th grade multiplying multi digit whole numbers', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-by-2-digit-numbers' },
+  { id:'mult-decimals', title:'Multiply Decimals', icon:'✖️💯', cc:'5.NBT.7', desc:'Multiply decimals using models, place value patterns, and the standard algorithm.', ytSearch:'khan academy 5th grade multiplying decimals', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-decimals' },
+  { id:'div-whole', title:'Divide Whole Numbers', icon:'➗', cc:'5.NBT.6', desc:'Divide multi-digit whole numbers using partial quotients and the standard algorithm.', ytSearch:'khan academy 5th grade long division 2 digit divisor', ixlUrl:'https://www.ixl.com/math/grade-5/divide-multi-digit-numbers-by-1-digit-numbers' },
+  { id:'div-decimals', title:'Divide Decimals', icon:'➗💯', cc:'5.NBT.7', desc:'Divide decimals by whole numbers and by decimals using place value reasoning.', ytSearch:'khan academy 5th grade dividing decimals', ixlUrl:'https://www.ixl.com/math/grade-5/divide-decimals' },
+  { id:'add-sub-fractions', title:'Add & Subtract Fractions', icon:'🍕', cc:'5.NF.1-2', desc:'Use equivalent fractions to add and subtract fractions and mixed numbers with unlike denominators.', ytSearch:'khan academy 5th grade adding subtracting fractions unlike denominators', ixlUrl:'https://www.ixl.com/math/grade-5/add-and-subtract-fractions-with-unlike-denominators' },
+  { id:'mult-fractions', title:'Multiply Fractions', icon:'🥧', cc:'5.NF.3-6', desc:'Multiply fractions by fractions and by whole numbers; interpret fractions as division.', ytSearch:'khan academy 5th grade multiplying fractions', ixlUrl:'https://www.ixl.com/math/grade-5/multiply-fractions' },
+  { id:'div-fractions', title:'Divide Fractions', icon:'🍰', cc:'5.NF.7', desc:'Divide unit fractions by whole numbers and whole numbers by unit fractions.', ytSearch:'khan academy 5th grade dividing fractions unit fraction', ixlUrl:'https://www.ixl.com/math/grade-5/divide-fractions' },
+  { id:'data', title:'Represent & Interpret Data', icon:'📊', cc:'5.MD.2', desc:'Make line plots using fractions of a unit; use data to solve problems.', ytSearch:'khan academy 5th grade line plots fractions', ixlUrl:'https://www.ixl.com/math/grade-5/interpret-line-plots' },
+  { id:'volume', title:'Understand Volume Concepts', icon:'🧊', cc:'5.MD.3-5', desc:'Recognize volume as an attribute; find volume of rectangular prisms and composite solids.', ytSearch:'khan academy 5th grade volume rectangular prism', ixlUrl:'https://www.ixl.com/math/grade-5/volume-of-cubes-and-rectangular-prisms' },
+  { id:'measurement', title:'Convert Measurements', icon:'📏', cc:'5.MD.1', desc:'Convert between units in the same measurement system (metric and customary).', ytSearch:'khan academy 5th grade converting units metric customary', ixlUrl:'https://www.ixl.com/math/grade-5/convert-and-compare-customary-units' },
+  { id:'expressions', title:'Numerical Expressions', icon:'🧮', cc:'5.OA.1-2', desc:'Write, interpret, and evaluate numerical expressions with grouping symbols; PEMDAS.', ytSearch:'khan academy 5th grade evaluating numerical expressions parentheses', ixlUrl:'https://www.ixl.com/math/grade-5/evaluate-numerical-expressions-with-parentheses' },
+  { id:'coordinate-plane', title:'Coordinate Plane', icon:'📍', cc:'5.G.1-2', desc:'Graph ordered pairs on the first quadrant and interpret coordinate values in context.', ytSearch:'khan academy 5th grade coordinate plane ordered pairs', ixlUrl:'https://www.ixl.com/math/grade-5/graph-points-on-a-coordinate-plane' },
+  { id:'patterns', title:'Patterns & Relationships', icon:'🔁', cc:'5.OA.3', desc:'Generate two numerical patterns using given rules and analyze their relationships.', ytSearch:'khan academy 5th grade analyze number patterns rules', ixlUrl:'https://www.ixl.com/math/grade-5/complete-a-table-from-a-graph' },
+  { id:'geometry-2d', title:'Classify Two-Dimensional Figures', icon:'🔷', cc:'5.G.3-4', desc:'Classify triangles and quadrilaterals in a hierarchy based on properties.', ytSearch:'khan academy 5th grade classify triangles quadrilaterals', ixlUrl:'https://www.ixl.com/math/grade-5/classify-quadrilaterals' },
 ];
 
 const LESSONS = {
-  'place-value': `<h2>Place Value & Rounding</h2>
-<p>In our number system, each digit's value depends on its <strong>place</strong>. Moving one place to the left makes a digit's value <strong>10 times greater</strong>; moving one place to the right makes it <strong>1/10 as large</strong>.</p>
-<p><strong>Place value chart (example 3,428.675):</strong></p>
-<ul>
-  <li>3 — thousands (3,000)</li>
-  <li>4 — hundreds (400)</li>
-  <li>2 — tens (20)</li>
-  <li>8 — ones (8)</li>
-  <li>6 — tenths (0.6)</li>
-  <li>7 — hundredths (0.07)</li>
-  <li>5 — thousandths (0.005)</li>
-</ul>
-<p><strong>Rounding rule:</strong> Look at the digit to the <em>right</em> of the rounding place. If it's 5 or more, round up; if it's 4 or less, round down.</p>
-<p><strong>Example:</strong> Round 7.486 to the tenths place → look at 8 (in hundredths) → round up → <strong>7.5</strong>.</p>`,
-
-  'add-subtract': `<h2>Addition & Subtraction</h2>
-<p>The <strong>standard algorithm</strong> lines up numbers by place value. Always align the ones, tens, hundreds, etc.</p>
-<p><strong>Addition example:</strong></p>
-<pre>  2,487
-+ 3,659
--------
-  6,146</pre>
-<p><strong>Subtraction with regrouping:</strong> When you cannot subtract, <em>borrow</em> 10 from the next place.</p>
-<pre>  5,002
--   348
--------
-  4,654</pre>
-<p><strong>Check your work:</strong> Addition and subtraction are inverse operations. If 4,654 + 348 = 5,002, your subtraction is correct!</p>`,
-
-  'mult-div': `<h2>Multiplication & Division</h2>
-<p><strong>Multi-digit multiplication</strong> uses the standard algorithm or the area model. Multiply each place value, then add partial products.</p>
-<p><strong>Example:</strong> 243 × 27</p>
-<pre>   243
- ×  27
-------
-  1701   (243 × 7)
-  4860   (243 × 20)
-------
-  6561</pre>
-<p><strong>Long division</strong> uses the steps: Divide, Multiply, Subtract, Bring down — sometimes remembered as <em>"Dad, Mom, Sister, Brother"</em>.</p>
-<p><strong>Example:</strong> 846 ÷ 6 = 141</p>
-<ul>
-  <li>6 into 8 → 1, remainder 2</li>
-  <li>Bring down 4 → 24 ÷ 6 = 4</li>
-  <li>Bring down 6 → 6 ÷ 6 = 1</li>
-  <li>Answer: 141</li>
-</ul>`,
-
-  'order-ops': `<h2>Order of Operations</h2>
-<p>When an expression has multiple operations, we follow a strict order — <strong>PEMDAS</strong>:</p>
-<ol>
-  <li><strong>P</strong>arentheses (or brackets)</li>
-  <li><strong>E</strong>xponents</li>
-  <li><strong>M</strong>ultiplication and <strong>D</strong>ivision (left to right)</li>
-  <li><strong>A</strong>ddition and <strong>S</strong>ubtraction (left to right)</li>
-</ol>
-<p><em>Please Excuse My Dear Aunt Sally</em></p>
-<p><strong>Example:</strong> 3 + 4 × (2 + 5)²</p>
-<ul>
-  <li>Parentheses: 2 + 5 = 7 → 3 + 4 × 7²</li>
-  <li>Exponents: 7² = 49 → 3 + 4 × 49</li>
-  <li>Multiplication: 4 × 49 = 196 → 3 + 196</li>
-  <li>Addition: 3 + 196 = <strong>199</strong></li>
-</ul>`,
-
-  'frac-add-sub': `<h2>Fractions — Add/Subtract</h2>
-<p>To add or subtract fractions with <strong>unlike denominators</strong>, first find a <strong>common denominator</strong> (usually the LCM of the denominators), then add or subtract the numerators only.</p>
-<p><strong>Example:</strong> 1/3 + 1/4</p>
-<ul>
-  <li>LCD of 3 and 4 is 12</li>
-  <li>1/3 = 4/12, 1/4 = 3/12</li>
-  <li>4/12 + 3/12 = <strong>7/12</strong></li>
-</ul>
-<p><strong>Mixed numbers:</strong> Add/subtract whole parts and fraction parts separately. Borrow from the whole if needed.</p>
-<p><strong>Example:</strong> 3 1/4 − 1 3/4 = 2 5/4 − 1 3/4 = <strong>1 2/4 = 1 1/2</strong></p>`,
-
-  'frac-mult-div': `<h2>Fractions — Multiply/Divide</h2>
-<p><strong>Multiplying fractions:</strong> Multiply numerators and multiply denominators. No common denominator needed!</p>
-<p><strong>Example:</strong> 2/3 × 3/5 = (2×3)/(3×5) = 6/15 = <strong>2/5</strong></p>
-<p><strong>Dividing fractions:</strong> <em>Keep, Change, Flip</em> — keep the first fraction, change division to multiplication, flip the second fraction (use the reciprocal).</p>
-<p><strong>Example:</strong> 1/2 ÷ 1/4 = 1/2 × 4/1 = 4/2 = <strong>2</strong></p>
-<p><strong>Unit fractions ÷ whole numbers:</strong> 1/5 ÷ 3 = 1/5 × 1/3 = <strong>1/15</strong>. This means sharing 1/5 equally among 3 people.</p>`,
-
-  'frac-convert': `<h2>Fractions — Converting</h2>
-<p>An <strong>improper fraction</strong> has a numerator ≥ denominator (e.g., 7/4). A <strong>mixed number</strong> combines a whole number and a fraction (e.g., 1 3/4).</p>
-<p><strong>Improper → Mixed:</strong> Divide the numerator by the denominator. The quotient is the whole, the remainder is the new numerator.</p>
-<p><strong>Example:</strong> 17/5 → 17 ÷ 5 = 3 remainder 2 → <strong>3 2/5</strong></p>
-<p><strong>Mixed → Improper:</strong> Multiply whole by denominator, add numerator. Keep denominator.</p>
-<p><strong>Example:</strong> 4 2/3 → (4 × 3) + 2 = 14 → <strong>14/3</strong></p>
-<p><strong>Simplifying:</strong> Divide numerator and denominator by their GCF. 8/12 → GCF is 4 → <strong>2/3</strong>.</p>`,
-
-  'frac-vs-dec': `<h2>Fractions vs Decimals</h2>
-<p>Fractions and decimals are two ways to represent the same value — a part of a whole.</p>
-<p><strong>Fraction → Decimal:</strong> Divide the numerator by the denominator.</p>
-<ul>
-  <li>3/4 → 3 ÷ 4 = <strong>0.75</strong></li>
-  <li>1/8 → 1 ÷ 8 = <strong>0.125</strong></li>
-  <li>1/3 → 1 ÷ 3 = <strong>0.333…</strong> (repeating)</li>
-</ul>
-<p><strong>Decimal → Fraction:</strong> Use place value. 0.6 = 6/10 = 3/5. 0.25 = 25/100 = 1/4.</p>
-<p><strong>Common conversions to memorize:</strong> 1/2 = 0.5, 1/4 = 0.25, 3/4 = 0.75, 1/5 = 0.2, 1/10 = 0.1.</p>`,
-
-  'dec-add-sub': `<h2>Decimals — Add/Subtract</h2>
-<p>The key rule: <strong>line up the decimal points</strong>. Add zeros as placeholders if one number has fewer decimal places.</p>
-<p><strong>Example:</strong> 12.5 + 3.47</p>
-<pre>  12.50
-+  3.47
--------
-  15.97</pre>
-<p><strong>Subtraction example:</strong> 8.2 − 4.365</p>
-<pre>  8.200
-- 4.365
--------
-  3.835</pre>
-<p><strong>Estimate first:</strong> 12.5 ≈ 13, 3.47 ≈ 3, so the answer should be near 16. This helps catch mistakes!</p>`,
-
-  'dec-mult': `<h2>Decimals — Multiplication</h2>
-<p>Multiply decimals like whole numbers, then <strong>count the total decimal places</strong> in both factors and place the decimal in your answer.</p>
-<p><strong>Example:</strong> 0.3 × 0.4</p>
-<ul>
-  <li>Multiply: 3 × 4 = 12</li>
-  <li>Decimal places: 1 + 1 = 2</li>
-  <li>Answer: <strong>0.12</strong></li>
-</ul>
-<p><strong>Example:</strong> 2.5 × 1.4</p>
-<ul>
-  <li>Multiply: 25 × 14 = 350</li>
-  <li>Decimal places: 1 + 1 = 2</li>
-  <li>Answer: <strong>3.50</strong> (or 3.5)</li>
-</ul>
-<p><strong>Check with estimation:</strong> 2.5 ≈ 3, 1.4 ≈ 1, so ≈ 3. Our answer 3.5 makes sense!</p>`,
-
-  'dec-div': `<h2>Decimals — Division</h2>
-<p><strong>Dividing a decimal by a whole number:</strong> Place the decimal point in the quotient directly above the decimal point in the dividend, then divide normally.</p>
-<p><strong>Example:</strong> 7.2 ÷ 4 = <strong>1.8</strong></p>
-<p><strong>Dividing by a decimal:</strong> Move the decimal point in the <em>divisor</em> to make it a whole number. Move the decimal in the <em>dividend</em> the same number of places.</p>
-<p><strong>Example:</strong> 6.4 ÷ 0.8 → 64 ÷ 8 = <strong>8</strong></p>
-<p><strong>Example:</strong> 3.75 ÷ 0.25 → 375 ÷ 25 = <strong>15</strong></p>
-<p><strong>Remember:</strong> If you're unsure where the decimal goes, estimate first!</p>`,
-
-  'measurement': `<h2>Measurement</h2>
-<p>Converting between units uses <strong>multiplication</strong> (going to smaller units) or <strong>division</strong> (going to larger units).</p>
-<p><strong>Customary Length:</strong></p>
-<ul>
-  <li>1 foot = 12 inches</li>
-  <li>1 yard = 3 feet = 36 inches</li>
-  <li>1 mile = 5,280 feet</li>
-</ul>
-<p><strong>Metric Length</strong> (uses powers of 10):</p>
-<ul>
-  <li>1 km = 1,000 m</li>
-  <li>1 m = 100 cm = 1,000 mm</li>
-</ul>
-<p><strong>Example:</strong> 4 ft = ? in → 4 × 12 = <strong>48 inches</strong></p>
-<p><strong>Example:</strong> 2,500 m = ? km → 2,500 ÷ 1,000 = <strong>2.5 km</strong></p>
-<p><strong>Capacity:</strong> 1 gal = 4 qt = 8 pt = 16 cups. <strong>Weight:</strong> 1 lb = 16 oz, 1 ton = 2,000 lb.</p>`,
-
-  'geometry': `<h2>Geometry</h2>
-<p>Shapes are classified by their <strong>attributes</strong> (properties): number of sides, angles, parallel lines, etc.</p>
-<p><strong>Quadrilateral hierarchy:</strong></p>
-<ul>
-  <li><strong>Quadrilateral</strong> — any 4-sided polygon</li>
-  <li><strong>Trapezoid</strong> — at least one pair of parallel sides</li>
-  <li><strong>Parallelogram</strong> — two pairs of parallel sides</li>
-  <li><strong>Rectangle</strong> — parallelogram with 4 right angles</li>
-  <li><strong>Rhombus</strong> — parallelogram with 4 equal sides</li>
-  <li><strong>Square</strong> — both rectangle AND rhombus (4 right angles + 4 equal sides)</li>
-</ul>
-<p><strong>Coordinate plane:</strong> Points are written as (x, y). The first number is horizontal (right/left), the second is vertical (up/down). (3, 5) means 3 right, 5 up from the origin (0,0).</p>`,
-
-  'factoring': `<h2>Factoring</h2>
-<p>A <strong>factor</strong> is a number that divides evenly into another number. A <strong>multiple</strong> is the product of a number and any whole number.</p>
-<p><strong>Example:</strong> Factors of 12 are 1, 2, 3, 4, 6, 12. Multiples of 3 are 3, 6, 9, 12, 15, 18…</p>
-<p><strong>Prime numbers</strong> have exactly two factors (1 and itself): 2, 3, 5, 7, 11, 13, 17, 19, 23…</p>
-<p><strong>Composite numbers</strong> have more than two factors: 4, 6, 8, 9, 10, 12…</p>
-<p><strong>Note:</strong> The number 1 is <em>neither</em> prime nor composite.</p>
-<p><strong>Prime factorization</strong> breaks a number into a product of primes. Example: 24 = 2 × 2 × 2 × 3 = 2³ × 3.</p>`,
-
-  'exponents': `<h2>Exponents</h2>
-<p>An <strong>exponent</strong> tells you how many times to multiply a base by itself.</p>
-<p><strong>Example:</strong> 10³ = 10 × 10 × 10 = 1,000</p>
-<p><strong>Powers of 10 pattern:</strong></p>
-<ul>
-  <li>10¹ = 10 (1 zero)</li>
-  <li>10² = 100 (2 zeros)</li>
-  <li>10³ = 1,000 (3 zeros)</li>
-  <li>10⁴ = 10,000 (4 zeros)</li>
-  <li>10⁶ = 1,000,000 (6 zeros)</li>
-</ul>
-<p>The exponent equals the number of zeros! This is why multiplying by powers of 10 just shifts the decimal point.</p>
-<p><strong>Example:</strong> 4.5 × 10³ = 4,500 (decimal moves 3 places right).</p>
-<p><strong>Example:</strong> 7 × 10² = 700. 3.2 × 10⁴ = 32,000.</p>`,
-
-  'data-graphing': `<h2>Data & Graphing</h2>
-<p>Data is collected and displayed in many ways: <strong>bar graphs, line plots, line graphs, and picture graphs</strong>.</p>
-<p><strong>Line plots with fractions:</strong> Measurements are plotted above a number line marked in fractions (like 1/8, 1/4, 1/2).</p>
-<p><strong>Example:</strong> Eight students measured pencil lengths: 6 1/2, 6 3/4, 7, 6 1/2, 7 1/4, 6 3/4, 7, 6 1/2 inches. Plot an X above each measurement on a number line scaled in 1/4 inches.</p>
-<p><strong>Reading graphs:</strong> Always check the <em>title</em>, <em>axis labels</em>, and <em>scale</em>.</p>
-<p><strong>Mean (average):</strong> Add all values and divide by how many there are.</p>
-<p><strong>Example:</strong> Mean of 5, 7, 3, 9 = (5+7+3+9) ÷ 4 = 24 ÷ 4 = <strong>6</strong>.</p>`,
-
-  'integers': `<h2>Integers</h2>
-<p><strong>Integers</strong> are whole numbers and their opposites: …, −3, −2, −1, 0, 1, 2, 3, …</p>
-<p>Negative numbers appear everywhere in the real world:</p>
-<ul>
-  <li>Temperature below zero: −10°F</li>
-  <li>Elevations below sea level: Dead Sea is −430 m</li>
-  <li>Debt or money owed: owing $15 is −$15</li>
-  <li>Floors below ground: B1, B2</li>
-</ul>
-<p><strong>The number line:</strong> Negatives are to the left of zero, positives to the right. <strong>−5 is less than −2</strong> (further left), even though 5 > 2 for positives!</p>
-<p><strong>Opposites:</strong> +7 and −7 are the same distance from zero. Their sum is 0.</p>
-<p><strong>Absolute value</strong> means distance from zero: |−8| = 8, |3| = 3.</p>`,
-
-  'algebra': `<h2>Algebra</h2>
-<p><strong>Algebra</strong> uses letters (variables) to stand for unknown numbers.</p>
-<p><strong>Example:</strong> If a movie ticket is $12 and you buy <em>n</em> tickets, the total cost is <strong>12n</strong> dollars.</p>
-<p><strong>Writing expressions from words:</strong></p>
-<ul>
-  <li>"5 more than a number" → n + 5</li>
-  <li>"twice a number" → 2n</li>
-  <li>"a number divided by 3" → n ÷ 3 or n/3</li>
-  <li>"7 less than a number" → n − 7</li>
-</ul>
-<p><strong>Evaluating expressions:</strong> Substitute the value for the variable.</p>
-<p><strong>Example:</strong> Evaluate 3x + 4 when x = 5 → 3(5) + 4 = 15 + 4 = <strong>19</strong></p>
-<p><strong>Patterns with two rules:</strong> Given rules "add 3" for x and "add 6" for y, starting at (0, 0): (0,0), (3,6), (6,12), (9,18)… Graph these and you'll see a straight line!</p>`,
-
-  'vex-vr': `<h2>🤖 VEX VR Robot Math</h2>
-<p><strong>VEX VR</strong> is a free browser-based virtual robotics environment at <a href="https://vr.vex.com" target="_blank">vr.vex.com</a>. You drag &amp; drop blocks (or write Python) to program a virtual robot that drives, turns, and uses sensors. Every command takes a <strong>number</strong> — so every program is a math problem in disguise. This unit shows you four big ways to put your 5th grade math to work.</p>
-
-<h3>1. Decimal arithmetic with distance</h3>
-<p>The robot's <code>drive forward</code> block takes a distance in <strong>millimeters</strong> (mm). One meter = 1000 mm. So when you write "drive forward 2.5 m," you really code <code>drive forward 2500 mm</code>. Now imagine a mission: "Drive 1.25 m, then 0.75 m, then 2 m." Total = 1.25 + 0.75 + 2 = <strong>4 m = 4000 mm</strong>. The robot will only land in the right spot if your decimal addition is correct.</p>
-<div class="example-box" style="background:#f0f9ff;border-left:5px solid #0284c7;padding:12px 16px;border-radius:6px;margin:10px 0;">
-  <strong>💡 Try it:</strong> Code the robot to drive forward 4500 mm, turn right, then drive 0.85 m. How far did it travel in total, in meters? <em>Answer: 4.5 + 0.85 = 5.35 m</em>.
-</div>
-
-<h3>2. Angles &amp; regular polygons — the 360÷N rule</h3>
-<p>The <code>turn right</code> block takes an angle in degrees. A right angle = 90°. To draw a SQUARE, you repeat <code>drive 300, turn 90</code> four times. To draw a triangle, you turn 120° three times. The pattern: <strong>angle = 360 ÷ N</strong>, where N is the number of sides.</p>
-<table style="margin:8px 0; border-collapse:collapse;">
-  <tr style="background:#fef3c7;"><th style="padding:6px 12px;border:1px solid #b8860b;">Shape</th><th style="padding:6px 12px;border:1px solid #b8860b;">Sides (N)</th><th style="padding:6px 12px;border:1px solid #b8860b;">Turn angle (360÷N)</th></tr>
-  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Triangle</td><td style="padding:6px 12px;border:1px solid #fde68a;">3</td><td style="padding:6px 12px;border:1px solid #fde68a;">120°</td></tr>
-  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Square</td><td style="padding:6px 12px;border:1px solid #fde68a;">4</td><td style="padding:6px 12px;border:1px solid #fde68a;">90°</td></tr>
-  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Pentagon</td><td style="padding:6px 12px;border:1px solid #fde68a;">5</td><td style="padding:6px 12px;border:1px solid #fde68a;">72°</td></tr>
-  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Hexagon</td><td style="padding:6px 12px;border:1px solid #fde68a;">6</td><td style="padding:6px 12px;border:1px solid #fde68a;">60°</td></tr>
-  <tr><td style="padding:6px 12px;border:1px solid #fde68a;">Octagon</td><td style="padding:6px 12px;border:1px solid #fde68a;">8</td><td style="padding:6px 12px;border:1px solid #fde68a;">45°</td></tr>
-</table>
-<p>This is genuine algebraic thinking — you discover a formula by trying examples, then use it to predict any case.</p>
-
-<h3>3. Coordinate plane navigation</h3>
-<p>VEX VR has a <strong>Number Grid Map</strong> playground designed for plotting points. The robot starts at (0, 0). To send it to (3, 5), you need to move <em>right</em> 3 tiles, then <em>up</em> 5 tiles. The first number is the <strong>x-coordinate</strong> (horizontal); the second is the <strong>y-coordinate</strong> (vertical). For 5th grade we stay in the first quadrant (positive x and y only).</p>
-<div class="example-box" style="background:#f0f9ff;border-left:5px solid #0284c7;padding:12px 16px;border-radius:6px;margin:10px 0;">
-  <strong>💡 Mission:</strong> From (0, 0), program the robot to visit (3, 0), then (3, 4), then back to origin. What shape did it trace? <em>Answer: A right triangle with legs 3 and 4.</em>
-</div>
-
-<h3>4. Patterns, loops, &amp; the mean</h3>
-<p>VEX VR has a <code>repeat</code> block — pure algebraic patterns. The code <code>repeat 5: drive 300, turn 72</code> draws a perfect regular pentagon. Change "5" to "6" and "72" to "60" — now it's a hexagon. You're generalizing.</p>
-<p>For statistics, have the robot run the same mission five times, using a distance sensor to measure how far it ended up. The five readings might be: 285, 290, 287, 291, 289 mm. The <strong>mean</strong> is their sum divided by 5: (285+290+287+291+289) ÷ 5 = 1442 ÷ 5 = <strong>288.4 mm</strong>. The mean tells you what's TYPICAL, smoothing out variation.</p>
-
-<div class="example-box" style="background:#dcfce7;border-left:5px solid #16a34a;padding:12px 16px;border-radius:6px;margin:10px 0;">
-  <strong>🎯 Common mistake:</strong> Mixing up units. The robot speaks <strong>millimeters and degrees</strong>. If you write "drive forward 2.5" (meaning 2.5 m), the robot only goes 2.5 mm — about the width of a pencil tip! Always convert: m → mm by ×1000, cm → mm by ×10.
-</div>
-
-<div class="example-box" style="background:#fef3c7;border-left:5px solid #FFD100;padding:12px 16px;border-radius:6px;margin:10px 0;">
-  <strong>🚀 Try it now:</strong> Open <a href="https://vr.vex.com" target="_blank">vr.vex.com</a>, pick the <strong>Number Grid Map</strong>, and program the robot to drive a 4×6 rectangle. Predict the perimeter (20 tiles) and area (24 tiles) before you run it!
-</div>`,
+  "place-value": "<h2>Understand Place Value</h2><p>Every digit in a number has a <strong>place value</strong> that tells its worth. Moving one place LEFT multiplies by 10; moving one place RIGHT divides by 10.</p><p><strong>Powers of 10:</strong> 10\u00b9 = 10, 10\u00b2 = 100, 10\u00b3 = 1,000. Multiplying by 10\u207f shifts every digit n places to the left.</p><p><strong>Decimals to thousandths:</strong> after the decimal point come tenths (1/10), hundredths (1/100), thousandths (1/1,000). Example: 3.472 = 3 + 0.4 + 0.07 + 0.002.</p><p><strong>Compare decimals:</strong> line up decimal points, compare digits left to right. 0.62 &gt; 0.6 because the tenths tie but hundredths 2 &gt; 0.</p><p><strong>Round decimals:</strong> find the target place, look at the digit to its right \u2014 5 or more, round up; less than 5, round down.</p><p><strong>Worked Example:</strong> Round 4.267 to the nearest tenth. Tenths digit is 2; digit to its right is 6 (\u2265 5), so round up: <strong>4.3</strong>.</p>",
+  "add-sub-decimals": "<h2>Add &amp; Subtract Decimals</h2><p>To add or subtract decimals, <strong>line up the decimal points</strong>. Fill in zeros as placeholders if the numbers have different numbers of decimal places.</p><p><strong>Estimate first:</strong> round each decimal to the nearest whole number to check reasonableness.</p><p><strong>Worked Example:</strong> 12.4 + 3.75</p><pre>  12.40\n+  3.75\n-------\n  16.15</pre><p><strong>Subtracting:</strong> 8.3 \u2212 1.457. Rewrite 8.3 as 8.300 to line up. 8.300 \u2212 1.457 = <strong>6.843</strong>.</p><p><strong>Common mistake:</strong> forgetting to line up the decimal points. If you write the numbers right-justified, you'll add wrong digits together.</p>",
+  "mult-whole": "<h2>Multiply Multi-Digit Whole Numbers</h2><p>To multiply a 3-digit number by a 2-digit number, multiply by each place of the smaller number and add the results.</p><p><strong>Estimate first:</strong> round each factor to the leading digit. 234 \u00d7 47 \u2248 200 \u00d7 50 = 10,000. Your answer should be near 10,000.</p><p><strong>Worked Example:</strong> 234 \u00d7 47</p><pre>       2 3 4\n     \u00d7   4 7\n     -------\n     1 6 3 8    (234 \u00d7 7)\n     9 3 6 0    (234 \u00d7 40)\n     -------\n    11,0 9 8</pre><p><strong>Answer:</strong> 234 \u00d7 47 = <strong>10,998</strong>.</p><p><strong>Tip:</strong> when multiplying by the tens digit, always write a 0 in the ones place before you start to keep place value correct.</p>",
+  "mult-decimals": "<h2>Multiply Decimals</h2><p><strong>Two rules:</strong></p><ol><li>Multiply as if there were no decimal points.</li><li>Count the total number of decimal places in both factors \u2014 place the decimal in the product so it has the same total.</li></ol><p><strong>Worked Example:</strong> 2.4 \u00d7 1.3</p><p>Ignore decimals: 24 \u00d7 13 = 312. Total decimal places: 1 + 1 = 2. So 2.4 \u00d7 1.3 = <strong>3.12</strong>.</p><p><strong>Estimate:</strong> 2 \u00d7 1 = 2. Answer 3.12 makes sense (close to 2).</p><p><strong>By powers of 10:</strong> 4.5 \u00d7 100 = 450 (decimal moves 2 places RIGHT). 4.5 \u00f7 100 = 0.045 (decimal moves 2 places LEFT).</p>",
+  "div-whole": "<h2>Divide Whole Numbers</h2><p><strong>Long division steps:</strong> Divide, Multiply, Subtract, Bring down (repeat).</p><p><strong>Worked Example:</strong> 936 \u00f7 24</p><p>Estimate first: 936 \u00f7 25 \u2248 37 (since 25 \u00d7 40 = 1,000).</p><pre>       3 9\n    ______\n 24 | 9 3 6\n     7 2\n     ---\n     2 1 6\n     2 1 6\n     ---\n         0</pre><p><strong>Answer:</strong> 936 \u00f7 24 = <strong>39</strong>.</p><p><strong>Partial quotients (friendly numbers):</strong> 936 \u00f7 24 \u2192 24 \u00d7 30 = 720; 936 \u2212 720 = 216; 24 \u00d7 9 = 216; 216 \u2212 216 = 0. Total: 30 + 9 = 39.</p>",
+  "div-decimals": "<h2>Divide Decimals</h2><p><strong>Decimal \u00f7 whole number:</strong> divide as usual; keep the decimal point in the same place in the quotient.</p><p><strong>Worked Example:</strong> 5.75 \u00f7 5 = <strong>1.15</strong> (line up the decimal above where it is in the dividend).</p><p><strong>Decimal \u00f7 decimal:</strong> move the decimal in the DIVISOR to make it a whole number. Move it the same number of places in the DIVIDEND. Then divide.</p><p><strong>Example:</strong> 4.8 \u00f7 0.6. Move both decimals 1 place right \u2192 48 \u00f7 6 = <strong>8</strong>.</p><p><strong>Estimate:</strong> 4.8 \u00f7 0.6 \u2248 5 \u00f7 1 = 5. Answer 8 is a bit off \u2014 recheck: 0.6 \u00d7 8 = 4.8 \u2713. The estimate was rough; 8 is correct.</p>",
+  "add-sub-fractions": "<h2>Add &amp; Subtract Fractions with Unlike Denominators</h2><p>To add or subtract fractions with different bottoms, first make them the same. Find a <strong>common denominator</strong> (any common multiple; the LCD is smallest).</p><p><strong>Worked Example:</strong> 1/2 + 1/3</p><p>LCD = 6. Rewrite: 1/2 = 3/6; 1/3 = 2/6. Add tops: 3/6 + 2/6 = <strong>5/6</strong>.</p><p><strong>Mixed numbers:</strong> add wholes and fractions separately. 2 1/4 + 1 1/2 = (2+1) + (1/4 + 2/4) = 3 + 3/4 = <strong>3 3/4</strong>.</p><p><strong>Subtracting with regrouping:</strong> 5 \u2212 2 3/8 \u2192 borrow 1 from 5 as 8/8 \u2192 4 8/8 \u2212 2 3/8 = <strong>2 5/8</strong>.</p>",
+  "mult-fractions": "<h2>Multiply Fractions</h2><p><strong>Whole \u00d7 fraction:</strong> multiply the whole by the top; keep the bottom. 4 \u00d7 2/3 = 8/3 = <strong>2 2/3</strong>.</p><p><strong>Fraction \u00d7 fraction:</strong> multiply tops together, multiply bottoms together, then simplify. 2/3 \u00d7 3/4 = 6/12 = <strong>1/2</strong>.</p><p><strong>Interpret \"of\" as \"\u00d7\":</strong> \"1/2 of 8\" = 1/2 \u00d7 8 = <strong>4</strong>.</p><p><strong>Mixed numbers:</strong> convert to improper fractions first. 1 1/2 \u00d7 2 1/3 = 3/2 \u00d7 7/3 = 21/6 = <strong>3 1/2</strong>.</p><p><strong>Scaling:</strong> multiplying by a fraction less than 1 makes the number SMALLER. Multiplying by more than 1 makes it LARGER.</p>",
+  "div-fractions": "<h2>Divide Fractions</h2><p><strong>Whole \u00f7 unit fraction:</strong> \"How many _/n fit in the whole?\" 3 \u00f7 1/4 = <strong>12</strong> (twelve quarters fit in 3 wholes).</p><p><strong>Unit fraction \u00f7 whole:</strong> \"Split _/n into pieces.\" 1/3 \u00f7 4 = 1/12 (each piece is one-twelfth).</p><p><strong>Keep-Change-Flip:</strong> keep the first fraction, change \u00f7 to \u00d7, flip the second fraction.</p><p><strong>Worked Example:</strong> 1/2 \u00f7 1/4 \u2192 1/2 \u00d7 4/1 = 4/2 = <strong>2</strong>.</p><p><strong>Worked Example:</strong> 5 \u00f7 1/3 \u2192 5 \u00d7 3/1 = <strong>15</strong>.</p><p><strong>Real-world use:</strong> How many 1/4-cup servings in 3 cups? 3 \u00f7 1/4 = 12 servings.</p>",
+  "data": "<h2>Represent &amp; Interpret Data</h2><p>A <strong>line plot</strong> uses X marks above a number line to show how often each value occurs. It's great for measurement data with fractions.</p><p><strong>Steps to build:</strong></p><ol><li>List all data values in order.</li><li>Draw a number line covering the range with even spacing.</li><li>Place one X above each value.</li><li>Title the graph and label the axis.</li></ol><p><strong>Interpret data:</strong> Which value has the most Xs? What's the range (largest \u2212 smallest)? What's the total of all values?</p><p><strong>Example use:</strong> lengths of pencils (in eighths of an inch). Redistribute total length evenly across all pencils.</p>",
+  "volume": "<h2>Understand Volume Concepts</h2><p><strong>Volume</strong> is the amount of space inside a 3D shape. It's measured in <strong>cubic units</strong> (cm\u00b3, in\u00b3, ft\u00b3).</p><p><strong>Rectangular prism formulas (both work):</strong></p><ul><li>V = length \u00d7 width \u00d7 height</li><li>V = base area \u00d7 height</li></ul><p><strong>Worked Example:</strong> Box is 6 ft \u00d7 4 ft \u00d7 3 ft. Volume = 6 \u00d7 4 \u00d7 3 = <strong>72 ft\u00b3</strong>.</p><p><strong>Composite solids:</strong> break the shape into rectangular prisms, find each volume, and ADD.</p><p><strong>Example:</strong> L-shape solid = prism A (5\u00d74\u00d73 = 60) + prism B (2\u00d74\u00d73 = 24) = <strong>84 units\u00b3</strong>.</p><p><strong>Real-world use:</strong> aquarium capacity, packing crates, storage boxes.</p>",
+  "measurement": "<h2>Convert Measurements</h2><p><strong>Customary system:</strong></p><ul><li>Length: 12 in = 1 ft; 3 ft = 1 yd; 5,280 ft = 1 mi</li><li>Weight: 16 oz = 1 lb; 2,000 lb = 1 ton</li><li>Capacity: 8 fl oz = 1 c; 2 c = 1 pt; 2 pt = 1 qt; 4 qt = 1 gal</li></ul><p><strong>Metric system (base-10, easier):</strong></p><ul><li>Length: 10 mm = 1 cm; 100 cm = 1 m; 1,000 m = 1 km</li><li>Mass: 1,000 g = 1 kg</li><li>Capacity: 1,000 mL = 1 L</li></ul><p><strong>Convert bigger \u2192 smaller:</strong> multiply. 5 ft = 5 \u00d7 12 = <strong>60 in</strong>.</p><p><strong>Convert smaller \u2192 bigger:</strong> divide. 350 cm = 350 \u00f7 100 = <strong>3.5 m</strong>.</p>",
+  "expressions": "<h2>Numerical Expressions</h2><p><strong>Order of Operations (PEMDAS):</strong></p><ol><li><strong>P</strong>arentheses</li><li><strong>E</strong>xponents</li><li><strong>M</strong>ultiplication and <strong>D</strong>ivision (left to right)</li><li><strong>A</strong>ddition and <strong>S</strong>ubtraction (left to right)</li></ol><p><strong>Worked Example:</strong> 3 \u00d7 (5 + 2) \u2212 4</p><p>Parentheses: 5 + 2 = 7 \u2192 3 \u00d7 7 \u2212 4. Multiply: 3 \u00d7 7 = 21 \u2192 21 \u2212 4 = <strong>17</strong>.</p><p><strong>Write expressions from words:</strong> \"3 times the sum of 5 and 2\" \u2192 3 \u00d7 (5 + 2).</p><p><strong>Nested brackets:</strong> [ 4 + (2 \u00d7 3) ] \u00d7 5. Do the innermost parentheses first: (2 \u00d7 3) = 6; then 4 + 6 = 10; then 10 \u00d7 5 = <strong>50</strong>.</p>",
+  "coordinate-plane": "<h2>Coordinate Plane</h2><p>A <strong>coordinate plane</strong> has two axes: the horizontal <em>x-axis</em> and the vertical <em>y-axis</em>. They cross at the <strong>origin</strong> (0, 0).</p><p><strong>Ordered pair (x, y):</strong> the first number tells how far to move RIGHT from the origin; the second tells how far to move UP.</p><p><strong>Worked Example:</strong> Plot (3, 5). Start at origin. Move right 3, then up 5. Place a dot.</p><p><strong>Interpret in real-life:</strong> a graph of time (x) vs distance (y) shows how far something travels over time. The point (2, 60) means at 2 hours, distance is 60 miles.</p><p><strong>First quadrant only:</strong> in 5th grade you work with positive x and y values (upper right region of the plane).</p><p><strong>Distance on axes:</strong> horizontal distance from (2, 3) to (7, 3) is 7 \u2212 2 = <strong>5 units</strong>.</p>",
+  "patterns": "<h2>Patterns &amp; Relationships</h2><p>A <strong>numerical pattern</strong> is generated by a rule. Two patterns can be compared to find a relationship between their terms.</p><p><strong>Example:</strong> Rule A: start at 0, add 3. Rule B: start at 0, add 6.</p><pre>A: 0, 3,  6,  9, 12, 15\nB: 0, 6, 12, 18, 24, 30</pre><p><strong>Relationship:</strong> each term in B is 2 \u00d7 the term in A. Written as ordered pairs: (0,0), (3,6), (6,12), (9,18), etc.</p><p><strong>Graph on a coordinate plane:</strong> the points form a straight line, showing the constant ratio.</p><p><strong>Real-world use:</strong> two workers earn $10/hour and $15/hour. After the same number of hours, one always earns 1.5 \u00d7 as much as the other.</p>",
+  "geometry-2d": "<h2>Classify Two-Dimensional Figures</h2><p>Shapes are classified by their <strong>properties</strong> \u2014 sides, angles, symmetry.</p><p><strong>Triangles by sides:</strong></p><ul><li>Equilateral: all 3 sides equal</li><li>Isosceles: 2 sides equal</li><li>Scalene: no sides equal</li></ul><p><strong>Triangles by angles:</strong> acute (all &lt; 90\u00b0), right (one = 90\u00b0), obtuse (one &gt; 90\u00b0).</p><p><strong>Quadrilateral hierarchy:</strong></p><ul><li>All squares are rectangles.</li><li>All squares are rhombuses.</li><li>All rectangles are parallelograms.</li><li>All parallelograms are quadrilaterals.</li></ul><p><strong>Worked Example:</strong> A shape with 4 equal sides AND 4 right angles is a SQUARE \u2014 and also a rhombus, rectangle, parallelogram, and quadrilateral (all at once).</p>",
 };
 
 const WORKSHEETS = {
-  'place-value': [
-    { q: 'What is the value of the 7 in 3,470,521?', answer: '70,000 (seventy thousand)' },
-    { q: 'Round 48,672 to the nearest thousand.', answer: '49,000' },
-    { q: 'Round 4.278 to the nearest tenth.', answer: '4.3' },
-    { q: 'Write the number twenty-three and forty-seven hundredths as a decimal.', answer: '23.47' },
-    { q: 'What is 10 times greater than 4.6?', answer: '46' },
-    { q: 'What is 1/10 of 350?', answer: '35' },
-    { q: 'Round 0.843 to the nearest hundredth.', answer: '0.84' },
-    { q: 'Compare: 0.7 ___ 0.70', answer: '= (they are equal)' },
-    { q: 'What digit is in the thousandths place in 5.6784?', answer: '8' },
-    { q: 'Order from least to greatest: 0.8, 0.08, 0.81, 0.18', answer: '0.08, 0.18, 0.8, 0.81' }
-  ],
-  'add-subtract': [
-    { q: '4,582 + 3,176 = ?', answer: '7,758' },
-    { q: '9,040 − 2,875 = ?', answer: '6,165' },
-    { q: '12,450 + 8,962 = ?', answer: '21,412' },
-    { q: '30,000 − 14,756 = ?', answer: '15,244' },
-    { q: 'Ben has 2,450 marbles. He gives away 687 and buys 1,200 more. How many does he have?', answer: '2,963 marbles' },
-    { q: '7,500 − 3,499 = ?', answer: '4,001' },
-    { q: '58,362 + 9,847 = ?', answer: '68,209' },
-    { q: '100,000 − 47,863 = ?', answer: '52,137' },
-    { q: 'Sum of 1,245 and 3,678 and 892?', answer: '5,815' },
-    { q: 'A library has 12,480 books. 3,675 are borrowed. How many remain?', answer: '8,805 books' }
-  ],
-  'mult-div': [
-    { q: '245 × 13 = ?', answer: '3,185' },
-    { q: '67 × 28 = ?', answer: '1,876' },
-    { q: '1,248 ÷ 6 = ?', answer: '208' },
-    { q: '956 ÷ 4 = ?', answer: '239' },
-    { q: '312 × 45 = ?', answer: '14,040' },
-    { q: '3,276 ÷ 7 = ?', answer: '468' },
-    { q: 'A box holds 24 crayons. How many crayons are in 35 boxes?', answer: '840 crayons' },
-    { q: 'Split $5,040 equally among 8 classrooms. How much does each get?', answer: '$630' },
-    { q: '503 × 19 = ?', answer: '9,557' },
-    { q: '8,440 ÷ 5 = ?', answer: '1,688' }
-  ],
-  'order-ops': [
-    { q: 'Evaluate: 3 + 4 × 2', answer: '11' },
-    { q: 'Evaluate: (3 + 4) × 2', answer: '14' },
-    { q: 'Evaluate: 20 − 3 × 2 + 5', answer: '19' },
-    { q: 'Evaluate: 6 + 8 ÷ 2 − 1', answer: '9' },
-    { q: 'Evaluate: 2 × (6 + 3)²', answer: '162' },
-    { q: 'Evaluate: 100 − (4 + 6) × 5', answer: '50' },
-    { q: 'Evaluate: 15 + [2 × (3 + 1)]', answer: '23' },
-    { q: 'Evaluate: 36 ÷ 6 + 2 × 3', answer: '12' },
-    { q: 'Evaluate: 4² + 3 × 2', answer: '22' },
-    { q: 'Evaluate: (8 − 3) × (2 + 4)', answer: '30' }
-  ],
-  'frac-add-sub': [
-    { q: '1/2 + 1/3 = ?', answer: '5/6' },
-    { q: '3/4 − 1/8 = ?', answer: '5/8' },
-    { q: '2/5 + 1/10 = ?', answer: '1/2 (or 5/10)' },
-    { q: '5/6 − 1/4 = ?', answer: '7/12' },
-    { q: '1 1/2 + 2 1/3 = ?', answer: '3 5/6' },
-    { q: '3 1/4 − 1 3/4 = ?', answer: '1 1/2' },
-    { q: '7/8 − 3/4 = ?', answer: '1/8' },
-    { q: '2/3 + 3/5 = ?', answer: '1 4/15 (or 19/15)' },
-    { q: '4 1/6 − 2 5/6 = ?', answer: '1 1/3' },
-    { q: 'Maya ate 3/8 of a pizza. Her brother ate 1/4. How much is left?', answer: '3/8 of the pizza' }
-  ],
-  'frac-mult-div': [
-    { q: '2/3 × 4/5 = ?', answer: '8/15' },
-    { q: '1/2 × 3/4 = ?', answer: '3/8' },
-    { q: '5 × 2/3 = ?', answer: '10/3 or 3 1/3' },
-    { q: '1/4 ÷ 2 = ?', answer: '1/8' },
-    { q: '6 ÷ 1/3 = ?', answer: '18' },
-    { q: '3/4 × 2/9 = ?', answer: '1/6 (or 6/36)' },
-    { q: '2 1/2 × 1 1/3 = ?', answer: '10/3 or 3 1/3' },
-    { q: 'A recipe needs 2/3 cup of flour. How much for half the recipe?', answer: '1/3 cup' },
-    { q: '1/5 ÷ 3 = ?', answer: '1/15' },
-    { q: 'If a ribbon is 4 ft long and you cut pieces of 1/2 ft, how many pieces?', answer: '8 pieces' }
-  ],
-  'frac-convert': [
-    { q: 'Convert 13/4 to a mixed number.', answer: '3 1/4' },
-    { q: 'Convert 4 2/5 to an improper fraction.', answer: '22/5' },
-    { q: 'Simplify 8/12.', answer: '2/3' },
-    { q: 'Simplify 15/25.', answer: '3/5' },
-    { q: 'Convert 17/3 to a mixed number.', answer: '5 2/3' },
-    { q: 'Convert 6 3/8 to an improper fraction.', answer: '51/8' },
-    { q: 'Simplify 18/24.', answer: '3/4' },
-    { q: 'Convert 29/6 to a mixed number.', answer: '4 5/6' },
-    { q: 'Convert 3 7/10 to an improper fraction.', answer: '37/10' },
-    { q: 'Simplify 20/30.', answer: '2/3' }
-  ],
-  'frac-vs-dec': [
-    { q: 'Convert 3/4 to a decimal.', answer: '0.75' },
-    { q: 'Convert 0.6 to a fraction in simplest form.', answer: '3/5' },
-    { q: 'Convert 7/10 to a decimal.', answer: '0.7' },
-    { q: 'Convert 0.125 to a fraction in simplest form.', answer: '1/8' },
-    { q: 'Convert 1/5 to a decimal.', answer: '0.2' },
-    { q: 'Convert 0.85 to a fraction in simplest form.', answer: '17/20' },
-    { q: 'Convert 9/20 to a decimal.', answer: '0.45' },
-    { q: 'Which is greater: 0.6 or 3/5?', answer: 'Equal (both = 0.6)' },
-    { q: 'Convert 2 1/4 to a decimal.', answer: '2.25' },
-    { q: 'Convert 0.04 to a fraction in simplest form.', answer: '1/25' }
-  ],
-  'dec-add-sub': [
-    { q: '3.4 + 2.78 = ?', answer: '6.18' },
-    { q: '12.5 − 4.37 = ?', answer: '8.13' },
-    { q: '0.9 + 0.08 = ?', answer: '0.98' },
-    { q: '25.6 − 13.45 = ?', answer: '12.15' },
-    { q: '7.25 + 3.8 + 1.6 = ?', answer: '12.65' },
-    { q: '100 − 27.5 = ?', answer: '72.5' },
-    { q: 'Lily had $20.00 and spent $13.47. How much is left?', answer: '$6.53' },
-    { q: '0.457 + 0.083 = ?', answer: '0.540' },
-    { q: '9.2 − 0.876 = ?', answer: '8.324' },
-    { q: '15.05 + 4.99 = ?', answer: '20.04' }
-  ],
-  'dec-mult': [
-    { q: '0.5 × 0.6 = ?', answer: '0.30 or 0.3' },
-    { q: '2.4 × 3 = ?', answer: '7.2' },
-    { q: '1.2 × 1.5 = ?', answer: '1.80 or 1.8' },
-    { q: '0.07 × 4 = ?', answer: '0.28' },
-    { q: '3.5 × 2.1 = ?', answer: '7.35' },
-    { q: '0.25 × 0.4 = ?', answer: '0.100 or 0.1' },
-    { q: '12.3 × 0.6 = ?', answer: '7.38' },
-    { q: '0.9 × 0.9 = ?', answer: '0.81' },
-    { q: 'A shirt costs $14.50. What do 6 shirts cost?', answer: '$87.00' },
-    { q: '4.56 × 10 = ?', answer: '45.6' }
-  ],
-  'dec-div': [
-    { q: '8.4 ÷ 4 = ?', answer: '2.1' },
-    { q: '7.2 ÷ 0.8 = ?', answer: '9' },
-    { q: '12.5 ÷ 5 = ?', answer: '2.5' },
-    { q: '0.96 ÷ 0.3 = ?', answer: '3.2' },
-    { q: '45 ÷ 1.5 = ?', answer: '30' },
-    { q: '6.3 ÷ 0.9 = ?', answer: '7' },
-    { q: '$18.75 split among 5 kids. Each gets?', answer: '$3.75' },
-    { q: '10.5 ÷ 2.5 = ?', answer: '4.2' },
-    { q: '0.84 ÷ 4 = ?', answer: '0.21' },
-    { q: '2.4 ÷ 0.06 = ?', answer: '40' }
-  ],
-  'measurement': [
-    { q: '5 feet = ___ inches', answer: '60 inches' },
-    { q: '4,000 meters = ___ kilometers', answer: '4 km' },
-    { q: '3 pounds = ___ ounces', answer: '48 oz' },
-    { q: '1 gallon = ___ cups', answer: '16 cups' },
-    { q: '250 cm = ___ m', answer: '2.5 m' },
-    { q: '6 yards = ___ feet', answer: '18 ft' },
-    { q: '5,500 grams = ___ kilograms', answer: '5.5 kg' },
-    { q: '3 quarts = ___ pints', answer: '6 pints' },
-    { q: 'A bottle holds 1.5 liters. How many mL?', answer: '1,500 mL' },
-    { q: '2 miles = ___ feet', answer: '10,560 feet' }
-  ],
-  'geometry': [
-    { q: 'What is a quadrilateral with exactly 4 equal sides but no right angles?', answer: 'Rhombus' },
-    { q: 'Is a square also a rectangle?', answer: 'Yes — a square has all the properties of a rectangle plus equal sides' },
-    { q: 'Plot the point (4, 3). How far right and up from origin?', answer: '4 right, 3 up' },
-    { q: 'Name the quadrilateral with exactly one pair of parallel sides.', answer: 'Trapezoid' },
-    { q: 'What are the coordinates of the origin?', answer: '(0, 0)' },
-    { q: 'A parallelogram with 4 right angles is a ___.', answer: 'Rectangle' },
-    { q: 'True or false: All rectangles are squares.', answer: 'False — only squares with all equal sides are squares' },
-    { q: 'What shape has 4 congruent sides and 4 right angles?', answer: 'Square' },
-    { q: 'Starting at (2, 1), move 3 right and 4 up. New coordinates?', answer: '(5, 5)' },
-    { q: 'Name the attribute shared by all parallelograms.', answer: 'Two pairs of parallel sides' }
-  ],
-  'factoring': [
-    { q: 'List all factors of 24.', answer: '1, 2, 3, 4, 6, 8, 12, 24' },
-    { q: 'List the first 5 multiples of 7.', answer: '7, 14, 21, 28, 35' },
-    { q: 'Is 17 prime or composite?', answer: 'Prime' },
-    { q: 'Is 21 prime or composite?', answer: 'Composite (3 × 7)' },
-    { q: 'Find the prime factorization of 36.', answer: '2² × 3² (or 2 × 2 × 3 × 3)' },
-    { q: 'Find the GCF of 12 and 18.', answer: '6' },
-    { q: 'Find the LCM of 4 and 6.', answer: '12' },
-    { q: 'Is 1 prime, composite, or neither?', answer: 'Neither' },
-    { q: 'List all factors of 30.', answer: '1, 2, 3, 5, 6, 10, 15, 30' },
-    { q: 'Find the prime factorization of 50.', answer: '2 × 5² (or 2 × 5 × 5)' }
-  ],
-  'exponents': [
-    { q: 'Evaluate 10⁴.', answer: '10,000' },
-    { q: 'Evaluate 2³.', answer: '8' },
-    { q: 'Evaluate 5².', answer: '25' },
-    { q: 'Write 1,000,000 as a power of 10.', answer: '10⁶' },
-    { q: 'Calculate 3.5 × 10³.', answer: '3,500' },
-    { q: 'Calculate 7 × 10⁵.', answer: '700,000' },
-    { q: 'Evaluate 3⁴.', answer: '81' },
-    { q: 'Write 10 × 10 × 10 × 10 × 10 in exponent form.', answer: '10⁵' },
-    { q: 'Evaluate 10⁰.', answer: '1 (any nonzero base to the 0 power = 1)' },
-    { q: 'Calculate 2.8 × 10².', answer: '280' }
-  ],
-  'data-graphing': [
-    { q: 'Find the mean of 4, 6, 8, 10, 12.', answer: '8' },
-    { q: 'Find the median of 3, 7, 5, 9, 11.', answer: '7' },
-    { q: 'Find the mode of 2, 5, 5, 7, 9, 5, 3.', answer: '5' },
-    { q: 'Find the range of 3, 8, 12, 5, 15.', answer: '12 (15 − 3)' },
-    { q: 'Six plants grew: 1/2, 3/4, 1/2, 1, 3/4, 1/2 inches. What was the most common growth?', answer: '1/2 inch' },
-    { q: 'Mean of 10, 20, 30, 40?', answer: '25' },
-    { q: 'If a bar graph shows 15 apples and 9 oranges, how many more apples than oranges?', answer: '6 more apples' },
-    { q: 'Find the mean of 2.5, 3.5, 4.5, 5.5.', answer: '4' },
-    { q: 'On a line plot, 5 X\'s above 1/4 means what?', answer: '5 items measured 1/4 (of a unit)' },
-    { q: 'Range of 24, 18, 31, 27, 22?', answer: '13' }
-  ],
-  'integers': [
-    { q: 'Order from least to greatest: −5, 3, −1, 0, 4, −8', answer: '−8, −5, −1, 0, 3, 4' },
-    { q: 'What is the opposite of −12?', answer: '+12 (or 12)' },
-    { q: 'Find |−9|.', answer: '9' },
-    { q: 'Which is greater: −3 or −7?', answer: '−3' },
-    { q: 'The temperature was 5°F and dropped 12 degrees. New temperature?', answer: '−7°F' },
-    { q: 'Find |15|.', answer: '15' },
-    { q: 'What integer represents "a loss of $20"?', answer: '−20' },
-    { q: 'Name the integer 6 units to the left of 2.', answer: '−4' },
-    { q: 'True or false: 0 is a positive integer.', answer: 'False (0 is neither positive nor negative)' },
-    { q: 'Which number has greater absolute value: −15 or 12?', answer: '−15 (|−15| = 15 > 12)' }
-  ],
-  'algebra': [
-    { q: 'Write an expression: "8 more than a number n"', answer: 'n + 8' },
-    { q: 'Write an expression: "3 times a number x"', answer: '3x' },
-    { q: 'Evaluate 5x + 2 when x = 4.', answer: '22' },
-    { q: 'Evaluate 2(y − 3) when y = 7.', answer: '8' },
-    { q: 'Write an expression: "a number divided by 5, plus 2"', answer: 'n/5 + 2' },
-    { q: 'Evaluate 3a + 4b when a = 2 and b = 5.', answer: '26' },
-    { q: 'Continue the pattern (add 4): 3, 7, 11, 15, ___', answer: '19' },
-    { q: 'Write an expression for the perimeter of a square with side s.', answer: '4s' },
-    { q: 'Evaluate x² + x when x = 3.', answer: '12' },
-    { q: 'Two rules: x: add 2, y: add 4, starting at (0, 0). Next 3 ordered pairs?', answer: '(2, 4), (4, 8), (6, 12)' }
-  ],
-  'vex-vr': [
-    { q: 'A VEX VR robot drives 1.5 m forward, then 2.75 m forward. Total distance in meters?', answer: '4.25 m' },
-    { q: 'Convert that total to millimeters (mm).', answer: '4,250 mm' },
-    { q: 'The robot must travel exactly 3,750 mm. Write that distance in meters as a decimal.', answer: '3.75 m' },
-    { q: 'To draw a regular pentagon (5-sided), what angle should the robot turn each time?', answer: '72° (because 360 ÷ 5 = 72)' },
-    { q: 'To draw a regular octagon (8-sided), what angle should the robot turn each time?', answer: '45° (because 360 ÷ 8 = 45)' },
-    { q: 'The robot turns 30° each time. How many sides will the shape have?', answer: '12 sides (since 360 ÷ 30 = 12)' },
-    { q: 'On the Number Grid Map, the robot starts at (0, 0). It drives to (4, 0), then to (4, 3). What is the distance from (4, 3) back to (0, 0) in a straight line? (Hint: 3-4-5 right triangle.)', answer: '5 tiles' },
-    { q: 'List three coordinate points the robot would visit if it traced a square with side length 5, starting at (0, 0) and moving right then up.', answer: '(5, 0), (5, 5), (0, 5)' },
-    { q: 'The robot runs a mission 5 times and the distance sensor reads: 295, 298, 302, 296, 299 mm. What is the mean?', answer: '298 mm (sum 1490 ÷ 5)' },
-    { q: 'A code uses repeat 4: drive forward 250 mm, turn right 90°. What is the total distance the robot drives (in mm)?', answer: '1,000 mm (= 1 m)' }
-  ],
+  "place-value": [{"q": "Write 24.508 in expanded form.", "answer": "20 + 4 + 0.5 + 0.008 (or 2×10 + 4×1 + 5×0.1 + 8×0.001)"}, {"q": "What is the value of the 7 in 3.478?", "answer": "0.07 (seven hundredths)"}, {"q": "Round 6.284 to the nearest hundredth.", "answer": "6.28 (the thousandths digit 4 &lt; 5, so round down)"}, {"q": "Compare: 5.62 ___ 5.6", "answer": "5.62 &gt; 5.6 (5.6 = 5.60; 62 &gt; 60 in hundredths)"}, {"q": "What is 3.45 × 10³?", "answer": "3,450 (decimal moves 3 places right)"}],
+  "add-sub-decimals": [{"q": "12.7 + 3.45 = ?", "answer": "16.15"}, {"q": "8.3 − 1.457 = ?", "answer": "6.843"}, {"q": "Add: 0.9 + 0.08 + 0.007", "answer": "0.987"}, {"q": "You have $20.00. You spend $12.65. How much is left?", "answer": "$7.35"}, {"q": "Estimate, then find exact: 4.79 + 2.15", "answer": "Estimate ≈ 5 + 2 = 7. Exact = 6.94."}],
+  "mult-whole": [{"q": "234 × 6 = ?", "answer": "1,404"}, {"q": "48 × 25 = ?", "answer": "1,200"}, {"q": "137 × 42 = ?", "answer": "5,754"}, {"q": "A stadium has 24 rows of 156 seats. How many seats total?", "answer": "3,744 seats"}, {"q": "Estimate then find exact: 389 × 27", "answer": "Estimate ≈ 400 × 30 = 12,000. Exact = 10,503."}],
+  "mult-decimals": [{"q": "0.7 × 0.3 = ?", "answer": "0.21 (7 × 3 = 21, then 2 decimal places)"}, {"q": "4.5 × 2.6 = ?", "answer": "11.7"}, {"q": "0.8 × 100 = ?", "answer": "80"}, {"q": "A juice bottle costs $2.35. How much do 6 bottles cost?", "answer": "$14.10"}, {"q": "Estimate: 5.9 × 3.1", "answer": "≈ 6 × 3 = 18. Exact = 18.29."}],
+  "div-whole": [{"q": "728 ÷ 8 = ?", "answer": "91"}, {"q": "1,296 ÷ 24 = ?", "answer": "54"}, {"q": "A crate of 480 apples is packed into boxes of 15. How many boxes?", "answer": "32 boxes"}, {"q": "Estimate then find exact: 953 ÷ 47", "answer": "Estimate ≈ 1,000 ÷ 50 = 20. Exact = 20 R 13."}, {"q": "924 ÷ 12 = ? (show your work)", "answer": "77 (12 × 77 = 924)"}],
+  "div-decimals": [{"q": "6.4 ÷ 8 = ?", "answer": "0.8"}, {"q": "12.5 ÷ 5 = ?", "answer": "2.5"}, {"q": "4.8 ÷ 0.6 = ?", "answer": "8 (move decimals: 48 ÷ 6 = 8)"}, {"q": "A ribbon is 7.5 m long. Cut into pieces 0.5 m each. How many pieces?", "answer": "15 pieces"}, {"q": "What is 0.036 ÷ 0.4?", "answer": "0.09"}],
+  "add-sub-fractions": [{"q": "1/3 + 1/4 = ?", "answer": "7/12 (common denom 12)"}, {"q": "2/5 + 1/2 = ?", "answer": "9/10"}, {"q": "3/4 − 1/6 = ?", "answer": "7/12"}, {"q": "2 1/3 + 1 3/4 = ?", "answer": "4 1/12"}, {"q": "5 − 2 3/8 = ?", "answer": "2 5/8"}],
+  "mult-fractions": [{"q": "2/3 × 4/5 = ?", "answer": "8/15"}, {"q": "6 × 2/3 = ?", "answer": "4 (or 12/3)"}, {"q": "What is 1/2 of 3/4?", "answer": "3/8 (1/2 × 3/4)"}, {"q": "1 1/2 × 2 1/3 = ?", "answer": "3 1/2 (3/2 × 7/3 = 21/6)"}, {"q": "A recipe needs 3/4 cup of flour. You make 2/3 of the recipe. How much flour?", "answer": "1/2 cup (3/4 × 2/3 = 6/12 = 1/2)"}],
+  "div-fractions": [{"q": "3 ÷ 1/4 = ?", "answer": "12"}, {"q": "1/2 ÷ 4 = ?", "answer": "1/8"}, {"q": "6 ÷ 1/3 = ?", "answer": "18"}, {"q": "You have 4 cups of soup. Each bowl uses 1/2 cup. How many bowls?", "answer": "8 bowls (4 ÷ 1/2 = 8)"}, {"q": "1/5 ÷ 2 = ?", "answer": "1/10"}],
+  "data": [{"q": "Data: 3, 5, 5, 7, 8, 8, 8, 10. What is the mode?", "answer": "8 (appears 3 times)"}, {"q": "Range of 12, 4, 9, 15, 6?", "answer": "11 (15 − 4)"}, {"q": "Line plot pencils (in.): 4 at 5, 3 at 5 1/2, 2 at 6. Total pencils?", "answer": "9 pencils"}, {"q": "Sum of all pencil lengths above?", "answer": "4×5 + 3×5.5 + 2×6 = 20 + 16.5 + 12 = 48.5 inches"}, {"q": "Mean length: total ÷ count", "answer": "48.5 ÷ 9 ≈ 5.4 inches"}],
+  "volume": [{"q": "V of a 4×5×6 rectangular prism = ?", "answer": "120 cubic units"}, {"q": "V of a cube with side 3 = ?", "answer": "27 units³"}, {"q": "A box is 8 in × 4 in × 3 in. Volume?", "answer": "96 in³"}, {"q": "An L-shape solid = 5×2×3 + 4×2×3. Volume?", "answer": "30 + 24 = 54 units³"}, {"q": "A prism has volume 60 units³, base area 12 units². Find the height.", "answer": "5 units (60 ÷ 12)"}],
+  "measurement": [{"q": "6 ft = ? in", "answer": "72 in (6 × 12)"}, {"q": "2,500 g = ? kg", "answer": "2.5 kg"}, {"q": "3 gal = ? qt", "answer": "12 qt"}, {"q": "450 cm = ? m", "answer": "4.5 m"}, {"q": "Convert 3 pounds to ounces.", "answer": "48 oz (3 × 16)"}],
+  "expressions": [{"q": "Evaluate: 6 + 2 × 5", "answer": "16 (multiply first: 2×5=10, then 6+10)"}, {"q": "Evaluate: (6 + 2) × 5", "answer": "40 (parentheses first: 8, then 8×5)"}, {"q": "Evaluate: 20 − [3 + (2 × 4)]", "answer": "9 (inner: 2×4=8; 3+8=11; 20−11=9)"}, {"q": "Write: \"twice the sum of 8 and 3\"", "answer": "2 × (8 + 3) = 22"}, {"q": "Evaluate: 48 ÷ (4 + 4)", "answer": "6 (parentheses: 8; 48÷8=6)"}],
+  "coordinate-plane": [{"q": "What ordered pair describes 4 right, 7 up from origin?", "answer": "(4, 7)"}, {"q": "A point is at (5, 0). Where is it?", "answer": "On the x-axis, 5 units right of origin"}, {"q": "Distance from (3, 2) to (3, 9)?", "answer": "7 units (vertical)"}, {"q": "Distance from (2, 5) to (8, 5)?", "answer": "6 units (horizontal)"}, {"q": "Plot: (1, 4), (5, 4), (5, 1), (1, 1). What shape?", "answer": "A rectangle (4 by 3)"}],
+  "patterns": [{"q": "Rule: start at 0, add 5. First 6 terms?", "answer": "0, 5, 10, 15, 20, 25"}, {"q": "Rule A: +2. Rule B: +6. If A gives 0,2,4,6, what does B give?", "answer": "0, 6, 12, 18"}, {"q": "Compare: for the same term number, B is __ times A above?", "answer": "3 times (B = 3 × A)"}, {"q": "Sequence: 1, 4, 7, 10, ___", "answer": "13 (add 3)"}, {"q": "Ordered pairs from Rule A (+3) and Rule B (+6): first 3 pairs?", "answer": "(0,0), (3,6), (6,12)"}],
+  "geometry-2d": [{"q": "A triangle with all sides equal is called ___.", "answer": "equilateral"}, {"q": "Name the quadrilateral: 4 right angles, opposite sides equal but not all 4 equal.", "answer": "rectangle"}, {"q": "A rhombus has how many pairs of parallel sides?", "answer": "2 pairs (opposite sides are parallel)"}, {"q": "True or false: All squares are rectangles.", "answer": "True"}, {"q": "True or false: All rectangles are squares.", "answer": "False (rectangles don't need 4 equal sides)"}],
 };
 
 const QUIZZES = {
-  'place-value': [
-    { q: 'What is the value of the 3 in 3,250,000?', opts: ['3 million', '3 hundred thousand', '3 thousand', '3 hundred'], ans: 0 },
-    { q: 'Round 6.837 to the nearest tenth.', opts: ['6.8', '6.9', '7.0', '6.84'], ans: 0 },
-    { q: 'Which is 10 times greater than 45?', opts: ['4.5', '450', '55', '4,500'], ans: 1 },
-    { q: 'Which decimal equals seven tenths?', opts: ['0.07', '7.0', '0.7', '0.007'], ans: 2 },
-    { q: 'Round 23,487 to the nearest hundred.', opts: ['23,500', '23,400', '24,000', '23,490'], ans: 0 }
-  ],
-  'add-subtract': [
-    { q: '7,425 + 1,898 = ?', opts: ['9,323', '9,223', '9,313', '8,323'], ans: 0 },
-    { q: '10,000 − 3,456 = ?', opts: ['6,544', '7,544', '6,454', '6,644'], ans: 0 },
-    { q: '4,875 + 3,248 = ?', opts: ['8,023', '8,123', '8,113', '8,023'], ans: 1 },
-    { q: '5,000 − 1,234 = ?', opts: ['3,766', '4,766', '3,866', '3,776'], ans: 0 },
-    { q: 'Which shows estimation? 4,823 + 5,189 ≈ ___', opts: ['9,000', '10,000', '11,000', '8,000'], ans: 1 }
-  ],
-  'mult-div': [
-    { q: '148 × 6 = ?', opts: ['888', '878', '848', '898'], ans: 0 },
-    { q: '432 ÷ 3 = ?', opts: ['144', '134', '154', '114'], ans: 0 },
-    { q: '25 × 16 = ?', opts: ['400', '425', '380', '450'], ans: 0 },
-    { q: '960 ÷ 4 = ?', opts: ['240', '220', '230', '260'], ans: 0 },
-    { q: 'Which is 12 × 25?', opts: ['300', '275', '325', '350'], ans: 0 }
-  ],
-  'order-ops': [
-    { q: 'Evaluate: 2 + 3 × 4', opts: ['20', '14', '10', '24'], ans: 1 },
-    { q: 'Evaluate: (6 + 2) × 3', opts: ['12', '24', '18', '20'], ans: 1 },
-    { q: 'What does PEMDAS stand for first?', opts: ['Parentheses', 'Exponents', 'Multiplication', 'Addition'], ans: 0 },
-    { q: 'Evaluate: 4 + 6 ÷ 2', opts: ['5', '7', '8', '10'], ans: 1 },
-    { q: 'Evaluate: 10 − 2 × 3 + 1', opts: ['5', '25', '23', '-1'], ans: 0 }
-  ],
-  'frac-add-sub': [
-    { q: '1/4 + 1/2 = ?', opts: ['3/4', '2/6', '1/6', '2/8'], ans: 0 },
-    { q: '5/6 − 1/3 = ?', opts: ['1/2', '4/3', '3/6', '1/3'], ans: 0 },
-    { q: 'What is the LCD of 1/3 and 1/5?', opts: ['15', '8', '10', '3'], ans: 0 },
-    { q: '2 1/4 + 1 1/2 = ?', opts: ['3 3/4', '3 2/6', '4', '3 1/4'], ans: 0 },
-    { q: '7/8 − 1/4 = ?', opts: ['5/8', '6/8', '3/4', '1/2'], ans: 0 }
-  ],
-  'frac-mult-div': [
-    { q: '1/2 × 1/3 = ?', opts: ['1/6', '2/6', '1/5', '2/3'], ans: 0 },
-    { q: '2/3 × 3/4 = ?', opts: ['1/2', '5/7', '2/4', '6/12'], ans: 0 },
-    { q: '4 ÷ 1/2 = ?', opts: ['8', '2', '1/8', '6'], ans: 0 },
-    { q: 'What does "keep, change, flip" describe?', opts: ['Dividing fractions', 'Adding fractions', 'Subtracting', 'Rounding'], ans: 0 },
-    { q: '1/3 × 6 = ?', opts: ['2', '3', '1/18', '6/3'], ans: 0 }
-  ],
-  'frac-convert': [
-    { q: 'Convert 9/4 to a mixed number.', opts: ['2 1/4', '2 1/2', '1 1/4', '2 1/3'], ans: 0 },
-    { q: 'Convert 3 2/5 to improper.', opts: ['17/5', '15/5', '13/5', '23/5'], ans: 0 },
-    { q: 'Simplify 6/8.', opts: ['3/4', '2/4', '1/2', '2/3'], ans: 0 },
-    { q: 'Simplify 10/15.', opts: ['2/3', '1/2', '3/5', '5/8'], ans: 0 },
-    { q: 'Convert 11/2 to mixed.', opts: ['5 1/2', '4 1/2', '6', '5 2/2'], ans: 0 }
-  ],
-  'frac-vs-dec': [
-    { q: '1/2 as a decimal?', opts: ['0.5', '0.2', '0.12', '1.2'], ans: 0 },
-    { q: '0.4 as a fraction in simplest form?', opts: ['2/5', '4/10', '1/4', '4/5'], ans: 0 },
-    { q: '3/4 as a decimal?', opts: ['0.75', '0.34', '0.43', '0.7'], ans: 0 },
-    { q: '0.25 as a fraction?', opts: ['1/4', '2/5', '1/5', '1/25'], ans: 0 },
-    { q: 'Which is equal? 1/5 and ___', opts: ['0.2', '0.15', '0.5', '0.05'], ans: 0 }
-  ],
-  'dec-add-sub': [
-    { q: '4.5 + 2.75 = ?', opts: ['7.25', '6.25', '7.75', '7.2'], ans: 0 },
-    { q: '8 − 3.6 = ?', opts: ['4.4', '5.4', '4.6', '4'], ans: 0 },
-    { q: '0.5 + 0.05 = ?', opts: ['0.55', '0.10', '0.1', '1'], ans: 0 },
-    { q: '12.4 − 5.85 = ?', opts: ['6.55', '7.55', '6.45', '6.65'], ans: 0 },
-    { q: '$15.00 − $7.83 = ?', opts: ['$7.17', '$8.17', '$7.27', '$6.83'], ans: 0 }
-  ],
-  'dec-mult': [
-    { q: '0.2 × 0.3 = ?', opts: ['0.06', '0.6', '0.5', '0.16'], ans: 0 },
-    { q: '1.5 × 4 = ?', opts: ['6', '5', '6.5', '7'], ans: 0 },
-    { q: '2.5 × 0.4 = ?', opts: ['1', '10', '0.1', '1.5'], ans: 0 },
-    { q: '0.9 × 0.9 = ?', opts: ['0.81', '0.18', '8.1', '1.8'], ans: 0 },
-    { q: '5.6 × 10 = ?', opts: ['56', '5.60', '0.56', '560'], ans: 0 }
-  ],
-  'dec-div': [
-    { q: '6.4 ÷ 2 = ?', opts: ['3.2', '2.3', '4.2', '3.4'], ans: 0 },
-    { q: '9 ÷ 0.3 = ?', opts: ['30', '3', '0.3', '27'], ans: 0 },
-    { q: '0.5 ÷ 5 = ?', opts: ['0.1', '1', '0.01', '0.5'], ans: 0 },
-    { q: '12.6 ÷ 0.2 = ?', opts: ['63', '6.3', '0.63', '6'], ans: 0 },
-    { q: '$20 ÷ 4 = ?', opts: ['$5', '$5.00', '$4', '$4.50'], ans: 0 }
-  ],
-  'measurement': [
-    { q: '48 inches = ___ feet', opts: ['4', '3', '5', '6'], ans: 0 },
-    { q: '3 km = ___ m', opts: ['3,000', '300', '30', '30,000'], ans: 0 },
-    { q: '2 lb = ___ oz', opts: ['32', '16', '24', '48'], ans: 0 },
-    { q: '1 gallon = ___ quarts', opts: ['4', '2', '8', '16'], ans: 0 },
-    { q: '7 feet = ___ inches', opts: ['84', '72', '91', '70'], ans: 0 }
-  ],
-  'geometry': [
-    { q: 'Which is always a parallelogram?', opts: ['Rectangle', 'Trapezoid', 'Kite', 'Pentagon'], ans: 0 },
-    { q: 'A square is also a ___.', opts: ['Rhombus', 'Trapezoid', 'Hexagon', 'Triangle'], ans: 0 },
-    { q: 'The origin of the coordinate plane is?', opts: ['(0, 0)', '(1, 1)', '(0, 1)', '(1, 0)'], ans: 0 },
-    { q: 'Shape with 5 sides?', opts: ['Pentagon', 'Hexagon', 'Octagon', 'Quadrilateral'], ans: 0 },
-    { q: 'Coordinate (3, 5) means:', opts: ['3 right, 5 up', '5 right, 3 up', '3 up, 5 right', '5 up, 3 left'], ans: 0 }
-  ],
-  'factoring': [
-    { q: 'Which is prime?', opts: ['13', '15', '21', '25'], ans: 0 },
-    { q: 'Which is composite?', opts: ['9', '7', '11', '13'], ans: 0 },
-    { q: 'GCF of 12 and 18?', opts: ['6', '2', '3', '12'], ans: 0 },
-    { q: 'LCM of 3 and 4?', opts: ['12', '6', '7', '24'], ans: 0 },
-    { q: 'Prime factorization of 20?', opts: ['2² × 5', '4 × 5', '2 × 10', '2³ × 5'], ans: 0 }
-  ],
-  'exponents': [
-    { q: 'What is 10³?', opts: ['1,000', '100', '30', '10,000'], ans: 0 },
-    { q: 'What is 2⁴?', opts: ['16', '8', '32', '24'], ans: 0 },
-    { q: 'What is 5²?', opts: ['25', '10', '15', '50'], ans: 0 },
-    { q: '10⁶ = ?', opts: ['1,000,000', '100,000', '60', '10,000'], ans: 0 },
-    { q: '4.2 × 10² = ?', opts: ['420', '42', '4,200', '4.2'], ans: 0 }
-  ],
-  'data-graphing': [
-    { q: 'Mean of 2, 4, 6, 8?', opts: ['5', '4', '6', '20'], ans: 0 },
-    { q: 'Mode of 3, 5, 3, 7, 3?', opts: ['3', '5', '7', '4'], ans: 0 },
-    { q: 'Median of 1, 3, 5, 7, 9?', opts: ['5', '3', '4', '7'], ans: 0 },
-    { q: 'Range of 10, 15, 8, 22?', opts: ['14', '22', '8', '55'], ans: 0 },
-    { q: 'A line plot displays data using?', opts: ['X marks on a number line', 'Bars', 'Slices', 'Lines'], ans: 0 }
-  ],
-  'integers': [
-    { q: 'Which is greatest?', opts: ['−2', '−10', '−15', '−100'], ans: 0 },
-    { q: '|−6| = ?', opts: ['6', '−6', '0', '12'], ans: 0 },
-    { q: 'Opposite of −8?', opts: ['8', '−8', '0', '18'], ans: 0 },
-    { q: 'What integer represents "5 below zero"?', opts: ['−5', '5', '0', '-50'], ans: 0 },
-    { q: 'Which is less: −4 or −7?', opts: ['−7', '−4', 'Equal', 'Cannot tell'], ans: 0 }
-  ],
-  'algebra': [
-    { q: 'Evaluate 3x when x = 5.', opts: ['15', '8', '35', '53'], ans: 0 },
-    { q: 'Which expression represents "7 less than n"?', opts: ['n − 7', '7 − n', '7n', 'n/7'], ans: 0 },
-    { q: 'Evaluate 2y + 1 when y = 6.', opts: ['13', '12', '8', '26'], ans: 0 },
-    { q: 'Next term in pattern: 5, 10, 15, 20, ___', opts: ['25', '30', '21', '24'], ans: 0 },
-    { q: 'Which is the perimeter of a square with side s?', opts: ['4s', 's²', '2s', '4 + s'], ans: 0 }
-  ],
-  'vex-vr': [
-    { q:'A VEX VR robot drives 1.25 m, then 0.875 m. Total distance in mm is:', options:['1,225 mm','2,125 mm','2,250 mm','11,250 mm'], correct:1 },
-    { q:'To make a regular hexagon (6 sides), the robot turn angle is:', options:['45°','60°','90°','120°'], correct:1 },
-    { q:'The robot turn angle is 40° each time. How many sides does the shape have?', options:['7','8','9','10'], correct:2 },
-    { q:'In the Number Grid Map starting at (0, 0), the robot drives to (5, 0) then (5, 4). What is the perimeter of the path if it returns directly to origin via (0, 0)?', options:['12 tiles','13 tiles','14 tiles','15 tiles'], correct:2 },
-    { q:'Convert 4.6 m to mm:', options:['46 mm','460 mm','4,600 mm','46,000 mm'], correct:2 },
-    { q:'The robot drives forward at 200 mm/sec for 6.5 seconds. Distance traveled:', options:['1,200 mm','1,300 mm','1,300 m','13,000 mm'], correct:1 },
-    { q:'Five distance-sensor readings: 320, 318, 322, 319, 321. The mean is:', options:['319','320','321','322'], correct:1 },
-    { q:'A regular polygon program uses repeat N: drive 300, turn 36. How many sides will it draw?', options:['8','9','10','12'], correct:2 },
-    { q:'The robot starts at (0, 0). After "drive forward 4, turn right 90, drive forward 3," its new coordinate is:', options:['(3, 4)','(4, 3)','(4, -3)','(3, -4)'], correct:2 },
-    { q:'A rectangle 6 tiles long × 4 tiles wide has area:', options:['10 tiles²','20 tiles²','24 tiles²','30 tiles²'], correct:2 }
-  ],
+  "place-value": [{"q": "The 4 in 8.472 has value ___.", "opts": ["4", "0.4", "0.04", "0.004"], "ans": 1}, {"q": "Round 3.657 to the nearest tenth.", "opts": ["3.6", "3.65", "3.7", "3.66"], "ans": 2}, {"q": "Which is largest?", "opts": ["0.72", "0.702", "0.7", "0.75"], "ans": 3}, {"q": "6.3 × 10² = ?", "opts": ["63", "630", "6,300", "0.063"], "ans": 1}, {"q": "Expanded form of 0.462:", "opts": ["0.4 + 0.06 + 0.002", "4 + 6 + 2", "0.04 + 0.6 + 0.002", "0.4 + 0.06 + 0.02"], "ans": 0}],
+  "add-sub-decimals": [{"q": "2.75 + 1.4 = ?", "opts": ["4.15", "2.79", "4.05", "3.15"], "ans": 0}, {"q": "When adding decimals, first ___.", "opts": ["line up decimal points", "multiply", "estimate", "ignore decimals"], "ans": 0}, {"q": "8.5 − 3.27 = ?", "opts": ["5.23", "5.33", "5.22", "4.23"], "ans": 0}, {"q": "Estimate 4.89 + 2.13 to nearest whole.", "opts": ["6", "7", "8", "5"], "ans": 1}, {"q": "$10 − $6.42 = ?", "opts": ["$3.58", "$4.58", "$3.68", "$4.42"], "ans": 0}],
+  "mult-whole": [{"q": "23 × 45 = ?", "opts": ["1,035", "1,045", "935", "1,015"], "ans": 0}, {"q": "Best estimate for 296 × 41:", "opts": ["1,200", "12,000", "120,000", "120"], "ans": 1}, {"q": "207 × 4 = ?", "opts": ["808", "828", "848", "8,028"], "ans": 1}, {"q": "When multiplying by tens digit, write ___ in ones place first.", "opts": ["1", "a decimal", "a 0", "nothing"], "ans": 2}, {"q": "156 × 12 = ?", "opts": ["1,872", "1,772", "1,672", "1,882"], "ans": 0}],
+  "mult-decimals": [{"q": "0.4 × 0.6 = ?", "opts": ["0.24", "2.4", "0.024", "24"], "ans": 0}, {"q": "3.2 × 100 = ?", "opts": ["32", "3,200", "320", "0.032"], "ans": 2}, {"q": "Number of decimal places in the product of 1.25 × 0.3:", "opts": ["1", "2", "3", "4"], "ans": 2}, {"q": "2.5 × 0.4 = ?", "opts": ["1.0", "10", "0.10", "0.01"], "ans": 0}, {"q": "A pencil costs $0.75. Cost of 8 pencils?", "opts": ["$5.00", "$6.00", "$6.50", "$7.50"], "ans": 1}],
+  "div-whole": [{"q": "864 ÷ 8 = ?", "opts": ["108", "118", "98", "208"], "ans": 0}, {"q": "Estimate 3,478 ÷ 6:", "opts": ["5", "60", "500", "5,000"], "ans": 2}, {"q": "Long division steps in order:", "opts": ["DMSB", "MDSB", "SBDM", "DBMS"], "ans": 0}, {"q": "936 ÷ 24 = ?", "opts": ["39", "29", "49", "40"], "ans": 0}, {"q": "240 ÷ 15 = ?", "opts": ["15", "16", "17", "14"], "ans": 1}],
+  "div-decimals": [{"q": "12.6 ÷ 6 = ?", "opts": ["2.1", "21", "0.21", "2.6"], "ans": 0}, {"q": "To divide by 0.5, first ___.", "opts": ["move both decimals 1 place right", "flip", "add", "subtract"], "ans": 0}, {"q": "6 ÷ 0.2 = ?", "opts": ["3", "30", "0.3", "300"], "ans": 1}, {"q": "0.72 ÷ 8 = ?", "opts": ["0.09", "0.9", "9", "0.009"], "ans": 0}, {"q": "A 3.6 m rope cut into 0.4 m pieces gives ___ pieces.", "opts": ["9", "10", "8", "12"], "ans": 0}],
+  "add-sub-fractions": [{"q": "1/2 + 1/3 = ?", "opts": ["2/5", "5/6", "1/6", "3/6"], "ans": 1}, {"q": "5/8 − 1/4 = ?", "opts": ["3/8", "4/8", "1/2", "1/8"], "ans": 0}, {"q": "Common denominator of 1/3 and 1/4?", "opts": ["7", "12", "4", "3"], "ans": 1}, {"q": "2 1/2 + 1 1/4 = ?", "opts": ["3 1/4", "3 3/4", "4 1/4", "3 1/2"], "ans": 1}, {"q": "5 − 1 2/3 = ?", "opts": ["3 1/3", "3 2/3", "4 1/3", "2 2/3"], "ans": 0}],
+  "mult-fractions": [{"q": "3/4 × 2/3 = ?", "opts": ["5/7", "6/12 = 1/2", "1/2", "both B and C"], "ans": 3}, {"q": "4 × 1/2 = ?", "opts": ["2", "4/2", "1/8", "both A and B"], "ans": 3}, {"q": "1/2 of 10 = ?", "opts": ["5", "20", "2", "1/20"], "ans": 0}, {"q": "2/3 × 3/4 = ?", "opts": ["1/2", "5/7", "6/7", "1/12"], "ans": 0}, {"q": "When you multiply by 1/2, the number gets ___.", "opts": ["bigger", "smaller", "stays the same", "doubles"], "ans": 1}],
+  "div-fractions": [{"q": "4 ÷ 1/2 = ?", "opts": ["2", "8", "1/8", "4/2"], "ans": 1}, {"q": "Keep-Change-Flip means:", "opts": ["keep first, change ÷ to ×, flip second", "keep bottom, change sign, flip top", "keep top, change, flip", "none"], "ans": 0}, {"q": "1/3 ÷ 2 = ?", "opts": ["2/3", "1/6", "1/5", "6"], "ans": 1}, {"q": "How many 1/4 cups fit in 3 cups?", "opts": ["12", "7", "3/4", "1/12"], "ans": 0}, {"q": "1/2 ÷ 1/4 = ?", "opts": ["1/8", "1/2", "2", "8"], "ans": 2}],
+  "data": [{"q": "A line plot uses ___ to show data.", "opts": ["bars", "Xs above a number line", "circles", "dots on a graph"], "ans": 1}, {"q": "Mode of 2, 3, 3, 5, 7?", "opts": ["2", "3", "5", "7"], "ans": 1}, {"q": "Range of 4, 8, 12, 20?", "opts": ["4", "16", "20", "12"], "ans": 1}, {"q": "Line plot: 3 Xs at 2, 2 Xs at 3. Total data points?", "opts": ["5", "2", "3", "6"], "ans": 0}, {"q": "Best display for measurement fractions:", "opts": ["bar graph", "line plot", "pie chart", "pictograph"], "ans": 1}],
+  "volume": [{"q": "Volume of a 5×3×2 prism = ?", "opts": ["10", "30", "15", "60"], "ans": 1}, {"q": "Volume is measured in ___.", "opts": ["units", "square units", "cubic units", "pounds"], "ans": 2}, {"q": "A cube with side 4 has volume ___.", "opts": ["16", "12", "64", "8"], "ans": 2}, {"q": "A box is 6×4×2. Volume?", "opts": ["24", "48", "12", "36"], "ans": 1}, {"q": "For composite solids, find each piece's volume and ___.", "opts": ["multiply", "add", "subtract", "average"], "ans": 1}],
+  "measurement": [{"q": "4 ft = ___ in", "opts": ["12", "24", "36", "48"], "ans": 3}, {"q": "3,500 mL = ___ L", "opts": ["3.5", "35", "350", "0.35"], "ans": 0}, {"q": "Which is heaviest?", "opts": ["32 oz", "2 lb", "1 lb 15 oz", "30 oz"], "ans": 1}, {"q": "2 miles = ___ ft", "opts": ["1,760", "5,280", "10,560", "1,320"], "ans": 2}, {"q": "To convert cm to m, ___.", "opts": ["× 100", "÷ 100", "× 10", "÷ 10"], "ans": 1}],
+  "expressions": [{"q": "6 + 3 × 2 = ?", "opts": ["18", "12", "9", "15"], "ans": 1}, {"q": "(4 + 2) × 5 = ?", "opts": ["14", "22", "30", "20"], "ans": 2}, {"q": "In PEMDAS, which comes first?", "opts": ["M", "D", "P", "A"], "ans": 2}, {"q": "Evaluate: 24 ÷ (2 + 4)", "opts": ["4", "8", "2", "6"], "ans": 0}, {"q": "\"Twice the sum of 5 and 3\" is:", "opts": ["2 × 5 + 3", "2 + (5 × 3)", "2 × (5 + 3)", "5 + 3 × 2"], "ans": 2}],
+  "coordinate-plane": [{"q": "The origin is at ___.", "opts": ["(1, 1)", "(0, 0)", "(x, y)", "the top right"], "ans": 1}, {"q": "In (3, 7), the 3 tells you ___.", "opts": ["how far up", "how far right", "a value", "the y-value"], "ans": 1}, {"q": "Distance from (2, 4) to (7, 4)?", "opts": ["5", "2", "7", "11"], "ans": 0}, {"q": "The x-axis is ___.", "opts": ["vertical", "horizontal", "diagonal", "a curve"], "ans": 1}, {"q": "Which point is 5 up from origin?", "opts": ["(0, 5)", "(5, 0)", "(5, 5)", "(0, 0)"], "ans": 0}],
+  "patterns": [{"q": "Rule: start at 0, add 4. Fourth term?", "opts": ["4", "8", "12", "16"], "ans": 2}, {"q": "If A: +3 and B: +9, then B = ___ × A.", "opts": ["2", "3", "6", "9"], "ans": 1}, {"q": "Next in: 2, 6, 18, 54, ...", "opts": ["108", "162", "216", "72"], "ans": 1}, {"q": "Ordered pair from A(+2) and B(+4): first non-zero pair?", "opts": ["(0, 0)", "(2, 4)", "(4, 2)", "(1, 2)"], "ans": 1}, {"q": "Rule: subtract 5, start at 30. Third term?", "opts": ["25", "20", "15", "10"], "ans": 1}],
+  "geometry-2d": [{"q": "A shape with 3 equal sides is ___.", "opts": ["isosceles", "scalene", "equilateral", "right"], "ans": 2}, {"q": "A rectangle has ___ right angles.", "opts": ["2", "3", "4", "0"], "ans": 2}, {"q": "A square is also a ___.", "opts": ["rectangle", "rhombus", "parallelogram", "all of these"], "ans": 3}, {"q": "A quadrilateral with exactly 1 pair of parallel sides is a ___.", "opts": ["trapezoid", "parallelogram", "rhombus", "square"], "ans": 0}, {"q": "True or false: All rhombuses are squares.", "opts": ["True", "False", "Sometimes", "Only if right angles"], "ans": 1}],
 };
 
 const HANDOUTS_5 = {
-  'place-value': {
-    title: `Building Big Numbers with Place Value`,
-    science: `🌌 Real-World Math — Astronomy & Distances`,
-    mission: `Place value lets us write and understand <em>huge</em> numbers — like the distance from Earth to the Sun (about 93,000,000 miles) or the number of stars in our galaxy (about 100,000,000,000). In this handout you'll build a place-value chart for some incredible real numbers, then practice rounding them.`,
-    steps: [
-      `Draw a place-value chart with columns from <em>hundred billions</em> down to <em>thousandths</em>.`,
-      `Place these numbers in your chart: Distance to Moon = 238,900 miles; Distance to Sun = 93,000,000 miles; Diameter of a human hair = 0.004 inches.`,
-      `For each number, circle the digit in the given place: moon distance — ten-thousands place; sun distance — millions place; hair diameter — thousandths place.`,
-      `Round each number to the nearest convenient place. Moon distance to nearest 10,000 mi. Sun distance to nearest million. Hair diameter to nearest hundredth.`,
-      `Write each rounded number in words — spelling out the name of the large or small place value.`
-    ],
-    deliverable: `A neat place-value chart with each number placed, the correct digit circled, and the rounded value written below.`,
-    reflect: [
-      `Why is rounding useful when talking about very large distances like the distance to the Sun?`,
-      `Which place value is easiest for you to visualize — millions, thousands, or thousandths? Why?`
-    ]
-  },
-  'add-subtract': {
-    title: `Classroom Budget Tracker`,
-    science: `💵 Real-World Math — Money Management`,
-    mission: `Every classroom has a budget for supplies. You'll imagine your class has $2,500 for the year and track purchases and donations using addition and subtraction.`,
-    steps: [
-      `Make a table with 3 columns: Item, Amount +/−, Running Total. Start with $2,500.`,
-      `Subtract these expenses: notebooks $345, markers $127, science kits $856, field trip bus $642.`,
-      `Add these donations: parent fund-raiser +$1,280, school grant +$500.`,
-      `Calculate the running total after each entry. Check your work by adding all + entries and all − entries separately.`,
-      `Find the ending balance. Should the class spend more on supplies, save it, or donate to another class?`
-    ],
-    deliverable: `A completed budget table with correct running totals and your recommendation for the remaining money.`,
-    reflect: [
-      `Why is keeping a running total helpful when managing money?`,
-      `How can you check if your final balance is correct without redoing every step?`
-    ]
-  },
-  'mult-div': {
-    title: `Stadium Seating Planner`,
-    science: `🏟️ Real-World Math — Event Planning`,
-    mission: `You're helping plan a school concert. The auditorium has rows of seats. Use multiplication and division to figure out how many people can attend and how to arrange seating.`,
-    steps: [
-      `An auditorium has 28 rows of 36 seats each. Multiply to find total seats.`,
-      `If each family buys 4 tickets, how many families can attend? Divide.`,
-      `If ticket price is $12, and every seat is sold, how much money does the school earn? Multiply.`,
-      `The school wants 15% of seats reserved for teachers. Estimate 10% (divide by 10), then add half of that for 15%.`,
-      `If extra guests arrive and 3 folding chairs go in each aisle (4 aisles), how many more people can be seated?`
-    ],
-    deliverable: `A planner sheet showing total seats, families that can attend, ticket revenue, teacher reservations, and extra seating.`,
-    reflect: [
-      `When is it faster to multiply than to add repeatedly?`,
-      `Why does dividing help solve "sharing equally" problems?`
-    ]
-  },
-  'order-ops': {
-    title: `Mystery Expression Decoder`,
-    science: `🔎 Real-World Math — Logic & Puzzles`,
-    mission: `Computers follow the order of operations exactly. A small mistake in PEMDAS can give a wildly wrong answer. Decode 6 "mystery" expressions and write a rule for each.`,
-    steps: [
-      `Copy these 6 expressions: (a) 5 + 2 × 4, (b) (5 + 2) × 4, (c) 20 − 6 ÷ 2, (d) (20 − 6) ÷ 2, (e) 3² + 4 × 2, (f) 2 × (3² − 1).`,
-      `For each one, write the steps you'd do in order, labeling the PEMDAS step you used.`,
-      `Calculate the final answer for each expression.`,
-      `Compare (a) vs (b) and (c) vs (d). What role do parentheses play?`,
-      `Write your own expression that uses parentheses, exponents, and at least one × and one + operation. Challenge a friend to solve it.`
-    ],
-    deliverable: `A decoder sheet with all 6 expressions solved, PEMDAS steps labeled, and your own challenge expression.`,
-    reflect: [
-      `Why do mathematicians need a standard order of operations?`,
-      `Which step of PEMDAS is easiest to forget? How will you remember it?`
-    ]
-  },
-  'frac-add-sub': {
-    title: `Recipe Remix`,
-    science: `🍪 Real-World Math — Cooking & Baking`,
-    mission: `Recipes use fractions all the time. You'll combine two cookie recipes and find the total amount of each ingredient needed.`,
-    steps: [
-      `Recipe A: 1 1/2 cups flour, 3/4 cup sugar, 1/3 cup butter. Recipe B: 2 1/4 cups flour, 1/2 cup sugar, 2/3 cup butter.`,
-      `Add the flour amounts. Find a common denominator first!`,
-      `Add the sugar amounts.`,
-      `Add the butter amounts.`,
-      `If you only want to make half of Recipe B, subtract half of each of its ingredient amounts from the combined totals.`
-    ],
-    deliverable: `A recipe remix sheet showing combined totals and the half-recipe totals, with your arithmetic shown.`,
-    reflect: [
-      `Why are recipes often written with fractions rather than decimals?`,
-      `Why do you need a common denominator to add or subtract fractions?`
-    ]
-  },
-  'frac-mult-div': {
-    title: `Pizza Party Planner`,
-    science: `🍕 Real-World Math — Fair Sharing`,
-    mission: `You have several pizzas to share at a party. Use fraction multiplication and division to figure out who gets how much.`,
-    steps: [
-      `Start with 3 pizzas cut into 8 slices each. Total slices?`,
-      `If 12 people come, how many slices does each person get? Divide.`,
-      `If 2/3 of the guests are kids and each kid eats 1/2 the amount of an adult, how many slices does a kid get?`,
-      `You have 1/4 of a pizza left. You want to share it among 3 siblings. What fraction of the whole pizza does each sibling get? (1/4 ÷ 3)`,
-      `Each guest also gets a 1/3-cup soda. If you have 4 liters of soda and a cup is 1/4 liter, how many 1/3-cup servings can you make?`
-    ],
-    deliverable: `A party planning sheet with slice totals per guest and a short paragraph explaining how you solved the fair-share problems.`,
-    reflect: [
-      `Why does dividing by a fraction give a larger answer than the original?`,
-      `How does "keep, change, flip" work for 1/4 ÷ 3?`
-    ]
-  },
-  'frac-convert': {
-    title: `Measuring Tape Detective`,
-    science: `📏 Real-World Math — Construction & Design`,
-    mission: `A carpenter's tape measure uses fractions (1/16, 1/8, 1/4, 1/2 inch). You'll practice converting between improper fractions, mixed numbers, and simplified forms as if you were measuring wood for a project.`,
-    steps: [
-      `You need 5 boards each 17/4 inches long. Convert 17/4 to a mixed number.`,
-      `Another 6 boards are 3 5/8 inches long. Convert 3 5/8 to improper.`,
-      `A leftover piece is 24/16 in. Simplify to the lowest terms.`,
-      `Compare: Is 11/8 longer or shorter than 1 1/3? Convert both and explain.`,
-      `Add all 5 boards from step 1 together. What is the total length as a mixed number and as a decimal?`
-    ],
-    deliverable: `A measurement log showing all conversions, comparisons, and the total length in two forms.`,
-    reflect: [
-      `Why might a carpenter prefer mixed numbers over improper fractions on a plan?`,
-      `When is simplifying a fraction most useful?`
-    ]
-  },
-  'frac-vs-dec': {
-    title: `Two Ways to Say the Same Thing`,
-    science: `🔄 Real-World Math — Sports & Statistics`,
-    mission: `Sports stats use both fractions AND decimals — batting averages (.325), free-throw percentages, etc. You'll practice converting between the two forms.`,
-    steps: [
-      `Make a table: Fraction | Decimal | Percent. Fill in these values: 1/2, 1/4, 3/4, 1/5, 3/5, 7/10, 9/20.`,
-      `Convert each fraction to a decimal by dividing numerator by denominator.`,
-      `Multiply each decimal by 100 to get the percent.`,
-      `Now in reverse — convert these decimals to fractions in simplest form: 0.8, 0.45, 0.125, 0.72.`,
-      `A basketball player made 18 out of 25 free throws. Write this as a fraction, decimal, and percent.`
-    ],
-    deliverable: `A completed conversion table plus the basketball stat in all three forms.`,
-    reflect: [
-      `When is a decimal form more useful than a fraction?`,
-      `Why can some fractions (like 1/3) only be written as a repeating decimal?`
-    ]
-  },
-  'dec-add-sub': {
-    title: `Receipt Detective`,
-    science: `🧾 Real-World Math — Money & Shopping`,
-    mission: `You'll build a realistic grocery receipt, calculate the total, handle sales tax, and figure out change.`,
-    steps: [
-      `List 6 items with prices to the hundredths: e.g., Bread $3.49, Milk $4.25, Eggs $3.89, Cheese $5.99, Apples $2.67, Cereal $4.50.`,
-      `Add all prices carefully — line up decimal points!`,
-      `Add 8% sales tax by multiplying the subtotal by 0.08, then adding it to the subtotal.`,
-      `You pay with $40.00. Subtract the total to find your change.`,
-      `Estimate first! Round each item to the nearest dollar and add. How close is your estimate to the actual total?`
-    ],
-    deliverable: `A formatted receipt with subtotal, tax, total, and change. Include your estimate and compare it to the actual total.`,
-    reflect: [
-      `Why is lining up decimal points so important when adding money?`,
-      `How can estimating first help you catch arithmetic mistakes?`
-    ]
-  },
-  'dec-mult': {
-    title: `Gas Mileage Math`,
-    science: `⛽ Real-World Math — Travel & Fuel`,
-    mission: `Cars measure fuel efficiency in miles per gallon (MPG). Use decimal multiplication to plan a road trip.`,
-    steps: [
-      `A car gets 28.5 miles per gallon. The gas tank holds 12.4 gallons. How many miles on a full tank? (Multiply!)`,
-      `Gas costs $3.85 per gallon. What does it cost to fill an empty 12.4-gallon tank?`,
-      `If you drive 450 miles, and the car gets 28.5 MPG, how many gallons do you use? (Divide 450 ÷ 28.5 — approximate to the nearest tenth.)`,
-      `How much does those gallons cost at $3.85/gal?`,
-      `Estimate first: 28.5 ≈ 30, 12.4 ≈ 12. Does your actual answer make sense compared to your estimate?`
-    ],
-    deliverable: `A trip-planning sheet showing MPG math, fuel cost, and an estimate check.`,
-    reflect: [
-      `Where do the decimal points go when you multiply 3.85 × 12.4? Walk through the count.`,
-      `How could a family save money on gas by understanding MPG?`
-    ]
-  },
-  'dec-div': {
-    title: `Unit Price Shopper`,
-    science: `🛒 Real-World Math — Smart Shopping`,
-    mission: `The "unit price" (price per unit) helps you decide which item is the best deal. Use decimal division to compare products.`,
-    steps: [
-      `Pick 4 products and pretend sizes: Cereal — 18 oz for $4.32. Soap — 12 bars for $9.48. Juice — 64 oz for $5.12. Chips — 7.5 oz for $3.75.`,
-      `Find the unit price for each: divide total price by size (e.g., 4.32 ÷ 18 = $0.24/oz).`,
-      `Rank them from cheapest per unit to most expensive per unit.`,
-      `Sometimes the "bigger" package isn't always cheaper per unit. Create a made-up example where a smaller package is actually a better deal per unit.`,
-      `If the cereal store has a "buy 2 get 1 free" sale, what's the new per-ounce price? (Divide total ounces by total cost.)`
-    ],
-    deliverable: `A shopping comparison sheet listing items, unit prices, rankings, and your "smaller is cheaper" counter-example.`,
-    reflect: [
-      `Why is unit price often a better measure than total price when comparing products?`,
-      `How does dividing by a decimal like 7.5 change the problem versus dividing by a whole number?`
-    ]
-  },
-  'measurement': {
-    title: `Metric Measurement Lab`,
-    science: `🔬 Real-World Math — Science Lab Preparation`,
-    mission: `Scientists use the metric system because it's based on powers of 10 — converting is just moving the decimal! Practice customary and metric conversions using real measurements.`,
-    steps: [
-      `Measure 5 items around your home in cm. Record each.`,
-      `Convert each to mm (multiply by 10) and to m (divide by 100).`,
-      `Pick 3 containers and estimate their capacity in mL and L. 1 L = 1,000 mL.`,
-      `Weigh 3 items in grams. Convert each to kilograms (divide by 1,000).`,
-      `Convert your height from inches → feet (÷12), then inches → cm (multiply by 2.54). Which system feels more natural?`
-    ],
-    deliverable: `A lab notebook-style chart with all measurements and their conversions in at least two units.`,
-    reflect: [
-      `Why is the metric system easier for conversions than the customary system?`,
-      `Why do scientists worldwide use the metric system?`
-    ]
-  },
-  'geometry': {
-    title: `Quadrilateral Zoo`,
-    science: `🏛️ Real-World Math — Architecture & Design`,
-    mission: `Architects use quadrilaterals everywhere — windows, tiles, floor plans. You'll sort shapes and plot a simple floor plan on a coordinate grid.`,
-    steps: [
-      `Draw or print 6 quadrilaterals: square, rectangle, rhombus, parallelogram (non-rectangle), trapezoid, kite.`,
-      `Create a sorting chart. Use checkboxes for: has 4 equal sides, has 4 right angles, has 2 pairs of parallel sides, has 1 pair of parallel sides, has perpendicular diagonals.`,
-      `On graph paper, set up coordinates (0–10 on both axes). Plot a square room with corners at (1,1), (5,1), (5,5), (1,5).`,
-      `Add a rectangular door at (2,1) to (3,1). A window at (4,5) to (5,5).`,
-      `Describe the floor plan in words, naming shapes and coordinates used.`
-    ],
-    deliverable: `Your sorting chart and labeled coordinate floor plan.`,
-    reflect: [
-      `Can a square be called a rectangle? Why or why not?`,
-      `Why is the coordinate plane useful for architecture?`
-    ]
-  },
-  'factoring': {
-    title: `Prime Number Explorer`,
-    science: `🔢 Real-World Math — Cryptography`,
-    mission: `Prime numbers are the "atoms" of multiplication — every number breaks into unique prime factors. Modern internet security relies on prime numbers! Explore primes up to 50.`,
-    steps: [
-      `Write numbers 1–50 in a 5×10 grid.`,
-      `Cross out all multiples of 2 (except 2), then 3 (except 3), then 5, then 7. This is the <em>Sieve of Eratosthenes</em>!`,
-      `Circle all numbers that remain — these are the primes up to 50. How many do you find?`,
-      `For each of these 5 composite numbers, find the prime factorization: 18, 24, 36, 45, 50.`,
-      `Find the GCF of 24 and 36 using their prime factorizations. Find the LCM of 6 and 8 the same way.`
-    ],
-    deliverable: `Your Sieve of Eratosthenes grid, a list of primes to 50, and all 5 prime factorizations plus GCF/LCM calculations.`,
-    reflect: [
-      `Why isn't 1 considered prime?`,
-      `Why are primes sometimes called the "building blocks" of the whole numbers?`
-    ]
-  },
-  'exponents': {
-    title: `Powers of 10 Tour`,
-    science: `🌌 Real-World Math — Scale of the Universe`,
-    mission: `Powers of 10 describe everything from the size of atoms (10⁻⁹ m) to the distance to stars (10¹⁶ m). Map real-world objects onto a powers-of-10 scale.`,
-    steps: [
-      `Make a table with columns: Power of 10, Standard Form, Real-world Example.`,
-      `Fill in 10¹ through 10⁹ with standard form (10, 100, 1,000, …, 1,000,000,000).`,
-      `Match each to a real example: 10¹ = height of a basketball player in feet; 10⁴ = number of students in a large school; 10⁶ = population of a small country; 10⁹ = number of seconds in 32 years.`,
-      `Evaluate 2.5 × 10³ and 7 × 10⁵ — write in standard form.`,
-      `Evaluate 3² , 4³ , and 5² by multiplying by hand.`
-    ],
-    deliverable: `A "powers of 10" scale chart with examples and all calculations shown.`,
-    reflect: [
-      `Why does the exponent tell you how many zeros are in a power of 10?`,
-      `Why is scientific notation (exponent form) helpful for very large numbers?`
-    ]
-  },
-  'data-graphing': {
-    title: `Backyard Data Scientist`,
-    science: `📊 Real-World Math — Statistics`,
-    mission: `Collect data about something you can observe — pencil lengths, daily temperatures, or how long a song is. Display it in a line plot.`,
-    steps: [
-      `Pick something to measure: pencil lengths in your pencil case to the nearest 1/4 inch.`,
-      `Record at least 10 measurements.`,
-      `Build a line plot: draw a number line in 1/4 inch increments; place an X above each value.`,
-      `Calculate the mean, median, mode, and range of your data.`,
-      `If you added 2 more pencils each 8 inches long, how would the mean change? Recalculate.`
-    ],
-    deliverable: `Your line plot with a neat data table and all four statistics (mean, median, mode, range).`,
-    reflect: [
-      `Which measure (mean, median, mode) best represents the "typical" pencil length?`,
-      `How could outliers (very long or short pencils) affect your mean?`
-    ]
-  },
-  'integers': {
-    title: `Elevator Integer Lab`,
-    science: `🏢 Real-World Math — Temperature & Elevation`,
-    mission: `Integers describe floors in a building (above and below ground), temperatures, and heights above/below sea level. Practice with real negative-number situations.`,
-    steps: [
-      `Imagine a building with floors from basement 3 (B3 = −3) up to floor 10. Draw a vertical number line.`,
-      `An elevator starts at floor 5, goes down 8 floors. Where is it now? (5 − 8 = −3 = B3.)`,
-      `A plane at 30,000 ft descends to 12,000 ft. Change?`,
-      `Record 5 temperatures (real or made up) that include negative values. Plot them on a number line.`,
-      `Which is colder: −5°F or −12°F? Order these from coldest to warmest: −5, 12, 0, −12, 3, −20.`
-    ],
-    deliverable: `Your vertical number line with elevator/plane calculations, and your temperature comparisons sorted least to greatest.`,
-    reflect: [
-      `Why is −10 considered less than −5, even though 10 > 5?`,
-      `What does absolute value tell you about a negative number?`
-    ]
-  },
-  'algebra': {
-    title: `Function Machine Builder`,
-    science: `⚙️ Real-World Math — Patterns & Predictions`,
-    mission: `Algebra is about finding rules and patterns. You'll build a "function machine" that takes an input and produces an output using a rule.`,
-    steps: [
-      `Pick a rule: "multiply by 3 then add 2" (output = 3x + 2).`,
-      `Make a table of inputs 0, 1, 2, 3, 4, 5. Calculate each output.`,
-      `On graph paper, plot each (input, output) as a coordinate point. Connect them. What do you notice?`,
-      `Now try 2 rules together — x rule: "add 1"; y rule: "add 3". Starting at (0, 0), generate 5 ordered pairs and plot them.`,
-      `Write a word-problem expression: "Each friend brings 3 cookies, and mom adds 5 extra. If n friends come, how many cookies?" → 3n + 5.`
-    ],
-    deliverable: `Your function table, graph of points, and word-problem expression.`,
-    reflect: [
-      `Why do algebraic rules show up as straight lines on a graph?`,
-      `How do variables help solve problems where the number isn't known yet?`
-    ]
-  }
+  "place-value": {"title": "Population Rounding", "science": "🌍 Real-World Math — Cities & Rounding", "mission": "Compare city populations by writing them in place value charts and rounding to a common place for easy discussion.", "steps": ["Record populations: A = 1,234,567; B = 856,432; C = 24,819; D = 3,502.", "Build a place value chart (millions down to ones) and place each number in it.", "Round each population to the nearest ten-thousand.", "Round each to the nearest hundred-thousand. Which rounding is more useful?", "Order the populations from largest to smallest."], "deliverable": "A completed place value chart with rounded values and city ranking.", "reflect": ["When is rounding useful? When could it mislead?", "Which rounding gives the sharpest comparison?"]},
+  "add-sub-decimals": {"title": "Grocery Cart Total", "science": "🛒 Real-World Math — Shopping", "mission": "Add up a shopping cart of items to the exact cent, then compute change from a $50 bill.", "steps": ["Items: milk $3.79; bread $2.45; eggs $4.29; apples $6.12; cereal $5.85.", "Add exact total.", "Round each to the nearest dollar and estimate.", "Compare exact and estimated totals.", "Give change from a $50 bill."], "deliverable": "Receipt showing each item, exact total, estimated total, and change owed.", "reflect": ["When is estimating enough vs when do you need exact?", "Why do stores prefer to line up decimal points on receipts?"]},
+  "mult-whole": {"title": "Concert Ticket Sales", "science": "🎤 Real-World Math — Events", "mission": "Plan revenue projections for a concert venue by multiplying rows × seats × price.", "steps": ["Venue has 24 rows of 156 seats. Total seats?", "Tickets sell for $37 each. Full-house revenue?", "If 85% of seats sell, how many tickets? (Round to whole seat.)", "What is the actual revenue at 85% capacity?", "Estimate: is your answer reasonable? Round to nearest thousand."], "deliverable": "Revenue table with total seats, actual sold, price, and totals.", "reflect": ["How does the algorithm handle carrying?", "What business decisions rely on this kind of estimate?"]},
+  "mult-decimals": {"title": "Gas Mileage Cost", "science": "⛽ Real-World Math — Cars & Travel", "mission": "Compute the cost of a road trip using gas price × gallons + hotel + food.", "steps": ["A trip is 342 miles. Car gets 27.5 mpg. Gallons needed?", "Gas costs $3.49 per gallon. Total fuel cost?", "1 night hotel: $87.50. Food: $38.75. Total trip cost?", "If 4 friends split the total evenly, cost per person?", "Estimate the total by rounding — is your exact answer reasonable?"], "deliverable": "Trip budget with all costs itemized and per-person share.", "reflect": ["Why round early estimates before doing exact math?", "How could gas price fluctuations change your budget?"]},
+  "div-whole": {"title": "Team Roster Split", "science": "🏀 Real-World Math — Sports Teams", "mission": "A league has 480 players to divide into balanced teams of 15. Use division to plan the schedule.", "steps": ["Divide 480 players into teams of 15. How many teams?", "If each team plays every other team once, how many games?", "A season is 12 weeks. How many games per week?", "Each team needs 3 basketballs. How many basketballs total?", "A $9,600 sponsor pays every team equally. How much per team?"], "deliverable": "League planning report: teams, games, weekly schedule, equipment, and per-team funding.", "reflect": ["When does division give a whole answer vs a remainder?", "How do you interpret remainders in real problems?"]},
+  "div-decimals": {"title": "Unit Price Comparison", "science": "🥫 Real-World Math — Smart Shopping", "mission": "Compare products by computing unit prices (price ÷ size) to find the best deal.", "steps": ["Cereal: 12.8 oz for $4.16. Unit price ($/oz)?", "Cereal: 18 oz for $5.40. Unit price?", "Which cereal is cheaper per ounce?", "A 2.5-liter juice costs $3.75. Price per liter?", "A 6-pack of soda for $4.20. Price per can?"], "deliverable": "Product comparison chart with unit prices and best-deal recommendation.", "reflect": ["Why is unit price a better comparison than total price?", "How could bigger packages be more expensive per unit? (bulk pricing tricks)"]},
+  "add-sub-fractions": {"title": "Recipe Scaling", "science": "🍪 Real-World Math — Cooking", "mission": "Combine ingredient amounts across recipes; find leftovers.", "steps": ["Recipe A needs 1/2 cup sugar; Recipe B needs 1/3 cup. Total sugar?", "You have 2 1/2 cups flour. Use 1 3/4 cups. How much left?", "Combine 1/4 cup + 3/8 cup butter. Total?", "Serve 3 batches of a 2/3 cup soup portion. Total soup? (multiply, careful mixing skills)", "A pie is cut into 8 slices. 3 people each eat 1/8; 1 person eats 1/4. Fraction eaten?"], "deliverable": "Kitchen worksheet with all fractions computed and reduced.", "reflect": ["Why must denominators match before you add?", "How do you double-check by drawing a picture?"]},
+  "mult-fractions": {"title": "Fabric Cutting", "science": "✂️ Real-World Math — Sewing & DIY", "mission": "You need 2/3 of a pattern that calls for 3/4 yard of fabric. Compute the total for multiple pieces.", "steps": ["One piece needs 3/4 × 2/3 yard. Compute.", "You need 4 identical pieces. Total fabric?", "A bolt has 6 yards. How much left after cutting 4 pieces?", "Compare: is 2/3 × 3/4 more or less than 3/4?", "If you make 1/2 the number of pieces, how much fabric is needed?"], "deliverable": "Cut list with each piece's dimensions and total yardage used.", "reflect": ["What does \"of\" mean in a math problem?", "Why does multiplying by a fraction less than 1 make things smaller?"]},
+  "div-fractions": {"title": "Sharing Portions", "science": "🥣 Real-World Math — Family Meals", "mission": "Split food into smaller portions and figure out how many portions you can make.", "steps": ["A 3-cup pot of soup, portioned in 1/2 cup bowls. How many bowls?", "Split 1/2 lb of peanuts equally into 4 bags. Each bag?", "A pizza cut in eighths; 3 whole pizzas. Total slices?", "4 friends share 1/3 of a chocolate bar equally. Each person's share?", "A 6-cup batch of dressing served in 1/4 cup portions. How many portions?"], "deliverable": "Portion planning chart with quotients and unit sizes.", "reflect": ["When you divide by a fraction, why does the answer grow?", "What does \"Keep, Change, Flip\" mean visually?"]},
+  "data": {"title": "Class Height Chart", "science": "📊 Real-World Math — Class Data", "mission": "Build a line plot from height measurements and compute typical values.", "steps": ["Record heights (in.): 52, 54, 54, 55, 56, 56, 56, 57, 58, 60.", "Draw a line plot on a number line from 50 to 62.", "Find the mode.", "Find the range.", "Compute the mean (average)."], "deliverable": "Labeled line plot with mode, range, and mean labeled.", "reflect": ["When is mode more useful than mean?", "How could an outlier (unusually tall or short) affect the mean?"]},
+  "volume": {"title": "Aquarium Capacity", "science": "🐠 Real-World Math — Fish Tanks", "mission": "A pet store carries three tank sizes. Compute each tank's volume and how many gallons it holds.", "steps": ["Small tank: 12 in × 6 in × 8 in. Volume?", "Medium tank: 24 in × 12 in × 15 in. Volume?", "1 gallon = 231 in³. How many gallons for the small tank? Round to nearest whole gallon.", "How many gallons for the medium tank?", "An L-shape display tank: 20×10×12 + 10×10×12. Total volume?"], "deliverable": "Tank size chart with volume in in³ and gallons.", "reflect": ["Why do we use cubic units for volume?", "How could you check by counting unit cubes?"]},
+  "measurement": {"title": "Race Distance Log", "science": "🏃 Real-World Math — Track & Field", "mission": "Convert race distances between miles, yards, and feet; log a runner's week.", "steps": ["A mile is 5,280 ft. How many feet in 3 miles?", "A track lap is 400 m. How many meters in 4 laps?", "Convert 800 m to kilometers.", "A runner does 2 mi Monday, 5 km Wednesday, 3 mi Friday. Total distance in km? (1 mile ≈ 1.6 km)", "Weekly km total ÷ number of runs = average per run?"], "deliverable": "Weekly log showing all distances converted to km with weekly average.", "reflect": ["Why is the metric system easier for conversions?", "When would you convert to a unit that is inconvenient?"]},
+  "expressions": {"title": "Coach's Score Sheet", "science": "⚽ Real-World Math — Team Scoring", "mission": "A youth soccer league scores 3 pts per win, 1 pt per tie, 0 per loss. Write and evaluate expressions.", "steps": ["Team A: 5 wins, 2 ties, 1 loss. Write the expression. Evaluate.", "Team B: 3 wins, 4 ties, 1 loss. Score?", "Team C's score is written 2 × (4 + 1) + 3 × 2. Evaluate.", "If a team plays 10 games, write an expression for a team with W wins, T ties, and (10 − W − T) losses.", "If the league doubles points for wins, rewrite Team A's expression."], "deliverable": "Score sheet with expressions and totals for each team.", "reflect": ["Why do the parentheses matter?", "How would the rankings change with double-points-for-wins?"]},
+  "coordinate-plane": {"title": "Playground Map", "science": "🗺️ Real-World Math — Layout Design", "mission": "Design a playground on a coordinate grid; place features by ordered pairs.", "steps": ["Draw a coordinate grid from 0 to 15 on both axes.", "Plot the slide at (3, 2), swings at (7, 5), sandbox at (11, 3), gate at (0, 8).", "Find the distance from the slide to the gate horizontally.", "Find the distance from the sandbox to the swings vertically.", "A path from (3, 2) to (11, 3): describe the horizontal and vertical moves."], "deliverable": "Playground map with all features plotted and paths described.", "reflect": ["Why is the coordinate plane useful for maps?", "How would negative coordinates (below or left of origin) change the map?"]},
+  "patterns": {"title": "Savings Race", "science": "💰 Real-World Math — Money Growth", "mission": "Two friends save at different rates. Compare their savings over time.", "steps": ["Anna starts at $0 and saves $5 per week. Table for 6 weeks?", "Ben starts at $0 and saves $15 per week. Table for 6 weeks?", "After 4 weeks, how much more has Ben saved?", "What's the relationship: Ben = ___ × Anna?", "Plot ordered pairs (Anna's $, Ben's $) — what shape do the points make?"], "deliverable": "Two savings tables + list of ordered pairs + brief note on the pattern.", "reflect": ["Why do the points form a straight line?", "What savings rule would make Ben's line even steeper?"]},
+  "geometry-2d": {"title": "Sign Shape Sort", "science": "🚦 Real-World Math — Signs & Symbols", "mission": "Classify street signs, tiles, and playground shapes by their properties.", "steps": ["Sort into triangles, quadrilaterals, and other polygons: STOP (octagon), YIELD (triangle), speed limit (rectangle), diamond warning (rhombus), pentagon fort (5 sides).", "For each triangle, note angles (acute/right/obtuse).", "For each quadrilateral, note if it's square, rectangle, rhombus, parallelogram, or trapezoid.", "Draw a hierarchy diagram showing which quadrilaterals are inside which categories.", "Give one property that all rectangles share but not all rhombuses share."], "deliverable": "Sign classification chart with hierarchy diagram.", "reflect": ["How can a shape have many names at once?", "Why is the hierarchy of quadrilaterals a good example of \"all A are B\"?"]},
 };
 
 const ANSWER_KEYS_5 = {
-  'place-value': 'Place_Value_Astronomy.xlsx',
-  'add-subtract': 'Classroom_Budget_Tracker.xlsx',
-  'mult-div': 'Stadium_Seating_Planner.xlsx',
-  'order-ops': 'Order_of_Operations_Decoder.xlsx',
-  'frac-add-sub': 'Recipe_Remix_Fractions.xlsx',
-  'frac-mult-div': 'Pizza_Party_Planner.xlsx',
-  'frac-convert': 'Measuring_Tape_Detective.xlsx',
-  'frac-vs-dec': 'Fractions_vs_Decimals.xlsx',
-  'dec-add-sub': 'Receipt_Detective.xlsx',
-  'dec-mult': 'Gas_Mileage_Math.xlsx',
-  'dec-div': 'Unit_Price_Shopper.xlsx',
-  'measurement': 'Metric_Measurement_Lab.xlsx',
-  'geometry': 'Quadrilateral_Zoo.xlsx',
-  'factoring': 'Prime_Number_Explorer.xlsx',
-  'exponents': 'Powers_of_10_Tour.xlsx',
-  'data-graphing': 'Backyard_Data_Scientist.xlsx',
-  'integers': 'Elevator_Integer_Lab.xlsx',
-  'algebra': 'Function_Machine_Builder.xlsx'
+  "place-value": "Math5_place_value.xlsx",
+  "add-sub-decimals": "Math5_add_sub_decimals.xlsx",
+  "mult-whole": "Math5_mult_whole.xlsx",
+  "mult-decimals": "Math5_mult_decimals.xlsx",
+  "div-whole": "Math5_div_whole.xlsx",
+  "div-decimals": "Math5_div_decimals.xlsx",
+  "add-sub-fractions": "Math5_add_sub_fractions.xlsx",
+  "mult-fractions": "Math5_mult_fractions.xlsx",
+  "div-fractions": "Math5_div_fractions.xlsx",
+  "data": "Math5_data.xlsx",
+  "volume": "Math5_volume.xlsx",
+  "measurement": "Math5_measurement.xlsx",
+  "expressions": "Math5_expressions.xlsx",
+  "coordinate-plane": "Math5_coordinate_plane.xlsx",
+  "patterns": "Math5_patterns.xlsx",
+  "geometry-2d": "Math5_geometry_2d.xlsx",
 };
 
-let completedUnits = {};
+const ANSWERS_5 = {
+  "place-value": ["Place value chart placement: A in millions, B in hundred-thousands, C in ten-thousands, D in thousands.", "Rounded to ten-thousand: A=1,230,000; B=860,000; C=20,000; D=0.", "Rounded to hundred-thousand: A=1,200,000; B=900,000; C=0; D=0. Ten-thousand rounding is more precise.", "Order (largest→smallest): A, B, C, D.", "Rounding groups small differences; huge cities dominate. Coarse rounding loses info about small cities."],
+  "add-sub-decimals": ["Exact total: 3.79 + 2.45 + 4.29 + 6.12 + 5.85 = <strong>$22.50</strong>.", "Estimate (rounded): 4 + 2 + 4 + 6 + 6 = $22. Close to exact.", "Change from $50: 50.00 − 22.50 = <strong>$27.50</strong>.", "Line-up decimal points prevents adding wrong place values.", "Estimate is useful for quick checks; exact is needed to give change."],
+  "mult-whole": ["Total seats: 24 × 156 = <strong>3,744</strong>.", "Full-house revenue: 3,744 × $37 = <strong>$138,528</strong>.", "85% of 3,744 ≈ 3,182 tickets.", "Actual revenue: 3,182 × $37 ≈ <strong>$117,734</strong>.", "Estimate: 4,000 × $40 = $160,000; 85% is $136,000. Actual ($117,734) is within reasonable range."],
+  "mult-decimals": ["Gallons: 342 ÷ 27.5 ≈ <strong>12.44 gal</strong>.", "Fuel cost: 12.44 × $3.49 ≈ <strong>$43.42</strong>.", "Total trip: $43.42 + $87.50 + $38.75 = <strong>$169.67</strong>.", "Per person: $169.67 ÷ 4 ≈ <strong>$42.42</strong>.", "Rough estimate: 12 × $3.50 = $42 fuel; +$90+$40 ≈ $172. Actual $169.67 is close ✓."],
+  "div-whole": ["Teams: 480 ÷ 15 = <strong>32 teams</strong>.", "Games (round-robin): 32 × 31 ÷ 2 = <strong>496 games</strong>.", "Games per week: 496 ÷ 12 ≈ <strong>41.3 games/week</strong>.", "Basketballs: 32 × 3 = <strong>96 basketballs</strong>.", "Per team: $9,600 ÷ 32 = <strong>$300</strong>."],
+  "div-decimals": ["Cereal 1 unit price: 4.16 ÷ 12.8 = <strong>$0.325/oz</strong>.", "Cereal 2 unit price: 5.40 ÷ 18 = <strong>$0.30/oz</strong>.", "Cereal 2 is cheaper per ounce.", "Juice: 3.75 ÷ 2.5 = <strong>$1.50/L</strong>.", "Soda: 4.20 ÷ 6 = <strong>$0.70/can</strong>."],
+  "add-sub-fractions": ["1/2 + 1/3 = 3/6 + 2/6 = <strong>5/6</strong>.", "2 1/2 − 1 3/4 = 2 2/4 − 1 3/4 = 1 6/4 − 1 3/4 = <strong>3/4 cup</strong>.", "1/4 + 3/8 = 2/8 + 3/8 = <strong>5/8 cup</strong>.", "3 × 2/3 = <strong>2 cups</strong>.", "3 × 1/8 + 1/4 = 3/8 + 2/8 = <strong>5/8 of the pie</strong>."],
+  "mult-fractions": ["3/4 × 2/3 = 6/12 = <strong>1/2 yard</strong> per piece.", "4 pieces × 1/2 yard = <strong>2 yards</strong>.", "6 − 2 = <strong>4 yards left</strong>.", "2/3 × 3/4 = 1/2 &lt; 3/4 (multiplying by a fraction less than 1 shrinks it).", "Half the pieces = 2 pieces × 1/2 yard = <strong>1 yard</strong>."],
+  "div-fractions": ["3 ÷ 1/2 = <strong>6 bowls</strong>.", "1/2 ÷ 4 = <strong>1/8 lb per bag</strong>.", "3 × 8 = <strong>24 slices</strong>.", "1/3 ÷ 4 = <strong>1/12 of the bar each</strong>.", "6 ÷ 1/4 = <strong>24 portions</strong>."],
+  "data": ["10 data points recorded.", "Line plot: 1X at 52, 2X at 54, 1X at 55, 3X at 56, 1X at 57, 1X at 58, 1X at 60.", "Mode = <strong>56</strong> (three data points).", "Range = 60 − 52 = <strong>8</strong>.", "Mean = (52+54+54+55+56+56+56+57+58+60) ÷ 10 = 558 ÷ 10 = <strong>55.8 in</strong>."],
+  "volume": ["Small tank: 12 × 6 × 8 = <strong>576 in³</strong>.", "Medium tank: 24 × 12 × 15 = <strong>4,320 in³</strong>.", "Small tank gallons: 576 ÷ 231 ≈ <strong>2 gal</strong>.", "Medium tank gallons: 4,320 ÷ 231 ≈ <strong>19 gal</strong>.", "L-shape: 20×10×12 + 10×10×12 = 2,400 + 1,200 = <strong>3,600 in³</strong>."],
+  "measurement": ["3 miles = 3 × 5,280 = <strong>15,840 ft</strong>.", "4 laps = 4 × 400 = <strong>1,600 m</strong>.", "800 m = <strong>0.8 km</strong>.", "2 mi ≈ 3.2 km; 5 km; 3 mi ≈ 4.8 km. Total ≈ <strong>13 km</strong>.", "Average = 13 ÷ 3 ≈ <strong>4.3 km/run</strong>."],
+  "expressions": ["Team A: 3 × 5 + 1 × 2 + 0 × 1 = 15 + 2 = <strong>17 pts</strong>.", "Team B: 3 × 3 + 1 × 4 + 0 × 1 = 9 + 4 = <strong>13 pts</strong>.", "Team C: 2 × (4+1) + 3 × 2 = 2 × 5 + 6 = 10 + 6 = <strong>16 pts</strong>.", "Points = 3W + T + 0 × (10 − W − T) = <strong>3W + T</strong>.", "Double win points: Team A → 6 × 5 + 1 × 2 = 30 + 2 = <strong>32 pts</strong>."],
+  "coordinate-plane": ["15×15 grid drawn.", "Features plotted at listed coordinates.", "Slide-to-gate horizontal distance = |3 − 0| = <strong>3 units</strong>.", "Sandbox-to-swings vertical distance = |5 − 3| = <strong>2 units</strong>.", "Path from (3, 2) to (11, 3): right 8, then up 1."],
+  "patterns": ["Anna: 0, 5, 10, 15, 20, 25, 30.", "Ben: 0, 15, 30, 45, 60, 75, 90.", "After week 4: Ben − Anna = 60 − 20 = <strong>$40 more</strong>.", "Relationship: Ben = <strong>3 × Anna</strong>.", "Ordered pairs (Anna, Ben): (0,0), (5,15), (10,30), ... form a <strong>straight line</strong>."],
+  "geometry-2d": ["Sort: triangle = YIELD; quadrilaterals = speed-limit rectangle + diamond rhombus; other = STOP octagon, pentagon fort.", "YIELD triangle is likely equilateral / acute (all angles < 90°).", "Speed-limit sign: rectangle. Diamond: rhombus (equal sides, no right angles).", "Hierarchy: Quadrilateral → Trapezoid, Parallelogram → Rectangle, Rhombus → Square (intersection of Rect & Rhombus).", "All rectangles have <strong>4 right angles</strong>; rhombuses generally don't."],
+};
 let currentUnit = null;
 
 function resourceCardHTML(unit) {
   const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
   const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
-  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${ytBtn}</div></div>`;
+  const ixlBtn = unit.ixlUrl ? `<a class="btn-ixl" href="${unit.ixlUrl}" target="_blank" rel="noopener">📚 IXL Practice</a>` : '';
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${ixlBtn}${ytBtn}</div></div>`;
 }
 
 function renderHome() {
@@ -1255,7 +397,13 @@ function showQuiz() {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('quiz-screen').classList.add('active');
   const quiz = QUIZZES[currentUnit];
-  let html = '';
+  let html = `
+    <div style="background:#f0f4ff;padding:14px;border-radius:8px;margin-bottom:15px;border-left:4px solid #1B3A8A;">
+      <label style="display:block;font-weight:600;color:#1B3A8A;margin-bottom:6px;">Student Name:</label>
+      <input type="text" id="student-name" placeholder="Type your full name"
+        style="width:100%;padding:8px;border:1px solid #ccc;border-radius:4px;font-size:14px;" />
+    </div>
+  `;
   quiz.forEach((q, idx) => {
     html += `<div class="quiz-question"><h4>Question ${idx + 1}</h4><p>${q.q}</p>`;
     q.opts.forEach((opt, optIdx) => {
@@ -1266,20 +414,94 @@ function showQuiz() {
   document.getElementById('quiz-content').innerHTML = html;
 }
 
+// Quiz results stored at latest submission so email button can use them.
+let lastQuizResults = null;
+
 function submitQuiz() {
   const quiz = QUIZZES[currentUnit];
+  const studentName = (document.getElementById('student-name')?.value || '').trim();
   let score = 0;
+  const breakdown = [];
   quiz.forEach((q, idx) => {
     const selected = document.querySelector(`input[name="q${idx}"]:checked`);
-    if (selected && parseInt(selected.value) === q.ans) score++;
+    const selectedIdx = selected ? parseInt(selected.value) : -1;
+    const isCorrect = selectedIdx === q.ans;
+    if (isCorrect) score++;
+    breakdown.push({
+      n: idx + 1,
+      question: q.q,
+      studentAnswer: selectedIdx >= 0 ? q.opts[selectedIdx] : '(no answer)',
+      correctAnswer: q.opts[q.ans],
+      correct: isCorrect
+    });
   });
   const percent = Math.round((score / quiz.length) * 100);
   completedUnits[currentUnit] = true;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('certificate-screen').classList.add('active');
-  document.getElementById('cert-content').innerHTML = `<p style="font-size: 24px; margin: 20px;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p><p>Congratulations on completing this unit!</p>`;
+
+  const unitObj = UNITS.find(u => u.id === currentUnit);
+  const unitTitle = unitObj ? unitObj.title : currentUnit;
+
+  lastQuizResults = { studentName, unitTitle, score, total: quiz.length, pct: percent, breakdown };
+
+  const nameLine = studentName
+    ? `<p><strong>Student:</strong> ${studentName}</p>`
+    : `<p style="color:#b91c1c;"><em>Tip: type your name on the quiz screen before submitting so Dr. Park knows who you are.</em></p>`;
+
+  document.getElementById('cert-content').innerHTML = `
+    <div style="padding: 20px;">
+      ${nameLine}
+      <p><strong>Unit:</strong> ${unitTitle}</p>
+      <p style="font-size: 24px; margin: 20px 0;">Quiz Score: ${score}/${quiz.length} (${percent}%)</p>
+      <p>${percent === 100 ? "Perfect! 🌟" : percent >= 67 ? "Nice work! Keep practicing." : "Good try! Review the lesson and try again."}</p>
+      <div style="margin-top:18px;">
+        <button class="btn" onclick="emailResults()" style="background:#1B3A8A;color:white;padding:10px 18px;font-size:14px;border:none;border-radius:6px;cursor:pointer;">
+          📧 Submit Quiz to Dr. Park
+        </button>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:#666;">
+        Tapping the button opens Gmail with the score and answers filled in. Just press Send.
+      </p>
+    </div>
+  `;
   renderSidebar();
   updateProgress();
+}
+
+function emailResults() {
+  if (!lastQuizResults) return;
+  const r = lastQuizResults;
+  const lines = [];
+  lines.push(`Aloha Dr. Park,`);
+  lines.push(``);
+  lines.push(`A 5th-grade math quiz was just submitted.`);
+  lines.push(``);
+  lines.push(`Student: ${r.studentName || '(name not provided)'}`);
+  lines.push(`Unit: ${r.unitTitle}`);
+  lines.push(`Score: ${r.score} out of ${r.total} (${r.pct}%)`);
+  lines.push(``);
+  lines.push(`--- Detailed Answers ---`);
+  r.breakdown.forEach(b => {
+    lines.push(``);
+    lines.push(`Q${b.n}. ${b.question}`);
+    lines.push(`   Student's answer: ${b.studentAnswer}`);
+    lines.push(`   Correct answer:   ${b.correctAnswer}`);
+    lines.push(`   ${b.correct ? '✓ Correct' : '✗ Incorrect'}`);
+  });
+  lines.push(``);
+  lines.push(`Mahalo,`);
+  lines.push(`Mary, Star of the Sea School — Grade 5 Math`);
+
+  const subject = `Grade 5 Math Quiz Result — ${r.studentName || 'Student'} — ${r.unitTitle} — ${r.pct}%`;
+  const body = lines.join('\n');
+  const to = 'ppark@starofthesea.org';
+
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&tf=1`
+    + `&to=${encodeURIComponent(to)}`
+    + `&su=${encodeURIComponent(subject)}`
+    + `&body=${encodeURIComponent(body)}`;
+  window.open(gmailUrl, '_blank');
 }
 
 function updateProgress() {
@@ -1301,7 +523,7 @@ function showHandout() {
   const answerKeyHtml = akFile ? `
       <div style="background:#E8F5E9;border:2px solid #2E7D32;border-radius:8px;padding:14px;margin:14px 0;">
         <strong style="color:#1B3A8A;">📗 Answer Key (for self-check):</strong>
-        <a href="AnswerKeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
+        <a href="answerkeys/${akFile}" download style="display:inline-block;background:#2E7D32;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-weight:600;margin:6px 8px 6px 0;">Download ${akFile}</a>
         <div style="font-size:0.9rem;color:#555;margin-top:6px;">Completed workbook with all formulas, charts, and real-world data. Open in Excel or upload to Google Sheets (<em>File → Import → Upload</em>) to compare with your own work after you finish.</div>
       </div>` : '';
   document.getElementById('handout-content').innerHTML = `
