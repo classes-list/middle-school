@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Syllabus &mdash; Mrs. Nishibun &middot; 6th Grade Band &middot; SY 2026-2027</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f3ff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-index-btn {
+  position: fixed; top: 20px; left: 20px;
+  background: #253a77; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-index-btn:hover { background: #1a2a4a; transform: translateX(-2px); }
+.print-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: #7c3aed; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+  box-shadow: 0 3px 10px rgba(124,58,237,0.25);
+  z-index: 10;
+}
+.print-btn:hover { background: #6d28d9; }
+
+.syllabus-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid #a855f7;
+}
+
+.header-top {
+  display: flex; gap: 24px; align-items: center;
+  border-bottom: 2px solid #e2e8f0; padding-bottom: 22px; margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.header-info { flex: 1 1 260px; }
+.header-info h1 { color: #253a77; font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+.header-info .role { color: #7c3aed; font-style: italic; font-size: 0.95rem; margin-bottom: 6px; font-weight: 700; }
+.header-info .contact { font-size: 0.92rem; line-height: 1.7; color: #444; }
+.header-info .contact strong { color: #253a77; }
+.header-info .contact a { color: #253a77; text-decoration: none; }
+.header-info .contact a:hover { text-decoration: underline; }
+.year-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+  color: #fff;
+  font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 999px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(124,58,237,0.35);
+}
+.teacher-photo {
+  width: 130px; height: 130px; border-radius: 50%;
+  background: #1a2a4a; overflow: hidden; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(37,58,119,0.2);
+}
+.teacher-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; }
+
+.mission-box {
+  background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 100%);
+  border-left: 5px solid #a855f7;
+  padding: 20px 24px; border-radius: 10px;
+  margin-bottom: 22px;
+}
+.mission-box h3 { color: #7c3aed; font-size: 1.05rem; margin-bottom: 6px; }
+.mission-box p { color: #1f2937; font-size: 0.95rem; line-height: 1.55; }
+
+.section-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  border-top: 4px solid #a855f7;
+}
+.section-card h2 {
+  color: #253a77; font-size: 1.25rem; font-weight: 800;
+  margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 2px solid #a855f7;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-card h3 { color: #7c3aed; font-size: 1.05rem; margin: 14px 0 8px; }
+.section-card p { color: #2d3748; font-size: 0.96rem; line-height: 1.7; margin-bottom: 10px; }
+.section-card ul, .section-card ol { margin: 8px 0 12px 24px; }
+.section-card li { padding: 3px 0; color: #2d3748; font-size: 0.95rem; line-height: 1.65; }
+.section-card li strong { color: #253a77; }
+
+.grade-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 10px; }
+.grade-item {
+  background: #faf5ff; border-left: 4px solid #a855f7;
+  padding: 14px 18px; border-radius: 8px;
+}
+.grade-item .g-title { font-weight: 700; color: #7c3aed; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+.grade-item .g-percent { background: #a855f7; color: #fff; padding: 2px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; }
+.grade-item ul { margin: 4px 0 0 18px; }
+.grade-item li { font-size: 0.9rem; padding: 2px 0; line-height: 1.5; }
+
+.behavior-steps {
+  background: #fff8e1; border-left: 4px solid #FFD100;
+  padding: 16px 20px; border-radius: 8px; margin: 12px 0;
+}
+.behavior-steps h4 { color: #7a5f00; font-size: 1rem; margin-bottom: 8px; }
+.behavior-steps ol { margin-left: 22px; }
+.behavior-steps li { font-size: 0.93rem; padding: 3px 0; }
+
+footer {
+  margin-top: 32px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center; color: #7c3aed;
+  font-style: italic; font-weight: 700; font-size: 1.05rem;
+}
+@media print {
+  body { background: #fff; padding: 0; }
+  .back-index-btn, .print-btn { display: none; }
+  .syllabus-card { box-shadow: none; padding: 20px; }
+  .section-card { box-shadow: none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .syllabus-card { padding: 24px 20px; }
+  .header-info h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+<a href="band.html" class="back-index-btn" title="Back to Music Class">&larr; Back to Class</a>
+<a class="print-btn" href="band-syllabus.pdf?v=1" target="_blank" rel="noopener" title="Open printable syllabus PDF">🖨️ Print Syllabus</a>
+
+<div class="container">
+  <div class="syllabus-card">
+
+    <div class="header-top">
+      <div class="teacher-photo">
+        <img src="mrs-nishibun.jpg" alt="Mrs. Deeann Nishibun">
+      </div>
+      <div class="header-info">
+        <div class="year-badge">School Year 2026-2027</div>
+        <h1>Mrs. Deeann Nishibun &middot; 6th Grade Band</h1>
+        <div class="role">Band Director &middot; Grade 6 &middot; Mary, Star of the Sea School</div>
+        <div class="contact">
+          <strong>Email:</strong> <a href="mailto:dnishibun@starofthesea.org">dnishibun@starofthesea.org</a><br>
+          <em>Emails are read/replied to during regular school hours.</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mission -->
+    <div class="mission-box">
+      <h3>🌟 Living Our NUI Mission</h3>
+      <p>At MSOS, we believe that living our NUI mission &mdash; <strong>N</strong>urturing each other, <strong>U</strong>niting as a community, and <strong>I</strong>nspiring excellence &mdash; guides how we learn and grow together.</p>
+    </div>
+
+    <!-- Course Outline / Objectives -->
+    <div class="section-card">
+      <h2>🎺 Course Outline &amp; Objectives &middot; Grade 6</h2>
+      <p>Throughout the school year, students will learn the value of music by understanding the <strong>elements of music</strong>: rhythm, dynamics, melody, harmony, tone color, and texture. By the end of the year, all students will demonstrate proper <strong>posture, playing position, intonation, fingerings, style, balance and blending, articulation,</strong> and <strong>phrasing</strong>.</p>
+      <p>Students will use this knowledge and the fundamentals of their instrument to <strong>actively listen, express themselves,</strong> and <strong>engage through music</strong>. Music Education allows students to develop a love of music that will carry on for the rest of their lives.</p>
+    </div>
+
+    <!-- Required Materials -->
+    <div class="section-card">
+      <h2>🎼 Required Materials</h2>
+      <p>All students are required to have the following in their possession at every class session:</p>
+      <ul>
+        <li><strong>Essential Elements Method Book 1</strong></li>
+        <li><strong>Assigned Instrument</strong> (Percussionists will bring book and their own drumsticks to class)</li>
+        <li><strong>Instrument Accessories</strong> &mdash; 3 extra reeds, valve oil, mouthpiece, cork grease, neck strap, slide cream, cleaning cloth, polishing cloth</li>
+      </ul>
+      <p><em>Failure to bring the required materials will result in reduced participation points for that class.</em></p>
+    </div>
+
+    <!-- Student Behavior -->
+    <div class="section-card">
+      <h2>🎼 Student Behavior</h2>
+      <p><strong>Students are expected to:</strong></p>
+      <ul>
+        <li><strong>Respect</strong> all people and property in the classroom at all times.</li>
+        <li><strong>Participate</strong> in all activities and come prepared for every class.</li>
+        <li><strong>Try their best</strong>.</li>
+        <li><strong>Follow</strong> the student code of conduct per the handbook.</li>
+      </ul>
+
+      <div class="behavior-steps">
+        <h4>Steps for Growth</h4>
+        <p style="margin:6px 0 0;font-size:0.94rem">Students may receive up to three <strong>verbal reminders</strong>, take time during <strong>recess or lunch to refocus</strong>, connect with <strong>parents through email or phone</strong>, participate in a <strong>Saturday session for improvement</strong>, or <strong>meet with the principal</strong> to create a positive plan moving forward.</p>
+      </div>
+    </div>
+
+    <!-- Grading Policy -->
+    <div class="section-card">
+      <h2>📊 Grading Policy</h2>
+      <p>Students will earn grades through <strong>class participation, testing,</strong> and <strong>weekly at-home practice</strong>. Students needing extra help may schedule a meeting during recess or lunch recess. All assignments will be posted on <strong>Google Classroom &mdash; 6th Band</strong>. All grades will be posted in <strong>Beehively</strong> (including late and missing assignments).</p>
+      <p><em>*Students and parents should check Google Classroom and Beehively frequently for all assignments and current grades.</em></p>
+      <div class="grade-grid">
+        <div class="grade-item">
+          <div class="g-title">Class Participation <span class="g-percent">50%</span></div>
+          <ul>
+            <li>Bring instrument and book to every class</li>
+            <li>Bring all other required materials</li>
+            <li>Following rules and directions</li>
+            <li>Active participation</li>
+          </ul>
+        </div>
+        <div class="grade-item">
+          <div class="g-title">Testing <span class="g-percent">30%</span></div>
+          <ul>
+            <li>Playing and written tests</li>
+          </ul>
+        </div>
+        <div class="grade-item">
+          <div class="g-title">Practice Logs <span class="g-percent">20%</span></div>
+          <ul>
+            <li><strong>Weekly practice</strong> is necessary to review/remember fingerings and concepts learned during class. Practicing several times a week with shorter sessions is recommended to achieve the <strong>60-minute weekly total</strong> and maximize retention.</li>
+            <li><em>Example: 4× a week (M, W, F, Sa) for 15 minutes each session.</em></li>
+            <li>The log must include a <strong>parent/guardian signature</strong> to receive full credit.</li>
+            <li>Due by <strong>5:00 pm every Friday on Google Classroom</strong>.</li>
+            <li>Late logs will only receive partial credit.</li>
+            <li>Logs will <strong>NOT</strong> be accepted 7 days past the due date.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="section-card">
+      <h2>💬 Contact Information</h2>
+      <p><strong>Email:</strong> <a href="mailto:dnishibun@starofthesea.org">dnishibun@starofthesea.org</a></p>
+      <p><em>**Note: Emails are read/replied to during regular school hours.</em></p>
+    </div>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🎵</footer>
+  </div>
+</div>
+</body>
+</html>
