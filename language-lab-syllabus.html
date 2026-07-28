@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Syllabus &mdash; Dr. Freitas &middot; Language Lab &middot; SY 2026-2027</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-index-btn {
+  position: fixed; top: 20px; left: 20px;
+  background: #253a77; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-index-btn:hover { background: #1a2a4a; transform: translateX(-2px); }
+.print-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: #0891b2; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+  box-shadow: 0 3px 10px rgba(14,116,144,0.25);
+  z-index: 10;
+}
+.print-btn:hover { background: #0e7490; }
+
+.syllabus-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid #0891b2;
+}
+.header-top {
+  display: flex; gap: 24px; align-items: center;
+  border-bottom: 2px solid #e2e8f0; padding-bottom: 22px; margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.header-info { flex: 1 1 260px; }
+.header-info h1 { color: #253a77; font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+.header-info .role { color: #0e7490; font-style: italic; font-size: 0.95rem; margin-bottom: 6px; font-weight: 700; }
+.header-info .contact { font-size: 0.92rem; line-height: 1.7; color: #444; }
+.header-info .contact strong { color: #253a77; }
+.header-info .contact a { color: #253a77; text-decoration: none; }
+.header-info .contact a:hover { text-decoration: underline; }
+.year-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+  color: #fff;
+  font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 999px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(14,116,144,0.35);
+}
+.teacher-photo {
+  width: 130px; height: 130px; border-radius: 50%;
+  background: #1a2a4a; overflow: hidden; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(37,58,119,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.teacher-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; }
+.teacher-photo .initials { color: #FFD100; font-size: 2.4rem; font-weight: 800; letter-spacing: 0.05em; display: none; }
+
+.vision-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 5px solid #0891b2;
+  padding: 20px 24px; border-radius: 10px;
+  margin-bottom: 22px;
+}
+.vision-box p { color: #1f2937; font-size: 0.98rem; line-height: 1.65; margin-bottom: 10px; }
+.vision-box p:last-child { margin-bottom: 0; }
+.vision-box ul { margin: 8px 0 8px 22px; }
+.vision-box li { padding: 3px 0; font-size: 0.95rem; color: #1f2937; line-height: 1.55; }
+
+.section-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  border-top: 4px solid #0891b2;
+}
+.section-card h2 {
+  color: #253a77; font-size: 1.25rem; font-weight: 800;
+  margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 2px solid #0891b2;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-card p { color: #2d3748; font-size: 0.96rem; line-height: 1.7; margin-bottom: 10px; }
+.section-card ul { margin: 8px 0 12px 24px; }
+.section-card li { padding: 4px 0; color: #2d3748; font-size: 0.95rem; line-height: 1.6; }
+.section-card li strong { color: #253a77; }
+
+.two-col {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+}
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+.two-col h3 { color: #0e7490; font-size: 1rem; margin-bottom: 6px; font-weight: 800; }
+
+.lang-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px; margin-top: 8px;
+}
+.lang-chip {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px solid #FFD100;
+  border-radius: 10px;
+  padding: 12px 10px;
+  text-align: center;
+  font-weight: 800;
+  color: #1a2a4a;
+  font-size: 0.98rem;
+}
+.lang-chip .flag { display: block; font-size: 1.6rem; margin-bottom: 4px; }
+
+.grading-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 0.92rem;
+}
+.grading-table th, .grading-table td {
+  border: 1px solid #cbd5e1;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.grading-table th {
+  background: #0e7490; color: #fff; font-weight: 800; letter-spacing: 0.03em;
+}
+.grading-table td:nth-child(2) { text-align: center; font-weight: 800; color: #0e7490; white-space: nowrap; }
+.grading-table tr:nth-child(even) td { background: #f8fafc; }
+
+.duolingo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.duo-card {
+  background: #ecfeff; border-left: 4px solid #0891b2;
+  padding: 12px 14px; border-radius: 8px;
+}
+.duo-card .duo-grade {
+  display: inline-block; background: #0e7490; color: #fff;
+  padding: 2px 10px; border-radius: 999px; font-size: 0.72rem;
+  font-weight: 800; letter-spacing: 0.05em; margin-bottom: 6px;
+}
+.duo-card h4 { color: #253a77; font-size: 0.98rem; margin-bottom: 4px; font-weight: 800; }
+.duo-card p { font-size: 0.86rem; color: #2d3748; line-height: 1.5; margin: 0; }
+
+.motto {
+  text-align: center; font-size: 1.15rem;
+  color: #0e7490; font-weight: 800; font-style: italic;
+  padding: 18px 20px; margin: 20px 0;
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-radius: 10px; border: 2px dashed #FFD100;
+}
+
+.contact-card {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 4px solid #FFD100;
+  padding: 16px 20px; border-radius: 8px;
+  margin-top: 8px;
+}
+.contact-card p { font-size: 0.95rem; color: #1a2a4a; line-height: 1.6; margin: 4px 0; }
+
+footer {
+  margin-top: 32px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 1.05rem;
+}
+@media print {
+  body { background: #fff; padding: 0; }
+  .back-index-btn, .print-btn { display: none; }
+  .syllabus-card { box-shadow: none; padding: 20px; }
+  .section-card { box-shadow: none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .syllabus-card { padding: 24px 20px; }
+  .header-info h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+<a href="language-lab.html" class="back-index-btn" title="Back to Language Lab">&larr; Back to Class</a>
+<a class="print-btn" href="language-lab-syllabus.pdf?v=1" target="_blank" rel="noopener" title="Open printable syllabus PDF">🖨️ Print Syllabus</a>
+
+<div class="container">
+  <div class="syllabus-card">
+
+    <div class="header-top">
+      <div class="teacher-photo">
+        <img src="dr-freitas.jpg" alt="Dr. Freitas" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="initials" style="width:100%;height:100%;align-items:center;justify-content:center;">BF</div>
+      </div>
+      <div class="header-info">
+        <div class="year-badge">School Year 2026-2027</div>
+        <h1>Dr. Freitas &middot; Language Lab</h1>
+        <div class="role">World Languages &amp; Culture &middot; Middle School &middot; Mary, Star of the Sea School</div>
+        <div class="contact">
+          <strong>Email:</strong> <a href="mailto:bfreitas@starofthesea.org">bfreitas@starofthesea.org</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision & NUI Mission -->
+    <div class="vision-box">
+      <p><strong>Language Lab Vision &amp; NUI Mission.</strong> The vision of the Middle School Language Lab is to provide students with the opportunity to develop proficiency in a second language while also gaining a deeper understanding and appreciation of the culture(s) associated with that language. Aligned with our school&rsquo;s NUI mission, this course:</p>
+      <ul>
+        <li><strong>Nurtures</strong> foundational communication skills by balancing structured lessons with personal growth.</li>
+        <li><strong>Unites</strong> students and cultures through meaningful cross-cultural comparisons and exposure to global perspectives.</li>
+        <li><strong>Inspires</strong> curiosity and lifelong learning through engaging tools like Duolingo and cultural exploration.</li>
+      </ul>
+      <p>At Mary, Star of the Sea School, we guide our students to become <strong>S.T.A.R.s:</strong></p>
+      <ul>
+        <li>Self-Aware, Confident Individuals</li>
+        <li>Teachable, Lifelong Independent Learners</li>
+        <li>Active Christians</li>
+        <li>Responsible Citizens</li>
+      </ul>
+    </div>
+
+    <!-- Curriculum Overview -->
+    <div class="section-card">
+      <h2>📚 Curriculum Overview</h2>
+      <p>The curriculum is well-rounded and covers both language skills and cultural topics.</p>
+      <div class="two-col">
+        <div>
+          <h3>Language Skills</h3>
+          <ul>
+            <li>Grammar</li>
+            <li>Vocabulary</li>
+            <li>Pronunciation</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Cultural Topics</h3>
+          <ul>
+            <li>History</li>
+            <li>Traditions</li>
+            <li>Social norms</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:10px">Students are exposed to authentic resources such as videos, songs, and texts, and are encouraged to use the language in real-world scenarios. Language options are based on availability in high school to support long-term learning.</p>
+    </div>
+
+    <!-- Languages Offered -->
+    <div class="section-card">
+      <h2>🌐 Languages Offered</h2>
+      <div class="lang-grid">
+        <div class="lang-chip"><span class="flag">🇪🇸</span>Spanish</div>
+        <div class="lang-chip"><span class="flag">🇫🇷</span>French</div>
+        <div class="lang-chip"><span class="flag">🇯🇵</span>Japanese</div>
+        <div class="lang-chip"><span class="flag">🇨🇳</span>Mandarin Chinese</div>
+        <div class="lang-chip"><span class="flag">🌺</span>Hawaiian</div>
+      </div>
+    </div>
+
+    <!-- Objectives & Grading -->
+    <div class="section-card">
+      <h2>🎯 Objective &amp; Grading</h2>
+      <p>The Language Lab aims to develop students&rsquo; <strong>listening, speaking, reading, and writing</strong> skills in their chosen language through the <strong>Duolingo for Schools</strong> program, supported by in-class speaking practice, cultural projects, and <strong>ACTFL-aligned</strong> activities.</p>
+      <p>Students will regularly:</p>
+      <ul>
+        <li>Complete interactive lessons online</li>
+        <li>Participate in role-plays and discussions</li>
+        <li>Listen to guest speakers</li>
+        <li>Engage in hands-on cultural learning</li>
+      </ul>
+
+      <table class="grading-table" style="margin-top:14px">
+        <thead>
+          <tr><th>Category</th><th>Weight</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Completion of Units / Lessons</td>
+            <td>50%</td>
+            <td>Duolingo progress, language binders, worksheets; in-class activities and immersive learning. 1 pt taken off for late work.</td>
+          </tr>
+          <tr>
+            <td>Assessments &amp; Projects</td>
+            <td>35%</td>
+            <td>Quizzes, presentations, cultural projects, and writing assignments that showcase growth and understanding.</td>
+          </tr>
+          <tr>
+            <td>Behavior / Participation</td>
+            <td>15%</td>
+            <td>Active engagement, appropriate use of tech, headphone etiquette, and participation in group / cultural activities. Points deducted daily for poor participation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Supplies -->
+    <div class="section-card">
+      <h2>🎒 Required Supplies</h2>
+      <ul>
+        <li>USB-C or gaming-style <strong>headphones (with microphone)</strong></li>
+        <li>1&Prime; Language Lab <strong>binder</strong> and <strong>composition notebook</strong></li>
+        <li><strong>MacBook</strong> (charged daily)</li>
+      </ul>
+    </div>
+
+    <!-- Duolingo Scope & Sequence -->
+    <div class="section-card">
+      <h2>🦉 Duolingo Scope &amp; Sequence</h2>
+      <div class="duolingo-grid">
+        <div class="duo-card">
+          <span class="duo-grade">Grade 6</span>
+          <h4>Level 1 &mdash; Introduction</h4>
+          <p>Greetings, colors, numbers, basic nouns / pronouns, weather.</p>
+        </div>
+        <div class="duo-card">
+          <span class="duo-grade">Grade 7</span>
+          <h4>Level 2 &mdash; Foundations</h4>
+          <p>Daily routines, food, describing people &amp; places.</p>
+        </div>
+        <div class="duo-card">
+          <span class="duo-grade">Grade 8</span>
+          <h4>Level 3 &mdash; Intermediate</h4>
+          <p>Travel, past tense, expressing emotions.</p>
+        </div>
+        <div class="duo-card">
+          <span class="duo-grade">Advanced</span>
+          <h4>Levels 4/5 &mdash; Communication &amp; Fluency</h4>
+          <p>Future tense, complex sentences, advanced grammar, opinions, current events, specialized vocabulary.</p>
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:0.94rem">Along the language-learning journey, students aren&rsquo;t just learning words &mdash; <strong>6th grade</strong> students gain the tools to connect with new people, explore different cultures, and see the world with fresh eyes. <strong>7th grade</strong> continues to strengthen their foundational vocabulary and <strong>8th grade</strong> begins their true experience of learning how to communicate with more complex grammar. This foundation sets them up to enter high school at <strong>Level 2</strong> in their target language.</p>
+      <p style="margin-top:8px;font-size:0.94rem;font-style:italic;color:#0e7490">Language learning is a journey that takes patience and dedication. Even if your child isn&rsquo;t speaking fluently right away, they are building strong foundations that &mdash; through consistent effort &mdash; will grow into the ability to communicate confidently in the future.</p>
+    </div>
+
+    <div class="motto">&ldquo;Come explore the world through language!&rdquo;</div>
+
+    <!-- Parent Involvement -->
+    <div class="section-card">
+      <h2>🙋 Parent Involvement</h2>
+      <p>We love guests and would love to have you come and help out or speak to the class!</p>
+      <div class="contact-card">
+        <p>Please contact Dr. Freitas at <strong><a href="mailto:bfreitas@starofthesea.org">bfreitas@starofthesea.org</a></strong> if you:</p>
+        <ul style="margin:6px 0 4px 22px">
+          <li>Speak a world language</li>
+          <li>Have traveled internationally</li>
+          <li>Want to share culture or stories</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+  </div>
+</div>
+</body>
+</html>
