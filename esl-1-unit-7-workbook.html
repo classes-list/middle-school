@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESL 1 &middot; Unit 7: Playing with Language &middot; Workbook</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn, .print-btn {
+  position: fixed; top: 20px; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-btn { left: 20px; background: #253a77; color: #fff; }
+.back-btn:hover { background:#1a2a4a; transform:translateX(-2px); }
+.print-btn { right: 20px; background: #0891b2; color: #fff; }
+.print-btn:hover { background:#0e7490; }
+
+.header {
+  text-align:center; margin-bottom: 24px; padding-bottom: 18px;
+  border-bottom: 3px solid #0891b2;
+}
+.header .unit-icon { font-size: 3rem; line-height:1; }
+.header .unit-num {
+  display:inline-block; margin-top: 6px;
+  background: #FFD100; color: #1a2a4a;
+  padding: 4px 14px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em;
+}
+.header h1 { color:#253a77; font-size: 1.9rem; font-weight: 800; margin: 6px 0 4px; }
+.header .quarter { color:#0e7490; font-style: italic; font-weight: 700; font-size: 0.95rem; }
+.header .wida {
+  display:inline-block; margin-top: 8px;
+  background: #ecfeff; border: 1px solid #0891b2;
+  color: #0e7490; padding: 3px 12px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em;
+}
+
+.can-do {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 4px solid #FFD100;
+  padding: 12px 18px; border-radius: 8px;
+  margin: 16px 0 22px;
+  font-size: 0.95rem; color: #1a2a4a; font-style: italic;
+}
+.can-do strong { color:#253a77; font-style: normal; }
+
+.section {
+  background: #fff; border-radius: 12px;
+  padding: 22px 26px; margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #0891b2;
+}
+.section h2 {
+  color: #253a77; font-size: 1.2rem; font-weight: 800;
+  margin-bottom: 12px; padding-bottom: 6px;
+  border-bottom: 2px solid #0891b2;
+  display: flex; align-items:center; gap: 8px;
+}
+.section h3 { color:#0e7490; font-size: 1rem; margin: 12px 0 6px; font-weight: 800; }
+.section p { color:#2d3748; line-height: 1.65; font-size: 0.95rem; margin-bottom: 8px; }
+.section ul { margin: 6px 0 10px 22px; }
+.section li { font-size: 0.94rem; color:#2d3748; line-height: 1.55; padding: 3px 0; }
+.section li strong { color:#253a77; }
+
+.goals {
+  background:#ecfeff; border-left: 4px solid #0891b2;
+  padding: 12px 16px; border-radius: 8px; margin-top: 8px;
+}
+.goals ul { margin:0 0 0 22px; }
+.goals li { padding: 2px 0; }
+
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 0.93rem;
+}
+.vocab-table td { border-bottom: 1px solid #e2e8f0; padding: 8px 10px; color:#2d3748; vertical-align: top; }
+.vocab-table td:first-child { font-weight: 800; color: #0e7490; width: 30%; white-space: nowrap; }
+.vocab-table tr:hover td { background:#f8fafc; }
+
+.phonics-list {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px; margin-top: 8px;
+}
+.phonics-card {
+  background:#ecfeff; border-left: 3px solid #0891b2;
+  padding: 10px 14px; border-radius: 8px;
+}
+.phonics-card strong { color:#0e7490; display: block; margin-bottom: 3px; }
+.phonics-card span { font-size: 0.9rem; color:#2d3748; }
+.sight-words {
+  background: #fff8e1; border: 2px dashed #FFD100;
+  padding: 10px 14px; border-radius: 8px;
+  margin-top: 10px;
+  font-size: 0.9rem; color:#1a2a4a;
+}
+.sight-words strong { color:#0e7490; }
+
+.passage {
+  background: #fefce8; border: 1px solid #FFD100;
+  padding: 18px 22px; border-radius: 8px;
+  font-size: 0.96rem; line-height: 1.75; color:#1a2a4a;
+  white-space: pre-line;
+}
+.passage-title {
+  color:#0e7490; font-weight: 800; font-size: 1rem;
+  margin-bottom: 10px; font-style: italic;
+}
+
+.comp-list { counter-reset: cq; }
+.comp-item {
+  background:#fff; border-left: 3px solid #0891b2;
+  padding: 12px 16px; margin-bottom: 10px; border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+  counter-increment: cq;
+}
+.comp-item::before {
+  content: counter(cq) ". ";
+  color:#0e7490; font-weight: 800;
+}
+.comp-strat {
+  display: inline-block; background: #253a77; color:#fff;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 999px; margin-left: 6px;
+}
+.comp-q { display: inline; font-weight: 700; color:#1a2a4a; }
+.comp-a {
+  display: block; margin-top: 6px;
+  font-size: 0.88rem; color: #065f46;
+  padding: 6px 10px; background: #d1fae5;
+  border-radius: 6px;
+}
+.comp-a::before { content: "Answer: "; font-weight: 800; }
+
+.grammar-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+}
+.grammar-box h3 { color:#0e7490; font-size: 1rem; margin-bottom: 6px; }
+.grammar-box p { line-height: 1.65; color:#1a2a4a; }
+.grammar-try {
+  margin-top: 10px; padding: 12px 14px;
+  background: #fff; border-radius: 6px;
+  font-size: 0.92rem;
+}
+.grammar-try strong { color:#0e7490; }
+.grammar-try ol { margin: 4px 0 0 22px; }
+.grammar-try li { padding: 3px 0; }
+
+.writing-diff {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px; margin-top: 12px;
+}
+.diff-card {
+  background: #f8fafc; border-top: 3px solid #0891b2;
+  padding: 12px 14px; border-radius: 8px;
+}
+.diff-card .diff-grade {
+  display:inline-block; background:#0e7490; color:#fff;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.diff-card p { font-size: 0.9rem; color: #2d3748; line-height: 1.55; margin:0; }
+
+.writing-prompt {
+  background: #fef3c7; border-left: 4px solid #FFD100;
+  padding: 14px 18px; border-radius: 8px;
+  font-size: 0.98rem; color:#1a2a4a; font-weight: 700;
+}
+.writing-prompt::before { content: "✏️ Prompt: "; color:#0e7490; }
+
+/* Quiz */
+.quiz {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100;
+  border-radius: 12px;
+  padding: 18px 22px;
+}
+.quiz-header { display: flex; align-items:center; justify-content: space-between; margin-bottom: 8px; }
+.quiz-header h2 { color:#1a2a4a; font-size: 1.15rem; font-weight: 800; border:none; padding:0; }
+.quiz-score {
+  background: #253a77; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font-size: 0.82rem; font-weight: 800;
+}
+.q-item {
+  background: #fff; border-radius: 8px;
+  padding: 12px 14px; margin: 10px 0;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+}
+.q-num { color:#0e7490; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.q-text { color:#1a2a4a; font-size: 0.98rem; font-weight: 700; margin: 4px 0 10px; }
+.q-choices { display: grid; gap: 6px; }
+.q-choice {
+  padding: 8px 12px; border-radius: 6px;
+  background: #f8fafc; border: 2px solid #e2e8f0;
+  cursor: pointer; font-size: 0.92rem;
+  transition: all 0.15s;
+  text-align: left;
+}
+.q-choice:hover { background: #ecfeff; border-color: #0891b2; }
+.q-choice.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700; }
+.q-choice.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-choice[disabled] { cursor: default; opacity: 0.85; }
+.q-feedback { margin-top: 6px; font-size: 0.82rem; color: #0e7490; font-weight: 700; }
+.quiz-reset {
+  display: inline-block; margin-top: 8px;
+  background: #253a77; color:#fff; text-decoration:none;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none;
+}
+.quiz-reset:hover { background: #1a2a4a; }
+
+.nav-units {
+  display: flex; justify-content: space-between; gap: 10px;
+  margin-top: 30px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+}
+.nav-btn {
+  background: #ecfeff; color: #0e7490; text-decoration: none;
+  padding: 8px 14px; border-radius: 8px;
+  font-weight: 700; font-size: 0.88rem;
+  border: 1px solid #0891b2;
+  transition: all 0.18s;
+}
+.nav-btn:hover { background: #0891b2; color: #fff; }
+.nav-btn.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+
+footer {
+  margin-top: 20px; padding-top: 10px;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 0.9rem;
+}
+
+.credits {
+  margin-top: 14px; font-size: 0.72rem; color: #64748b;
+  text-align: center; font-style: italic;
+}
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn, .quiz-reset, .nav-units { display:none; }
+  .section, .quiz { box-shadow:none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+<a href="esl-1-units.html" class="back-btn">&larr; All ESL 1 Units</a>
+<a href="javascript:window.print()" class="print-btn">🖨️ Print</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="unit-icon">🎨</div>
+    <div class="unit-num">Unit 7 &middot; Q4 · Bridging to Grade-Level ELA</div>
+    <h1>Playing with Language</h1>
+    <div class="wida">WIDA 4-5</div>
+  </div>
+
+  <div class="can-do"><strong>Can-Do:</strong> I can read poems for meaning and sound, and I can write short poems using sensory and figurative language.</div>
+
+  <div class="section">
+    <h2>🎯 What You'll Learn</h2>
+    <div class="goals"><ul><li>Read poems for meaning, rhyme, and rhythm</li><li>Use sensory words to paint word pictures</li><li>Understand similes, metaphors, and personification</li><li>Write acrostic, haiku, shape, and free-verse poems</li><li>Use suffixes and syllable division</li></ul></div>
+  </div>
+
+  <div class="section">
+    <h2>📖 Vocabulary Bank</h2>
+    <p>Twelve key words for Unit 7. Read each aloud with your teacher, then use each in a spoken sentence.</p>
+    <table class="vocab-table"><tbody><tr><td>poem</td><td>a piece of writing that uses rhythm and image, often shorter than a story</td></tr><tr><td>rhyme</td><td>words that end with the same sound (moon / spoon)</td></tr><tr><td>rhythm</td><td>the beat of a poem</td></tr><tr><td>stanza</td><td>a group of lines in a poem, like a paragraph</td></tr><tr><td>simile</td><td>comparing two things using 'like' or 'as' (fast as a shark)</td></tr><tr><td>metaphor</td><td>calling one thing something else to make an image (the moon is a lamp)</td></tr><tr><td>personification</td><td>giving human traits to a non-human thing (the wind whispered)</td></tr><tr><td>sensory</td><td>having to do with the five senses</td></tr><tr><td>image</td><td>a picture the words make in your mind</td></tr><tr><td>acrostic</td><td>a poem where the first letter of each line spells a word</td></tr><tr><td>haiku</td><td>a 3-line Japanese poem with 5-7-5 syllables</td></tr><tr><td>free verse</td><td>a poem that does not have to rhyme or count syllables</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>🔤 Phonics & Word Study</h2>
+    <p><strong>This unit's focus:</strong> Suffixes and syllable division</p>
+    <h3>Word Families</h3>
+    <div class="phonics-list"><div class="phonics-card"><strong>-ing words</strong><span>running, jumping, singing, dancing, thinking, dreaming</span></div><div class="phonics-card"><strong>-ed words</strong><span>played, watched, laughed, cried, splashed, hopped</span></div><div class="phonics-card"><strong>-ly words</strong><span>slowly, quickly, softly, kindly, brightly, quietly</span></div><div class="phonics-card"><strong>-er / -est</strong><span>faster, fastest; brighter, brightest; kinder, kindest</span></div><div class="phonics-card"><strong>2-syllable words</strong><span>sunny (sun-ny), water (wa-ter), music (mu-sic), open (o-pen)</span></div></div>
+    <div class="sight-words"><strong>Sight Words:</strong> like, as, than, feels, sounds, tastes, looks, smells</div>
+    <h3>Practice</h3>
+    <p>Say each word aloud and clap once for each syllable. Sort the words into 1-syllable, 2-syllable, and 3-syllable columns.</p>
+  </div>
+
+  <div class="section">
+    <h2>📚 Reading Passage</h2>
+    <div class="passage">
+      <div class="passage-title">Three Poems for Ocean Days</div>
+      1. Acrostic Poem
+
+Waves crash on the reef
+Alive with sound and salt
+Turtles float below
+Every wave a song
+Reaching for the shore
+
+2. Haiku
+
+Warm sand on my feet
+Two little crabs skitter by
+Sun paints the ocean
+
+3. Free Verse
+
+The wind whispered secrets to the coconut trees,
+and the ocean answered back in a rolling voice,
+loud as a drum.
+I sat on the sand and listened,
+as quiet as a shell.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>❓ Reading Comprehension</h2>
+    <p>Answer each question in a complete sentence. Check the green box after you write your answer.</p>
+    <div class="comp-list"><div class="comp-item"><span class="comp-q">How many syllables are in each line of the haiku?</span><span class="comp-strat">Facts</span><span class="comp-a">5, 7, and 5 syllables.</span></div><div class="comp-item"><span class="comp-q">Find one example of personification in the free-verse poem.</span><span class="comp-strat">Figurative</span><span class="comp-a">'The wind whispered' or 'the ocean answered back' -- non-human things doing human actions.</span></div><div class="comp-item"><span class="comp-q">Find one simile in the free-verse poem.</span><span class="comp-strat">Simile</span><span class="comp-a">'Loud as a drum' or 'as quiet as a shell.'</span></div><div class="comp-item"><span class="comp-q">What word do the first letters of the acrostic poem spell?</span><span class="comp-strat">Main Idea</span><span class="comp-a">WATER.</span></div></div>
+  </div>
+
+  <div class="section">
+    <h2>📐 Language & Grammar</h2>
+    <div class="grammar-box">
+      <h3>Similes, Metaphors, and Personification</h3>
+      <p><b>Simile:</b> compares two things with <i>like</i> or <i>as</i>. &rarr; The ocean is loud <b>as</b> a drum.<br><b>Metaphor:</b> calls one thing another (no <i>like/as</i>). &rarr; The ocean <b>is</b> a drum.<br><b>Personification:</b> gives a non-human thing a human action. &rarr; The wind <b>whispered</b>.</p>
+      <div class="grammar-try">
+        <strong>Try It:</strong>
+        <ol><li>The stars shine _____ diamonds. (simile)</li><li>My teacher is a warm sun. (this is a __________.)</li><li>The old floor _____ under my feet. (personification: complete with a human action)</li><li>The clouds are _____ pillows. (simile using 'like' or 'as')</li></ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>✏️ Writing</h2>
+    <div class="writing-prompt">Write your own ocean-day poem.</div>
+    <h3>Grade Differentiation</h3>
+    <div class="writing-diff">
+      <div class="diff-card"><span class="diff-grade">Grade 4-5</span><p>Write an acrostic poem using the word OCEAN. One line per letter.</p></div>
+      <div class="diff-card"><span class="diff-grade">Grade 6</span><p>Write a haiku (5-7-5 syllables) about a place you love in Hawaiʻi.</p></div>
+      <div class="diff-card"><span class="diff-grade">Grade 7-8</span><p>Write a 3-poem portfolio: 1 acrostic, 1 haiku, 1 free-verse poem. Each must include at least one simile or metaphor.</p></div>
+    </div>
+  </div>
+
+  <div class="section quiz" id="quiz" data-questions="[{&quot;q&quot;: &quot;A haiku has how many lines?&quot;, &quot;choices&quot;: [&quot;2&quot;, &quot;3&quot;, &quot;5&quot;, &quot;10&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;A simile uses which words?&quot;, &quot;choices&quot;: [&quot;and / but&quot;, &quot;like / as&quot;, &quot;is / are&quot;, &quot;then / now&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;The moon is a lamp in the sky&#x27; is a...&quot;, &quot;choices&quot;: [&quot;simile&quot;, &quot;metaphor&quot;, &quot;personification&quot;, &quot;haiku&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;An acrostic is a poem where...&quot;, &quot;choices&quot;: [&quot;every line rhymes&quot;, &quot;the first letters spell a word&quot;, &quot;every line is 5 syllables&quot;, &quot;the last line is longest&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;The wind whispered&#x27; is an example of...&quot;, &quot;choices&quot;: [&quot;a simile&quot;, &quot;personification&quot;, &quot;rhyme&quot;, &quot;rhythm&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;How many syllables are in &#x27;water&#x27;?&quot;, &quot;choices&quot;: [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Sensory&#x27; words describe the...&quot;, &quot;choices&quot;: [&quot;sky&quot;, &quot;five senses&quot;, &quot;stars&quot;, &quot;letters&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;A stanza is like a...&quot;, &quot;choices&quot;: [&quot;title&quot;, &quot;sentence&quot;, &quot;paragraph&quot;, &quot;letter&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;The suffix &#x27;-ly&#x27; usually turns a word into...&quot;, &quot;choices&quot;: [&quot;a noun&quot;, &quot;a verb&quot;, &quot;an adverb&quot;, &quot;a question&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Free-verse poetry...&quot;, &quot;choices&quot;: [&quot;must rhyme&quot;, &quot;never rhymes&quot;, &quot;does not have to rhyme&quot;, &quot;must be 3 lines&quot;], &quot;a&quot;: 2}]">
+    <div class="quiz-header">
+      <h2>🧠 Unit 7 Quiz</h2>
+      <span class="quiz-score">0 / 10</span>
+    </div>
+    <div class="q-items"></div>
+    <button class="quiz-reset" type="button">↻ Reset Quiz</button>
+  </div>
+
+  <div class="nav-units">
+    <a class="nav-btn " href="esl-1-unit-6-workbook.html">&larr; Unit 6</a>
+    <a class="nav-btn" href="esl-1-units.html">All Units</a>
+    <a class="nav-btn " href="esl-1-unit-8-workbook.html">Unit 8 &rarr;</a>
+  </div>
+
+  <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+
+  <div class="credits">
+    Content styled after Spectrum Reading (Carson Dellosa) &middot; Harcourt Family Learning &middot; Explode the Code (Flashkids)
+    &middot; Reading passages original for MSOS ESL 1 by Mrs. Rasmussen.
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var quizEl = document.querySelector('.quiz');
+  if (!quizEl) return;
+  var questions = JSON.parse(quizEl.getAttribute('data-questions'));
+  var scoreEl = quizEl.querySelector('.quiz-score');
+  var itemsEl = quizEl.querySelector('.q-items');
+  var total = questions.length;
+
+  function render() {
+    itemsEl.innerHTML = '';
+    var correct = 0;
+    scoreEl.textContent = '0 / ' + total;
+    questions.forEach(function(q, i) {
+      var item = document.createElement('div');
+      item.className = 'q-item';
+      item.innerHTML = '<div class="q-num">Question ' + (i+1) + ' of ' + total + '</div>' +
+                       '<div class="q-text"></div>' +
+                       '<div class="q-choices"></div><div class="q-feedback"></div>';
+      item.querySelector('.q-text').textContent = q.q;
+      var choicesDiv = item.querySelector('.q-choices');
+      var feedback = item.querySelector('.q-feedback');
+      var answered = false;
+      q.choices.forEach(function(choice, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'q-choice'; btn.type='button'; btn.textContent = choice;
+        btn.addEventListener('click', function() {
+          if (answered) return;
+          answered = true;
+          Array.prototype.forEach.call(choicesDiv.children, function(c) { c.disabled = true; });
+          if (ci === q.a) {
+            btn.classList.add('correct'); correct++;
+            feedback.textContent = '✓ Correct!'; feedback.style.color='#065f46';
+          } else {
+            btn.classList.add('wrong'); choicesDiv.children[q.a].classList.add('correct');
+            feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+            feedback.style.color='#991b1b';
+          }
+          scoreEl.textContent = correct + ' / ' + total;
+        });
+        choicesDiv.appendChild(btn);
+      });
+      itemsEl.appendChild(item);
+    });
+  }
+  render();
+  quizEl.querySelector('.quiz-reset').addEventListener('click', render);
+})();
+</script>
+</body>
+</html>

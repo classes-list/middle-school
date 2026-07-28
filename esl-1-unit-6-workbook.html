@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESL 1 &middot; Unit 6: Making a Case &middot; Workbook</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn, .print-btn {
+  position: fixed; top: 20px; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-btn { left: 20px; background: #253a77; color: #fff; }
+.back-btn:hover { background:#1a2a4a; transform:translateX(-2px); }
+.print-btn { right: 20px; background: #0891b2; color: #fff; }
+.print-btn:hover { background:#0e7490; }
+
+.header {
+  text-align:center; margin-bottom: 24px; padding-bottom: 18px;
+  border-bottom: 3px solid #0891b2;
+}
+.header .unit-icon { font-size: 3rem; line-height:1; }
+.header .unit-num {
+  display:inline-block; margin-top: 6px;
+  background: #FFD100; color: #1a2a4a;
+  padding: 4px 14px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em;
+}
+.header h1 { color:#253a77; font-size: 1.9rem; font-weight: 800; margin: 6px 0 4px; }
+.header .quarter { color:#0e7490; font-style: italic; font-weight: 700; font-size: 0.95rem; }
+.header .wida {
+  display:inline-block; margin-top: 8px;
+  background: #ecfeff; border: 1px solid #0891b2;
+  color: #0e7490; padding: 3px 12px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em;
+}
+
+.can-do {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 4px solid #FFD100;
+  padding: 12px 18px; border-radius: 8px;
+  margin: 16px 0 22px;
+  font-size: 0.95rem; color: #1a2a4a; font-style: italic;
+}
+.can-do strong { color:#253a77; font-style: normal; }
+
+.section {
+  background: #fff; border-radius: 12px;
+  padding: 22px 26px; margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #0891b2;
+}
+.section h2 {
+  color: #253a77; font-size: 1.2rem; font-weight: 800;
+  margin-bottom: 12px; padding-bottom: 6px;
+  border-bottom: 2px solid #0891b2;
+  display: flex; align-items:center; gap: 8px;
+}
+.section h3 { color:#0e7490; font-size: 1rem; margin: 12px 0 6px; font-weight: 800; }
+.section p { color:#2d3748; line-height: 1.65; font-size: 0.95rem; margin-bottom: 8px; }
+.section ul { margin: 6px 0 10px 22px; }
+.section li { font-size: 0.94rem; color:#2d3748; line-height: 1.55; padding: 3px 0; }
+.section li strong { color:#253a77; }
+
+.goals {
+  background:#ecfeff; border-left: 4px solid #0891b2;
+  padding: 12px 16px; border-radius: 8px; margin-top: 8px;
+}
+.goals ul { margin:0 0 0 22px; }
+.goals li { padding: 2px 0; }
+
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 0.93rem;
+}
+.vocab-table td { border-bottom: 1px solid #e2e8f0; padding: 8px 10px; color:#2d3748; vertical-align: top; }
+.vocab-table td:first-child { font-weight: 800; color: #0e7490; width: 30%; white-space: nowrap; }
+.vocab-table tr:hover td { background:#f8fafc; }
+
+.phonics-list {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px; margin-top: 8px;
+}
+.phonics-card {
+  background:#ecfeff; border-left: 3px solid #0891b2;
+  padding: 10px 14px; border-radius: 8px;
+}
+.phonics-card strong { color:#0e7490; display: block; margin-bottom: 3px; }
+.phonics-card span { font-size: 0.9rem; color:#2d3748; }
+.sight-words {
+  background: #fff8e1; border: 2px dashed #FFD100;
+  padding: 10px 14px; border-radius: 8px;
+  margin-top: 10px;
+  font-size: 0.9rem; color:#1a2a4a;
+}
+.sight-words strong { color:#0e7490; }
+
+.passage {
+  background: #fefce8; border: 1px solid #FFD100;
+  padding: 18px 22px; border-radius: 8px;
+  font-size: 0.96rem; line-height: 1.75; color:#1a2a4a;
+  white-space: pre-line;
+}
+.passage-title {
+  color:#0e7490; font-weight: 800; font-size: 1rem;
+  margin-bottom: 10px; font-style: italic;
+}
+
+.comp-list { counter-reset: cq; }
+.comp-item {
+  background:#fff; border-left: 3px solid #0891b2;
+  padding: 12px 16px; margin-bottom: 10px; border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+  counter-increment: cq;
+}
+.comp-item::before {
+  content: counter(cq) ". ";
+  color:#0e7490; font-weight: 800;
+}
+.comp-strat {
+  display: inline-block; background: #253a77; color:#fff;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 999px; margin-left: 6px;
+}
+.comp-q { display: inline; font-weight: 700; color:#1a2a4a; }
+.comp-a {
+  display: block; margin-top: 6px;
+  font-size: 0.88rem; color: #065f46;
+  padding: 6px 10px; background: #d1fae5;
+  border-radius: 6px;
+}
+.comp-a::before { content: "Answer: "; font-weight: 800; }
+
+.grammar-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+}
+.grammar-box h3 { color:#0e7490; font-size: 1rem; margin-bottom: 6px; }
+.grammar-box p { line-height: 1.65; color:#1a2a4a; }
+.grammar-try {
+  margin-top: 10px; padding: 12px 14px;
+  background: #fff; border-radius: 6px;
+  font-size: 0.92rem;
+}
+.grammar-try strong { color:#0e7490; }
+.grammar-try ol { margin: 4px 0 0 22px; }
+.grammar-try li { padding: 3px 0; }
+
+.writing-diff {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px; margin-top: 12px;
+}
+.diff-card {
+  background: #f8fafc; border-top: 3px solid #0891b2;
+  padding: 12px 14px; border-radius: 8px;
+}
+.diff-card .diff-grade {
+  display:inline-block; background:#0e7490; color:#fff;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.diff-card p { font-size: 0.9rem; color: #2d3748; line-height: 1.55; margin:0; }
+
+.writing-prompt {
+  background: #fef3c7; border-left: 4px solid #FFD100;
+  padding: 14px 18px; border-radius: 8px;
+  font-size: 0.98rem; color:#1a2a4a; font-weight: 700;
+}
+.writing-prompt::before { content: "✏️ Prompt: "; color:#0e7490; }
+
+/* Quiz */
+.quiz {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100;
+  border-radius: 12px;
+  padding: 18px 22px;
+}
+.quiz-header { display: flex; align-items:center; justify-content: space-between; margin-bottom: 8px; }
+.quiz-header h2 { color:#1a2a4a; font-size: 1.15rem; font-weight: 800; border:none; padding:0; }
+.quiz-score {
+  background: #253a77; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font-size: 0.82rem; font-weight: 800;
+}
+.q-item {
+  background: #fff; border-radius: 8px;
+  padding: 12px 14px; margin: 10px 0;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+}
+.q-num { color:#0e7490; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.q-text { color:#1a2a4a; font-size: 0.98rem; font-weight: 700; margin: 4px 0 10px; }
+.q-choices { display: grid; gap: 6px; }
+.q-choice {
+  padding: 8px 12px; border-radius: 6px;
+  background: #f8fafc; border: 2px solid #e2e8f0;
+  cursor: pointer; font-size: 0.92rem;
+  transition: all 0.15s;
+  text-align: left;
+}
+.q-choice:hover { background: #ecfeff; border-color: #0891b2; }
+.q-choice.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700; }
+.q-choice.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-choice[disabled] { cursor: default; opacity: 0.85; }
+.q-feedback { margin-top: 6px; font-size: 0.82rem; color: #0e7490; font-weight: 700; }
+.quiz-reset {
+  display: inline-block; margin-top: 8px;
+  background: #253a77; color:#fff; text-decoration:none;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none;
+}
+.quiz-reset:hover { background: #1a2a4a; }
+
+.nav-units {
+  display: flex; justify-content: space-between; gap: 10px;
+  margin-top: 30px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+}
+.nav-btn {
+  background: #ecfeff; color: #0e7490; text-decoration: none;
+  padding: 8px 14px; border-radius: 8px;
+  font-weight: 700; font-size: 0.88rem;
+  border: 1px solid #0891b2;
+  transition: all 0.18s;
+}
+.nav-btn:hover { background: #0891b2; color: #fff; }
+.nav-btn.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+
+footer {
+  margin-top: 20px; padding-top: 10px;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 0.9rem;
+}
+
+.credits {
+  margin-top: 14px; font-size: 0.72rem; color: #64748b;
+  text-align: center; font-style: italic;
+}
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn, .quiz-reset, .nav-units { display:none; }
+  .section, .quiz { box-shadow:none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+<a href="esl-1-units.html" class="back-btn">&larr; All ESL 1 Units</a>
+<a href="javascript:window.print()" class="print-btn">🖨️ Print</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="unit-icon">💭</div>
+    <div class="unit-num">Unit 6 &middot; Q3 · Writing to Inform &amp; Explain</div>
+    <h1>Making a Case</h1>
+    <div class="wida">WIDA 4</div>
+  </div>
+
+  <div class="can-do"><strong>Can-Do:</strong> I can state my opinion clearly, support it with reasons, and compare two things using specific language.</div>
+
+  <div class="section">
+    <h2>🎯 What You'll Learn</h2>
+    <div class="goals"><ul><li>Distinguish fact from opinion</li><li>Compare and contrast two things</li><li>Write an opinion piece with at least 2 reasons</li><li>Use comparative and superlative adjectives</li><li>Use consonant blends and prefixes (un-, re-, pre-)</li></ul></div>
+  </div>
+
+  <div class="section">
+    <h2>📖 Vocabulary Bank</h2>
+    <p>Twelve key words for Unit 6. Read each aloud with your teacher, then use each in a spoken sentence.</p>
+    <table class="vocab-table"><tbody><tr><td>opinion</td><td>what someone thinks or feels; not a fact</td></tr><tr><td>reason</td><td>why you think what you think</td></tr><tr><td>evidence</td><td>proof that supports your reason</td></tr><tr><td>compare</td><td>to show how two things are alike</td></tr><tr><td>contrast</td><td>to show how two things are different</td></tr><tr><td>agree</td><td>to think the same as someone</td></tr><tr><td>disagree</td><td>to think differently</td></tr><tr><td>prefer</td><td>to like one more than another</td></tr><tr><td>advantage</td><td>something good about a choice</td></tr><tr><td>disadvantage</td><td>something not so good about a choice</td></tr><tr><td>convince</td><td>to make someone believe your idea</td></tr><tr><td>audience</td><td>the people who read or hear your writing</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>🔤 Phonics & Word Study</h2>
+    <p><strong>This unit's focus:</strong> Consonant blends (br, cl, sp, str) and prefixes un-, re-, pre-</p>
+    <h3>Word Families</h3>
+    <div class="phonics-list"><div class="phonics-card"><strong>br / cl blends</strong><span>brave, bright, brush, class, clean, close, clear</span></div><div class="phonics-card"><strong>sp / st blends</strong><span>spot, spend, spelling, star, storm, story, strong</span></div><div class="phonics-card"><strong>prefix un-</strong><span>unhappy, unfair, unkind, undo, unlock</span></div><div class="phonics-card"><strong>prefix re-</strong><span>redo, refill, retell, reread, replay, rewrite</span></div><div class="phonics-card"><strong>prefix pre-</strong><span>preview, preheat, prepay, prepare, preschool</span></div></div>
+    <div class="sight-words"><strong>Sight Words:</strong> favorite, better, best, worst, prefer, agree, disagree, think, believe</div>
+    <h3>Practice</h3>
+    <p>Circle every prefix (un-, re-, pre-) you can find in the passage. Then use 3 of the prefix words in your own sentences.</p>
+  </div>
+
+  <div class="section">
+    <h2>📚 Reading Passage</h2>
+    <div class="passage">
+      <div class="passage-title">E-Books vs. Paper Books</div>
+      Some people love reading on tablets. They say e-books are the best because you can carry a whole library in one small device. E-books also let you change the size of the letters, which helps people who have trouble seeing small print.
+
+Other people prefer paper books. They say paper books are better because there is no battery to run out. You can also share a paper book with a friend, and you can find your place easily by folding the corner.
+
+In truth, both kinds have advantages and disadvantages. What matters most is that you read something -- every day, whenever you can.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>❓ Reading Comprehension</h2>
+    <p>Answer each question in a complete sentence. Check the green box after you write your answer.</p>
+    <div class="comp-list"><div class="comp-item"><span class="comp-q">Name one thing e-books and paper books have in common.</span><span class="comp-strat">Compare</span><span class="comp-a">Both are ways to read books.</span></div><div class="comp-item"><span class="comp-q">Name one difference between e-books and paper books.</span><span class="comp-strat">Contrast</span><span class="comp-a">E-books need a battery; paper books don't. Or: e-books can change letter size; paper books can't.</span></div><div class="comp-item"><span class="comp-q">Is 'Paper books are better' a fact or an opinion?</span><span class="comp-strat">Fact vs. Opinion</span><span class="comp-a">An opinion -- 'better' depends on what someone thinks.</span></div><div class="comp-item"><span class="comp-q">What is the main idea of the last paragraph?</span><span class="comp-strat">Main Idea</span><span class="comp-a">Both kinds of books have good and bad points -- what matters is that you read.</span></div></div>
+  </div>
+
+  <div class="section">
+    <h2>📐 Language & Grammar</h2>
+    <div class="grammar-box">
+      <h3>Comparative &amp; Superlative Adjectives</h3>
+      <p>Use <b>comparatives</b> to compare 2 things (add <b>-er</b> or use <b>more</b>).<br>Use <b>superlatives</b> for 3 or more (add <b>-est</b> or use <b>most</b>).<br><br>&bull; short &rarr; shorter &rarr; shortest<br>&bull; small &rarr; smaller &rarr; smallest<br>&bull; interesting &rarr; more interesting &rarr; most interesting<br>&bull; good &rarr; better &rarr; best &nbsp; (irregular)<br>&bull; bad &rarr; worse &rarr; worst &nbsp; (irregular)</p>
+      <div class="grammar-try">
+        <strong>Try It:</strong>
+        <ol><li>This book is _____ (short) than that one.</li><li>She is the _____ (kind) person in our class.</li><li>Math is _____ (interesting) than I thought.</li><li>Recess is the _____ (good) part of the day.</li></ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>✏️ Writing</h2>
+    <div class="writing-prompt">Write an opinion piece: Which do you prefer -- e-books or paper books? Support your opinion with at least 2 reasons.</div>
+    <h3>Grade Differentiation</h3>
+    <div class="writing-diff">
+      <div class="diff-card"><span class="diff-grade">Grade 4-5</span><p>Fill in the frame: 'My favorite kind of book is _____ because _____ and _____.'</p></div>
+      <div class="diff-card"><span class="diff-grade">Grade 6</span><p>Write a 4-sentence opinion paragraph: opinion + 2 reasons + closing sentence.</p></div>
+      <div class="diff-card"><span class="diff-grade">Grade 7-8</span><p>Write a 5-paragraph opinion essay: introduction, three reason paragraphs, and a strong closing that restates your opinion.</p></div>
+    </div>
+  </div>
+
+  <div class="section quiz" id="quiz" data-questions="[{&quot;q&quot;: &quot;An opinion is...&quot;, &quot;choices&quot;: [&quot;something you can prove&quot;, &quot;what someone thinks&quot;, &quot;the same as a fact&quot;, &quot;only in nonfiction&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;To &#x27;compare&#x27; two things means to show how they are...&quot;, &quot;choices&quot;: [&quot;different&quot;, &quot;the same size&quot;, &quot;alike&quot;, &quot;expensive&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which word has the prefix &#x27;re-&#x27;?&quot;, &quot;choices&quot;: [&quot;reader&quot;, &quot;retell&quot;, &quot;really&quot;, &quot;reach&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;The comparative form of &#x27;good&#x27; is...&quot;, &quot;choices&quot;: [&quot;gooder&quot;, &quot;goodest&quot;, &quot;better&quot;, &quot;best&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;The superlative form of &#x27;small&#x27; is...&quot;, &quot;choices&quot;: [&quot;smaller&quot;, &quot;smallest&quot;, &quot;more small&quot;, &quot;most small&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which is a fact?&quot;, &quot;choices&quot;: [&quot;E-books are the best.&quot;, &quot;E-books use a battery.&quot;, &quot;Paper books are boring.&quot;, &quot;Reading is easy.&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Prefer&#x27; means...&quot;, &quot;choices&quot;: [&quot;to hate&quot;, &quot;to like one more than another&quot;, &quot;to forget&quot;, &quot;to buy&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;An advantage is...&quot;, &quot;choices&quot;: [&quot;something bad&quot;, &quot;something good about a choice&quot;, &quot;a math problem&quot;, &quot;a reason to disagree&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;To &#x27;convince&#x27; someone is to...&quot;, &quot;choices&quot;: [&quot;make them believe your idea&quot;, &quot;make them angry&quot;, &quot;make them leave&quot;, &quot;make them laugh&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;The prefix &#x27;un-&#x27; usually means...&quot;, &quot;choices&quot;: [&quot;again&quot;, &quot;before&quot;, &quot;not&quot;, &quot;after&quot;], &quot;a&quot;: 2}]">
+    <div class="quiz-header">
+      <h2>🧠 Unit 6 Quiz</h2>
+      <span class="quiz-score">0 / 10</span>
+    </div>
+    <div class="q-items"></div>
+    <button class="quiz-reset" type="button">↻ Reset Quiz</button>
+  </div>
+
+  <div class="nav-units">
+    <a class="nav-btn " href="esl-1-unit-5-workbook.html">&larr; Unit 5</a>
+    <a class="nav-btn" href="esl-1-units.html">All Units</a>
+    <a class="nav-btn " href="esl-1-unit-7-workbook.html">Unit 7 &rarr;</a>
+  </div>
+
+  <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+
+  <div class="credits">
+    Content styled after Spectrum Reading (Carson Dellosa) &middot; Harcourt Family Learning &middot; Explode the Code (Flashkids)
+    &middot; Reading passages original for MSOS ESL 1 by Mrs. Rasmussen.
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var quizEl = document.querySelector('.quiz');
+  if (!quizEl) return;
+  var questions = JSON.parse(quizEl.getAttribute('data-questions'));
+  var scoreEl = quizEl.querySelector('.quiz-score');
+  var itemsEl = quizEl.querySelector('.q-items');
+  var total = questions.length;
+
+  function render() {
+    itemsEl.innerHTML = '';
+    var correct = 0;
+    scoreEl.textContent = '0 / ' + total;
+    questions.forEach(function(q, i) {
+      var item = document.createElement('div');
+      item.className = 'q-item';
+      item.innerHTML = '<div class="q-num">Question ' + (i+1) + ' of ' + total + '</div>' +
+                       '<div class="q-text"></div>' +
+                       '<div class="q-choices"></div><div class="q-feedback"></div>';
+      item.querySelector('.q-text').textContent = q.q;
+      var choicesDiv = item.querySelector('.q-choices');
+      var feedback = item.querySelector('.q-feedback');
+      var answered = false;
+      q.choices.forEach(function(choice, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'q-choice'; btn.type='button'; btn.textContent = choice;
+        btn.addEventListener('click', function() {
+          if (answered) return;
+          answered = true;
+          Array.prototype.forEach.call(choicesDiv.children, function(c) { c.disabled = true; });
+          if (ci === q.a) {
+            btn.classList.add('correct'); correct++;
+            feedback.textContent = '✓ Correct!'; feedback.style.color='#065f46';
+          } else {
+            btn.classList.add('wrong'); choicesDiv.children[q.a].classList.add('correct');
+            feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+            feedback.style.color='#991b1b';
+          }
+          scoreEl.textContent = correct + ' / ' + total;
+        });
+        choicesDiv.appendChild(btn);
+      });
+      itemsEl.appendChild(item);
+    });
+  }
+  render();
+  quizEl.querySelector('.quiz-reset').addEventListener('click', render);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESL 1 &middot; Unit 2: School &amp; Classroom Language &middot; Workbook</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn, .print-btn {
+  position: fixed; top: 20px; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-btn { left: 20px; background: #253a77; color: #fff; }
+.back-btn:hover { background:#1a2a4a; transform:translateX(-2px); }
+.print-btn { right: 20px; background: #0891b2; color: #fff; }
+.print-btn:hover { background:#0e7490; }
+
+.header {
+  text-align:center; margin-bottom: 24px; padding-bottom: 18px;
+  border-bottom: 3px solid #0891b2;
+}
+.header .unit-icon { font-size: 3rem; line-height:1; }
+.header .unit-num {
+  display:inline-block; margin-top: 6px;
+  background: #FFD100; color: #1a2a4a;
+  padding: 4px 14px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em;
+}
+.header h1 { color:#253a77; font-size: 1.9rem; font-weight: 800; margin: 6px 0 4px; }
+.header .quarter { color:#0e7490; font-style: italic; font-weight: 700; font-size: 0.95rem; }
+.header .wida {
+  display:inline-block; margin-top: 8px;
+  background: #ecfeff; border: 1px solid #0891b2;
+  color: #0e7490; padding: 3px 12px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em;
+}
+
+.can-do {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 4px solid #FFD100;
+  padding: 12px 18px; border-radius: 8px;
+  margin: 16px 0 22px;
+  font-size: 0.95rem; color: #1a2a4a; font-style: italic;
+}
+.can-do strong { color:#253a77; font-style: normal; }
+
+.section {
+  background: #fff; border-radius: 12px;
+  padding: 22px 26px; margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #0891b2;
+}
+.section h2 {
+  color: #253a77; font-size: 1.2rem; font-weight: 800;
+  margin-bottom: 12px; padding-bottom: 6px;
+  border-bottom: 2px solid #0891b2;
+  display: flex; align-items:center; gap: 8px;
+}
+.section h3 { color:#0e7490; font-size: 1rem; margin: 12px 0 6px; font-weight: 800; }
+.section p { color:#2d3748; line-height: 1.65; font-size: 0.95rem; margin-bottom: 8px; }
+.section ul { margin: 6px 0 10px 22px; }
+.section li { font-size: 0.94rem; color:#2d3748; line-height: 1.55; padding: 3px 0; }
+.section li strong { color:#253a77; }
+
+.goals {
+  background:#ecfeff; border-left: 4px solid #0891b2;
+  padding: 12px 16px; border-radius: 8px; margin-top: 8px;
+}
+.goals ul { margin:0 0 0 22px; }
+.goals li { padding: 2px 0; }
+
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 0.93rem;
+}
+.vocab-table td { border-bottom: 1px solid #e2e8f0; padding: 8px 10px; color:#2d3748; vertical-align: top; }
+.vocab-table td:first-child { font-weight: 800; color: #0e7490; width: 30%; white-space: nowrap; }
+.vocab-table tr:hover td { background:#f8fafc; }
+
+.phonics-list {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px; margin-top: 8px;
+}
+.phonics-card {
+  background:#ecfeff; border-left: 3px solid #0891b2;
+  padding: 10px 14px; border-radius: 8px;
+}
+.phonics-card strong { color:#0e7490; display: block; margin-bottom: 3px; }
+.phonics-card span { font-size: 0.9rem; color:#2d3748; }
+.sight-words {
+  background: #fff8e1; border: 2px dashed #FFD100;
+  padding: 10px 14px; border-radius: 8px;
+  margin-top: 10px;
+  font-size: 0.9rem; color:#1a2a4a;
+}
+.sight-words strong { color:#0e7490; }
+
+.passage {
+  background: #fefce8; border: 1px solid #FFD100;
+  padding: 18px 22px; border-radius: 8px;
+  font-size: 0.96rem; line-height: 1.75; color:#1a2a4a;
+  white-space: pre-line;
+}
+.passage-title {
+  color:#0e7490; font-weight: 800; font-size: 1rem;
+  margin-bottom: 10px; font-style: italic;
+}
+
+.comp-list { counter-reset: cq; }
+.comp-item {
+  background:#fff; border-left: 3px solid #0891b2;
+  padding: 12px 16px; margin-bottom: 10px; border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+  counter-increment: cq;
+}
+.comp-item::before {
+  content: counter(cq) ". ";
+  color:#0e7490; font-weight: 800;
+}
+.comp-strat {
+  display: inline-block; background: #253a77; color:#fff;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 999px; margin-left: 6px;
+}
+.comp-q { display: inline; font-weight: 700; color:#1a2a4a; }
+.comp-a {
+  display: block; margin-top: 6px;
+  font-size: 0.88rem; color: #065f46;
+  padding: 6px 10px; background: #d1fae5;
+  border-radius: 6px;
+}
+.comp-a::before { content: "Answer: "; font-weight: 800; }
+
+.grammar-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+}
+.grammar-box h3 { color:#0e7490; font-size: 1rem; margin-bottom: 6px; }
+.grammar-box p { line-height: 1.65; color:#1a2a4a; }
+.grammar-try {
+  margin-top: 10px; padding: 12px 14px;
+  background: #fff; border-radius: 6px;
+  font-size: 0.92rem;
+}
+.grammar-try strong { color:#0e7490; }
+.grammar-try ol { margin: 4px 0 0 22px; }
+.grammar-try li { padding: 3px 0; }
+
+.writing-diff {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px; margin-top: 12px;
+}
+.diff-card {
+  background: #f8fafc; border-top: 3px solid #0891b2;
+  padding: 12px 14px; border-radius: 8px;
+}
+.diff-card .diff-grade {
+  display:inline-block; background:#0e7490; color:#fff;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.diff-card p { font-size: 0.9rem; color: #2d3748; line-height: 1.55; margin:0; }
+
+.writing-prompt {
+  background: #fef3c7; border-left: 4px solid #FFD100;
+  padding: 14px 18px; border-radius: 8px;
+  font-size: 0.98rem; color:#1a2a4a; font-weight: 700;
+}
+.writing-prompt::before { content: "✏️ Prompt: "; color:#0e7490; }
+
+/* Quiz */
+.quiz {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100;
+  border-radius: 12px;
+  padding: 18px 22px;
+}
+.quiz-header { display: flex; align-items:center; justify-content: space-between; margin-bottom: 8px; }
+.quiz-header h2 { color:#1a2a4a; font-size: 1.15rem; font-weight: 800; border:none; padding:0; }
+.quiz-score {
+  background: #253a77; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font-size: 0.82rem; font-weight: 800;
+}
+.q-item {
+  background: #fff; border-radius: 8px;
+  padding: 12px 14px; margin: 10px 0;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+}
+.q-num { color:#0e7490; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.q-text { color:#1a2a4a; font-size: 0.98rem; font-weight: 700; margin: 4px 0 10px; }
+.q-choices { display: grid; gap: 6px; }
+.q-choice {
+  padding: 8px 12px; border-radius: 6px;
+  background: #f8fafc; border: 2px solid #e2e8f0;
+  cursor: pointer; font-size: 0.92rem;
+  transition: all 0.15s;
+  text-align: left;
+}
+.q-choice:hover { background: #ecfeff; border-color: #0891b2; }
+.q-choice.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700; }
+.q-choice.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-choice[disabled] { cursor: default; opacity: 0.85; }
+.q-feedback { margin-top: 6px; font-size: 0.82rem; color: #0e7490; font-weight: 700; }
+.quiz-reset {
+  display: inline-block; margin-top: 8px;
+  background: #253a77; color:#fff; text-decoration:none;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none;
+}
+.quiz-reset:hover { background: #1a2a4a; }
+
+.nav-units {
+  display: flex; justify-content: space-between; gap: 10px;
+  margin-top: 30px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+}
+.nav-btn {
+  background: #ecfeff; color: #0e7490; text-decoration: none;
+  padding: 8px 14px; border-radius: 8px;
+  font-weight: 700; font-size: 0.88rem;
+  border: 1px solid #0891b2;
+  transition: all 0.18s;
+}
+.nav-btn:hover { background: #0891b2; color: #fff; }
+.nav-btn.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+
+footer {
+  margin-top: 20px; padding-top: 10px;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 0.9rem;
+}
+
+.credits {
+  margin-top: 14px; font-size: 0.72rem; color: #64748b;
+  text-align: center; font-style: italic;
+}
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn, .quiz-reset, .nav-units { display:none; }
+  .section, .quiz { box-shadow:none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+<a href="esl-1-units.html" class="back-btn">&larr; All ESL 1 Units</a>
+<a href="javascript:window.print()" class="print-btn">🖨️ Print</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="unit-icon">🎒</div>
+    <div class="unit-num">Unit 2 &middot; Q1 · Foundations &amp; Identity</div>
+    <h1>School &amp; Classroom Language</h1>
+    <div class="wida">WIDA 2-3</div>
+  </div>
+
+  <div class="can-do"><strong>Can-Do:</strong> I can listen to and follow multi-step directions, and I can ask for clarification in complete questions.</div>
+
+  <div class="section">
+    <h2>🎯 What You'll Learn</h2>
+    <div class="goals"><ul><li>Understand and follow classroom directions</li><li>Ask clarifying questions using who/what/where/when/why/how</li><li>Write short procedural how-to paragraphs</li><li>Use digraph patterns (ch, sh, th, wh)</li></ul></div>
+  </div>
+
+  <div class="section">
+    <h2>📖 Vocabulary Bank</h2>
+    <p>Twelve key words for Unit 2. Read each aloud with your teacher, then use each in a spoken sentence.</p>
+    <table class="vocab-table"><tbody><tr><td>directions</td><td>words that tell you what to do</td></tr><tr><td>listen</td><td>to pay attention to sounds and words</td></tr><tr><td>raise</td><td>to lift up (as in raise your hand)</td></tr><tr><td>first</td><td>the beginning; number one</td></tr><tr><td>next</td><td>the one right after</td></tr><tr><td>then</td><td>after that</td></tr><tr><td>finally</td><td>the last thing</td></tr><tr><td>worksheet</td><td>a paper with problems or questions to do</td></tr><tr><td>assignment</td><td>work the teacher gives you</td></tr><tr><td>schedule</td><td>a list of when things happen</td></tr><tr><td>subject</td><td>a topic you study, like math or reading</td></tr><tr><td>recess</td><td>break time to play at school</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>🔤 Phonics & Word Study</h2>
+    <p><strong>This unit's focus:</strong> Digraphs: ch, sh, th, wh</p>
+    <h3>Word Families</h3>
+    <div class="phonics-list"><div class="phonics-card"><strong>ch words</strong><span>chat, chip, chop, church, teach, lunch, march</span></div><div class="phonics-card"><strong>sh words</strong><span>ship, shop, shell, wish, fish, brush, wash</span></div><div class="phonics-card"><strong>th words</strong><span>this, that, then, them, thin, math, path, with</span></div><div class="phonics-card"><strong>wh words</strong><span>when, why, what, where, whip, wheel, whale</span></div></div>
+    <div class="sight-words"><strong>Sight Words:</strong> the, and, this, that, then, when, where, what, with, ask, tell</div>
+    <h3>Practice</h3>
+    <p>Circle every digraph you find in the reading passage below. Then read the passage aloud to a partner.</p>
+  </div>
+
+  <div class="section">
+    <h2>📚 Reading Passage</h2>
+    <div class="passage">
+      <div class="passage-title">A Day at Star of the Sea</div>
+      The morning bell rings at eight o'clock. First, Kaimana walks to his classroom and puts his backpack on his hook.
+
+Next, the teacher writes the day's schedule on the whiteboard: reading, math, recess, science, and lunch.
+
+Then, the class stands for the pledge. After that, they open their reading books and follow along as the teacher reads aloud.
+
+Finally, when Kaimana finishes his worksheet, he raises his hand to ask a question. 'When do we have art today?' he asks.
+
+The teacher smiles and points to the schedule. Art is after lunch. Kaimana can hardly wait.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>❓ Reading Comprehension</h2>
+    <p>Answer each question in a complete sentence. Check the green box after you write your answer.</p>
+    <div class="comp-list"><div class="comp-item"><span class="comp-q">What does Kaimana do first when he gets to class?</span><span class="comp-strat">Sequence</span><span class="comp-a">He puts his backpack on his hook.</span></div><div class="comp-item"><span class="comp-q">What five things are on the day's schedule?</span><span class="comp-strat">Sequence</span><span class="comp-a">Reading, math, recess, science, and lunch.</span></div><div class="comp-item"><span class="comp-q">When does the morning bell ring?</span><span class="comp-strat">Facts</span><span class="comp-a">At eight o'clock.</span></div><div class="comp-item"><span class="comp-q">How can you tell that Kaimana is excited for art?</span><span class="comp-strat">Inference</span><span class="comp-a">He can 'hardly wait' after the teacher says it's after lunch.</span></div></div>
+  </div>
+
+  <div class="section">
+    <h2>📐 Language & Grammar</h2>
+    <div class="grammar-box">
+      <h3>Asking a Question</h3>
+      <p>Questions start with a <b>question word</b> and end with a <b>?</b><br><br><b>Who</b> asks about a person. <b>What</b> asks about a thing. <b>Where</b> asks about a place. <b>When</b> asks about a time. <b>Why</b> asks about a reason. <b>How</b> asks about a way.<br><br><i>Example:</i> When does class start?</p>
+      <div class="grammar-try">
+        <strong>Try It:</strong>
+        <ol><li>_____ is your teacher?</li><li>_____ is your favorite subject?</li><li>_____ is recess?</li><li>_____ do you go home?</li></ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>✏️ Writing</h2>
+    <div class="writing-prompt">Write a how-to paragraph about your morning routine at school.</div>
+    <h3>Grade Differentiation</h3>
+    <div class="writing-diff">
+      <div class="diff-card"><span class="diff-grade">Grade 4-5</span><p>Draw 4 pictures of your morning at school. Label each one: First, Next, Then, Finally.</p></div>
+      <div class="diff-card"><span class="diff-grade">Grade 6</span><p>Write 4 sentences describing your morning at school. Start each sentence with First, Next, Then, or Finally.</p></div>
+      <div class="diff-card"><span class="diff-grade">Grade 7-8</span><p>Write a full 6-8 sentence how-to paragraph explaining your morning routine. Use at least 4 sequence words.</p></div>
+    </div>
+  </div>
+
+  <div class="section quiz" id="quiz" data-questions="[{&quot;q&quot;: &quot;Which word starts with a digraph?&quot;, &quot;choices&quot;: [&quot;ball&quot;, &quot;chip&quot;, &quot;frog&quot;, &quot;stop&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Assignment&#x27; means...&quot;, &quot;choices&quot;: [&quot;a place to sit&quot;, &quot;work the teacher gives you&quot;, &quot;a friend&quot;, &quot;a game&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which sequence word means &#x27;the last thing&#x27;?&quot;, &quot;choices&quot;: [&quot;First&quot;, &quot;Next&quot;, &quot;Then&quot;, &quot;Finally&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;To ask about a place, use...&quot;, &quot;choices&quot;: [&quot;Who&quot;, &quot;What&quot;, &quot;Where&quot;, &quot;When&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which digraph do you hear in &#x27;wish&#x27;?&quot;, &quot;choices&quot;: [&quot;ch&quot;, &quot;sh&quot;, &quot;th&quot;, &quot;wh&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Recess&#x27; is a time to...&quot;, &quot;choices&quot;: [&quot;do homework&quot;, &quot;play at school&quot;, &quot;take a test&quot;, &quot;go home&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;To ask about a time, use...&quot;, &quot;choices&quot;: [&quot;Who&quot;, &quot;When&quot;, &quot;Where&quot;, &quot;Why&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which sentence is a question?&quot;, &quot;choices&quot;: [&quot;I like math.&quot;, &quot;Math is fun!&quot;, &quot;Do you like math?&quot;, &quot;Math class is short.&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;Schedule&#x27; means...&quot;, &quot;choices&quot;: [&quot;a friend&quot;, &quot;a classroom&quot;, &quot;a list of when things happen&quot;, &quot;a snack&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which word ends with the /th/ digraph?&quot;, &quot;choices&quot;: [&quot;with&quot;, &quot;when&quot;, &quot;wish&quot;, &quot;which&quot;], &quot;a&quot;: 0}]">
+    <div class="quiz-header">
+      <h2>🧠 Unit 2 Quiz</h2>
+      <span class="quiz-score">0 / 10</span>
+    </div>
+    <div class="q-items"></div>
+    <button class="quiz-reset" type="button">↻ Reset Quiz</button>
+  </div>
+
+  <div class="nav-units">
+    <a class="nav-btn " href="esl-1-unit-1-workbook.html">&larr; Unit 1</a>
+    <a class="nav-btn" href="esl-1-units.html">All Units</a>
+    <a class="nav-btn " href="esl-1-unit-3-workbook.html">Unit 3 &rarr;</a>
+  </div>
+
+  <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+
+  <div class="credits">
+    Content styled after Spectrum Reading (Carson Dellosa) &middot; Harcourt Family Learning &middot; Explode the Code (Flashkids)
+    &middot; Reading passages original for MSOS ESL 1 by Mrs. Rasmussen.
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var quizEl = document.querySelector('.quiz');
+  if (!quizEl) return;
+  var questions = JSON.parse(quizEl.getAttribute('data-questions'));
+  var scoreEl = quizEl.querySelector('.quiz-score');
+  var itemsEl = quizEl.querySelector('.q-items');
+  var total = questions.length;
+
+  function render() {
+    itemsEl.innerHTML = '';
+    var correct = 0;
+    scoreEl.textContent = '0 / ' + total;
+    questions.forEach(function(q, i) {
+      var item = document.createElement('div');
+      item.className = 'q-item';
+      item.innerHTML = '<div class="q-num">Question ' + (i+1) + ' of ' + total + '</div>' +
+                       '<div class="q-text"></div>' +
+                       '<div class="q-choices"></div><div class="q-feedback"></div>';
+      item.querySelector('.q-text').textContent = q.q;
+      var choicesDiv = item.querySelector('.q-choices');
+      var feedback = item.querySelector('.q-feedback');
+      var answered = false;
+      q.choices.forEach(function(choice, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'q-choice'; btn.type='button'; btn.textContent = choice;
+        btn.addEventListener('click', function() {
+          if (answered) return;
+          answered = true;
+          Array.prototype.forEach.call(choicesDiv.children, function(c) { c.disabled = true; });
+          if (ci === q.a) {
+            btn.classList.add('correct'); correct++;
+            feedback.textContent = '✓ Correct!'; feedback.style.color='#065f46';
+          } else {
+            btn.classList.add('wrong'); choicesDiv.children[q.a].classList.add('correct');
+            feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+            feedback.style.color='#991b1b';
+          }
+          scoreEl.textContent = correct + ' / ' + total;
+        });
+        choicesDiv.appendChild(btn);
+      });
+      itemsEl.appendChild(item);
+    });
+  }
+  render();
+  quizEl.querySelector('.quiz-reset').addEventListener('click', render);
+})();
+</script>
+</body>
+</html>

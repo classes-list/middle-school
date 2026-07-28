@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESL 1 &middot; Unit 8: My Shining-Star Portfolio &middot; Workbook</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn, .print-btn {
+  position: fixed; top: 20px; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-btn { left: 20px; background: #253a77; color: #fff; }
+.back-btn:hover { background:#1a2a4a; transform:translateX(-2px); }
+.print-btn { right: 20px; background: #0891b2; color: #fff; }
+.print-btn:hover { background:#0e7490; }
+
+.header {
+  text-align:center; margin-bottom: 24px; padding-bottom: 18px;
+  border-bottom: 3px solid #0891b2;
+}
+.header .unit-icon { font-size: 3rem; line-height:1; }
+.header .unit-num {
+  display:inline-block; margin-top: 6px;
+  background: #FFD100; color: #1a2a4a;
+  padding: 4px 14px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em;
+}
+.header h1 { color:#253a77; font-size: 1.9rem; font-weight: 800; margin: 6px 0 4px; }
+.header .quarter { color:#0e7490; font-style: italic; font-weight: 700; font-size: 0.95rem; }
+.header .wida {
+  display:inline-block; margin-top: 8px;
+  background: #ecfeff; border: 1px solid #0891b2;
+  color: #0e7490; padding: 3px 12px; border-radius: 999px;
+  font-size: 0.78rem; font-weight: 800; letter-spacing: 0.05em;
+}
+
+.can-do {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 4px solid #FFD100;
+  padding: 12px 18px; border-radius: 8px;
+  margin: 16px 0 22px;
+  font-size: 0.95rem; color: #1a2a4a; font-style: italic;
+}
+.can-do strong { color:#253a77; font-style: normal; }
+
+.section {
+  background: #fff; border-radius: 12px;
+  padding: 22px 26px; margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #0891b2;
+}
+.section h2 {
+  color: #253a77; font-size: 1.2rem; font-weight: 800;
+  margin-bottom: 12px; padding-bottom: 6px;
+  border-bottom: 2px solid #0891b2;
+  display: flex; align-items:center; gap: 8px;
+}
+.section h3 { color:#0e7490; font-size: 1rem; margin: 12px 0 6px; font-weight: 800; }
+.section p { color:#2d3748; line-height: 1.65; font-size: 0.95rem; margin-bottom: 8px; }
+.section ul { margin: 6px 0 10px 22px; }
+.section li { font-size: 0.94rem; color:#2d3748; line-height: 1.55; padding: 3px 0; }
+.section li strong { color:#253a77; }
+
+.goals {
+  background:#ecfeff; border-left: 4px solid #0891b2;
+  padding: 12px 16px; border-radius: 8px; margin-top: 8px;
+}
+.goals ul { margin:0 0 0 22px; }
+.goals li { padding: 2px 0; }
+
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 0.93rem;
+}
+.vocab-table td { border-bottom: 1px solid #e2e8f0; padding: 8px 10px; color:#2d3748; vertical-align: top; }
+.vocab-table td:first-child { font-weight: 800; color: #0e7490; width: 30%; white-space: nowrap; }
+.vocab-table tr:hover td { background:#f8fafc; }
+
+.phonics-list {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px; margin-top: 8px;
+}
+.phonics-card {
+  background:#ecfeff; border-left: 3px solid #0891b2;
+  padding: 10px 14px; border-radius: 8px;
+}
+.phonics-card strong { color:#0e7490; display: block; margin-bottom: 3px; }
+.phonics-card span { font-size: 0.9rem; color:#2d3748; }
+.sight-words {
+  background: #fff8e1; border: 2px dashed #FFD100;
+  padding: 10px 14px; border-radius: 8px;
+  margin-top: 10px;
+  font-size: 0.9rem; color:#1a2a4a;
+}
+.sight-words strong { color:#0e7490; }
+
+.passage {
+  background: #fefce8; border: 1px solid #FFD100;
+  padding: 18px 22px; border-radius: 8px;
+  font-size: 0.96rem; line-height: 1.75; color:#1a2a4a;
+  white-space: pre-line;
+}
+.passage-title {
+  color:#0e7490; font-weight: 800; font-size: 1rem;
+  margin-bottom: 10px; font-style: italic;
+}
+
+.comp-list { counter-reset: cq; }
+.comp-item {
+  background:#fff; border-left: 3px solid #0891b2;
+  padding: 12px 16px; margin-bottom: 10px; border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+  counter-increment: cq;
+}
+.comp-item::before {
+  content: counter(cq) ". ";
+  color:#0e7490; font-weight: 800;
+}
+.comp-strat {
+  display: inline-block; background: #253a77; color:#fff;
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.05em;
+  padding: 2px 8px; border-radius: 999px; margin-left: 6px;
+}
+.comp-q { display: inline; font-weight: 700; color:#1a2a4a; }
+.comp-a {
+  display: block; margin-top: 6px;
+  font-size: 0.88rem; color: #065f46;
+  padding: 6px 10px; background: #d1fae5;
+  border-radius: 6px;
+}
+.comp-a::before { content: "Answer: "; font-weight: 800; }
+
+.grammar-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+}
+.grammar-box h3 { color:#0e7490; font-size: 1rem; margin-bottom: 6px; }
+.grammar-box p { line-height: 1.65; color:#1a2a4a; }
+.grammar-try {
+  margin-top: 10px; padding: 12px 14px;
+  background: #fff; border-radius: 6px;
+  font-size: 0.92rem;
+}
+.grammar-try strong { color:#0e7490; }
+.grammar-try ol { margin: 4px 0 0 22px; }
+.grammar-try li { padding: 3px 0; }
+
+.writing-diff {
+  display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px; margin-top: 12px;
+}
+.diff-card {
+  background: #f8fafc; border-top: 3px solid #0891b2;
+  padding: 12px 14px; border-radius: 8px;
+}
+.diff-card .diff-grade {
+  display:inline-block; background:#0e7490; color:#fff;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.diff-card p { font-size: 0.9rem; color: #2d3748; line-height: 1.55; margin:0; }
+
+.writing-prompt {
+  background: #fef3c7; border-left: 4px solid #FFD100;
+  padding: 14px 18px; border-radius: 8px;
+  font-size: 0.98rem; color:#1a2a4a; font-weight: 700;
+}
+.writing-prompt::before { content: "✏️ Prompt: "; color:#0e7490; }
+
+/* Quiz */
+.quiz {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100;
+  border-radius: 12px;
+  padding: 18px 22px;
+}
+.quiz-header { display: flex; align-items:center; justify-content: space-between; margin-bottom: 8px; }
+.quiz-header h2 { color:#1a2a4a; font-size: 1.15rem; font-weight: 800; border:none; padding:0; }
+.quiz-score {
+  background: #253a77; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font-size: 0.82rem; font-weight: 800;
+}
+.q-item {
+  background: #fff; border-radius: 8px;
+  padding: 12px 14px; margin: 10px 0;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+}
+.q-num { color:#0e7490; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.q-text { color:#1a2a4a; font-size: 0.98rem; font-weight: 700; margin: 4px 0 10px; }
+.q-choices { display: grid; gap: 6px; }
+.q-choice {
+  padding: 8px 12px; border-radius: 6px;
+  background: #f8fafc; border: 2px solid #e2e8f0;
+  cursor: pointer; font-size: 0.92rem;
+  transition: all 0.15s;
+  text-align: left;
+}
+.q-choice:hover { background: #ecfeff; border-color: #0891b2; }
+.q-choice.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700; }
+.q-choice.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-choice[disabled] { cursor: default; opacity: 0.85; }
+.q-feedback { margin-top: 6px; font-size: 0.82rem; color: #0e7490; font-weight: 700; }
+.quiz-reset {
+  display: inline-block; margin-top: 8px;
+  background: #253a77; color:#fff; text-decoration:none;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none;
+}
+.quiz-reset:hover { background: #1a2a4a; }
+
+.nav-units {
+  display: flex; justify-content: space-between; gap: 10px;
+  margin-top: 30px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+}
+.nav-btn {
+  background: #ecfeff; color: #0e7490; text-decoration: none;
+  padding: 8px 14px; border-radius: 8px;
+  font-weight: 700; font-size: 0.88rem;
+  border: 1px solid #0891b2;
+  transition: all 0.18s;
+}
+.nav-btn:hover { background: #0891b2; color: #fff; }
+.nav-btn.disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+
+footer {
+  margin-top: 20px; padding-top: 10px;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 0.9rem;
+}
+
+.credits {
+  margin-top: 14px; font-size: 0.72rem; color: #64748b;
+  text-align: center; font-style: italic;
+}
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn, .quiz-reset, .nav-units { display:none; }
+  .section, .quiz { box-shadow:none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+<a href="esl-1-units.html" class="back-btn">&larr; All ESL 1 Units</a>
+<a href="javascript:window.print()" class="print-btn">🖨️ Print</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="unit-icon">🎓</div>
+    <div class="unit-num">Unit 8 &middot; Q4 · Bridging to Grade-Level ELA</div>
+    <h1>My Shining-Star Portfolio</h1>
+    <div class="wida">WIDA 4-5</div>
+  </div>
+
+  <div class="can-do"><strong>Can-Do:</strong> I can present my year of learning -- a story, a report, an opinion, and a poem -- and explain how I have grown.</div>
+
+  <div class="section">
+    <h2>🎯 What You'll Learn</h2>
+    <div class="goals"><ul><li>Revisit and revise writing from all four quarters</li><li>Reflect on how you have grown as a reader and writer</li><li>Give a 3-minute oral presentation</li><li>Complete WIDA ACCESS speaking and writing samples</li></ul></div>
+  </div>
+
+  <div class="section">
+    <h2>📖 Vocabulary Bank</h2>
+    <p>Twelve key words for Unit 8. Read each aloud with your teacher, then use each in a spoken sentence.</p>
+    <table class="vocab-table"><tbody><tr><td>portfolio</td><td>a collection of your best work</td></tr><tr><td>reflect</td><td>to think back on what you did and learned</td></tr><tr><td>revise</td><td>to change writing to make it better</td></tr><tr><td>edit</td><td>to fix spelling, punctuation, and small mistakes</td></tr><tr><td>audience</td><td>the people who will read or hear your work</td></tr><tr><td>proud</td><td>feeling happy about what you have done</td></tr><tr><td>goal</td><td>something you want to reach or do</td></tr><tr><td>progress</td><td>forward movement or improvement</td></tr><tr><td>growth</td><td>becoming better at something over time</td></tr><tr><td>celebration</td><td>a happy event to mark something special</td></tr><tr><td>present</td><td>to share your work with an audience</td></tr><tr><td>thank</td><td>to show gratitude</td></tr></tbody></table>
+  </div>
+
+  <div class="section">
+    <h2>🔤 Phonics & Word Study</h2>
+    <p><strong>This unit's focus:</strong> Review of all patterns from Units 1-7</p>
+    <h3>Word Families</h3>
+    <div class="phonics-list"><div class="phonics-card"><strong>Unit 1: short vowels</strong><span>cat, hen, ship, top, sun</span></div><div class="phonics-card"><strong>Unit 2: digraphs</strong><span>chip, shop, this, when</span></div><div class="phonics-card"><strong>Unit 3: silent-e</strong><span>cake, ride, home, cube</span></div><div class="phonics-card"><strong>Unit 4: vowel teams</strong><span>rain, team, boat, cloud</span></div><div class="phonics-card"><strong>Unit 5: r-controlled</strong><span>car, her, bird, corn, hurt</span></div><div class="phonics-card"><strong>Unit 6: blends &amp; prefixes</strong><span>brave, spot, undo, retell, preview</span></div><div class="phonics-card"><strong>Unit 7: suffixes</strong><span>running, faster, softly, sunny</span></div></div>
+    <div class="sight-words"><strong>Sight Words:</strong> proud, thanks, goal, growth, learn, ready, remember, celebrate</div>
+    <h3>Practice</h3>
+    <p>Choose one word from each unit. Use them all in one paragraph about a good school memory.</p>
+  </div>
+
+  <div class="section">
+    <h2>📚 Reading Passage</h2>
+    <div class="passage">
+      <div class="passage-title">A Note from Mrs. Rasmussen</div>
+      Aloha, ESL 1 stars!
+
+This year you learned to introduce yourself, follow directions, retell a story, read between the lines, report on the world, share your opinion, and play with poetry. That is a lot!
+
+Now it is time to look back at your best work and share it with your family, your friends, and your future self.
+
+Your portfolio will hold four pieces: your personal narrative from Unit 1, your story retell from Unit 3, your short informational report from Unit 5, and your favorite poem from Unit 7. You will revise each piece so it shows your very best writing.
+
+Then you will present your portfolio out loud for three minutes. Be proud. You have grown so much!
+
+-- Mrs. Rasmussen
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>❓ Reading Comprehension</h2>
+    <p>Answer each question in a complete sentence. Check the green box after you write your answer.</p>
+    <div class="comp-list"><div class="comp-item"><span class="comp-q">What is the main idea of Mrs. Rasmussen's note?</span><span class="comp-strat">Main Idea</span><span class="comp-a">It is time to look back on the year, revise your best work, and share your growth.</span></div><div class="comp-item"><span class="comp-q">Which four pieces will go in the portfolio?</span><span class="comp-strat">Sequence</span><span class="comp-a">Personal narrative (Unit 1), story retell (Unit 3), informational report (Unit 5), favorite poem (Unit 7).</span></div><div class="comp-item"><span class="comp-q">How long is the oral presentation?</span><span class="comp-strat">Facts</span><span class="comp-a">Three minutes.</span></div><div class="comp-item"><span class="comp-q">How does Mrs. Rasmussen feel about her students' work?</span><span class="comp-strat">Inference</span><span class="comp-a">Proud -- she calls them 'stars' and says they have grown so much.</span></div></div>
+  </div>
+
+  <div class="section">
+    <h2>📐 Language & Grammar</h2>
+    <div class="grammar-box">
+      <h3>Sentence Variety in Presentations</h3>
+      <p>When you present, mix up sentence types so your voice does not sound flat:<br><br>&bull; A <b>statement</b> tells: <i>I wrote a story about my family.</i><br>&bull; A <b>question</b> engages: <i>Have you ever felt shy at a new school?</i><br>&bull; An <b>exclamation</b> shows feeling: <i>I was so proud of that essay!</i><br>&bull; A <b>command</b> invites: <i>Look at this photo of my family.</i></p>
+      <div class="grammar-try">
+        <strong>Try It:</strong>
+        <ol><li>Write one statement about your best writing from this year.</li><li>Write one question you might ask the audience.</li><li>Write one exclamation showing pride.</li><li>Write one command that invites the audience to look or listen.</li></ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>✏️ Writing</h2>
+    <div class="writing-prompt">Write a reflection: How have you grown as a reader and writer this year?</div>
+    <h3>Grade Differentiation</h3>
+    <div class="writing-diff">
+      <div class="diff-card"><span class="diff-grade">Grade 4-5</span><p>Draw a big star. On each of the 5 points, write one thing you learned this year.</p></div>
+      <div class="diff-card"><span class="diff-grade">Grade 6</span><p>Write a 5-sentence reflection: your favorite unit + why + one thing you did well + one thing you want to do next year + a thank-you.</p></div>
+      <div class="diff-card"><span class="diff-grade">Grade 7-8</span><p>Write a full reflection essay (2-3 paragraphs). Include a specific example from each quarter and a goal for next year.</p></div>
+    </div>
+  </div>
+
+  <div class="section quiz" id="quiz" data-questions="[{&quot;q&quot;: &quot;A portfolio is...&quot;, &quot;choices&quot;: [&quot;a bag&quot;, &quot;a collection of your best work&quot;, &quot;a book&quot;, &quot;a test&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;To &#x27;revise&#x27; means to...&quot;, &quot;choices&quot;: [&quot;throw away&quot;, &quot;change writing to make it better&quot;, &quot;copy neatly&quot;, &quot;translate&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;To &#x27;edit&#x27; means to fix...&quot;, &quot;choices&quot;: [&quot;the topic&quot;, &quot;spelling and punctuation&quot;, &quot;the pictures&quot;, &quot;the title only&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which piece is from Unit 3?&quot;, &quot;choices&quot;: [&quot;Personal narrative&quot;, &quot;Story retell&quot;, &quot;Informational report&quot;, &quot;Poem&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;How long is your oral presentation?&quot;, &quot;choices&quot;: [&quot;30 seconds&quot;, &quot;1 minute&quot;, &quot;3 minutes&quot;, &quot;10 minutes&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;An exclamation shows...&quot;, &quot;choices&quot;: [&quot;a question&quot;, &quot;feeling&quot;, &quot;a command&quot;, &quot;nothing&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Your &#x27;audience&#x27; is...&quot;, &quot;choices&quot;: [&quot;your teacher only&quot;, &quot;the people who will hear or read your work&quot;, &quot;your family only&quot;, &quot;your grade level&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Growth&#x27; means...&quot;, &quot;choices&quot;: [&quot;staying the same&quot;, &quot;becoming better over time&quot;, &quot;losing something&quot;, &quot;being fast&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Reflect&#x27; means to...&quot;, &quot;choices&quot;: [&quot;shine&quot;, &quot;think back on what you did&quot;, &quot;forget&quot;, &quot;practice&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which sentence is an exclamation?&quot;, &quot;choices&quot;: [&quot;I wrote a poem.&quot;, &quot;Did you like my poem?&quot;, &quot;I love my poem!&quot;, &quot;Read my poem.&quot;], &quot;a&quot;: 2}]">
+    <div class="quiz-header">
+      <h2>🧠 Unit 8 Quiz</h2>
+      <span class="quiz-score">0 / 10</span>
+    </div>
+    <div class="q-items"></div>
+    <button class="quiz-reset" type="button">↻ Reset Quiz</button>
+  </div>
+
+  <div class="nav-units">
+    <a class="nav-btn " href="esl-1-unit-7-workbook.html">&larr; Unit 7</a>
+    <a class="nav-btn" href="esl-1-units.html">All Units</a>
+    <a class="nav-btn disabled" href="esl-1-units.html">Back to Units &rarr;</a>
+  </div>
+
+  <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+
+  <div class="credits">
+    Content styled after Spectrum Reading (Carson Dellosa) &middot; Harcourt Family Learning &middot; Explode the Code (Flashkids)
+    &middot; Reading passages original for MSOS ESL 1 by Mrs. Rasmussen.
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var quizEl = document.querySelector('.quiz');
+  if (!quizEl) return;
+  var questions = JSON.parse(quizEl.getAttribute('data-questions'));
+  var scoreEl = quizEl.querySelector('.quiz-score');
+  var itemsEl = quizEl.querySelector('.q-items');
+  var total = questions.length;
+
+  function render() {
+    itemsEl.innerHTML = '';
+    var correct = 0;
+    scoreEl.textContent = '0 / ' + total;
+    questions.forEach(function(q, i) {
+      var item = document.createElement('div');
+      item.className = 'q-item';
+      item.innerHTML = '<div class="q-num">Question ' + (i+1) + ' of ' + total + '</div>' +
+                       '<div class="q-text"></div>' +
+                       '<div class="q-choices"></div><div class="q-feedback"></div>';
+      item.querySelector('.q-text').textContent = q.q;
+      var choicesDiv = item.querySelector('.q-choices');
+      var feedback = item.querySelector('.q-feedback');
+      var answered = false;
+      q.choices.forEach(function(choice, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'q-choice'; btn.type='button'; btn.textContent = choice;
+        btn.addEventListener('click', function() {
+          if (answered) return;
+          answered = true;
+          Array.prototype.forEach.call(choicesDiv.children, function(c) { c.disabled = true; });
+          if (ci === q.a) {
+            btn.classList.add('correct'); correct++;
+            feedback.textContent = '✓ Correct!'; feedback.style.color='#065f46';
+          } else {
+            btn.classList.add('wrong'); choicesDiv.children[q.a].classList.add('correct');
+            feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+            feedback.style.color='#991b1b';
+          }
+          scoreEl.textContent = correct + ' / ' + total;
+        });
+        choicesDiv.appendChild(btn);
+      });
+      itemsEl.appendChild(item);
+    });
+  }
+  render();
+  quizEl.querySelector('.quiz-reset').addEventListener('click', render);
+})();
+</script>
+</body>
+</html>
