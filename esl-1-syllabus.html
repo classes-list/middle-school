@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Syllabus &mdash; Mrs. Rasmussen &middot; ESL 1 &middot; SY 2026-2027</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-index-btn {
+  position: fixed; top: 20px; left: 20px;
+  background: #253a77; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-index-btn:hover { background: #1a2a4a; transform: translateX(-2px); }
+.print-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: #0891b2; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+  box-shadow: 0 3px 10px rgba(14,116,144,0.25);
+  z-index: 10;
+}
+.print-btn:hover { background: #0e7490; }
+
+.syllabus-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid #0891b2;
+}
+.header-top {
+  display: flex; gap: 24px; align-items: center;
+  border-bottom: 2px solid #e2e8f0; padding-bottom: 22px; margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.header-info { flex: 1 1 260px; }
+.header-info h1 { color: #253a77; font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+.header-info .role { color: #0e7490; font-style: italic; font-size: 0.95rem; margin-bottom: 6px; font-weight: 700; }
+.header-info .contact { font-size: 0.92rem; line-height: 1.7; color: #444; }
+.header-info .contact strong { color: #253a77; }
+.header-info .contact a { color: #253a77; text-decoration: none; }
+.header-info .contact a:hover { text-decoration: underline; }
+.year-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+  color: #fff;
+  font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 999px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(14,116,144,0.35);
+}
+.teacher-photo {
+  width: 130px; height: 130px; border-radius: 50%;
+  background: #1a2a4a; overflow: hidden; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(37,58,119,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.teacher-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; }
+.teacher-photo .initials { color: #FFD100; font-size: 2.4rem; font-weight: 800; letter-spacing: 0.05em; display: none; }
+
+.welcome-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 5px solid #0891b2;
+  padding: 20px 24px; border-radius: 10px;
+  margin-bottom: 22px;
+}
+.welcome-box p { color: #1f2937; font-size: 0.98rem; line-height: 1.65; margin-bottom: 10px; }
+.welcome-box p:last-child { margin-bottom: 0; }
+.welcome-box .signature { font-style: italic; color: #0e7490; font-weight: 700; text-align: right; margin-top: 8px; }
+
+.section-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  border-top: 4px solid #0891b2;
+}
+.section-card h2 {
+  color: #253a77; font-size: 1.25rem; font-weight: 800;
+  margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 2px solid #0891b2;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-card p { color: #2d3748; font-size: 0.96rem; line-height: 1.7; margin-bottom: 10px; }
+.section-card ul { margin: 8px 0 12px 24px; }
+.section-card li { padding: 4px 0; color: #2d3748; font-size: 0.95rem; line-height: 1.6; }
+.section-card li strong { color: #253a77; }
+.section-card li em { color: #0e7490; }
+
+.essential-q {
+  text-align: center; font-size: 1.05rem;
+  color: #0e7490; font-weight: 800; font-style: italic;
+  padding: 16px 20px; margin: 16px 0;
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-radius: 10px; border: 2px dashed #FFD100;
+}
+
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+.scope-card {
+  background: #ecfeff; border-left: 4px solid #0891b2;
+  padding: 14px 16px; border-radius: 8px;
+}
+.scope-card h4 { color: #0e7490; font-size: 0.98rem; margin-bottom: 6px; font-weight: 800; }
+.scope-card ul { margin: 4px 0 0 18px; padding: 0; }
+.scope-card li { font-size: 0.86rem; padding: 2px 0; }
+
+.motto {
+  text-align: center; font-size: 1.15rem;
+  color: #0e7490; font-weight: 800; font-style: italic;
+  padding: 18px 20px; margin: 20px 0;
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-radius: 10px; border: 2px dashed #FFD100;
+}
+
+footer {
+  margin-top: 32px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 1.05rem;
+}
+@media print {
+  body { background: #fff; padding: 0; }
+  .back-index-btn, .print-btn { display: none; }
+  .syllabus-card { box-shadow: none; padding: 20px; }
+  .section-card { box-shadow: none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .syllabus-card { padding: 24px 20px; }
+  .header-info h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+<a href="esl-1.html" class="back-index-btn" title="Back to ESL 1 Class">&larr; Back to Class</a>
+<a class="print-btn" href="esl-1-syllabus.pdf?v=1" target="_blank" rel="noopener" title="Open printable syllabus PDF">🖨️ Print Syllabus</a>
+
+<div class="container">
+  <div class="syllabus-card">
+
+    <div class="header-top">
+      <div class="teacher-photo">
+        <img src="mrs-rasmussen.jpg" alt="Mrs. Rasmussen" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="initials" style="width:100%;height:100%;align-items:center;justify-content:center;">DR</div>
+      </div>
+      <div class="header-info">
+        <div class="year-badge">School Year 2026-2027</div>
+        <h1>Mrs. Rasmussen &middot; ESL 1</h1>
+        <div class="role">English as a Second Language &middot; Grades 4&ndash;8 &middot; Mary, Star of the Sea School</div>
+        <div class="contact">
+          <strong>Email:</strong> <a href="mailto:drasmussen@starofthesea.org">drasmussen@starofthesea.org</a><br>
+          <strong>Phone:</strong> (808) 734-0208
+        </div>
+      </div>
+    </div>
+
+    <!-- Welcome Letter -->
+    <div class="welcome-box">
+      <p><strong>Welcome Parents and Guardians!</strong></p>
+      <p>I am Mrs. Rasmussen, your child&rsquo;s English as a Second Language teacher. I am a graduate of the University of Hawaii with a Bachelor&rsquo;s in Secondary Education / Social Studies and a minor in Psychology. I have additional coursework in Montessori and Early Childhood Development and am certified to teach preschool through grade 12.</p>
+      <p>I have spent years substituting in public schools, an orthopedic unit, a deaf and blind school, and special education. I also spent 10 years at Star of the Sea Early Learning Center in preschool and kindergarten. I have tutored students in various subjects since 1978 and have been an ESL teacher at Mary, Star of the Sea since 2006.</p>
+      <p>I am here to facilitate your child&rsquo;s learning of English as well as support their functioning in the regular classroom. In ESL 1, we work on speaking and oral reading; we write weekly on a variety of topics; and we learn vocabulary words and their usage.</p>
+      <p>Communication among teachers, students, and parents is essential in learning English. I am grateful for your support and the opportunity to work with your child.</p>
+      <p class="signature">Sincerely,<br>Mrs. Rasmussen &middot; <a href="mailto:drasmussen@starofthesea.org">drasmussen@starofthesea.org</a></p>
+    </div>
+
+    <!-- Mission -->
+    <div class="section-card">
+      <h2>🌟 Our Mission</h2>
+      <p>To provide a Christ-centered education that reflects academic excellence and stewardship, and to provide a learning environment where students can foster confidence and social skills and become lifelong learners.</p>
+    </div>
+
+    <div class="essential-q">Essential Question: How do you navigate to become a shining star?</div>
+
+    <!-- Academics -->
+    <div class="section-card">
+      <h2>📚 Academics</h2>
+      <ul>
+        <li><strong>Imagine Learning</strong> &mdash; online reading program used throughout the year.</li>
+        <li><strong>Explode the Code</strong> &mdash; phonics and reinforcement.</li>
+        <li><strong>Spelling Skills</strong> &mdash; vocabulary development at each student&rsquo;s level.</li>
+        <li><strong>Language Arts</strong> &mdash; parts of speech and sentence structure.</li>
+        <li><strong>Reading Skills</strong> &mdash; Facts, Sequence, Context, Main Idea, Conclusion, and Inference.</li>
+        <li><strong>Writing Skills</strong> &mdash; personal narratives, informative writing, descriptive writing, opinion and comparative writing, stories, and short reports.</li>
+      </ul>
+    </div>
+
+    <!-- Scope & Sequence -->
+    <div class="section-card">
+      <h2>🧭 English as a Second Language &mdash; Scope</h2>
+      <div class="scope-grid">
+        <div class="scope-card">
+          <h4>I. Communication</h4>
+          <ul>
+            <li>Oral and written communication</li>
+            <li>Understanding directions</li>
+            <li>Listening and following directions</li>
+          </ul>
+        </div>
+        <div class="scope-card">
+          <h4>II. Vocabulary &amp; Grammar Usage</h4>
+          <ul>
+            <li>Parts of speech</li>
+            <li>Writing in complete sentences</li>
+            <li>Mechanics</li>
+          </ul>
+        </div>
+        <div class="scope-card">
+          <h4>III. Reading</h4>
+          <ul>
+            <li>Decoding words</li>
+            <li>Punctuation &amp; intonation</li>
+            <li>Fluency</li>
+          </ul>
+        </div>
+        <div class="scope-card">
+          <h4>IV. Comprehension</h4>
+          <ul>
+            <li>Understanding directions &amp; questions</li>
+            <li>Responding in complete sentences</li>
+            <li>Context clues, Main Idea, details</li>
+            <li>Cause &amp; effect, predicting outcomes</li>
+            <li>Inference &amp; drawing conclusions</li>
+          </ul>
+        </div>
+        <div class="scope-card">
+          <h4>V. Writing</h4>
+          <ul>
+            <li>Sentences, questions, and answers</li>
+            <li>Short answers, paragraphs, essays</li>
+            <li>Different forms of writing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Homework & Communication -->
+    <div class="section-card">
+      <h2>📝 Homework &amp; Support at Home</h2>
+      <ul>
+        <li><strong>Homework</strong> is assigned daily and should take about <strong>20 minutes</strong> to complete independently. It is due when the next class is in session.</li>
+        <li>Computers and other tools such as dictionaries are allowed.</li>
+        <li>I encourage the use of English in the home daily.</li>
+        <li><strong>Reading aloud for 20 minutes each day</strong> helps students speak English clearly and write in complete sentences.</li>
+        <li>Students who need assistance completing assignments may finish their work during lunch recess in my room.</li>
+      </ul>
+    </div>
+
+    <div class="motto">&ldquo;Let&rsquo;s work together for a successful year!&rdquo;</div>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+  </div>
+</div>
+</body>
+</html>
