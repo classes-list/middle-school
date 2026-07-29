@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Art Syllabus &amp; Rubrics &mdash; Mrs. Taylor</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #fdf2f8 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn {
+  position: fixed; top: 20px; left: 20px;
+  background: #253a77; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  z-index: 10;
+}
+.back-btn:hover { background: #1a2a4a; }
+.print-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: #be185d; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(190,24,93,0.28);
+  z-index: 10;
+}
+.print-btn:hover { background: #9d174d; }
+
+.syllabus-card {
+  background: #fff; border-radius: 14px;
+  padding: 40px 44px;
+  box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+  border-top: 6px solid #ec4899;
+}
+.header-top { text-align: center; margin-bottom: 26px; padding-bottom: 20px; border-bottom: 2px solid #ec4899; }
+.header-top .art-hero { font-size: 3rem; line-height: 1; margin-bottom: 6px; }
+.header-top h1 { color:#be185d; font-size: 1.9rem; font-weight: 800; margin-bottom: 4px; }
+.header-top .sub { color:#ec4899; font-style: italic; font-weight: 700; font-size: 1rem; }
+
+.welcome-box {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  border-left: 5px solid #ec4899;
+  padding: 20px 24px; border-radius: 10px;
+  margin-bottom: 22px;
+}
+.welcome-box p { color:#1a2a4a; font-size: 0.98rem; line-height: 1.65; margin-bottom: 10px; }
+.welcome-box p:last-child { margin-bottom: 0; }
+
+.section-card {
+  background: #fff; border-radius: 12px;
+  padding: 22px 26px; margin-bottom: 18px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #ec4899;
+}
+.section-card h2 {
+  color:#be185d; font-size: 1.25rem; font-weight: 800;
+  margin-bottom: 12px; padding-bottom: 6px;
+  border-bottom: 2px solid #ec4899;
+  display: flex; align-items:center; gap: 8px;
+}
+.section-card p { color:#2d3748; line-height: 1.65; font-size: 0.95rem; margin-bottom: 8px; }
+.section-card a { color:#be185d; font-weight:700; text-decoration:none; }
+.section-card a:hover { text-decoration: underline; }
+
+.mission-callout {
+  text-align:center; padding: 20px 24px; margin: 20px 0;
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100; border-radius: 12px;
+}
+.mission-callout .tag { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.12em; color:#7a5f00; text-transform: uppercase; margin-bottom: 4px; }
+.mission-callout h3 { color:#7a5f00; font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
+.mission-callout p { color:#1a2a4a; font-size: 0.94rem; line-height: 1.6; }
+
+.rubric-table { width:100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+.rubric-table th {
+  background:#be185d; color:#fff; padding: 10px 8px; text-align:left;
+  font-weight: 700; border: 1px solid #be185d;
+}
+.rubric-table td {
+  padding: 10px 8px; border: 1px solid #e2e8f0; vertical-align: top; color:#2d3748;
+}
+.rubric-table td:first-child {
+  font-weight: 800; color:#be185d; background:#fdf2f8; white-space: nowrap;
+}
+.rubric-table th:first-child { background:#9d174d; }
+.rubric-table .score-4 { background:#fef7ff; }
+.rubric-table .score-3 { background:#fef2f2; }
+.rubric-note {
+  background: #fef2f2; border-left: 4px solid #fca5a5;
+  padding: 12px 16px; border-radius: 6px; margin-top: 10px;
+  font-size: 0.9rem; font-style: italic; color:#7c2d12; line-height: 1.55;
+}
+
+footer { text-align: center; margin-top: 26px; padding-top: 18px; border-top: 2px solid #fce7f3; color:#be185d; font-style: italic; font-weight:700; font-size: 0.95rem; }
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn { display: none; }
+  .syllabus-card, .section-card { box-shadow:none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .syllabus-card { padding: 24px 20px; }
+  .header-top h1 { font-size: 1.4rem; }
+  .rubric-table { font-size: 0.78rem; }
+}
+</style>
+</head>
+<body>
+<a href="art.html" class="back-btn">&larr; Back to Art Class</a>
+<a class="print-btn" href="art-general-syllabus.pdf?v=1" target="_blank" rel="noopener">🖨️ Print Rubric</a>
+
+<div class="container">
+  <div class="syllabus-card">
+
+    <div class="header-top">
+      <div class="art-hero">🎨</div>
+      <h1>Welcome to Art</h1>
+      <div class="sub">Mrs. Taylor &middot; Mary, Star of the Sea School &middot; SY 2026-2027</div>
+    </div>
+
+    <div class="welcome-box">
+      <p><strong>Hello and welcome to Art!</strong></p>
+      <p>I&rsquo;m <strong>Mrs. Taylor</strong>, your child&rsquo;s art teacher. This is my <strong>seventh year at MSOS</strong>, and I&rsquo;m excited for another fantastic year filled with creativity and exploration. I look forward to getting to know your child and sharing the joy of art with them.</p>
+      <p>I upload the students&rsquo; artwork through a site called <strong>Artsonia</strong>. Our art program receives <strong>20%</strong> of the money from items purchased.</p>
+    </div>
+
+    <div class="section-card">
+      <h2>📬 Contact Info</h2>
+      <p>Email: <a href="mailto:staylor@starofthesea.org">staylor@starofthesea.org</a></p>
+      <p>Please contact me via email if you have any questions or concerns or if you would like access to your child&rsquo;s Google Classroom (Grades 4&ndash;8).</p>
+    </div>
+
+    <div class="section-card">
+      <h2>🤝 Classroom Expectations</h2>
+      <p>Students are expected to come to class ready to learn and prepared to follow all classroom and school rules. They must follow safety guidelines and use classroom materials as directed. <strong>Responsible use of materials, respect for others, staying focused, perseverance, and a willingness to learn</strong> are all essential expectations.</p>
+      <p>Ample class time is provided to complete art projects, so <strong>there should be no homework assigned for art class</strong>. Please refer to the grading rubric below.</p>
+      <p>At least <strong>50% of the lessons must be completed</strong> to receive a comprehensive grade in Art class. Each lesson covers different elements of art, so missing lessons may negatively impact overall grades.</p>
+    </div>
+
+    <div class="section-card">
+      <h2>📊 Assessments</h2>
+      <p>Each art project is worth <strong>20 points</strong> and is graded using <strong>five criteria</strong> outlined in the rubrics below, with each criterion valued at <strong>4 points</strong>. You&rsquo;ll notice the focus isn&rsquo;t on being a &ldquo;good&rdquo; artist. Instead, the rubric emphasizes <strong>skill development, creativity, following directions, and positive classroom behavior</strong>.</p>
+      <p><strong>Middle School late-work policy:</strong> One point is deducted for each day an assignment is late. Students are welcome to take projects home or make arrangements with me to complete them during school hours. Students should not come during lunch periods without making arrangements with me in advance.</p>
+    </div>
+
+    <div class="section-card">
+      <h2>📝 Primary Art Rubric &mdash; What Counts (K&ndash;3)</h2>
+      <div style="overflow-x:auto">
+      <table class="rubric-table">
+        <thead>
+          <tr><th></th><th>4</th><th>3</th><th>2</th><th>1</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Use of elements &amp; concepts</td><td class="score-4">I used all of the concepts taught</td><td class="score-3">I used most of the concepts taught</td><td>I used some of the concepts taught</td><td>I didn&rsquo;t use the concepts taught in the lesson</td></tr>
+          <tr><td>Neatness</td><td class="score-4">Very neat! Perfect</td><td class="score-3">Mostly neat</td><td>Almost neat</td><td>Not neat at all &mdash; very messy</td></tr>
+          <tr><td>Creativity</td><td class="score-4">Very creative! Original ideas</td><td class="score-3">Somewhat creative &mdash; some original ideas</td><td>Not very creative &mdash; some borrowed ideas</td><td>No creative ideas &mdash; I copied everything</td></tr>
+          <tr><td>Followed directions</td><td class="score-4">I followed all of the directions</td><td class="score-3">I followed most of the directions</td><td>I followed &ldquo;some&rdquo; of the directions</td><td>I had trouble following the directions</td></tr>
+          <tr><td>Work habits</td><td class="score-4">I work quietly and clean up after myself</td><td class="score-3">I chat while working but clean up after myself</td><td>I am chatty while I work &mdash; have to be reminded to clean up</td><td>I am loud / disruptive while working and I don&rsquo;t clean up</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="rubric-note">
+        I do not grade based on who is a &ldquo;good&rdquo; artist (as in can draw realistically). I grade according to the rubric &mdash; considering following directions, neat work, creativity, using the concepts being taught, cleaning up, and effort. A student who cannot draw well but pays attention, helps her/his teammates, TRIES their best, and cleans up after themselves can earn an A.
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2>📝 Middle School &amp; Intermediate Art Rubric (4&ndash;8)</h2>
+      <div style="overflow-x:auto">
+      <table class="rubric-table">
+        <thead>
+          <tr><th>Criteria</th><th>4</th><th>3</th><th>2</th><th>1</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Use of principles, elements &amp; techniques</td><td class="score-4">Artwork shows principles and techniques taught during the lesson completely executed, demonstrated, and in a unique manner</td><td class="score-3">Artwork shows principles and techniques taught during the lesson demonstrated adequately</td><td>Artwork shows principles and techniques minimally demonstrated</td><td>Artwork shows bare minimum of work was completed</td></tr>
+          <tr><td>Neatness</td><td class="score-4">Work was done with great care and attention to detail and is very neat</td><td class="score-3">Work was done with some care and is mostly neat</td><td>Work was done with minimal care and is a bit messy</td><td>Work was not done with care and is messy</td></tr>
+          <tr><td>Creativity</td><td class="score-4">Student&rsquo;s work shows a unique level of originality</td><td class="score-3">Student&rsquo;s work shows some originality</td><td>Student&rsquo;s work lacks originality</td><td>Student&rsquo;s work shows no originality or creative ideas</td></tr>
+          <tr><td>Followed directions</td><td class="score-4">Directions were followed completely and lesson was completed successfully</td><td class="score-3">Directions were mostly followed but lesson was completed to plan</td><td>Directions were followed partially but lesson was not successful to plan</td><td>Directions were not followed at all and lesson was not successful</td></tr>
+          <tr><td>Work habits</td><td class="score-4">Work was completed quietly and neatly</td><td class="score-3">Work was completed with minimal chatting and some mess</td><td>Work was partially completed or completed with many interruptions and reminders</td><td>Work was either not completed or completed with many interruptions, reminders, and messes</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="mission-callout">
+      <div class="tag">🌟 Our Mission</div>
+      <h3>Nurture &middot; Unite &middot; Inspire</h3>
+      <p>In our art class, we <strong>nurture</strong> each student&rsquo;s God-given creativity through Christ-centered teaching and artistic exploration; we <strong>unite</strong> learners in a collaborative, supportive studio environment that builds confidence and fellowship; and we <strong>inspire</strong> imagination, self-expression, and a lifelong appreciation for the arts.</p>
+    </div>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🎨</footer>
+  </div>
+</div>
+</body>
+</html>

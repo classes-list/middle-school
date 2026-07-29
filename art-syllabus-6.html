@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sixth Grade Art Syllabus &mdash; Mrs. Taylor</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #fdf2f8 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1000px; margin: 0 auto; }
+.back-btn {
+  position: fixed; top: 20px; left: 20px;
+  background: #253a77; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  z-index: 10;
+}
+.back-btn:hover { background: #1a2a4a; }
+.print-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: #be185d; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(190,24,93,0.28);
+  z-index: 10;
+}
+.print-btn:hover { background: #9d174d; }
+
+.syllabus-card {
+  background: #fff; border-radius: 14px;
+  padding: 40px 44px;
+  box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+  border-top: 6px solid #ec4899;
+}
+.header-top { text-align: center; margin-bottom: 26px; padding-bottom: 20px; border-bottom: 2px solid #ec4899; }
+.grade-badge {
+  display: inline-block; background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+  color:#fff; padding:5px 14px; border-radius:999px;
+  font-size:0.75rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase;
+  margin-bottom: 8px;
+}
+.art-hero { font-size: 3rem; line-height: 1; margin: 4px 0; }
+.header-top h1 { color:#be185d; font-size: 1.8rem; font-weight: 800; margin-bottom: 4px; }
+.header-top .sub { color:#ec4899; font-style: italic; font-weight: 700; font-size: 1rem; }
+
+.overview-box {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+  border-left: 5px solid #ec4899;
+  padding: 18px 22px; border-radius: 10px; margin-bottom: 24px;
+  font-size: 0.98rem; color: #1a2a4a; line-height: 1.65;
+}
+
+.quarters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.quarter-card {
+  background:#fff; border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: 0 3px 12px rgba(37,58,119,0.08);
+  border-top: 5px solid #ec4899;
+  display: flex; flex-direction: column;
+}
+.quarter-card .q-pill {
+  display: inline-block; background:#ec4899; color:#fff;
+  padding: 3px 12px; border-radius:999px;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 6px; align-self: flex-start;
+}
+.quarter-card h3 { color:#be185d; font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; line-height:1.3; }
+.quarter-card .season { color:#7a5f00; font-style:italic; font-size: 0.82rem; margin-bottom: 4px; }
+.quarter-card .focus { color:#0e7490; font-size: 0.82rem; font-weight: 700; margin-bottom: 10px; }
+.quarter-card ul { margin: 4px 0 0 18px; padding: 0; }
+.quarter-card li { font-size: 0.9rem; color:#2d3748; padding: 3px 0; line-height:1.5; }
+
+.develop-box {
+  background: #fff; border-radius: 12px;
+  padding: 22px 26px; border-top: 4px solid #ec4899;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  margin-bottom: 18px;
+}
+.develop-box h2 {
+  color:#be185d; font-size: 1.2rem; font-weight: 800; margin-bottom: 12px;
+  padding-bottom: 6px; border-bottom: 2px solid #ec4899;
+}
+.develop-box ul { margin: 8px 0 0 22px; }
+.develop-box li { padding: 4px 0; color:#2d3748; line-height: 1.55; }
+
+.seasonal-note {
+  background: #fefce8; border-left: 4px solid #FFD100;
+  padding: 12px 16px; border-radius: 6px; margin-bottom: 18px;
+  font-size: 0.92rem; color: #7a5f00; font-style: italic; line-height: 1.6;
+}
+.assessment-note {
+  background: #ecfdf5; border-left: 4px solid #10b981;
+  padding: 12px 16px; border-radius: 6px;
+  font-size: 0.92rem; color: #065f46; line-height: 1.6;
+}
+.assessment-note a { color: #065f46; font-weight: 700; }
+
+footer { text-align: center; margin-top: 24px; padding-top: 18px; border-top: 2px solid #fce7f3; color:#be185d; font-style: italic; font-weight: 700; font-size: 0.95rem; }
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn { display:none; }
+  .syllabus-card, .quarter-card, .develop-box { box-shadow:none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .syllabus-card { padding: 24px 20px; }
+  .header-top h1 { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+<a href="art.html" class="back-btn">&larr; Back to Art Class</a>
+<a class="print-btn" href="art-syllabus-6.pdf?v=1" target="_blank" rel="noopener">🖨️ Print Syllabus</a>
+
+<div class="container">
+  <div class="syllabus-card">
+
+    <div class="header-top">
+      <div class="grade-badge">🎨 6th Grade Art</div>
+      <div class="art-hero">🎨</div>
+      <h1>Sixth Grade Art Syllabus</h1>
+      <div class="sub">Mrs. Taylor &middot; Mary, Star of the Sea School &middot; SY 2026-2027</div>
+    </div>
+
+    <div class="overview-box">
+      <strong>Course Overview.</strong> Sixth Grade Art explores the history of art through the <strong>Art Through the Ages</strong> curriculum. Students discover how art has evolved across civilizations while developing technical skills in drawing, painting, printmaking, and mixed media. Each unit introduces students to influential artists, cultures, and artistic movements, encouraging creativity, critical thinking, and personal expression.
+    </div>
+
+    <div class="quarters-grid">
+      <div class="quarter-card"><span class="q-pill">Q1</span><h3>The Ancient World</h3><div class="focus">Focus: Back to School and Art of Early Civilizations</div><ul><li>Bright Future Self-Portrait</li><li>Stonehenge Line Drawing</li><li>Ancient Greek Vase</li></ul></div><div class="quarter-card"><span class="q-pill">Q2</span><h3>The Middle Ages &amp; Renaissance</h3><div class="focus">Focus: Medieval and Renaissance Art</div><ul><li>Coat of Arms Foam Print</li><li>Wanderer Above the Sea of Fog Inspired Landscape</li></ul></div><div class="quarter-card"><span class="q-pill">Q3</span><h3>Impressionism &amp; Post-Impressionism</h3><div class="focus">Focus: Color, Light, and Expression</div><ul><li>Fantastical Japanese Bridge (Impressionism)</li><li>Van Gogh Irises or C&eacute;zanne Still Life</li></ul></div><div class="quarter-card"><span class="q-pill">Q4</span><h3>Modern &amp; Contemporary Art</h3><div class="focus">Focus: Innovation and Personal Expression</div><ul><li>Le Coq Chalk Drawing</li><li>Positive Shape Prints</li><li>Lichtenstein Self-Portrait</li><li>Basquiat Dinosaur</li></ul></div>
+    </div>
+
+    <div class="seasonal-note">
+      &#127793; Additional seasonal and literacy-based projects are added each quarter to reinforce basic skills and to explore different art techniques.
+    </div>
+
+    <div class="develop-box">
+      <h2>&#127775; Throughout the Year, Students Will Develop:</h2>
+      <ul><li>Drawing, painting, printmaking, and mixed media techniques</li><li>Knowledge of major art periods, artists, and cultures</li><li>Creative problem-solving and critical thinking</li><li>Understanding of the Elements and Principles of Art</li><li>Craftsmanship, observation skills, and artistic confidence</li><li>Respect for classmates, artwork, and classroom materials</li></ul>
+    </div>
+
+    <div class="assessment-note">
+      &#128203; <strong>Assessment:</strong> Artwork is assessed on <strong>participation, effort, craftsmanship, and artistic growth</strong> throughout the year. See the <a href="art-general-syllabus.html">grading rubric</a> for more information.
+    </div>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🎨</footer>
+  </div>
+</div>
+</body>
+</html>
