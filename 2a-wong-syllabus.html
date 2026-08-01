@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Syllabus &mdash; Ms. Wong &middot; 2nd Grade A &middot; SY 2026-2027</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #eef2fa 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-index-btn {
+  position: fixed; top: 20px; left: 20px;
+  background: #253a77; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-index-btn:hover { background: #1a2a4a; transform: translateX(-2px); }
+.print-btn {
+  position: fixed; top: 20px; right: 20px;
+  background: #B45309; color: #fff; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+  box-shadow: 0 3px 10px rgba(180,83,9,0.25);
+  z-index: 10;
+}
+.print-btn:hover { background: #92400e; }
+
+.syllabus-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 28px rgba(37,58,119,0.12);
+  padding: 40px 44px;
+  border-top: 6px solid #FFD100;
+}
+
+.header-top {
+  display: flex; gap: 24px; align-items: center;
+  border-bottom: 2px solid #e2e8f0; padding-bottom: 22px; margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.header-info { flex: 1 1 260px; }
+.header-info h1 { color: #253a77; font-size: 1.6rem; font-weight: 800; margin-bottom: 4px; }
+.header-info .role { color: #7a5f00; font-style: italic; font-size: 0.95rem; margin-bottom: 6px; }
+.header-info .contact { font-size: 0.92rem; line-height: 1.7; color: #444; }
+.header-info .contact strong { color: #253a77; }
+.header-info .contact a { color: #253a77; text-decoration: none; }
+.header-info .contact a:hover { text-decoration: underline; }
+.year-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #FFD100 0%, #FFB800 100%);
+  color: #253a77;
+  font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 999px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(255,209,0,0.35);
+}
+.teacher-photo {
+  width: 130px; height: 130px; border-radius: 50%;
+  background: #1a2a4a; overflow: hidden; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(37,58,119,0.2);
+  display: flex; align-items: center; justify-content: center;
+}
+.teacher-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; display: block; }
+.teacher-photo .initials { color: #FFD100; font-size: 2.4rem; font-weight: 800; letter-spacing: 0.05em; }
+
+.section-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  border-top: 4px solid #253a77;
+}
+.section-card h2 {
+  color: #253a77; font-size: 1.25rem; font-weight: 800;
+  margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 2px solid #FFD100;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-card h3 { color: #253a77; font-size: 1.05rem; font-weight: 700; margin: 14px 0 6px; }
+.section-card p { color: #2d3748; font-size: 0.96rem; line-height: 1.7; margin-bottom: 10px; }
+.section-card ul, .section-card ol { margin: 8px 0 12px 24px; }
+.section-card li { padding: 3px 0; color: #2d3748; font-size: 0.95rem; line-height: 1.65; }
+.section-card li strong { color: #253a77; }
+
+.eq-box {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 5px solid #FFD100;
+  padding: 20px 24px; border-radius: 10px;
+  margin-bottom: 22px; text-align: center;
+}
+.eq-box .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 800; color: #7a5f00; margin-bottom: 8px; }
+.eq-box .question { font-size: 1.2rem; color: #253a77; font-weight: 700; font-style: italic; margin-bottom: 6px; }
+.eq-box .verse { color: #7a5f00; font-size: 0.95rem; font-weight: 600; }
+
+.sle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+.sle-item {
+  background: #fefce8; border-left: 4px solid #FFD100;
+  padding: 12px 16px; border-radius: 8px;
+  font-weight: 700; color: #7a5f00;
+}
+
+.expect-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 12px; }
+.expect-item {
+  background: #f0fdf4; border-left: 4px solid #16a34a;
+  padding: 12px 16px; border-radius: 8px; font-size: 0.92rem; color: #14532d;
+}
+
+.grading-scale { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
+.grade-item {
+  background: #f8fafc; border-left: 4px solid #253a77;
+  padding: 12px 16px; border-radius: 6px;
+}
+.grade-item .grade-num { font-size: 1.8rem; font-weight: 800; color: #253a77; margin-bottom: 4px; }
+.grade-item .grade-name { font-weight: 700; color: #7a5f00; margin-bottom: 4px; font-size: 0.95rem; }
+.grade-item ul { margin: 4px 0 0 18px; }
+.grade-item li { font-size: 0.85rem; padding: 1px 0; line-height: 1.45; }
+
+.callout {
+  background: #fff8e1; border-left: 4px solid #FFD100;
+  padding: 14px 20px; border-radius: 8px; margin: 12px 0;
+}
+.callout p { margin-bottom: 6px; }
+
+.subject-block {
+  background: #f8fafc; border-left: 4px solid #253a77;
+  padding: 14px 18px; margin-bottom: 12px; border-radius: 8px;
+}
+.subject-block h4 { color: #253a77; font-size: 1rem; margin-bottom: 6px; }
+.subject-block .book { font-size: 0.85rem; color: #7a5f00; font-weight: 600; margin-bottom: 4px; }
+.subject-block p { font-size: 0.93rem; line-height: 1.55; margin: 0; }
+
+table.schedule {
+  width: 100%; border-collapse: collapse; margin: 10px 0;
+  font-size: 0.83rem;
+}
+table.schedule th, table.schedule td {
+  border: 1px solid #d1d5db; padding: 6px 8px; text-align: center;
+  color: #1f2937;
+}
+table.schedule th { background: #253a77; color: #fff; font-weight: 700; }
+table.schedule td.time { background: #f8fafc; font-weight: 700; color: #253a77; white-space: nowrap; }
+.sub-morning { background: #cffafe; }
+.sub-religion { background: #fce7f3; }
+.sub-literacy { background: #ede9fe; }
+.sub-snack { background: #e2e8f0; }
+.sub-pe { background: #fed7aa; }
+.sub-math { background: #dcfce7; }
+.sub-writing { background: #e0e7ff; }
+.sub-lunch { background: #e2e8f0; }
+.sub-sci-ss { background: #ffedd5; }
+.sub-music { background: #ddd6fe; }
+.sub-art { background: #fef08a; }
+.sub-library { background: #b45309; color: #fff; }
+.sub-mass { background: #9d174d; color: #fff; }
+.sub-reading { background: #dbeafe; }
+.sub-worktime { background: #f3f4f6; }
+.sub-dismiss { background: #fef3c7; font-weight: 700; }
+
+footer {
+  margin-top: 32px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center; color: #7a5f00;
+  font-style: italic; font-weight: 700; font-size: 1.05rem;
+}
+
+@media print {
+  body { background: #fff; padding: 0; }
+  .back-index-btn, .print-btn { display: none; }
+  .syllabus-card { box-shadow: none; padding: 20px; }
+  .section-card { box-shadow: none; break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .syllabus-card { padding: 24px 20px; }
+  .header-info h1 { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+<a href="2a-wong.html" class="back-index-btn" title="Back to Ms. Wong's Class">&larr; Back to Class</a>
+<a class="print-btn" href="2a-wong-syllabus.pdf?v=2" target="_blank" rel="noopener" title="Open original PDF">🖨️ Print Syllabus</a>
+
+<div class="container">
+  <div class="syllabus-card">
+
+    <div class="header-top">
+      <div class="teacher-photo">
+        <img src="ms-joanna-wong.jpg" alt="Ms. Joanna Wong" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="initials" style="display:none; width:100%; height:100%; align-items:center; justify-content:center;">JW</div>
+      </div>
+      <div class="header-info">
+        <div class="year-badge">School Year 2026-2027</div>
+        <h1>Ms. Joanna Wong &middot; 2nd Grade A</h1>
+        <div class="role">2nd Grade A Teacher &middot; Mary, Star of the Sea School</div>
+        <div class="contact">
+          <strong>Email:</strong> <a href="mailto:jwong@starofthesea.org">jwong@starofthesea.org</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mission / EQ -->
+    <div class="eq-box">
+      <div class="label">Essential Question &middot; Mission / Vision</div>
+      <div class="question">&ldquo;How can I model kindness, fairness, and humility like Jesus?&rdquo;</div>
+      <div class="verse"><strong>N</strong>urture, <strong>U</strong>nite, <strong>I</strong>nspire &middot; Empowered to Succeed, Guided by Faith</div>
+    </div>
+
+    <!-- Welcome -->
+    <div class="section-card">
+      <h2>👋 Welcome to 2A!</h2>
+      <p>Welcome to Second Grade! My name is <strong>Ms. Wong</strong> and I am very excited to be your teacher this year. I have been in education since 2016 and have taught 1st, 2nd, and 5th grade in my career thus far. I enjoy working with children and helping them shine.</p>
+      <p>When I am not teaching, I am chauffeuring my kids to their basketball practices and games. I enjoy watching them play basketball. We also scrimmage together as a family &mdash; basketball is definitely a family sport for us. We also enjoy soccer. Another hobby I enjoy is <strong>crocheting</strong> &mdash; I was self-taught and taught my daughter how to crochet, too!</p>
+      <p>2nd grade is a big year! It is the year where our students can take <strong>sacramental preparation classes</strong>. It is a big commitment and we are excited to see our students soar with Jesus.</p>
+      <p>In the classroom, I have very high expectations and achievable goals for 2A. I will do my best to teach and model everything we do. I am a believer in treating others with <strong>kindness and respect</strong>. In class, we show respect by raising our hands to speak and asking permission before doing. To show kindness is to offer words of encouragement like &ldquo;great job!&rdquo;, &ldquo;that&rsquo;s a beautiful drawing!&rdquo;, &ldquo;you can do it!&rdquo; My goal is to build positive relationships between students.</p>
+      <p>In second grade, <strong>independence</strong> is a big theme. Students will have morning tasks &mdash; putting away their own backpack, taking out their homework, and starting their morning work. We have a daily routine and we stick to it. By September, they can do it on their own without any reminders. Students take care of their own desks, cubbies, homework folder, and agendas.</p>
+      <p>I am excited for the new school year! We will have a great year <em>soaring with our God-given talents together!</em></p>
+    </div>
+
+    <!-- 2A Mission -->
+    <div class="section-card">
+      <h2>🤝 2A&rsquo;s Mission</h2>
+      <p>In our class, we live the NUI mission by being <strong>kind, respectful, and safe</strong>. I believe it&rsquo;s important to take care of one another. Everyone is different, and that&rsquo;s what makes us special! In our classroom, we practice being kind, accepting others, showing respect, and being safe. We respect each other&rsquo;s differences, take care of our classroom, and always try to be caring, safe, and helpful friends.</p>
+    </div>
+
+    <!-- SLEs -->
+    <div class="section-card">
+      <h2>⭐ Schoolwide Learning Expectations (SLEs)</h2>
+      <p>Our classroom expectations are based on our Schoolwide Learning Expectations:</p>
+      <div class="sle-grid">
+        <div class="sle-item">🧠 Self-Aware Confident Individuals</div>
+        <div class="sle-item">📚 Teachable Lifelong Learners</div>
+        <div class="sle-item">✝️ Active Christians</div>
+        <div class="sle-item">🤝 Responsible Citizens</div>
+      </div>
+    </div>
+
+    <!-- Class Expectations -->
+    <div class="section-card">
+      <h2>✅ In This Class You Will</h2>
+      <div class="expect-grid">
+        <div class="expect-item">Arrive on time and be ready to learn, with a positive attitude.</div>
+        <div class="expect-item">Be respectful to your classmates.</div>
+        <div class="expect-item">Actively participate in class discussions.</div>
+        <div class="expect-item">Complete assigned work with your best effort by the due date.</div>
+        <div class="expect-item">Follow safety rules and expectations.</div>
+        <div class="expect-item">Work collaboratively in a safe and responsible way.</div>
+      </div>
+    </div>
+
+    <!-- Grading -->
+    <div class="section-card">
+      <h2>📊 Grading</h2>
+      <p>Grading will be based on a variety of daily classwork, projects, assessments, and homework. Late work will be accepted, but may affect the student&rsquo;s grade. In Primary we use <strong>1&ndash;4</strong> as our grading system.</p>
+      <div class="grading-scale">
+        <div class="grade-item">
+          <div class="grade-num">1</div>
+          <div class="grade-name">Emerging</div>
+          <ul>
+            <li>Beginning to understand the concept or skill</li>
+            <li>Requires significant support and guidance</li>
+            <li>Limited understanding or mastery</li>
+          </ul>
+        </div>
+        <div class="grade-item">
+          <div class="grade-num">2</div>
+          <div class="grade-name">Developing</div>
+          <ul>
+            <li>Demonstrates partial understanding</li>
+            <li>Needs occasional assistance and support</li>
+            <li>Progressing with notable gaps</li>
+          </ul>
+        </div>
+        <div class="grade-item">
+          <div class="grade-num">3</div>
+          <div class="grade-name">Proficient</div>
+          <ul>
+            <li>Meets grade-level expectations</li>
+            <li>Demonstrates solid understanding &amp; application</li>
+            <li>Works independently with minimal errors</li>
+          </ul>
+        </div>
+        <div class="grade-item">
+          <div class="grade-num">4</div>
+          <div class="grade-name">Mastery</div>
+          <ul>
+            <li>Exceeds grade-level expectations</li>
+            <li>Thorough understanding, applies to new situations</li>
+            <li>Consistently accurate, higher-level thinking</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        <p><strong>Note:</strong> Report card grades are <em>not progressive</em>. Students receive a 1, 2, 3, or 4 based on the topics covered in that specific quarter. Grading is based on end-of-unit assessments and in-class work.</p>
+      </div>
+    </div>
+
+    <!-- Homework -->
+    <div class="section-card">
+      <h2>📝 Homework</h2>
+      <p>Homework will typically be given <strong>Monday through Thursday</strong>. Some projects may extend through the weekend. Students will write their homework in their agenda daily.</p>
+      <ul>
+        <li>Please <strong>initial</strong> that you have seen the agenda and check homework Mon.&ndash;Thurs.</li>
+        <li>The following day I will place a <strong>stamp, sticker, or star</strong> to indicate homework was seen and checked by parents.</li>
+        <li>Homework should not take more than <strong>20 minutes a day</strong>, without reading time.</li>
+        <li><strong>Reading</strong> on its own is another <strong>15&ndash;20 minutes a day</strong>.</li>
+        <li>If it&rsquo;s hard to complete homework, don&rsquo;t hesitate to let me know in advance &mdash; I am very accommodating.</li>
+      </ul>
+    </div>
+
+    <!-- Communication -->
+    <div class="section-card">
+      <h2>💬 Communication</h2>
+      <ul>
+        <li><strong>Email</strong> is the best way to communicate: <a href="mailto:jwong@starofthesea.org">jwong@starofthesea.org</a>. I will respond within <strong>24 hours</strong>.</li>
+        <li><strong>Tuesday Pouch</strong> will be sent home every Tuesday and returned Wednesday. Please empty pouches, send back any forms, and sign to acknowledge receipt of flyers.</li>
+        <li><strong>Beehively</strong>: our weekly newsletter is emailed on <strong>Fridays</strong>.</li>
+      </ul>
+    </div>
+
+    <!-- Policies -->
+    <div class="section-card">
+      <h2>📋 Policies</h2>
+
+      <h3>Dress Code</h3>
+      <p>Please double-check that your student is dressed in the appropriate school uniform every day:</p>
+      <ul>
+        <li><strong>PE uniform</strong> on PE days only (<strong>Monday / Tuesday</strong>).</li>
+        <li><strong>Church uniform</strong> on Mass days (usually Fridays unless special Catholic holidays).</li>
+        <li><strong>Regular uniform</strong> on all other days.</li>
+      </ul>
+      <p>If they are not wearing appropriate uniforms, they will receive a slip. Please check the handbook for more dress code information.</p>
+
+      <h3>Birthday Celebrations / Parties</h3>
+      <p>Your child will be celebrated on their birthday &mdash; they get a special shout-out on the morning announcements, a special job for the day, a birthday sticker to wear on their shirt, and 2A will sing happy birthday to them.</p>
+      <ul>
+        <li>Parents must notify the teacher <strong>a week in advance</strong> if there are plans to bring pre-packaged birthday celebration snacks or goody bags.</li>
+        <li>The pre-packaged snacks / goody bags must be brought to the <strong>office</strong>. The office will deliver them to the classroom.</li>
+        <li>Please aim for <strong>healthier snacks</strong>, as well as <strong>tree-nut and peanut free</strong> items.</li>
+      </ul>
+
+      <h3>Pick Up</h3>
+      <p>Please make sure that your <strong>BLUE placards</strong> are in your car for pickup. This will make pickup run smoothly. Please be prompt &mdash; <strong>2:45 p.m.</strong> is our pickup time at the front of the office. If there are any changes to pickup, please notify the office.</p>
+    </div>
+
+    <!-- Digital Platforms -->
+    <div class="section-card">
+      <h2>💻 Digital Platforms &amp; Academic Programs</h2>
+      <p>We will be using a variety of digital resources throughout the year, including <strong>Freckle, Epic, Renaissance, Mystery Science</strong>, and others may be added during the year. Freckle is a program used to support individualized learning.</p>
+      <p>In second grade, students will be challenged through <strong>hands-on interactive cross-curricular units</strong>.</p>
+    </div>
+
+    <!-- Subjects -->
+    <div class="section-card">
+      <h2>📚 Subjects &amp; Content</h2>
+
+      <div class="subject-block">
+        <h4>✝️ Religion</h4>
+        <div class="book">Book: Blest Are We</div>
+        <p>The Sacraments &mdash; emphasis on Baptism, Reconciliation, Confirmation, and Communion. Additional topics: Vocations, Saints, and holidays.</p>
+      </div>
+
+      <div class="subject-block">
+        <h4>🔤 Spelling / Phonics</h4>
+        <div class="book">Program: From Sounds to Spelling</div>
+        <p>Encompasses phonics and phonological awareness &mdash; sound-based rather than memorization. We practice weekly Target Words and High Frequency Words throughout the week to prepare for a dictation test.</p>
+      </div>
+
+      <div class="subject-block">
+        <h4>📖 Reading</h4>
+        <div class="book">Programs: Epic, Freckle, book novels</div>
+        <p>Storybooks, chapter books, biographies, poetry, fables, historical text, non-fiction, realistic fiction, mysteries, fantasies, magazine articles, procedure texts, plays, informational texts, opinion pieces, and folktales.</p>
+      </div>
+
+      <div class="subject-block">
+        <h4>✍️ Literacy</h4>
+        <div class="book">Books: Reader&rsquo;s &amp; Writer&rsquo;s Journal, From Sounds to Spelling, Zaner-Bloser Handwriting</div>
+        <p>Writing, Grammar, Spelling, Speech, and Listening.</p>
+      </div>
+
+      <div class="subject-block">
+        <h4>🧮 Math</h4>
+        <div class="book">Book: enVision Math 2.0 Volume 1 &amp; 2</div>
+        <p>Computation, place value, time, money, estimating and graphing, problem solving, geometry, measurement, fractions, temperature, and multiplication.</p>
+      </div>
+
+      <div class="subject-block">
+        <h4>🔬 Science</h4>
+        <div class="book">Books: Into Science, Mystery Science</div>
+        <p>Being a Scientist, All about Plants, New Technology, Matter, Energy, Light, Sound, and Magnets, Earth and its Resources, The Solar System, and Habitats.</p>
+      </div>
+
+      <div class="subject-block">
+        <h4>🌍 Social Studies</h4>
+        <div class="book">Book: My World Interactive</div>
+        <p>Self &mdash; All about me: Grandparents Day, Community and Community Helpers, Economics, American Culture / Government, Cultural Diversity, Earth and Environment Awareness, Family History, Geography, <strong>Market Day</strong>.</p>
+        <p style="margin-top:8px"><strong>Major events for 2nd graders:</strong> <em>Grandparents Day</em> (celebrating grandparents on campus with light refreshments) and <em>Market Day</em> (students write about a business they&rsquo;d like to have, plan how to run it, and use math skills counting money to run a successful and profitable business).</p>
+      </div>
+    </div>
+
+    <!-- Schedule -->
+    <div class="section-card">
+      <h2>🗓️ 2A Weekly Schedule</h2>
+      <p><strong>Note:</strong> PE is on <strong>Mondays and Tuesdays</strong>.</p>
+      <div style="overflow-x:auto">
+      <table class="schedule">
+        <thead>
+          <tr><th></th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="time">7:45–8:00</td><td class="sub-morning">Morning Work</td><td class="sub-morning">Morning Work</td><td class="sub-morning">Morning Work</td><td class="sub-morning">Morning Work</td><td class="sub-morning">Morning Work</td></tr>
+          <tr><td class="time">8:00–8:30</td><td class="sub-religion">Religion<br>w/ Mrs. Tanaka</td><td class="sub-religion">Religion<br>w/ Mrs. Tanaka</td><td class="sub-religion">Religion<br>w/ Mrs. Tanaka</td><td class="sub-religion">Religion<br>w/ Mrs. Tanaka</td><td class="sub-mass">8:00–9:00<br>MASS</td></tr>
+          <tr><td class="time">8:35–9:40</td><td class="sub-literacy">Literacy</td><td class="sub-literacy">Literacy</td><td class="sub-literacy">Literacy</td><td class="sub-literacy">Literacy</td><td class="sub-literacy">Literacy</td></tr>
+          <tr><td class="time">9:45–9:55</td><td class="sub-snack" colspan="5">Snack</td></tr>
+          <tr><td class="time">10:00–10:50</td><td class="sub-pe"><strong>PE</strong></td><td class="sub-pe"><strong>PE</strong></td><td class="sub-math">Math</td><td class="sub-math">Math</td><td class="sub-math">Math</td></tr>
+          <tr><td class="time">10:55–11:15</td><td class="sub-writing">Writing</td><td class="sub-writing">Writing</td><td class="sub-writing">Writing</td><td class="sub-writing">Writing</td><td class="sub-writing">Writing</td></tr>
+          <tr><td class="time">11:20–12:10</td><td class="sub-lunch" colspan="5">Lunch</td></tr>
+          <tr><td class="time">12:15–1:00</td><td class="sub-math">Math</td><td class="sub-math">Math<br><small>12:50–1:40 MUSIC</small></td><td class="sub-library"><strong>LIBRARY</strong></td><td class="sub-sci-ss">SS/SCI<br><small>12:50–1:40 ART</small></td><td class="sub-sci-ss">SS/SCI</td></tr>
+          <tr><td class="time">1:05–1:45</td><td class="sub-sci-ss">SS/SCI</td><td class="sub-music"><strong>MUSIC</strong></td><td class="sub-sci-ss">SS/SCI</td><td class="sub-art"><strong>ART</strong></td><td class="sub-worktime">Work Time</td></tr>
+          <tr><td class="time">1:45–2:35</td><td class="sub-art"><strong>ART</strong></td><td class="sub-reading">Reading</td><td class="sub-reading">Reading</td><td class="sub-reading">Reading</td><td class="sub-music"><strong>MUSIC</strong></td></tr>
+          <tr><td class="time">2:30–2:45</td><td class="sub-dismiss" colspan="5">Packup and Dismissal</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <!-- Room Parent -->
+    <div class="section-card" style="border-top-color:#c084fc;background:#faf5ff">
+      <h2 style="color:#6b21a8">💛 Room Parent Volunteers &amp; Final Note</h2>
+      <p>If you have a strong desire to volunteer as a homeroom parent, please send me an email at <strong><a href="mailto:jwong@starofthesea.org">jwong@starofthesea.org</a></strong>. In order to help within our class, please complete the forms in the Parent Orientation Packet and return them as soon as possible.</p>
+      <p>I am looking forward to a great year ahead of us! <em>With your partnership, your children will continue to become lifelong independent learners.</em></p>
+    </div>
+
+    <footer>
+      Soaring with our God-given talents together &mdash; Ms. Wong &middot; 2A
+    </footer>
+
+  </div>
+</div>
+</body>
+</html>
