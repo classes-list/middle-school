@@ -89,6 +89,36 @@
     .btn-phet:hover { background: #6d28d9; }
     .btn-ixl-sci { display: inline-block; padding: 10px 15px; background: #0891b2; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
     .btn-ixl-sci:hover { background: #0e7490; }
+    .btn-ssat { display: inline-block; padding: 10px 15px; background: #6d28d9; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 600; }
+    .btn-ssat:hover { background: #5b21b6; }
+    .ssat-modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 200; overflow-y: auto; padding: 30px 20px; }
+    .ssat-modal.active { display: block; }
+    .ssat-panel { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 26px 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+    .ssat-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 2px solid #ede9fe; margin-bottom: 16px; }
+    .ssat-header h2 { color: #5b21b6; font-size: 1.2rem; }
+    .ssat-header .ssat-meta { font-size: 0.85rem; color: #6b7280; }
+    .ssat-close { background: none; border: none; font-size: 24px; color: #6b7280; cursor: pointer; padding: 0 6px; }
+    .ssat-close:hover { color: #5b21b6; }
+    .ssat-question { font-size: 1.02rem; color: #1f2937; margin-bottom: 14px; line-height: 1.6; }
+    .ssat-choice { display: block; width: 100%; padding: 10px 14px; margin: 6px 0; text-align: left; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; cursor: pointer; transition: all 0.15s; }
+    .ssat-choice:hover { background: #ede9fe; border-color: #6d28d9; }
+    .ssat-choice.selected { background: #ede9fe; border-color: #6d28d9; }
+    .ssat-choice.correct { background: #d1fae5; border-color: #10b981; }
+    .ssat-choice.wrong { background: #fee2e2; border-color: #dc2626; }
+    .ssat-choice .letter { display: inline-block; width: 22px; font-weight: 700; color: #6d28d9; margin-right: 6px; }
+    .ssat-feedback { padding: 12px 16px; margin-top: 12px; border-radius: 8px; font-size: 0.94rem; line-height: 1.55; }
+    .ssat-feedback.ok { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+    .ssat-feedback.bad { background: #fef3c7; color: #78350f; border-left: 4px solid #f59e0b; }
+    .ssat-actions { display: flex; justify-content: space-between; margin-top: 18px; }
+    .ssat-btn { background: #6d28d9; color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+    .ssat-btn:hover { background: #5b21b6; }
+    .ssat-btn.skip { background: #94a3b8; }
+    .ssat-btn.skip:hover { background: #64748b; }
+    .ssat-progress { font-size: 0.85rem; color: #6b7280; font-weight: 600; }
+    .ssat-result { text-align: center; padding: 20px 10px; }
+    .ssat-result .score { font-size: 3rem; font-weight: 800; color: #5b21b6; margin: 10px 0; }
+    .ssat-result .msg { font-size: 1.1rem; color: #374151; margin-bottom: 20px; }
+
     .btn-graph { display: inline-block; padding: 10px 15px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
     .btn-graph:hover { background: #3730a3; }
     .btn-lab { display: inline-block; padding: 10px 15px; background: #0d9488; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
@@ -1769,6 +1799,280 @@ function showRealWorld() {
   window.addEventListener('hashchange', checkHash);
 })();
 
+
+
+// SSAT Prep question banks for Math 8 (Upper Level style, 5 answer choices)
+const SSAT_BANK = {
+'exponents': [
+  {q:'Simplify: 3² · 3⁴',choices:['3⁶','3⁸','9⁶','9⁸','12'],correct:0,exp:'Same base — add exponents: 3^(2+4) = 3⁶ = 729.'},
+  {q:'Simplify: (5²)³',choices:['5⁵','5⁶','5⁸','25³','125²'],correct:1,exp:'Power of a power — multiply: 5^(2·3) = 5⁶.'},
+  {q:'Simplify: 2⁵ / 2²',choices:['2²','2³','2⁷','2¹⁰','4'],correct:1,exp:'Same base — subtract exponents: 2^(5−2) = 2³ = 8.'},
+  {q:'Evaluate: 4⁻²',choices:['−16','−8','1/16','1/8','16'],correct:2,exp:'a^(−n) = 1/aⁿ; 4⁻² = 1/16.'},
+  {q:'Evaluate: 5⁰',choices:['0','1','5','25','undefined'],correct:1,exp:'Any nonzero number to the 0 power is 1.'},
+  {q:'Simplify: (2x³)⁴',choices:['2x¹²','8x⁷','8x¹²','16x⁷','16x¹²'],correct:4,exp:'2⁴ = 16, and (x³)⁴ = x¹².'},
+  {q:'If 2ⁿ = 32, what is <em>n</em>?',choices:['3','4','5','6','16'],correct:2,exp:'32 = 2⁵, so n = 5.'},
+  {q:'Simplify: x⁵ · x⁻²',choices:['x⁻¹⁰','x⁻³','x³','x⁷','x¹⁰'],correct:2,exp:'x^(5+(−2)) = x³.'},
+  {q:'Simplify: (a²b³)²',choices:['a²b³','a²b⁶','a⁴b⁶','a⁴b⁹','a⁶b⁵'],correct:2,exp:'Distribute the exponent: a^(2·2) · b^(3·2) = a⁴b⁶.'},
+  {q:'Evaluate: 8^(2/3)',choices:['2','4','6','8','16'],correct:1,exp:'8^(1/3) = 2; then 2² = 4.'}
+],
+'linear-equations': [
+  {q:'Solve for <em>x</em>: 5<em>x</em> − 3 = 2<em>x</em> + 12',choices:['3','4','5','6','7'],correct:2,exp:'3x = 15, so x = 5.'},
+  {q:'What is the slope of the line through (2, 3) and (5, 12)?',choices:['1','2','3','4','9'],correct:2,exp:'(12−3)/(5−2) = 9/3 = 3.'},
+  {q:'What is the y-intercept of y = −2x + 7?',choices:['−2','0','2','5','7'],correct:4,exp:'In y = mx + b, b is the y-intercept.'},
+  {q:'Which is the equation of the line with slope 3 and y-intercept −2?',choices:['y = 3x + 2','y = 3x − 2','y = −2x + 3','y = 2x − 3','y = −3x − 2'],correct:1,exp:'y = mx + b with m = 3, b = −2.'},
+  {q:'What is the slope of a horizontal line?',choices:['0','1','−1','undefined','depends'],correct:0,exp:'y stays constant, so Δy/Δx = 0.'},
+  {q:'What is the slope of a vertical line?',choices:['0','1','−1','undefined','∞'],correct:3,exp:'Δx = 0 → division by zero is undefined.'},
+  {q:'A line passes through (0, 5) and (2, 9). What is its slope?',choices:['1','2','3','4','9'],correct:1,exp:'(9−5)/(2−0) = 4/2 = 2.'},
+  {q:'Rewrite 2<em>x</em> + 3<em>y</em> = 12 in slope-intercept form.',choices:['y = 2x + 4','y = 2/3 x + 4','y = −2/3 x + 4','y = 3/2 x − 4','y = 12 − 2x'],correct:2,exp:'3y = −2x + 12 → y = −2/3 x + 4.'},
+  {q:'Find the x-intercept of y = 4<em>x</em> − 20.',choices:['−20','−5','4','5','20'],correct:3,exp:'Set y = 0: 4x = 20, x = 5.'},
+  {q:'Two lines are parallel if and only if they have __.',choices:['the same y-intercept','opposite slopes','reciprocal slopes','the same slope','the same x-intercept'],correct:3,exp:'Parallel lines share the same slope.'}
+],
+'pythagorean': [
+  {q:'A right triangle has legs of 3 and 4. What is the length of the hypotenuse?',choices:['5','6','7','25','12'],correct:0,exp:'3² + 4² = 25; √25 = 5.'},
+  {q:'A right triangle has legs of 5 and 12. What is the hypotenuse?',choices:['7','13','15','17','60'],correct:1,exp:'25 + 144 = 169; √169 = 13.'},
+  {q:'The hypotenuse of a right triangle is 10 and one leg is 6. What is the other leg?',choices:['4','6','8','12','16'],correct:2,exp:'100 − 36 = 64; √64 = 8.'},
+  {q:'A right triangle has legs 8 and 15. What is the hypotenuse?',choices:['13','17','19','21','23'],correct:1,exp:'64 + 225 = 289; √289 = 17.'},
+  {q:'A right triangle has legs 6 and 8. What is the hypotenuse?',choices:['9','10','12','14','16'],correct:1,exp:'36 + 64 = 100; √100 = 10.'},
+  {q:'Which set of side lengths forms a right triangle?',choices:['2, 3, 4','3, 4, 6','5, 12, 13','6, 7, 9','8, 10, 12'],correct:2,exp:'5² + 12² = 25 + 144 = 169 = 13². Others don\'t satisfy a² + b² = c².'},
+  {q:'A 13-ft ladder leans against a wall with its base 5 ft from the wall. How high up the wall does it reach?',choices:['8 ft','10 ft','11 ft','12 ft','14 ft'],correct:3,exp:'13² − 5² = 169 − 25 = 144; √144 = 12 ft.'},
+  {q:'What is the distance between the points (0, 0) and (3, 4)?',choices:['3','4','5','7','25'],correct:2,exp:'√(3² + 4²) = √25 = 5.'},
+  {q:'What is the distance between (1, 2) and (4, 6)?',choices:['3','4','5','7','9'],correct:2,exp:'Δx = 3, Δy = 4; √(9 + 16) = √25 = 5.'},
+  {q:'A rectangle has length 6 and width 8. What is the length of its diagonal?',choices:['7','10','12','14','48'],correct:1,exp:'Diagonal = √(6² + 8²) = √100 = 10.'}
+],
+'volume': [
+  {q:'What is the volume of a cube with side length 5?',choices:['15','25','75','100','125'],correct:4,exp:'V = s³ = 5³ = 125.'},
+  {q:'What is the volume of a rectangular prism 2 by 3 by 4?',choices:['9','12','18','24','36'],correct:3,exp:'V = lwh = 2·3·4 = 24.'},
+  {q:'What is the volume of a cylinder with radius 3 and height 10?',choices:['30π','60π','90π','180π','300π'],correct:2,exp:'V = πr²h = π·9·10 = 90π.'},
+  {q:'What is the volume of a cone with radius 3 and height 10?',choices:['10π','20π','30π','60π','90π'],correct:2,exp:'V = (1/3)πr²h = (1/3)(90π) = 30π.'},
+  {q:'What is the volume of a sphere with radius 3?',choices:['9π','27π','36π','108π','144π'],correct:2,exp:'V = (4/3)πr³ = (4/3)·27·π = 36π.'},
+  {q:'Which formula gives the volume of a cylinder?',choices:['πr²h','2πr² + 2πrh','πrh','(1/3)πr²h','(4/3)πr³'],correct:0,exp:'V = πr²h.'},
+  {q:'If the side length of a cube doubles, its volume becomes how many times the original?',choices:['2','3','4','6','8'],correct:4,exp:'V scales with s³; doubling s → volume × 8.'},
+  {q:'A prism has a base area of 15 and a height of 8. What is its volume?',choices:['23','60','90','120','150'],correct:3,exp:'V = base area × height = 15·8 = 120.'},
+  {q:'Water fills a cylindrical tank with radius 5 ft and height 8 ft. What is the volume in cubic feet?',choices:['40π','80π','100π','200π','400π'],correct:3,exp:'V = π·25·8 = 200π.'},
+  {q:'A sphere has a diameter of 6. What is its volume?',choices:['9π','12π','24π','36π','288π'],correct:3,exp:'r = 3; V = (4/3)π·27 = 36π.'}
+],
+'word-problems': [
+  {q:'Together, Alex and Ben have $70. Alex has $10 more than Ben. How much does Ben have?',choices:['$20','$25','$30','$35','$40'],correct:2,exp:'B + (B + 10) = 70 → 2B = 60 → B = $30.'},
+  {q:'A train travels 240 miles in 4 hours at a constant speed. What is its speed?',choices:['40 mph','50 mph','60 mph','70 mph','80 mph'],correct:2,exp:'240 / 4 = 60 mph.'},
+  {q:'Two numbers have a sum of 45 and a difference of 5. What is the larger number?',choices:['15','20','22','25','30'],correct:3,exp:'(45 + 5)/2 = 25; (45 − 5)/2 = 20.'},
+  {q:'If 5 workers finish a job in 12 hours, how long would 3 workers take (same rate each)?',choices:['15 hours','18 hours','20 hours','24 hours','36 hours'],correct:2,exp:'Inverse variation: 5·12 = 3·x, so x = 20.'},
+  {q:'A pipe fills a tank in 6 hours. What fraction of the tank is filled in 2 hours?',choices:['1/6','1/4','1/3','1/2','2/3'],correct:2,exp:'Rate = 1/6 per hour; in 2 hours: 2/6 = 1/3.'},
+  {q:'A phone plan costs $30 per month plus $0.10 per minute. What is the cost for a month with 200 minutes?',choices:['$32','$40','$50','$60','$80'],correct:2,exp:'$30 + $0.10·200 = $30 + $20 = $50.'},
+  {q:'The average of five numbers is 20. What is their sum?',choices:['25','40','80','100','125'],correct:3,exp:'Sum = average × count = 20·5 = 100.'},
+  {q:'20% of a class is absent. If 32 students are present, how many students are in the class?',choices:['32','36','38','40','44'],correct:3,exp:'32 = 80% of total → total = 32 / 0.80 = 40.'},
+  {q:'A rectangle\'s length is 3 more than its width. If the perimeter is 26, find the width.',choices:['4','5','6','7','8'],correct:1,exp:'2(w + w + 3) = 26 → 4w + 6 = 26 → w = 5.'},
+  {q:'The ratio of boys to girls in a class is 3 : 5. If there are 40 girls, how many boys are there?',choices:['15','18','20','24','25'],correct:3,exp:'3/5 = x/40 → x = 24.'}
+],
+'real-numbers': [
+  {q:'Which of the following is irrational?',choices:['√4','√9','√16','√25','√2'],correct:4,exp:'√2 cannot be written as a fraction of two integers.'},
+  {q:'Evaluate: √49',choices:['5','6','7','8','9'],correct:2,exp:'7² = 49.'},
+  {q:'Which of the following is rational?',choices:['π','√3','5/8','√5','√7'],correct:2,exp:'5/8 is a ratio of two integers.'},
+  {q:'√20 is between which two consecutive integers?',choices:['3 and 4','4 and 5','5 and 6','6 and 7','2 and 3'],correct:1,exp:'4² = 16 and 5² = 25, and 16 < 20 < 25.'},
+  {q:'Which is larger, √50 or 7?',choices:['√50','7','They are equal','Cannot be determined','Neither is real'],correct:0,exp:'√50 ≈ 7.07, which is greater than 7.'},
+  {q:'A rational number can always be written as __.',choices:['a decimal','a fraction of two integers','a whole number','an irrational number','a perfect square'],correct:1,exp:'By definition, rational = ratio of two integers.'},
+  {q:'0.333… (repeating) is __.',choices:['irrational','rational','not a number','a whole number','undefined'],correct:1,exp:'0.333… = 1/3, a ratio of two integers.'},
+  {q:'Which set contains all of the others?',choices:['Naturals','Wholes','Integers','Rationals','Reals'],correct:4,exp:'Reals include rationals ⊃ integers ⊃ wholes ⊃ naturals.'},
+  {q:'Evaluate: √81',choices:['7','8','9','10','11'],correct:2,exp:'9² = 81.'},
+  {q:'Evaluate: ∛27',choices:['2','3','4','5','9'],correct:1,exp:'3³ = 27.'}
+],
+'slope': [
+  {q:'Find the slope of the line through (0, 0) and (3, 6).',choices:['1','2','3','6','9'],correct:1,exp:'(6 − 0) / (3 − 0) = 2.'},
+  {q:'Find the slope of the line through (−1, 2) and (3, −4).',choices:['−3/2','−2/3','2/3','3/2','6'],correct:0,exp:'(−4 − 2)/(3 − (−1)) = −6/4 = −3/2.'},
+  {q:'What is the slope of a horizontal line?',choices:['0','1','−1','undefined','∞'],correct:0,exp:'No change in y, so slope = 0.'},
+  {q:'What is the slope of a vertical line?',choices:['0','1','−1','undefined','∞'],correct:3,exp:'Δx = 0 → division by zero is undefined.'},
+  {q:'A line with negative slope goes __ from left to right.',choices:['up','down','horizontally','vertically','flat'],correct:1,exp:'Negative slope = decreasing.'},
+  {q:'Find the slope of the line through (1, 5) and (4, 5).',choices:['−1','0','1','3','undefined'],correct:1,exp:'y-values are equal → horizontal line, slope 0.'},
+  {q:'Which of these defines slope?',choices:['change in x over change in y','change in y over change in x','y-intercept minus x-intercept','distance / time','sum of coordinates'],correct:1,exp:'Slope = Δy/Δx (rise/run).'},
+  {q:'Find the slope of the line through (2, 1) and (4, 7).',choices:['1','2','3','4','6'],correct:2,exp:'(7 − 1)/(4 − 2) = 6/2 = 3.'},
+  {q:'A line has slope 2 and passes through (1, 3). What is y when x = 4?',choices:['5','7','8','9','11'],correct:3,exp:'From (1, 3) go right 3, up 6 → (4, 9).'},
+  {q:'Two lines are perpendicular if the product of their slopes is __.',choices:['0','1','−1','2','undefined'],correct:2,exp:'Perpendicular lines have negative reciprocal slopes: m₁·m₂ = −1.'}
+],
+'systems': [
+  {q:'Solve the system: x + y = 10, x − y = 4',choices:['x = 3, y = 7','x = 5, y = 5','x = 6, y = 4','x = 7, y = 3','x = 8, y = 2'],correct:3,exp:'Add equations: 2x = 14 → x = 7; y = 3.'},
+  {q:'Solve: y = 2x, y = x + 3',choices:['(1, 2)','(2, 4)','(3, 6)','(4, 8)','(5, 10)'],correct:2,exp:'2x = x + 3 → x = 3, y = 6.'},
+  {q:'Solve: 2x + y = 7, x + y = 4',choices:['(1, 3)','(2, 2)','(3, 1)','(4, −1)','(5, −3)'],correct:2,exp:'Subtract second from first: x = 3; then y = 1.'},
+  {q:'A system of two parallel lines has __.',choices:['exactly one solution','no solution','infinitely many solutions','two solutions','undefined solutions'],correct:1,exp:'Parallel lines never intersect.'},
+  {q:'A system where both equations describe the same line has __.',choices:['no solution','one solution','infinitely many solutions','two solutions','undefined'],correct:2,exp:'Every point on the line is a solution.'},
+  {q:'If 3x + 2y = 12 and x = 2, find y.',choices:['1','2','3','4','5'],correct:2,exp:'6 + 2y = 12 → 2y = 6 → y = 3.'},
+  {q:'Two linear equations with different slopes have __.',choices:['no solution','exactly one solution','two solutions','infinitely many solutions','no y-intercept'],correct:1,exp:'Different slopes → the lines cross at exactly one point.'},
+  {q:'Solve: y = x + 1, y = −x + 5',choices:['(1, 2)','(2, 3)','(3, 4)','(4, 5)','(0, 5)'],correct:1,exp:'x + 1 = −x + 5 → 2x = 4 → x = 2, y = 3.'},
+  {q:'Solve: 2x + y = 8, y = x + 2',choices:['(1, 3)','(2, 4)','(3, 5)','(4, 6)','(0, 2)'],correct:1,exp:'2x + (x + 2) = 8 → 3x = 6 → x = 2, y = 4.'},
+  {q:'The sum of two numbers is 20 and their difference is 6. What is the larger number?',choices:['7','10','12','13','14'],correct:3,exp:'x + y = 20, x − y = 6 → x = 13.'}
+],
+'functions': [
+  {q:'Which of the following represents a function?',choices:['{(1,2), (1,3), (2,4)}','{(1,2), (2,3), (1,4)}','{(1,2), (2,3), (3,4)}','{(1,2), (1,5), (1,7)}','{(2,3), (2,4), (2,5)}'],correct:2,exp:'A function requires each input maps to only one output.'},
+  {q:'Is {(1, 2), (2, 3), (3, 4)} a function?',choices:['Yes','No','Only for x > 0','Only for whole numbers','Cannot be determined'],correct:0,exp:'Each x-value has exactly one y-value.'},
+  {q:'Is {(1, 2), (1, 3)} a function?',choices:['Yes','No','Only for integers','Sometimes','Cannot be determined'],correct:1,exp:'x = 1 maps to two different y-values.'},
+  {q:'If a graph passes the vertical line test, it is __.',choices:['a function','not a function','a line','a parabola','a circle'],correct:0,exp:'Passing the VLT means each x has exactly one y — a function.'},
+  {q:'If f(x) = 2x + 3, find f(5).',choices:['5','7','10','13','15'],correct:3,exp:'2·5 + 3 = 13.'},
+  {q:'If f(x) = x², find f(−4).',choices:['−16','−8','8','16','32'],correct:3,exp:'(−4)² = 16.'},
+  {q:'The set of all input values of a function is called the __.',choices:['range','domain','image','function','output'],correct:1,exp:'Domain = inputs; range = outputs.'},
+  {q:'The set of all output values of a function is called the __.',choices:['range','domain','input','coordinate','graph'],correct:0,exp:'Range = outputs.'},
+  {q:'If f(x) = 3x − 2, find f(0).',choices:['−3','−2','0','2','3'],correct:1,exp:'3·0 − 2 = −2.'},
+  {q:'Which graph represents a function?',choices:['A circle','A vertical line','A horizontal line','A shape crossed by a vertical line twice','A U-shape lying on its side'],correct:2,exp:'A horizontal line has exactly one y for each x.'}
+],
+'linear-functions': [
+  {q:'What is the slope of y = 3x − 5?',choices:['−5','−3','0','3','5'],correct:3,exp:'In y = mx + b, m is the slope.'},
+  {q:'What is the y-intercept of y = −2x + 4?',choices:['−4','−2','0','2','4'],correct:4,exp:'b = 4.'},
+  {q:'Which line is the steepest?',choices:['y = x','y = 2x','y = 0.5x','y = −x','y = 3x'],correct:4,exp:'Steepness = |slope|; |3| is largest.'},
+  {q:'The equation y = 5 represents a __ line.',choices:['vertical','horizontal','diagonal','parabolic','circular'],correct:1,exp:'Constant y = 5 → horizontal.'},
+  {q:'The equation x = 4 represents a __ line.',choices:['horizontal','vertical','diagonal','curved','none of these'],correct:1,exp:'Constant x → vertical.'},
+  {q:'A line through the origin with slope 2 is __.',choices:['y = x + 2','y = 2x','y = x/2','y = 2','y = x'],correct:1,exp:'Through origin: b = 0; y = 2x.'},
+  {q:'Which point lies on y = x + 3?',choices:['(1, 4)','(2, 3)','(0, 4)','(−1, 3)','(3, 5)'],correct:0,exp:'1 + 3 = 4 ✓.'},
+  {q:'A line has slope 0 and y-intercept 6. Its equation is __.',choices:['y = 6x','y = x + 6','x = 6','y = 6','y = 0'],correct:3,exp:'Horizontal line at y = 6.'},
+  {q:'Convert x + 2y = 6 to slope-intercept form.',choices:['y = x + 3','y = 2x + 6','y = −x/2 + 3','y = x/2 − 3','y = −2x + 6'],correct:2,exp:'2y = −x + 6 → y = −x/2 + 3.'},
+  {q:'If y = 2x − 1, and x = 1, find y.',choices:['−2','−1','0','1','2'],correct:3,exp:'2·1 − 1 = 1.'}
+],
+'angle-relationships': [
+  {q:'Vertical angles are __.',choices:['complementary','supplementary','equal','right angles','opposite'],correct:2,exp:'Vertical angles are congruent (equal).'},
+  {q:'Two angles on a straight line sum to __.',choices:['45°','90°','120°','180°','360°'],correct:3,exp:'A straight angle is 180°.'},
+  {q:'The interior angles of a triangle sum to __.',choices:['90°','180°','270°','360°','540°'],correct:1,exp:'Fundamental fact.'},
+  {q:'When parallel lines are cut by a transversal, alternate interior angles are __.',choices:['complementary','supplementary','equal','right angles','opposite'],correct:2,exp:'They are congruent.'},
+  {q:'When parallel lines are cut by a transversal, corresponding angles are __.',choices:['complementary','supplementary','equal','right angles','none of these'],correct:2,exp:'Corresponding angles are congruent.'},
+  {q:'When parallel lines are cut by a transversal, co-interior (same-side interior) angles are __.',choices:['equal','complementary','supplementary','right angles','opposite'],correct:2,exp:'They sum to 180°.'},
+  {q:'The exterior angle of a triangle equals the sum of the two non-adjacent interior angles. If the exterior angle is 120°, what is that sum?',choices:['60°','90°','100°','120°','180°'],correct:3,exp:'By exterior angle theorem, they are equal → 120°.'},
+  {q:'A right angle measures __.',choices:['45°','60°','90°','120°','180°'],correct:2,exp:'A right angle is exactly 90°.'},
+  {q:'Complementary angles sum to __.',choices:['45°','90°','120°','180°','360°'],correct:1,exp:'Complementary = 90°.'},
+  {q:'What is the complement of a 42° angle?',choices:['38°','48°','58°','132°','138°'],correct:1,exp:'90 − 42 = 48°.'}
+],
+'transformations': [
+  {q:'A reflection produces an image that is __.',choices:['smaller','larger','a mirror image','rotated','translated'],correct:2,exp:'Reflection = mirror image over a line.'},
+  {q:'A translation moves a shape without __.',choices:['flipping','rotating','sliding','changing size','rotating or resizing'],correct:4,exp:'Translation is a slide — no rotation and no size change.'},
+  {q:'A rotation turns a shape around a fixed __.',choices:['line','point','side','vertex','angle'],correct:1,exp:'Rotations happen about a point (the center of rotation).'},
+  {q:'Reflect the point (3, 2) over the x-axis.',choices:['(3, 2)','(−3, 2)','(3, −2)','(−3, −2)','(2, 3)'],correct:2,exp:'Reflection over x-axis negates y.'},
+  {q:'Translate (1, 4) right 3 and down 2. New coordinates?',choices:['(4, 2)','(4, 6)','(−2, 2)','(−2, 6)','(3, 2)'],correct:0,exp:'Add 3 to x and subtract 2 from y → (4, 2).'},
+  {q:'Rotate (2, 0) 90° counterclockwise about the origin.',choices:['(0, 2)','(0, −2)','(−2, 0)','(2, 0)','(−2, 2)'],correct:0,exp:'CCW 90°: (x, y) → (−y, x); (2, 0) → (0, 2).'},
+  {q:'A rigid transformation preserves __.',choices:['only size','only shape','both size and shape','only orientation','only angle'],correct:2,exp:'Translations, reflections, rotations preserve both size and shape.'},
+  {q:'A dilation with scale factor 2 makes a shape __.',choices:['half the size','the same size','twice as large','four times as large','a mirror image'],correct:2,exp:'Linear dimensions scale by 2.'},
+  {q:'Reflect (5, 3) over the y-axis.',choices:['(5, 3)','(5, −3)','(−5, 3)','(−5, −3)','(3, 5)'],correct:2,exp:'Reflection over y-axis negates x.'},
+  {q:'Which transformation is NOT a rigid transformation?',choices:['Reflection','Rotation','Translation','Dilation','All are rigid'],correct:3,exp:'Dilation changes size — not rigid.'}
+],
+'two-way-tables': [
+  {q:'A two-way table shows 20 seventh graders and 15 eighth graders who like pizza, and 5 seventh graders and 10 eighth graders who don\'t. What is the total number of students?',choices:['25','35','40','45','50'],correct:4,exp:'20 + 15 + 5 + 10 = 50.'},
+  {q:'From that table, how many seventh graders don\'t like pizza?',choices:['5','10','15','20','25'],correct:0,exp:'The value at row Grade 7, column "doesn\'t like".'},
+  {q:'How many students in total like pizza?',choices:['20','25','30','35','40'],correct:3,exp:'20 + 15 = 35.'},
+  {q:'What percent of eighth graders don\'t like pizza?',choices:['20%','25%','30%','40%','60%'],correct:3,exp:'10 out of 25 eighth graders = 40%.'},
+  {q:'The probability that a randomly chosen student is a seventh grader is __.',choices:['1/5','1/4','2/5','1/2','3/5'],correct:3,exp:'25 seventh graders out of 50 total = 1/2.'},
+  {q:'The probability that a random student is an eighth grader AND likes pizza is __.',choices:['1/10','3/20','1/5','3/10','2/5'],correct:3,exp:'15/50 = 3/10.'},
+  {q:'Given that a student likes pizza, the probability they are a seventh grader is __.',choices:['2/5','3/7','1/2','4/7','5/7'],correct:3,exp:'20 seventh-grade pizza-lovers out of 35 total pizza-lovers = 20/35 = 4/7.'},
+  {q:'What is the marginal frequency for eighth graders?',choices:['15','20','25','35','50'],correct:2,exp:'Total eighth graders = 15 + 10 = 25.'},
+  {q:'What is the relative frequency of "likes pizza" out of the total group?',choices:['1/2','3/5','2/3','7/10','5/7'],correct:3,exp:'35/50 = 7/10.'},
+  {q:'The joint frequency of seventh grade AND doesn\'t like pizza is __.',choices:['5','10','15','20','25'],correct:0,exp:'Cell where Grade 7 and doesn\'t-like intersect = 5.'}
+]
+};
+
+
+// ==================== SSAT Prep Runner ====================
+let SSAT_STATE = { unitId: null, qIdx: 0, score: 0, answered: false, selected: -1 };
+
+function openSSAT(unitId) {
+  const bank = SSAT_BANK[unitId];
+  if (!bank || !bank.length) return;
+  SSAT_STATE = { unitId, qIdx: 0, score: 0, answered: false, selected: -1 };
+  const unit = UNITS.find(u => u.id === unitId);
+  document.getElementById('ssat-title').textContent = '🎯 SSAT Prep · ' + (unit ? unit.title : unitId);
+  document.getElementById('ssat-meta').textContent = 'Multiple choice · 5 answer options · SSAT Upper Level style';
+  document.getElementById('ssat-modal').classList.add('active');
+  renderSSATQuestion();
+}
+
+function closeSSAT() {
+  document.getElementById('ssat-modal').classList.remove('active');
+}
+
+function renderSSATQuestion() {
+  const bank = SSAT_BANK[SSAT_STATE.unitId];
+  const idx = SSAT_STATE.qIdx;
+  if (idx >= bank.length) { renderSSATResult(); return; }
+  const q = bank[idx];
+  SSAT_STATE.answered = false; SSAT_STATE.selected = -1;
+  const letters = ['A','B','C','D','E'];
+  let choicesHTML = '';
+  q.choices.forEach((c, i) => {
+    choicesHTML += `<button class="ssat-choice" data-idx="${i}" onclick="ssatSelect(${i})"><span class="letter">${letters[i]}</span>${c}</button>`;
+  });
+  document.getElementById('ssat-body').innerHTML = `
+    <div class="ssat-progress">Question ${idx+1} of ${bank.length}</div>
+    <div class="ssat-question">${q.q}</div>
+    <div id="ssat-choices">${choicesHTML}</div>
+    <div id="ssat-feedback"></div>
+    <div class="ssat-actions">
+      <button class="ssat-btn skip" onclick="ssatSkip()">Skip →</button>
+      <button class="ssat-btn" id="ssat-submit" onclick="ssatSubmit()" disabled>Submit</button>
+    </div>`;
+}
+
+function ssatSelect(i) {
+  if (SSAT_STATE.answered) return;
+  SSAT_STATE.selected = i;
+  document.querySelectorAll('#ssat-choices .ssat-choice').forEach((c, j) => {
+    c.classList.toggle('selected', j === i);
+  });
+  document.getElementById('ssat-submit').disabled = false;
+}
+
+function ssatSubmit() {
+  if (SSAT_STATE.answered) { ssatNext(); return; }
+  const bank = SSAT_BANK[SSAT_STATE.unitId];
+  const q = bank[SSAT_STATE.qIdx];
+  const chosen = SSAT_STATE.selected;
+  const correct = q.correct;
+  SSAT_STATE.answered = true;
+  if (chosen === correct) SSAT_STATE.score++;
+  document.querySelectorAll('#ssat-choices .ssat-choice').forEach((c, j) => {
+    c.disabled = true;
+    if (j === correct) c.classList.add('correct');
+    else if (j === chosen) c.classList.add('wrong');
+  });
+  const isRight = chosen === correct;
+  document.getElementById('ssat-feedback').innerHTML = `
+    <div class="ssat-feedback ${isRight ? 'ok' : 'bad'}">
+      <strong>${isRight ? '✓ Correct!' : '✗ Not quite.'}</strong> ${q.exp || ''}
+    </div>`;
+  const btn = document.getElementById('ssat-submit');
+  btn.textContent = (SSAT_STATE.qIdx + 1 < bank.length) ? 'Next Question →' : 'See Results →';
+  btn.disabled = false;
+  btn.onclick = ssatNext;
+}
+
+function ssatSkip() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
+function ssatNext() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
+
+function renderSSATResult() {
+  const bank = SSAT_BANK[SSAT_STATE.unitId];
+  const pct = Math.round((SSAT_STATE.score / bank.length) * 100);
+  let msg = 'Keep practicing!';
+  if (pct === 100) msg = '🌟 Perfect! Ready for the SSAT.';
+  else if (pct >= 80) msg = '💪 Strong work — review your misses.';
+  else if (pct >= 60) msg = '👍 Solid start — practice this topic more.';
+  else msg = '📚 Review the lesson and try again.';
+  document.getElementById('ssat-body').innerHTML = `
+    <div class="ssat-result">
+      <div>Your SSAT Prep score:</div>
+      <div class="score">${SSAT_STATE.score} / ${bank.length}</div>
+      <div class="msg"><strong>${pct}%</strong> — ${msg}</div>
+      <div class="ssat-actions" style="justify-content:center;gap:10px">
+        <button class="ssat-btn skip" onclick="closeSSAT()">Close</button>
+        <button class="ssat-btn" onclick="openSSAT(SSAT_STATE.unitId)">Try Again ↻</button>
+      </div>
+    </div>`;
+}
+
 </script>
+
+<!-- SSAT Prep Modal -->
+<div id="ssat-modal" class="ssat-modal" onclick="if(event.target===this)closeSSAT()">
+  <div class="ssat-panel">
+    <div class="ssat-header">
+      <div>
+        <h2 id="ssat-title">🎯 SSAT Prep</h2>
+        <div class="ssat-meta" id="ssat-meta">Multiple choice · 5 answer options</div>
+      </div>
+      <button class="ssat-close" onclick="closeSSAT()">×</button>
+    </div>
+    <div id="ssat-body"></div>
+  </div>
+</div>
+
 </body>
 </html>

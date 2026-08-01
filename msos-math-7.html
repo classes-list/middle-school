@@ -89,6 +89,36 @@
     .btn-phet:hover { background: #6d28d9; }
     .btn-ixl-sci { display: inline-block; padding: 10px 15px; background: #0891b2; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; }
     .btn-ixl-sci:hover { background: #0e7490; }
+    .btn-ssat { display: inline-block; padding: 10px 15px; background: #6d28d9; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 600; }
+    .btn-ssat:hover { background: #5b21b6; }
+    .ssat-modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 200; overflow-y: auto; padding: 30px 20px; }
+    .ssat-modal.active { display: block; }
+    .ssat-panel { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 26px 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+    .ssat-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 2px solid #ede9fe; margin-bottom: 16px; }
+    .ssat-header h2 { color: #5b21b6; font-size: 1.2rem; }
+    .ssat-header .ssat-meta { font-size: 0.85rem; color: #6b7280; }
+    .ssat-close { background: none; border: none; font-size: 24px; color: #6b7280; cursor: pointer; padding: 0 6px; }
+    .ssat-close:hover { color: #5b21b6; }
+    .ssat-question { font-size: 1.02rem; color: #1f2937; margin-bottom: 14px; line-height: 1.6; }
+    .ssat-choice { display: block; width: 100%; padding: 10px 14px; margin: 6px 0; text-align: left; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; cursor: pointer; transition: all 0.15s; }
+    .ssat-choice:hover { background: #ede9fe; border-color: #6d28d9; }
+    .ssat-choice.selected { background: #ede9fe; border-color: #6d28d9; }
+    .ssat-choice.correct { background: #d1fae5; border-color: #10b981; }
+    .ssat-choice.wrong { background: #fee2e2; border-color: #dc2626; }
+    .ssat-choice .letter { display: inline-block; width: 22px; font-weight: 700; color: #6d28d9; margin-right: 6px; }
+    .ssat-feedback { padding: 12px 16px; margin-top: 12px; border-radius: 8px; font-size: 0.94rem; line-height: 1.55; }
+    .ssat-feedback.ok { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+    .ssat-feedback.bad { background: #fef3c7; color: #78350f; border-left: 4px solid #f59e0b; }
+    .ssat-actions { display: flex; justify-content: space-between; margin-top: 18px; }
+    .ssat-btn { background: #6d28d9; color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+    .ssat-btn:hover { background: #5b21b6; }
+    .ssat-btn.skip { background: #94a3b8; }
+    .ssat-btn.skip:hover { background: #64748b; }
+    .ssat-progress { font-size: 0.85rem; color: #6b7280; font-weight: 600; }
+    .ssat-result { text-align: center; padding: 20px 10px; }
+    .ssat-result .score { font-size: 3rem; font-weight: 800; color: #5b21b6; margin: 10px 0; }
+    .ssat-result .msg { font-size: 1.1rem; color: #374151; margin-bottom: 20px; }
+
     .btn-graph { display: inline-block; padding: 10px 15px; background: #4f46e5; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
     .btn-graph:hover { background: #3730a3; }
     .btn-lab { display: inline-block; padding: 10px 15px; background: #0d9488; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 700; }
@@ -1107,7 +1137,8 @@ function resourceCardHTML(unit) {
   const ixlSciBtn = unit.ixlSciUrl ? `<a class="btn-ixl-sci" href="${unit.ixlSciUrl}" target="_blank" rel="noopener">🔬 IXL Science</a>` : '';
   const labBtn = unit.labUrl ? `<a class="btn-lab" href="${unit.labUrl}" target="_blank">🎯 Percent Error Lab</a>` : '';
   const graphBtn = unit.graphLabUrl ? `<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank">📊 Data Analysis</a>` : '';
-  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${ixlBtn}${ixlSciBtn}${ytBtn}${labBtn}</div></div>`;
+    const ssatBtn = (typeof SSAT_BANK !== 'undefined' && SSAT_BANK[unit.id]) ? `<button class="btn-ssat" onclick="openSSAT('${unit.id}')">🎯 SSAT Prep</button>` : '';
+  return `<div class="resource-card"><h3>📚 Resources</h3><div class="resource-btns">${phetBtn}${ixlBtn}${ssatBtn}${ixlSciBtn}${ytBtn}${labBtn}</div></div>`;
 }
 
 function renderHome() {
@@ -1858,6 +1889,328 @@ function showRealWorld() {
   window.addEventListener('hashchange', checkHash);
 })();
 
+
+
+// SSAT Prep question banks for Math 7 (Upper Level style, 5 answer choices)
+const SSAT_BANK = {
+'proportional': [
+  {q:'If <em>y</em> is proportional to <em>x</em> and <em>y</em> = 12 when <em>x</em> = 3, what is <em>y</em> when <em>x</em> = 8?',choices:['4','24','32','36','96'],correct:2,exp:'k = 12/3 = 4, so y = 4·8 = 32.'},
+  {q:'Which pair (x, y) is <strong>NOT</strong> part of the same proportional relationship as the others?',choices:['(2, 6)','(3, 9)','(4, 12)','(5, 14)','(6, 18)'],correct:3,exp:'All others have y/x = 3; (5,14) has y/x = 2.8.'},
+  {q:'A car travels 180 miles in 3 hours at a constant speed. How far will it travel in 5 hours?',choices:['240 mi','280 mi','300 mi','330 mi','360 mi'],correct:2,exp:'Rate = 60 mph; 60·5 = 300.'},
+  {q:'A proportional relationship always passes through which point on a graph?',choices:['(1, 1)','(0, 0)','(1, 0)','(0, 1)','(2, 2)'],correct:1,exp:'y = kx passes through the origin.'},
+  {q:'If 4 pens cost $6, how much do 10 pens cost?',choices:['$12','$13','$14','$15','$16'],correct:3,exp:'$6/4 = $1.50 per pen; $1.50·10 = $15.'},
+  {q:'A recipe uses 2 cups of flour for 12 cookies. How much flour is needed for 30 cookies?',choices:['3 cups','4 cups','5 cups','6 cups','8 cups'],correct:2,exp:'2/12 = x/30, so x = 5.'},
+  {q:'If <em>y</em> = <em>kx</em> and <em>y</em> = 21 when <em>x</em> = 7, find <em>k</em>.',choices:['2','3','4','7','14'],correct:1,exp:'k = y/x = 21/7 = 3.'},
+  {q:'A map scale is 1 inch = 25 miles. Two cities are 3.2 inches apart on the map. What is the actual distance?',choices:['64 mi','75 mi','80 mi','85 mi','100 mi'],correct:2,exp:'3.2 · 25 = 80 miles.'},
+  {q:'If <em>y</em> and <em>x</em> are proportional and <em>y</em> = 45 when <em>x</em> = 5, find <em>x</em> when <em>y</em> = 108.',choices:['10','12','15','18','20'],correct:1,exp:'k = 9; x = 108/9 = 12.'},
+  {q:'Which equation represents a proportional relationship?',choices:['y = 2x + 3','y = x²','y = 5x','y = 3/x','y = x − 1'],correct:2,exp:'A proportional relationship has the form y = kx with no added constant.'}
+],
+'percents': [
+  {q:'What is 25% of 80?',choices:['15','18','20','24','25'],correct:2,exp:'0.25 · 80 = 20.'},
+  {q:'15 is what percent of 60?',choices:['15%','20%','25%','30%','40%'],correct:2,exp:'15/60 = 0.25 = 25%.'},
+  {q:'A shirt originally costs $40 and is on sale for 30% off. What is the sale price?',choices:['$10','$24','$28','$30','$32'],correct:2,exp:'$40 · 0.70 = $28.'},
+  {q:'A price increases from $50 to $65. What is the percent increase?',choices:['15%','20%','25%','30%','35%'],correct:3,exp:'(65−50)/50 = 15/50 = 30%.'},
+  {q:'A $80 jacket has 8% sales tax. What is the total cost?',choices:['$82.40','$84.00','$86.40','$88.00','$96.00'],correct:2,exp:'$80 · 1.08 = $86.40.'},
+  {q:'12 is 40% of what number?',choices:['20','24','28','30','48'],correct:3,exp:'12 / 0.40 = 30.'},
+  {q:'A team won 18 of 24 games. What is their winning percentage?',choices:['60%','65%','70%','75%','80%'],correct:3,exp:'18/24 = 0.75 = 75%.'},
+  {q:'The price of a book dropped from $60 to $45. What is the percent decrease?',choices:['15%','20%','25%','30%','33%'],correct:2,exp:'(60−45)/60 = 15/60 = 25%.'},
+  {q:'Which value is the <strong>greatest</strong>?',choices:['5/8','60%','0.7','2/3','45%'],correct:2,exp:'5/8 = 0.625, 2/3 ≈ 0.667, 0.7 = 70% is largest.'},
+  {q:'If <em>x</em> is 20% larger than <em>y</em>, and <em>y</em> = 50, find <em>x</em>.',choices:['52','55','58','60','70'],correct:3,exp:'x = 50 · 1.20 = 60.'}
+],
+'equations': [
+  {q:'Solve for <em>x</em>: 3<em>x</em> + 5 = 20',choices:['3','4','5','6','7'],correct:2,exp:'3x = 15, so x = 5.'},
+  {q:'Solve for <em>x</em>: 2(<em>x</em> − 3) = 14',choices:['5','7','8','10','11'],correct:3,exp:'Divide both sides by 2: x − 3 = 7, so x = 10.'},
+  {q:'Solve for <em>x</em>: 5<em>x</em> − 8 = 3<em>x</em> + 4',choices:['2','4','6','8','12'],correct:2,exp:'2x = 12, so x = 6.'},
+  {q:'If 4<em>x</em> + 7 = 27, what is the value of 2<em>x</em> + 3?',choices:['5','10','13','15','17'],correct:2,exp:'x = 5, so 2·5 + 3 = 13.'},
+  {q:'Solve for <em>x</em>: −3<em>x</em> + 12 = 3',choices:['−3','−1','1','3','5'],correct:3,exp:'−3x = −9, so x = 3.'},
+  {q:'The sum of a number and 8 is 21. What is the number?',choices:['11','12','13','14','15'],correct:2,exp:'x + 8 = 21, so x = 13.'},
+  {q:'Twice a number decreased by 5 equals 17. Find the number.',choices:['6','8','9','11','12'],correct:3,exp:'2x − 5 = 17 → 2x = 22 → x = 11.'},
+  {q:'Solve for <em>x</em>: <em>x</em>/4 + 3 = 10',choices:['20','24','25','28','32'],correct:3,exp:'x/4 = 7, so x = 28.'},
+  {q:'Solve for <em>x</em>: 0.5<em>x</em> − 2 = 6',choices:['8','10','12','14','16'],correct:4,exp:'0.5x = 8, so x = 16.'},
+  {q:'If 5(<em>x</em> − 2) = 30, find <em>x</em>.',choices:['4','6','7','8','10'],correct:3,exp:'x − 2 = 6, so x = 8.'}
+],
+'circles': [
+  {q:'What is the circumference of a circle with radius 5?',choices:['5π','10π','15π','20π','25π'],correct:1,exp:'C = 2πr = 10π.'},
+  {q:'What is the area of a circle with diameter 12?',choices:['12π','24π','36π','72π','144π'],correct:2,exp:'r = 6, so A = π·6² = 36π.'},
+  {q:'What is the area of a circle with radius 7?',choices:['14π','21π','36π','49π','98π'],correct:3,exp:'A = π·7² = 49π.'},
+  {q:'A circle has area 25π. What is its radius?',choices:['5','6','8','10','12.5'],correct:0,exp:'πr² = 25π, so r² = 25, r = 5.'},
+  {q:'A circular garden has diameter 20 ft. What is its circumference?',choices:['10π ft','20π ft','40π ft','100π ft','400π ft'],correct:1,exp:'C = πd = 20π.'},
+  {q:'If the radius of a circle doubles, its area becomes how many times the original?',choices:['2','3','4','8','16'],correct:2,exp:'Area scales with r²; doubling r → area × 4.'},
+  {q:'Circle A has radius 3; Circle B has radius 6. What is the ratio of B\'s area to A\'s area?',choices:['1 : 2','1 : 4','2 : 1','4 : 1','6 : 1'],correct:3,exp:'(6/3)² = 4, so 4 : 1.'},
+  {q:'A pizza has radius 8 inches. What is its area?',choices:['16π','32π','48π','64π','128π'],correct:3,exp:'A = π·8² = 64π.'},
+  {q:'The circumference of a circle is 18π. What is its diameter?',choices:['9','18','36','54','9π'],correct:1,exp:'C = πd, so d = 18.'},
+  {q:'A pie has radius 6 in and is cut into 8 equal slices. What is the area of one slice?',choices:['3π/4','3π/2','9π/4','9π/2','36π'],correct:3,exp:'Total area = 36π; one slice = 36π/8 = 9π/2.'}
+],
+'probability': [
+  {q:'Rolling a fair six-sided die, what is the probability of rolling a 4?',choices:['1/2','1/3','1/4','1/5','1/6'],correct:4,exp:'One favorable outcome out of six.'},
+  {q:'A bag has 3 red, 5 blue, and 2 green marbles. What is P(red)?',choices:['1/10','3/10','1/3','1/2','3/5'],correct:1,exp:'3 red out of 10 total = 3/10.'},
+  {q:'Flipping a fair coin twice, what is P(both heads)?',choices:['1/8','1/6','1/4','1/3','1/2'],correct:2,exp:'(1/2)² = 1/4.'},
+  {q:'Rolling two fair dice, what is the probability the sum is 7?',choices:['1/12','1/6','1/4','5/36','7/36'],correct:1,exp:'6 favorable outcomes out of 36 = 1/6.'},
+  {q:'From a standard deck of 52 cards, what is the probability of drawing a king?',choices:['1/13','1/12','1/4','4/13','1/52'],correct:0,exp:'4 kings out of 52 = 1/13.'},
+  {q:'If P(rain tomorrow) = 0.4, what is P(no rain)?',choices:['0.4','0.5','0.6','0.7','1.0'],correct:2,exp:'1 − 0.4 = 0.6.'},
+  {q:'A spinner has 8 equal sections numbered 1–8. What is P(landing on an even number)?',choices:['1/8','1/4','3/8','1/2','5/8'],correct:3,exp:'4 evens (2, 4, 6, 8) out of 8 = 1/2.'},
+  {q:'A bag has 10 cards numbered 1 to 10. What is the probability of drawing a prime number?',choices:['1/5','3/10','2/5','1/2','3/5'],correct:2,exp:'Primes 1–10: 2, 3, 5, 7 (four numbers), so 4/10 = 2/5.'},
+  {q:'A bag has 6 chips: 2 red and 4 blue. You draw one, replace it, then draw again. What is P(both blue)?',choices:['1/9','2/9','4/9','1/2','5/9'],correct:2,exp:'(4/6)² = (2/3)² = 4/9.'},
+  {q:'The odds of winning a raffle are 2 : 5. What is the probability of winning?',choices:['2/5','2/7','3/7','1/2','5/7'],correct:1,exp:'Odds 2 : 5 means 2 winning out of 2 + 5 = 7 total → 2/7.'}
+],
+'ratios-rates': [
+  {q:'The ratio of cats to dogs at a shelter is 3 : 4. If there are 12 cats, how many dogs are there?',choices:['9','12','15','16','24'],correct:3,exp:'3/4 = 12/x → x = 16.'},
+  {q:'Write the ratio 15 : 25 in simplest form.',choices:['1 : 2','2 : 5','3 : 5','5 : 7','3 : 8'],correct:2,exp:'Divide both by 5 → 3 : 5.'},
+  {q:'A car travels 240 miles in 4 hours. What is the unit rate?',choices:['40 mph','50 mph','60 mph','70 mph','80 mph'],correct:2,exp:'240/4 = 60 mph.'},
+  {q:'Which is the better unit price?',choices:['$8 for 4 lb (= $2.00/lb)','$15 for 6 lb (= $2.50/lb)','$18 for 9 lb (= $2.00/lb)','$25 for 10 lb (= $2.50/lb)','All are equal'],correct:0,exp:'$8/4 = $2.00/lb ties with $18/9; the cheaper listed choice is $8 for 4 lb.'},
+  {q:'A recipe uses 3 cups of flour to 2 cups of sugar. Which is the ratio of flour to sugar?',choices:['2 : 3','3 : 2','3 : 5','2 : 5','5 : 2'],correct:1,exp:'Flour : sugar = 3 : 2.'},
+  {q:'If 4 pounds of apples cost $6, what is the price per pound?',choices:['$1.00','$1.25','$1.50','$1.75','$2.00'],correct:2,exp:'$6/4 = $1.50/lb.'},
+  {q:'Simplify the ratio 8 : 12.',choices:['1 : 2','2 : 3','3 : 4','4 : 6','3 : 5'],correct:1,exp:'Divide both by 4 → 2 : 3.'},
+  {q:'A car uses 5 gallons of gas to travel 150 miles. What is its fuel efficiency?',choices:['20 mpg','25 mpg','30 mpg','35 mpg','40 mpg'],correct:2,exp:'150/5 = 30 mpg.'},
+  {q:'A class has 15 boys and 20 girls. What is the ratio of boys to total students?',choices:['3 : 4','3 : 5','3 : 7','4 : 7','15 : 20'],correct:2,exp:'15 : (15+20) = 15 : 35 = 3 : 7.'},
+  {q:'If 5 pencils cost $3.75, how much do 12 pencils cost?',choices:['$7.50','$8.25','$9.00','$9.75','$10.50'],correct:2,exp:'$3.75/5 = $0.75 each; $0.75 · 12 = $9.00.'}
+],
+'add-sub-rational': [
+  {q:'Evaluate: −5 + 8',choices:['−13','−3','3','13','5'],correct:2,exp:'|8| > |−5|, so result is positive: 8 − 5 = 3.'},
+  {q:'Evaluate: −3 − 7',choices:['−10','−4','4','10','−11'],correct:0,exp:'−3 − 7 = −3 + (−7) = −10.'},
+  {q:'Evaluate: −12 + (−5)',choices:['−17','−7','7','17','−5'],correct:0,exp:'Both negative, add magnitudes: −(12 + 5) = −17.'},
+  {q:'Evaluate: 1/2 − 3/4',choices:['−1/2','−1/4','0','1/4','1/2'],correct:1,exp:'Common denominator: 2/4 − 3/4 = −1/4.'},
+  {q:'Evaluate: −0.25 + 0.75',choices:['−1.00','−0.50','0.50','1.00','0.25'],correct:2,exp:'0.75 − 0.25 = 0.50.'},
+  {q:'Evaluate: 2.5 − (−1.5)',choices:['−4','−1','1','2','4'],correct:4,exp:'Subtracting a negative adds: 2.5 + 1.5 = 4.'},
+  {q:'Evaluate: −7 + 4 − 3',choices:['−14','−10','−6','−4','6'],correct:2,exp:'−7 + 4 = −3; then −3 − 3 = −6.'},
+  {q:'Evaluate: −2 1/3 + 1 1/2',choices:['−5/6','−1/6','1/6','5/6','7/6'],correct:0,exp:'−14/6 + 9/6 = −5/6.'},
+  {q:'Which is the greatest?',choices:['−12','−10','−8','−5','−2'],correct:4,exp:'On the number line, −2 is farthest right, so greatest.'},
+  {q:'Evaluate: −1/3 + 1/4',choices:['−7/12','−1/12','1/12','7/12','−1/7'],correct:1,exp:'Common denom 12: −4/12 + 3/12 = −1/12.'}
+],
+'mult-div-rational': [
+  {q:'Evaluate: −5 × 6',choices:['−30','−11','1','11','30'],correct:0,exp:'Different signs give a negative product: −30.'},
+  {q:'Evaluate: −8 × −7',choices:['−56','−1','1','15','56'],correct:4,exp:'Same signs give positive: 8·7 = 56.'},
+  {q:'Evaluate: −36 ÷ 4',choices:['−9','−8','−7','8','9'],correct:0,exp:'Different signs → negative: 36/4 = 9, so −9.'},
+  {q:'Evaluate: −24 ÷ −6',choices:['−4','−2','2','4','6'],correct:3,exp:'Same signs → positive: 24/6 = 4.'},
+  {q:'Evaluate: 1/2 × 2/3',choices:['1/6','2/6','1/3','2/3','3/5'],correct:2,exp:'(1·2)/(2·3) = 2/6 = 1/3.'},
+  {q:'Evaluate: −2/5 × 10',choices:['−4','−2','2','4','−20/5'],correct:0,exp:'−2/5 · 10 = −20/5 = −4.'},
+  {q:'Evaluate: 3/4 ÷ 1/2',choices:['3/8','2/3','3/4','1','3/2'],correct:4,exp:'3/4 · 2/1 = 6/4 = 3/2.'},
+  {q:'Evaluate: −1.5 × 4',choices:['−8','−6','−5.5','2.5','6'],correct:1,exp:'−1.5 · 4 = −6.'},
+  {q:'Evaluate: (−12 ÷ 3) × (−2)',choices:['−8','−4','4','8','24'],correct:3,exp:'−12/3 = −4; (−4)(−2) = 8.'},
+  {q:'Evaluate: (−2)³',choices:['−8','−6','−2','6','8'],correct:0,exp:'(−2)(−2)(−2) = 4 · (−2) = −8.'}
+],
+'alg-expressions': [
+  {q:'Simplify: 3x + 5 + 2x − 3',choices:['5x + 2','5x − 8','x + 2','5x + 8','6x + 2'],correct:0,exp:'Combine like terms: (3x+2x) + (5−3) = 5x + 2.'},
+  {q:'Simplify: 4(x + 3)',choices:['4x + 3','4x + 7','x + 12','4x + 12','4x − 12'],correct:3,exp:'Distribute: 4·x + 4·3 = 4x + 12.'},
+  {q:'Simplify: 7y − 3 − 2y + 8',choices:['5y + 5','5y − 11','9y + 5','9y − 11','5y − 5'],correct:0,exp:'(7y − 2y) + (−3 + 8) = 5y + 5.'},
+  {q:'Simplify: −2(3x − 5)',choices:['−6x − 10','−6x + 10','6x − 10','6x + 10','−6x + 5'],correct:1,exp:'−2·3x + (−2)(−5) = −6x + 10.'},
+  {q:'Evaluate 2x² + 3 at x = 4',choices:['11','19','35','67','131'],correct:2,exp:'2·16 + 3 = 32 + 3 = 35.'},
+  {q:'Simplify: 3(x + 2) − (x − 4)',choices:['2x + 2','2x + 10','2x − 2','4x + 10','4x − 2'],correct:1,exp:'3x + 6 − x + 4 = 2x + 10.'},
+  {q:'Which is equivalent to 6x + 12?',choices:['3(2x + 4)','6(x + 2)','2(3x + 4)','12x + 6','both A and B'],correct:4,exp:'3(2x+4)=6x+12 and 6(x+2)=6x+12.'},
+  {q:'If x = 5, find x² − 2x.',choices:['5','10','15','20','25'],correct:2,exp:'25 − 10 = 15.'},
+  {q:'Simplify: −(y − 3) + 2y',choices:['y − 3','y + 3','3y − 3','3y + 3','−y + 3'],correct:1,exp:'−y + 3 + 2y = y + 3.'},
+  {q:'Combine: 5a + 3b − 2a + b',choices:['3a + 4b','3a + 2b','7a + 4b','3a + 3b','8ab'],correct:0,exp:'(5a−2a) + (3b+b) = 3a + 4b.'}
+],
+'triangles': [
+  {q:'The interior angles of any triangle sum to __.',choices:['90°','180°','270°','360°','540°'],correct:1,exp:'Fundamental fact of triangle geometry.'},
+  {q:'An isosceles triangle has two base angles of 50° each. What is the vertex angle?',choices:['50°','60°','70°','80°','100°'],correct:3,exp:'180 − 50 − 50 = 80°.'},
+  {q:'Each angle of an equilateral triangle measures __.',choices:['45°','50°','60°','75°','90°'],correct:2,exp:'180/3 = 60° for all three.'},
+  {q:'A right triangle has one acute angle of 35°. What is the other acute angle?',choices:['35°','45°','55°','65°','90°'],correct:2,exp:'90 − 35 = 55°.'},
+  {q:'A triangle with sides 3, 4, 5 is __.',choices:['acute','right','obtuse','equilateral','isosceles'],correct:1,exp:'3² + 4² = 5², so it satisfies the Pythagorean theorem — right triangle.'},
+  {q:'Which set of side lengths does NOT form a valid triangle?',choices:['3, 4, 5','5, 12, 13','6, 8, 10','7, 7, 7','5, 7, 15'],correct:4,exp:'Triangle inequality: 5 + 7 = 12 < 15, so it fails.'},
+  {q:'The exterior angle of a triangle equals the sum of the two non-adjacent interior angles. If those interiors are 40° and 60°, the exterior angle is __.',choices:['80°','90°','100°','120°','140°'],correct:2,exp:'40 + 60 = 100°.'},
+  {q:'A triangle with all three sides different lengths is called __.',choices:['equilateral','isosceles','scalene','right','obtuse'],correct:2,exp:'Scalene = no two sides equal.'},
+  {q:'An angle bisector divides an angle into __.',choices:['3 equal parts','2 equal parts','4 equal parts','a right angle','a straight angle'],correct:1,exp:'Bisector = cuts in two equal halves.'},
+  {q:'In a 30-60-90 right triangle, the shortest side is opposite the __.',choices:['30° angle','60° angle','90° angle','longest side','hypotenuse'],correct:0,exp:'Shortest side always faces the smallest angle.'}
+],
+'area-polygons': [
+  {q:'What is the area of a rectangle with length 8 and width 5?',choices:['13','26','35','40','80'],correct:3,exp:'A = lw = 8·5 = 40.'},
+  {q:'A triangle has base 10 and height 6. What is its area?',choices:['16','30','36','48','60'],correct:1,exp:'A = ½bh = ½·10·6 = 30.'},
+  {q:'A parallelogram has base 12 and height 5. What is its area?',choices:['17','30','34','60','120'],correct:3,exp:'A = bh = 60.'},
+  {q:'A trapezoid has parallel bases 6 and 10 and height 4. What is its area?',choices:['16','24','32','40','60'],correct:2,exp:'A = ½(b₁ + b₂)h = ½(16)(4) = 32.'},
+  {q:'What is the area of a square with side 9?',choices:['18','36','72','81','90'],correct:3,exp:'A = s² = 81.'},
+  {q:'A rectangle has length 12 and width 4. What is its perimeter?',choices:['16','24','32','48','52'],correct:2,exp:'P = 2(l + w) = 2·16 = 32.'},
+  {q:'What is the area of a right triangle with legs 3 and 4?',choices:['5','6','7','10','12'],correct:1,exp:'A = ½·3·4 = 6.'},
+  {q:'A rectangle 6 × 4 has a 2 × 2 square cut out of a corner. Find the remaining area.',choices:['16','18','20','22','24'],correct:2,exp:'24 − 4 = 20.'},
+  {q:'Which formula gives the area of a triangle?',choices:['b + h','2bh','b · h','½ · b · h','(b + h) / 2'],correct:3,exp:'A = ½ · base · height.'},
+  {q:'A rectangle has area 48 and length 8. What is its width?',choices:['5','6','7','8','12'],correct:1,exp:'w = A / l = 48/8 = 6.'}
+],
+'surface-area-volume': [
+  {q:'What is the volume of a cube with side 4?',choices:['16','32','48','64','96'],correct:3,exp:'V = s³ = 64.'},
+  {q:'What is the surface area of a cube with side 4?',choices:['16','48','64','96','128'],correct:3,exp:'SA = 6s² = 6·16 = 96.'},
+  {q:'What is the volume of a rectangular prism 2 × 3 × 5?',choices:['10','16','20','30','60'],correct:3,exp:'V = 2·3·5 = 30.'},
+  {q:'What is the surface area of a rectangular prism 2 × 3 × 5?',choices:['30','40','52','62','80'],correct:3,exp:'SA = 2(6 + 10 + 15) = 2·31 = 62.'},
+  {q:'A triangular prism has a triangular base of area 12 and length 8. What is its volume?',choices:['20','48','80','96','120'],correct:3,exp:'V = base area × length = 12·8 = 96.'},
+  {q:'A cube has surface area 54. What is its side length?',choices:['2','3','4','5','6'],correct:1,exp:'6s² = 54 → s² = 9 → s = 3.'},
+  {q:'What is the volume of a cylinder with radius 2 and height 5?',choices:['10π','20π','40π','50π','100π'],correct:1,exp:'V = πr²h = π·4·5 = 20π.'},
+  {q:'A pyramid has base area 9 and height 10. What is its volume?',choices:['15','30','45','60','90'],correct:1,exp:'V = ⅓ · base · height = ⅓·90 = 30.'},
+  {q:'The volume of a prism equals __.',choices:['side³','base area × height','½ · b · h','πr²h','⅓ · base × height'],correct:1,exp:'V = base area × height for any prism.'},
+  {q:'If the side length of a cube doubles, its surface area becomes __ times the original.',choices:['2','3','4','6','8'],correct:2,exp:'SA scales with s²; doubling s → SA × 4.'}
+],
+'angles': [
+  {q:'Two angles are complementary. Their measures sum to __.',choices:['45°','90°','120°','180°','360°'],correct:1,exp:'Complementary → 90°.'},
+  {q:'Two angles are supplementary. Their measures sum to __.',choices:['45°','90°','120°','180°','360°'],correct:3,exp:'Supplementary → 180°.'},
+  {q:'Angle A measures 35°. What is its complement?',choices:['35°','45°','55°','65°','145°'],correct:2,exp:'90 − 35 = 55°.'},
+  {q:'Angle B measures 110°. What is its supplement?',choices:['20°','35°','55°','70°','80°'],correct:3,exp:'180 − 110 = 70°.'},
+  {q:'Vertical angles (opposite angles formed by two intersecting lines) are always __.',choices:['complementary','supplementary','congruent','right angles','acute'],correct:2,exp:'Vertical angles are equal (congruent).'},
+  {q:'Two supplementary angles are equal. Each measures __.',choices:['45°','60°','90°','120°','180°'],correct:2,exp:'2x = 180 → x = 90°.'},
+  {q:'A straight angle measures __.',choices:['45°','90°','180°','270°','360°'],correct:2,exp:'A straight line = 180°.'},
+  {q:'When parallel lines are cut by a transversal, alternate interior angles are __.',choices:['complementary','supplementary','equal','right angles','opposite'],correct:2,exp:'They are congruent (equal).'},
+  {q:'Two complementary angles measure 3x and 2x. What is x?',choices:['12','18','30','45','90'],correct:1,exp:'3x + 2x = 90 → 5x = 90 → x = 18.'},
+  {q:'A right angle measures __.',choices:['30°','45°','60°','90°','180°'],correct:3,exp:'A right angle = 90°.'}
+],
+'inequalities': [
+  {q:'Solve for x: x + 3 > 7',choices:['x > 4','x > 10','x < 4','x < 10','x = 4'],correct:0,exp:'Subtract 3: x > 4.'},
+  {q:'Solve for x: 2x − 5 ≤ 9',choices:['x ≤ 2','x ≤ 4','x ≤ 7','x ≥ 7','x ≥ 2'],correct:2,exp:'2x ≤ 14 → x ≤ 7.'},
+  {q:'Solve for x: −3x < 12',choices:['x > −4','x < −4','x > 4','x < 4','x = −4'],correct:0,exp:'Divide by −3 and flip the inequality: x > −4.'},
+  {q:'Which graph represents x ≥ 5?',choices:['Open circle at 5, arrow left','Open circle at 5, arrow right','Closed circle at 5, arrow left','Closed circle at 5, arrow right','Closed circle at 5, no arrow'],correct:3,exp:'≥ uses a closed circle; larger values are to the right.'},
+  {q:'Solve for x: 3(x + 1) > 12',choices:['x > 3','x > 4','x > 5','x < 3','x < 4'],correct:0,exp:'3x + 3 > 12 → 3x > 9 → x > 3.'},
+  {q:'If x is a positive integer and x < 5, list all possible values.',choices:['1, 2, 3','1, 2, 3, 4','0, 1, 2, 3, 4','1, 2, 3, 4, 5','2, 3, 4'],correct:1,exp:'Positive integers less than 5: 1, 2, 3, 4.'},
+  {q:'Solve for x: x/2 + 3 ≥ 5',choices:['x ≥ 1','x ≥ 4','x ≥ 8','x ≤ 4','x ≤ 8'],correct:1,exp:'x/2 ≥ 2 → x ≥ 4.'},
+  {q:'Which interval represents −2 < x ≤ 5?',choices:['Both endpoints open','Both endpoints closed','Open at −2, closed at 5','Closed at −2, open at 5','x = −2 only'],correct:2,exp:'< is open; ≤ is closed.'},
+  {q:'Solve for x: 5 − 2x ≥ 1',choices:['x ≤ 2','x ≥ 2','x ≤ −2','x ≥ −2','x ≤ 3'],correct:0,exp:'−2x ≥ −4 → x ≤ 2 (flip when dividing by negative).'},
+  {q:'If x + 5 ≥ 2, what is the smallest possible integer value of x?',choices:['−7','−5','−3','0','2'],correct:2,exp:'x ≥ −3, so the smallest integer is −3.'}
+],
+'statistics': [
+  {q:'Find the mean of 4, 8, 12, 16.',choices:['4','8','10','12','16'],correct:2,exp:'(4+8+12+16)/4 = 40/4 = 10.'},
+  {q:'Find the median of 3, 7, 9, 11, 15.',choices:['3','7','9','11','15'],correct:2,exp:'Middle value in order = 9.'},
+  {q:'Find the mode of 2, 5, 5, 8, 8, 8, 10.',choices:['2','5','8','10','no mode'],correct:2,exp:'8 appears most often.'},
+  {q:'Find the range of 4, 8, 12, 16, 20.',choices:['4','8','12','16','20'],correct:3,exp:'Max − min = 20 − 4 = 16.'},
+  {q:'If the mean of four numbers is 15, what is their sum?',choices:['15','30','45','60','75'],correct:3,exp:'Sum = mean × count = 15 · 4 = 60.'},
+  {q:'A data set is {5, 6, 7}. Adding an outlier 100 changes which statistic most?',choices:['Mean','Median','Mode','Range','All change equally'],correct:0,exp:'Mean is highly sensitive to outliers.'},
+  {q:'Find the median of 2, 4, 6, 8.',choices:['4','4.5','5','6','7'],correct:2,exp:'Average of two middle values: (4+6)/2 = 5.'},
+  {q:'The mean of five numbers is 20. What is their sum?',choices:['20','40','80','100','120'],correct:3,exp:'20 · 5 = 100.'},
+  {q:'If the sum of six numbers is 42, what is the mean?',choices:['6','7','8','9','12'],correct:1,exp:'42/6 = 7.'},
+  {q:'Which measure of center is LEAST affected by outliers?',choices:['Mean','Median','Mode','Range','Sum'],correct:1,exp:'Median depends on middle position, not extreme values.'}
+],
+'scale-drawings': [
+  {q:'A drawing has scale 1 : 100. If an actual length is 500 cm, what is its length on the drawing?',choices:['2 cm','5 cm','10 cm','50 cm','500 cm'],correct:1,exp:'500/100 = 5 cm.'},
+  {q:'The scale is 1 cm = 5 m. If a wall is 8 cm on the drawing, its actual length is __.',choices:['13 m','20 m','40 m','80 m','160 m'],correct:2,exp:'8 · 5 = 40 m.'},
+  {q:'A model car has scale 1 : 24. The real car is 4.8 m long. The model is __.',choices:['4.8 cm','12 cm','20 cm','24 cm','48 cm'],correct:2,exp:'4.8 m / 24 = 0.2 m = 20 cm.'},
+  {q:'A drawing scale is 1 in = 10 ft. A wall shown as 3.5 in is actually __.',choices:['13.5 ft','30 ft','35 ft','40 ft','350 ft'],correct:2,exp:'3.5 · 10 = 35 ft.'},
+  {q:'A rectangle is 3 cm × 4 cm at scale 1 : 50. Its actual dimensions are __.',choices:['0.6 m × 0.8 m','1.5 m × 2 m','3 m × 4 m','30 m × 40 m','150 cm × 200 cm'],correct:1,exp:'3 · 50 = 150 cm = 1.5 m; 4 · 50 = 200 cm = 2 m.'},
+  {q:'A map scale is 1 inch = 25 miles. Two cities 4.2 inches apart are actually __.',choices:['25 miles','63 miles','84 miles','105 miles','625 miles'],correct:3,exp:'4.2 · 25 = 105 miles.'},
+  {q:'A blueprint is at scale 1 : 60. A wall 24 m tall shows on the blueprint as __.',choices:['20 cm','24 cm','40 cm','60 cm','400 cm'],correct:2,exp:'24 m = 2400 cm; 2400/60 = 40 cm.'},
+  {q:'An enlargement uses scale 1 : 5. An original figure of 3 cm becomes __.',choices:['3/5 cm','5 cm','8 cm','15 cm','30 cm'],correct:3,exp:'3 · 5 = 15 cm.'},
+  {q:'If an actual size is 200 units and its scale drawing shows 5 units, the scale is __.',choices:['1 : 5','1 : 20','1 : 40','1 : 200','40 : 1'],correct:2,exp:'5/200 = 1/40.'},
+  {q:'A scale factor of 2 changes the area by a factor of __.',choices:['1','2','3','4','8'],correct:3,exp:'Area scales with the square of the linear scale: 2² = 4.'}
+],
+'word-problems': [
+  {q:'Sara has $12 and buys 3 books at $2.50 each. How much money does she have left?',choices:['$3.50','$4.00','$4.50','$5.00','$7.50'],correct:2,exp:'12 − 3·2.50 = 12 − 7.50 = 4.50.'},
+  {q:'If x + 4 = 15, find x.',choices:['9','10','11','12','19'],correct:2,exp:'x = 15 − 4 = 11.'},
+  {q:'Marco walks 3/4 of a mile in 15 minutes. What is his speed in miles per hour?',choices:['2 mph','2.5 mph','3 mph','3.5 mph','4 mph'],correct:2,exp:'15 min = 0.25 hr; 0.75 / 0.25 = 3 mph.'},
+  {q:'Five friends split $85 equally. How much does each get?',choices:['$15','$16','$17','$18','$20'],correct:2,exp:'85 / 5 = 17.'},
+  {q:'A restaurant bill is $30. Sara leaves a 20% tip. How much is the tip?',choices:['$3','$5','$6','$7.50','$10'],correct:2,exp:'0.20 · 30 = 6.'},
+  {q:'A class of 30 students is 40% girls. How many girls are in the class?',choices:['10','12','14','16','18'],correct:1,exp:'0.40 · 30 = 12.'},
+  {q:'A rectangle is 8 cm by 5 cm. What is its perimeter?',choices:['13 cm','24 cm','26 cm','40 cm','50 cm'],correct:2,exp:'P = 2(8 + 5) = 26.'},
+  {q:'Find the sum of the three consecutive integers 25, 26, 27.',choices:['52','75','76','78','80'],correct:3,exp:'25 + 26 + 27 = 78.'},
+  {q:'An item costs $80. With 15% sales tax, the total is __.',choices:['$83','$88','$90','$92','$95'],correct:3,exp:'80 · 1.15 = 92.'},
+  {q:'Twice a number plus 8 equals 22. Find the number.',choices:['5','6','7','8','10'],correct:2,exp:'2x + 8 = 22 → 2x = 14 → x = 7.'}
+]
+};
+
+
+// ==================== SSAT Prep Runner ====================
+let SSAT_STATE = { unitId: null, qIdx: 0, score: 0, answered: false, selected: -1 };
+
+function openSSAT(unitId) {
+  const bank = SSAT_BANK[unitId];
+  if (!bank || !bank.length) return;
+  SSAT_STATE = { unitId, qIdx: 0, score: 0, answered: false, selected: -1 };
+  const unit = UNITS.find(u => u.id === unitId);
+  document.getElementById('ssat-title').textContent = '🎯 SSAT Prep · ' + (unit ? unit.title : unitId);
+  document.getElementById('ssat-meta').textContent = 'Multiple choice · 5 answer options · SSAT Upper Level style';
+  document.getElementById('ssat-modal').classList.add('active');
+  renderSSATQuestion();
+}
+
+function closeSSAT() {
+  document.getElementById('ssat-modal').classList.remove('active');
+}
+
+function renderSSATQuestion() {
+  const bank = SSAT_BANK[SSAT_STATE.unitId];
+  const idx = SSAT_STATE.qIdx;
+  if (idx >= bank.length) { renderSSATResult(); return; }
+  const q = bank[idx];
+  SSAT_STATE.answered = false; SSAT_STATE.selected = -1;
+  const letters = ['A','B','C','D','E'];
+  let choicesHTML = '';
+  q.choices.forEach((c, i) => {
+    choicesHTML += `<button class="ssat-choice" data-idx="${i}" onclick="ssatSelect(${i})"><span class="letter">${letters[i]}</span>${c}</button>`;
+  });
+  document.getElementById('ssat-body').innerHTML = `
+    <div class="ssat-progress">Question ${idx+1} of ${bank.length}</div>
+    <div class="ssat-question">${q.q}</div>
+    <div id="ssat-choices">${choicesHTML}</div>
+    <div id="ssat-feedback"></div>
+    <div class="ssat-actions">
+      <button class="ssat-btn skip" onclick="ssatSkip()">Skip →</button>
+      <button class="ssat-btn" id="ssat-submit" onclick="ssatSubmit()" disabled>Submit</button>
+    </div>`;
+}
+
+function ssatSelect(i) {
+  if (SSAT_STATE.answered) return;
+  SSAT_STATE.selected = i;
+  document.querySelectorAll('#ssat-choices .ssat-choice').forEach((c, j) => {
+    c.classList.toggle('selected', j === i);
+  });
+  document.getElementById('ssat-submit').disabled = false;
+}
+
+function ssatSubmit() {
+  if (SSAT_STATE.answered) { ssatNext(); return; }
+  const bank = SSAT_BANK[SSAT_STATE.unitId];
+  const q = bank[SSAT_STATE.qIdx];
+  const chosen = SSAT_STATE.selected;
+  const correct = q.correct;
+  SSAT_STATE.answered = true;
+  if (chosen === correct) SSAT_STATE.score++;
+  document.querySelectorAll('#ssat-choices .ssat-choice').forEach((c, j) => {
+    c.disabled = true;
+    if (j === correct) c.classList.add('correct');
+    else if (j === chosen) c.classList.add('wrong');
+  });
+  const isRight = chosen === correct;
+  document.getElementById('ssat-feedback').innerHTML = `
+    <div class="ssat-feedback ${isRight ? 'ok' : 'bad'}">
+      <strong>${isRight ? '✓ Correct!' : '✗ Not quite.'}</strong> ${q.exp || ''}
+    </div>`;
+  const btn = document.getElementById('ssat-submit');
+  btn.textContent = (SSAT_STATE.qIdx + 1 < bank.length) ? 'Next Question →' : 'See Results →';
+  btn.disabled = false;
+  btn.onclick = ssatNext;
+}
+
+function ssatSkip() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
+function ssatNext() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
+
+function renderSSATResult() {
+  const bank = SSAT_BANK[SSAT_STATE.unitId];
+  const pct = Math.round((SSAT_STATE.score / bank.length) * 100);
+  let msg = 'Keep practicing!';
+  if (pct === 100) msg = '🌟 Perfect! Ready for the SSAT.';
+  else if (pct >= 80) msg = '💪 Strong work — review your misses.';
+  else if (pct >= 60) msg = '👍 Solid start — practice this topic more.';
+  else msg = '📚 Review the lesson and try again.';
+  document.getElementById('ssat-body').innerHTML = `
+    <div class="ssat-result">
+      <div>Your SSAT Prep score:</div>
+      <div class="score">${SSAT_STATE.score} / ${bank.length}</div>
+      <div class="msg"><strong>${pct}%</strong> — ${msg}</div>
+      <div class="ssat-actions" style="justify-content:center;gap:10px">
+        <button class="ssat-btn skip" onclick="closeSSAT()">Close</button>
+        <button class="ssat-btn" onclick="openSSAT(SSAT_STATE.unitId)">Try Again ↻</button>
+      </div>
+    </div>`;
+}
+
 </script>
+
+<!-- SSAT Prep Modal -->
+<div id="ssat-modal" class="ssat-modal" onclick="if(event.target===this)closeSSAT()">
+  <div class="ssat-panel">
+    <div class="ssat-header">
+      <div>
+        <h2 id="ssat-title">🎯 SSAT Prep</h2>
+        <div class="ssat-meta" id="ssat-meta">Multiple choice · 5 answer options</div>
+      </div>
+      <button class="ssat-close" onclick="closeSSAT()">×</button>
+    </div>
+    <div id="ssat-body"></div>
+  </div>
+</div>
+
 </body>
 </html>
