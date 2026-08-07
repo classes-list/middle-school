@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hawaiian Workbook &mdash; Language Lab &middot; Dr. Freitas</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn, .print-btn {
+  position: fixed; top: 20px; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-btn { left: 20px; background: #253a77; color: #fff; }
+.back-btn:hover { background:#1a2a4a; transform:translateX(-2px); }
+.print-btn { right: 20px; background: #0891b2; color: #fff; }
+.print-btn:hover { background:#0e7490; }
+.header {
+  text-align:center; margin-bottom: 26px; padding-bottom: 20px;
+  border-bottom: 3px solid #0891b2;
+}
+.flag { font-size: 4rem; line-height:1; }
+.header h1 { color:#253a77; font-size: 2rem; font-weight: 800; margin: 6px 0; }
+.header .native { color:#0e7490; font-style: italic; font-weight: 700; font-size: 1.05rem; }
+.header .greeting { margin-top: 8px; font-size: 1.1rem; color:#1a2a4a; font-weight: 700; }
+.duo-cta {
+  display: inline-block; background: linear-gradient(135deg, #58cc02 0%, #4bad00 100%);
+  color: #fff; text-decoration: none;
+  padding: 10px 22px; border-radius: 999px;
+  font-weight: 800; font-size: 0.92rem; margin-top: 14px;
+  box-shadow: 0 3px 10px rgba(88,204,2,0.35);
+  transition: all 0.2s;
+}
+.duo-cta:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(88,204,2,0.45); }
+
+.toc {
+  background: #fff; border-radius: 10px;
+  padding: 14px 20px; margin-bottom: 22px;
+  box-shadow: 0 2px 8px rgba(37,58,119,0.08);
+  border-left: 4px solid #FFD100;
+}
+.toc h3 { color:#253a77; font-size: 1rem; margin-bottom: 6px; }
+.toc a {
+  display: inline-block; margin: 3px 8px 3px 0;
+  padding: 4px 10px; background: #ecfeff; color: #0e7490;
+  border-radius: 999px; text-decoration: none;
+  font-size: 0.82rem; font-weight: 700;
+  border: 1px solid #0891b2;
+}
+.toc a:hover { background: #0891b2; color: #fff; }
+
+.culture-box {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 5px solid #FFD100;
+  padding: 18px 22px; border-radius: 10px;
+  margin-bottom: 26px;
+}
+.culture-box h3 { color:#1a2a4a; font-size: 1.05rem; margin-bottom: 8px; }
+.culture-box ul { margin:0; padding-left: 22px; }
+.culture-box li { font-size: 0.95rem; color: #1a2a4a; line-height: 1.55; padding: 3px 0; }
+
+.unit { margin-bottom: 40px; }
+.unit-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px; padding: 12px 18px;
+  background: linear-gradient(135deg, #253a77 0%, #1a2a4a 100%);
+  border-radius: 10px; color:#fff;
+  box-shadow: 0 4px 14px rgba(37,58,119,0.22);
+}
+.unit-header .grade-badge {
+  background: #FFD100; color: #1a2a4a;
+  width: 62px; height: 44px; border-radius: 8px;
+  display: flex; align-items:center; justify-content:center;
+  font-weight: 800; font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.unit-header .u-title { font-size: 1.15rem; font-weight: 800; }
+.unit-header .u-title .u-sub {
+  display: block; font-size: 0.78rem; font-weight: 500;
+  color: #cffafe; font-style: italic; margin-top: 2px;
+}
+
+.section {
+  background: #fff; border-radius: 10px;
+  padding: 18px 22px; margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #0891b2;
+}
+.section h4 {
+  color: #253a77; font-size: 1rem; font-weight: 800;
+  margin-bottom: 10px; padding-bottom: 4px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 0.92rem;
+}
+.vocab-table td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 7px 10px;
+  color: #2d3748; vertical-align: top;
+}
+.vocab-table td:first-child {
+  font-weight: 700; color: #0e7490; width: 45%;
+}
+.vocab-table tr:hover td { background: #ecfeff; }
+
+.grammar-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+  margin: 14px 0;
+}
+.grammar-box h5 { color:#0e7490; font-size:0.98rem; margin-bottom: 6px; }
+.grammar-box p { font-size: 0.92rem; color: #1a2a4a; line-height: 1.6; }
+
+.practice {
+  background: #ecfeff; border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+  margin-top: 14px;
+}
+.practice h5 {
+  color: #0e7490; font-size: 0.98rem; margin-bottom: 6px;
+}
+.practice ol { margin: 6px 0 0 22px; }
+.practice li { font-size: 0.92rem; color: #1a2a4a; padding: 3px 0; line-height: 1.5; }
+
+/* Quiz */
+.quiz {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-top: 20px;
+}
+.quiz-header {
+  display: flex; align-items:center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.quiz-header h5 { color:#1a2a4a; font-size: 1.05rem; font-weight: 800; }
+.quiz-score {
+  background: #253a77; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font-size: 0.82rem; font-weight: 800;
+}
+.q-item {
+  background: #fff; border-radius: 8px;
+  padding: 12px 14px; margin: 10px 0;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+}
+.q-num { color:#0e7490; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.q-text { color:#1a2a4a; font-size: 0.98rem; font-weight: 700; margin: 4px 0 10px; }
+.q-choices { display: grid; gap: 6px; }
+.q-choice {
+  padding: 8px 12px; border-radius: 6px;
+  background: #f8fafc; border: 2px solid #e2e8f0;
+  cursor: pointer; font-size: 0.92rem;
+  transition: all 0.15s;
+  text-align: left;
+}
+.q-choice:hover { background: #ecfeff; border-color: #0891b2; }
+.q-choice.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700; }
+.q-choice.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-choice[disabled] { cursor: default; opacity: 0.85; }
+.q-feedback { margin-top: 6px; font-size: 0.82rem; color: #0e7490; font-weight: 700; }
+.quiz-reset {
+  display: inline-block; margin-top: 8px;
+  background: #253a77; color:#fff; text-decoration:none;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none;
+}
+.quiz-reset:hover { background: #1a2a4a; }
+
+footer {
+  margin-top: 30px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 0.95rem;
+}
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn, .duo-cta, .quiz-reset { display:none; }
+  .section, .unit-header, .quiz { box-shadow:none; break-inside: avoid; }
+  .unit { break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.5rem; }
+  .vocab-table td:first-child { width: 50%; }
+}
+</style>
+</head>
+<body>
+<a href="language-lab-hawaiian.html" class="back-btn">&larr; Back to Hawaiian</a>
+<a href="javascript:window.print()" class="print-btn">🖨️ Print</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="flag">🌺</div>
+    <h1>Hawaiian Workbook</h1>
+    <div class="native">ʻŌlelo Hawaiʻi</div>
+    <div class="greeting">Aloha &middot; welcome to your Hawaiian workbook!</div>
+  </div>
+
+  <div class="toc">
+    <h3>Jump to:</h3>
+    <a href="#culture">Culture</a>
+    <a href="#g6">Grade 6 &middot; Level 1</a>
+    <a href="#g7">Grade 7 &middot; Level 2</a>
+    <a href="#g8">Grade 8 &middot; Level 3</a>
+    <a href="#q6">Quiz 1</a>
+    <a href="#q7">Quiz 2</a>
+    <a href="#q8">Quiz 3</a>
+  </div>
+
+  <div class="culture-box" id="culture">
+    <h3>🌏 Culture Corner</h3>
+    <ul><li>Hawaiian (ʻŌlelo Hawaiʻi) is one of two official languages of the State of Hawaiʻi.</li><li>The Hawaiian alphabet has only 13 letters: A, E, I, O, U, H, K, L, M, N, P, W, and the ʻokina (glottal stop).</li><li>The kahakō (macron) over a vowel means to hold the sound longer -- listen for the difference between makai and mākai.</li><li>'Aloha' is more than 'hello' -- it means love, breath of life, and mutual regard.</li><li>Immersion schools (Papahana Kaiapuni) have brought Hawaiian back from the edge of extinction since the 1980s.</li></ul>
+  </div>
+
+  <div class="unit"><div class="unit-header" id="g6"><div class="grade-badge">Grade 6</div><div class="u-title">Level 1 -- Introduction<span class="u-sub">Level 1 &mdash; Introduction</span></div></div><div class="section"><h4>Greetings &amp; Courtesy</h4><table class="vocab-table"><tbody><tr><td>Aloha</td><td>Hello / Love / Goodbye</td></tr><tr><td>Aloha kakahiaka</td><td>Good morning</td></tr><tr><td>Aloha ʻauinalā</td><td>Good afternoon</td></tr><tr><td>Aloha ahiahi</td><td>Good evening</td></tr><tr><td>A hui hou</td><td>Until we meet again</td></tr><tr><td>Pehea ʻoe?</td><td>How are you?</td></tr><tr><td>Maikaʻi</td><td>Good / Fine</td></tr><tr><td>Maikaʻi nō</td><td>Very well</td></tr><tr><td>E ʻoluʻolu</td><td>Please</td></tr><tr><td>Mahalo</td><td>Thank you</td></tr><tr><td>Mahalo nui loa</td><td>Thank you very much</td></tr><tr><td>ʻAʻole pilikia</td><td>You're welcome / No problem</td></tr><tr><td>E kala mai</td><td>Excuse me / Sorry</td></tr><tr><td>ʻAe</td><td>Yes</td></tr><tr><td>ʻAʻole</td><td>No</td></tr></tbody></table></div><div class="section"><h4>Introducing Yourself</h4><table class="vocab-table"><tbody><tr><td>ʻO wai kou inoa?</td><td>What is your name?</td></tr><tr><td>ʻO ... koʻu inoa</td><td>My name is ...</td></tr><tr><td>No hea mai ʻoe?</td><td>Where are you from?</td></tr><tr><td>No ... mai au</td><td>I am from ...</td></tr><tr><td>ʻEhia ou makahiki?</td><td>How old are you?</td></tr><tr><td>He 12 oʻu makahiki</td><td>I am 12 years old</td></tr></tbody></table></div><div class="section"><h4>Numbers 1-20</h4><table class="vocab-table"><tbody><tr><td>ʻekahi</td><td>1</td></tr><tr><td>ʻelua</td><td>2</td></tr><tr><td>ʻekolu</td><td>3</td></tr><tr><td>ʻehā</td><td>4</td></tr><tr><td>ʻelima</td><td>5</td></tr><tr><td>ʻeono</td><td>6</td></tr><tr><td>ʻehiku</td><td>7</td></tr><tr><td>ʻewalu</td><td>8</td></tr><tr><td>ʻeiwa</td><td>9</td></tr><tr><td>ʻumi</td><td>10</td></tr><tr><td>ʻumikūmākahi</td><td>11</td></tr><tr><td>ʻumikūmālua</td><td>12</td></tr><tr><td>ʻumikūmākolu</td><td>13</td></tr><tr><td>ʻumikūmāhā</td><td>14</td></tr><tr><td>ʻumikūmālima</td><td>15</td></tr><tr><td>ʻumikūmāono</td><td>16</td></tr><tr><td>ʻumikūmāhiku</td><td>17</td></tr><tr><td>ʻumikūmāwalu</td><td>18</td></tr><tr><td>ʻumikūmāiwa</td><td>19</td></tr><tr><td>iwakālua</td><td>20</td></tr></tbody></table></div><div class="section"><h4>Colors</h4><table class="vocab-table"><tbody><tr><td>ʻulaʻula</td><td>red</td></tr><tr><td>polū</td><td>blue</td></tr><tr><td>ʻōmaʻomaʻo</td><td>green</td></tr><tr><td>melemele</td><td>yellow</td></tr><tr><td>keʻokeʻo</td><td>white</td></tr><tr><td>ʻeleʻele</td><td>black</td></tr><tr><td>ʻalani</td><td>orange</td></tr><tr><td>poni</td><td>purple</td></tr><tr><td>ʻākala</td><td>pink</td></tr><tr><td>hinahina</td><td>gray</td></tr><tr><td>palaunu</td><td>brown</td></tr></tbody></table></div><div class="section"><h4>Days of the Week</h4><table class="vocab-table"><tbody><tr><td>Pōʻakahi</td><td>Monday</td></tr><tr><td>Pōʻalua</td><td>Tuesday</td></tr><tr><td>Pōʻakolu</td><td>Wednesday</td></tr><tr><td>Pōʻahā</td><td>Thursday</td></tr><tr><td>Pōʻalima</td><td>Friday</td></tr><tr><td>Pōʻaono</td><td>Saturday</td></tr><tr><td>Lāpule</td><td>Sunday</td></tr></tbody></table></div><div class="section"><h4>Months of the Year</h4><table class="vocab-table"><tbody><tr><td>Ianuali</td><td>January</td></tr><tr><td>Pepeluali</td><td>February</td></tr><tr><td>Malaki</td><td>March</td></tr><tr><td>ʻApelila</td><td>April</td></tr><tr><td>Mei</td><td>May</td></tr><tr><td>Iune</td><td>June</td></tr><tr><td>Iulai</td><td>July</td></tr><tr><td>ʻAukake</td><td>August</td></tr><tr><td>Kepakemapa</td><td>September</td></tr><tr><td>ʻOkakopa</td><td>October</td></tr><tr><td>Nowemapa</td><td>November</td></tr><tr><td>Kēkēmapa</td><td>December</td></tr></tbody></table></div><div class="section"><h4>Family (ʻOhana)</h4><table class="vocab-table"><tbody><tr><td>ka ʻohana</td><td>family</td></tr><tr><td>ka makuahine</td><td>mother</td></tr><tr><td>ka makuakāne</td><td>father</td></tr><tr><td>ke kaikuaʻana</td><td>older sibling (same gender)</td></tr><tr><td>ke kaikaina</td><td>younger sibling (same gender)</td></tr><tr><td>ke keiki</td><td>child</td></tr><tr><td>ka wahine</td><td>woman / wife</td></tr><tr><td>ke kāne</td><td>man / husband</td></tr><tr><td>ka tūtū / kupuna</td><td>grandparent / elder</td></tr><tr><td>ka moʻopuna</td><td>grandchild</td></tr></tbody></table></div><div class="section"><h4>Basic Nouns</h4><table class="vocab-table"><tbody><tr><td>ka hale</td><td>the house</td></tr><tr><td>ka puke</td><td>the book</td></tr><tr><td>ke kula</td><td>the school</td></tr><tr><td>ka ʻīlio</td><td>the dog</td></tr><tr><td>ka pōpoki</td><td>the cat</td></tr><tr><td>ka wai</td><td>the water</td></tr><tr><td>ka meaʻai</td><td>the food</td></tr><tr><td>ke kumu</td><td>the teacher</td></tr><tr><td>ka haumāna</td><td>the student</td></tr></tbody></table></div><div class="section"><h4>Pronouns</h4><table class="vocab-table"><tbody><tr><td>au</td><td>I</td></tr><tr><td>ʻoe</td><td>you (one person)</td></tr><tr><td>ʻo ia</td><td>he / she</td></tr><tr><td>kāua</td><td>we two (you and me)</td></tr><tr><td>māua</td><td>we two (excl. you)</td></tr><tr><td>kākou</td><td>we all (incl. you)</td></tr><tr><td>mākou</td><td>we all (excl. you)</td></tr><tr><td>ʻolua</td><td>you two</td></tr><tr><td>lākou</td><td>they</td></tr></tbody></table></div><div class="section"><h4>Weather</h4><table class="vocab-table"><tbody><tr><td>Ua</td><td>rain</td></tr><tr><td>Lā</td><td>sun</td></tr><tr><td>Makani</td><td>wind</td></tr><tr><td>ʻEhu</td><td>mist / spray</td></tr><tr><td>Anuanu</td><td>cold</td></tr><tr><td>Wela</td><td>hot</td></tr><tr><td>Mahana</td><td>warm</td></tr><tr><td>Nāulu</td><td>shower</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: ka vs. ke articles</h5><p>Hawaiian has two words for 'the': <b>ka</b> and <b>ke</b>. Use <b>ke</b> before words starting with K, E, A, O (KEAO trick): <i>ke kula, ke keiki, ke ʻano.</i> Use <b>ka</b> before everything else: <i>ka hale, ka puke, ka wai.</i></p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Greet a partner with the right aloha for the time of day.</li><li>Count from ʻekahi to iwakālua aloud.</li><li>Name three things in the classroom using ka / ke correctly.</li><li>Say your favorite color and one thing that is that color.</li></ol></div><div class="quiz" id="q6" data-questions="[{&quot;q&quot;: &quot;&#x27;Aloha kakahiaka&#x27; is used...&quot;, &quot;choices&quot;: [&quot;in the morning&quot;, &quot;at noon&quot;, &quot;in the evening&quot;, &quot;at night&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;Which color is &#x27;green&#x27;?&quot;, &quot;choices&quot;: [&quot;ʻulaʻula&quot;, &quot;polū&quot;, &quot;ʻōmaʻomaʻo&quot;, &quot;melemele&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;Pōʻakolu&#x27; is which day?&quot;, &quot;choices&quot;: [&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Sunday&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;How do you count &#x27;7&#x27;?&quot;, &quot;choices&quot;: [&quot;ʻeono&quot;, &quot;ʻehiku&quot;, &quot;ʻewalu&quot;, &quot;ʻeiwa&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which is &#x27;thank you very much&#x27;?&quot;, &quot;choices&quot;: [&quot;Mahalo&quot;, &quot;Mahalo nui loa&quot;, &quot;A hui hou&quot;, &quot;E ʻoluʻolu&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which article goes with &#x27;hale&#x27;?&quot;, &quot;choices&quot;: [&quot;ka&quot;, &quot;ke&quot;, &quot;ko&quot;, &quot;kā&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;&#x27;Makuahine&#x27; means...&quot;, &quot;choices&quot;: [&quot;father&quot;, &quot;mother&quot;, &quot;grandmother&quot;, &quot;aunt&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Ua&#x27; means...&quot;, &quot;choices&quot;: [&quot;sun&quot;, &quot;wind&quot;, &quot;rain&quot;, &quot;hot&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which pronoun means &#x27;we all (including you)&#x27;?&quot;, &quot;choices&quot;: [&quot;mākou&quot;, &quot;kākou&quot;, &quot;kāua&quot;, &quot;māua&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Use &#x27;ke&#x27; before words starting with...&quot;, &quot;choices&quot;: [&quot;any letter&quot;, &quot;K, E, A, O&quot;, &quot;H, M, P&quot;, &quot;vowels only&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 6 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+<div class="unit"><div class="unit-header" id="g7"><div class="grade-badge">Grade 7</div><div class="u-title">Level 2 -- Foundations<span class="u-sub">Level 2 &mdash; Foundations</span></div></div><div class="section"><h4>Daily Routines (Verbs)</h4><table class="vocab-table"><tbody><tr><td>Ala</td><td>wake up</td></tr><tr><td>Kū</td><td>stand up</td></tr><tr><td>ʻAi</td><td>eat</td></tr><tr><td>Inu</td><td>drink</td></tr><tr><td>Hele</td><td>go</td></tr><tr><td>Aʻo</td><td>learn / teach</td></tr><tr><td>Heluhelu</td><td>read</td></tr><tr><td>Kākau</td><td>write</td></tr><tr><td>Pāʻani</td><td>play</td></tr><tr><td>Hana</td><td>work / do</td></tr><tr><td>Moe</td><td>sleep</td></tr></tbody></table></div><div class="section"><h4>Food (Meaʻai)</h4><table class="vocab-table"><tbody><tr><td>ka poi</td><td>poi</td></tr><tr><td>ka iʻa</td><td>fish</td></tr><tr><td>ka puaʻa</td><td>pork</td></tr><tr><td>ka pipi</td><td>beef</td></tr><tr><td>ka ʻulu</td><td>breadfruit</td></tr><tr><td>ka niu</td><td>coconut</td></tr><tr><td>ka maiʻa</td><td>banana</td></tr><tr><td>ka ʻōpū</td><td>stomach / belly</td></tr><tr><td>ka wai</td><td>water</td></tr><tr><td>ka waiū</td><td>milk</td></tr><tr><td>ka kope</td><td>coffee</td></tr><tr><td>ka meaʻai ʻawaʻawa</td><td>dessert / sweet food</td></tr></tbody></table></div><div class="section"><h4>Describing People</h4><table class="vocab-table"><tbody><tr><td>nui</td><td>big</td></tr><tr><td>liʻiliʻi</td><td>small</td></tr><tr><td>lōʻihi</td><td>tall / long</td></tr><tr><td>pōkole</td><td>short</td></tr><tr><td>hou</td><td>new</td></tr><tr><td>kahiko</td><td>old / ancient</td></tr><tr><td>maikaʻi</td><td>good</td></tr><tr><td>ʻino</td><td>bad</td></tr><tr><td>ʻoluʻolu</td><td>kind / pleasant</td></tr><tr><td>ʻakamai</td><td>smart / clever</td></tr><tr><td>nani</td><td>beautiful</td></tr><tr><td>uʻi</td><td>handsome</td></tr><tr><td>hauʻoli</td><td>happy</td></tr></tbody></table></div><div class="section"><h4>Body Parts (Kino)</h4><table class="vocab-table"><tbody><tr><td>ke poʻo</td><td>head</td></tr><tr><td>ka lauoho</td><td>hair</td></tr><tr><td>ka maka</td><td>eye</td></tr><tr><td>ka ihu</td><td>nose</td></tr><tr><td>ka waha</td><td>mouth</td></tr><tr><td>ka pepeiao</td><td>ear</td></tr><tr><td>ka niho</td><td>tooth</td></tr><tr><td>ka lima</td><td>arm / hand</td></tr><tr><td>ka wāwae</td><td>foot / leg</td></tr><tr><td>ka manamana</td><td>finger / toe</td></tr><tr><td>ka puʻuwai</td><td>heart</td></tr></tbody></table></div><div class="section"><h4>Time &amp; Day Parts</h4><table class="vocab-table"><tbody><tr><td>Kakahiaka</td><td>morning</td></tr><tr><td>Awakea</td><td>late morning</td></tr><tr><td>ʻAuinalā</td><td>afternoon</td></tr><tr><td>Ahiahi</td><td>evening</td></tr><tr><td>Pō</td><td>night</td></tr><tr><td>Waena po</td><td>midnight</td></tr></tbody></table></div><div class="section"><h4>Common Places</h4><table class="vocab-table"><tbody><tr><td>ka hale</td><td>house</td></tr><tr><td>ke kula</td><td>school</td></tr><tr><td>ka hale kūʻai</td><td>store</td></tr><tr><td>ka hale ʻaina</td><td>restaurant</td></tr><tr><td>ka hale pule</td><td>church</td></tr><tr><td>ke kai</td><td>the sea</td></tr><tr><td>ka mauna</td><td>the mountain</td></tr><tr><td>ka mahiʻai</td><td>the farm</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: how to say 'I go' vs. 'you go'</h5><p>Hawaiian verbs don't change form for person. Just use the verb + the pronoun. <i>Hele au</i> = I go. <i>Hele ʻoe</i> = You go. <i>Hele ʻo ia</i> = He/she goes. Very simple, but word order matters -- verb usually comes first.</p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Introduce yourself with aloha, name, and age.</li><li>Describe a Hawaiian food you love using nani, ʻono (delicious), or ʻakamai.</li><li>Describe your school using three Hawaiian adjectives.</li><li>Say what time of day it is and one activity you do at that time.</li></ol></div><div class="quiz" id="q7" data-questions="[{&quot;q&quot;: &quot;Which verb means &#x27;to eat&#x27;?&quot;, &quot;choices&quot;: [&quot;Inu&quot;, &quot;ʻAi&quot;, &quot;Hele&quot;, &quot;Moe&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Ka maiʻa&#x27; is which food?&quot;, &quot;choices&quot;: [&quot;fish&quot;, &quot;coconut&quot;, &quot;poi&quot;, &quot;banana&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;Which adjective means &#x27;smart&#x27;?&quot;, &quot;choices&quot;: [&quot;nani&quot;, &quot;ʻakamai&quot;, &quot;hou&quot;, &quot;nui&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Ka maka&#x27; is your...&quot;, &quot;choices&quot;: [&quot;eye&quot;, &quot;mouth&quot;, &quot;nose&quot;, &quot;hand&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;&#x27;Awakea&#x27; refers to...&quot;, &quot;choices&quot;: [&quot;dawn&quot;, &quot;late morning&quot;, &quot;sunset&quot;, &quot;night&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which place is &#x27;ka hale ʻaina&#x27;?&quot;, &quot;choices&quot;: [&quot;school&quot;, &quot;church&quot;, &quot;restaurant&quot;, &quot;store&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;Hele ʻoe&#x27; means...&quot;, &quot;choices&quot;: [&quot;I go&quot;, &quot;You go&quot;, &quot;He goes&quot;, &quot;We go&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Ka wāwae&#x27; is your...&quot;, &quot;choices&quot;: [&quot;arm&quot;, &quot;foot / leg&quot;, &quot;head&quot;, &quot;stomach&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which food is &#x27;ka poi&#x27;?&quot;, &quot;choices&quot;: [&quot;fish&quot;, &quot;poi&quot;, &quot;milk&quot;, &quot;fruit&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Ka puʻuwai&#x27; is the...&quot;, &quot;choices&quot;: [&quot;stomach&quot;, &quot;heart&quot;, &quot;tooth&quot;, &quot;hand&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 7 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+<div class="unit"><div class="unit-header" id="g8"><div class="grade-badge">Grade 8</div><div class="u-title">Level 3 -- Intermediate<span class="u-sub">Level 3 &mdash; Intermediate</span></div></div><div class="section"><h4>Travel Vocabulary</h4><table class="vocab-table"><tbody><tr><td>ka mokulele</td><td>airplane</td></tr><tr><td>ka hōkele</td><td>hotel</td></tr><tr><td>ke kai</td><td>the sea</td></tr><tr><td>ka mauna</td><td>the mountain</td></tr><tr><td>ka ʻāina</td><td>the land</td></tr><tr><td>ka huakaʻi</td><td>the trip</td></tr><tr><td>ke alanui</td><td>the road</td></tr><tr><td>ke kaʻa</td><td>the car</td></tr><tr><td>ka moku</td><td>the ship / island</td></tr><tr><td>ke aloha ʻāina</td><td>love for the land</td></tr></tbody></table></div><div class="section"><h4>Past-Tense (Ua ...)</h4><table class="vocab-table"><tbody><tr><td>Ua ʻai au</td><td>I ate</td></tr><tr><td>Ua inu au</td><td>I drank</td></tr><tr><td>Ua hele au</td><td>I went</td></tr><tr><td>Ua ʻike au</td><td>I saw / knew</td></tr><tr><td>Ua aʻo au</td><td>I learned</td></tr><tr><td>Ua pāʻani au</td><td>I played</td></tr><tr><td>Ua noho au</td><td>I stayed / lived</td></tr><tr><td>Ua kūʻai au</td><td>I bought</td></tr></tbody></table></div><div class="section"><h4>Emotions &amp; Feelings</h4><table class="vocab-table"><tbody><tr><td>hauʻoli</td><td>happy</td></tr><tr><td>kaumaha</td><td>sad</td></tr><tr><td>huhū</td><td>angry</td></tr><tr><td>pīhoihoi</td><td>surprised</td></tr><tr><td>luhi</td><td>tired</td></tr><tr><td>mākaukau</td><td>ready</td></tr><tr><td>makemake</td><td>want / like</td></tr><tr><td>hopohopo</td><td>worried</td></tr><tr><td>hilahila</td><td>embarrassed</td></tr></tbody></table></div><div class="section"><h4>Directions &amp; Places</h4><table class="vocab-table"><tbody><tr><td>ma ka ʻākau</td><td>to the right / north</td></tr><tr><td>ma ka hema</td><td>to the left / south</td></tr><tr><td>mua</td><td>in front / forward</td></tr><tr><td>hope</td><td>behind / after</td></tr><tr><td>kokoke</td><td>near</td></tr><tr><td>mamao</td><td>far</td></tr><tr><td>aihea</td><td>where?</td></tr></tbody></table></div><div class="section"><h4>Connecting Words</h4><table class="vocab-table"><tbody><tr><td>no ka mea</td><td>because</td></tr><tr><td>no laila</td><td>therefore / so</td></tr><tr><td>akā</td><td>but</td></tr><tr><td>a laila</td><td>then</td></tr><tr><td>mamua</td><td>before</td></tr><tr><td>mahope</td><td>after</td></tr><tr><td>kekahi</td><td>also</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: past tense with 'Ua'</h5><p>To make a verb past tense in Hawaiian, put <b>ua</b> in front of it: <i>hele = go &rarr; ua hele = went. ʻai = eat &rarr; ua ʻai = ate.</i> So 'I went' is <b>Ua hele au</b>.</p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Write about a place in Hawaiʻi you love, using three words from the list.</li><li>Describe how you felt on a special day, using ua + one verb.</li><li>Plan a day trip to a favorite beach or mountain in Hawaiian.</li><li>Say what you did yesterday using three ua verbs.</li></ol></div><div class="quiz" id="q8" data-questions="[{&quot;q&quot;: &quot;Which means &#x27;I went&#x27;?&quot;, &quot;choices&quot;: [&quot;Hele au&quot;, &quot;Ua hele au&quot;, &quot;E hele&quot;, &quot;Hele ʻoe&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Ka mokulele&#x27; is a...&quot;, &quot;choices&quot;: [&quot;car&quot;, &quot;airplane&quot;, &quot;ship&quot;, &quot;road&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which emotion is &#x27;kaumaha&#x27;?&quot;, &quot;choices&quot;: [&quot;happy&quot;, &quot;sad&quot;, &quot;angry&quot;, &quot;excited&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Aihea&#x27; means...&quot;, &quot;choices&quot;: [&quot;When?&quot;, &quot;Who?&quot;, &quot;Why?&quot;, &quot;Where?&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;Which connector means &#x27;because&#x27;?&quot;, &quot;choices&quot;: [&quot;akā&quot;, &quot;no laila&quot;, &quot;no ka mea&quot;, &quot;kekahi&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which means &#x27;to the right / north&#x27;?&quot;, &quot;choices&quot;: [&quot;ma ka hema&quot;, &quot;ma ka ʻākau&quot;, &quot;mua&quot;, &quot;hope&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Past-tense marker is...&quot;, &quot;choices&quot;: [&quot;e&quot;, &quot;ke&quot;, &quot;ua&quot;, &quot;ka&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;Ka huakaʻi&#x27; is a...&quot;, &quot;choices&quot;: [&quot;road&quot;, &quot;trip&quot;, &quot;store&quot;, &quot;hotel&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Luhi&#x27; means...&quot;, &quot;choices&quot;: [&quot;ready&quot;, &quot;tired&quot;, &quot;angry&quot;, &quot;surprised&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Ua kūʻai au&#x27; means...&quot;, &quot;choices&quot;: [&quot;I bought&quot;, &quot;I sold&quot;, &quot;I saw&quot;, &quot;I wanted&quot;], &quot;a&quot;: 0}]">  <div class="quiz-header">    <h5>🧠 Grade 8 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+
+  
+    <a class="duo-cta" href="https://www.duolingo.com/course/hw/en/Learn-Hawaiian" target="_blank" rel="noopener">🦉 Practice on Duolingo &nearr;</a>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+
+</div>
+
+<script>
+// Interactive quiz runner
+(function() {
+  document.querySelectorAll('.quiz').forEach(function(quizEl) {
+    var questions = JSON.parse(quizEl.getAttribute('data-questions'));
+    var total = questions.length;
+    var answered = 0, correct = 0;
+    var scoreEl = quizEl.querySelector('.quiz-score');
+    var itemsEl = quizEl.querySelector('.q-items');
+    scoreEl.textContent = '0 / ' + total;
+    questions.forEach(function(q, i) {
+      var item = document.createElement('div');
+      item.className = 'q-item';
+      var num = document.createElement('div');
+      num.className = 'q-num'; num.textContent = 'Question ' + (i+1) + ' of ' + total;
+      var text = document.createElement('div');
+      text.className = 'q-text'; text.textContent = q.q;
+      var choices = document.createElement('div');
+      choices.className = 'q-choices';
+      var feedback = document.createElement('div');
+      feedback.className = 'q-feedback';
+      var answered_here = false;
+      q.choices.forEach(function(choice, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'q-choice';
+        btn.type = 'button';
+        btn.textContent = choice;
+        btn.addEventListener('click', function() {
+          if (answered_here) return;
+          answered_here = true;
+          answered++;
+          Array.prototype.forEach.call(choices.children, function(c) { c.disabled = true; });
+          if (ci === q.a) {
+            btn.classList.add('correct');
+            correct++;
+            feedback.textContent = '✓ Correct!';
+            feedback.style.color = '#065f46';
+          } else {
+            btn.classList.add('wrong');
+            choices.children[q.a].classList.add('correct');
+            feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+            feedback.style.color = '#991b1b';
+          }
+          scoreEl.textContent = correct + ' / ' + total;
+        });
+        choices.appendChild(btn);
+      });
+      item.appendChild(num);
+      item.appendChild(text);
+      item.appendChild(choices);
+      item.appendChild(feedback);
+      itemsEl.appendChild(item);
+    });
+    // Reset button
+    var reset = quizEl.querySelector('.quiz-reset');
+    reset.addEventListener('click', function() {
+      itemsEl.innerHTML = '';
+      answered = 0; correct = 0;
+      scoreEl.textContent = '0 / ' + total;
+      // Re-render
+      questions.forEach(function(q, i) {
+        var item = document.createElement('div');
+        item.className = 'q-item';
+        item.innerHTML = '<div class="q-num">Question ' + (i+1) + ' of ' + total + '</div>' +
+                         '<div class="q-text">' + q.q + '</div>' +
+                         '<div class="q-choices"></div><div class="q-feedback"></div>';
+        var choicesDiv = item.querySelector('.q-choices');
+        var feedback = item.querySelector('.q-feedback');
+        var answered_here = false;
+        q.choices.forEach(function(choice, ci) {
+          var btn = document.createElement('button');
+          btn.className = 'q-choice'; btn.type='button'; btn.textContent = choice;
+          btn.addEventListener('click', function() {
+            if (answered_here) return;
+            answered_here = true; answered++;
+            Array.prototype.forEach.call(choicesDiv.children, function(c) { c.disabled = true; });
+            if (ci === q.a) {
+              btn.classList.add('correct'); correct++;
+              feedback.textContent = '✓ Correct!'; feedback.style.color = '#065f46';
+            } else {
+              btn.classList.add('wrong'); choicesDiv.children[q.a].classList.add('correct');
+              feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+              feedback.style.color = '#991b1b';
+            }
+            scoreEl.textContent = correct + ' / ' + total;
+          });
+          choicesDiv.appendChild(btn);
+        });
+        itemsEl.appendChild(item);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

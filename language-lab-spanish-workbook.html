@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spanish Workbook &mdash; Language Lab &middot; Dr. Freitas</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn, .print-btn {
+  position: fixed; top: 20px; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-btn { left: 20px; background: #253a77; color: #fff; }
+.back-btn:hover { background:#1a2a4a; transform:translateX(-2px); }
+.print-btn { right: 20px; background: #0891b2; color: #fff; }
+.print-btn:hover { background:#0e7490; }
+.header {
+  text-align:center; margin-bottom: 26px; padding-bottom: 20px;
+  border-bottom: 3px solid #0891b2;
+}
+.flag { font-size: 4rem; line-height:1; }
+.header h1 { color:#253a77; font-size: 2rem; font-weight: 800; margin: 6px 0; }
+.header .native { color:#0e7490; font-style: italic; font-weight: 700; font-size: 1.05rem; }
+.header .greeting { margin-top: 8px; font-size: 1.1rem; color:#1a2a4a; font-weight: 700; }
+.duo-cta {
+  display: inline-block; background: linear-gradient(135deg, #58cc02 0%, #4bad00 100%);
+  color: #fff; text-decoration: none;
+  padding: 10px 22px; border-radius: 999px;
+  font-weight: 800; font-size: 0.92rem; margin-top: 14px;
+  box-shadow: 0 3px 10px rgba(88,204,2,0.35);
+  transition: all 0.2s;
+}
+.duo-cta:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(88,204,2,0.45); }
+
+.toc {
+  background: #fff; border-radius: 10px;
+  padding: 14px 20px; margin-bottom: 22px;
+  box-shadow: 0 2px 8px rgba(37,58,119,0.08);
+  border-left: 4px solid #FFD100;
+}
+.toc h3 { color:#253a77; font-size: 1rem; margin-bottom: 6px; }
+.toc a {
+  display: inline-block; margin: 3px 8px 3px 0;
+  padding: 4px 10px; background: #ecfeff; color: #0e7490;
+  border-radius: 999px; text-decoration: none;
+  font-size: 0.82rem; font-weight: 700;
+  border: 1px solid #0891b2;
+}
+.toc a:hover { background: #0891b2; color: #fff; }
+
+.culture-box {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 5px solid #FFD100;
+  padding: 18px 22px; border-radius: 10px;
+  margin-bottom: 26px;
+}
+.culture-box h3 { color:#1a2a4a; font-size: 1.05rem; margin-bottom: 8px; }
+.culture-box ul { margin:0; padding-left: 22px; }
+.culture-box li { font-size: 0.95rem; color: #1a2a4a; line-height: 1.55; padding: 3px 0; }
+
+.unit { margin-bottom: 40px; }
+.unit-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px; padding: 12px 18px;
+  background: linear-gradient(135deg, #253a77 0%, #1a2a4a 100%);
+  border-radius: 10px; color:#fff;
+  box-shadow: 0 4px 14px rgba(37,58,119,0.22);
+}
+.unit-header .grade-badge {
+  background: #FFD100; color: #1a2a4a;
+  width: 62px; height: 44px; border-radius: 8px;
+  display: flex; align-items:center; justify-content:center;
+  font-weight: 800; font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.unit-header .u-title { font-size: 1.15rem; font-weight: 800; }
+.unit-header .u-title .u-sub {
+  display: block; font-size: 0.78rem; font-weight: 500;
+  color: #cffafe; font-style: italic; margin-top: 2px;
+}
+
+.section {
+  background: #fff; border-radius: 10px;
+  padding: 18px 22px; margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #0891b2;
+}
+.section h4 {
+  color: #253a77; font-size: 1rem; font-weight: 800;
+  margin-bottom: 10px; padding-bottom: 4px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 0.92rem;
+}
+.vocab-table td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 7px 10px;
+  color: #2d3748; vertical-align: top;
+}
+.vocab-table td:first-child {
+  font-weight: 700; color: #0e7490; width: 45%;
+}
+.vocab-table tr:hover td { background: #ecfeff; }
+
+.grammar-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+  margin: 14px 0;
+}
+.grammar-box h5 { color:#0e7490; font-size:0.98rem; margin-bottom: 6px; }
+.grammar-box p { font-size: 0.92rem; color: #1a2a4a; line-height: 1.6; }
+
+.practice {
+  background: #ecfeff; border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+  margin-top: 14px;
+}
+.practice h5 {
+  color: #0e7490; font-size: 0.98rem; margin-bottom: 6px;
+}
+.practice ol { margin: 6px 0 0 22px; }
+.practice li { font-size: 0.92rem; color: #1a2a4a; padding: 3px 0; line-height: 1.5; }
+
+/* Quiz */
+.quiz {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-top: 20px;
+}
+.quiz-header {
+  display: flex; align-items:center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.quiz-header h5 { color:#1a2a4a; font-size: 1.05rem; font-weight: 800; }
+.quiz-score {
+  background: #253a77; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font-size: 0.82rem; font-weight: 800;
+}
+.q-item {
+  background: #fff; border-radius: 8px;
+  padding: 12px 14px; margin: 10px 0;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+}
+.q-num { color:#0e7490; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.q-text { color:#1a2a4a; font-size: 0.98rem; font-weight: 700; margin: 4px 0 10px; }
+.q-choices { display: grid; gap: 6px; }
+.q-choice {
+  padding: 8px 12px; border-radius: 6px;
+  background: #f8fafc; border: 2px solid #e2e8f0;
+  cursor: pointer; font-size: 0.92rem;
+  transition: all 0.15s;
+  text-align: left;
+}
+.q-choice:hover { background: #ecfeff; border-color: #0891b2; }
+.q-choice.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700; }
+.q-choice.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-choice[disabled] { cursor: default; opacity: 0.85; }
+.q-feedback { margin-top: 6px; font-size: 0.82rem; color: #0e7490; font-weight: 700; }
+.quiz-reset {
+  display: inline-block; margin-top: 8px;
+  background: #253a77; color:#fff; text-decoration:none;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none;
+}
+.quiz-reset:hover { background: #1a2a4a; }
+
+footer {
+  margin-top: 30px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 0.95rem;
+}
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn, .duo-cta, .quiz-reset { display:none; }
+  .section, .unit-header, .quiz { box-shadow:none; break-inside: avoid; }
+  .unit { break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.5rem; }
+  .vocab-table td:first-child { width: 50%; }
+}
+</style>
+</head>
+<body>
+<a href="language-lab-spanish.html" class="back-btn">&larr; Back to Spanish</a>
+<a href="javascript:window.print()" class="print-btn">🖨️ Print</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="flag">🇪🇸</div>
+    <h1>Spanish Workbook</h1>
+    <div class="native">Español</div>
+    <div class="greeting">Hola &middot; welcome to your Spanish workbook!</div>
+  </div>
+
+  <div class="toc">
+    <h3>Jump to:</h3>
+    <a href="#culture">Culture</a>
+    <a href="#g6">Grade 6 &middot; Level 1</a>
+    <a href="#g7">Grade 7 &middot; Level 2</a>
+    <a href="#g8">Grade 8 &middot; Level 3</a>
+    <a href="#q6">Quiz 1</a>
+    <a href="#q7">Quiz 2</a>
+    <a href="#q8">Quiz 3</a>
+  </div>
+
+  <div class="culture-box" id="culture">
+    <h3>🌏 Culture Corner</h3>
+    <ul><li>Spanish is spoken by ~500 million people worldwide -- the second-most-spoken first language after Mandarin.</li><li>In Hawai'i, many local families have Puerto Rican and Filipino roots that share Spanish vocabulary through history.</li><li>Fun fact: Spanish uses upside-down ¿ and ¡ to open questions and exclamations.</li><li>Every Spanish noun is masculine (el) or feminine (la) -- and adjectives change to match.</li><li>Rolling the R in perro (dog) versus tapping the R in pero (but) can change the meaning of a word!</li></ul>
+  </div>
+
+  <div class="unit"><div class="unit-header" id="g6"><div class="grade-badge">Grade 6</div><div class="u-title">Level 1 -- Introduction<span class="u-sub">Level 1 &mdash; Introduction</span></div></div><div class="section"><h4>Greetings &amp; Courtesy</h4><table class="vocab-table"><tbody><tr><td>Hola</td><td>Hi / Hello</td></tr><tr><td>Buenos días</td><td>Good morning</td></tr><tr><td>Buenas tardes</td><td>Good afternoon</td></tr><tr><td>Buenas noches</td><td>Good evening / night</td></tr><tr><td>Adiós</td><td>Goodbye</td></tr><tr><td>Hasta luego</td><td>See you later</td></tr><tr><td>Hasta mañana</td><td>See you tomorrow</td></tr><tr><td>¿Cómo estás?</td><td>How are you?</td></tr><tr><td>Bien, gracias</td><td>Well, thanks</td></tr><tr><td>Mal</td><td>Not good</td></tr><tr><td>Más o menos</td><td>So-so</td></tr><tr><td>Por favor</td><td>Please</td></tr><tr><td>Gracias</td><td>Thank you</td></tr><tr><td>De nada</td><td>You're welcome</td></tr><tr><td>Perdón</td><td>Sorry / Excuse me</td></tr><tr><td>Mucho gusto</td><td>Nice to meet you</td></tr></tbody></table></div><div class="section"><h4>Introducing Yourself</h4><table class="vocab-table"><tbody><tr><td>Me llamo...</td><td>My name is...</td></tr><tr><td>Soy de...</td><td>I'm from...</td></tr><tr><td>Tengo doce años</td><td>I'm 12 years old</td></tr><tr><td>¿Cómo te llamas?</td><td>What is your name?</td></tr><tr><td>¿Cuántos años tienes?</td><td>How old are you?</td></tr><tr><td>¿De dónde eres?</td><td>Where are you from?</td></tr></tbody></table></div><div class="section"><h4>Numbers 1-30</h4><table class="vocab-table"><tbody><tr><td>uno</td><td>1</td></tr><tr><td>dos</td><td>2</td></tr><tr><td>tres</td><td>3</td></tr><tr><td>cuatro</td><td>4</td></tr><tr><td>cinco</td><td>5</td></tr><tr><td>seis</td><td>6</td></tr><tr><td>siete</td><td>7</td></tr><tr><td>ocho</td><td>8</td></tr><tr><td>nueve</td><td>9</td></tr><tr><td>diez</td><td>10</td></tr><tr><td>once</td><td>11</td></tr><tr><td>doce</td><td>12</td></tr><tr><td>trece</td><td>13</td></tr><tr><td>catorce</td><td>14</td></tr><tr><td>quince</td><td>15</td></tr><tr><td>dieciséis</td><td>16</td></tr><tr><td>diecisiete</td><td>17</td></tr><tr><td>dieciocho</td><td>18</td></tr><tr><td>diecinueve</td><td>19</td></tr><tr><td>veinte</td><td>20</td></tr><tr><td>veintiuno</td><td>21</td></tr><tr><td>veintidós</td><td>22</td></tr><tr><td>veintitrés</td><td>23</td></tr><tr><td>veinticuatro</td><td>24</td></tr><tr><td>veinticinco</td><td>25</td></tr><tr><td>veintiséis</td><td>26</td></tr><tr><td>veintisiete</td><td>27</td></tr><tr><td>veintiocho</td><td>28</td></tr><tr><td>veintinueve</td><td>29</td></tr><tr><td>treinta</td><td>30</td></tr></tbody></table></div><div class="section"><h4>Colors</h4><table class="vocab-table"><tbody><tr><td>rojo</td><td>red</td></tr><tr><td>azul</td><td>blue</td></tr><tr><td>verde</td><td>green</td></tr><tr><td>amarillo</td><td>yellow</td></tr><tr><td>blanco</td><td>white</td></tr><tr><td>negro</td><td>black</td></tr><tr><td>naranja</td><td>orange</td></tr><tr><td>morado</td><td>purple</td></tr><tr><td>rosa</td><td>pink</td></tr><tr><td>gris</td><td>gray</td></tr><tr><td>marrón</td><td>brown</td></tr><tr><td>dorado</td><td>gold</td></tr></tbody></table></div><div class="section"><h4>Days of the Week</h4><table class="vocab-table"><tbody><tr><td>lunes</td><td>Monday</td></tr><tr><td>martes</td><td>Tuesday</td></tr><tr><td>miércoles</td><td>Wednesday</td></tr><tr><td>jueves</td><td>Thursday</td></tr><tr><td>viernes</td><td>Friday</td></tr><tr><td>sábado</td><td>Saturday</td></tr><tr><td>domingo</td><td>Sunday</td></tr></tbody></table></div><div class="section"><h4>Months of the Year</h4><table class="vocab-table"><tbody><tr><td>enero</td><td>January</td></tr><tr><td>febrero</td><td>February</td></tr><tr><td>marzo</td><td>March</td></tr><tr><td>abril</td><td>April</td></tr><tr><td>mayo</td><td>May</td></tr><tr><td>junio</td><td>June</td></tr><tr><td>julio</td><td>July</td></tr><tr><td>agosto</td><td>August</td></tr><tr><td>septiembre</td><td>September</td></tr><tr><td>octubre</td><td>October</td></tr><tr><td>noviembre</td><td>November</td></tr><tr><td>diciembre</td><td>December</td></tr></tbody></table></div><div class="section"><h4>Family</h4><table class="vocab-table"><tbody><tr><td>la familia</td><td>family</td></tr><tr><td>la madre / mamá</td><td>mother / mom</td></tr><tr><td>el padre / papá</td><td>father / dad</td></tr><tr><td>el hermano</td><td>brother</td></tr><tr><td>la hermana</td><td>sister</td></tr><tr><td>el abuelo</td><td>grandfather</td></tr><tr><td>la abuela</td><td>grandmother</td></tr><tr><td>el tío</td><td>uncle</td></tr><tr><td>la tía</td><td>aunt</td></tr><tr><td>el primo / la prima</td><td>cousin</td></tr></tbody></table></div><div class="section"><h4>Basic Nouns</h4><table class="vocab-table"><tbody><tr><td>la casa</td><td>the house</td></tr><tr><td>el libro</td><td>the book</td></tr><tr><td>la escuela</td><td>the school</td></tr><tr><td>la mesa</td><td>the table</td></tr><tr><td>la silla</td><td>the chair</td></tr><tr><td>el perro</td><td>the dog</td></tr><tr><td>el gato</td><td>the cat</td></tr><tr><td>el agua</td><td>water</td></tr><tr><td>la comida</td><td>food</td></tr><tr><td>el amigo / la amiga</td><td>friend</td></tr><tr><td>el maestro / la maestra</td><td>teacher</td></tr><tr><td>el estudiante</td><td>student</td></tr></tbody></table></div><div class="section"><h4>Pronouns</h4><table class="vocab-table"><tbody><tr><td>yo</td><td>I</td></tr><tr><td>tú</td><td>you (informal)</td></tr><tr><td>usted</td><td>you (formal)</td></tr><tr><td>él</td><td>he</td></tr><tr><td>ella</td><td>she</td></tr><tr><td>nosotros / nosotras</td><td>we</td></tr><tr><td>ustedes</td><td>you all</td></tr><tr><td>ellos / ellas</td><td>they</td></tr></tbody></table></div><div class="section"><h4>Weather</h4><table class="vocab-table"><tbody><tr><td>Hace sol</td><td>It's sunny</td></tr><tr><td>Hace calor</td><td>It's hot</td></tr><tr><td>Hace frío</td><td>It's cold</td></tr><tr><td>Hace fresco</td><td>It's cool</td></tr><tr><td>Llueve</td><td>It's raining</td></tr><tr><td>Nieva</td><td>It's snowing</td></tr><tr><td>Hace viento</td><td>It's windy</td></tr><tr><td>Está nublado</td><td>It's cloudy</td></tr><tr><td>Hay tormenta</td><td>There's a storm</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: gender &amp; articles</h5><p>Every Spanish noun is masculine or feminine. Use <b>el</b> for masculine (el libro), <b>la</b> for feminine (la casa). Most nouns ending in <b>-o</b> are masculine and most ending in <b>-a</b> are feminine. Adjectives change to match: <i>un gato negro</i> (a black cat, masc.) but <i>una casa blanca</i> (a white house, fem.).</p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Introduce yourself to a partner: name, age, where you're from.</li><li>Count from 1 to 30 aloud without stopping.</li><li>Name three classroom objects with the correct el/la.</li><li>Say the day, month, and weather in one Spanish sentence.</li></ol></div><div class="quiz" id="q6" data-questions="[{&quot;q&quot;: &quot;How do you say &#x27;Good morning&#x27; in Spanish?&quot;, &quot;choices&quot;: [&quot;Buenas noches&quot;, &quot;Buenos días&quot;, &quot;Hola&quot;, &quot;Adiós&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which color is &#x27;green&#x27;?&quot;, &quot;choices&quot;: [&quot;azul&quot;, &quot;rojo&quot;, &quot;verde&quot;, &quot;amarillo&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;Miércoles&#x27; means...&quot;, &quot;choices&quot;: [&quot;Monday&quot;, &quot;Wednesday&quot;, &quot;Friday&quot;, &quot;Sunday&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;How do you count &#x27;15&#x27;?&quot;, &quot;choices&quot;: [&quot;once&quot;, &quot;doce&quot;, &quot;catorce&quot;, &quot;quince&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;Which article goes with &#x27;casa&#x27;?&quot;, &quot;choices&quot;: [&quot;el&quot;, &quot;la&quot;, &quot;los&quot;, &quot;un&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Tengo doce años&#x27; means...&quot;, &quot;choices&quot;: [&quot;I have twelve books&quot;, &quot;I am twelve years old&quot;, &quot;I have twelve friends&quot;, &quot;I like twelve&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which is &#x27;sister&#x27;?&quot;, &quot;choices&quot;: [&quot;hermano&quot;, &quot;hermana&quot;, &quot;abuela&quot;, &quot;tía&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Está nublado&#x27; means...&quot;, &quot;choices&quot;: [&quot;It&#x27;s sunny&quot;, &quot;It&#x27;s snowing&quot;, &quot;It&#x27;s cloudy&quot;, &quot;It&#x27;s windy&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;How do you say &#x27;Thank you&#x27;?&quot;, &quot;choices&quot;: [&quot;Por favor&quot;, &quot;Gracias&quot;, &quot;De nada&quot;, &quot;Perdón&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which pronoun means &#x27;we&#x27; (mixed group)?&quot;, &quot;choices&quot;: [&quot;yo&quot;, &quot;tú&quot;, &quot;nosotros&quot;, &quot;ustedes&quot;], &quot;a&quot;: 2}]">  <div class="quiz-header">    <h5>🧠 Grade 6 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+<div class="unit"><div class="unit-header" id="g7"><div class="grade-badge">Grade 7</div><div class="u-title">Level 2 -- Foundations<span class="u-sub">Level 2 &mdash; Foundations</span></div></div><div class="section"><h4>Daily Routines (Verbs)</h4><table class="vocab-table"><tbody><tr><td>despertarse</td><td>to wake up</td></tr><tr><td>levantarse</td><td>to get up</td></tr><tr><td>ducharse</td><td>to shower</td></tr><tr><td>vestirse</td><td>to get dressed</td></tr><tr><td>desayunar</td><td>to eat breakfast</td></tr><tr><td>ir a la escuela</td><td>to go to school</td></tr><tr><td>estudiar</td><td>to study</td></tr><tr><td>almorzar</td><td>to eat lunch</td></tr><tr><td>hacer la tarea</td><td>to do homework</td></tr><tr><td>cenar</td><td>to eat dinner</td></tr><tr><td>mirar la tele</td><td>to watch TV</td></tr><tr><td>acostarse</td><td>to go to bed</td></tr><tr><td>dormir</td><td>to sleep</td></tr></tbody></table></div><div class="section"><h4>Food &amp; Drink</h4><table class="vocab-table"><tbody><tr><td>el pan</td><td>bread</td></tr><tr><td>el arroz</td><td>rice</td></tr><tr><td>el pollo</td><td>chicken</td></tr><tr><td>la carne</td><td>meat</td></tr><tr><td>el pescado</td><td>fish</td></tr><tr><td>la ensalada</td><td>salad</td></tr><tr><td>la sopa</td><td>soup</td></tr><tr><td>las verduras</td><td>vegetables</td></tr><tr><td>la fruta</td><td>fruit</td></tr><tr><td>la manzana</td><td>apple</td></tr><tr><td>el plátano</td><td>banana</td></tr><tr><td>la naranja</td><td>orange</td></tr><tr><td>la fresa</td><td>strawberry</td></tr><tr><td>la leche</td><td>milk</td></tr><tr><td>el agua</td><td>water</td></tr><tr><td>el jugo</td><td>juice</td></tr><tr><td>el café</td><td>coffee</td></tr><tr><td>el desayuno</td><td>breakfast</td></tr><tr><td>el almuerzo</td><td>lunch</td></tr><tr><td>la cena</td><td>dinner</td></tr></tbody></table></div><div class="section"><h4>Describing People</h4><table class="vocab-table"><tbody><tr><td>alto/a</td><td>tall</td></tr><tr><td>bajo/a</td><td>short</td></tr><tr><td>joven</td><td>young</td></tr><tr><td>viejo/a</td><td>old</td></tr><tr><td>simpático/a</td><td>nice</td></tr><tr><td>inteligente</td><td>intelligent</td></tr><tr><td>gracioso/a</td><td>funny</td></tr><tr><td>serio/a</td><td>serious</td></tr><tr><td>bonito/a</td><td>pretty</td></tr><tr><td>guapo/a</td><td>handsome</td></tr><tr><td>moreno/a</td><td>brown-haired</td></tr><tr><td>rubio/a</td><td>blond</td></tr><tr><td>delgado/a</td><td>thin</td></tr><tr><td>fuerte</td><td>strong</td></tr><tr><td>amable</td><td>kind</td></tr></tbody></table></div><div class="section"><h4>Body Parts</h4><table class="vocab-table"><tbody><tr><td>la cabeza</td><td>head</td></tr><tr><td>el pelo</td><td>hair</td></tr><tr><td>los ojos</td><td>eyes</td></tr><tr><td>la nariz</td><td>nose</td></tr><tr><td>la boca</td><td>mouth</td></tr><tr><td>las orejas</td><td>ears</td></tr><tr><td>los dientes</td><td>teeth</td></tr><tr><td>el brazo</td><td>arm</td></tr><tr><td>la mano</td><td>hand</td></tr><tr><td>la pierna</td><td>leg</td></tr><tr><td>el pie</td><td>foot</td></tr><tr><td>la espalda</td><td>back</td></tr><tr><td>el corazón</td><td>heart</td></tr><tr><td>el estómago</td><td>stomach</td></tr></tbody></table></div><div class="section"><h4>Time &amp; Clock</h4><table class="vocab-table"><tbody><tr><td>¿Qué hora es?</td><td>What time is it?</td></tr><tr><td>Es la una</td><td>It's 1:00</td></tr><tr><td>Son las dos</td><td>It's 2:00</td></tr><tr><td>Son las tres y media</td><td>It's 3:30</td></tr><tr><td>Son las cuatro y cuarto</td><td>It's 4:15</td></tr><tr><td>Son las cinco menos cuarto</td><td>It's 4:45</td></tr><tr><td>el mediodía</td><td>noon</td></tr><tr><td>la medianoche</td><td>midnight</td></tr><tr><td>la mañana</td><td>morning</td></tr><tr><td>la tarde</td><td>afternoon</td></tr><tr><td>la noche</td><td>night</td></tr></tbody></table></div><div class="section"><h4>Common Places</h4><table class="vocab-table"><tbody><tr><td>la casa</td><td>house</td></tr><tr><td>el colegio</td><td>school</td></tr><tr><td>la biblioteca</td><td>library</td></tr><tr><td>el parque</td><td>park</td></tr><tr><td>la tienda</td><td>store</td></tr><tr><td>el mercado</td><td>market</td></tr><tr><td>el restaurante</td><td>restaurant</td></tr><tr><td>la iglesia</td><td>church</td></tr><tr><td>la playa</td><td>beach</td></tr><tr><td>el cine</td><td>cinema</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: present-tense -AR verbs</h5><p>Regular -AR verbs like <b>hablar</b> (to speak) drop -ar and add these endings: <b>yo hablo, tú hablas, él/ella habla, nosotros hablamos, ellos/ustedes hablan.</b> Same rule applies to <i>estudiar, escuchar, mirar, trabajar, cantar.</i></p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Describe your morning routine using at least 5 verbs.</li><li>Describe your best friend in 3 Spanish sentences.</li><li>Order a full Spanish lunch: 3 foods + 1 drink.</li><li>Tell a partner what time you wake up and what time you go to bed.</li></ol></div><div class="quiz" id="q7" data-questions="[{&quot;q&quot;: &quot;Which verb means &#x27;to eat breakfast&#x27;?&quot;, &quot;choices&quot;: [&quot;cenar&quot;, &quot;almorzar&quot;, &quot;desayunar&quot;, &quot;dormir&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;La manzana&#x27; is which fruit?&quot;, &quot;choices&quot;: [&quot;banana&quot;, &quot;orange&quot;, &quot;strawberry&quot;, &quot;apple&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;Which adjective means &#x27;funny&#x27;?&quot;, &quot;choices&quot;: [&quot;serio&quot;, &quot;gracioso&quot;, &quot;alto&quot;, &quot;fuerte&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Los ojos&#x27; are your...&quot;, &quot;choices&quot;: [&quot;ears&quot;, &quot;eyes&quot;, &quot;teeth&quot;, &quot;hands&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which is &#x27;It&#x27;s 3:30&#x27;?&quot;, &quot;choices&quot;: [&quot;Son las tres&quot;, &quot;Son las tres y media&quot;, &quot;Son las cuatro&quot;, &quot;Son las tres y cuarto&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;El mercado&#x27; is the...&quot;, &quot;choices&quot;: [&quot;park&quot;, &quot;beach&quot;, &quot;market&quot;, &quot;library&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Present-tense of &#x27;hablar&#x27; for &#x27;nosotros&#x27; is...&quot;, &quot;choices&quot;: [&quot;hablo&quot;, &quot;hablas&quot;, &quot;habla&quot;, &quot;hablamos&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;Which meal comes last?&quot;, &quot;choices&quot;: [&quot;el desayuno&quot;, &quot;el almuerzo&quot;, &quot;la cena&quot;, &quot;la mañana&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which body part is &#x27;la pierna&#x27;?&quot;, &quot;choices&quot;: [&quot;arm&quot;, &quot;leg&quot;, &quot;heart&quot;, &quot;hand&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;La biblioteca&#x27; means...&quot;, &quot;choices&quot;: [&quot;park&quot;, &quot;library&quot;, &quot;bicycle&quot;, &quot;bookstore&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 7 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+<div class="unit"><div class="unit-header" id="g8"><div class="grade-badge">Grade 8</div><div class="u-title">Level 3 -- Intermediate<span class="u-sub">Level 3 &mdash; Intermediate</span></div></div><div class="section"><h4>Travel Vocabulary</h4><table class="vocab-table"><tbody><tr><td>el aeropuerto</td><td>airport</td></tr><tr><td>el vuelo</td><td>flight</td></tr><tr><td>el hotel</td><td>hotel</td></tr><tr><td>la playa</td><td>beach</td></tr><tr><td>la montaña</td><td>mountain</td></tr><tr><td>la ciudad</td><td>city</td></tr><tr><td>el país</td><td>country</td></tr><tr><td>el pasaporte</td><td>passport</td></tr><tr><td>la maleta</td><td>suitcase</td></tr><tr><td>el mapa</td><td>map</td></tr><tr><td>el boleto</td><td>ticket</td></tr><tr><td>el tren</td><td>train</td></tr><tr><td>el autobús</td><td>bus</td></tr><tr><td>el coche</td><td>car</td></tr><tr><td>el metro</td><td>subway</td></tr></tbody></table></div><div class="section"><h4>Past-Tense Verbs (Pretérito)</h4><table class="vocab-table"><tbody><tr><td>hablé</td><td>I spoke</td></tr><tr><td>comí</td><td>I ate</td></tr><tr><td>viví</td><td>I lived</td></tr><tr><td>fui</td><td>I went / I was</td></tr><tr><td>vi</td><td>I saw</td></tr><tr><td>hice</td><td>I did / I made</td></tr><tr><td>dije</td><td>I said</td></tr><tr><td>tuve</td><td>I had</td></tr><tr><td>compré</td><td>I bought</td></tr><tr><td>visité</td><td>I visited</td></tr><tr><td>viajé</td><td>I traveled</td></tr><tr><td>aprendí</td><td>I learned</td></tr></tbody></table></div><div class="section"><h4>Emotions &amp; Feelings</h4><table class="vocab-table"><tbody><tr><td>feliz</td><td>happy</td></tr><tr><td>triste</td><td>sad</td></tr><tr><td>enojado/a</td><td>angry</td></tr><tr><td>sorprendido/a</td><td>surprised</td></tr><tr><td>cansado/a</td><td>tired</td></tr><tr><td>emocionado/a</td><td>excited</td></tr><tr><td>nervioso/a</td><td>nervous</td></tr><tr><td>aburrido/a</td><td>bored</td></tr><tr><td>enfermo/a</td><td>sick</td></tr><tr><td>orgulloso/a</td><td>proud</td></tr><tr><td>preocupado/a</td><td>worried</td></tr></tbody></table></div><div class="section"><h4>Money &amp; Shopping</h4><table class="vocab-table"><tbody><tr><td>¿Cuánto cuesta?</td><td>How much does it cost?</td></tr><tr><td>caro/a</td><td>expensive</td></tr><tr><td>barato/a</td><td>cheap</td></tr><tr><td>el dinero</td><td>money</td></tr><tr><td>la tarjeta</td><td>card</td></tr><tr><td>comprar</td><td>to buy</td></tr><tr><td>vender</td><td>to sell</td></tr><tr><td>pagar</td><td>to pay</td></tr><tr><td>la tienda</td><td>the shop</td></tr></tbody></table></div><div class="section"><h4>Directions</h4><table class="vocab-table"><tbody><tr><td>a la derecha</td><td>to the right</td></tr><tr><td>a la izquierda</td><td>to the left</td></tr><tr><td>todo recto</td><td>straight ahead</td></tr><tr><td>cerca</td><td>near</td></tr><tr><td>lejos</td><td>far</td></tr><tr><td>aquí</td><td>here</td></tr><tr><td>allí</td><td>there</td></tr><tr><td>¿Dónde está...?</td><td>Where is...?</td></tr></tbody></table></div><div class="section"><h4>Connecting Words</h4><table class="vocab-table"><tbody><tr><td>porque</td><td>because</td></tr><tr><td>así que</td><td>so</td></tr><tr><td>pero</td><td>but</td></tr><tr><td>cuando</td><td>when</td></tr><tr><td>después</td><td>after / afterward</td></tr><tr><td>antes</td><td>before</td></tr><tr><td>también</td><td>also</td></tr><tr><td>por eso</td><td>that's why</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: preterite endings</h5><p>To talk about a completed past action, use the preterite. For -AR verbs, drop -ar and add: <b>-é, -aste, -ó, -amos, -aron.</b> Example: <i>hablar &rarr; yo hablé (I spoke), ella habló (she spoke).</i></p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Write about a real trip you took, using at least 4 preterite verbs.</li><li>Describe how you felt on your first day of middle school, and why (use 'porque').</li><li>Plan an imaginary trip to a Spanish-speaking country: 3 places + 3 things you'll buy.</li><li>Give directions from the classroom to the library in Spanish.</li></ol></div><div class="quiz" id="q8" data-questions="[{&quot;q&quot;: &quot;Which verb means &#x27;I traveled&#x27;?&quot;, &quot;choices&quot;: [&quot;viajo&quot;, &quot;viajaba&quot;, &quot;viajé&quot;, &quot;viajaré&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;El vuelo&#x27; is a...&quot;, &quot;choices&quot;: [&quot;flight&quot;, &quot;ticket&quot;, &quot;hotel&quot;, &quot;suitcase&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;Which is &#x27;nervous&#x27;?&quot;, &quot;choices&quot;: [&quot;cansado&quot;, &quot;aburrido&quot;, &quot;nervioso&quot;, &quot;orgulloso&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;¿Cuánto cuesta?&#x27; means...&quot;, &quot;choices&quot;: [&quot;Where is it?&quot;, &quot;How are you?&quot;, &quot;How much does it cost?&quot;, &quot;When is it?&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which means &#x27;to the left&#x27;?&quot;, &quot;choices&quot;: [&quot;a la derecha&quot;, &quot;a la izquierda&quot;, &quot;todo recto&quot;, &quot;cerca&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which connector means &#x27;because&#x27;?&quot;, &quot;choices&quot;: [&quot;pero&quot;, &quot;porque&quot;, &quot;cuando&quot;, &quot;también&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Preterite &#x27;yo&#x27; ending for -AR verbs is...&quot;, &quot;choices&quot;: [&quot;-o&quot;, &quot;-é&quot;, &quot;-aste&quot;, &quot;-aron&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;La maleta&#x27; is a...&quot;, &quot;choices&quot;: [&quot;map&quot;, &quot;passport&quot;, &quot;suitcase&quot;, &quot;ticket&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which emotion is &#x27;sorprendido&#x27;?&quot;, &quot;choices&quot;: [&quot;sad&quot;, &quot;surprised&quot;, &quot;tired&quot;, &quot;proud&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Compré un boleto&#x27; means...&quot;, &quot;choices&quot;: [&quot;I sell a ticket&quot;, &quot;I bought a ticket&quot;, &quot;I want a ticket&quot;, &quot;I lost a ticket&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 8 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+
+  
+    <a class="duo-cta" href="https://www.duolingo.com/course/es/en/Learn-Spanish" target="_blank" rel="noopener">🦉 Practice on Duolingo &nearr;</a>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+
+</div>
+
+<script>
+// Interactive quiz runner
+(function() {
+  document.querySelectorAll('.quiz').forEach(function(quizEl) {
+    var questions = JSON.parse(quizEl.getAttribute('data-questions'));
+    var total = questions.length;
+    var answered = 0, correct = 0;
+    var scoreEl = quizEl.querySelector('.quiz-score');
+    var itemsEl = quizEl.querySelector('.q-items');
+    scoreEl.textContent = '0 / ' + total;
+    questions.forEach(function(q, i) {
+      var item = document.createElement('div');
+      item.className = 'q-item';
+      var num = document.createElement('div');
+      num.className = 'q-num'; num.textContent = 'Question ' + (i+1) + ' of ' + total;
+      var text = document.createElement('div');
+      text.className = 'q-text'; text.textContent = q.q;
+      var choices = document.createElement('div');
+      choices.className = 'q-choices';
+      var feedback = document.createElement('div');
+      feedback.className = 'q-feedback';
+      var answered_here = false;
+      q.choices.forEach(function(choice, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'q-choice';
+        btn.type = 'button';
+        btn.textContent = choice;
+        btn.addEventListener('click', function() {
+          if (answered_here) return;
+          answered_here = true;
+          answered++;
+          Array.prototype.forEach.call(choices.children, function(c) { c.disabled = true; });
+          if (ci === q.a) {
+            btn.classList.add('correct');
+            correct++;
+            feedback.textContent = '✓ Correct!';
+            feedback.style.color = '#065f46';
+          } else {
+            btn.classList.add('wrong');
+            choices.children[q.a].classList.add('correct');
+            feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+            feedback.style.color = '#991b1b';
+          }
+          scoreEl.textContent = correct + ' / ' + total;
+        });
+        choices.appendChild(btn);
+      });
+      item.appendChild(num);
+      item.appendChild(text);
+      item.appendChild(choices);
+      item.appendChild(feedback);
+      itemsEl.appendChild(item);
+    });
+    // Reset button
+    var reset = quizEl.querySelector('.quiz-reset');
+    reset.addEventListener('click', function() {
+      itemsEl.innerHTML = '';
+      answered = 0; correct = 0;
+      scoreEl.textContent = '0 / ' + total;
+      // Re-render
+      questions.forEach(function(q, i) {
+        var item = document.createElement('div');
+        item.className = 'q-item';
+        item.innerHTML = '<div class="q-num">Question ' + (i+1) + ' of ' + total + '</div>' +
+                         '<div class="q-text">' + q.q + '</div>' +
+                         '<div class="q-choices"></div><div class="q-feedback"></div>';
+        var choicesDiv = item.querySelector('.q-choices');
+        var feedback = item.querySelector('.q-feedback');
+        var answered_here = false;
+        q.choices.forEach(function(choice, ci) {
+          var btn = document.createElement('button');
+          btn.className = 'q-choice'; btn.type='button'; btn.textContent = choice;
+          btn.addEventListener('click', function() {
+            if (answered_here) return;
+            answered_here = true; answered++;
+            Array.prototype.forEach.call(choicesDiv.children, function(c) { c.disabled = true; });
+            if (ci === q.a) {
+              btn.classList.add('correct'); correct++;
+              feedback.textContent = '✓ Correct!'; feedback.style.color = '#065f46';
+            } else {
+              btn.classList.add('wrong'); choicesDiv.children[q.a].classList.add('correct');
+              feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+              feedback.style.color = '#991b1b';
+            }
+            scoreEl.textContent = correct + ' / ' + total;
+          });
+          choicesDiv.appendChild(btn);
+        });
+        itemsEl.appendChild(item);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

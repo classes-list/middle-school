@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>French Workbook &mdash; Language Lab &middot; Dr. Freitas</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn, .print-btn {
+  position: fixed; top: 20px; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-btn { left: 20px; background: #253a77; color: #fff; }
+.back-btn:hover { background:#1a2a4a; transform:translateX(-2px); }
+.print-btn { right: 20px; background: #0891b2; color: #fff; }
+.print-btn:hover { background:#0e7490; }
+.header {
+  text-align:center; margin-bottom: 26px; padding-bottom: 20px;
+  border-bottom: 3px solid #0891b2;
+}
+.flag { font-size: 4rem; line-height:1; }
+.header h1 { color:#253a77; font-size: 2rem; font-weight: 800; margin: 6px 0; }
+.header .native { color:#0e7490; font-style: italic; font-weight: 700; font-size: 1.05rem; }
+.header .greeting { margin-top: 8px; font-size: 1.1rem; color:#1a2a4a; font-weight: 700; }
+.duo-cta {
+  display: inline-block; background: linear-gradient(135deg, #58cc02 0%, #4bad00 100%);
+  color: #fff; text-decoration: none;
+  padding: 10px 22px; border-radius: 999px;
+  font-weight: 800; font-size: 0.92rem; margin-top: 14px;
+  box-shadow: 0 3px 10px rgba(88,204,2,0.35);
+  transition: all 0.2s;
+}
+.duo-cta:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(88,204,2,0.45); }
+
+.toc {
+  background: #fff; border-radius: 10px;
+  padding: 14px 20px; margin-bottom: 22px;
+  box-shadow: 0 2px 8px rgba(37,58,119,0.08);
+  border-left: 4px solid #FFD100;
+}
+.toc h3 { color:#253a77; font-size: 1rem; margin-bottom: 6px; }
+.toc a {
+  display: inline-block; margin: 3px 8px 3px 0;
+  padding: 4px 10px; background: #ecfeff; color: #0e7490;
+  border-radius: 999px; text-decoration: none;
+  font-size: 0.82rem; font-weight: 700;
+  border: 1px solid #0891b2;
+}
+.toc a:hover { background: #0891b2; color: #fff; }
+
+.culture-box {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 5px solid #FFD100;
+  padding: 18px 22px; border-radius: 10px;
+  margin-bottom: 26px;
+}
+.culture-box h3 { color:#1a2a4a; font-size: 1.05rem; margin-bottom: 8px; }
+.culture-box ul { margin:0; padding-left: 22px; }
+.culture-box li { font-size: 0.95rem; color: #1a2a4a; line-height: 1.55; padding: 3px 0; }
+
+.unit { margin-bottom: 40px; }
+.unit-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px; padding: 12px 18px;
+  background: linear-gradient(135deg, #253a77 0%, #1a2a4a 100%);
+  border-radius: 10px; color:#fff;
+  box-shadow: 0 4px 14px rgba(37,58,119,0.22);
+}
+.unit-header .grade-badge {
+  background: #FFD100; color: #1a2a4a;
+  width: 62px; height: 44px; border-radius: 8px;
+  display: flex; align-items:center; justify-content:center;
+  font-weight: 800; font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.unit-header .u-title { font-size: 1.15rem; font-weight: 800; }
+.unit-header .u-title .u-sub {
+  display: block; font-size: 0.78rem; font-weight: 500;
+  color: #cffafe; font-style: italic; margin-top: 2px;
+}
+
+.section {
+  background: #fff; border-radius: 10px;
+  padding: 18px 22px; margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #0891b2;
+}
+.section h4 {
+  color: #253a77; font-size: 1rem; font-weight: 800;
+  margin-bottom: 10px; padding-bottom: 4px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 0.92rem;
+}
+.vocab-table td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 7px 10px;
+  color: #2d3748; vertical-align: top;
+}
+.vocab-table td:first-child {
+  font-weight: 700; color: #0e7490; width: 45%;
+}
+.vocab-table tr:hover td { background: #ecfeff; }
+
+.grammar-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+  margin: 14px 0;
+}
+.grammar-box h5 { color:#0e7490; font-size:0.98rem; margin-bottom: 6px; }
+.grammar-box p { font-size: 0.92rem; color: #1a2a4a; line-height: 1.6; }
+
+.practice {
+  background: #ecfeff; border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+  margin-top: 14px;
+}
+.practice h5 {
+  color: #0e7490; font-size: 0.98rem; margin-bottom: 6px;
+}
+.practice ol { margin: 6px 0 0 22px; }
+.practice li { font-size: 0.92rem; color: #1a2a4a; padding: 3px 0; line-height: 1.5; }
+
+/* Quiz */
+.quiz {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-top: 20px;
+}
+.quiz-header {
+  display: flex; align-items:center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.quiz-header h5 { color:#1a2a4a; font-size: 1.05rem; font-weight: 800; }
+.quiz-score {
+  background: #253a77; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font-size: 0.82rem; font-weight: 800;
+}
+.q-item {
+  background: #fff; border-radius: 8px;
+  padding: 12px 14px; margin: 10px 0;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+}
+.q-num { color:#0e7490; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.q-text { color:#1a2a4a; font-size: 0.98rem; font-weight: 700; margin: 4px 0 10px; }
+.q-choices { display: grid; gap: 6px; }
+.q-choice {
+  padding: 8px 12px; border-radius: 6px;
+  background: #f8fafc; border: 2px solid #e2e8f0;
+  cursor: pointer; font-size: 0.92rem;
+  transition: all 0.15s;
+  text-align: left;
+}
+.q-choice:hover { background: #ecfeff; border-color: #0891b2; }
+.q-choice.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700; }
+.q-choice.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-choice[disabled] { cursor: default; opacity: 0.85; }
+.q-feedback { margin-top: 6px; font-size: 0.82rem; color: #0e7490; font-weight: 700; }
+.quiz-reset {
+  display: inline-block; margin-top: 8px;
+  background: #253a77; color:#fff; text-decoration:none;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none;
+}
+.quiz-reset:hover { background: #1a2a4a; }
+
+footer {
+  margin-top: 30px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 0.95rem;
+}
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn, .duo-cta, .quiz-reset { display:none; }
+  .section, .unit-header, .quiz { box-shadow:none; break-inside: avoid; }
+  .unit { break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.5rem; }
+  .vocab-table td:first-child { width: 50%; }
+}
+</style>
+</head>
+<body>
+<a href="language-lab-french.html" class="back-btn">&larr; Back to French</a>
+<a href="javascript:window.print()" class="print-btn">🖨️ Print</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="flag">🇫🇷</div>
+    <h1>French Workbook</h1>
+    <div class="native">Français</div>
+    <div class="greeting">Bonjour &middot; welcome to your French workbook!</div>
+  </div>
+
+  <div class="toc">
+    <h3>Jump to:</h3>
+    <a href="#culture">Culture</a>
+    <a href="#g6">Grade 6 &middot; Level 1</a>
+    <a href="#g7">Grade 7 &middot; Level 2</a>
+    <a href="#g8">Grade 8 &middot; Level 3</a>
+    <a href="#q6">Quiz 1</a>
+    <a href="#q7">Quiz 2</a>
+    <a href="#q8">Quiz 3</a>
+  </div>
+
+  <div class="culture-box" id="culture">
+    <h3>🌏 Culture Corner</h3>
+    <ul><li>French is spoken by ~300 million people across 29 countries, including Canada, Switzerland, Belgium, and much of West Africa.</li><li>France is the most-visited country in the world.</li><li>French has masculine (le) and feminine (la) nouns -- and adjectives change to match.</li><li>Silent letters everywhere! 'Paris' is pronounced 'Pah-REE' -- the S is silent.</li><li>About 30 percent of English words come from French (via the Norman Conquest of 1066).</li></ul>
+  </div>
+
+  <div class="unit"><div class="unit-header" id="g6"><div class="grade-badge">Grade 6</div><div class="u-title">Level 1 -- Introduction<span class="u-sub">Level 1 &mdash; Introduction</span></div></div><div class="section"><h4>Greetings &amp; Courtesy</h4><table class="vocab-table"><tbody><tr><td>Bonjour</td><td>Hello / Good day</td></tr><tr><td>Salut</td><td>Hi (informal)</td></tr><tr><td>Bonsoir</td><td>Good evening</td></tr><tr><td>Bonne nuit</td><td>Good night</td></tr><tr><td>Au revoir</td><td>Goodbye</td></tr><tr><td>À bientôt</td><td>See you soon</td></tr><tr><td>À demain</td><td>See you tomorrow</td></tr><tr><td>Comment ça va?</td><td>How are you?</td></tr><tr><td>Ça va bien</td><td>I'm well</td></tr><tr><td>Ça va mal</td><td>I'm not doing well</td></tr><tr><td>Comme ci, comme ça</td><td>So-so</td></tr><tr><td>S'il vous plaît</td><td>Please (formal)</td></tr><tr><td>S'il te plaît</td><td>Please (informal)</td></tr><tr><td>Merci</td><td>Thank you</td></tr><tr><td>Merci beaucoup</td><td>Thank you very much</td></tr><tr><td>De rien</td><td>You're welcome</td></tr><tr><td>Excusez-moi</td><td>Excuse me</td></tr><tr><td>Enchanté(e)</td><td>Nice to meet you</td></tr></tbody></table></div><div class="section"><h4>Introducing Yourself</h4><table class="vocab-table"><tbody><tr><td>Je m'appelle...</td><td>My name is...</td></tr><tr><td>Je suis de...</td><td>I am from...</td></tr><tr><td>J'ai douze ans</td><td>I am 12 years old</td></tr><tr><td>Comment tu t'appelles?</td><td>What is your name?</td></tr><tr><td>Quel âge as-tu?</td><td>How old are you?</td></tr><tr><td>D'où viens-tu?</td><td>Where are you from?</td></tr></tbody></table></div><div class="section"><h4>Numbers 1-30</h4><table class="vocab-table"><tbody><tr><td>un</td><td>1</td></tr><tr><td>deux</td><td>2</td></tr><tr><td>trois</td><td>3</td></tr><tr><td>quatre</td><td>4</td></tr><tr><td>cinq</td><td>5</td></tr><tr><td>six</td><td>6</td></tr><tr><td>sept</td><td>7</td></tr><tr><td>huit</td><td>8</td></tr><tr><td>neuf</td><td>9</td></tr><tr><td>dix</td><td>10</td></tr><tr><td>onze</td><td>11</td></tr><tr><td>douze</td><td>12</td></tr><tr><td>treize</td><td>13</td></tr><tr><td>quatorze</td><td>14</td></tr><tr><td>quinze</td><td>15</td></tr><tr><td>seize</td><td>16</td></tr><tr><td>dix-sept</td><td>17</td></tr><tr><td>dix-huit</td><td>18</td></tr><tr><td>dix-neuf</td><td>19</td></tr><tr><td>vingt</td><td>20</td></tr><tr><td>vingt et un</td><td>21</td></tr><tr><td>vingt-deux</td><td>22</td></tr><tr><td>vingt-trois</td><td>23</td></tr><tr><td>vingt-quatre</td><td>24</td></tr><tr><td>vingt-cinq</td><td>25</td></tr><tr><td>vingt-six</td><td>26</td></tr><tr><td>vingt-sept</td><td>27</td></tr><tr><td>vingt-huit</td><td>28</td></tr><tr><td>vingt-neuf</td><td>29</td></tr><tr><td>trente</td><td>30</td></tr></tbody></table></div><div class="section"><h4>Colors</h4><table class="vocab-table"><tbody><tr><td>rouge</td><td>red</td></tr><tr><td>bleu</td><td>blue</td></tr><tr><td>vert</td><td>green</td></tr><tr><td>jaune</td><td>yellow</td></tr><tr><td>blanc</td><td>white</td></tr><tr><td>noir</td><td>black</td></tr><tr><td>orange</td><td>orange</td></tr><tr><td>violet</td><td>purple</td></tr><tr><td>rose</td><td>pink</td></tr><tr><td>gris</td><td>gray</td></tr><tr><td>marron</td><td>brown</td></tr><tr><td>doré</td><td>gold</td></tr></tbody></table></div><div class="section"><h4>Days of the Week</h4><table class="vocab-table"><tbody><tr><td>lundi</td><td>Monday</td></tr><tr><td>mardi</td><td>Tuesday</td></tr><tr><td>mercredi</td><td>Wednesday</td></tr><tr><td>jeudi</td><td>Thursday</td></tr><tr><td>vendredi</td><td>Friday</td></tr><tr><td>samedi</td><td>Saturday</td></tr><tr><td>dimanche</td><td>Sunday</td></tr></tbody></table></div><div class="section"><h4>Months of the Year</h4><table class="vocab-table"><tbody><tr><td>janvier</td><td>January</td></tr><tr><td>février</td><td>February</td></tr><tr><td>mars</td><td>March</td></tr><tr><td>avril</td><td>April</td></tr><tr><td>mai</td><td>May</td></tr><tr><td>juin</td><td>June</td></tr><tr><td>juillet</td><td>July</td></tr><tr><td>août</td><td>August</td></tr><tr><td>septembre</td><td>September</td></tr><tr><td>octobre</td><td>October</td></tr><tr><td>novembre</td><td>November</td></tr><tr><td>décembre</td><td>December</td></tr></tbody></table></div><div class="section"><h4>Family</h4><table class="vocab-table"><tbody><tr><td>la famille</td><td>family</td></tr><tr><td>la mère / maman</td><td>mother / mom</td></tr><tr><td>le père / papa</td><td>father / dad</td></tr><tr><td>le frère</td><td>brother</td></tr><tr><td>la sœur</td><td>sister</td></tr><tr><td>le grand-père</td><td>grandfather</td></tr><tr><td>la grand-mère</td><td>grandmother</td></tr><tr><td>l'oncle</td><td>uncle</td></tr><tr><td>la tante</td><td>aunt</td></tr><tr><td>le cousin / la cousine</td><td>cousin</td></tr></tbody></table></div><div class="section"><h4>Basic Nouns</h4><table class="vocab-table"><tbody><tr><td>la maison</td><td>the house</td></tr><tr><td>le livre</td><td>the book</td></tr><tr><td>l'école</td><td>the school</td></tr><tr><td>la table</td><td>the table</td></tr><tr><td>la chaise</td><td>the chair</td></tr><tr><td>le chien</td><td>the dog</td></tr><tr><td>le chat</td><td>the cat</td></tr><tr><td>l'eau</td><td>water</td></tr><tr><td>la nourriture</td><td>food</td></tr><tr><td>l'ami / l'amie</td><td>friend</td></tr><tr><td>le professeur</td><td>teacher</td></tr><tr><td>l'élève</td><td>student</td></tr></tbody></table></div><div class="section"><h4>Pronouns</h4><table class="vocab-table"><tbody><tr><td>je</td><td>I</td></tr><tr><td>tu</td><td>you (informal)</td></tr><tr><td>vous</td><td>you (formal / plural)</td></tr><tr><td>il</td><td>he</td></tr><tr><td>elle</td><td>she</td></tr><tr><td>nous</td><td>we</td></tr><tr><td>ils</td><td>they (m)</td></tr><tr><td>elles</td><td>they (f)</td></tr></tbody></table></div><div class="section"><h4>Weather</h4><table class="vocab-table"><tbody><tr><td>Il fait beau</td><td>It's nice out</td></tr><tr><td>Il fait chaud</td><td>It's hot</td></tr><tr><td>Il fait froid</td><td>It's cold</td></tr><tr><td>Il fait frais</td><td>It's cool</td></tr><tr><td>Il pleut</td><td>It's raining</td></tr><tr><td>Il neige</td><td>It's snowing</td></tr><tr><td>Il y a du vent</td><td>It's windy</td></tr><tr><td>Il y a du soleil</td><td>It's sunny</td></tr><tr><td>Il y a des nuages</td><td>It's cloudy</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: gender &amp; articles</h5><p>Every French noun is masculine (<b>le</b>) or feminine (<b>la</b>). Words starting with a vowel use <b>l'</b> (l'école, l'eau). Adjectives change to match: <i>un chat noir</i> (a black cat, masc.) but <i>une maison blanche</i> (a white house, fem.).</p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Introduce yourself to a partner: name, age, where you're from.</li><li>Count from 1 to 30 aloud without stopping.</li><li>Name three classroom objects with the correct le/la/l'.</li><li>Say the day, month, and weather in one French sentence.</li></ol></div><div class="quiz" id="q6" data-questions="[{&quot;q&quot;: &quot;How do you say &#x27;Hello / Good day&#x27; in French?&quot;, &quot;choices&quot;: [&quot;Bonsoir&quot;, &quot;Bonjour&quot;, &quot;Au revoir&quot;, &quot;Bonne nuit&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which color is &#x27;red&#x27;?&quot;, &quot;choices&quot;: [&quot;bleu&quot;, &quot;jaune&quot;, &quot;rouge&quot;, &quot;vert&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;Mercredi&#x27; is which day?&quot;, &quot;choices&quot;: [&quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;How do you count &#x27;16&#x27;?&quot;, &quot;choices&quot;: [&quot;quinze&quot;, &quot;seize&quot;, &quot;dix-sept&quot;, &quot;douze&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which article goes with &#x27;école&#x27;?&quot;, &quot;choices&quot;: [&quot;le&quot;, &quot;la&quot;, &quot;l&#x27;&quot;, &quot;un&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;J&#x27;ai douze ans&#x27; means...&quot;, &quot;choices&quot;: [&quot;I have twelve books&quot;, &quot;I am twelve years old&quot;, &quot;I have twelve friends&quot;, &quot;I need twelve&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which is &#x27;sister&#x27;?&quot;, &quot;choices&quot;: [&quot;frère&quot;, &quot;sœur&quot;, &quot;tante&quot;, &quot;mère&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Il pleut&#x27; means...&quot;, &quot;choices&quot;: [&quot;It&#x27;s sunny&quot;, &quot;It&#x27;s raining&quot;, &quot;It&#x27;s cold&quot;, &quot;It&#x27;s windy&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;How do you say &#x27;Thank you very much&#x27;?&quot;, &quot;choices&quot;: [&quot;S&#x27;il vous plaît&quot;, &quot;Merci beaucoup&quot;, &quot;De rien&quot;, &quot;Excusez-moi&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which pronoun means &#x27;we&#x27;?&quot;, &quot;choices&quot;: [&quot;je&quot;, &quot;tu&quot;, &quot;nous&quot;, &quot;vous&quot;], &quot;a&quot;: 2}]">  <div class="quiz-header">    <h5>🧠 Grade 6 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+<div class="unit"><div class="unit-header" id="g7"><div class="grade-badge">Grade 7</div><div class="u-title">Level 2 -- Foundations<span class="u-sub">Level 2 &mdash; Foundations</span></div></div><div class="section"><h4>Daily Routines (Verbs)</h4><table class="vocab-table"><tbody><tr><td>se réveiller</td><td>to wake up</td></tr><tr><td>se lever</td><td>to get up</td></tr><tr><td>se doucher</td><td>to shower</td></tr><tr><td>s'habiller</td><td>to get dressed</td></tr><tr><td>prendre le petit déjeuner</td><td>to eat breakfast</td></tr><tr><td>aller à l'école</td><td>to go to school</td></tr><tr><td>étudier</td><td>to study</td></tr><tr><td>déjeuner</td><td>to eat lunch</td></tr><tr><td>faire les devoirs</td><td>to do homework</td></tr><tr><td>dîner</td><td>to eat dinner</td></tr><tr><td>regarder la télé</td><td>to watch TV</td></tr><tr><td>se coucher</td><td>to go to bed</td></tr><tr><td>dormir</td><td>to sleep</td></tr></tbody></table></div><div class="section"><h4>Food &amp; Drink</h4><table class="vocab-table"><tbody><tr><td>le pain</td><td>bread</td></tr><tr><td>le riz</td><td>rice</td></tr><tr><td>le poulet</td><td>chicken</td></tr><tr><td>la viande</td><td>meat</td></tr><tr><td>le poisson</td><td>fish</td></tr><tr><td>la salade</td><td>salad</td></tr><tr><td>la soupe</td><td>soup</td></tr><tr><td>les légumes</td><td>vegetables</td></tr><tr><td>les fruits</td><td>fruit</td></tr><tr><td>la pomme</td><td>apple</td></tr><tr><td>la banane</td><td>banana</td></tr><tr><td>l'orange</td><td>orange</td></tr><tr><td>la fraise</td><td>strawberry</td></tr><tr><td>le lait</td><td>milk</td></tr><tr><td>l'eau</td><td>water</td></tr><tr><td>le jus</td><td>juice</td></tr><tr><td>le café</td><td>coffee</td></tr><tr><td>le petit déjeuner</td><td>breakfast</td></tr><tr><td>le déjeuner</td><td>lunch</td></tr><tr><td>le dîner</td><td>dinner</td></tr></tbody></table></div><div class="section"><h4>Describing People</h4><table class="vocab-table"><tbody><tr><td>grand/e</td><td>tall</td></tr><tr><td>petit/e</td><td>short</td></tr><tr><td>jeune</td><td>young</td></tr><tr><td>vieux/vieille</td><td>old</td></tr><tr><td>gentil/le</td><td>nice</td></tr><tr><td>intelligent/e</td><td>intelligent</td></tr><tr><td>drôle</td><td>funny</td></tr><tr><td>sérieux/sérieuse</td><td>serious</td></tr><tr><td>beau/belle</td><td>beautiful</td></tr><tr><td>brun/e</td><td>brown-haired</td></tr><tr><td>blond/e</td><td>blond</td></tr><tr><td>mince</td><td>thin</td></tr><tr><td>fort/e</td><td>strong</td></tr><tr><td>sympa</td><td>cool / nice</td></tr></tbody></table></div><div class="section"><h4>Body Parts</h4><table class="vocab-table"><tbody><tr><td>la tête</td><td>head</td></tr><tr><td>les cheveux</td><td>hair</td></tr><tr><td>les yeux</td><td>eyes</td></tr><tr><td>le nez</td><td>nose</td></tr><tr><td>la bouche</td><td>mouth</td></tr><tr><td>les oreilles</td><td>ears</td></tr><tr><td>les dents</td><td>teeth</td></tr><tr><td>le bras</td><td>arm</td></tr><tr><td>la main</td><td>hand</td></tr><tr><td>la jambe</td><td>leg</td></tr><tr><td>le pied</td><td>foot</td></tr><tr><td>le dos</td><td>back</td></tr><tr><td>le cœur</td><td>heart</td></tr><tr><td>l'estomac</td><td>stomach</td></tr></tbody></table></div><div class="section"><h4>Time &amp; Clock</h4><table class="vocab-table"><tbody><tr><td>Quelle heure est-il?</td><td>What time is it?</td></tr><tr><td>Il est une heure</td><td>It's 1:00</td></tr><tr><td>Il est deux heures</td><td>It's 2:00</td></tr><tr><td>Il est trois heures et demie</td><td>It's 3:30</td></tr><tr><td>Il est quatre heures et quart</td><td>It's 4:15</td></tr><tr><td>Il est cinq heures moins le quart</td><td>It's 4:45</td></tr><tr><td>midi</td><td>noon</td></tr><tr><td>minuit</td><td>midnight</td></tr><tr><td>le matin</td><td>morning</td></tr><tr><td>l'après-midi</td><td>afternoon</td></tr><tr><td>le soir</td><td>evening</td></tr></tbody></table></div><div class="section"><h4>Common Places</h4><table class="vocab-table"><tbody><tr><td>la maison</td><td>house</td></tr><tr><td>l'école</td><td>school</td></tr><tr><td>la bibliothèque</td><td>library</td></tr><tr><td>le parc</td><td>park</td></tr><tr><td>le magasin</td><td>store</td></tr><tr><td>le marché</td><td>market</td></tr><tr><td>le restaurant</td><td>restaurant</td></tr><tr><td>l'église</td><td>church</td></tr><tr><td>la plage</td><td>beach</td></tr><tr><td>le cinéma</td><td>cinema</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: present-tense -ER verbs</h5><p>Regular -ER verbs like <b>parler</b> (to speak) drop -er and add: <b>je parle, tu parles, il/elle parle, nous parlons, vous parlez, ils/elles parlent.</b> Same rule for <i>étudier, écouter, regarder, travailler, chanter.</i></p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Describe your morning routine using at least 5 verbs.</li><li>Describe your best friend in 3 French sentences.</li><li>Order a full French lunch: 3 foods + 1 drink.</li><li>Tell a partner what time you wake up and what time you go to bed.</li></ol></div><div class="quiz" id="q7" data-questions="[{&quot;q&quot;: &quot;Which verb means &#x27;to wake up&#x27;?&quot;, &quot;choices&quot;: [&quot;se lever&quot;, &quot;se réveiller&quot;, &quot;se doucher&quot;, &quot;se coucher&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;La pomme&#x27; is which fruit?&quot;, &quot;choices&quot;: [&quot;banana&quot;, &quot;apple&quot;, &quot;orange&quot;, &quot;strawberry&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which adjective means &#x27;funny&#x27;?&quot;, &quot;choices&quot;: [&quot;sérieux&quot;, &quot;drôle&quot;, &quot;grand&quot;, &quot;fort&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Les yeux&#x27; are your...&quot;, &quot;choices&quot;: [&quot;ears&quot;, &quot;eyes&quot;, &quot;teeth&quot;, &quot;feet&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which is &#x27;It&#x27;s 3:30&#x27;?&quot;, &quot;choices&quot;: [&quot;Il est trois heures&quot;, &quot;Il est trois heures et demie&quot;, &quot;Il est quatre heures&quot;, &quot;Il est trois heures et quart&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;La bibliothèque&#x27; means...&quot;, &quot;choices&quot;: [&quot;park&quot;, &quot;library&quot;, &quot;beach&quot;, &quot;bookstore&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Present-tense of &#x27;parler&#x27; for &#x27;nous&#x27; is...&quot;, &quot;choices&quot;: [&quot;parle&quot;, &quot;parles&quot;, &quot;parlez&quot;, &quot;parlons&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;Which meal comes last?&quot;, &quot;choices&quot;: [&quot;le petit déjeuner&quot;, &quot;le déjeuner&quot;, &quot;le dîner&quot;, &quot;le matin&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which body part is &#x27;la jambe&#x27;?&quot;, &quot;choices&quot;: [&quot;arm&quot;, &quot;leg&quot;, &quot;hand&quot;, &quot;heart&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Le marché&#x27; is the...&quot;, &quot;choices&quot;: [&quot;park&quot;, &quot;market&quot;, &quot;restaurant&quot;, &quot;cinema&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 7 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+<div class="unit"><div class="unit-header" id="g8"><div class="grade-badge">Grade 8</div><div class="u-title">Level 3 -- Intermediate<span class="u-sub">Level 3 &mdash; Intermediate</span></div></div><div class="section"><h4>Travel Vocabulary</h4><table class="vocab-table"><tbody><tr><td>l'aéroport</td><td>airport</td></tr><tr><td>le vol</td><td>flight</td></tr><tr><td>l'hôtel</td><td>hotel</td></tr><tr><td>la plage</td><td>beach</td></tr><tr><td>la montagne</td><td>mountain</td></tr><tr><td>la ville</td><td>city</td></tr><tr><td>le pays</td><td>country</td></tr><tr><td>le passeport</td><td>passport</td></tr><tr><td>la valise</td><td>suitcase</td></tr><tr><td>la carte</td><td>map</td></tr><tr><td>le billet</td><td>ticket</td></tr><tr><td>le train</td><td>train</td></tr><tr><td>le bus</td><td>bus</td></tr><tr><td>la voiture</td><td>car</td></tr><tr><td>le métro</td><td>subway</td></tr></tbody></table></div><div class="section"><h4>Passé Composé (Past Tense)</h4><table class="vocab-table"><tbody><tr><td>j'ai parlé</td><td>I spoke</td></tr><tr><td>j'ai mangé</td><td>I ate</td></tr><tr><td>j'ai vécu</td><td>I lived</td></tr><tr><td>je suis allé(e)</td><td>I went</td></tr><tr><td>j'ai vu</td><td>I saw</td></tr><tr><td>j'ai fait</td><td>I did / I made</td></tr><tr><td>j'ai dit</td><td>I said</td></tr><tr><td>j'ai eu</td><td>I had</td></tr><tr><td>j'ai acheté</td><td>I bought</td></tr><tr><td>j'ai visité</td><td>I visited</td></tr><tr><td>j'ai voyagé</td><td>I traveled</td></tr><tr><td>j'ai appris</td><td>I learned</td></tr></tbody></table></div><div class="section"><h4>Emotions &amp; Feelings</h4><table class="vocab-table"><tbody><tr><td>heureux/heureuse</td><td>happy</td></tr><tr><td>triste</td><td>sad</td></tr><tr><td>fâché/e</td><td>angry</td></tr><tr><td>surpris/e</td><td>surprised</td></tr><tr><td>fatigué/e</td><td>tired</td></tr><tr><td>excité/e</td><td>excited</td></tr><tr><td>nerveux/nerveuse</td><td>nervous</td></tr><tr><td>ennuyé/e</td><td>bored</td></tr><tr><td>malade</td><td>sick</td></tr><tr><td>fier/fière</td><td>proud</td></tr><tr><td>inquiet/inquiète</td><td>worried</td></tr></tbody></table></div><div class="section"><h4>Money &amp; Shopping</h4><table class="vocab-table"><tbody><tr><td>Combien ça coûte?</td><td>How much does it cost?</td></tr><tr><td>cher/chère</td><td>expensive</td></tr><tr><td>bon marché</td><td>cheap</td></tr><tr><td>l'argent</td><td>money</td></tr><tr><td>la carte</td><td>card</td></tr><tr><td>acheter</td><td>to buy</td></tr><tr><td>vendre</td><td>to sell</td></tr><tr><td>payer</td><td>to pay</td></tr><tr><td>le magasin</td><td>the store</td></tr></tbody></table></div><div class="section"><h4>Directions</h4><table class="vocab-table"><tbody><tr><td>à droite</td><td>to the right</td></tr><tr><td>à gauche</td><td>to the left</td></tr><tr><td>tout droit</td><td>straight ahead</td></tr><tr><td>près</td><td>near</td></tr><tr><td>loin</td><td>far</td></tr><tr><td>ici</td><td>here</td></tr><tr><td>là</td><td>there</td></tr><tr><td>Où est...?</td><td>Where is...?</td></tr></tbody></table></div><div class="section"><h4>Connecting Words</h4><table class="vocab-table"><tbody><tr><td>parce que</td><td>because</td></tr><tr><td>donc</td><td>so / therefore</td></tr><tr><td>mais</td><td>but</td></tr><tr><td>quand</td><td>when</td></tr><tr><td>après</td><td>after</td></tr><tr><td>avant</td><td>before</td></tr><tr><td>aussi</td><td>also</td></tr><tr><td>c'est pourquoi</td><td>that's why</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: passé composé</h5><p>To talk about a completed past action, use passé composé: <b>avoir/être + past participle.</b> For -ER verbs, the past participle ends in -é: <i>parler &rarr; parlé; manger &rarr; mangé.</i> Example: <b>J'ai parlé</b> = I spoke; <b>Nous avons mangé</b> = we ate.</p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Write about a real trip you took, using at least 4 passé composé verbs.</li><li>Describe how you felt on your first day of middle school (use 'parce que').</li><li>Plan an imaginary trip to Paris: 3 places + 3 things to buy.</li><li>Give directions from the classroom to the library in French.</li></ol></div><div class="quiz" id="q8" data-questions="[{&quot;q&quot;: &quot;Which verb means &#x27;I traveled&#x27;?&quot;, &quot;choices&quot;: [&quot;je voyage&quot;, &quot;j&#x27;ai voyagé&quot;, &quot;je voyagerai&quot;, &quot;je voyageais&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;Le vol&#x27; is a...&quot;, &quot;choices&quot;: [&quot;flight&quot;, &quot;ticket&quot;, &quot;hotel&quot;, &quot;car&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;Which is &#x27;nervous&#x27;?&quot;, &quot;choices&quot;: [&quot;fatigué&quot;, &quot;ennuyé&quot;, &quot;nerveux&quot;, &quot;fier&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;Combien ça coûte?&#x27; means...&quot;, &quot;choices&quot;: [&quot;Where is it?&quot;, &quot;How are you?&quot;, &quot;How much does it cost?&quot;, &quot;When is it?&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which means &#x27;to the left&#x27;?&quot;, &quot;choices&quot;: [&quot;à droite&quot;, &quot;à gauche&quot;, &quot;tout droit&quot;, &quot;près&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which connector means &#x27;because&#x27;?&quot;, &quot;choices&quot;: [&quot;mais&quot;, &quot;parce que&quot;, &quot;quand&quot;, &quot;aussi&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Passé composé of &#x27;manger&#x27; is...&quot;, &quot;choices&quot;: [&quot;je mange&quot;, &quot;j&#x27;ai mangé&quot;, &quot;je mangeais&quot;, &quot;je mangerai&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;La valise&#x27; is a...&quot;, &quot;choices&quot;: [&quot;map&quot;, &quot;passport&quot;, &quot;suitcase&quot;, &quot;ticket&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which emotion is &#x27;fier&#x27;?&quot;, &quot;choices&quot;: [&quot;sad&quot;, &quot;surprised&quot;, &quot;tired&quot;, &quot;proud&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;&#x27;J&#x27;ai acheté un billet&#x27; means...&quot;, &quot;choices&quot;: [&quot;I sell a ticket&quot;, &quot;I bought a ticket&quot;, &quot;I want a ticket&quot;, &quot;I lost a ticket&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 8 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+
+  
+    <a class="duo-cta" href="https://www.duolingo.com/course/fr/en/Learn-French" target="_blank" rel="noopener">🦉 Practice on Duolingo &nearr;</a>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+
+</div>
+
+<script>
+// Interactive quiz runner
+(function() {
+  document.querySelectorAll('.quiz').forEach(function(quizEl) {
+    var questions = JSON.parse(quizEl.getAttribute('data-questions'));
+    var total = questions.length;
+    var answered = 0, correct = 0;
+    var scoreEl = quizEl.querySelector('.quiz-score');
+    var itemsEl = quizEl.querySelector('.q-items');
+    scoreEl.textContent = '0 / ' + total;
+    questions.forEach(function(q, i) {
+      var item = document.createElement('div');
+      item.className = 'q-item';
+      var num = document.createElement('div');
+      num.className = 'q-num'; num.textContent = 'Question ' + (i+1) + ' of ' + total;
+      var text = document.createElement('div');
+      text.className = 'q-text'; text.textContent = q.q;
+      var choices = document.createElement('div');
+      choices.className = 'q-choices';
+      var feedback = document.createElement('div');
+      feedback.className = 'q-feedback';
+      var answered_here = false;
+      q.choices.forEach(function(choice, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'q-choice';
+        btn.type = 'button';
+        btn.textContent = choice;
+        btn.addEventListener('click', function() {
+          if (answered_here) return;
+          answered_here = true;
+          answered++;
+          Array.prototype.forEach.call(choices.children, function(c) { c.disabled = true; });
+          if (ci === q.a) {
+            btn.classList.add('correct');
+            correct++;
+            feedback.textContent = '✓ Correct!';
+            feedback.style.color = '#065f46';
+          } else {
+            btn.classList.add('wrong');
+            choices.children[q.a].classList.add('correct');
+            feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+            feedback.style.color = '#991b1b';
+          }
+          scoreEl.textContent = correct + ' / ' + total;
+        });
+        choices.appendChild(btn);
+      });
+      item.appendChild(num);
+      item.appendChild(text);
+      item.appendChild(choices);
+      item.appendChild(feedback);
+      itemsEl.appendChild(item);
+    });
+    // Reset button
+    var reset = quizEl.querySelector('.quiz-reset');
+    reset.addEventListener('click', function() {
+      itemsEl.innerHTML = '';
+      answered = 0; correct = 0;
+      scoreEl.textContent = '0 / ' + total;
+      // Re-render
+      questions.forEach(function(q, i) {
+        var item = document.createElement('div');
+        item.className = 'q-item';
+        item.innerHTML = '<div class="q-num">Question ' + (i+1) + ' of ' + total + '</div>' +
+                         '<div class="q-text">' + q.q + '</div>' +
+                         '<div class="q-choices"></div><div class="q-feedback"></div>';
+        var choicesDiv = item.querySelector('.q-choices');
+        var feedback = item.querySelector('.q-feedback');
+        var answered_here = false;
+        q.choices.forEach(function(choice, ci) {
+          var btn = document.createElement('button');
+          btn.className = 'q-choice'; btn.type='button'; btn.textContent = choice;
+          btn.addEventListener('click', function() {
+            if (answered_here) return;
+            answered_here = true; answered++;
+            Array.prototype.forEach.call(choicesDiv.children, function(c) { c.disabled = true; });
+            if (ci === q.a) {
+              btn.classList.add('correct'); correct++;
+              feedback.textContent = '✓ Correct!'; feedback.style.color = '#065f46';
+            } else {
+              btn.classList.add('wrong'); choicesDiv.children[q.a].classList.add('correct');
+              feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+              feedback.style.color = '#991b1b';
+            }
+            scoreEl.textContent = correct + ' / ' + total;
+          });
+          choicesDiv.appendChild(btn);
+        });
+        itemsEl.appendChild(item);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japanese Workbook &mdash; Language Lab &middot; Dr. Freitas</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #ecfeff 0%, #f8f9fa 100%);
+  color: #253a77;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.back-btn, .print-btn {
+  position: fixed; top: 20px; text-decoration: none;
+  padding: 10px 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(37,58,119,0.25);
+  transition: all 0.18s; z-index: 10;
+}
+.back-btn { left: 20px; background: #253a77; color: #fff; }
+.back-btn:hover { background:#1a2a4a; transform:translateX(-2px); }
+.print-btn { right: 20px; background: #0891b2; color: #fff; }
+.print-btn:hover { background:#0e7490; }
+.header {
+  text-align:center; margin-bottom: 26px; padding-bottom: 20px;
+  border-bottom: 3px solid #0891b2;
+}
+.flag { font-size: 4rem; line-height:1; }
+.header h1 { color:#253a77; font-size: 2rem; font-weight: 800; margin: 6px 0; }
+.header .native { color:#0e7490; font-style: italic; font-weight: 700; font-size: 1.05rem; }
+.header .greeting { margin-top: 8px; font-size: 1.1rem; color:#1a2a4a; font-weight: 700; }
+.duo-cta {
+  display: inline-block; background: linear-gradient(135deg, #58cc02 0%, #4bad00 100%);
+  color: #fff; text-decoration: none;
+  padding: 10px 22px; border-radius: 999px;
+  font-weight: 800; font-size: 0.92rem; margin-top: 14px;
+  box-shadow: 0 3px 10px rgba(88,204,2,0.35);
+  transition: all 0.2s;
+}
+.duo-cta:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(88,204,2,0.45); }
+
+.toc {
+  background: #fff; border-radius: 10px;
+  padding: 14px 20px; margin-bottom: 22px;
+  box-shadow: 0 2px 8px rgba(37,58,119,0.08);
+  border-left: 4px solid #FFD100;
+}
+.toc h3 { color:#253a77; font-size: 1rem; margin-bottom: 6px; }
+.toc a {
+  display: inline-block; margin: 3px 8px 3px 0;
+  padding: 4px 10px; background: #ecfeff; color: #0e7490;
+  border-radius: 999px; text-decoration: none;
+  font-size: 0.82rem; font-weight: 700;
+  border: 1px solid #0891b2;
+}
+.toc a:hover { background: #0891b2; color: #fff; }
+
+.culture-box {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border-left: 5px solid #FFD100;
+  padding: 18px 22px; border-radius: 10px;
+  margin-bottom: 26px;
+}
+.culture-box h3 { color:#1a2a4a; font-size: 1.05rem; margin-bottom: 8px; }
+.culture-box ul { margin:0; padding-left: 22px; }
+.culture-box li { font-size: 0.95rem; color: #1a2a4a; line-height: 1.55; padding: 3px 0; }
+
+.unit { margin-bottom: 40px; }
+.unit-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 18px; padding: 12px 18px;
+  background: linear-gradient(135deg, #253a77 0%, #1a2a4a 100%);
+  border-radius: 10px; color:#fff;
+  box-shadow: 0 4px 14px rgba(37,58,119,0.22);
+}
+.unit-header .grade-badge {
+  background: #FFD100; color: #1a2a4a;
+  width: 62px; height: 44px; border-radius: 8px;
+  display: flex; align-items:center; justify-content:center;
+  font-weight: 800; font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.unit-header .u-title { font-size: 1.15rem; font-weight: 800; }
+.unit-header .u-title .u-sub {
+  display: block; font-size: 0.78rem; font-weight: 500;
+  color: #cffafe; font-style: italic; margin-top: 2px;
+}
+
+.section {
+  background: #fff; border-radius: 10px;
+  padding: 18px 22px; margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(37,58,119,0.07);
+  border-top: 4px solid #0891b2;
+}
+.section h4 {
+  color: #253a77; font-size: 1rem; font-weight: 800;
+  margin-bottom: 10px; padding-bottom: 4px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.vocab-table {
+  width: 100%; border-collapse: collapse; font-size: 0.92rem;
+}
+.vocab-table td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 7px 10px;
+  color: #2d3748; vertical-align: top;
+}
+.vocab-table td:first-child {
+  font-weight: 700; color: #0e7490; width: 45%;
+}
+.vocab-table tr:hover td { background: #ecfeff; }
+
+.grammar-box {
+  background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+  border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+  margin: 14px 0;
+}
+.grammar-box h5 { color:#0e7490; font-size:0.98rem; margin-bottom: 6px; }
+.grammar-box p { font-size: 0.92rem; color: #1a2a4a; line-height: 1.6; }
+
+.practice {
+  background: #ecfeff; border-left: 4px solid #0891b2;
+  padding: 14px 18px; border-radius: 8px;
+  margin-top: 14px;
+}
+.practice h5 {
+  color: #0e7490; font-size: 0.98rem; margin-bottom: 6px;
+}
+.practice ol { margin: 6px 0 0 22px; }
+.practice li { font-size: 0.92rem; color: #1a2a4a; padding: 3px 0; line-height: 1.5; }
+
+/* Quiz */
+.quiz {
+  background: linear-gradient(135deg, #fff8e1 0%, #fef3c7 100%);
+  border: 2px dashed #FFD100;
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin-top: 20px;
+}
+.quiz-header {
+  display: flex; align-items:center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.quiz-header h5 { color:#1a2a4a; font-size: 1.05rem; font-weight: 800; }
+.quiz-score {
+  background: #253a77; color: #fff; padding: 4px 12px;
+  border-radius: 999px; font-size: 0.82rem; font-weight: 800;
+}
+.q-item {
+  background: #fff; border-radius: 8px;
+  padding: 12px 14px; margin: 10px 0;
+  box-shadow: 0 1px 4px rgba(37,58,119,0.08);
+}
+.q-num { color:#0e7490; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.q-text { color:#1a2a4a; font-size: 0.98rem; font-weight: 700; margin: 4px 0 10px; }
+.q-choices { display: grid; gap: 6px; }
+.q-choice {
+  padding: 8px 12px; border-radius: 6px;
+  background: #f8fafc; border: 2px solid #e2e8f0;
+  cursor: pointer; font-size: 0.92rem;
+  transition: all 0.15s;
+  text-align: left;
+}
+.q-choice:hover { background: #ecfeff; border-color: #0891b2; }
+.q-choice.correct { background: #d1fae5; border-color: #10b981; color: #065f46; font-weight: 700; }
+.q-choice.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+.q-choice[disabled] { cursor: default; opacity: 0.85; }
+.q-feedback { margin-top: 6px; font-size: 0.82rem; color: #0e7490; font-weight: 700; }
+.quiz-reset {
+  display: inline-block; margin-top: 8px;
+  background: #253a77; color:#fff; text-decoration:none;
+  padding: 6px 14px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; border: none;
+}
+.quiz-reset:hover { background: #1a2a4a; }
+
+footer {
+  margin-top: 30px; padding-top: 20px;
+  border-top: 2px solid #e2e8f0;
+  text-align: center; color: #0e7490;
+  font-style: italic; font-weight: 700; font-size: 0.95rem;
+}
+
+@media print {
+  body { background:#fff; padding:0; }
+  .back-btn, .print-btn, .duo-cta, .quiz-reset { display:none; }
+  .section, .unit-header, .quiz { box-shadow:none; break-inside: avoid; }
+  .unit { break-inside: avoid; }
+}
+@media (max-width: 640px) {
+  .header h1 { font-size: 1.5rem; }
+  .vocab-table td:first-child { width: 50%; }
+}
+</style>
+</head>
+<body>
+<a href="language-lab-japanese.html" class="back-btn">&larr; Back to Japanese</a>
+<a href="javascript:window.print()" class="print-btn">🖨️ Print</a>
+
+<div class="container">
+
+  <div class="header">
+    <div class="flag">🇯🇵</div>
+    <h1>Japanese Workbook</h1>
+    <div class="native">日本語</div>
+    <div class="greeting">こんにちは &middot; welcome to your Japanese workbook!</div>
+  </div>
+
+  <div class="toc">
+    <h3>Jump to:</h3>
+    <a href="#culture">Culture</a>
+    <a href="#g6">Grade 6 &middot; Level 1</a>
+    <a href="#g7">Grade 7 &middot; Level 2</a>
+    <a href="#g8">Grade 8 &middot; Level 3</a>
+    <a href="#q6">Quiz 1</a>
+    <a href="#q7">Quiz 2</a>
+    <a href="#q8">Quiz 3</a>
+  </div>
+
+  <div class="culture-box" id="culture">
+    <h3>🌏 Culture Corner</h3>
+    <ul><li>Japanese uses three writing systems: hiragana (native words), katakana (loan words), and kanji (Chinese characters).</li><li>In Hawai'i, over 200,000 residents claim Japanese ancestry -- words like bento, sushi, and shibai are part of local life.</li><li>Japanese has no plural forms and no articles (a / the) -- meaning comes from context.</li><li>Bowing (ojigi) is a common greeting; the deeper the bow, the more respect it shows.</li><li>The verb goes at the END of a Japanese sentence: 私は寿司を食べます (I sushi eat).</li></ul>
+  </div>
+
+  <div class="unit"><div class="unit-header" id="g6"><div class="grade-badge">Grade 6</div><div class="u-title">Level 1 -- Introduction<span class="u-sub">Level 1 &mdash; Introduction</span></div></div><div class="section"><h4>Greetings &amp; Courtesy</h4><table class="vocab-table"><tbody><tr><td>おはよう (ohayō)</td><td>Good morning (casual)</td></tr><tr><td>おはようございます (ohayō gozaimasu)</td><td>Good morning (polite)</td></tr><tr><td>こんにちは (konnichiwa)</td><td>Hello / Good afternoon</td></tr><tr><td>こんばんは (konbanwa)</td><td>Good evening</td></tr><tr><td>さようなら (sayōnara)</td><td>Goodbye</td></tr><tr><td>じゃあね (jā ne)</td><td>See you</td></tr><tr><td>お元気ですか (ogenki desu ka)</td><td>How are you?</td></tr><tr><td>元気です (genki desu)</td><td>I'm well</td></tr><tr><td>お願いします (onegaishimasu)</td><td>Please</td></tr><tr><td>ありがとう (arigatō)</td><td>Thank you</td></tr><tr><td>ありがとうございます (arigatō gozaimasu)</td><td>Thank you (polite)</td></tr><tr><td>どういたしまして (dō itashimashite)</td><td>You're welcome</td></tr><tr><td>すみません (sumimasen)</td><td>Excuse me / Sorry</td></tr><tr><td>はい (hai)</td><td>Yes</td></tr><tr><td>いいえ (iie)</td><td>No</td></tr></tbody></table></div><div class="section"><h4>Introducing Yourself</h4><table class="vocab-table"><tbody><tr><td>私は...です (watashi wa ... desu)</td><td>I am...</td></tr><tr><td>...から来ました (...kara kimashita)</td><td>I come from...</td></tr><tr><td>12歳です (jūni-sai desu)</td><td>I am 12 years old</td></tr><tr><td>お名前は何ですか (onamae wa nan desu ka)</td><td>What is your name?</td></tr><tr><td>何歳ですか (nan-sai desu ka)</td><td>How old are you?</td></tr><tr><td>はじめまして (hajimemashite)</td><td>Nice to meet you</td></tr></tbody></table></div><div class="section"><h4>Numbers 1-20</h4><table class="vocab-table"><tbody><tr><td>いち (ichi)</td><td>1</td></tr><tr><td>に (ni)</td><td>2</td></tr><tr><td>さん (san)</td><td>3</td></tr><tr><td>し / よん (shi / yon)</td><td>4</td></tr><tr><td>ご (go)</td><td>5</td></tr><tr><td>ろく (roku)</td><td>6</td></tr><tr><td>しち / なな (shichi / nana)</td><td>7</td></tr><tr><td>はち (hachi)</td><td>8</td></tr><tr><td>きゅう / く (kyū / ku)</td><td>9</td></tr><tr><td>じゅう (jū)</td><td>10</td></tr><tr><td>じゅういち (jū-ichi)</td><td>11</td></tr><tr><td>じゅうに (jū-ni)</td><td>12</td></tr><tr><td>じゅうさん (jū-san)</td><td>13</td></tr><tr><td>じゅうよん (jū-yon)</td><td>14</td></tr><tr><td>じゅうご (jū-go)</td><td>15</td></tr><tr><td>じゅうろく (jū-roku)</td><td>16</td></tr><tr><td>じゅうなな (jū-nana)</td><td>17</td></tr><tr><td>じゅうはち (jū-hachi)</td><td>18</td></tr><tr><td>じゅうきゅう (jū-kyū)</td><td>19</td></tr><tr><td>にじゅう (ni-jū)</td><td>20</td></tr></tbody></table></div><div class="section"><h4>Colors</h4><table class="vocab-table"><tbody><tr><td>赤 (aka)</td><td>red</td></tr><tr><td>青 (ao)</td><td>blue</td></tr><tr><td>緑 (midori)</td><td>green</td></tr><tr><td>黄色 (kiiro)</td><td>yellow</td></tr><tr><td>白 (shiro)</td><td>white</td></tr><tr><td>黒 (kuro)</td><td>black</td></tr><tr><td>茶色 (chairo)</td><td>brown</td></tr><tr><td>オレンジ (orenji)</td><td>orange</td></tr><tr><td>ピンク (pinku)</td><td>pink</td></tr><tr><td>紫 (murasaki)</td><td>purple</td></tr></tbody></table></div><div class="section"><h4>Days of the Week</h4><table class="vocab-table"><tbody><tr><td>月曜日 (getsuyōbi)</td><td>Monday</td></tr><tr><td>火曜日 (kayōbi)</td><td>Tuesday</td></tr><tr><td>水曜日 (suiyōbi)</td><td>Wednesday</td></tr><tr><td>木曜日 (mokuyōbi)</td><td>Thursday</td></tr><tr><td>金曜日 (kinyōbi)</td><td>Friday</td></tr><tr><td>土曜日 (doyōbi)</td><td>Saturday</td></tr><tr><td>日曜日 (nichiyōbi)</td><td>Sunday</td></tr></tbody></table></div><div class="section"><h4>Months (Just Say the Number + Gatsu)</h4><table class="vocab-table"><tbody><tr><td>一月 (ichi-gatsu)</td><td>January</td></tr><tr><td>二月 (ni-gatsu)</td><td>February</td></tr><tr><td>三月 (san-gatsu)</td><td>March</td></tr><tr><td>四月 (shi-gatsu)</td><td>April</td></tr><tr><td>五月 (go-gatsu)</td><td>May</td></tr><tr><td>六月 (roku-gatsu)</td><td>June</td></tr><tr><td>七月 (shichi-gatsu)</td><td>July</td></tr><tr><td>八月 (hachi-gatsu)</td><td>August</td></tr><tr><td>九月 (ku-gatsu)</td><td>September</td></tr><tr><td>十月 (jū-gatsu)</td><td>October</td></tr><tr><td>十一月 (jū-ichi-gatsu)</td><td>November</td></tr><tr><td>十二月 (jū-ni-gatsu)</td><td>December</td></tr></tbody></table></div><div class="section"><h4>Family</h4><table class="vocab-table"><tbody><tr><td>家族 (kazoku)</td><td>family</td></tr><tr><td>お母さん (okāsan)</td><td>mother</td></tr><tr><td>お父さん (otōsan)</td><td>father</td></tr><tr><td>お兄さん (onīsan)</td><td>older brother</td></tr><tr><td>お姉さん (onēsan)</td><td>older sister</td></tr><tr><td>弟 (otōto)</td><td>younger brother</td></tr><tr><td>妹 (imōto)</td><td>younger sister</td></tr><tr><td>おじいさん (ojīsan)</td><td>grandfather</td></tr><tr><td>おばあさん (obāsan)</td><td>grandmother</td></tr></tbody></table></div><div class="section"><h4>Basic Nouns</h4><table class="vocab-table"><tbody><tr><td>家 (ie)</td><td>house</td></tr><tr><td>本 (hon)</td><td>book</td></tr><tr><td>学校 (gakkō)</td><td>school</td></tr><tr><td>犬 (inu)</td><td>dog</td></tr><tr><td>猫 (neko)</td><td>cat</td></tr><tr><td>水 (mizu)</td><td>water</td></tr><tr><td>食べ物 (tabemono)</td><td>food</td></tr><tr><td>先生 (sensei)</td><td>teacher</td></tr><tr><td>学生 (gakusei)</td><td>student</td></tr></tbody></table></div><div class="section"><h4>Pronouns</h4><table class="vocab-table"><tbody><tr><td>私 (watashi)</td><td>I (polite)</td></tr><tr><td>僕 (boku)</td><td>I (male, casual)</td></tr><tr><td>あなた (anata)</td><td>you</td></tr><tr><td>彼 (kare)</td><td>he</td></tr><tr><td>彼女 (kanojo)</td><td>she</td></tr><tr><td>私たち (watashitachi)</td><td>we</td></tr></tbody></table></div><div class="section"><h4>Weather</h4><table class="vocab-table"><tbody><tr><td>晴れ (hare)</td><td>sunny</td></tr><tr><td>曇り (kumori)</td><td>cloudy</td></tr><tr><td>雨 (ame)</td><td>rain</td></tr><tr><td>雪 (yuki)</td><td>snow</td></tr><tr><td>風 (kaze)</td><td>wind</td></tr><tr><td>暑い (atsui)</td><td>hot</td></tr><tr><td>寒い (samui)</td><td>cold</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: word order &amp; 'desu'</h5><p>Japanese word order is <b>Subject + Object + Verb</b>. <br>The word <b>です (desu)</b> is like the English 'is / am / are' and goes at the end of the sentence: <i>私は学生です</i> (Watashi wa gakusei desu.) = I am a student.</p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Introduce yourself using 私は... and hajimemashite.</li><li>Count from 1 to 20 aloud in Japanese.</li><li>Say today's day, month, and weather.</li><li>Draw your family and label each person in Japanese.</li></ol></div><div class="quiz" id="q6" data-questions="[{&quot;q&quot;: &quot;&#x27;こんにちは (konnichiwa)&#x27; is used...&quot;, &quot;choices&quot;: [&quot;in the morning&quot;, &quot;in the afternoon&quot;, &quot;at night&quot;, &quot;only Sundays&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which color is &#x27;blue&#x27;?&quot;, &quot;choices&quot;: [&quot;赤 (aka)&quot;, &quot;青 (ao)&quot;, &quot;緑 (midori)&quot;, &quot;黒 (kuro)&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;火曜日 (kayōbi)&#x27; is which day?&quot;, &quot;choices&quot;: [&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Sunday&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;How do you count &#x27;5&#x27;?&quot;, &quot;choices&quot;: [&quot;さん (san)&quot;, &quot;し (shi)&quot;, &quot;ご (go)&quot;, &quot;なな (nana)&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;ありがとう&#x27; means...&quot;, &quot;choices&quot;: [&quot;Sorry&quot;, &quot;Hello&quot;, &quot;Thank you&quot;, &quot;Goodbye&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;私は学生です&#x27; means...&quot;, &quot;choices&quot;: [&quot;I am a teacher&quot;, &quot;I am a student&quot;, &quot;I have a book&quot;, &quot;I like school&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;お母さん (okāsan)&#x27; is your...&quot;, &quot;choices&quot;: [&quot;father&quot;, &quot;mother&quot;, &quot;older sister&quot;, &quot;grandma&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;雨 (ame)&#x27; means...&quot;, &quot;choices&quot;: [&quot;snow&quot;, &quot;sunny&quot;, &quot;rain&quot;, &quot;wind&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which is &#x27;yes&#x27;?&quot;, &quot;choices&quot;: [&quot;はい (hai)&quot;, &quot;いいえ (iie)&quot;, &quot;じゃあね (jā ne)&quot;, &quot;おはよう (ohayō)&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;Japanese word order is...&quot;, &quot;choices&quot;: [&quot;Subject + Verb + Object&quot;, &quot;Subject + Object + Verb&quot;, &quot;Verb + Subject + Object&quot;, &quot;Object + Subject + Verb&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 6 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+<div class="unit"><div class="unit-header" id="g7"><div class="grade-badge">Grade 7</div><div class="u-title">Level 2 -- Foundations<span class="u-sub">Level 2 &mdash; Foundations</span></div></div><div class="section"><h4>Daily Routines (Verbs)</h4><table class="vocab-table"><tbody><tr><td>起きます (okimasu)</td><td>wake up</td></tr><tr><td>朝ご飯を食べます (asagohan o tabemasu)</td><td>eat breakfast</td></tr><tr><td>シャワーを浴びます (shawā o abimasu)</td><td>take a shower</td></tr><tr><td>学校に行きます (gakkō ni ikimasu)</td><td>go to school</td></tr><tr><td>勉強します (benkyō shimasu)</td><td>study</td></tr><tr><td>昼ご飯を食べます (hirugohan o tabemasu)</td><td>eat lunch</td></tr><tr><td>宿題をします (shukudai o shimasu)</td><td>do homework</td></tr><tr><td>晩ご飯を食べます (bangohan o tabemasu)</td><td>eat dinner</td></tr><tr><td>テレビを見ます (terebi o mimasu)</td><td>watch TV</td></tr><tr><td>寝ます (nemasu)</td><td>sleep</td></tr></tbody></table></div><div class="section"><h4>Food &amp; Drink</h4><table class="vocab-table"><tbody><tr><td>ご飯 (gohan)</td><td>rice / meal</td></tr><tr><td>パン (pan)</td><td>bread</td></tr><tr><td>肉 (niku)</td><td>meat</td></tr><tr><td>魚 (sakana)</td><td>fish</td></tr><tr><td>野菜 (yasai)</td><td>vegetables</td></tr><tr><td>果物 (kudamono)</td><td>fruit</td></tr><tr><td>りんご (ringo)</td><td>apple</td></tr><tr><td>バナナ (banana)</td><td>banana</td></tr><tr><td>寿司 (sushi)</td><td>sushi</td></tr><tr><td>ラーメン (rāmen)</td><td>ramen</td></tr><tr><td>水 (mizu)</td><td>water</td></tr><tr><td>お茶 (ocha)</td><td>tea</td></tr><tr><td>牛乳 (gyūnyū)</td><td>milk</td></tr><tr><td>ジュース (jūsu)</td><td>juice</td></tr></tbody></table></div><div class="section"><h4>Describing People</h4><table class="vocab-table"><tbody><tr><td>大きい (ōkii)</td><td>big</td></tr><tr><td>小さい (chiisai)</td><td>small</td></tr><tr><td>新しい (atarashii)</td><td>new</td></tr><tr><td>古い (furui)</td><td>old</td></tr><tr><td>いい (ii)</td><td>good</td></tr><tr><td>悪い (warui)</td><td>bad</td></tr><tr><td>優しい (yasashii)</td><td>kind</td></tr><tr><td>面白い (omoshiroi)</td><td>interesting / funny</td></tr><tr><td>かわいい (kawaii)</td><td>cute</td></tr><tr><td>かっこいい (kakkoii)</td><td>cool</td></tr></tbody></table></div><div class="section"><h4>Body Parts</h4><table class="vocab-table"><tbody><tr><td>頭 (atama)</td><td>head</td></tr><tr><td>髪 (kami)</td><td>hair</td></tr><tr><td>目 (me)</td><td>eye</td></tr><tr><td>鼻 (hana)</td><td>nose</td></tr><tr><td>口 (kuchi)</td><td>mouth</td></tr><tr><td>耳 (mimi)</td><td>ear</td></tr><tr><td>歯 (ha)</td><td>teeth</td></tr><tr><td>手 (te)</td><td>hand</td></tr><tr><td>足 (ashi)</td><td>leg / foot</td></tr><tr><td>お腹 (onaka)</td><td>stomach</td></tr></tbody></table></div><div class="section"><h4>Time &amp; Clock</h4><table class="vocab-table"><tbody><tr><td>今何時ですか (ima nan-ji desu ka)</td><td>What time is it now?</td></tr><tr><td>一時 (ichi-ji)</td><td>1:00</td></tr><tr><td>二時 (ni-ji)</td><td>2:00</td></tr><tr><td>三時半 (san-ji han)</td><td>3:30</td></tr><tr><td>四時十五分 (yo-ji jū-go-fun)</td><td>4:15</td></tr><tr><td>お昼 (ohiru)</td><td>noon</td></tr><tr><td>真夜中 (mayonaka)</td><td>midnight</td></tr><tr><td>朝 (asa)</td><td>morning</td></tr><tr><td>昼 (hiru)</td><td>daytime</td></tr><tr><td>夜 (yoru)</td><td>night</td></tr></tbody></table></div><div class="section"><h4>Common Places</h4><table class="vocab-table"><tbody><tr><td>家 (ie / uchi)</td><td>house</td></tr><tr><td>学校 (gakkō)</td><td>school</td></tr><tr><td>図書館 (toshokan)</td><td>library</td></tr><tr><td>公園 (kōen)</td><td>park</td></tr><tr><td>お店 (omise)</td><td>store</td></tr><tr><td>レストラン (resutoran)</td><td>restaurant</td></tr><tr><td>駅 (eki)</td><td>train station</td></tr><tr><td>海 (umi)</td><td>sea / beach</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: particles を (o) and に (ni)</h5><p>Particles are little words that tag other words in a Japanese sentence.<br><b>を (o)</b> marks the direct object: 寿司<b>を</b>食べます (I eat sushi).<br><b>に (ni)</b> marks a destination or time: 学校<b>に</b>行きます (I go to school). 三時<b>に</b>寝ます (I sleep at 3:00).</p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Introduce yourself with three sentences: name, age, grade.</li><li>Order your favorite Japanese food using ...を食べます / ...を飲みます.</li><li>Describe your best friend using three adjectives.</li><li>Say what time you wake up and go to sleep.</li></ol></div><div class="quiz" id="q7" data-questions="[{&quot;q&quot;: &quot;Which verb means &#x27;to eat&#x27;?&quot;, &quot;choices&quot;: [&quot;飲みます (nomimasu)&quot;, &quot;食べます (tabemasu)&quot;, &quot;見ます (mimasu)&quot;, &quot;行きます (ikimasu)&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;りんご (ringo)&#x27; is which fruit?&quot;, &quot;choices&quot;: [&quot;banana&quot;, &quot;apple&quot;, &quot;strawberry&quot;, &quot;orange&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which adjective means &#x27;cute&#x27;?&quot;, &quot;choices&quot;: [&quot;面白い (omoshiroi)&quot;, &quot;かわいい (kawaii)&quot;, &quot;大きい (ōkii)&quot;, &quot;悪い (warui)&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;目 (me)&#x27; is your...&quot;, &quot;choices&quot;: [&quot;nose&quot;, &quot;eye&quot;, &quot;hand&quot;, &quot;foot&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which particle marks the direct object?&quot;, &quot;choices&quot;: [&quot;は (wa)&quot;, &quot;を (o)&quot;, &quot;に (ni)&quot;, &quot;が (ga)&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;図書館 (toshokan)&#x27; means...&quot;, &quot;choices&quot;: [&quot;park&quot;, &quot;library&quot;, &quot;train station&quot;, &quot;house&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;三時半&#x27; means...&quot;, &quot;choices&quot;: [&quot;3:00&quot;, &quot;3:15&quot;, &quot;3:30&quot;, &quot;3:45&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which meal is 晩ご飯 (bangohan)?&quot;, &quot;choices&quot;: [&quot;breakfast&quot;, &quot;lunch&quot;, &quot;snack&quot;, &quot;dinner&quot;], &quot;a&quot;: 3}, {&quot;q&quot;: &quot;Which is &#x27;to sleep&#x27;?&quot;, &quot;choices&quot;: [&quot;起きます (okimasu)&quot;, &quot;寝ます (nemasu)&quot;, &quot;勉強します&quot;, &quot;食べます&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;海 (umi)&#x27; means...&quot;, &quot;choices&quot;: [&quot;mountain&quot;, &quot;sea&quot;, &quot;park&quot;, &quot;garden&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 7 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+<div class="unit"><div class="unit-header" id="g8"><div class="grade-badge">Grade 8</div><div class="u-title">Level 3 -- Intermediate<span class="u-sub">Level 3 &mdash; Intermediate</span></div></div><div class="section"><h4>Travel Vocabulary</h4><table class="vocab-table"><tbody><tr><td>空港 (kūkō)</td><td>airport</td></tr><tr><td>飛行機 (hikōki)</td><td>airplane</td></tr><tr><td>ホテル (hoteru)</td><td>hotel</td></tr><tr><td>海 (umi)</td><td>sea / beach</td></tr><tr><td>山 (yama)</td><td>mountain</td></tr><tr><td>駅 (eki)</td><td>train station</td></tr><tr><td>旅行 (ryokō)</td><td>trip</td></tr><tr><td>パスポート (pasupōto)</td><td>passport</td></tr><tr><td>かばん (kaban)</td><td>bag / suitcase</td></tr><tr><td>地図 (chizu)</td><td>map</td></tr><tr><td>切符 (kippu)</td><td>ticket</td></tr><tr><td>電車 (densha)</td><td>train</td></tr><tr><td>バス (basu)</td><td>bus</td></tr></tbody></table></div><div class="section"><h4>Past-Tense Verbs (-mashita)</h4><table class="vocab-table"><tbody><tr><td>食べました (tabemashita)</td><td>ate</td></tr><tr><td>飲みました (nomimashita)</td><td>drank</td></tr><tr><td>行きました (ikimashita)</td><td>went</td></tr><tr><td>見ました (mimashita)</td><td>saw</td></tr><tr><td>しました (shimashita)</td><td>did</td></tr><tr><td>勉強しました (benkyō shimashita)</td><td>studied</td></tr><tr><td>買いました (kaimashita)</td><td>bought</td></tr><tr><td>旅行しました (ryokō shimashita)</td><td>traveled</td></tr></tbody></table></div><div class="section"><h4>Emotions &amp; Feelings</h4><table class="vocab-table"><tbody><tr><td>嬉しい (ureshii)</td><td>happy</td></tr><tr><td>悲しい (kanashii)</td><td>sad</td></tr><tr><td>怒っている (okotte iru)</td><td>angry</td></tr><tr><td>驚いた (odoroita)</td><td>surprised</td></tr><tr><td>疲れた (tsukareta)</td><td>tired</td></tr><tr><td>楽しい (tanoshii)</td><td>fun / enjoying</td></tr><tr><td>寂しい (sabishii)</td><td>lonely</td></tr><tr><td>恥ずかしい (hazukashii)</td><td>embarrassed</td></tr></tbody></table></div><div class="section"><h4>Money &amp; Shopping</h4><table class="vocab-table"><tbody><tr><td>いくらですか (ikura desu ka)</td><td>How much is it?</td></tr><tr><td>高い (takai)</td><td>expensive / tall</td></tr><tr><td>安い (yasui)</td><td>cheap</td></tr><tr><td>お金 (okane)</td><td>money</td></tr><tr><td>買います (kaimasu)</td><td>to buy</td></tr><tr><td>売ります (urimasu)</td><td>to sell</td></tr><tr><td>店 (mise)</td><td>shop</td></tr></tbody></table></div><div class="section"><h4>Directions</h4><table class="vocab-table"><tbody><tr><td>右 (migi)</td><td>right</td></tr><tr><td>左 (hidari)</td><td>left</td></tr><tr><td>まっすぐ (massugu)</td><td>straight ahead</td></tr><tr><td>近い (chikai)</td><td>near</td></tr><tr><td>遠い (tōi)</td><td>far</td></tr><tr><td>ここ (koko)</td><td>here</td></tr><tr><td>そこ (soko)</td><td>there</td></tr><tr><td>どこですか (doko desu ka)</td><td>Where is it?</td></tr></tbody></table></div><div class="section"><h4>Connecting Words</h4><table class="vocab-table"><tbody><tr><td>だから (dakara)</td><td>so / therefore</td></tr><tr><td>でも (demo)</td><td>but</td></tr><tr><td>そして (soshite)</td><td>and then</td></tr><tr><td>それから (sorekara)</td><td>and after that</td></tr><tr><td>なぜなら (nazenara)</td><td>because</td></tr><tr><td>も (mo)</td><td>also</td></tr></tbody></table></div><div class="grammar-box"><h5>📐 Mini-Grammar: past tense -mashita</h5><p>Polite past tense: swap <b>-masu</b> for <b>-mashita</b>. <i>食べます (tabemasu = eat) &rarr; 食べました (tabemashita = ate). 行きます (ikimasu = go) &rarr; 行きました (ikimashita = went).</i></p></div><div class="practice"><h5>✏️ Try It Yourself</h5><ol><li>Write about a trip using two -mashita verbs.</li><li>Describe an emotion you felt yesterday and why.</li><li>Plan a day in Tokyo: three places + why.</li><li>Ask for prices at three imaginary shops.</li></ol></div><div class="quiz" id="q8" data-questions="[{&quot;q&quot;: &quot;Which verb means &#x27;traveled&#x27;?&quot;, &quot;choices&quot;: [&quot;旅行します&quot;, &quot;旅行しました&quot;, &quot;旅行しません&quot;, &quot;旅行してください&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;飛行機 (hikōki)&#x27; is a...&quot;, &quot;choices&quot;: [&quot;train&quot;, &quot;airplane&quot;, &quot;bus&quot;, &quot;boat&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Which is &#x27;lonely&#x27;?&quot;, &quot;choices&quot;: [&quot;嬉しい&quot;, &quot;悲しい&quot;, &quot;寂しい&quot;, &quot;楽しい&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;&#x27;いくらですか&#x27; means...&quot;, &quot;choices&quot;: [&quot;Where is it?&quot;, &quot;How are you?&quot;, &quot;How much is it?&quot;, &quot;When is it?&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which means &#x27;right (direction)&#x27;?&quot;, &quot;choices&quot;: [&quot;右 (migi)&quot;, &quot;左 (hidari)&quot;, &quot;まっすぐ&quot;, &quot;近い&quot;], &quot;a&quot;: 0}, {&quot;q&quot;: &quot;Which connector means &#x27;but&#x27;?&quot;, &quot;choices&quot;: [&quot;だから (dakara)&quot;, &quot;でも (demo)&quot;, &quot;そして (soshite)&quot;, &quot;も (mo)&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;Polite past-tense ending is...&quot;, &quot;choices&quot;: [&quot;-masen&quot;, &quot;-mashita&quot;, &quot;-masu&quot;, &quot;-tai&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;かばん (kaban)&#x27; is a...&quot;, &quot;choices&quot;: [&quot;map&quot;, &quot;passport&quot;, &quot;bag / suitcase&quot;, &quot;ticket&quot;], &quot;a&quot;: 2}, {&quot;q&quot;: &quot;Which emotion is 驚いた (odoroita)?&quot;, &quot;choices&quot;: [&quot;sad&quot;, &quot;surprised&quot;, &quot;tired&quot;, &quot;embarrassed&quot;], &quot;a&quot;: 1}, {&quot;q&quot;: &quot;&#x27;買いました&#x27; means...&quot;, &quot;choices&quot;: [&quot;I sell&quot;, &quot;I bought&quot;, &quot;I want&quot;, &quot;I saw&quot;], &quot;a&quot;: 1}]">  <div class="quiz-header">    <h5>🧠 Grade 8 Quiz -- Check Your Learning</h5>    <span class="quiz-score">0 / 10</span>  </div>  <div class="q-items"></div>  <button class="quiz-reset" type="button">↻ Reset Quiz</button></div></div>
+
+  
+    <a class="duo-cta" href="https://www.duolingo.com/course/ja/en/Learn-Japanese" target="_blank" rel="noopener">🦉 Practice on Duolingo &nearr;</a>
+
+    <footer>Empowered to Succeed, Guided by Faith &nbsp;🌐</footer>
+
+</div>
+
+<script>
+// Interactive quiz runner
+(function() {
+  document.querySelectorAll('.quiz').forEach(function(quizEl) {
+    var questions = JSON.parse(quizEl.getAttribute('data-questions'));
+    var total = questions.length;
+    var answered = 0, correct = 0;
+    var scoreEl = quizEl.querySelector('.quiz-score');
+    var itemsEl = quizEl.querySelector('.q-items');
+    scoreEl.textContent = '0 / ' + total;
+    questions.forEach(function(q, i) {
+      var item = document.createElement('div');
+      item.className = 'q-item';
+      var num = document.createElement('div');
+      num.className = 'q-num'; num.textContent = 'Question ' + (i+1) + ' of ' + total;
+      var text = document.createElement('div');
+      text.className = 'q-text'; text.textContent = q.q;
+      var choices = document.createElement('div');
+      choices.className = 'q-choices';
+      var feedback = document.createElement('div');
+      feedback.className = 'q-feedback';
+      var answered_here = false;
+      q.choices.forEach(function(choice, ci) {
+        var btn = document.createElement('button');
+        btn.className = 'q-choice';
+        btn.type = 'button';
+        btn.textContent = choice;
+        btn.addEventListener('click', function() {
+          if (answered_here) return;
+          answered_here = true;
+          answered++;
+          Array.prototype.forEach.call(choices.children, function(c) { c.disabled = true; });
+          if (ci === q.a) {
+            btn.classList.add('correct');
+            correct++;
+            feedback.textContent = '✓ Correct!';
+            feedback.style.color = '#065f46';
+          } else {
+            btn.classList.add('wrong');
+            choices.children[q.a].classList.add('correct');
+            feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+            feedback.style.color = '#991b1b';
+          }
+          scoreEl.textContent = correct + ' / ' + total;
+        });
+        choices.appendChild(btn);
+      });
+      item.appendChild(num);
+      item.appendChild(text);
+      item.appendChild(choices);
+      item.appendChild(feedback);
+      itemsEl.appendChild(item);
+    });
+    // Reset button
+    var reset = quizEl.querySelector('.quiz-reset');
+    reset.addEventListener('click', function() {
+      itemsEl.innerHTML = '';
+      answered = 0; correct = 0;
+      scoreEl.textContent = '0 / ' + total;
+      // Re-render
+      questions.forEach(function(q, i) {
+        var item = document.createElement('div');
+        item.className = 'q-item';
+        item.innerHTML = '<div class="q-num">Question ' + (i+1) + ' of ' + total + '</div>' +
+                         '<div class="q-text">' + q.q + '</div>' +
+                         '<div class="q-choices"></div><div class="q-feedback"></div>';
+        var choicesDiv = item.querySelector('.q-choices');
+        var feedback = item.querySelector('.q-feedback');
+        var answered_here = false;
+        q.choices.forEach(function(choice, ci) {
+          var btn = document.createElement('button');
+          btn.className = 'q-choice'; btn.type='button'; btn.textContent = choice;
+          btn.addEventListener('click', function() {
+            if (answered_here) return;
+            answered_here = true; answered++;
+            Array.prototype.forEach.call(choicesDiv.children, function(c) { c.disabled = true; });
+            if (ci === q.a) {
+              btn.classList.add('correct'); correct++;
+              feedback.textContent = '✓ Correct!'; feedback.style.color = '#065f46';
+            } else {
+              btn.classList.add('wrong'); choicesDiv.children[q.a].classList.add('correct');
+              feedback.textContent = '✗ The correct answer is: ' + q.choices[q.a];
+              feedback.style.color = '#991b1b';
+            }
+            scoreEl.textContent = correct + ' / ' + total;
+          });
+          choicesDiv.appendChild(btn);
+        });
+        itemsEl.appendChild(item);
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
