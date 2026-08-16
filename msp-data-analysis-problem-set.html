@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphing Lab Problem Set &middot; Data Analysis</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --cream:#fffdf2; --paper:#fef3c7;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#0F9D58; --accent-deep:#0b6f3f;
+  --accent-soft:#d1fae5;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #d1fae5 0%, #fef3c7 50%, #dbeafe 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:900px; margin:0 auto; }
+header { text-align:center; margin-bottom:24px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25); transition:all .15s ease;
+}
+.back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+.points { display:inline-block; background:var(--gold); color:var(--navy); font-size:.78rem; font-weight:800; padding:4px 12px; border-radius:999px; margin-left:8px; vertical-align:middle; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+.name-row { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin:14px auto 8px; font-size:.95rem; color:#374151; }
+.name-row span { display:inline-block; border-bottom:1.5px solid #94a3b8; min-width:130px; }
+main { display:flex; flex-direction:column; gap:16px; }
+section.card {
+  background:#fff; border-radius:14px; padding:18px 22px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:4px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.15rem; font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1.02rem; font-weight:800; margin:14px 0 8px; }
+section.card p { margin-bottom:8px; color:var(--ink); }
+section.card ul { margin:6px 0 10px 22px; }
+section.card ul li { margin-bottom:4px; }
+section.card ul li strong { color:var(--accent-deep); }
+.callout {
+  background:var(--paper); border-left:4px solid var(--gold-deep);
+  padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.95rem;
+}
+.callout strong { color:var(--navy); }
+.scenario { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:12px 14px; margin:12px 0; font-size:.98rem; }
+.scenario strong { color:var(--accent-deep); }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:12px 0; }
+@media (max-width:640px) { .two-col { grid-template-columns:1fr; } }
+table.data { width:100%; border-collapse:collapse; margin:8px 0; font-size:.94rem; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+table.data th, table.data td { border:1px solid #94a3b8; padding:6px 10px; text-align:center; }
+table.data th { background:var(--accent); color:#fff; font-weight:800; }
+table.data tr:nth-child(even) td { background:#f8fafc; }
+.graph-slot { background:#f8fafc; border:2px dashed #94a3b8; border-radius:8px; min-height:180px; display:flex; align-items:center; justify-content:center; color:#94a3b8; font-style:italic; font-size:.9rem; padding:14px; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li {
+  counter-increment:q; position:relative;
+  padding:10px 0 10px 42px; border-bottom:1px dashed #d1d5db;
+}
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before {
+  content:counter(q); position:absolute; left:0; top:10px;
+  width:30px; height:30px; background:var(--accent); color:#fff;
+  border-radius:50%; font-weight:800; font-size:.9rem;
+  display:flex; align-items:center; justify-content:center;
+}
+ol.qlist p.q-text { color:var(--ink); font-size:1rem; margin-bottom:6px; }
+.q-pts { font-size:.78rem; color:var(--dim); font-weight:700; }
+.answer-lines { min-height:52px; }
+.answer-lines .line { display:block; border-bottom:1.5px solid #cbd5e1; height:26px; }
+footer { text-align:center; margin-top:26px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+.important { background:#fef3c7; border-left:4px solid #f59e0b; padding:10px 14px; border-radius:6px; margin:12px 0; font-size:.95rem; }
+.important strong { color:#92400e; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="graphing-lab.html" onclick="if(document.referrer&&history.length>1){history.back();return false;}">&larr; Back to Data Analysis</a>
+  <div class="eyebrow">Metrics &amp; Data Analysis</div>
+  <h1>📊 Graphing Lab Problem Set <span class="points">50 pts</span></h1>
+  <p class="tagline">Build a data table, then graph the right way in Google Sheets.</p>
+  <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center;">
+    <a href="graphing-lab-problem-set.docx" download style="display:inline-flex; align-items:center; gap:8px; background:#4285F4; color:#fff; padding:10px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:0.92rem; box-shadow:0 3px 10px rgba(66,133,244,0.3);">
+      📄 Download as Google Doc (.docx)
+    </a>
+  </div>
+  <div class="name-row">
+    Name: <span>&nbsp;</span> Date: <span>&nbsp;</span> Class: <span>&nbsp;</span>
+  </div>
+</header>
+<main>
+
+<section class="card">
+  <h2>🎯 Objective</h2>
+  <p>Learn how to:</p>
+  <ul>
+    <li>Read different types of graphs.</li>
+    <li>Organize data into a data table and graph using Google Sheets.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>📖 Background</h2>
+  <p>Data tables and graphing are used by scientists to display the data that is collected during a controlled experiment. A graph must be constructed to accurately depict the data collected. An incorrect graph often leads to the acceptance of an incorrect hypothesis or detract from the acceptance of a correct hypothesis.</p>
+  <p>The graph should contain <strong>4 major parts</strong>: the title, the independent variable, the dependent variable, and the units for each variable.</p>
+  <ul>
+    <li><strong>The Title:</strong> shows what the graph is about. Reading the title should give the reader an idea of the variables displayed. Concise, placed above the graph, and stated as a relationship or comparison.</li>
+    <li><strong>Independent Variable:</strong> the variable the experimenter changes / manipulates. Placed on the horizontal (x) axis.</li>
+    <li><strong>Dependent Variable:</strong> the variable directly affected by the independent variable — the result of what happens. Placed on the vertical (y) axis.</li>
+    <li><strong>Units:</strong> in parentheses next to your independent and dependent variables.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>❓ How do I know what type of graph to use?</h2>
+  <h3>→ X-Y Scatter Plot</h3>
+  <p>The most common type of graph. Used to determine the <em>relationship</em> between two variables. If both increase together they have a <strong>positive</strong> relationship; if one decreases as the other increases, the relationship is <strong>negative</strong>. Relationships can be <em>linear</em> or <em>exponential</em>; sometimes there is no relationship at all. If the graph is <strong>proportional</strong>, <strong>directly proportional</strong>, or <strong>inversely proportional</strong>, identify it as such.</p>
+  <h3>→ Bar Graph</h3>
+  <p>Used to compare two or more different groups. Bar graphs do not show a relationship and do not change over time.</p>
+  <h3>→ Pie Chart</h3>
+  <p>Best when you are comparing parts of a whole. Pie charts do not show a relationship and do not change over time.</p>
+</section>
+
+<section class="card">
+  <h2>🧭 Instructions</h2>
+  <p>For each of the graphing scenarios below, first create a <strong>data table</strong> and then a <strong>graph</strong> using Google Sheets, copy it into this assignment, and answer the associated questions. Type your answers to the questions in <span style="color:#dc2626;font-weight:700;">RED</span>.</p>
+  <div class="important">
+    <strong>*** IMPORTANT ***</strong> When making your data tables in Google Sheets, include the units <em>only in the column title</em>, NOT after the numbers. If you try to graph with units in the data cells, you will get a "No Data" error.
+  </div>
+</section>
+
+<!-- Scenario 1 -->
+<section class="card">
+  <h2>📈 Graphing Scenario #1 <span class="q-pts">(X-Y Scatter Plot)</span></h2>
+  <div class="scenario">
+    The data table below shows ocean water temperature at various depths. Graph your data on an <strong>X-Y scatter plot</strong> and insert the graph next to the data table. When graphing your data, make sure to include a title.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Data Table</h3>
+      <table class="data">
+        <thead><tr><th>Water depth (m)</th><th>Temperature (ºC)</th></tr></thead>
+        <tbody>
+          <tr><td>50</td><td>18</td></tr>
+          <tr><td>75</td><td>15</td></tr>
+          <tr><td>100</td><td>12</td></tr>
+          <tr><td>150</td><td>5</td></tr>
+          <tr><td>200</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Graph <span class="q-pts">(10 pts)</span></h3>
+      <div class="graph-slot">Paste your Google Sheets graph here</div>
+    </div>
+  </div>
+  <ol class="qlist">
+    <li>
+      <p class="q-text">Why is the X-Y scatter plot the best choice to graph this data? <span class="q-pts">(2 pts)</span></p>
+      <div class="answer-lines"><span class="line"></span><span class="line"></span></div>
+    </li>
+    <li>
+      <p class="q-text">What is the relationship between water depth and temperature? (describe the line) <span class="q-pts">(2 pts)</span></p>
+      <div class="answer-lines"><span class="line"></span><span class="line"></span></div>
+    </li>
+    <li>
+      <p class="q-text">The approximate water temperature at a depth of 125 m would be about: <span class="q-pts">(2 pts)</span></p>
+      <div class="answer-lines"><span class="line"></span></div>
+    </li>
+  </ol>
+</section>
+
+<!-- Scenario 2 -->
+<section class="card">
+  <h2>🥧 Graphing Scenario #2 <span class="q-pts">(Pie Chart)</span></h2>
+  <div class="scenario">
+    A group of students did a beach clean-up at Sandys. Of all of the pieces of trash collected, <strong>55%</strong> was cigarette butts, <strong>20%</strong> was plastic, and <strong>25%</strong> was Styrofoam. Create a data table and a <strong>pie chart</strong> showing the data.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Data Table <span class="q-pts">(5 pts)</span></h3>
+      <table class="data">
+        <thead><tr><th>Type of trash</th><th>Percentage</th></tr></thead>
+        <tbody>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Graph <span class="q-pts">(10 pts)</span></h3>
+      <div class="graph-slot">Paste your Google Sheets pie chart here</div>
+    </div>
+  </div>
+  <ol class="qlist">
+    <li>
+      <p class="q-text">Why is the pie chart the best choice to graph this data? <span class="q-pts">(2 pts)</span></p>
+      <div class="answer-lines"><span class="line"></span><span class="line"></span></div>
+    </li>
+  </ol>
+</section>
+
+<!-- Scenario 3 -->
+<section class="card">
+  <h2>📊 Graphing Scenario #3 <span class="q-pts">(Bar / Column Chart)</span></h2>
+  <div class="scenario">
+    The population of Oahu is (about) <strong>900,000</strong>. Kauai's population is <strong>58,000</strong>. Maui's is <strong>120,000</strong>. Big Island is <strong>150,000</strong>. Create a data table and a <strong>bar/column graph</strong> of this data.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Data Table <span class="q-pts">(5 pts)</span></h3>
+      <table class="data">
+        <thead><tr><th>Island</th><th>Population</th></tr></thead>
+        <tbody>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+          <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Graph <span class="q-pts">(10 pts)</span></h3>
+      <div class="graph-slot">Paste your Google Sheets bar chart here</div>
+    </div>
+  </div>
+  <ol class="qlist">
+    <li>
+      <p class="q-text">Why is the bar/column chart the best choice to graph this data? <span class="q-pts">(2 pts)</span></p>
+      <div class="answer-lines"><span class="line"></span><span class="line"></span></div>
+    </li>
+  </ol>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Middle School Math &middot; Metrics &amp; Data Analysis</footer>
+</div>
+</body>
+</html>
