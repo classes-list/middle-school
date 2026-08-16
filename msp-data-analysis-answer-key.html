@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphing Lab Answer Key &middot; Data Analysis</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#0F9D58; --accent-deep:#0b6f3f;
+  --accent-soft:#d1fae5;
+  --highlight:#fef08a;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #d1fae5 0%, #fef3c7 50%, #dbeafe 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:960px; margin:0 auto; }
+header { text-align:center; margin-bottom:24px; position:relative; }
+.back-btn {
+  position:absolute; left:0; top:6px;
+  background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 16px;
+  border-radius:8px; font-weight:800; font-size:.9rem; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25); transition:all .15s ease;
+}
+.back-btn:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+@media (max-width:640px) { .back-btn { position:static; margin-bottom:10px; display:inline-flex; } }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:16px; }
+section.card {
+  background:#fff; border-radius:14px; padding:18px 22px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:4px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.15rem; font-weight:800; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1.02rem; font-weight:800; margin:14px 0 8px; }
+section.card p { margin-bottom:8px; color:var(--ink); }
+.scenario { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:12px 14px; margin:12px 0; font-size:.98rem; }
+.scenario strong { color:var(--accent-deep); }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:12px 0; align-items:start; }
+@media (max-width:700px) { .two-col { grid-template-columns:1fr; } }
+table.data { width:100%; border-collapse:collapse; margin:8px 0; font-size:.94rem; box-shadow:0 2px 8px rgba(0,0,0,0.06); }
+table.data th, table.data td { border:1px solid #94a3b8; padding:6px 10px; text-align:center; }
+table.data th { background:var(--accent); color:#fff; font-weight:800; }
+table.data tr:nth-child(even) td { background:#f8fafc; }
+.hl { background:var(--highlight); padding:1px 5px; border-radius:3px; font-weight:700; }
+.graph-img { width:100%; max-width:100%; height:auto; border:1px solid #cbd5e1; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.06); background:#fff; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li {
+  counter-increment:q; position:relative;
+  padding:10px 0 10px 42px; border-bottom:1px dashed #d1d5db;
+}
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before {
+  content:counter(q); position:absolute; left:0; top:10px;
+  width:30px; height:30px; background:var(--accent); color:#fff;
+  border-radius:50%; font-weight:800; font-size:.9rem;
+  display:flex; align-items:center; justify-content:center;
+}
+ol.qlist p.q-text { color:var(--ink); font-size:1rem; margin-bottom:4px; }
+.note { background:#fef3c7; border-left:4px solid #f59e0b; padding:10px 14px; border-radius:6px; margin:12px 0; font-size:.92rem; }
+.note strong { color:#92400e; }
+footer { text-align:center; margin-top:26px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="back-btn" href="msp-data-analysis-problem-set.html" onclick="if(document.referrer&&history.length>1){history.back();return false;}">&larr; Back to Problem Set</a>
+  <div class="eyebrow">Metrics &amp; Data Analysis</div>
+  <h1>🔑 Graphing Lab Answer Key</h1>
+  <p class="tagline">Sample data tables, graphs, and answers. Correct student responses in <span class="hl">yellow highlight</span>.</p>
+</header>
+<main>
+
+<!-- Scenario 1 -->
+<section class="card">
+  <h2>📈 Graphing Scenario #1 — X-Y Scatter Plot</h2>
+  <div class="scenario">
+    The data table shows ocean water temperature at various depths. Graph on an <strong>X-Y scatter plot</strong> with a title.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Data Table</h3>
+      <table class="data">
+        <thead><tr><th>Water depth (m)</th><th>Temperature (ºC)</th></tr></thead>
+        <tbody>
+          <tr><td>50</td><td>18</td></tr>
+          <tr><td>75</td><td>15</td></tr>
+          <tr><td>100</td><td>12</td></tr>
+          <tr><td>150</td><td>5</td></tr>
+          <tr><td>200</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Sample Graph</h3>
+      <img src="graphing-ak-scatter.png" alt="Sample scatter plot: The Relationship between Water depth (m) and Temperature (ºC) — points at (50,18), (75,15), (100,12), (150,5), (200,4) with a downward linear trend line" class="graph-img">
+    </div>
+  </div>
+  <ol class="qlist">
+    <li>
+      <p class="q-text">Why did you use an X-Y scatter plot to graph the data?</p>
+      <p><span class="hl">To determine a relationship</span> between the two variables.</p>
+    </li>
+    <li>
+      <p class="q-text">What was the relationship between water depth and temperature?</p>
+      <p><span class="hl">Negative / linear</span> — as water depth increases, temperature decreases in a straight-line pattern.</p>
+    </li>
+    <li>
+      <p class="q-text">The approximate water temperature at a depth of 125 m would be:</p>
+      <p><span class="hl">~8 degrees ºC</span> (read from the trend line between the 100 m and 150 m points).</p>
+    </li>
+  </ol>
+</section>
+
+<!-- Scenario 2 -->
+<section class="card">
+  <h2>🥧 Graphing Scenario #2 — Pie Chart</h2>
+  <div class="scenario">
+    Beach cleanup at Sandys: <strong>55%</strong> cigarette butts, <strong>20%</strong> plastic, <strong>25%</strong> Styrofoam.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Data Table</h3>
+      <table class="data">
+        <thead><tr><th>Type of trash</th><th>Percentage (%)</th></tr></thead>
+        <tbody>
+          <tr><td><span class="hl">cigarette butts</span></td><td><span class="hl">55</span></td></tr>
+          <tr><td><span class="hl">plastic</span></td><td><span class="hl">20</span></td></tr>
+          <tr><td><span class="hl">Styrofoam</span></td><td><span class="hl">25</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3>Sample Graph</h3>
+      <img src="graphing-ak-pie.png" alt="Sample pie chart labeled Percentage: cigarette butts 55.0%, Styrofoam 25.0%, plastic 20.0%" class="graph-img">
+    </div>
+  </div>
+  <ol class="qlist">
+    <li>
+      <p class="q-text">What type of graph did you use and why?</p>
+      <p><span class="hl">Pie chart</span> — to show parts of a whole.</p>
+    </li>
+  </ol>
+</section>
+
+<!-- Scenario 3 -->
+<section class="card">
+  <h2>📊 Graphing Scenario #3 — Bar / Column Chart</h2>
+  <div class="scenario">
+    Populations: Oahu ~900,000, Kauai 58,000, Maui 120,000, Big Island 150,000.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Data Table</h3>
+      <table class="data">
+        <thead><tr><th>Island</th><th>Population</th></tr></thead>
+        <tbody>
+          <tr><td><span class="hl">Oahu</span></td><td><span class="hl">900,000</span></td></tr>
+          <tr><td><span class="hl">Kauai</span></td><td><span class="hl">58,000</span></td></tr>
+          <tr><td><span class="hl">Maui</span></td><td><span class="hl">120,000</span></td></tr>
+          <tr><td><span class="hl">Big Island</span></td><td><span class="hl">150,000</span></td></tr>
+        </tbody>
+      </table>
+      <div class="note">
+        <strong>Teacher note:</strong> The sample graph shows Maui as 12,000 — that&rsquo;s a typo in the source; the correct value is <strong>120,000</strong>.
+      </div>
+    </div>
+    <div>
+      <h3>Sample Graph</h3>
+      <img src="graphing-ak-bar.png" alt="Sample bar chart labeled Population vs. Island: Oahu ~900,000, Kauai small, Maui small, Big Island ~150,000" class="graph-img">
+    </div>
+  </div>
+  <ol class="qlist">
+    <li>
+      <p class="q-text">Why did you choose to create this type of graph?</p>
+      <p><span class="hl">A bar graph is used to compare</span> groups (or categories that don&rsquo;t change over time).</p>
+    </li>
+  </ol>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School &middot; Middle School Math &middot; Metrics &amp; Data Analysis</footer>
+</div>
+</body>
+</html>
