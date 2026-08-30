@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Notation — Quiz</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#2563eb; --accent-deep:#1e40af; --accent-soft:#dbeafe;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:900px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+.namebar { display:flex; gap:16px; align-items:center; margin:14px 0 22px; background:#fff; border:1.5px solid #cbd5e1; border-radius:10px; padding:12px 18px; font-size:.95rem; }
+.namebar label { font-weight:700; color:var(--navy); }
+.namebar .line { flex:1; border-bottom:1.5px solid #94a3b8; height:22px; }
+main { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
+main h2 { color:var(--accent-deep); font-size:1.3rem; font-weight:800; margin-bottom:10px; }
+.instructions { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 20px; font-size:.95rem; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; }
+ol.qlist > li { counter-increment:q; position:relative; padding:12px 0 12px 42px; border-bottom:1px dashed #d1d5db; }
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before { content:counter(q); position:absolute; left:0; top:12px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+.answer-line { display:inline-block; min-width:150px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.reveal-btn { display:inline-block; background:var(--gold); color:var(--navy); border:1px solid var(--gold-deep); padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 0 6px; }
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:12px 16px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:1rem; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+@media print {
+  body { background:#fff; padding:0; }
+  main { box-shadow:none; border:1px solid #cbd5e1; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Quiz</div>
+  <h1>🔬 Scientific Notation Quiz</h1>
+  <p class="tagline">Convert, compute, and compare numbers in scientific notation.</p>
+</header>
+<script>
+(function(){
+  const g = new URLSearchParams(location.search).get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Quiz`;
+  }
+})();
+</script>
+<main>
+  <h2>Quiz — 10 Problems</h2>
+  <div class="instructions">Answer all 10 problems. Show work in your notebook when needed. Click <strong>Show Answer Key</strong> to check.</div>
+  <ol class="qlist">
+  <li>Write 4,500 in scientific notation. <span class="answer-line"></span></li>
+<li>Write 0.0034 in scientific notation. <span class="answer-line"></span></li>
+<li>Write 6.2 × 10⁴ in standard form. <span class="answer-line"></span></li>
+<li>Write 5 × 10⁻² in standard form. <span class="answer-line"></span></li>
+<li>10⁰ =  <span class="answer-line"></span></li>
+<li>10⁻³ =  <span class="answer-line"></span></li>
+<li>(3 × 10⁴) × (2 × 10⁵) =  <span class="answer-line"></span></li>
+<li>(6 × 10⁸) ÷ (2 × 10³) =  <span class="answer-line"></span></li>
+<li>(3 × 10⁴) + (2 × 10⁴) =  <span class="answer-line"></span></li>
+<li>Which is 'true' scientific notation: 50 × 10⁴ or 5 × 10⁵? <span class="answer-line"></span></li>
+
+  </ol>
+  <button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div id="ak" class="ak">
+    <h4>Answer Key</h4>
+    (1) 4.5 × 10³ · (2) 3.4 × 10⁻³ · (3) 62,000 · (4) 0.05 · (5) 1 · (6) 0.001 (1/1000) · (7) 6 × 10⁹ · (8) 3 × 10⁵ · (9) 5 × 10⁴ · (10) 5 × 10⁵ (since 1 ≤ |a| < 10)
+  </div>
+</main>
+<footer>Mary, Star of the Sea School · Middle School Math · Scientific Notation · Dr. Park</footer>
+</div>
+<script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+</body>
+</html>

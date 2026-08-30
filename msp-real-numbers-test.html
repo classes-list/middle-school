@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Numbers — Unit Test</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --ink:#1f2937; --dim:#64748b;
+  --accent:#4f46e5; --accent-deep:#3730a3;
+  --accent-soft:#e0e7ff;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:900px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+.namebar {
+  display:flex; gap:16px; align-items:center; margin:14px 0 22px;
+  background:#fff; border:1.5px solid #cbd5e1; border-radius:10px;
+  padding:12px 18px; font-size:.95rem;
+}
+.namebar label { font-weight:700; color:var(--navy); }
+.namebar .line { flex:1; border-bottom:1.5px solid #94a3b8; height:22px; }
+main { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
+main h2 { color:var(--accent-deep); font-size:1.3rem; font-weight:800; margin-bottom:10px; }
+.instructions { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 20px; font-size:.95rem; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; }
+ol.qlist > li { counter-increment:q; position:relative; padding:12px 0 12px 42px; border-bottom:1px dashed #d1d5db; }
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before { content:counter(q); position:absolute; left:0; top:12px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+.answer-line { display:inline-block; min-width:150px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.reveal-btn { display:inline-block; background:var(--gold); color:var(--navy); border:1px solid var(--gold-deep); padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 0 6px; }
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:12px 16px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:1rem; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+@media print {
+  body { background:#fff; padding:0; }
+  main { box-shadow:none; border:1px solid #cbd5e1; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Unit Test</div>
+  <h1>🔢 Real Numbers Unit Test</h1>
+  <p class="tagline">Rational vs. irrational, square roots.</p>
+</header>
+<script>
+(function(){
+  const g = new URLSearchParams(location.search).get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Unit Test`;
+  }
+})();
+</script>
+<main>
+  <h2>Unit Test — 20 Problems</h2>
+  <div class="instructions">Answer all 20 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
+  <ol class="qlist">
+  <li>Define rational number. <span class="answer-line"></span></li>
+<li>Define irrational number. <span class="answer-line"></span></li>
+<li>Classify 0.121212…  <span class="answer-line"></span></li>
+<li>Classify √50 <span class="answer-line"></span></li>
+<li>Classify -7 <span class="answer-line"></span></li>
+<li>Classify π <span class="answer-line"></span></li>
+<li>√1 =  <span class="answer-line"></span></li>
+<li>√49 =  <span class="answer-line"></span></li>
+<li>√64 =  <span class="answer-line"></span></li>
+<li>√100 =  <span class="answer-line"></span></li>
+<li>√121 =  <span class="answer-line"></span></li>
+<li>√50 is between which two whole numbers? <span class="answer-line"></span></li>
+<li>√75 is between which two whole numbers? <span class="answer-line"></span></li>
+<li>Estimate √11 to nearest tenth. <span class="answer-line"></span></li>
+<li>Estimate √8 to nearest tenth. <span class="answer-line"></span></li>
+<li>Which is greater: √17 or 4.1? <span class="answer-line"></span></li>
+<li>Which is greater: π or √10? <span class="answer-line"></span></li>
+<li>Order: 2, √5, 5/2, 2.3 (least to greatest) <span class="answer-line"></span></li>
+<li>0.5 as fraction =  <span class="answer-line"></span></li>
+<li>0.666… as fraction =  <span class="answer-line"></span></li>
+
+  </ol>
+  <button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div id="ak" class="ak">
+    <h4>Answer Key</h4>
+    (1) Can be written as a/b (b ≠ 0) · (2) Cannot be written as a fraction · (3) Rational (repeats) · (4) Irrational · (5) Rational · (6) Irrational · (7) 1 · (8) 7 · (9) 8 · (10) 10 · (11) 11 · (12) 7 and 8 · (13) 8 and 9 · (14) ≈ 3.3 · (15) ≈ 2.8 · (16) √17 (≈ 4.12) · (17) √10 (≈ 3.16) · (18) 2, √5 (≈2.24), 2.3, 5/2 · (19) 1/2 · (20) 2/3
+  </div>
+</main>
+<footer>Mary, Star of the Sea School · Middle School Math · Real Numbers · Dr. Park</footer>
+</div>
+<script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+</body>
+</html>

@@ -651,6 +651,8 @@
             <button class="btn" id="handout-btn" onclick="showHandout()">🔬 Science Connection</button>
             <button class="btn" id="realworld-btn" onclick="showRealWorld()">🎨 Real-World Project</button>
             <button class="btn" id="worksheet-btn" onclick="showWorksheet()">Worksheet →</button>
+            <button class="btn" id="quiz-btn-ext" onclick="showQuizExternal()">Quiz →</button>
+            <button class="btn" id="unittest-btn" onclick="showUnitTest()">Unit Test →</button>
           </div>
         </div>
         <div id="worksheet-screen" class="screen">
@@ -711,12 +713,12 @@
 
   <script>
 const UNITS = [
-  { id:'metrics-sci-process', title:'Metrics & Data Analysis', icon:'🔬', cc:'8.MP + Skill', desc:'A 6-lesson unit hub covering metric units, the lab tools, three hands-on labs, and Google Sheets graphing. Foundation for every experiment this year.', ytSearch:'metric system scientific method middle school introduction', graphLabUrl:'metrics-scientific-process.html' },
-  { id:'scientific-notation', ixlUrl:'https://www.ixl.com/math/grade-8/convert-between-standard-and-scientific-notation', title:'Scientific Notation', icon:'🔬', cc:'8.EE.3-4', desc:'Write very large and small numbers in scientific notation and compute with them.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy 8th grade scientific notation', bpUrl:'https://www.brainpop.com/topic/standard-and-scientific-notation/', worksheetUrl:'msp-scientific-notation-worksheet.html?grade=8'},
-  { id:'real-numbers', ixlUrl:'https://www.ixl.com/math/grade-8/identify-rational-and-irrational-numbers', title:'Real Numbers', icon:'🔢', cc:'8.NS.1-2', desc:'Distinguish rational from irrational numbers and approximate square roots.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy 8th grade rational irrational numbers square roots', bpUrl:'https://www.brainpop.com/topic/rational-and-irrational-numbers/', worksheetUrl:'msp-real-numbers-worksheet.html?grade=8'},
-  { id:'exponents', ixlUrl:'https://www.ixl.com/math/grade-8/understanding-exponents', title:'Exponents', icon:'✴️', cc:'8.EE.1-2', desc:'Apply laws of exponents and evaluate expressions with integer exponents.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy 8th grade laws of exponents', bpUrl:'https://www.brainpop.com/topic/exponents/', worksheetUrl:'msp-exponents-worksheet.html?grade=8'},
-  { id:'slope', ixlUrl:'https://www.ixl.com/math/grade-8/find-the-slope-of-a-graph', title:'Slope & Rate of Change', icon:'📈', cc:'8.EE.5-6', desc:'Calculate slope from graphs, tables, and equations; interpret rate of change.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ytSearch:'khan academy 8th grade slope rate of change', phetUrl:'https://phet.colorado.edu/en/simulations/graphing-slope-intercept', bpUrl:'https://www.brainpop.com/topic/slope-and-intercept/', worksheetUrl:'msp-slope-worksheet.html?grade=8'},
-  { id:'linear-equations', ixlUrl:'https://www.ixl.com/math/grade-8/solve-equations-with-variables-on-both-sides', title:'Linear Equations', icon:'⚖️', cc:'8.EE.7', desc:'Solve linear equations with variables on both sides and special solutions.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ytSearch:'khan academy 8th grade linear equations', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer-two-variables', bpUrl:'https://www.brainpop.com/topic/graphing-linear-equations/', worksheetUrl:'msp-linear-equations-worksheet.html?grade=8'},
+  { id:'metrics-sci-process', title:'Metrics & Data Analysis', icon:'🔬', cc:'8.MP + Skill', desc:'A 6-lesson unit hub covering metric units, the lab tools, three hands-on labs, and Google Sheets graphing. Foundation for every experiment this year.', ytSearch:'metric system scientific method middle school introduction', graphLabUrl:'metrics-scientific-process.html', quizUrl:'msp-metrics-data-analysis-quiz.html?grade=8', unitTestUrl:'msp-metrics-data-analysis-test.html?grade=8' },
+  { id:'scientific-notation', ixlUrl:'https://www.ixl.com/math/grade-8/convert-between-standard-and-scientific-notation', title:'Scientific Notation', icon:'🔬', cc:'8.EE.3-4', desc:'Write very large and small numbers in scientific notation and compute with them.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy 8th grade scientific notation', bpUrl:'https://www.brainpop.com/topic/standard-and-scientific-notation/', worksheetUrl:'msp-scientific-notation-worksheet.html?grade=8', quizUrl:'msp-scientific-notation-quiz.html?grade=8', unitTestUrl:'msp-scientific-notation-test.html?grade=8'},
+  { id:'real-numbers', ixlUrl:'https://www.ixl.com/math/grade-8/identify-rational-and-irrational-numbers', title:'Real Numbers', icon:'🔢', cc:'8.NS.1-2', desc:'Distinguish rational from irrational numbers and approximate square roots.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy 8th grade rational irrational numbers square roots', bpUrl:'https://www.brainpop.com/topic/rational-and-irrational-numbers/', worksheetUrl:'msp-real-numbers-worksheet.html?grade=8', quizUrl:'msp-real-numbers-quiz.html?grade=8', unitTestUrl:'msp-real-numbers-test.html?grade=8'},
+  { id:'exponents', ixlUrl:'https://www.ixl.com/math/grade-8/understanding-exponents', title:'Exponents', icon:'✴️', cc:'8.EE.1-2', desc:'Apply laws of exponents and evaluate expressions with integer exponents.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy 8th grade laws of exponents', bpUrl:'https://www.brainpop.com/topic/exponents/', worksheetUrl:'msp-exponents-worksheet.html?grade=8', quizUrl:'msp-exponents-quiz.html?grade=8', unitTestUrl:'msp-exponents-test.html?grade=8'},
+  { id:'slope', ixlUrl:'https://www.ixl.com/math/grade-8/find-the-slope-of-a-graph', title:'Slope & Rate of Change', icon:'📈', cc:'8.EE.5-6', desc:'Calculate slope from graphs, tables, and equations; interpret rate of change.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ytSearch:'khan academy 8th grade slope rate of change', phetUrl:'https://phet.colorado.edu/en/simulations/graphing-slope-intercept', bpUrl:'https://www.brainpop.com/topic/slope-and-intercept/', worksheetUrl:'msp-slope-worksheet.html?grade=8', quizUrl:'msp-slope-quiz.html?grade=8', unitTestUrl:'msp-slope-test.html?grade=8'},
+  { id:'linear-equations', ixlUrl:'https://www.ixl.com/math/grade-8/solve-equations-with-variables-on-both-sides', title:'Linear Equations', icon:'⚖️', cc:'8.EE.7', desc:'Solve linear equations with variables on both sides and special solutions.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ytSearch:'khan academy 8th grade linear equations', phetUrl:'https://phet.colorado.edu/en/simulations/equality-explorer-two-variables', bpUrl:'https://www.brainpop.com/topic/graphing-linear-equations/', worksheetUrl:'msp-linear-equations-worksheet.html?grade=8', quizUrl:'msp-linear-equations-quiz.html?grade=8', unitTestUrl:'msp-linear-equations-test.html?grade=8'},
   { id:'systems', ixlUrl:'https://www.ixl.com/math/grade-8/solve-a-system-of-equations-by-graphing', title:'Systems of Equations', icon:'🔀', cc:'8.EE.8', desc:'Solve systems by graphing, substitution, and elimination.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-systems-topic', ytSearch:'khan academy 8th grade systems of equations', phetUrl:'https://phet.colorado.edu/en/simulations/graphing-lines', bpUrl:'https://www.brainpop.com/topic/graphing-linear-equations/'},
   { id:'rearranging-formulas', ixlUrl:'https://www.ixl.com/math/grade-8/rearrange-multi-variable-equations', title:'Rearranging Formulas', icon:'🔄', cc:'8.EE + Science', desc:'Solve formulas for any variable using inverse operations. Essential for stoichiometry (n = m/M), physics (v = d/t), and any rate equation. Master the formula triangle.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-linear-equations-functions', ytSearch:'rearranging formulas solve for variable 8th grade physics' },
   { id:'weighted-averages', ixlUrl:'https://www.ixl.com/math/grade-8/calculate-mean-median-mode-and-range', title:'Percent & Weighted Averages', icon:'⚖️', cc:'8.NS + Chemistry', desc:'Calculate weighted averages where different values have different importance. Used for isotope abundance (Element Babybook), stain concentrations, GPA, and survey results.', kaUrl:'https://www.khanacademy.org/math/statistics-probability/summarizing-quantitative-data', ytSearch:'weighted average isotope abundance percent chemistry 8th grade' },
@@ -1396,6 +1398,10 @@ function showLesson(unitId) {
   const hideExtras = (unitId === 'metrics-sci-process');
   if (hbtn) hbtn.style.display = hideExtras ? 'none' : '';
   if (wbtn) wbtn.style.display = hideExtras ? 'none' : '';
+  const qbe = document.getElementById('quiz-btn-ext');
+  const utb = document.getElementById('unittest-btn');
+  if (qbe) qbe.style.display = (unit && unit.quizUrl) ? '' : 'none';
+  if (utb) utb.style.display = (unit && unit.unitTestUrl) ? '' : 'none';
   renderSidebar();
   setTopbar();
 }
@@ -1424,6 +1430,17 @@ function checkWorksheet() {
     html += `<div class="problem"><h4>Problem ${idx + 1}</h4><p>${p.q}</p><div class="answer-key"><strong>Answer:</strong> ${p.answer}</div><p><strong>Your answer:</strong> ${userAns || '(no answer)'}</p></div>`;
   });
   document.getElementById('worksheet-content').innerHTML = html;
+}
+
+
+function showQuizExternal(){
+  const unit = UNITS.find(u => u.id === currentUnit);
+  if (unit && unit.quizUrl) { window.open(unit.quizUrl, '_blank', 'noopener'); return; }
+  showQuiz();
+}
+function showUnitTest(){
+  const unit = UNITS.find(u => u.id === currentUnit);
+  if (unit && unit.unitTestUrl) { window.open(unit.unitTestUrl, '_blank', 'noopener'); }
 }
 
 function showQuiz() {
