@@ -68,6 +68,7 @@
     .unit-card-icon { font-size: 32px; }
     .unit-card-meta { flex: 1; }
     .unit-card-title { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+    .unit-badge { display:inline-block; background:#FFD100; color:#1a2a4a; font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; margin-right:6px; vertical-align:middle; letter-spacing:.03em; }
     .unit-card-cc { font-size: 12px; color: #666; }
     .unit-card-desc { font-size: 13px; color: #555; margin-bottom: 12px; line-height: 1.4; }
     .unit-card-pills { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -1381,7 +1382,7 @@ function resourceCardHTML(unit) {
 function renderHome() {
   const grid = document.getElementById('units-grid');
   grid.innerHTML = '';
-  UNITS.forEach(unit => {
+  UNITS.forEach((unit, idx) => {
     const card = document.createElement('div');
     card.className = 'unit-card';
     card.onclick = () => showLesson(unit.id);
@@ -1389,7 +1390,7 @@ function renderHome() {
       <div class="unit-card-header">
         <div class="unit-card-icon">${unit.icon}</div>
         <div class="unit-card-meta">
-          <div class="unit-card-title">${unit.title}${completedUnits[unit.id]?' ✅':''}</div>
+          <div class="unit-card-title"><span class="unit-badge">Unit ${idx+1}</span>${unit.title}${completedUnits[unit.id]?' ✅':''}</div>
           <div class="unit-card-cc">${unit.cc}</div>
         </div>
       </div>
