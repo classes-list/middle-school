@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factors & Multiples — Foundations Worksheet</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#7c3aed; --accent-deep:#5b21b6;
+  --accent-soft:#ede9fe;
+  --highlight:#fef08a;
+  --pos:#059669; --neg:#dc2626;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card { background:#fff; border-radius:14px; padding:18px 22px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1rem; font-weight:800; margin:12px 0 8px; }
+section.card p { margin-bottom:8px; }
+.intro { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 12px; font-size:.95rem; }
+.rule { background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; padding:8px 12px; margin:10px 0; font-size:.94rem; }
+.rule strong { color:#78350f; }
+table.rules { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:.98rem; }
+table.rules th, table.rules td { border:1.5px solid #94a3b8; padding:8px 12px; text-align:center; }
+table.rules th { background:var(--navy); color:#fff; font-weight:800; }
+table.rules tr:nth-child(even) td { background:#f8fafc; }
+.pos { color:var(--pos); font-weight:800; }
+.neg { color:var(--neg); font-weight:800; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li { counter-increment:q; position:relative; padding:9px 0 9px 42px; border-bottom:1px dashed #d1d5db; }
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before { content:counter(q); position:absolute; left:0; top:9px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+.answer-line { display:inline-block; min-width:120px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.answer-line-lg { display:inline-block; min-width:200px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin:6px 0; }
+@media (max-width:640px) { .grid2 { grid-template-columns:1fr; } }
+.calc-box { background:#f0f9ff; border:2px dashed var(--accent); border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.94rem; }
+.calc-box strong { color:var(--accent-deep); }
+.reveal-btn { display:inline-block; background:var(--gold); color:var(--navy); border:1px solid var(--gold-deep); padding:8px 14px; border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer; margin:6px 0; }
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:.95rem; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+@media print {
+  body { background:#fff; padding:0; }
+  section.card { box-shadow:none; border:1px solid #cbd5e1; page-break-inside:avoid; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
+  <h1>🔢 Factors & Multiples Worksheet</h1>
+  <p class="tagline">Prime factorization, GCF, and LCM.</p>
+</header>
+<script>
+(function(){
+  const g = new URLSearchParams(location.search).get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Foundations Review`;
+  }
+})();
+</script>
+<main>
+
+<section class="card">
+  <h2>1️⃣ Divisibility Rules</h2>
+  <div class="intro">Quick tests for whether one number divides evenly into another.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Is 342 divisible by 3? <span class="answer-line"></span></li>
+<li>Is 465 divisible by 5? <span class="answer-line"></span></li>
+<li>Is 156 divisible by 4? <span class="answer-line"></span></li>
+<li>Is 720 divisible by 6? <span class="answer-line"></span></li>
+<li>Is 288 divisible by 9? <span class="answer-line"></span></li>
+<li>List all divisors of 24. <span class="answer-line"></span></li>
+<li>List all divisors of 36. <span class="answer-line"></span></li>
+</ol>
+<table class="rules"><tr><th>Divisible by</th><th>Rule</th></tr><tr><td>2</td><td>Ends in 0, 2, 4, 6, or 8</td></tr><tr><td>3</td><td>Sum of digits is divisible by 3</td></tr><tr><td>4</td><td>Last two digits divisible by 4</td></tr><tr><td>5</td><td>Ends in 0 or 5</td></tr><tr><td>6</td><td>Divisible by both 2 AND 3</td></tr><tr><td>9</td><td>Sum of digits divisible by 9</td></tr><tr><td>10</td><td>Ends in 0</td></tr></table>
+<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak">
+  <h4>Answer Key — Section 1</h4>
+  (1) Yes (3+4+2=9, ÷3) · (2) Yes (ends in 5) · (3) Yes (56 ÷ 4) · (4) Yes (÷2 and ÷3) · (5) Yes (2+8+8=18, ÷9) · (6) 1, 2, 3, 4, 6, 8, 12, 24 · (7) 1, 2, 3, 4, 6, 9, 12, 18, 36
+</div>
+</section>
+
+<section class="card">
+  <h2>2️⃣ Prime Factorization</h2>
+  <div class="intro">Every whole number can be written as a product of primes (2, 3, 5, 7, 11, 13, …). Use a factor tree.</div>
+<div class="rule"><strong>Example:</strong> 60 → 60 = 2 × 30 = 2 × 2 × 15 = 2 × 2 × 3 × 5 = <strong>2² × 3 × 5</strong></div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Prime factorize 12 <span class="answer-line"></span></li>
+<li>Prime factorize 24 <span class="answer-line"></span></li>
+<li>Prime factorize 30 <span class="answer-line"></span></li>
+<li>Prime factorize 48 <span class="answer-line"></span></li>
+<li>Prime factorize 72 <span class="answer-line"></span></li>
+<li>Prime factorize 100 <span class="answer-line"></span></li>
+<li>Prime factorize 84 <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<div id="ak2" class="ak">
+  <h4>Answer Key — Section 2</h4>
+  (1) 2² × 3 · (2) 2³ × 3 · (3) 2 × 3 × 5 · (4) 2⁴ × 3 · (5) 2³ × 3² · (6) 2² × 5² · (7) 2² × 3 × 7
+</div>
+</section>
+
+<section class="card">
+  <h2>3️⃣ Greatest Common Factor (GCF)</h2>
+  <div class="intro">GCF = the largest number that divides evenly into both. Method: prime factorize each, then multiply the shared primes (taking the smallest power).</div>
+<div class="rule"><strong>Example:</strong> GCF(24, 36). 24 = 2³ × 3, 36 = 2² × 3². Shared: 2² × 3 = 4 × 3 = <strong>12</strong></div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>GCF(12, 18) =  <span class="answer-line"></span></li>
+<li>GCF(24, 36) =  <span class="answer-line"></span></li>
+<li>GCF(15, 25) =  <span class="answer-line"></span></li>
+<li>GCF(20, 30) =  <span class="answer-line"></span></li>
+<li>GCF(48, 60) =  <span class="answer-line"></span></li>
+<li>GCF(14, 21) =  <span class="answer-line"></span></li>
+<li>GCF(72, 108) =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<div id="ak3" class="ak">
+  <h4>Answer Key — Section 3</h4>
+  (1) 6 · (2) 12 · (3) 5 · (4) 10 · (5) 12 · (6) 7 · (7) 36
+</div>
+</section>
+
+<section class="card">
+  <h2>4️⃣ Least Common Multiple (LCM)</h2>
+  <div class="intro">LCM = the smallest number that BOTH numbers divide into evenly. Method: prime factorize each, take ALL primes (highest power) and multiply.</div>
+<div class="rule"><strong>Example:</strong> LCM(4, 6). 4 = 2², 6 = 2 × 3. Take highest of each prime: 2² × 3 = <strong>12</strong></div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>LCM(4, 6) =  <span class="answer-line"></span></li>
+<li>LCM(3, 5) =  <span class="answer-line"></span></li>
+<li>LCM(6, 8) =  <span class="answer-line"></span></li>
+<li>LCM(10, 15) =  <span class="answer-line"></span></li>
+<li>LCM(12, 18) =  <span class="answer-line"></span></li>
+<li>LCM(9, 12) =  <span class="answer-line"></span></li>
+<li>LCM(8, 20) =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<div id="ak4" class="ak">
+  <h4>Answer Key — Section 4</h4>
+  (1) 12 · (2) 15 · (3) 24 · (4) 30 · (5) 36 · (6) 36 · (7) 40
+</div>
+</section>
+
+<section class="card">
+  <h2>5️⃣ Word Problems (GCF vs LCM)</h2>
+  <div class="intro"><strong>GCF</strong> problems: dividing things into equal groups (largest possible group). <strong>LCM</strong> problems: when two events happen at the same time (next time they meet).</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A teacher has 24 pencils and 36 erasers. She wants to make identical goody bags with no leftovers. What is the largest number of bags she can make? <span class="answer-line"></span></li>
+<li>Bus A comes every 12 minutes, Bus B every 18 minutes. If both arrive at 8:00 AM, when do they arrive together next? <span class="answer-line"></span></li>
+<li>Two runners start together. One laps every 3 minutes, the other every 5 minutes. When do they meet at the start again? <span class="answer-line"></span></li>
+<li>A packet of 30 stickers and a packet of 45 stickers. Largest equal-size groups with none left over? <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<div id="ak5" class="ak">
+  <h4>Answer Key — Section 5</h4>
+  (1) GCF(24,36) = 12 bags · (2) LCM(12,18) = 36 min → 8:36 AM · (3) LCM(3,5) = 15 min · (4) GCF(30,45) = 15 stickers per group
+</div>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School · Middle School Math · Factors & Multiples · Dr. Park</footer>
+</div>
+<script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+</body>
+</html>

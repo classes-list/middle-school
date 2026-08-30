@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fraction Division — Foundations Worksheet</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#db2777; --accent-deep:#9d174d;
+  --accent-soft:#fce7f3;
+  --highlight:#fef08a;
+  --pos:#059669; --neg:#dc2626;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card { background:#fff; border-radius:14px; padding:18px 22px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1rem; font-weight:800; margin:12px 0 8px; }
+section.card p { margin-bottom:8px; }
+.intro { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 12px; font-size:.95rem; }
+.rule { background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; padding:8px 12px; margin:10px 0; font-size:.94rem; }
+.rule strong { color:#78350f; }
+table.rules { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:.98rem; }
+table.rules th, table.rules td { border:1.5px solid #94a3b8; padding:8px 12px; text-align:center; }
+table.rules th { background:var(--navy); color:#fff; font-weight:800; }
+table.rules tr:nth-child(even) td { background:#f8fafc; }
+.pos { color:var(--pos); font-weight:800; }
+.neg { color:var(--neg); font-weight:800; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li { counter-increment:q; position:relative; padding:9px 0 9px 42px; border-bottom:1px dashed #d1d5db; }
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before { content:counter(q); position:absolute; left:0; top:9px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+.answer-line { display:inline-block; min-width:120px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.answer-line-lg { display:inline-block; min-width:200px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin:6px 0; }
+@media (max-width:640px) { .grid2 { grid-template-columns:1fr; } }
+.calc-box { background:#f0f9ff; border:2px dashed var(--accent); border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.94rem; }
+.calc-box strong { color:var(--accent-deep); }
+.reveal-btn { display:inline-block; background:var(--gold); color:var(--navy); border:1px solid var(--gold-deep); padding:8px 14px; border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer; margin:6px 0; }
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:.95rem; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+@media print {
+  body { background:#fff; padding:0; }
+  section.card { box-shadow:none; border:1px solid #cbd5e1; page-break-inside:avoid; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
+  <h1>➗ Fraction Division Worksheet</h1>
+  <p class="tagline">Keep, Change, Flip — and understand why.</p>
+</header>
+<script>
+(function(){
+  const g = new URLSearchParams(location.search).get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Foundations Review`;
+  }
+})();
+</script>
+<main>
+
+<section class="card">
+  <h2>1️⃣ Fraction Review</h2>
+  <div class="intro">A fraction has a <strong>numerator</strong> (top) and a <strong>denominator</strong> (bottom). The <strong>reciprocal</strong> flips the fraction upside down.</div>
+<div class="rule"><strong>Reciprocal:</strong> The reciprocal of a/b is b/a. Example: reciprocal of 3/4 is 4/3. Reciprocal of 5 = 1/5.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Reciprocal of 2/3 =  <span class="answer-line"></span></li>
+<li>Reciprocal of 5/8 =  <span class="answer-line"></span></li>
+<li>Reciprocal of 7 =  <span class="answer-line"></span></li>
+<li>Reciprocal of 1/4 =  <span class="answer-line"></span></li>
+<li>Simplify 6/8 =  <span class="answer-line"></span></li>
+<li>Simplify 15/20 =  <span class="answer-line"></span></li>
+<li>Convert 2 1/3 to improper fraction =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak">
+  <h4>Answer Key — Section 1</h4>
+  (1) 3/2 · (2) 8/5 · (3) 1/7 · (4) 4 · (5) 3/4 · (6) 3/4 · (7) 7/3
+</div>
+</section>
+
+<section class="card">
+  <h2>2️⃣ Keep, Change, Flip</h2>
+  <div class="intro">Dividing by a fraction = multiplying by its reciprocal.</div>
+<div class="rule"><strong>KEEP</strong> the first fraction, <strong>CHANGE</strong> ÷ to ×, <strong>FLIP</strong> the second fraction. Then multiply straight across and simplify.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>1/2 ÷ 1/4 =  <span class="answer-line"></span></li>
+<li>2/3 ÷ 1/6 =  <span class="answer-line"></span></li>
+<li>3/4 ÷ 2/3 =  <span class="answer-line"></span></li>
+<li>5/8 ÷ 1/2 =  <span class="answer-line"></span></li>
+<li>4/9 ÷ 2/3 =  <span class="answer-line"></span></li>
+<li>1/3 ÷ 2/5 =  <span class="answer-line"></span></li>
+<li>7/10 ÷ 1/5 =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<div id="ak2" class="ak">
+  <h4>Answer Key — Section 2</h4>
+  (1) 1/2 × 4/1 = 4/2 = 2 · (2) 2/3 × 6/1 = 12/3 = 4 · (3) 3/4 × 3/2 = 9/8 = 1 1/8 · (4) 5/8 × 2/1 = 10/8 = 5/4 = 1 1/4 · (5) 4/9 × 3/2 = 12/18 = 2/3 · (6) 1/3 × 5/2 = 5/6 · (7) 7/10 × 5/1 = 35/10 = 7/2 = 3 1/2
+</div>
+</section>
+
+<section class="card">
+  <h2>3️⃣ Whole ÷ Fraction and Fraction ÷ Whole</h2>
+  <div class="intro">A whole number is really a fraction over 1. So 6 = 6/1. Same rule applies.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>4 ÷ 1/2 =  <span class="answer-line"></span></li>
+<li>6 ÷ 1/3 =  <span class="answer-line"></span></li>
+<li>1/2 ÷ 4 =  <span class="answer-line"></span></li>
+<li>3/4 ÷ 2 =  <span class="answer-line"></span></li>
+<li>10 ÷ 2/5 =  <span class="answer-line"></span></li>
+<li>5/6 ÷ 5 =  <span class="answer-line"></span></li>
+<li>8 ÷ 3/4 =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<div id="ak3" class="ak">
+  <h4>Answer Key — Section 3</h4>
+  (1) 4/1 × 2/1 = 8 · (2) 6/1 × 3/1 = 18 · (3) 1/2 × 1/4 = 1/8 · (4) 3/4 × 1/2 = 3/8 · (5) 10 × 5/2 = 25 · (6) 5/6 × 1/5 = 1/6 · (7) 8 × 4/3 = 32/3 = 10 2/3
+</div>
+</section>
+
+<section class="card">
+  <h2>4️⃣ Mixed Numbers</h2>
+  <div class="intro">Convert mixed numbers to improper fractions FIRST, then apply Keep-Change-Flip.</div>
+<div class="rule">Mixed → improper: whole × denominator + numerator, over the denominator. Example: 2 3/4 = (2×4 + 3)/4 = 11/4.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>1 1/2 ÷ 1/4 =  <span class="answer-line"></span></li>
+<li>2 1/3 ÷ 1/2 =  <span class="answer-line"></span></li>
+<li>3 ÷ 1 1/2 =  <span class="answer-line"></span></li>
+<li>2 1/4 ÷ 3/4 =  <span class="answer-line"></span></li>
+<li>1 2/3 ÷ 5/6 =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<div id="ak4" class="ak">
+  <h4>Answer Key — Section 4</h4>
+  (1) 3/2 × 4/1 = 12/2 = 6 · (2) 7/3 × 2/1 = 14/3 = 4 2/3 · (3) 3 × 2/3 = 6/3 = 2 · (4) 9/4 × 4/3 = 36/12 = 3 · (5) 5/3 × 6/5 = 30/15 = 2
+</div>
+</section>
+
+<section class="card">
+  <h2>5️⃣ Word Problems</h2>
+  <div class="intro">Fraction division shows up in cooking, sharing, and measurement.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A pizza is cut into 8 slices. Each slice is 1/8 of the pizza. If Ali eats 1/2 of the pizza, how many slices did he eat? <span class="answer-line"></span></li>
+<li>A rope is 3/4 m long. You cut it into pieces of 1/8 m each. How many pieces? <span class="answer-line"></span></li>
+<li>A recipe calls for 1/2 cup sugar. You have 3 cups. How many batches can you make? <span class="answer-line"></span></li>
+<li>You have 6 m of ribbon and each bow uses 3/4 m. How many bows can you make? <span class="answer-line"></span></li>
+<li>A jug holds 2 1/2 L. You pour it into 1/4 L cups. How many cups? <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<div id="ak5" class="ak">
+  <h4>Answer Key — Section 5</h4>
+  (1) 1/2 ÷ 1/8 = 4 slices · (2) 3/4 ÷ 1/8 = 6 pieces · (3) 3 ÷ 1/2 = 6 batches · (4) 6 ÷ 3/4 = 8 bows · (5) 5/2 ÷ 1/4 = 10 cups
+</div>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School · Middle School Math · Fraction Division · Dr. Park</footer>
+</div>
+<script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+</body>
+</html>

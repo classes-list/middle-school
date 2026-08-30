@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real Numbers — Foundations Worksheet</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#4f46e5; --accent-deep:#3730a3;
+  --accent-soft:#e0e7ff;
+  --highlight:#fef08a;
+  --pos:#059669; --neg:#dc2626;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card { background:#fff; border-radius:14px; padding:18px 22px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1rem; font-weight:800; margin:12px 0 8px; }
+section.card p { margin-bottom:8px; }
+.intro { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 12px; font-size:.95rem; }
+.rule { background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; padding:8px 12px; margin:10px 0; font-size:.94rem; }
+.rule strong { color:#78350f; }
+table.rules { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:.98rem; }
+table.rules th, table.rules td { border:1.5px solid #94a3b8; padding:8px 12px; text-align:center; }
+table.rules th { background:var(--navy); color:#fff; font-weight:800; }
+table.rules tr:nth-child(even) td { background:#f8fafc; }
+.pos { color:var(--pos); font-weight:800; }
+.neg { color:var(--neg); font-weight:800; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li { counter-increment:q; position:relative; padding:9px 0 9px 42px; border-bottom:1px dashed #d1d5db; }
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before { content:counter(q); position:absolute; left:0; top:9px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+.answer-line { display:inline-block; min-width:120px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.answer-line-lg { display:inline-block; min-width:200px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin:6px 0; }
+@media (max-width:640px) { .grid2 { grid-template-columns:1fr; } }
+.calc-box { background:#f0f9ff; border:2px dashed var(--accent); border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.94rem; }
+.calc-box strong { color:var(--accent-deep); }
+.reveal-btn { display:inline-block; background:var(--gold); color:var(--navy); border:1px solid var(--gold-deep); padding:8px 14px; border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer; margin:6px 0; }
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:.95rem; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+@media print {
+  body { background:#fff; padding:0; }
+  section.card { box-shadow:none; border:1px solid #cbd5e1; page-break-inside:avoid; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
+  <h1>🔢 Real Numbers Worksheet</h1>
+  <p class="tagline">Rational vs. irrational · square roots · ordering real numbers.</p>
+</header>
+<script>
+(function(){
+  const g = new URLSearchParams(location.search).get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Foundations Review`;
+  }
+})();
+</script>
+<main>
+
+<section class="card">
+  <h2>1️⃣ Rational vs. Irrational</h2>
+  <div class="intro">A <strong>rational</strong> number can be written as a fraction a/b (b ≠ 0). Its decimal either terminates or repeats. An <strong>irrational</strong> number cannot be written as a fraction — its decimal goes forever without repeating.</div>
+<div class="rule"><strong>Examples:</strong> Rational: 3, -5, 1/2, 0.75, 0.333… Irrational: √2, √3, π, e.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Classify 4/9 as rational or irrational. <span class="answer-line"></span></li>
+<li>Classify 0.121212… as rational or irrational. <span class="answer-line"></span></li>
+<li>Classify √16 as rational or irrational. <span class="answer-line"></span></li>
+<li>Classify √17 as rational or irrational. <span class="answer-line"></span></li>
+<li>Classify π = 3.14159… as rational or irrational. <span class="answer-line"></span></li>
+<li>Classify 0.101001000100001… <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak">
+  <h4>Answer Key — Section 1</h4>
+  (1) rational · (2) rational (repeating) · (3) rational (√16 = 4) · (4) irrational (17 not a perfect square) · (5) irrational · (6) irrational (no repeating pattern)
+</div>
+</section>
+
+<section class="card">
+  <h2>2️⃣ Perfect Squares</h2>
+  <div class="intro">Memorize these — you'll use them constantly.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>√25 =  <span class="answer-line"></span></li>
+<li>√81 =  <span class="answer-line"></span></li>
+<li>√144 =  <span class="answer-line"></span></li>
+<li>√100 =  <span class="answer-line"></span></li>
+<li>√1 =  <span class="answer-line"></span></li>
+<li>√49 =  <span class="answer-line"></span></li>
+<li>√64 =  <span class="answer-line"></span></li>
+</ol>
+<table class="rules"><tr><th>n</th><th>n²</th><th>√n²</th></tr><tr><td>1</td><td>1</td><td>1</td></tr><tr><td>2</td><td>4</td><td>2</td></tr><tr><td>3</td><td>9</td><td>3</td></tr><tr><td>4</td><td>16</td><td>4</td></tr><tr><td>5</td><td>25</td><td>5</td></tr><tr><td>6</td><td>36</td><td>6</td></tr><tr><td>7</td><td>49</td><td>7</td></tr><tr><td>8</td><td>64</td><td>8</td></tr><tr><td>9</td><td>81</td><td>9</td></tr><tr><td>10</td><td>100</td><td>10</td></tr><tr><td>11</td><td>121</td><td>11</td></tr><tr><td>12</td><td>144</td><td>12</td></tr></table>
+<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<div id="ak2" class="ak">
+  <h4>Answer Key — Section 2</h4>
+  (1) 5 · (2) 9 · (3) 12 · (4) 10 · (5) 1 · (6) 7 · (7) 8
+</div>
+</section>
+
+<section class="card">
+  <h2>3️⃣ Estimating Irrational Square Roots</h2>
+  <div class="intro">If a number is NOT a perfect square, its square root is irrational. Estimate by finding the two nearest perfect squares.</div>
+<div class="rule"><strong>Example:</strong> √20. Nearest perfect squares: √16 = 4 and √25 = 5. Since 20 is closer to 16 than 25, √20 ≈ 4.5 (actually 4.47).</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>√30 is between which two whole numbers? <span class="answer-line"></span></li>
+<li>√50 is between which two whole numbers? <span class="answer-line"></span></li>
+<li>√8 ≈ (to nearest tenth) <span class="answer-line"></span></li>
+<li>√75 is between which two whole numbers? <span class="answer-line"></span></li>
+<li>Estimate √11 to nearest tenth. <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<div id="ak3" class="ak">
+  <h4>Answer Key — Section 3</h4>
+  (1) 5 and 6 (√25=5, √36=6) · (2) 7 and 8 · (3) ≈ 2.8 · (4) 8 and 9 (√64=8, √81=9) · (5) ≈ 3.3
+</div>
+</section>
+
+<section class="card">
+  <h2>4️⃣ Ordering Real Numbers</h2>
+  <div class="intro">To compare, convert everything to decimals, then order on the number line.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Order least to greatest: 3.5, √9, 3.14 <span class="answer-line"></span></li>
+<li>Order least to greatest: 2, √5, 5/2, 2.3 <span class="answer-line"></span></li>
+<li>Which is greater: √17 or 4.1? <span class="answer-line"></span></li>
+<li>Which is greater: π or √10? <span class="answer-line"></span></li>
+<li>Order: -√4, -1.5, -1, -√2 <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<div id="ak4" class="ak">
+  <h4>Answer Key — Section 4</h4>
+  (1) 3.14, √9 (=3), 3.5 → wait: √9 = 3, so order is √9 (3), 3.14, 3.5 · (2) 2, 2.3, √5 (≈2.24), 5/2 (=2.5) → 2, √5, 2.3, 5/2 · (3) √17 ≈ 4.12 > 4.1 → √17 · (4) √10 ≈ 3.16, π ≈ 3.14 → √10 is greater · (5) -√4 (-2), -√2 (-1.41), -1.5, -1 → -2, -1.5, -√2, -1
+</div>
+</section>
+
+<section class="card">
+  <h2>5️⃣ Converting Repeating Decimals to Fractions</h2>
+  <div class="intro">A repeating decimal is rational. To convert, use algebra: let x = the decimal, multiply to shift the repeating part, subtract, solve.</div>
+<div class="rule"><strong>Example:</strong> 0.333… → let x = 0.333…, then 10x = 3.333…. Subtract: 9x = 3, so x = 3/9 = 1/3.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>0.5 = (as fraction) <span class="answer-line"></span></li>
+<li>0.75 =  <span class="answer-line"></span></li>
+<li>0.333… =  <span class="answer-line"></span></li>
+<li>0.666… =  <span class="answer-line"></span></li>
+<li>0.121212… =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<div id="ak5" class="ak">
+  <h4>Answer Key — Section 5</h4>
+  (1) 1/2 · (2) 3/4 · (3) 1/3 · (4) 2/3 · (5) 12/99 = 4/33
+</div>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School · Middle School Math · Real Numbers · Dr. Park</footer>
+</div>
+<script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+</body>
+</html>

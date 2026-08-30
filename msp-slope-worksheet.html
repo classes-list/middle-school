@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slope — Foundations Worksheet</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#0369a1; --accent-deep:#0c4a6e;
+  --accent-soft:#bae6fd;
+  --highlight:#fef08a;
+  --pos:#059669; --neg:#dc2626;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card { background:#fff; border-radius:14px; padding:18px 22px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1rem; font-weight:800; margin:12px 0 8px; }
+section.card p { margin-bottom:8px; }
+.intro { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 12px; font-size:.95rem; }
+.rule { background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; padding:8px 12px; margin:10px 0; font-size:.94rem; }
+.rule strong { color:#78350f; }
+table.rules { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:.98rem; }
+table.rules th, table.rules td { border:1.5px solid #94a3b8; padding:8px 12px; text-align:center; }
+table.rules th { background:var(--navy); color:#fff; font-weight:800; }
+table.rules tr:nth-child(even) td { background:#f8fafc; }
+.pos { color:var(--pos); font-weight:800; }
+.neg { color:var(--neg); font-weight:800; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li { counter-increment:q; position:relative; padding:9px 0 9px 42px; border-bottom:1px dashed #d1d5db; }
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before { content:counter(q); position:absolute; left:0; top:9px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+.answer-line { display:inline-block; min-width:120px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.answer-line-lg { display:inline-block; min-width:200px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin:6px 0; }
+@media (max-width:640px) { .grid2 { grid-template-columns:1fr; } }
+.calc-box { background:#f0f9ff; border:2px dashed var(--accent); border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.94rem; }
+.calc-box strong { color:var(--accent-deep); }
+.reveal-btn { display:inline-block; background:var(--gold); color:var(--navy); border:1px solid var(--gold-deep); padding:8px 14px; border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer; margin:6px 0; }
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:.95rem; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+@media print {
+  body { background:#fff; padding:0; }
+  section.card { box-shadow:none; border:1px solid #cbd5e1; page-break-inside:avoid; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
+  <h1>📉 Slope Worksheet</h1>
+  <p class="tagline">Rise over run, and the slope formula.</p>
+</header>
+<script>
+(function(){
+  const g = new URLSearchParams(location.search).get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Foundations Review`;
+  }
+})();
+</script>
+<main>
+
+<section class="card">
+  <h2>1️⃣ What Is Slope?</h2>
+  <div class="intro">SLOPE is the STEEPNESS of a line. It tells us how much y changes for every 1 unit that x changes.</div>
+<div class="rule"><strong>Slope = RISE / RUN</strong>. Rise = vertical change. Run = horizontal change.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A line rises 4 units and runs 2 units. Slope =  <span class="answer-line"></span></li>
+<li>A line rises 6, runs 3. Slope =  <span class="answer-line"></span></li>
+<li>A line drops 5 (rise = -5), run = 10. Slope =  <span class="answer-line"></span></li>
+<li>A horizontal line has slope of  <span class="answer-line"></span></li>
+<li>A vertical line has slope of  <span class="answer-line"></span></li>
+</ol>
+<table class="rules"><tr><th>Slope</th><th>Line direction</th></tr><tr><td class="pos">Positive</td><td>Goes UP left to right ↗</td></tr><tr><td class="neg">Negative</td><td>Goes DOWN left to right ↘</td></tr><tr><td>Zero</td><td>Horizontal line →</td></tr><tr><td>Undefined</td><td>Vertical line ↑</td></tr></table>
+<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak">
+  <h4>Answer Key — Section 1</h4>
+  (1) 4/2 = 2 · (2) 6/3 = 2 · (3) -5/10 = -1/2 · (4) 0 · (5) undefined
+</div>
+</section>
+
+<section class="card">
+  <h2>2️⃣ Slope Formula from Two Points</h2>
+  <div class="intro">Given two points (x₁, y₁) and (x₂, y₂), the slope is:</div>
+<div class="rule"><strong>slope = (y₂ − y₁) ÷ (x₂ − x₁)</strong>  — this is "rise over run" written algebraically.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Points (1, 2) and (3, 8). Slope =  <span class="answer-line"></span></li>
+<li>Points (0, 0) and (4, 12). Slope =  <span class="answer-line"></span></li>
+<li>Points (2, 5) and (6, 5). Slope =  <span class="answer-line"></span></li>
+<li>Points (-1, 4) and (3, -4). Slope =  <span class="answer-line"></span></li>
+<li>Points (2, 3) and (2, 7). Slope =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<div id="ak2" class="ak">
+  <h4>Answer Key — Section 2</h4>
+  (1) (8-2)/(3-1) = 6/2 = 3 · (2) 12/4 = 3 · (3) 0/4 = 0 (horizontal) · (4) -8/4 = -2 · (5) 4/0 = undefined (vertical)
+</div>
+</section>
+
+<section class="card">
+  <h2>3️⃣ Slope from a Graph</h2>
+  <div class="intro">Pick two clear points on the line, count the rise (vertical squares) and run (horizontal squares), then divide.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A line through (0,1) and (2,5). Slope? <span class="answer-line"></span></li>
+<li>A line drops 3 units over 4 units to the right. Slope? <span class="answer-line"></span></li>
+<li>A line goes through (0,0) and (5,10). Slope? <span class="answer-line"></span></li>
+<li>A line passes through (1,4) and (3,4). Slope? <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<div id="ak3" class="ak">
+  <h4>Answer Key — Section 3</h4>
+  (1) 4/2 = 2 · (2) -3/4 · (3) 10/5 = 2 · (4) 0
+</div>
+</section>
+
+<section class="card">
+  <h2>4️⃣ Slope from a Table</h2>
+  <div class="intro">In a table, pick any two rows and use the formula. If the ratio (Δy/Δx) is the SAME for every pair, the relationship is linear.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>From (1,3) to (2,7): slope =  <span class="answer-line"></span></li>
+<li>From (2,7) to (3,11): slope =  <span class="answer-line"></span></li>
+<li>Are all slopes equal? Is this linear? <span class="answer-line"></span></li>
+<li>Table: (0,5), (2,9), (4,13). Slope? <span class="answer-line"></span></li>
+<li>Table: (1,4), (3,10), (5,16). Slope? <span class="answer-line"></span></li>
+</ol>
+<table class="rules"><tr><th>x</th><th>y</th></tr><tr><td>1</td><td>3</td></tr><tr><td>2</td><td>7</td></tr><tr><td>3</td><td>11</td></tr><tr><td>4</td><td>15</td></tr></table><p>What is the slope? <span class="answer-line"></span></p>
+<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<div id="ak4" class="ak">
+  <h4>Answer Key — Section 4</h4>
+  (1) 4/1 = 4 · (2) 4/1 = 4 · (3) Yes, all equal 4 → linear · (4) 4/2 = 2 · (5) 6/2 = 3
+</div>
+</section>
+
+<section class="card">
+  <h2>5️⃣ Real-World Slope</h2>
+  <div class="intro">Slope shows up as GRADE (roads), PITCH (roofs), RATE OF CHANGE (mph, $/hr), and MORE.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A road rises 200 ft over 4000 ft horizontal. Grade (slope) as % =  <span class="answer-line"></span></li>
+<li>A ramp rises 3 ft over 12 ft. Slope =  <span class="answer-line"></span></li>
+<li>A wheelchair ramp must not exceed 1:12 slope. Is a 5 ft rise over 50 ft run ok? (compare) <span class="answer-line"></span></li>
+<li>A plant grows 12 cm in 3 weeks. Rate (slope) =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<div id="ak5" class="ak">
+  <h4>Answer Key — Section 5</h4>
+  (1) 200/4000 = 5% · (2) 3/12 = 1/4 (or 0.25) · (3) 5/50 = 1/10, which is STEEPER than 1/12 → NOT ok · (4) 12/3 = 4 cm/week
+</div>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School · Middle School Math · Slope · Dr. Park</footer>
+</div>
+<script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+</body>
+</html>

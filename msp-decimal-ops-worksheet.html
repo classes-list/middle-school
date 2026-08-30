@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decimal Operations — Foundations Worksheet</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#0891b2; --accent-deep:#0e7490;
+  --accent-soft:#cffafe;
+  --highlight:#fef08a;
+  --pos:#059669; --neg:#dc2626;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card { background:#fff; border-radius:14px; padding:18px 22px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1rem; font-weight:800; margin:12px 0 8px; }
+section.card p { margin-bottom:8px; }
+.intro { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 12px; font-size:.95rem; }
+.rule { background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; padding:8px 12px; margin:10px 0; font-size:.94rem; }
+.rule strong { color:#78350f; }
+table.rules { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:.98rem; }
+table.rules th, table.rules td { border:1.5px solid #94a3b8; padding:8px 12px; text-align:center; }
+table.rules th { background:var(--navy); color:#fff; font-weight:800; }
+table.rules tr:nth-child(even) td { background:#f8fafc; }
+.pos { color:var(--pos); font-weight:800; }
+.neg { color:var(--neg); font-weight:800; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li { counter-increment:q; position:relative; padding:9px 0 9px 42px; border-bottom:1px dashed #d1d5db; }
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before { content:counter(q); position:absolute; left:0; top:9px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+.answer-line { display:inline-block; min-width:120px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.answer-line-lg { display:inline-block; min-width:200px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin:6px 0; }
+@media (max-width:640px) { .grid2 { grid-template-columns:1fr; } }
+.calc-box { background:#f0f9ff; border:2px dashed var(--accent); border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.94rem; }
+.calc-box strong { color:var(--accent-deep); }
+.reveal-btn { display:inline-block; background:var(--gold); color:var(--navy); border:1px solid var(--gold-deep); padding:8px 14px; border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer; margin:6px 0; }
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:.95rem; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+@media print {
+  body { background:#fff; padding:0; }
+  section.card { box-shadow:none; border:1px solid #cbd5e1; page-break-inside:avoid; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
+  <h1>💯 Decimal Operations Worksheet</h1>
+  <p class="tagline">Add, subtract, multiply, and divide decimals with confidence.</p>
+</header>
+<script>
+(function(){
+  const g = new URLSearchParams(location.search).get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Foundations Review`;
+  }
+})();
+</script>
+<main>
+
+<section class="card">
+  <h2>1️⃣ Place Value Review</h2>
+  <div class="intro">Every digit's value depends on its place. To the LEFT of the decimal: ones, tens, hundreds, thousands… To the RIGHT: tenths, hundredths, thousandths, ten-thousandths.</div>
+<div class="rule"><strong>Reading decimals:</strong> Read the whole part, say "and" for the decimal point, then read the fraction part with its place-value name. Example: 3.47 = "three <em>and</em> forty-seven hundredths."</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Write in words: 5.3 <span class="answer-line"></span></li>
+<li>Write in words: 0.06 <span class="answer-line"></span></li>
+<li>Write in words: 12.409 <span class="answer-line"></span></li>
+<li>Which is larger: 0.7 or 0.65? <span class="answer-line"></span></li>
+<li>Which is larger: 3.14 or 3.104? <span class="answer-line"></span></li>
+<li>Round 4.867 to the nearest tenth. <span class="answer-line"></span></li>
+<li>Round 12.352 to the nearest hundredth. <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak">
+  <h4>Answer Key — Section 1</h4>
+  (1) five and three tenths · (2) six hundredths · (3) twelve and four hundred nine thousandths · (4) 0.7 (0.70 > 0.65) · (5) 3.14 (3.140 > 3.104) · (6) 4.9 · (7) 12.35
+</div>
+</section>
+
+<section class="card">
+  <h2>2️⃣ Adding & Subtracting Decimals</h2>
+  <div class="intro">Line up the decimal points! Add zeros to make the numbers the same length. Then add or subtract as usual — bring the decimal straight down.</div>
+<div class="rule"><strong>Golden rule:</strong> DECIMALS LINE UP. Missing places → add zeros. Example: 3.4 − 1.276 → write 3.400 − 1.276 = 2.124.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>4.5 + 2.3 =  <span class="answer-line"></span></li>
+<li>12.7 + 8.45 =  <span class="answer-line"></span></li>
+<li>0.6 + 0.75 =  <span class="answer-line"></span></li>
+<li>9.8 − 3.4 =  <span class="answer-line"></span></li>
+<li>7.2 − 4.85 =  <span class="answer-line"></span></li>
+<li>10 − 3.72 =  <span class="answer-line"></span></li>
+<li>5.06 + 12.9 + 0.008 =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<div id="ak2" class="ak">
+  <h4>Answer Key — Section 2</h4>
+  (1) 6.8 · (2) 21.15 · (3) 1.35 · (4) 6.4 · (5) 2.35 · (6) 6.28 · (7) 17.968
+</div>
+</section>
+
+<section class="card">
+  <h2>3️⃣ Multiplying Decimals</h2>
+  <div class="intro">Multiply as if there were no decimal points. Then count the total number of decimal places in both factors — put that many places in the answer.</div>
+<div class="rule"><strong>Steps:</strong> (1) Ignore decimals, multiply. (2) Count decimal places in BOTH factors. (3) Add them, and move the decimal that many places from the right of the answer.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>0.3 × 0.4 =  <span class="answer-line"></span></li>
+<li>2.5 × 1.2 =  <span class="answer-line"></span></li>
+<li>0.06 × 7 =  <span class="answer-line"></span></li>
+<li>3.14 × 2 =  <span class="answer-line"></span></li>
+<li>1.2 × 0.05 =  <span class="answer-line"></span></li>
+<li>4.5 × 0.03 =  <span class="answer-line"></span></li>
+<li>2.7 × 1.5 =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<div id="ak3" class="ak">
+  <h4>Answer Key — Section 3</h4>
+  (1) 0.12 · (2) 3.00 = 3 · (3) 0.42 · (4) 6.28 · (5) 0.060 = 0.06 · (6) 0.135 · (7) 4.05
+</div>
+</section>
+
+<section class="card">
+  <h2>4️⃣ Dividing Decimals</h2>
+  <div class="intro">When the divisor (outside) has a decimal, move BOTH decimals the same number of places right until the divisor is a whole number. Then divide normally, bringing the decimal straight up.</div>
+<div class="rule"><strong>Trick:</strong> Move decimals to make the divisor a whole number. Move BOTH the same number of places. Example: 4.5 ÷ 0.3 → 45 ÷ 3 = 15.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>6.4 ÷ 2 =  <span class="answer-line"></span></li>
+<li>9.6 ÷ 0.4 =  <span class="answer-line"></span></li>
+<li>0.15 ÷ 0.05 =  <span class="answer-line"></span></li>
+<li>2.5 ÷ 0.5 =  <span class="answer-line"></span></li>
+<li>7.2 ÷ 3 =  <span class="answer-line"></span></li>
+<li>18.6 ÷ 0.6 =  <span class="answer-line"></span></li>
+<li>0.084 ÷ 0.04 =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<div id="ak4" class="ak">
+  <h4>Answer Key — Section 4</h4>
+  (1) 3.2 · (2) 24 · (3) 3 · (4) 5 · (5) 2.4 · (6) 31 · (7) 2.1
+</div>
+</section>
+
+<section class="card">
+  <h2>5️⃣ Word Problems</h2>
+  <div class="intro">Real-world decimals: money, measurements, distances, science lab data. Identify the operation, then apply the rules above.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A pizza slice costs $2.75. What is the total cost for 4 slices? <span class="answer-line"></span></li>
+<li>You bought a shirt for $18.99 and paid with a $20 bill. How much change? <span class="answer-line"></span></li>
+<li>A car goes 32.5 miles on 1.25 gallons of gas. What is the miles per gallon (mpg)? <span class="answer-line"></span></li>
+<li>A lab beaker holds 0.85 L. How many mL is that? (1 L = 1000 mL) <span class="answer-line"></span></li>
+<li>A recipe needs 0.5 kg of flour for 4 servings. How much for 10 servings? <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<div id="ak5" class="ak">
+  <h4>Answer Key — Section 5</h4>
+  (1) $11.00 · (2) $1.01 · (3) 26 mpg (32.5 ÷ 1.25) · (4) 850 mL · (5) 1.25 kg (0.5 ÷ 4 × 10)
+</div>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School · Middle School Math · Decimal Operations · Dr. Park</footer>
+</div>
+<script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proportional Relationships — Foundations Worksheet</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#0f766e; --accent-deep:#134e4a;
+  --accent-soft:#ccfbf1;
+  --highlight:#fef08a;
+  --pos:#059669; --neg:#dc2626;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:20px; }
+section.card { background:#fff; border-radius:14px; padding:18px 22px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1rem; font-weight:800; margin:12px 0 8px; }
+section.card p { margin-bottom:8px; }
+.intro { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 12px; font-size:.95rem; }
+.rule { background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; padding:8px 12px; margin:10px 0; font-size:.94rem; }
+.rule strong { color:#78350f; }
+table.rules { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:.98rem; }
+table.rules th, table.rules td { border:1.5px solid #94a3b8; padding:8px 12px; text-align:center; }
+table.rules th { background:var(--navy); color:#fff; font-weight:800; }
+table.rules tr:nth-child(even) td { background:#f8fafc; }
+.pos { color:var(--pos); font-weight:800; }
+.neg { color:var(--neg); font-weight:800; }
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li { counter-increment:q; position:relative; padding:9px 0 9px 42px; border-bottom:1px dashed #d1d5db; }
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before { content:counter(q); position:absolute; left:0; top:9px; width:30px; height:30px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:.9rem; display:flex; align-items:center; justify-content:center; }
+.answer-line { display:inline-block; min-width:120px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.answer-line-lg { display:inline-block; min-width:200px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin:6px 0; }
+@media (max-width:640px) { .grid2 { grid-template-columns:1fr; } }
+.calc-box { background:#f0f9ff; border:2px dashed var(--accent); border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.94rem; }
+.calc-box strong { color:var(--accent-deep); }
+.reveal-btn { display:inline-block; background:var(--gold); color:var(--navy); border:1px solid var(--gold-deep); padding:8px 14px; border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer; margin:6px 0; }
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:.95rem; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+@media print {
+  body { background:#fff; padding:0; }
+  section.card { box-shadow:none; border:1px solid #cbd5e1; page-break-inside:avoid; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
+  <h1>⚖️ Proportional Relationships Worksheet</h1>
+  <p class="tagline">Find the constant of proportionality k and write y = kx.</p>
+</header>
+<script>
+(function(){
+  const g = new URLSearchParams(location.search).get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Foundations Review`;
+  }
+})();
+</script>
+<main>
+
+<section class="card">
+  <h2>1️⃣ Ratio & Unit Rate Review</h2>
+  <div class="intro">A ratio compares two quantities. A UNIT RATE is a ratio where the denominator is 1 (e.g., 5 miles per hour).</div>
+<div class="rule"><strong>Unit rate:</strong> divide numerator by denominator.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>12 apples for $6 → cost per apple =  <span class="answer-line"></span></li>
+<li>150 miles in 3 hours → miles per hour =  <span class="answer-line"></span></li>
+<li>240 words in 4 minutes → words per minute =  <span class="answer-line"></span></li>
+<li>$18 for 2 kg → cost per kg =  <span class="answer-line"></span></li>
+<li>6 slices of pizza for 3 people → slices per person =  <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak">
+  <h4>Answer Key — Section 1</h4>
+  (1) $0.50/apple · (2) 50 mph · (3) 60 wpm · (4) $9/kg · (5) 2 slices/person
+</div>
+</section>
+
+<section class="card">
+  <h2>2️⃣ What Makes a Relationship Proportional?</h2>
+  <div class="intro">Two quantities are PROPORTIONAL if their ratio is always the same — the y ÷ x ratio is constant.</div>
+<div class="rule"><strong>Test:</strong> Compute y ÷ x for each row. If ALL ratios are the same → proportional. If they differ → NOT proportional.</div>
+<h3>Which tables are proportional?</h3><table class="rules"><tr><th>Table A: x</th><th>y</th></tr><tr><td>2</td><td>6</td></tr><tr><td>4</td><td>12</td></tr><tr><td>6</td><td>18</td></tr></table><table class="rules"><tr><th>Table B: x</th><th>y</th></tr><tr><td>1</td><td>3</td></tr><tr><td>2</td><td>5</td></tr><tr><td>3</td><td>7</td></tr></table><p><strong>A is proportional?</strong> <span class="answer-line"></span> &nbsp;&nbsp; <strong>B is proportional?</strong> <span class="answer-line"></span></p>
+<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<div id="ak2" class="ak">
+  <h4>Answer Key — Section 2</h4>
+  Table A: 6/2 = 3, 12/4 = 3, 18/6 = 3 → PROPORTIONAL (k=3). Table B: 3/1 = 3, 5/2 = 2.5, 7/3 ≈ 2.33 → NOT proportional.
+</div>
+</section>
+
+<section class="card">
+  <h2>3️⃣ Constant of Proportionality (k) and y = kx</h2>
+  <div class="intro">If two quantities are proportional, the equation is <strong>y = kx</strong>, where <strong>k = y ÷ x</strong> is the constant of proportionality (or unit rate).</div>
+<div class="rule"><strong>Steps:</strong> (1) Find k = y ÷ x from any row. (2) Write y = kx. (3) Use to find missing values.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Table: (x=3, y=15), (x=5, y=25). Find k. Write equation. <span class="answer-line"></span></li>
+<li>A car goes 60 miles in 1 hour. Find k. Distance for 4 hours? <span class="answer-line"></span></li>
+<li>4 apples cost $6. Find k. Cost of 10 apples? <span class="answer-line"></span></li>
+<li>A recipe: 2 cups flour makes 12 cookies. Find k. Cups for 30 cookies? <span class="answer-line"></span></li>
+<li>y = 8x. What is k? What is y when x = 7? <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<div id="ak3" class="ak">
+  <h4>Answer Key — Section 3</h4>
+  (1) k = 5, y = 5x · (2) k = 60 mi/hr, distance for 4 hrs = 240 mi · (3) k = $1.50/apple, cost of 10 = $15 · (4) k = 6 cookies/cup → cups = 30/6 = 5 cups · (5) k = 8, y = 56
+</div>
+</section>
+
+<section class="card">
+  <h2>4️⃣ Graphs of Proportional Relationships</h2>
+  <div class="intro">Proportional relationships graph as STRAIGHT LINES through the ORIGIN (0, 0). The slope equals k.</div>
+<div class="rule"><strong>3 tests for a proportional graph:</strong> (1) It's a straight line. (2) It passes through (0, 0). (3) Its slope = k.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A line passes through (0,0) and (4, 12). Is it proportional? What is k? <span class="answer-line"></span></li>
+<li>A line passes through (0, 2) and (3, 8). Is it proportional? <span class="answer-line"></span></li>
+<li>Graph of y = 4x — where does it cross the y-axis? <span class="answer-line"></span></li>
+<li>Two points: (2, 10) and (5, 25). Proportional? Find k. <span class="answer-line"></span></li>
+<li>At (1, 3), what does the y-value mean? <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<div id="ak4" class="ak">
+  <h4>Answer Key — Section 4</h4>
+  (1) Yes (through origin), k = 3 · (2) No (does not pass through origin) · (3) At y = 0 (the origin) · (4) Yes — 10/2 = 5 = 25/5, k = 5 · (5) It's the unit rate: when x = 1, y = k
+</div>
+</section>
+
+<section class="card">
+  <h2>5️⃣ Real-World Applications</h2>
+  <div class="intro">Proportional relationships are everywhere — pricing, scaling, speed, mixing.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>3 lbs of grapes cost $4.50. Find k. Cost of 8 lbs? <span class="answer-line"></span></li>
+<li>A printer prints 15 pages in 2 minutes. Find k. Pages in 10 minutes? <span class="answer-line"></span></li>
+<li>Density is proportional: 5 mL of oil has mass 4 g. Density (k) = ? Mass of 20 mL? <span class="answer-line"></span></li>
+<li>A recipe scaling: 3 eggs make 12 pancakes. Eggs for 40 pancakes? <span class="answer-line"></span></li>
+</ol>
+<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<div id="ak5" class="ak">
+  <h4>Answer Key — Section 5</h4>
+  (1) k = $1.50/lb, cost of 8 lbs = $12 · (2) k = 7.5 pages/min, in 10 min = 75 pages · (3) k = 0.8 g/mL, mass of 20 mL = 16 g · (4) k = 4 pancakes/egg → eggs = 40/4 = 10 eggs
+</div>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School · Middle School Math · Proportional Relationships · Dr. Park</footer>
+</div>
+<script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+</body>
+</html>
