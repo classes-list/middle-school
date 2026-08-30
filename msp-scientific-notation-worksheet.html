@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Notation — Foundations Worksheet · Grade 8</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#2563eb; --accent-deep:#1e40af;
+  --accent-soft:#dbeafe;
+  --highlight:#fef08a;
+  --pos:#059669; --neg:#dc2626;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+.namebar {
+  display:flex; gap:16px; align-items:center; margin:14px 0 22px;
+  background:#fff; border:1.5px solid #cbd5e1; border-radius:10px;
+  padding:12px 18px; font-size:.95rem;
+}
+.namebar label { font-weight:700; color:var(--navy); }
+.namebar .line { flex:1; border-bottom:1.5px solid #94a3b8; height:22px; }
+
+main { display:flex; flex-direction:column; gap:20px; }
+section.card {
+  background:#fff; border-radius:14px; padding:18px 22px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.07);
+  border-top:5px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1rem; font-weight:800; margin:12px 0 8px; }
+section.card p { margin-bottom:8px; }
+.intro { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 12px; font-size:.95rem; }
+.rule { background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; padding:8px 12px; margin:10px 0; font-size:.94rem; }
+.rule strong { color:#78350f; }
+
+table.rules { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:.98rem; }
+table.rules th, table.rules td { border:1.5px solid #94a3b8; padding:8px 12px; text-align:center; }
+table.rules th { background:var(--navy); color:#fff; font-weight:800; }
+table.rules tr:nth-child(even) td { background:#f8fafc; }
+.pos { color:var(--pos); font-weight:800; }
+.neg { color:var(--neg); font-weight:800; }
+
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li {
+  counter-increment:q; position:relative;
+  padding:9px 0 9px 42px; border-bottom:1px dashed #d1d5db;
+}
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before {
+  content:counter(q); position:absolute; left:0; top:9px;
+  width:30px; height:30px; background:var(--accent); color:#fff;
+  border-radius:50%; font-weight:800; font-size:.9rem;
+  display:flex; align-items:center; justify-content:center;
+}
+.answer-line { display:inline-block; min-width:120px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.answer-line-lg { display:inline-block; min-width:200px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.q-row { display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; margin:6px 0; font-size:.98rem; }
+.q-row > div { padding:2px 0; }
+
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin:6px 0; }
+@media (max-width:640px) { .grid2 { grid-template-columns:1fr; } .q-row { grid-template-columns:1fr; } }
+
+.calc-box {
+  background:#f0f9ff; border:2px dashed var(--accent);
+  border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.94rem;
+}
+.calc-box strong { color:var(--accent-deep); }
+
+.reveal-btn {
+  display:inline-block; background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 14px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:6px 0;
+}
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:.95rem; }
+
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+
+@media print {
+  body { background:#fff; padding:0; }
+  section.card { box-shadow:none; border:1px solid #cbd5e1; page-break-inside:avoid; }
+  .reveal-btn { display:none; }
+  .ak { display:block; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow">Grade 8 · Foundations Review</div>
+  <h1>🔬 Scientific Notation Worksheet</h1>
+  <p class="tagline">Build a rock-solid foundation before doing scientific notation arithmetic.</p>
+</header>
+
+<div class="namebar">
+  <label>Name:</label><span class="line"></span>
+  <label>Date:</label><span class="line" style="max-width:120px"></span>
+  <label>Class:</label><span class="line" style="max-width:80px"></span>
+</div>
+
+<main>
+
+<!-- SECTION 1 -->
+<section class="card">
+  <h2>1️⃣ Powers of 10</h2>
+  <div class="intro">
+    A "power of 10" means how many times you multiply 10 by itself. 10<sup>n</sup> tells you how many places to move the decimal. Positive n → big number; negative n → small number.
+  </div>
+  <div class="rule">
+    <strong>⚠️ Watch out with negative exponents!</strong> A negative power of 10 means the <strong>reciprocal</strong>:
+    <p style="margin:6px 0; font-size:1.02rem;"><strong>10<sup>−n</sup> = 1 ÷ 10<sup>n</sup> = 1/10<sup>n</sup></strong></p>
+    <p style="margin:6px 0;">So 10<sup>−2</sup> = 1/10<sup>2</sup> = 1/100 = <strong>0.01</strong> (not something you get by "moving the decimal left from 10.0").</p>
+    <p style="margin:6px 0;"><em>Trick that works:</em> to find 10<sup>−n</sup>, start from <strong>1.0</strong> (NOT 10.0) and move the decimal <strong>left</strong> n places.</p>
+    <table class="rules" style="margin-top:6px;">
+      <tr><th>Expression</th><th>As a fraction</th><th>Decimal form</th></tr>
+      <tr><td>10<sup>−1</sup></td><td>1 ÷ 10<sup>1</sup> = 1/10</td><td>0.1</td></tr>
+      <tr><td>10<sup>−2</sup></td><td>1 ÷ 10<sup>2</sup> = 1/100</td><td>0.01</td></tr>
+      <tr><td>10<sup>−3</sup></td><td>1 ÷ 10<sup>3</sup> = 1/1,000</td><td>0.001</td></tr>
+      <tr><td>10<sup>−5</sup></td><td>1 ÷ 10<sup>5</sup> = 1/100,000</td><td>0.00001</td></tr>
+    </table>
+  </div>
+  <h3>Fill in the value:</h3>
+  <div class="grid2">
+    <div>10<sup>0</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>1</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>2</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>3</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>4</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>6</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>-1</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>-2</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>-3</sup> = <span class="answer-line"></span></div>
+    <div>10<sup>-5</sup> = <span class="answer-line"></span></div>
+  </div>
+  <div class="rule"><strong>Pattern check:</strong> What happens to the number of zeros (or decimal places) as the exponent changes by 1?</div>
+  <p>Answer: <span class="answer-line-lg"></span></p>
+  <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+  <div id="ak1" class="ak">
+    <h4>Answer Key — Section 1</h4>
+    10<sup>0</sup> = 1 · 10<sup>1</sup> = 10 · 10<sup>2</sup> = 100 · 10<sup>3</sup> = 1,000 · 10<sup>4</sup> = 10,000 · 10<sup>6</sup> = 1,000,000<br>
+    10<sup>−1</sup> = 0.1 (or 1/10) · 10<sup>−2</sup> = 0.01 (or 1/100) · 10<sup>−3</sup> = 0.001 (or 1/1,000) · 10<sup>−5</sup> = 0.00001 (or 1/100,000)
+    <p style="margin-top:8px;"><strong>Pattern:</strong> Each time the exponent increases by 1, the number gets 10 times larger (one more zero, or the decimal moves one place right). Each time the exponent decreases by 1, the number gets 10 times smaller (the decimal moves one place left).</p>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="card">
+  <h2>2️⃣ Converting: Standard Form ↔ Scientific Notation</h2>
+  <div class="intro">
+    Scientific notation writes a number as <strong>a × 10<sup>n</sup></strong> where <strong>1 ≤ |a| &lt; 10</strong> and <strong>n is an integer</strong>. Move the decimal so only ONE non-zero digit is to the left. Count the moves — that's n. Move left → n positive. Move right → n negative.
+  </div>
+
+  <h3>A. Standard form → scientific notation:</h3>
+  <ol class="qlist">
+    <li>300 = <span class="answer-line"></span></li>
+    <li>4,500 = <span class="answer-line"></span></li>
+    <li>62,000 = <span class="answer-line"></span></li>
+    <li>850,000 = <span class="answer-line"></span></li>
+    <li>7,200,000 = <span class="answer-line"></span></li>
+    <li>0.05 = <span class="answer-line"></span></li>
+    <li>0.0034 = <span class="answer-line"></span></li>
+    <li>0.000012 = <span class="answer-line"></span></li>
+  </ol>
+
+  <h3>B. Scientific notation → standard form:</h3>
+  <ol class="qlist">
+    <li>3 × 10<sup>2</sup> = <span class="answer-line"></span></li>
+    <li>4.5 × 10<sup>3</sup> = <span class="answer-line"></span></li>
+    <li>6.2 × 10<sup>4</sup> = <span class="answer-line"></span></li>
+    <li>8.5 × 10<sup>5</sup> = <span class="answer-line"></span></li>
+    <li>5 × 10<sup>-2</sup> = <span class="answer-line"></span></li>
+    <li>3.4 × 10<sup>-3</sup> = <span class="answer-line"></span></li>
+    <li>1.2 × 10<sup>-5</sup> = <span class="answer-line"></span></li>
+    <li>9.87 × 10<sup>6</sup> = <span class="answer-line"></span></li>
+  </ol>
+
+  <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+  <div id="ak2" class="ak">
+    <h4>Answer Key — Section 2</h4>
+    A: (1) 3 × 10<sup>2</sup> · (2) 4.5 × 10<sup>3</sup> · (3) 6.2 × 10<sup>4</sup> · (4) 8.5 × 10<sup>5</sup> · (5) 7.2 × 10<sup>6</sup> · (6) 5 × 10<sup>-2</sup> · (7) 3.4 × 10<sup>-3</sup> · (8) 1.2 × 10<sup>-5</sup><br>
+    B: (1) 300 · (2) 4,500 · (3) 62,000 · (4) 850,000 · (5) 0.05 · (6) 0.0034 · (7) 0.000012 · (8) 9,870,000
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="card">
+  <h2>3️⃣ Sign Rules — Multiplication &amp; Division</h2>
+  <div class="intro">
+    For multiplication and division, the sign of the answer depends only on the signs of the two numbers. Memorize this table:
+  </div>
+  <table class="rules">
+    <tr><th>First sign</th><th>Second sign</th><th>Answer sign</th><th>Rule</th></tr>
+    <tr><td class="pos">+</td><td class="pos">+</td><td class="pos">+</td><td>same signs → positive</td></tr>
+    <tr><td class="neg">−</td><td class="neg">−</td><td class="pos">+</td><td>same signs → positive</td></tr>
+    <tr><td class="pos">+</td><td class="neg">−</td><td class="neg">−</td><td>different signs → negative</td></tr>
+    <tr><td class="neg">−</td><td class="pos">+</td><td class="neg">−</td><td>different signs → negative</td></tr>
+  </table>
+  <div class="rule"><strong>Shortcut:</strong> Same signs → answer is <span class="pos">POSITIVE</span>. Different signs → answer is <span class="neg">NEGATIVE</span>.</div>
+
+  <h3>Practice — multiply and divide:</h3>
+  <ol class="qlist">
+    <li>(+3) × (+4) = <span class="answer-line"></span></li>
+    <li>(−3) × (+4) = <span class="answer-line"></span></li>
+    <li>(+3) × (−4) = <span class="answer-line"></span></li>
+    <li>(−3) × (−4) = <span class="answer-line"></span></li>
+    <li>(+12) ÷ (+4) = <span class="answer-line"></span></li>
+    <li>(+12) ÷ (−4) = <span class="answer-line"></span></li>
+    <li>(−12) ÷ (+4) = <span class="answer-line"></span></li>
+    <li>(−12) ÷ (−4) = <span class="answer-line"></span></li>
+    <li>(−5) × (+7) = <span class="answer-line"></span></li>
+    <li>(−36) ÷ (−9) = <span class="answer-line"></span></li>
+  </ol>
+  <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+  <div id="ak3" class="ak">
+    <h4>Answer Key — Section 3</h4>
+    (1) 12 · (2) −12 · (3) −12 · (4) 12 · (5) 3 · (6) −3 · (7) −3 · (8) 3 · (9) −35 · (10) 4
+  </div>
+</section>
+
+<!-- SECTION 4 -->
+<section class="card">
+  <h2>4️⃣ Adding &amp; Subtracting Signed Integers</h2>
+  <div class="intro">
+    Adding and subtracting signed numbers follows the same "same/different" idea — but now you think of the sign as a <em>direction</em> on the number line.
+  </div>
+  <div class="rule">
+    <strong>Same signs → ADD the numbers and KEEP the sign.</strong><br>
+    <strong>Different signs → SUBTRACT the smaller from the larger and take the sign of the larger absolute value.</strong><br>
+    <strong>Subtracting a negative = adding a positive.</strong> (Two minuses cancel: <em>a − (−b) = a + b</em>)
+  </div>
+
+  <div class="calc-box">
+    <strong>What does "subtract the smaller from the larger and take the sign of the larger absolute value" mean?</strong>
+    <p style="margin:8px 0;"><em>Simple version:</em> <strong>"Whoever has more, wins. Subtract their sizes, and use the winner's sign."</strong></p>
+    <p><strong>3 steps:</strong></p>
+    <ol style="padding-left:24px; margin:4px 0 8px;">
+      <li><strong>Ignore the signs</strong> and look at the size (absolute value) of each number.</li>
+      <li><strong>Subtract</strong> the smaller size from the larger size.</li>
+      <li>The answer takes the sign of the number with the <strong>bigger size</strong>.</li>
+    </ol>
+    <table class="rules" style="margin-top:6px;">
+      <tr><th>Problem</th><th>Sizes</th><th>Subtract</th><th>Bigger side is…</th><th>Answer</th></tr>
+      <tr><td>(−8) + 3</td><td>8 and 3</td><td>8 − 3 = 5</td><td class="neg">−8 (negative)</td><td class="neg">−5</td></tr>
+      <tr><td>7 + (−4)</td><td>7 and 4</td><td>7 − 4 = 3</td><td class="pos">7 (positive)</td><td class="pos">+3</td></tr>
+      <tr><td>(−12) + 5</td><td>12 and 5</td><td>12 − 5 = 7</td><td class="neg">−12 (negative)</td><td class="neg">−7</td></tr>
+      <tr><td>20 + (−13)</td><td>20 and 13</td><td>20 − 13 = 7</td><td class="pos">20 (positive)</td><td class="pos">+7</td></tr>
+    </table>
+    <p style="margin-top:8px;"><em>Number-line intuition:</em> positives push right, negatives push left. Whichever push is stronger, that direction wins — and by how much depends on the difference between the two "pushes."</p>
+  </div>
+
+  <h3>Practice — add / subtract:</h3>
+  <ol class="qlist">
+    <li>5 + 3 = <span class="answer-line"></span></li>
+    <li>5 + (−3) = <span class="answer-line"></span></li>
+    <li>(−5) + 3 = <span class="answer-line"></span></li>
+    <li>(−5) + (−3) = <span class="answer-line"></span></li>
+    <li>5 − 3 = <span class="answer-line"></span></li>
+    <li>5 − (−3) = <span class="answer-line"></span></li>
+    <li>(−5) − 3 = <span class="answer-line"></span></li>
+    <li>(−5) − (−3) = <span class="answer-line"></span></li>
+    <li>(−12) + 20 = <span class="answer-line"></span></li>
+    <li>7 − (−15) = <span class="answer-line"></span></li>
+  </ol>
+  <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+  <div id="ak4" class="ak">
+    <h4>Answer Key — Section 4</h4>
+    (1) 8 · (2) 2 · (3) −2 · (4) −8 · (5) 2 · (6) 8 · (7) −8 · (8) −2 · (9) 8 · (10) 22
+  </div>
+</section>
+
+<!-- SECTION 5 -->
+<section class="card">
+  <h2>5️⃣ Scientific Notation — Multiplication &amp; Division</h2>
+  <div class="intro">
+    Now put the pieces together. The "a" part follows the sign rules from Section 3. The "10<sup>n</sup>" part uses <strong>exponent rules</strong>:
+  </div>
+  <div class="rule">
+    <strong>Multiply:</strong> (a × 10<sup>m</sup>) × (b × 10<sup>n</sup>) = <strong>(a × b) × 10<sup>m + n</sup></strong>&nbsp;&nbsp;<em>(add the exponents)</em><br>
+    <strong>Divide:</strong> (a × 10<sup>m</sup>) ÷ (b × 10<sup>n</sup>) = <strong>(a ÷ b) × 10<sup>m − n</sup></strong>&nbsp;&nbsp;<em>(subtract the exponents)</em>
+  </div>
+
+  <h3>A. Multiplication:</h3>
+  <ol class="qlist">
+    <li>(3 × 10<sup>4</sup>) × (2 × 10<sup>5</sup>) = <span class="answer-line"></span></li>
+    <li>(4 × 10<sup>3</sup>) × (2 × 10<sup>6</sup>) = <span class="answer-line"></span></li>
+    <li>(2.5 × 10<sup>−3</sup>) × (4 × 10<sup>6</sup>) = <span class="answer-line"></span></li>
+    <li>(−5 × 10<sup>4</sup>) × (2 × 10<sup>3</sup>) = <span class="answer-line"></span></li>
+    <li>(−3 × 10<sup>2</sup>) × (−4 × 10<sup>5</sup>) = <span class="answer-line"></span></li>
+  </ol>
+  <h3>B. Division:</h3>
+  <ol class="qlist">
+    <li>(6 × 10<sup>8</sup>) ÷ (2 × 10<sup>3</sup>) = <span class="answer-line"></span></li>
+    <li>(9 × 10<sup>5</sup>) ÷ (3 × 10<sup>2</sup>) = <span class="answer-line"></span></li>
+    <li>(8 × 10<sup>5</sup>) ÷ (4 × 10<sup>−2</sup>) = <span class="answer-line"></span></li>
+    <li>(−12 × 10<sup>7</sup>) ÷ (4 × 10<sup>3</sup>) = <span class="answer-line"></span></li>
+    <li>(−15 × 10<sup>−2</sup>) ÷ (−5 × 10<sup>4</sup>) = <span class="answer-line"></span></li>
+  </ol>
+  <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+  <div id="ak5" class="ak">
+    <h4>Answer Key — Section 5</h4>
+    A: (1) 6 × 10<sup>9</sup> · (2) 8 × 10<sup>9</sup> · (3) 1 × 10<sup>4</sup> · (4) −1 × 10<sup>8</sup> · (5) 1.2 × 10<sup>8</sup><br>
+    B: (1) 3 × 10<sup>5</sup> · (2) 3 × 10<sup>3</sup> · (3) 2 × 10<sup>7</sup> · (4) −3 × 10<sup>4</sup> · (5) 3 × 10<sup>−6</sup>
+  </div>
+</section>
+
+<!-- SECTION 6 -->
+<section class="card">
+  <h2>6️⃣ Scientific Notation — Addition &amp; Subtraction</h2>
+  <div class="intro">
+    Addition/subtraction is different. You can ONLY add or subtract when the powers of 10 <strong>match</strong>. If they don't match, rewrite one number so they do — then add/subtract the "a" parts and keep the exponent.
+  </div>
+  <div class="rule">
+    <strong>Steps:</strong>
+    <ol style="padding-left:24px; margin:6px 0;">
+      <li>Make both exponents the same (use the LARGER exponent).</li>
+      <li>Add or subtract the "a" parts (with sign rules from Section 4).</li>
+      <li>Keep the shared power of 10.</li>
+      <li>Adjust so <strong>1 ≤ |a| &lt; 10</strong> if needed.</li>
+    </ol>
+  </div>
+
+  <h3>Practice — add / subtract:</h3>
+  <ol class="qlist">
+    <li>(3 × 10<sup>4</sup>) + (2 × 10<sup>4</sup>) = <span class="answer-line"></span></li>
+    <li>(7 × 10<sup>6</sup>) − (4 × 10<sup>6</sup>) = <span class="answer-line"></span></li>
+    <li>(5 × 10<sup>5</sup>) + (2 × 10<sup>4</sup>) = <span class="answer-line"></span>
+      <br><em>Hint: rewrite 2 × 10<sup>4</sup> as 0.2 × 10<sup>5</sup> first.</em></li>
+    <li>(6 × 10<sup>7</sup>) − (3 × 10<sup>6</sup>) = <span class="answer-line"></span></li>
+    <li>(4 × 10<sup>−3</sup>) + (2 × 10<sup>−3</sup>) = <span class="answer-line"></span></li>
+    <li>(9 × 10<sup>4</sup>) + (8 × 10<sup>4</sup>) = <span class="answer-line"></span>
+      <br><em>Hint: your answer will be 17 × 10<sup>4</sup>. Rewrite so 1 ≤ |a| &lt; 10.</em></li>
+    <li>(3 × 10<sup>3</sup>) − (5 × 10<sup>3</sup>) = <span class="answer-line"></span></li>
+  </ol>
+  <button class="reveal-btn" onclick="toggle('ak6')">Show / Hide Answer Key</button>
+  <div id="ak6" class="ak">
+    <h4>Answer Key — Section 6</h4>
+    (1) 5 × 10<sup>4</sup> · (2) 3 × 10<sup>6</sup> · (3) 5.2 × 10<sup>5</sup> · (4) 5.7 × 10<sup>7</sup> · (5) 6 × 10<sup>−3</sup> · (6) 17 × 10<sup>4</sup> = 1.7 × 10<sup>5</sup> · (7) −2 × 10<sup>3</sup>
+  </div>
+</section>
+
+<!-- SECTION 7 -->
+<section class="card">
+  <h2>7️⃣ Discovery — Use "My Calculator" to explore <em>why</em> 1 ≤ |a| &lt; 10</h2>
+  <div class="intro">
+    You can use your Google Sheets <strong>"My Calculator"</strong> or the online version below to type each expression below into the calculator and record what happens. Then answer the discovery questions.
+  </div>
+
+  <div class="rule">
+    <strong>How to type scientific notation in the Google Sheets calculator:</strong>
+    <p style="margin:6px 0;">Instead of "×10<sup>n</sup>", use the letter <strong>e</strong> between the coefficient and the exponent. The letter <strong>E (or e) means "times 10 to the power of."</strong> So <code>5e2</code> reads as "5 times 10 to the power of 2." Lowercase <code>e</code> works — you do <em>not</em> need to type capital <code>E</code>.</p>
+    <table class="rules" style="margin-top:6px;">
+      <tr><th>You want to enter…</th><th>Type this</th></tr>
+      <tr><td>5.0 × 10<sup>2</sup></td><td><code>5e2</code> (or <code>5.0e2</code>)</td></tr>
+      <tr><td>5.0 × 10<sup>−2</sup></td><td><code>5.0e-2</code></td></tr>
+      <tr><td>6.02 × 10<sup>23</sup></td><td><code>6.02e23</code></td></tr>
+      <tr><td>1.5 × 10<sup>−9</sup></td><td><code>1.5e-9</code></td></tr>
+    </table>
+    <p style="margin-top:6px;font-size:.9rem;"><em>Sheets stores the actual number and can display it either in standard form or in scientific notation (Format → Number → Scientific).</em></p>
+  </div>
+
+  <!-- Embedded live calculator -->
+  <div class="mini-calc">
+    <h3 style="margin-top:0;">🧮 Live Calculator (works right here on the page)</h3>
+    <p style="font-size:.9rem; color:var(--dim); margin-bottom:12px;">
+      Type each number in scientific notation using the <code>e</code> shorthand (e.g. <code>5e2</code>, <code>6.02e23</code>, <code>1.5e-9</code>) — or as plain numbers (e.g. <code>500</code>). Results are shown in both scientific notation and standard form.
+    </p>
+
+    <div class="calc-row check-row">
+      <label>🔍 Just show me:</label>
+      <input type="text" class="ci solo" id="solo-input" placeholder="12e5">
+      <span class="eq">=</span>
+      <span class="result" id="res-solo">—</span>
+    </div>
+    <div class="calc-row">
+      <label>Addition:</label>
+      <input type="text" class="ci" data-op="add" data-slot="a" placeholder="5e2">
+      <span class="op">+</span>
+      <input type="text" class="ci" data-op="add" data-slot="b" placeholder="2e2">
+      <span class="eq">=</span>
+      <span class="result" id="res-add">—</span>
+    </div>
+    <div class="calc-row">
+      <label>Subtraction:</label>
+      <input type="text" class="ci" data-op="sub" data-slot="a" placeholder="3e8">
+      <span class="op">−</span>
+      <input type="text" class="ci" data-op="sub" data-slot="b" placeholder="2e8">
+      <span class="eq">=</span>
+      <span class="result" id="res-sub">—</span>
+    </div>
+    <div class="calc-row">
+      <label>Multiplication:</label>
+      <input type="text" class="ci" data-op="mul" data-slot="a" placeholder="6.02e23">
+      <span class="op">×</span>
+      <input type="text" class="ci" data-op="mul" data-slot="b" placeholder="12">
+      <span class="eq">=</span>
+      <span class="result" id="res-mul">—</span>
+    </div>
+    <div class="calc-row">
+      <label>Division:</label>
+      <input type="text" class="ci" data-op="div" data-slot="a" placeholder="1e10">
+      <span class="op">÷</span>
+      <input type="text" class="ci" data-op="div" data-slot="b" placeholder="2e6">
+      <span class="eq">=</span>
+      <span class="result" id="res-div">—</span>
+    </div>
+    <p style="font-size:.85rem; color:var(--dim); margin-top:10px;">
+      💡 Try the same problem two ways — e.g. <code>12e5</code> vs <code>1.2e6</code> — and see the calculator produces the same number.
+    </p>
+  </div>
+  <style>
+    .mini-calc { background:#f0f9ff; border:2px solid var(--accent); border-radius:10px; padding:16px 18px; margin:14px 0 18px; }
+    .mini-calc h3 { color:var(--accent-deep); margin-bottom:6px; }
+    .calc-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 0; border-bottom:1px dashed #cbd5e1; }
+    .calc-row:last-of-type { border-bottom:none; }
+    .calc-row label { min-width:120px; font-weight:800; color:var(--navy); }
+    .calc-row .ci {
+      width:120px; padding:6px 10px; font-family:'Courier New', monospace;
+      font-size:.95rem; border:1.5px solid #94a3b8; border-radius:6px;
+    }
+    .calc-row .ci:focus { outline:none; border-color:var(--accent); background:#fff; }
+    .calc-row .op, .calc-row .eq { font-size:1.2rem; font-weight:800; color:var(--navy); }
+    .calc-row .result {
+      flex:1; min-width:180px; padding:6px 12px;
+      background:#fff; border:1.5px solid #cbd5e1; border-radius:6px;
+      font-family:'Courier New', monospace; font-size:.98rem;
+      color:var(--accent-deep); font-weight:700;
+    }
+  </style>
+  <script>
+    function parseSci(s){
+      s = (s||'').trim().replace(/\s+/g,'').replace(/×/g,'*').replace(/\^/g,'**');
+      if(!s) return NaN;
+      // Allow "5x10^2" or "5*10^2" alongside "5e2"
+      s = s.replace(/x10\*\*/gi,'e').replace(/\*10\*\*/g,'e');
+      return Number(s);
+    }
+    function fmt(x){
+      if(!isFinite(x) || isNaN(x)) return '—';
+      const sci = x.toExponential(4).replace(/e([+-])0*(\d)/,'e$1$2').replace(/\.?0+e/,'e');
+      const std = Math.abs(x) >= 1e-3 && Math.abs(x) < 1e15
+        ? x.toLocaleString('en-US', {maximumFractionDigits:6})
+        : sci;
+      return `${sci}  (${std})`;
+    }
+    function calc(){
+      const ops = {add:(a,b)=>a+b, sub:(a,b)=>a-b, mul:(a,b)=>a*b, div:(a,b)=>a/b};
+      ['add','sub','mul','div'].forEach(op=>{
+        const a = parseSci(document.querySelector(`[data-op="${op}"][data-slot="a"]`).value);
+        const b = parseSci(document.querySelector(`[data-op="${op}"][data-slot="b"]`).value);
+        const el = document.getElementById('res-'+op);
+        if(isNaN(a) || isNaN(b)) { el.textContent = '—'; return; }
+        el.textContent = fmt(ops[op](a,b));
+      });
+    }
+    function solo(){
+      const el = document.getElementById('res-solo');
+      const v = parseSci(document.getElementById('solo-input').value);
+      el.textContent = isNaN(v) ? '—' : fmt(v);
+    }
+    document.querySelectorAll('.ci').forEach(el=>el.addEventListener('input', calc));
+    document.getElementById('solo-input').addEventListener('input', solo);
+  </script>
+
+  <div class="calc-box">
+    <strong>Try 1:</strong> Use the <strong>🔍 Just show me</strong> row. Enter <strong>12 × 10<sup>5</sup></strong> (type <code>12e5</code>), then clear and enter <strong>1.2 × 10<sup>6</sup></strong> (type <code>1.2e6</code>).<br>
+    What does the calculator display for each? <span class="answer-line-lg"></span><br>
+    Are they equal? <span class="answer-line"></span>
+  </div>
+
+  <div class="calc-box">
+    <strong>Try 2:</strong> Use the <strong>🔍 Just show me</strong> row again. Enter <strong>0.3 × 10<sup>4</sup></strong> (type <code>0.3e4</code>), then clear and enter <strong>3 × 10<sup>3</sup></strong> (type <code>3e3</code>).<br>
+    Result 1: <span class="answer-line"></span>&nbsp;&nbsp;Result 2: <span class="answer-line"></span><br>
+    Are they equal? <span class="answer-line"></span>
+  </div>
+
+  <div class="calc-box">
+    <strong>Try 3:</strong> Enter one very large product and one small quotient:<br>
+    <strong>6.02 × 10<sup>23</sup></strong> × 12 = <span class="answer-line"></span><br>
+    <strong>1 × 10<sup>10</sup></strong> ÷ <strong>2 × 10<sup>6</sup></strong> = <span class="answer-line"></span>
+  </div>
+
+  <div class="calc-box">
+    <strong>Try 4 — "Break the rule":</strong> Use the <strong>🔍 Just show me</strong> row again. Enter the same number three ways: <strong>500,000</strong> (type <code>500000</code>), <strong>5 × 10<sup>5</sup></strong> (type <code>5e5</code>), and <strong>50 × 10<sup>4</sup></strong> (type <code>50e4</code>). Do all three give the same value? <span class="answer-line"></span><br>
+    Which form is "true" scientific notation? <span class="answer-line-lg"></span>
+  </div>
+
+  <h3>Discovery questions — write a full sentence:</h3>
+  <ol class="qlist">
+    <li>Why must the "a" part of scientific notation satisfy <strong>1 ≤ |a| &lt; 10</strong>?<br>
+      <span class="answer-line-lg" style="min-width:100%; display:block; height:22px;"></span>
+      <span class="answer-line-lg" style="min-width:100%; display:block; height:22px; margin-top:8px;"></span>
+    </li>
+    <li>What would go wrong if we let a = 12 or a = 0.3?<br>
+      <span class="answer-line-lg" style="min-width:100%; display:block; height:22px;"></span>
+      <span class="answer-line-lg" style="min-width:100%; display:block; height:22px; margin-top:8px;"></span>
+    </li>
+    <li>Why must n be an <strong>integer</strong> (whole number, positive or negative)?<br>
+      <span class="answer-line-lg" style="min-width:100%; display:block; height:22px;"></span>
+      <span class="answer-line-lg" style="min-width:100%; display:block; height:22px; margin-top:8px;"></span>
+    </li>
+    <li>How does scientific notation make it EASIER to compare two very large or two very small numbers than standard form?<br>
+      <span class="answer-line-lg" style="min-width:100%; display:block; height:22px;"></span>
+      <span class="answer-line-lg" style="min-width:100%; display:block; height:22px; margin-top:8px;"></span>
+    </li>
+  </ol>
+  <button class="reveal-btn" onclick="toggle('ak7')">Show / Hide Answer Key</button>
+  <div id="ak7" class="ak">
+    <h4>Answer Key — Section 7</h4>
+    <p><strong>Try 1:</strong> Both display as 1,200,000 (or 1.2E+06). Yes, equal.</p>
+    <p><strong>Try 2:</strong> Both give 3,000 (or 3E+03). Yes, equal.</p>
+    <p><strong>Try 3:</strong> 7.224E+24 · 5,000 (or 5E+03).</p>
+    <p><strong>Try 4:</strong> Yes — all three give 500,000. Only <code>5 × 10<sup>5</sup></code> is true scientific notation.</p>
+    <p><strong>Discovery answers:</strong></p>
+    <p>(1) The rule <strong>1 ≤ |a| &lt; 10</strong> makes scientific notation <strong>unique</strong> — every number has exactly one correct way to write it, so numbers can be compared and ordered cleanly.</p>
+    <p>(2) If a = 12 (or a = 0.3), the same number could be written many ways (12 × 10<sup>4</sup> = 1.2 × 10<sup>5</sup> = 0.12 × 10<sup>6</sup>), which defeats the purpose of a standard form.</p>
+    <p>(3) n must be an integer because it counts the number of decimal-place shifts. You can't move a decimal 2.5 places.</p>
+    <p>(4) Comparing 3.2 × 10<sup>12</sup> to 4.7 × 10<sup>10</sup> is instant — look at exponents first, then coefficients. Comparing 3,200,000,000,000 to 47,000,000,000 requires counting digits.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+Mary, Star of the Sea School · Middle School Math · Grade 8 · Scientific Notation Foundations · Dr. Park
+</footer>
+</div>
+
+<script>
+function toggle(id){ document.getElementById(id).classList.toggle('open'); }
+</script>
+</body>
+</html>
