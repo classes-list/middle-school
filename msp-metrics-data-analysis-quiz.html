@@ -11,22 +11,20 @@
   --ink:#1f2937; --dim:#64748b;
   --accent:#0d9488; --accent-deep:#134e4a; --accent-soft:#ccfbf1;
 }
-body {
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
-  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
-}
-.container { max-width:900px; margin:0 auto; }
+body { font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%); color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6; }
+.container { max-width:960px; margin:0 auto; }
 header { text-align:center; margin-bottom:20px; }
 .eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
 h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
 .tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
-.namebar { display:flex; gap:16px; align-items:center; margin:14px 0 22px; background:#fff; border:1.5px solid #cbd5e1; border-radius:10px; padding:12px 18px; font-size:.95rem; }
-.namebar label { font-weight:700; color:var(--navy); }
-.namebar .line { flex:1; border-bottom:1.5px solid #94a3b8; height:22px; }
+.back-to-unit { display:inline-block; background:var(--gold); color:var(--navy); border:1.5px solid var(--gold-deep); padding:9px 18px; border-radius:8px; font-weight:800; font-size:.92rem; text-decoration:none; margin-bottom:16px; box-shadow:0 2px 6px rgba(184,134,11,0.25); cursor:pointer; }
+.back-to-unit:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
 main { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent); }
 main h2 { color:var(--accent-deep); font-size:1.3rem; font-weight:800; margin-bottom:10px; }
-.instructions { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 20px; font-size:.95rem; }
+.instructions { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 14px; font-size:.95rem; }
+.formula-ref { background:#fef3c7; border:2px solid var(--gold-deep); border-radius:10px; padding:12px 16px; margin:12px 0 20px; font-size:1rem; }
+.formula-ref strong { color:#78350f; }
+.target-diagram { background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:14px 18px; margin:14px 0 20px; }
 ol.qlist { list-style:none; counter-reset:q; padding:0; }
 ol.qlist > li { counter-increment:q; position:relative; padding:12px 0 12px 42px; border-bottom:1px dashed #d1d5db; }
 ol.qlist > li:last-child { border-bottom:none; }
@@ -43,6 +41,7 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   main { box-shadow:none; border:1px solid #cbd5e1; }
   .reveal-btn { display:none; }
   .ak { display:block; }
+  .back-to-unit { display:none; }
 }
 </style>
 </head>
@@ -51,7 +50,7 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <header>
   <div class="eyebrow" id="grade-eyebrow">Middle School · Quiz</div>
   <h1>🔬 Metrics & Data Analysis Quiz</h1>
-  <p class="tagline">Metric conversions, percent error, graphs, and data displays.</p>
+  <p class="tagline">Metric conversions, percent error, and graphs.</p>
 </header>
 <script>
 (function(){
@@ -61,26 +60,36 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   }
 })();
 </script>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 <main>
   <h2>Quiz — 10 Problems</h2>
-  <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
+  <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
+  
+  <div class="formula-ref">
+    <strong>📐 Formulas (always available for reference):</strong>
+    <div style="margin-top:6px;"><strong>Error</strong> = |Measured − Actual|</div>
+    <div><strong>Percent Error</strong> = |Measured − Actual| ÷ Actual × 100</div>
+    <div style="font-size:.88rem; color:#78350f; margin-top:4px; font-style:italic;">Percent error &lt; absolute error can mislead — a big number of grams may still be a very small % of the real value.</div>
+  </div>
+
+  
   <ol class="qlist">
   <li>Convert 4.5 km to meters. <span class="answer-line"></span></li>
 <li>Convert 2,500 mL to liters. <span class="answer-line"></span></li>
 <li>Convert 750 g to kilograms. <span class="answer-line"></span></li>
-<li>Convert 3.2 m to centimeters. <span class="answer-line"></span></li>
-<li>Percent error formula: %Error =  <span class="answer-line"></span></li>
-<li>A student measures a cat as 7 kg. Actual is 8 kg. %Error =  <span class="answer-line"></span></li>
-<li>A student measures a blue whale as 175,000 kg. Actual is 180,000 kg. %Error =  <span class="answer-line"></span></li>
-<li>Which measurement in the previous two was MORE accurate — the cat or the whale? Why? <span class="answer-line"></span></li>
-<li>Which graph best compares parts of a whole (percentages of trash types): bar, pie, or scatter? <span class="answer-line"></span></li>
-<li>Which graph best shows a relationship between two continuous variables: bar, pie, or scatter? <span class="answer-line"></span></li>
+<li>A student measures a cat as <strong>7 kg</strong>. Actual mass is <strong>8 kg</strong>. Compute the ERROR (in kg) and the PERCENT ERROR. <span class="answer-line"></span></li>
+<li>A student measures a blue whale as <strong>175,000 kg</strong>. Actual mass is <strong>180,000 kg</strong>. Compute the ERROR (in kg) and the PERCENT ERROR. <span class="answer-line"></span></li>
+<li>The whale measurement has a MUCH larger error in kilograms (5,000 kg vs 1 kg). Which measurement is actually MORE ACCURATE, and why? Explain using percent error. <span class="answer-line"></span></li>
+<li>You weigh a piece of paper as <strong>0.9 g</strong> (actual 1.0 g) vs an elephant as <strong>5,900 kg</strong> (actual 6,000 kg). Compute percent error for both. Which is more accurate? <span class="answer-line"></span></li>
+<li>Which graph best shows PARTS OF A WHOLE (percentages of beach trash)? <span class="answer-line"></span></li>
+<li>Which graph best shows the RELATIONSHIP between two continuous variables (ocean depth vs temperature)? <span class="answer-line"></span></li>
+<li>Find the mean (average) and range of: 4, 6, 8, 10, 12 <span class="answer-line"></span></li>
 
   </ol>
   <button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
-    (1) 4,500 m · (2) 2.5 L · (3) 0.75 kg · (4) 320 cm · (5) |Measured − Actual| ÷ Actual × 100 · (6) |7 − 8| ÷ 8 × 100 = 12.5% · (7) |175,000 − 180,000| ÷ 180,000 × 100 = 2.78% · (8) Whale (2.78% error) — smaller percent error means more accurate even though the absolute error (5,000 kg) is bigger than the cat's (1 kg). · (9) Pie chart · (10) Scatter plot
+    (1) 4,500 m · (2) 2.5 L · (3) 0.75 kg · (4) Error = 1 kg; %Error = 1/8 × 100 = <strong>12.5%</strong> · (5) Error = 5,000 kg; %Error = 5000/180000 × 100 = <strong>2.78%</strong> · (6) The whale (2.78% error is much smaller than 12.5%). Absolute error can mislead — 5,000 kg sounds huge, but relative to a 180,000 kg whale it's less than 3%. Percent error compares the mistake to the size of the thing being measured, so it's the fair way to compare accuracy across very different scales. · (7) Paper: |0.9−1.0|/1.0 × 100 = <strong>10%</strong>. Elephant: |5900−6000|/6000 × 100 = <strong>1.67%</strong>. The elephant measurement is more accurate — 100 kg off a 6,000 kg animal is a smaller percent of the real value than 0.1 g off a 1 g paper. · (8) Pie chart (circle graph) · (9) Scatter plot (X-Y plot) · (10) Mean = (4+6+8+10+12)/5 = 40/5 = <strong>8</strong>; Range = 12 − 4 = <strong>8</strong>
   </div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Metrics & Data Analysis · Dr. Park</footer>
