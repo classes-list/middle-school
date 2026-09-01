@@ -38,68 +38,115 @@ ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30
 .ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
 footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
 @media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 7 · Foundations Review</div>
   <h1>% Percents & Percent Change Worksheet</h1>
   <p class="tagline">Percent of change, simple interest.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<section class="card">
+<section class="card" id="wsec1">
 <h2>1️⃣ Percent Increase / Decrease</h2>
 <div class="intro">Percent change = |New − Old| ÷ Old × 100. If new > old → increase. If new < old → decrease.</div>
 <div class="rule"><strong>Formula:</strong> % change = (change ÷ original) × 100</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>A price rises from $20 to $25. % increase? <span class="answer-line"></span></li>
-<li>A price drops from $50 to $40. % decrease? <span class="answer-line"></span></li>
-<li>Score goes from 60 to 75. % increase? <span class="answer-line"></span></li>
-<li>Population drops from 500 to 450. % decrease? <span class="answer-line"></span></li>
+<li>A price rises from $20 to $25. % increase? <input class="ans" data-a="25" size="6"></li>
+<li>A price drops from $50 to $40. % decrease? <input class="ans" data-a="20" size="6"></li>
+<li>Score goes from 60 to 75. % increase? <input class="ans" data-a="25" size="6"></li>
+<li>Population drops from 500 to 450. % decrease? <input class="ans" data-a="10" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) 25% (2) 20% (3) 25% (4) 10%</div>
 </section>
-<section class="card">
+<section class="card" id="wsec2">
 <h2>2️⃣ Discount, Tax, Tip, Markup</h2>
 <div class="intro">Discount ↓, tax + tip ↑, markup ↑. Compute the change, then combine.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>$60 jacket, 25% off. Sale price =  <span class="answer-line"></span></li>
-<li>$40 meal, 18% tip. Total =  <span class="answer-line"></span></li>
-<li>$80 item, 7% tax. Total =  <span class="answer-line"></span></li>
-<li>A store buys wholesale $20, marks up 40%. Selling price =  <span class="answer-line"></span></li>
+<li>$60 jacket, 25% off. Sale price =  <input class="ans" data-a="45" size="6"></li>
+<li>$40 meal, 18% tip. Total =  <input class="ans" data-a="47.20" size="8"></li>
+<li>$80 item, 7% tax. Total =  <input class="ans" data-a="85.60" size="8"></li>
+<li>A store buys wholesale $20, marks up 40%. Selling price =  <input class="ans" data-a="28" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) $45 (2) $47.20 (3) $85.60 (4) $28</div>
 </section>
-<section class="card">
+<section class="card" id="wsec3">
 <h2>3️⃣ Simple Interest</h2>
 <div class="intro">I = Prt (interest = principal × rate × time in years).</div>
 <div class="rule"><strong>Example:</strong> $500 at 5% for 3 years → I = 500 × 0.05 × 3 = $75.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>$1000 at 4% for 2 yr → interest =  <span class="answer-line"></span></li>
-<li>$500 at 6% for 3 yr → interest =  <span class="answer-line"></span></li>
-<li>$2000 at 5% for 1 yr → interest =  <span class="answer-line"></span></li>
-<li>$800 at 3% for 5 yr → interest =  <span class="answer-line"></span></li>
+<li>$1000 at 4% for 2 yr → interest =  <input class="ans" data-a="80" size="6"></li>
+<li>$500 at 6% for 3 yr → interest =  <input class="ans" data-a="90" size="6"></li>
+<li>$2000 at 5% for 1 yr → interest =  <input class="ans" data-a="100" size="6"></li>
+<li>$800 at 3% for 5 yr → interest =  <input class="ans" data-a="120" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>(1) $80 (2) $90 (3) $100 (4) $120</div>
 </section>
-<section class="card">
+<section class="card" id="wsec4">
 <h2>4️⃣ Percent Word Problems</h2>
 <div class="intro">Read carefully — identify what part = ? and set up the equation.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>30% of what number is 21? <span class="answer-line"></span></li>
-<li>What percent of 80 is 12? <span class="answer-line"></span></li>
-<li>65 is 25% of what number? <span class="answer-line"></span></li>
-<li>The number 42 is 60% of what? <span class="answer-line"></span></li>
+<li>30% of what number is 21? <input class="ans" data-a="70" size="6"></li>
+<li>What percent of 80 is 12? <input class="ans" data-a="15" size="6"></li>
+<li>65 is 25% of what number? <input class="ans" data-a="260" size="6"></li>
+<li>The number 42 is 60% of what? <input class="ans" data-a="70" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) 70 (2) 15% (3) 260 (4) 70</div>
 </section>
 
@@ -107,4 +154,110 @@ footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;paddi
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Percents & Percent Change · Dr. Park</footer>
 </div>
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body></html>

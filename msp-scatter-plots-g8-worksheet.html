@@ -37,112 +37,159 @@ ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30
 .ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
 footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
 @media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 8 · Foundations Review</div>
   <h1>📈 Scatter Plots & Line of Best Fit</h1>
   <p class="tagline">Bivariate data, correlation, and fitting a linear model.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<section class="card">
+<section class="card" id="wsec1">
 <h2>1️⃣ What Is a Scatter Plot?</h2>
 <div class="intro">A SCATTER PLOT displays ordered pairs (x, y) as dots on a coordinate plane. It shows the RELATIONSHIP between two numerical variables — for example, hours studied vs. test score.</div>
 <div class="rule"><strong>Setup:</strong> INDEPENDENT variable on x-axis (the one you control or that comes first). DEPENDENT variable on y-axis (the response).</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>In a plot of 'hours studied' vs 'test score', which goes on the x-axis? <span class="answer-line"></span></li>
-<li>In a plot of 'ice cream sales' vs 'temperature', which is independent? <span class="answer-line"></span></li>
-<li>In a plot of 'age' vs 'height of a person from 0-18 yr', which axis is age? <span class="answer-line"></span></li>
-<li>In a plot of 'water depth (m)' vs 'temperature (°C)' — an X-Y plot, which is independent? <span class="answer-line"></span></li>
+<li>In a plot of 'hours studied' vs 'test score', which goes on the x-axis? <input class="ans" data-a="hours studied" size="16"></li>
+<li>In a plot of 'ice cream sales' vs 'temperature', which is independent? <input class="ans" data-a="temperature" size="14"></li>
+<li>In a plot of 'age' vs 'height of a person from 0-18 yr', which axis is age? <input class="ans" data-a="x-axis" size="9"></li>
+<li>In a plot of 'water depth (m)' vs 'temperature (°C)' — an X-Y plot, which is independent? <input class="ans" data-a="water depth" size="14"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) hours studied (2) temperature (temp drives sales) (3) x-axis (4) water depth</div>
 </section>
-<section class="card">
+<section class="card" id="wsec2">
 <h2>2️⃣ Association / Correlation</h2>
 <div class="intro">The PATTERN of dots tells us the ASSOCIATION between the two variables.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Hours studied vs. test score — expected association? <span class="answer-line"></span></li>
-<li>Age of car (years) vs. resale value ($) — association? <span class="answer-line"></span></li>
-<li>Shoe size vs. IQ — expected association? <span class="answer-line"></span></li>
-<li>Height vs. weight — association? <span class="answer-line"></span></li>
-<li>Water depth vs. temperature — association? <span class="answer-line"></span></li>
+<li>Hours studied vs. test score — expected association? <input class="ans" data-a="Positive" size="11"></li>
+<li>Age of car (years) vs. resale value ($) — association? <input class="ans" data-a="Negative" size="11"></li>
+<li>Shoe size vs. IQ — expected association? <input class="ans" data-a="None" size="7"></li>
+<li>Height vs. weight — association? <input class="ans" data-a="Positive" size="11"></li>
+<li>Water depth vs. temperature — association? <input class="ans" data-a="colder)" size="10"></li>
 </ol>
 <table class="rules"><tr><th>Pattern</th><th>What it means</th></tr><tr><td class="pos">Positive</td><td>As x ↑, y ↑ (dots go up left → right)</td></tr><tr><td class="neg">Negative</td><td>As x ↑, y ↓ (dots go down left → right)</td></tr><tr><td>None</td><td>No clear pattern — random cloud of dots</td></tr><tr><td>Linear</td><td>Dots roughly follow a straight line</td></tr><tr><td>Nonlinear</td><td>Dots follow a curve</td></tr></table>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) Positive (2) Negative (3) None (unrelated) (4) Positive (5) Negative (deeper = colder)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec3">
 <h2>3️⃣ Clusters and Outliers</h2>
 <div class="intro">A CLUSTER = group of dots near each other. An OUTLIER = one dot far from the rest.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>In a scatter of test scores, one student got 95 while others got 40-60. What is that point? <span class="answer-line"></span></li>
-<li>In a plot of adults' heights vs. weights, why might there be TWO clusters? <span class="answer-line"></span></li>
-<li>Should outliers be ignored automatically? <span class="answer-line"></span></li>
+<li>In a scatter of test scores, one student got 95 while others got 40-60. What is that point? <input class="ans" data-a="Outlier" size="10"></li>
+<li>In a plot of adults' heights vs. weights, why might there be TWO clusters? <input class="ans" data-a="Possibly two groups" size="22"></li>
+<li>Should outliers be ignored automatically? <input class="ans" data-a="NO — investigate first. An outlier can be a real event or a measurement error." size="22"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>(1) Outlier (2) Possibly two groups (e.g., male/female heights) (3) NO — investigate first. An outlier can be a real event or a measurement error.</div>
 </section>
-<section class="card">
+<section class="card" id="wsec4">
 <h2>4️⃣ Line of Best Fit (Informal)</h2>
 <div class="intro">A LINE OF BEST FIT is a straight line drawn through the middle of the scatter of dots — as close to as many points as possible. It models the linear trend.</div>
 <div class="rule"><strong>How to draw:</strong> Draw a line that (1) goes through the middle of the cluster, (2) has about the same number of dots ABOVE and BELOW it, and (3) matches the overall direction.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Should the line pass through EVERY data point? <span class="answer-line"></span></li>
-<li>If most data goes up-right, should the line's slope be positive or negative? <span class="answer-line"></span></li>
-<li>Data: (1,3),(2,5),(3,7),(4,9),(5,11). Best-fit line equation? <span class="answer-line"></span></li>
-<li>Data: (0,10),(1,8),(2,6),(3,4). Best-fit line? <span class="answer-line"></span></li>
+<li>Should the line pass through EVERY data point? <input class="ans" data-a="No — it approximates, doesn&#x27;t hit every point" size="22"></li>
+<li>If most data goes up-right, should the line's slope be positive or negative? <input class="ans" data-a="Positive" size="11"></li>
+<li>Data: (1,3),(2,5),(3,7),(4,9),(5,11). Best-fit line equation? <input class="ans" data-a="2x + 1" size="9"></li>
+<li>Data: (0,10),(1,8),(2,6),(3,4). Best-fit line? <input class="ans" data-a="-2x + 10" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) No — it approximates, doesn't hit every point (2) Positive (3) y = 2x + 1 (fits exactly) (4) y = -2x + 10</div>
 </section>
-<section class="card">
+<section class="card" id="wsec5">
 <h2>5️⃣ Interpreting Slope & y-Intercept in Context</h2>
 <div class="intro">Once you have y = mx + b, INTERPRET slope and y-intercept in the real-world context.</div>
 <div class="rule"><strong>Slope</strong> = how much y changes for each 1-unit increase in x. <strong>y-intercept</strong> = the value of y when x = 0.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>A model of cost = 10 + 2n (n = # of items). What does slope 2 mean? <span class="answer-line"></span></li>
-<li>Same model. What does 10 (y-intercept) mean? <span class="answer-line"></span></li>
-<li>Test score = 5·hours + 60. What does slope 5 mean? <span class="answer-line"></span></li>
-<li>Same. What does 60 mean? <span class="answer-line"></span></li>
-<li>Height = 2·age + 30 (cm, yr) for young children. What does 30 mean? What does 2 mean? <span class="answer-line"></span></li>
+<li>A model of cost = 10 + 2n (n = # of items). What does slope 2 mean? <input class="ans" data-a="Each additional item costs $2" size="22"></li>
+<li>Same model. What does 10 (y-intercept) mean? <input class="ans" data-a="10 flat/starting fee even for 0 items" size="22"></li>
+<li>Test score = 5·hours + 60. What does slope 5 mean? <input class="ans" data-a="Each extra hour of studying adds 5 points to the score" size="22"></li>
+<li>Same. What does 60 mean? <input class="ans" data-a="A student who studied 0 hours would score 60" size="22"></li>
+<li>Height = 2·age + 30 (cm, yr) for young children. What does 30 mean? What does 2 mean? <input class="ans" data-a="30 cm at age 0 (birth); grows 2 cm per year" size="22"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak"><h4>Answer Key — Section 5</h4>(1) Each additional item costs $2 (2) $10 flat/starting fee even for 0 items (3) Each extra hour of studying adds 5 points to the score (4) A student who studied 0 hours would score 60 (5) 30 cm at age 0 (birth); grows 2 cm per year</div>
 </section>
-<section class="card">
+<section class="card" id="wsec6">
 <h2>6️⃣ Using the Line to Make Predictions</h2>
 <div class="intro">Plug an x-value into your equation to predict y.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>y = 3x + 5. Predict y when x = 10. <span class="answer-line"></span></li>
-<li>cost = 2·items + 3. Predict cost for 15 items. <span class="answer-line"></span></li>
-<li>test score = 4·hours + 60. If you study 8 hours, predicted score? <span class="answer-line"></span></li>
-<li>temperature = -2·depth + 20. Predict temp at depth 8 m. <span class="answer-line"></span></li>
+<li>y = 3x + 5. Predict y when x = 10. <input class="ans" data-a="35" size="6"></li>
+<li>cost = 2·items + 3. Predict cost for 15 items. <input class="ans" data-a="33" size="6"></li>
+<li>test score = 4·hours + 60. If you study 8 hours, predicted score? <input class="ans" data-a="92" size="6"></li>
+<li>temperature = -2·depth + 20. Predict temp at depth 8 m. <input class="ans" data-a="4" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak6')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec6')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec6')">↺ Clear</button><span class="score" id="score-wsec6">—</span> <button class="reveal-btn" onclick="toggle('ak6')">Show / Hide Answer Key</button>
 <div id="ak6" class="ak"><h4>Answer Key — Section 6</h4>(1) 35 (2) $33 (3) 92 (4) 4°C</div>
 </section>
-<section class="card">
+<section class="card" id="wsec7">
 <h2>7️⃣ Real Data Discovery (Google Sheets)</h2>
 <div class="intro">Open Google Sheets. Type this data into columns A and B, select it, Insert → Chart → Scatter, then click the chart → Customize → Series → Trendline: Linear.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Enter the data. Add a scatter chart. What's the trendline equation Sheets shows? <span class="answer-line"></span></li>
-<li>What is the slope (approximately)? <span class="answer-line"></span></li>
-<li>What does the slope mean in context? <span class="answer-line"></span></li>
-<li>Predict sales at 100°F using your equation. <span class="answer-line"></span></li>
-<li>Is this a positive or negative association? <span class="answer-line"></span></li>
+<li>Enter the data. Add a scatter chart. What's the trendline equation Sheets shows? <input class="ans" data-a="8x - 355" size="11"></li>
+<li>What is the slope (approximately)? <input class="ans" data-a="≈ 8" size="6"></li>
+<li>What does the slope mean in context? <input class="ans" data-a="For every 1°F increase, sales increase by about $8" size="22"></li>
+<li>Predict sales at 100°F using your equation. <input class="ans" data-a="At 100°F: 8" size="14"></li>
+<li>Is this a positive or negative association? <input class="ans" data-a="445" size="6"></li>
 </ol>
 <div class="rule"><strong>Ice cream sales vs. temperature</strong><br>Temp (°F): 60, 65, 70, 75, 80, 85, 90<br>Sales ($): 120, 150, 200, 230, 280, 320, 360</div>
-<button class="reveal-btn" onclick="toggle('ak7')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec7')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec7')">↺ Clear</button><span class="score" id="score-wsec7">—</span> <button class="reveal-btn" onclick="toggle('ak7')">Show / Hide Answer Key</button>
 <div id="ak7" class="ak"><h4>Answer Key — Section 7</h4>(1) Approx y = 8x - 355 (values vary slightly depending on exact fit) (2) ≈ 8 (3) For every 1°F increase, sales increase by about $8 (4) At 100°F: 8(100) - 355 = $445 (5) Positive</div>
 </section>
 
@@ -150,4 +197,110 @@ footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;paddi
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Scatter Plots & Line of Best Fit · Dr. Park</footer>
 </div>
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body></html>

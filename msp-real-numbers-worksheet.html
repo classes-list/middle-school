@@ -69,6 +69,53 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   cursor:pointer;
 }
 .back-to-unit:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style>
 </head>
 <body>
@@ -77,7 +124,7 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
   <h1>🔢 Real Numbers Worksheet</h1>
   <p class="tagline">Rational vs. irrational · square roots · ordering real numbers.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <script>
 (function(){
   const g = new URLSearchParams(location.search).get('grade');
@@ -89,97 +136,97 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 <main>
 
-<section class="card">
+<section class="card" id="wsec1">
   <h2>1️⃣ Rational vs. Irrational</h2>
   <div class="intro">A <strong>rational</strong> number can be written as a fraction a/b (b ≠ 0). Its decimal either terminates or repeats. An <strong>irrational</strong> number cannot be written as a fraction — its decimal goes forever without repeating.</div>
 <div class="rule"><strong>Examples:</strong> Rational: 3, -5, 1/2, 0.75, 0.333… Irrational: √2, √3, π, e.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Classify 4/9 as rational or irrational. <span class="answer-line"></span></li>
-<li>Classify 0.121212… as rational or irrational. <span class="answer-line"></span></li>
-<li>Classify √16 as rational or irrational. <span class="answer-line"></span></li>
-<li>Classify √17 as rational or irrational. <span class="answer-line"></span></li>
-<li>Classify π = 3.14159… as rational or irrational. <span class="answer-line"></span></li>
-<li>Classify 0.101001000100001… <span class="answer-line"></span></li>
+<li>Classify 4/9 as rational or irrational. <input class="ans" data-a="rationa" size="10"></li>
+<li>Classify 0.121212… as rational or irrational. <input class="ans" data-a="rationa" size="10"></li>
+<li>Classify √16 as rational or irrational. <input class="ans" data-a="4)" size="6"></li>
+<li>Classify √17 as rational or irrational. <input class="ans" data-a="irrationa" size="12"></li>
+<li>Classify π = 3.14159… as rational or irrational. <input class="ans" data-a="irrationa" size="12"></li>
+<li>Classify 0.101001000100001… <input class="ans" data-a="irrationa" size="12"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak">
   <h4>Answer Key — Section 1</h4>
   (1) rational | (2) rational (repeating) | (3) rational (√16 = 4) | (4) irrational (17 not a perfect square) | (5) irrational | (6) irrational (no repeating pattern)
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec2">
   <h2>2️⃣ Perfect Squares</h2>
   <div class="intro">Memorize these — you'll use them constantly.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>√25 =  <span class="answer-line"></span></li>
-<li>√81 =  <span class="answer-line"></span></li>
-<li>√144 =  <span class="answer-line"></span></li>
-<li>√100 =  <span class="answer-line"></span></li>
-<li>√1 =  <span class="answer-line"></span></li>
-<li>√49 =  <span class="answer-line"></span></li>
-<li>√64 =  <span class="answer-line"></span></li>
+<li>√25 =  <input class="ans" data-a="5" size="6"></li>
+<li>√81 =  <input class="ans" data-a="9" size="6"></li>
+<li>√144 =  <input class="ans" data-a="12" size="6"></li>
+<li>√100 =  <input class="ans" data-a="10" size="6"></li>
+<li>√1 =  <input class="ans" data-a="1" size="6"></li>
+<li>√49 =  <input class="ans" data-a="7" size="6"></li>
+<li>√64 =  <input class="ans" data-a="8" size="6"></li>
 </ol>
 <table class="rules"><tr><th>n</th><th>n²</th><th>√n²</th></tr><tr><td>1</td><td>1</td><td>1</td></tr><tr><td>2</td><td>4</td><td>2</td></tr><tr><td>3</td><td>9</td><td>3</td></tr><tr><td>4</td><td>16</td><td>4</td></tr><tr><td>5</td><td>25</td><td>5</td></tr><tr><td>6</td><td>36</td><td>6</td></tr><tr><td>7</td><td>49</td><td>7</td></tr><tr><td>8</td><td>64</td><td>8</td></tr><tr><td>9</td><td>81</td><td>9</td></tr><tr><td>10</td><td>100</td><td>10</td></tr><tr><td>11</td><td>121</td><td>11</td></tr><tr><td>12</td><td>144</td><td>12</td></tr></table>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak">
   <h4>Answer Key — Section 2</h4>
   (1) 5 | (2) 9 | (3) 12 | (4) 10 | (5) 1 | (6) 7 | (7) 8
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec3">
   <h2>3️⃣ Estimating Irrational Square Roots</h2>
   <div class="intro">If a number is NOT a perfect square, its square root is irrational. Estimate by finding the two nearest perfect squares.</div>
 <div class="rule"><strong>Example:</strong> √20. Nearest perfect squares: √16 = 4 and √25 = 5. Since 20 is closer to 16 than 25, √20 ≈ 4.5 (actually 4.47).</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>√30 is between which two whole numbers? <span class="answer-line"></span></li>
-<li>√50 is between which two whole numbers? <span class="answer-line"></span></li>
-<li>√8 ≈ (to nearest tenth) <span class="answer-line"></span></li>
-<li>√75 is between which two whole numbers? <span class="answer-line"></span></li>
-<li>Estimate √11 to nearest tenth. <span class="answer-line"></span></li>
+<li>√30 is between which two whole numbers? <input class="ans" data-a="6)" size="6"></li>
+<li>√50 is between which two whole numbers? <input class="ans" data-a="7 and 8" size="10"></li>
+<li>√8 ≈ (to nearest tenth) <input class="ans" data-a="≈ 2.8" size="8"></li>
+<li>√75 is between which two whole numbers? <input class="ans" data-a="9)" size="6"></li>
+<li>Estimate √11 to nearest tenth. <input class="ans" data-a="≈ 3.3" size="8"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak">
   <h4>Answer Key — Section 3</h4>
   (1) 5 and 6 (√25=5, √36=6) | (2) 7 and 8 | (3) ≈ 2.8 | (4) 8 and 9 (√64=8, √81=9) | (5) ≈ 3.3
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec4">
   <h2>4️⃣ Ordering Real Numbers</h2>
   <div class="intro">To compare, convert everything to decimals, then order on the number line.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Order least to greatest: 3.5, √9, 3.14 <span class="answer-line"></span></li>
-<li>Order least to greatest: 2, √5, 5/2, 2.3 <span class="answer-line"></span></li>
-<li>Which is greater: √17 or 4.1? <span class="answer-line"></span></li>
-<li>Which is greater: π or √10? <span class="answer-line"></span></li>
-<li>Order: -√4, -1.5, -1, -√2 <span class="answer-line"></span></li>
+<li>Order least to greatest: 3.5, √9, 3.14 <input class="ans" data-a="3, so order is √9" size="20"></li>
+<li>Order least to greatest: 2, √5, 5/2, 2.3 <input class="ans" data-a=", 3.14, 3.5" size="14"></li>
+<li>Which is greater: √17 or 4.1? <input class="ans" data-a="2.5) → 2, √5, 2.3, 5/2" size="22"></li>
+<li>Which is greater: π or √10? <input class="ans" data-a="√17 ≈ 4.12 &gt; 4.1 → √17" size="22"></li>
+<li>Order: -√4, -1.5, -1, -√2 <input class="ans" data-a="√10 ≈ 3.16, π ≈ 3.14 → √10 is greater" size="22"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak">
   <h4>Answer Key — Section 4</h4>
   (1) 3.14, √9 (=3), 3.5 → wait: √9 = 3, so order is √9 (3), 3.14, 3.5 | (2) 2, 2.3, √5 (≈2.24), 5/2 (=2.5) → 2, √5, 2.3, 5/2 | (3) √17 ≈ 4.12 > 4.1 → √17 | (4) √10 ≈ 3.16, π ≈ 3.14 → √10 is greater | (5) -√4 (-2), -√2 (-1.41), -1.5, -1 → -2, -1.5, -√2, -1
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec5">
   <h2>5️⃣ Converting Repeating Decimals to Fractions</h2>
   <div class="intro">A repeating decimal is rational. To convert, use algebra: let x = the decimal, multiply to shift the repeating part, subtract, solve.</div>
 <div class="rule"><strong>Example:</strong> 0.333… → let x = 0.333…, then 10x = 3.333…. Subtract: 9x = 3, so x = 3/9 = 1/3.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>0.5 = (as fraction) <span class="answer-line"></span></li>
-<li>0.75 =  <span class="answer-line"></span></li>
-<li>0.333… =  <span class="answer-line"></span></li>
-<li>0.666… =  <span class="answer-line"></span></li>
-<li>0.121212… =  <span class="answer-line"></span></li>
+<li>0.5 = (as fraction) <input class="ans" data-a="1/2" size="6"></li>
+<li>0.75 =  <input class="ans" data-a="3/4" size="6"></li>
+<li>0.333… =  <input class="ans" data-a="1/3" size="6"></li>
+<li>0.666… =  <input class="ans" data-a="2/3" size="6"></li>
+<li>0.121212… =  <input class="ans" data-a="4/33" size="7"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak">
   <h4>Answer Key — Section 5</h4>
   (1) 1/2 | (2) 3/4 | (3) 1/3 | (4) 2/3 | (5) 12/99 = 4/33
@@ -190,5 +237,111 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <footer>Mary, Star of the Sea School · Middle School Math · Real Numbers · Dr. Park</footer>
 </div>
 <script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body>
 </html>

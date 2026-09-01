@@ -38,71 +38,118 @@ ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30
 .ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
 footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
 @media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 7 · Foundations Review</div>
   <h1>🔁 Rearranging Formulas Worksheet</h1>
   <p class="tagline">Solve a formula for a specific variable.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<section class="card">
+<section class="card" id="wsec1">
 <h2>1️⃣ Why Rearrange?</h2>
 <div class="intro">Sometimes the variable you want isn't alone. Apply inverse operations just like solving an equation, keeping everything else in symbolic form.</div>
 </section>
-<section class="card">
+<section class="card" id="wsec2">
 <h2>2️⃣ Area and Perimeter</h2>
 <div class="intro">A = lw. Solve for l: l = A/w. P = 2(l + w). Solve for w: w = P/2 − l.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>A = lw. Solve for w. <span class="answer-line"></span></li>
-<li>P = 2l + 2w. Solve for l. <span class="answer-line"></span></li>
-<li>A = ½bh. Solve for h. <span class="answer-line"></span></li>
-<li>C = πd. Solve for d. <span class="answer-line"></span></li>
-<li>V = lwh. Solve for h. <span class="answer-line"></span></li>
+<li>A = lw. Solve for w. <input class="ans" data-a="A/" size="6"></li>
+<li>P = 2l + 2w. Solve for l. <input class="ans" data-a="(P − 2w)/2" size="13"></li>
+<li>A = ½bh. Solve for h. <input class="ans" data-a="2A/b" size="7"></li>
+<li>C = πd. Solve for d. <input class="ans" data-a="C/π" size="6"></li>
+<li>V = lwh. Solve for h. <input class="ans" data-a="V/" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) w = A/l (2) l = (P − 2w)/2 (3) h = 2A/b (4) d = C/π (5) h = V/(lw)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec3">
 <h2>3️⃣ Distance/Rate/Time</h2>
 <div class="intro">d = rt. Solve for r: r = d/t. Solve for t: t = d/r.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>d = rt. Solve for r. <span class="answer-line"></span></li>
-<li>d = rt. Solve for t. <span class="answer-line"></span></li>
-<li>If d = 200 mi and r = 50 mph, t =  <span class="answer-line"></span></li>
-<li>If d = 300 km and t = 5 hr, r =  <span class="answer-line"></span></li>
+<li>d = rt. Solve for r. <input class="ans" data-a="d/t" size="6"></li>
+<li>d = rt. Solve for t. <input class="ans" data-a="d/r" size="6"></li>
+<li>If d = 200 mi and r = 50 mph, t =  <input class="ans" data-a="4 hr" size="7"></li>
+<li>If d = 300 km and t = 5 hr, r =  <input class="ans" data-a="60 km/hr" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>(1) r = d/t (2) t = d/r (3) 4 hr (4) 60 km/hr</div>
 </section>
-<section class="card">
+<section class="card" id="wsec4">
 <h2>4️⃣ Density</h2>
 <div class="intro">D = m/V. Solve for m: m = DV. Solve for V: V = m/D.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>D = m/V. Solve for m. <span class="answer-line"></span></li>
-<li>D = m/V. Solve for V. <span class="answer-line"></span></li>
-<li>If D = 4 g/cm³ and V = 10 cm³, m =  <span class="answer-line"></span></li>
-<li>If m = 100 g and D = 5 g/cm³, V =  <span class="answer-line"></span></li>
+<li>D = m/V. Solve for m. <input class="ans" data-a="DV" size="6"></li>
+<li>D = m/V. Solve for V. <input class="ans" data-a="m/D" size="6"></li>
+<li>If D = 4 g/cm³ and V = 10 cm³, m =  <input class="ans" data-a="40" size="6"></li>
+<li>If m = 100 g and D = 5 g/cm³, V =  <input class="ans" data-a="20 cm³" size="9"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) m = DV (2) V = m/D (3) 40 g (4) 20 cm³</div>
 </section>
-<section class="card">
+<section class="card" id="wsec5">
 <h2>5️⃣ Temperature</h2>
 <div class="intro">F = 9/5 C + 32. Solve for C.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>F = 9/5 C + 32. Solve for C. <span class="answer-line"></span></li>
-<li>Convert 68°F to °C. <span class="answer-line"></span></li>
-<li>Convert 25°C to °F. <span class="answer-line"></span></li>
-<li>Convert 100°C to °F. <span class="answer-line"></span></li>
+<li>F = 9/5 C + 32. Solve for C. <input class="ans" data-a="5/9" size="6"></li>
+<li>Convert 68°F to °C. <input class="ans" data-a="20" size="6"></li>
+<li>Convert 25°C to °F. <input class="ans" data-a="77" size="6"></li>
+<li>Convert 100°C to °F. <input class="ans" data-a="212" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak"><h4>Answer Key — Section 5</h4>(1) C = 5/9 (F − 32) (2) 20°C (3) 77°F (4) 212°F</div>
 </section>
 
@@ -110,4 +157,110 @@ footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;paddi
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Rearranging Formulas · Dr. Park</footer>
 </div>
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body></html>

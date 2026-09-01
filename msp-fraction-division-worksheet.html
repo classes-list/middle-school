@@ -69,6 +69,53 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   cursor:pointer;
 }
 .back-to-unit:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style>
 </head>
 <body>
@@ -77,7 +124,7 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
   <h1>➗ Fraction Division Worksheet</h1>
   <p class="tagline">Keep, Change, Flip — and understand why.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <script>
 (function(){
   const g = new URLSearchParams(location.search).get('grade');
@@ -89,99 +136,99 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 <main>
 
-<section class="card">
+<section class="card" id="wsec1">
   <h2>1️⃣ Fraction Review</h2>
   <div class="intro">A fraction has a <strong>numerator</strong> (top) and a <strong>denominator</strong> (bottom). The <strong>reciprocal</strong> flips the fraction upside down.</div>
 <div class="rule"><strong>Reciprocal:</strong> The reciprocal of a/b is b/a. Example: reciprocal of 3/4 is 4/3. Reciprocal of 5 = 1/5.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Reciprocal of 2/3 =  <span class="answer-line"></span></li>
-<li>Reciprocal of 5/8 =  <span class="answer-line"></span></li>
-<li>Reciprocal of 7 =  <span class="answer-line"></span></li>
-<li>Reciprocal of 1/4 =  <span class="answer-line"></span></li>
-<li>Simplify 6/8 =  <span class="answer-line"></span></li>
-<li>Simplify 15/20 =  <span class="answer-line"></span></li>
-<li>Convert 2 1/3 to improper fraction =  <span class="answer-line"></span></li>
+<li>Reciprocal of 2/3 =  <input class="ans" data-a="3/2" size="6"></li>
+<li>Reciprocal of 5/8 =  <input class="ans" data-a="8/5" size="6"></li>
+<li>Reciprocal of 7 =  <input class="ans" data-a="1/7" size="6"></li>
+<li>Reciprocal of 1/4 =  <input class="ans" data-a="4" size="6"></li>
+<li>Simplify 6/8 =  <input class="ans" data-a="3/4" size="6"></li>
+<li>Simplify 15/20 =  <input class="ans" data-a="3/4" size="6"></li>
+<li>Convert 2 1/3 to improper fraction =  <input class="ans" data-a="7/3" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak">
   <h4>Answer Key — Section 1</h4>
   (1) 3/2 | (2) 8/5 | (3) 1/7 | (4) 4 | (5) 3/4 | (6) 3/4 | (7) 7/3
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec2">
   <h2>2️⃣ Keep, Change, Flip</h2>
   <div class="intro">Dividing by a fraction = multiplying by its reciprocal.</div>
 <div class="rule"><strong>KEEP</strong> the first fraction, <strong>CHANGE</strong> ÷ to ×, <strong>FLIP</strong> the second fraction. Then multiply straight across and simplify.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>1/2 ÷ 1/4 =  <span class="answer-line"></span></li>
-<li>2/3 ÷ 1/6 =  <span class="answer-line"></span></li>
-<li>3/4 ÷ 2/3 =  <span class="answer-line"></span></li>
-<li>5/8 ÷ 1/2 =  <span class="answer-line"></span></li>
-<li>4/9 ÷ 2/3 =  <span class="answer-line"></span></li>
-<li>1/3 ÷ 2/5 =  <span class="answer-line"></span></li>
-<li>7/10 ÷ 1/5 =  <span class="answer-line"></span></li>
+<li>1/2 ÷ 1/4 =  <input class="ans" data-a="2" size="6"></li>
+<li>2/3 ÷ 1/6 =  <input class="ans" data-a="4" size="6"></li>
+<li>3/4 ÷ 2/3 =  <input class="ans" data-a="1 1/8" size="8"></li>
+<li>5/8 ÷ 1/2 =  <input class="ans" data-a="1 1/4" size="8"></li>
+<li>4/9 ÷ 2/3 =  <input class="ans" data-a="2/3" size="6"></li>
+<li>1/3 ÷ 2/5 =  <input class="ans" data-a="5/6" size="6"></li>
+<li>7/10 ÷ 1/5 =  <input class="ans" data-a="3 1/2" size="8"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak">
   <h4>Answer Key — Section 2</h4>
   (1) 1/2 × 4/1 = 4/2 = 2 | (2) 2/3 × 6/1 = 12/3 = 4 | (3) 3/4 × 3/2 = 9/8 = 1 1/8 | (4) 5/8 × 2/1 = 10/8 = 5/4 = 1 1/4 | (5) 4/9 × 3/2 = 12/18 = 2/3 | (6) 1/3 × 5/2 = 5/6 | (7) 7/10 × 5/1 = 35/10 = 7/2 = 3 1/2
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec3">
   <h2>3️⃣ Whole ÷ Fraction and Fraction ÷ Whole</h2>
   <div class="intro">A whole number is really a fraction over 1. So 6 = 6/1. Same rule applies.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>4 ÷ 1/2 =  <span class="answer-line"></span></li>
-<li>6 ÷ 1/3 =  <span class="answer-line"></span></li>
-<li>1/2 ÷ 4 =  <span class="answer-line"></span></li>
-<li>3/4 ÷ 2 =  <span class="answer-line"></span></li>
-<li>10 ÷ 2/5 =  <span class="answer-line"></span></li>
-<li>5/6 ÷ 5 =  <span class="answer-line"></span></li>
-<li>8 ÷ 3/4 =  <span class="answer-line"></span></li>
+<li>4 ÷ 1/2 =  <input class="ans" data-a="8" size="6"></li>
+<li>6 ÷ 1/3 =  <input class="ans" data-a="18" size="6"></li>
+<li>1/2 ÷ 4 =  <input class="ans" data-a="1/8" size="6"></li>
+<li>3/4 ÷ 2 =  <input class="ans" data-a="3/8" size="6"></li>
+<li>10 ÷ 2/5 =  <input class="ans" data-a="25" size="6"></li>
+<li>5/6 ÷ 5 =  <input class="ans" data-a="1/6" size="6"></li>
+<li>8 ÷ 3/4 =  <input class="ans" data-a="10 2/3" size="9"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak">
   <h4>Answer Key — Section 3</h4>
   (1) 4/1 × 2/1 = 8 | (2) 6/1 × 3/1 = 18 | (3) 1/2 × 1/4 = 1/8 | (4) 3/4 × 1/2 = 3/8 | (5) 10 × 5/2 = 25 | (6) 5/6 × 1/5 = 1/6 | (7) 8 × 4/3 = 32/3 = 10 2/3
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec4">
   <h2>4️⃣ Mixed Numbers</h2>
   <div class="intro">Convert mixed numbers to improper fractions FIRST, then apply Keep-Change-Flip.</div>
 <div class="rule">Mixed → improper: whole × denominator + numerator, over the denominator. Example: 2 3/4 = (2×4 + 3)/4 = 11/4.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>1 1/2 ÷ 1/4 =  <span class="answer-line"></span></li>
-<li>2 1/3 ÷ 1/2 =  <span class="answer-line"></span></li>
-<li>3 ÷ 1 1/2 =  <span class="answer-line"></span></li>
-<li>2 1/4 ÷ 3/4 =  <span class="answer-line"></span></li>
-<li>1 2/3 ÷ 5/6 =  <span class="answer-line"></span></li>
+<li>1 1/2 ÷ 1/4 =  <input class="ans" data-a="6" size="6"></li>
+<li>2 1/3 ÷ 1/2 =  <input class="ans" data-a="4 2/3" size="8"></li>
+<li>3 ÷ 1 1/2 =  <input class="ans" data-a="2" size="6"></li>
+<li>2 1/4 ÷ 3/4 =  <input class="ans" data-a="3" size="6"></li>
+<li>1 2/3 ÷ 5/6 =  <input class="ans" data-a="2" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak">
   <h4>Answer Key — Section 4</h4>
   (1) 3/2 × 4/1 = 12/2 = 6 | (2) 7/3 × 2/1 = 14/3 = 4 2/3 | (3) 3 × 2/3 = 6/3 = 2 | (4) 9/4 × 4/3 = 36/12 = 3 | (5) 5/3 × 6/5 = 30/15 = 2
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec5">
   <h2>5️⃣ Word Problems</h2>
   <div class="intro">Fraction division shows up in cooking, sharing, and measurement.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>A pizza is cut into 8 slices. Each slice is 1/8 of the pizza. If Ali eats 1/2 of the pizza, how many slices did he eat? <span class="answer-line"></span></li>
-<li>A rope is 3/4 m long. You cut it into pieces of 1/8 m each. How many pieces? <span class="answer-line"></span></li>
-<li>A recipe calls for 1/2 cup sugar. You have 3 cups. How many batches can you make? <span class="answer-line"></span></li>
-<li>You have 6 m of ribbon and each bow uses 3/4 m. How many bows can you make? <span class="answer-line"></span></li>
-<li>A jug holds 2 1/2 L. You pour it into 1/4 L cups. How many cups? <span class="answer-line"></span></li>
+<li>A pizza is cut into 8 slices. Each slice is 1/8 of the pizza. If Ali eats 1/2 of the pizza, how many slices did he eat? <input class="ans" data-a="4" size="6"></li>
+<li>A rope is 3/4 m long. You cut it into pieces of 1/8 m each. How many pieces? <input class="ans" data-a="6" size="6"></li>
+<li>A recipe calls for 1/2 cup sugar. You have 3 cups. How many batches can you make? <input class="ans" data-a="6" size="6"></li>
+<li>You have 6 m of ribbon and each bow uses 3/4 m. How many bows can you make? <input class="ans" data-a="8" size="6"></li>
+<li>A jug holds 2 1/2 L. You pour it into 1/4 L cups. How many cups? <input class="ans" data-a="10" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak">
   <h4>Answer Key — Section 5</h4>
   (1) 1/2 ÷ 1/8 = 4 slices | (2) 3/4 ÷ 1/8 = 6 pieces | (3) 3 ÷ 1/2 = 6 batches | (4) 6 ÷ 3/4 = 8 bows | (5) 5/2 ÷ 1/4 = 10 cups
@@ -192,5 +239,111 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <footer>Mary, Star of the Sea School · Middle School Math · Fraction Division · Dr. Park</footer>
 </div>
 <script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body>
 </html>

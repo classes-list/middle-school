@@ -69,6 +69,53 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   cursor:pointer;
 }
 .back-to-unit:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style>
 </head>
 <body>
@@ -77,7 +124,7 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
   <h1>✴️ Exponents Worksheet</h1>
   <p class="tagline">Product, quotient, power, zero, and negative exponent rules.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <script>
 (function(){
   const g = new URLSearchParams(location.search).get('grade');
@@ -89,115 +136,115 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 <main>
 
-<section class="card">
+<section class="card" id="wsec1">
   <h2>1️⃣ Exponent Basics</h2>
   <div class="intro">An exponent tells you how many times to multiply the base by itself. In 5³, base = 5, exponent = 3, meaning 5 × 5 × 5 = 125.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>2³ =  <span class="answer-line"></span></li>
-<li>3⁴ =  <span class="answer-line"></span></li>
-<li>5² =  <span class="answer-line"></span></li>
-<li>10⁴ =  <span class="answer-line"></span></li>
-<li>2⁵ =  <span class="answer-line"></span></li>
-<li>4³ =  <span class="answer-line"></span></li>
-<li>6² =  <span class="answer-line"></span></li>
+<li>2³ =  <input class="ans" data-a="8" size="6"></li>
+<li>3⁴ =  <input class="ans" data-a="81" size="6"></li>
+<li>5² =  <input class="ans" data-a="25" size="6"></li>
+<li>10⁴ =  <input class="ans" data-a="10,000" size="9"></li>
+<li>2⁵ =  <input class="ans" data-a="32" size="6"></li>
+<li>4³ =  <input class="ans" data-a="64" size="6"></li>
+<li>6² =  <input class="ans" data-a="36" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak">
   <h4>Answer Key — Section 1</h4>
   (1) 8 | (2) 81 | (3) 25 | (4) 10,000 | (5) 32 | (6) 64 | (7) 36
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec2">
   <h2>2️⃣ Product Rule: aᵐ × aⁿ = aᵐ⁺ⁿ</h2>
   <div class="intro">When multiplying powers with the SAME base, ADD the exponents.</div>
 <div class="rule"><strong>Why?</strong> 2³ × 2² = (2·2·2)(2·2) = 2⁵ = 2³⁺².</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>2³ × 2⁴ =  <span class="answer-line"></span></li>
-<li>5² × 5⁵ =  <span class="answer-line"></span></li>
-<li>x³ · x⁴ =  <span class="answer-line"></span></li>
-<li>10⁶ × 10² =  <span class="answer-line"></span></li>
-<li>a⁵ · a =  <span class="answer-line"></span></li>
-<li>3² × 3⁷ =  <span class="answer-line"></span></li>
+<li>2³ × 2⁴ =  <input class="ans" data-a="128" size="6"></li>
+<li>5² × 5⁵ =  <input class="ans" data-a="5⁷" size="6"></li>
+<li>x³ · x⁴ =  <input class="ans" data-a="x⁷" size="6"></li>
+<li>10⁶ × 10² =  <input class="ans" data-a="10⁸" size="6"></li>
+<li>a⁵ · a =  <input class="ans" data-a="a⁶" size="6"></li>
+<li>3² × 3⁷ =  <input class="ans" data-a="3⁹" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak">
   <h4>Answer Key — Section 2</h4>
   (1) 2⁷ = 128 | (2) 5⁷ | (3) x⁷ | (4) 10⁸ | (5) a⁶ | (6) 3⁹
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec3">
   <h2>3️⃣ Quotient Rule: aᵐ ÷ aⁿ = aᵐ⁻ⁿ</h2>
   <div class="intro">When dividing powers with the SAME base, SUBTRACT the exponents.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>2⁵ ÷ 2² =  <span class="answer-line"></span></li>
-<li>x⁷ ÷ x³ =  <span class="answer-line"></span></li>
-<li>10⁸ ÷ 10³ =  <span class="answer-line"></span></li>
-<li>5⁶ / 5⁴ =  <span class="answer-line"></span></li>
-<li>a¹⁰ ÷ a⁴ =  <span class="answer-line"></span></li>
+<li>2⁵ ÷ 2² =  <input class="ans" data-a="8" size="6"></li>
+<li>x⁷ ÷ x³ =  <input class="ans" data-a="x⁴" size="6"></li>
+<li>10⁸ ÷ 10³ =  <input class="ans" data-a="10⁵" size="6"></li>
+<li>5⁶ / 5⁴ =  <input class="ans" data-a="25" size="6"></li>
+<li>a¹⁰ ÷ a⁴ =  <input class="ans" data-a="a⁶" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak">
   <h4>Answer Key — Section 3</h4>
   (1) 2³ = 8 | (2) x⁴ | (3) 10⁵ | (4) 5² = 25 | (5) a⁶
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec4">
   <h2>4️⃣ Power Rule: (aᵐ)ⁿ = aᵐⁿ</h2>
   <div class="intro">A power raised to a power: MULTIPLY the exponents.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>(2³)² =  <span class="answer-line"></span></li>
-<li>(x⁴)⁵ =  <span class="answer-line"></span></li>
-<li>(10²)³ =  <span class="answer-line"></span></li>
-<li>(a⁵)² =  <span class="answer-line"></span></li>
-<li>(5²)⁴ =  <span class="answer-line"></span></li>
+<li>(2³)² =  <input class="ans" data-a="64" size="6"></li>
+<li>(x⁴)⁵ =  <input class="ans" data-a="x²⁰" size="6"></li>
+<li>(10²)³ =  <input class="ans" data-a="10⁶" size="6"></li>
+<li>(a⁵)² =  <input class="ans" data-a="a¹⁰" size="6"></li>
+<li>(5²)⁴ =  <input class="ans" data-a="5⁸" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak">
   <h4>Answer Key — Section 4</h4>
   (1) 2⁶ = 64 | (2) x²⁰ | (3) 10⁶ | (4) a¹⁰ | (5) 5⁸
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec5">
   <h2>5️⃣ Zero Exponent: a⁰ = 1</h2>
   <div class="intro">Any nonzero base to the zero power equals <strong>1</strong>. (Except 0⁰, which is undefined.)</div>
 <div class="rule"><strong>Why?</strong> Because aⁿ ÷ aⁿ = 1 AND aⁿ⁻ⁿ = a⁰. So a⁰ = 1.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>7⁰ =  <span class="answer-line"></span></li>
-<li>(500)⁰ =  <span class="answer-line"></span></li>
-<li>x⁰ =  <span class="answer-line"></span></li>
-<li>(2³)⁰ =  <span class="answer-line"></span></li>
-<li>3⁰ + 5⁰ =  <span class="answer-line"></span></li>
+<li>7⁰ =  <input class="ans" data-a="1" size="6"></li>
+<li>(500)⁰ =  <input class="ans" data-a="1" size="6"></li>
+<li>x⁰ =  <input class="ans" data-a="1" size="6"></li>
+<li>(2³)⁰ =  <input class="ans" data-a="1" size="6"></li>
+<li>3⁰ + 5⁰ =  <input class="ans" data-a="2" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak">
   <h4>Answer Key — Section 5</h4>
   (1) 1 | (2) 1 | (3) 1 (assuming x ≠ 0) | (4) 1 | (5) 1 + 1 = 2
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec6">
   <h2>6️⃣ Negative Exponents: a⁻ⁿ = 1/aⁿ</h2>
   <div class="intro">A negative exponent means <strong>reciprocal</strong>. Move the base to the other side of the fraction bar.</div>
 <div class="rule"><strong>Example:</strong> 2⁻³ = 1/2³ = 1/8. Also: 1/x⁻² = x².</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>2⁻² =  <span class="answer-line"></span></li>
-<li>5⁻¹ =  <span class="answer-line"></span></li>
-<li>10⁻³ =  <span class="answer-line"></span></li>
-<li>x⁻⁴ = (rewrite with positive exponent) <span class="answer-line"></span></li>
-<li>3⁻² =  <span class="answer-line"></span></li>
-<li>1/2⁻³ =  <span class="answer-line"></span></li>
+<li>2⁻² =  <input class="ans" data-a="1/4" size="6"></li>
+<li>5⁻¹ =  <input class="ans" data-a="1/5" size="6"></li>
+<li>10⁻³ =  <input class="ans" data-a="1/1000" size="9"></li>
+<li>x⁻⁴ = (rewrite with positive exponent) <input class="ans" data-a="1/x⁴" size="7"></li>
+<li>3⁻² =  <input class="ans" data-a="1/9" size="6"></li>
+<li>1/2⁻³ =  <input class="ans" data-a="8" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak6')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec6')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec6')">↺ Clear</button><span class="score" id="score-wsec6">—</span> <button class="reveal-btn" onclick="toggle('ak6')">Show / Hide Answer Key</button>
 <div id="ak6" class="ak">
   <h4>Answer Key — Section 6</h4>
   (1) 1/4 | (2) 1/5 | (3) 1/1000 | (4) 1/x⁴ | (5) 1/9 | (6) 2³ = 8
@@ -208,5 +255,111 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <footer>Mary, Star of the Sea School · Middle School Math · Exponents · Dr. Park</footer>
 </div>
 <script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body>
 </html>

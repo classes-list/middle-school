@@ -38,76 +38,123 @@ ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30
 .ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
 footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
 @media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 8 · Foundations Review</div>
   <h1>🔀 Systems of Equations Worksheet</h1>
   <p class="tagline">Solve by graphing, substitution, and elimination.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<section class="card">
+<section class="card" id="wsec1">
 <h2>1️⃣ What Is a System?</h2>
 <div class="intro">A SYSTEM = two or more equations solved together. Solution = a point (x,y) that satisfies BOTH equations. Graphically, that's where the lines CROSS.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Check: is (2,5) a solution to y = 2x + 1 and y = x + 3? <span class="answer-line"></span></li>
-<li>Check: is (1,4) a solution to y = 3x + 1 and y = 2x + 2? <span class="answer-line"></span></li>
-<li>How many solutions do two parallel lines have? <span class="answer-line"></span></li>
-<li>How many solutions do two identical lines have? <span class="answer-line"></span></li>
+<li>Check: is (2,5) a solution to y = 2x + 1 and y = x + 3? <input class="ans" data-a="2" size="6"></li>
+<li>Check: is (1,4) a solution to y = 3x + 1 and y = 2x + 2? <input class="ans" data-a="5 ✓ → Yes" size="12"></li>
+<li>How many solutions do two parallel lines have? <input class="ans" data-a="4 ✓ → Yes" size="12"></li>
+<li>How many solutions do two identical lines have? <input class="ans" data-a="Zero" size="7"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) y=2(2)+1=5 ✓, y=2+3=5 ✓ → Yes (2) y=3+1=4 ✓, y=2+2=4 ✓ → Yes (3) Zero (never cross) (4) Infinite</div>
 </section>
-<section class="card">
+<section class="card" id="wsec2">
 <h2>2️⃣ Solving by Graphing</h2>
 <div class="intro">Graph both lines; the intersection is the solution.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Graph y = x + 2 and y = -x + 4. Solution? <span class="answer-line"></span></li>
-<li>Graph y = 2x − 1 and y = -x + 5. Solution? <span class="answer-line"></span></li>
-<li>Graph y = x and y = 3. Solution? <span class="answer-line"></span></li>
+<li>Graph y = x + 2 and y = -x + 4. Solution? <input class="ans" data-a="" size="11"></li>
+<li>Graph y = 2x − 1 and y = -x + 5. Solution? <input class="ans" data-a="" size="11"></li>
+<li>Graph y = x and y = 3. Solution? <input class="ans" data-a="" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) (1, 3) (2) (2, 3) (3) (3, 3)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec3">
 <h2>3️⃣ Substitution Method</h2>
 <div class="intro">Solve one equation for a variable, then substitute into the other.</div>
 <div class="rule"><strong>Steps:</strong> (1) Isolate one variable. (2) Substitute into the other equation. (3) Solve for the remaining variable. (4) Back-substitute.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Solve: y = 2x + 1 and y = x + 4 <span class="answer-line"></span></li>
-<li>Solve: y = 3x and y = x + 6 <span class="answer-line"></span></li>
-<li>Solve: y = x + 2 and 2x + y = 8 <span class="answer-line"></span></li>
+<li>Solve: y = 2x + 1 and y = x + 4 <input class="ans" data-a="7." size="6"></li>
+<li>Solve: y = 3x and y = x + 6 <input class="ans" data-a="9." size="6"></li>
+<li>Solve: y = x + 2 and 2x + y = 8 <input class="ans" data-a="4." size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>(1) 2x+1 = x+4 → x=3, y=7. (3,7) (2) 3x = x+6 → x=3, y=9. (3,9) (3) 2x+(x+2)=8 → x=2, y=4. (2,4)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec4">
 <h2>4️⃣ Elimination Method</h2>
 <div class="intro">Add or subtract equations to eliminate a variable.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>x + y = 10, x − y = 4 <span class="answer-line"></span></li>
-<li>2x + y = 7, x − y = 2 <span class="answer-line"></span></li>
-<li>3x + 2y = 13, x + 2y = 7 <span class="answer-line"></span></li>
+<li>x + y = 10, x − y = 4 <input class="ans" data-a="3." size="6"></li>
+<li>2x + y = 7, x − y = 2 <input class="ans" data-a="1." size="6"></li>
+<li>3x + 2y = 13, x + 2y = 7 <input class="ans" data-a="2." size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) Add: 2x=14 → x=7, y=3. (7,3) (2) Add: 3x=9 → x=3, y=1. (3,1) (3) Subtract: 2x=6 → x=3, y=2. (3,2)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec5">
 <h2>5️⃣ Word Problems</h2>
 <div class="intro">Set up two equations from the situation.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Two numbers sum to 20, difference is 4. Find them. <span class="answer-line"></span></li>
-<li>Adult tickets $8, child tickets $5. 20 tickets sold, $130 collected. How many of each? <span class="answer-line"></span></li>
-<li>In 5 years, Tom will be twice as old as his brother Sam. Tom is now 3 years older than Sam. Ages? <span class="answer-line"></span></li>
+<li>Two numbers sum to 20, difference is 4. Find them. <input class="ans" data-a="8" size="6"></li>
+<li>Adult tickets $8, child tickets $5. 20 tickets sold, $130 collected. How many of each? <input class="ans" data-a="10" size="6"></li>
+<li>In 5 years, Tom will be twice as old as his brother Sam. Tom is now 3 years older than Sam. Ages? <input class="ans" data-a="5" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak"><h4>Answer Key — Section 5</h4>(1) x+y=20, x−y=4 → x=12, y=8 (2) A+C=20, 8A+5C=130 → A=10, C=10 (3) T+5=2(S+5), T=S+3 → T=8, S=5</div>
 </section>
 
@@ -115,4 +162,110 @@ footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;paddi
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Systems of Equations · Dr. Park</footer>
 </div>
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body></html>

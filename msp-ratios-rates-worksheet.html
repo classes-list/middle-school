@@ -69,6 +69,53 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   cursor:pointer;
 }
 .back-to-unit:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style>
 </head>
 <body>
@@ -77,7 +124,7 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
   <h1>📐 Ratios & Unit Rates Worksheet</h1>
   <p class="tagline">Compare, simplify, and compute unit rates — even with fractions.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <script>
 (function(){
   const g = new URLSearchParams(location.search).get('grade');
@@ -89,89 +136,89 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 <main>
 
-<section class="card">
+<section class="card" id="wsec1">
   <h2>1️⃣ Ratio Notation</h2>
   <div class="intro">A ratio compares two quantities. Three equivalent notations:  <strong>3 to 5</strong>, <strong>3:5</strong>, <strong>3/5</strong>.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>In a class of 24 students, 10 are boys. Boys : girls =  <span class="answer-line"></span></li>
-<li>A recipe uses 2 cups flour to 3 cups milk. Flour : milk =  <span class="answer-line"></span></li>
-<li>A team has 15 wins and 5 losses. Wins : losses (simplified) =  <span class="answer-line"></span></li>
-<li>In a bag: 8 red, 12 blue marbles. Red : total =  <span class="answer-line"></span></li>
-<li>Class 6:1 has 18 boys and 12 girls. Boys : girls (simplified) =  <span class="answer-line"></span></li>
+<li>In a class of 24 students, 10 are boys. Boys : girls =  <input class="ans" data-a="5 : 7" size="8"></li>
+<li>A recipe uses 2 cups flour to 3 cups milk. Flour : milk =  <input class="ans" data-a="2 : 3" size="8"></li>
+<li>A team has 15 wins and 5 losses. Wins : losses (simplified) =  <input class="ans" data-a="3 : 1" size="8"></li>
+<li>In a bag: 8 red, 12 blue marbles. Red : total =  <input class="ans" data-a="2 : 5" size="8"></li>
+<li>Class 6:1 has 18 boys and 12 girls. Boys : girls (simplified) =  <input class="ans" data-a="3 : 2" size="8"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak">
   <h4>Answer Key — Section 1</h4>
   (1) 10 : 14 = 5 : 7 | (2) 2 : 3 | (3) 15 : 5 = 3 : 1 | (4) 8 : 20 = 2 : 5 | (5) 18 : 12 = 3 : 2
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec2">
   <h2>2️⃣ Equivalent Ratios & Simplifying</h2>
   <div class="intro">Two ratios are equivalent if their fractions are equal. To simplify, divide both parts by the GCF.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Simplify: 15 : 25 <span class="answer-line"></span></li>
-<li>Simplify: 24 : 36 <span class="answer-line"></span></li>
-<li>Simplify: 8 : 20 <span class="answer-line"></span></li>
-<li>Find missing: 3 : 4 = 15 : ? <span class="answer-line"></span></li>
-<li>Find missing: 2 : 5 = ? : 20 <span class="answer-line"></span></li>
+<li>Simplify: 15 : 25 <input class="ans" data-a="3 : 5" size="8"></li>
+<li>Simplify: 24 : 36 <input class="ans" data-a="2 : 3" size="8"></li>
+<li>Simplify: 8 : 20 <input class="ans" data-a="2 : 5" size="8"></li>
+<li>Find missing: 3 : 4 = 15 : ? <input class="ans" data-a="20" size="6"></li>
+<li>Find missing: 2 : 5 = ? : 20 <input class="ans" data-a="8" size="6"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak">
   <h4>Answer Key — Section 2</h4>
   (1) 3 : 5 | (2) 2 : 3 | (3) 2 : 5 | (4) 20 | (5) 8
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec3">
   <h2>3️⃣ Unit Rates</h2>
   <div class="intro">A UNIT RATE has 1 in the denominator. Divide numerator ÷ denominator to find it.</div>
 <div class="rule">Units help you check: MILES per HOUR, DOLLARS per POUND, WORDS per MINUTE, etc.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>180 miles in 3 hours → mph =  <span class="answer-line"></span></li>
-<li>$24 for 6 lbs → cost per lb =  <span class="answer-line"></span></li>
-<li>320 words typed in 4 minutes → wpm =  <span class="answer-line"></span></li>
-<li>72 heartbeats in 60 seconds → beats per second =  <span class="answer-line"></span></li>
-<li>$3.75 for 3 apples → cost per apple =  <span class="answer-line"></span></li>
+<li>180 miles in 3 hours → mph =  <input class="ans" data-a="60 mph" size="9"></li>
+<li>$24 for 6 lbs → cost per lb =  <input class="ans" data-a="4/lb" size="7"></li>
+<li>320 words typed in 4 minutes → wpm =  <input class="ans" data-a="80 wp" size="8"></li>
+<li>72 heartbeats in 60 seconds → beats per second =  <input class="ans" data-a="1.2 beats/s" size="14"></li>
+<li>$3.75 for 3 apples → cost per apple =  <input class="ans" data-a="1.25/apple" size="13"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak">
   <h4>Answer Key — Section 3</h4>
   (1) 60 mph | (2) $4/lb | (3) 80 wpm | (4) 1.2 beats/s | (5) $1.25/apple
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec4">
   <h2>4️⃣ Complex Fractions in Unit Rates</h2>
   <div class="intro">Sometimes both parts of a ratio are fractions. Apply the Keep-Change-Flip rule to divide.</div>
 <div class="rule"><strong>Example:</strong> Ali walks 1/2 mile in 1/4 hour. Rate = (1/2) ÷ (1/4) = 1/2 × 4/1 = 2 miles per hour.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Walk 3/4 mile in 1/2 hour. Rate? <span class="answer-line"></span></li>
-<li>Read 2/3 of a book in 1/4 week. Books per week? <span class="answer-line"></span></li>
-<li>Paint 1/3 wall in 1/6 hour. Walls per hour? <span class="answer-line"></span></li>
-<li>Fill 5/8 tank in 1/2 hour. Tanks per hour? <span class="answer-line"></span></li>
+<li>Walk 3/4 mile in 1/2 hour. Rate? <input class="ans" data-a="1.5 mph" size="10"></li>
+<li>Read 2/3 of a book in 1/4 week. Books per week? <input class="ans" data-a="8/3 books/week ≈ 2.67" size="22"></li>
+<li>Paint 1/3 wall in 1/6 hour. Walls per hour? <input class="ans" data-a="2 walls/hr" size="13"></li>
+<li>Fill 5/8 tank in 1/2 hour. Tanks per hour? <input class="ans" data-a="1.25" size="7"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak">
   <h4>Answer Key — Section 4</h4>
   (1) 3/4 ÷ 1/2 = 1.5 mph | (2) 2/3 ÷ 1/4 = 8/3 books/week ≈ 2.67 | (3) 1/3 ÷ 1/6 = 2 walls/hr | (4) 5/8 ÷ 1/2 = 5/4 tanks/hr = 1.25
 </div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec5">
   <h2>5️⃣ Best Buy Comparisons</h2>
   <div class="intro">Which is the better deal? Convert each option to a unit rate ($/unit), then compare — smaller unit price = better deal.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Option A: 12 oz for $3.60. Option B: 20 oz for $5.20. Better? <span class="answer-line"></span></li>
-<li>Option A: 3 lbs of apples for $6. Option B: 5 lbs for $9. Better? <span class="answer-line"></span></li>
-<li>Small box: 8 crackers for $2. Large box: 20 crackers for $4.50. Better? <span class="answer-line"></span></li>
+<li>Option A: 12 oz for $3.60. Option B: 20 oz for $5.20. Better? <input class="ans" data-a="A: $0.30/oz, B: $0.26/oz → B is better" size="22"></li>
+<li>Option A: 3 lbs of apples for $6. Option B: 5 lbs for $9. Better? <input class="ans" data-a="A: $2/lb, B: $1.80/lb → B is better" size="22"></li>
+<li>Small box: 8 crackers for $2. Large box: 20 crackers for $4.50. Better? <input class="ans" data-a="Small: $0.25/cracker, Large: $0.225/cracker → Large is better" size="22"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak">
   <h4>Answer Key — Section 5</h4>
   (1) A: $0.30/oz, B: $0.26/oz → B is better | (2) A: $2/lb, B: $1.80/lb → B is better | (3) Small: $0.25/cracker, Large: $0.225/cracker → Large is better
@@ -182,5 +229,111 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <footer>Mary, Star of the Sea School · Middle School Math · Ratios & Unit Rates · Dr. Park</footer>
 </div>
 <script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body>
 </html>

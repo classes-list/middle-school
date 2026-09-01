@@ -38,69 +38,116 @@ ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30
 .ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
 footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
 @media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 7 · Foundations Review</div>
   <h1>📏 Inequalities Worksheet</h1>
   <p class="tagline">Solve and graph inequalities.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<section class="card">
+<section class="card" id="wsec1">
 <h2>1️⃣ Symbols</h2>
 <div class="intro">&lt; less than, &gt; greater than, ≤ less than or equal, ≥ greater than or equal.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Is 5 &lt; 8? <span class="answer-line"></span></li>
-<li>Is 3 ≥ 3? <span class="answer-line"></span></li>
-<li>Which symbol: 7 ___ 4? <span class="answer-line"></span></li>
-<li>Write: x is at least 10 →  <span class="answer-line"></span></li>
+<li>Is 5 &lt; 8? <input class="ans" data-a="Yes" size="6"></li>
+<li>Is 3 ≥ 3? <input class="ans" data-a="Yes" size="6"></li>
+<li>Which symbol: 7 ___ 4? <input class="ans" data-a="&amp;gt;" size="7"></li>
+<li>Write: x is at least 10 →  <input class="ans" data-a="x ≥ 10" size="9"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) Yes (2) Yes (3) &gt; (4) x ≥ 10</div>
 </section>
-<section class="card">
+<section class="card" id="wsec2">
 <h2>2️⃣ Solving Inequalities</h2>
 <div class="intro">Same as equations, but if you multiply/divide by a NEGATIVE, FLIP the inequality sign.</div>
 <div class="rule"><strong>Golden rule:</strong> FLIP the sign when × or ÷ by a negative.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>x + 5 &gt; 10 <span class="answer-line"></span></li>
-<li>2x &lt; 12 <span class="answer-line"></span></li>
-<li>x/3 ≥ 4 <span class="answer-line"></span></li>
-<li>-2x &gt; 6 <span class="answer-line"></span></li>
-<li>3x + 4 ≤ 19 <span class="answer-line"></span></li>
-<li>-x &lt; 5 <span class="answer-line"></span></li>
+<li>x + 5 &gt; 10 <input class="ans" data-a="x &amp;gt; 5" size="11"></li>
+<li>2x &lt; 12 <input class="ans" data-a="x &amp;lt; 6" size="11"></li>
+<li>x/3 ≥ 4 <input class="ans" data-a="x ≥ 12" size="9"></li>
+<li>-2x &gt; 6 <input class="ans" data-a="x &amp;lt; -3" size="12"></li>
+<li>3x + 4 ≤ 19 <input class="ans" data-a="x ≤ 5" size="8"></li>
+<li>-x &lt; 5 <input class="ans" data-a="x &amp;gt; -5" size="12"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) x &gt; 5 (2) x &lt; 6 (3) x ≥ 12 (4) x &lt; -3 (flip) (5) x ≤ 5 (6) x &gt; -5 (flip)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec3">
 <h2>3️⃣ Graphing on Number Line</h2>
 <div class="intro">Open circle for &lt;/&gt;, closed for ≤/≥. Arrow toward solution direction.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Graph x &gt; 3 <span class="answer-line"></span></li>
-<li>Graph x ≤ -2 <span class="answer-line"></span></li>
-<li>Graph x &lt; 5 <span class="answer-line"></span></li>
-<li>Graph x ≥ 0 <span class="answer-line"></span></li>
+<li>Graph x &gt; 3 <input class="ans" data-a="" size="11"></li>
+<li>Graph x ≤ -2 <input class="ans" data-a="" size="11"></li>
+<li>Graph x &lt; 5 <input class="ans" data-a="" size="11"></li>
+<li>Graph x ≥ 0 <input class="ans" data-a="" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>[Number lines with open/closed circles and arrows shown by teacher]</div>
 </section>
-<section class="card">
+<section class="card" id="wsec4">
 <h2>4️⃣ Word Problems</h2>
 <div class="intro">"At least" = ≥, "at most" = ≤, "no more than" = ≤, "no less than" = ≥.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>You need at least $50 for a game. Write inequality. <span class="answer-line"></span></li>
-<li>No more than 4 people can ride an elevator car. Write. <span class="answer-line"></span></li>
-<li>A test needs at least 70%. Write. <span class="answer-line"></span></li>
-<li>A car can hold up to 500 lb. Write. <span class="answer-line"></span></li>
+<li>You need at least $50 for a game. Write inequality. <input class="ans" data-a="money ≥ 50" size="13"></li>
+<li>No more than 4 people can ride an elevator car. Write. <input class="ans" data-a="p ≤ 4" size="8"></li>
+<li>A test needs at least 70%. Write. <input class="ans" data-a="score ≥ 70" size="13"></li>
+<li>A car can hold up to 500 lb. Write. <input class="ans" data-a="w ≤ 500" size="10"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) money ≥ 50 (2) p ≤ 4 (3) score ≥ 70 (4) w ≤ 500</div>
 </section>
 
@@ -108,4 +155,110 @@ footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;paddi
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Inequalities · Dr. Park</footer>
 </div>
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body></html>

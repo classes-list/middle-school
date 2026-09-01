@@ -38,80 +38,127 @@ ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30
 .ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
 footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
 @media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 8 · Foundations Review</div>
   <h1>🔄 Transformations Worksheet</h1>
   <p class="tagline">Translate, reflect, rotate, and dilate.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<section class="card">
+<section class="card" id="wsec1">
 <h2>1️⃣ Translations (Slides)</h2>
 <div class="intro">Every point moves the same distance in the same direction. (x, y) → (x + a, y + b).</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Translate (3, 5) by (2, -1). New point? <span class="answer-line"></span></li>
-<li>Translate (-2, 4) by (5, 3). New? <span class="answer-line"></span></li>
-<li>Translate (0, 0) by (-4, -6). New? <span class="answer-line"></span></li>
+<li>Translate (3, 5) by (2, -1). New point? <input class="ans" data-a="" size="11"></li>
+<li>Translate (-2, 4) by (5, 3). New? <input class="ans" data-a="" size="11"></li>
+<li>Translate (0, 0) by (-4, -6). New? <input class="ans" data-a="" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) (5, 4) (2) (3, 7) (3) (-4, -6)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec2">
 <h2>2️⃣ Reflections (Flips)</h2>
 <div class="intro">Over the x-axis: (x, y) → (x, -y). Over the y-axis: (x, y) → (-x, y).</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Reflect (3, 4) over x-axis. New? <span class="answer-line"></span></li>
-<li>Reflect (3, 4) over y-axis. New? <span class="answer-line"></span></li>
-<li>Reflect (-2, -5) over x-axis. New? <span class="answer-line"></span></li>
-<li>Reflect (-2, -5) over y-axis. New? <span class="answer-line"></span></li>
+<li>Reflect (3, 4) over x-axis. New? <input class="ans" data-a="" size="11"></li>
+<li>Reflect (3, 4) over y-axis. New? <input class="ans" data-a="" size="11"></li>
+<li>Reflect (-2, -5) over x-axis. New? <input class="ans" data-a="" size="11"></li>
+<li>Reflect (-2, -5) over y-axis. New? <input class="ans" data-a="" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) (3, -4) (2) (-3, 4) (3) (-2, 5) (4) (2, -5)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec3">
 <h2>3️⃣ Rotations (Turns)</h2>
 <div class="intro">Around origin: 90° clockwise: (x,y) → (y, -x). 180°: (x, y) → (-x, -y). 90° counter-clockwise: (x,y) → (-y, x).</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Rotate (3, 4) 180° around origin. New? <span class="answer-line"></span></li>
-<li>Rotate (3, 4) 90° CW. New? <span class="answer-line"></span></li>
-<li>Rotate (3, 4) 90° CCW. New? <span class="answer-line"></span></li>
+<li>Rotate (3, 4) 180° around origin. New? <input class="ans" data-a="" size="11"></li>
+<li>Rotate (3, 4) 90° CW. New? <input class="ans" data-a="" size="11"></li>
+<li>Rotate (3, 4) 90° CCW. New? <input class="ans" data-a="" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>(1) (-3, -4) (2) (4, -3) (3) (-4, 3)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec4">
 <h2>4️⃣ Dilations (Resize)</h2>
 <div class="intro">Multiply both coordinates by scale factor k. (x, y) → (kx, ky). k &gt; 1 enlarges; 0 &lt; k &lt; 1 shrinks.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Dilate (3, 4) by k = 2. New? <span class="answer-line"></span></li>
-<li>Dilate (6, 8) by k = ½. New? <span class="answer-line"></span></li>
-<li>Dilate (-2, 5) by k = 3. New? <span class="answer-line"></span></li>
+<li>Dilate (3, 4) by k = 2. New? <input class="ans" data-a="" size="11"></li>
+<li>Dilate (6, 8) by k = ½. New? <input class="ans" data-a="" size="11"></li>
+<li>Dilate (-2, 5) by k = 3. New? <input class="ans" data-a="" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) (6, 8) (2) (3, 4) (3) (-6, 15)</div>
 </section>
-<section class="card">
+<section class="card" id="wsec5">
 <h2>5️⃣ Which Preserves Size/Shape?</h2>
 <div class="intro">Translations, reflections, rotations = RIGID motions (same size). Dilations change SIZE but keep shape.</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Which changes size? <span class="answer-line"></span></li>
-<li>Which preserves distance between points? <span class="answer-line"></span></li>
-<li>Which is a "flip"? <span class="answer-line"></span></li>
-<li>Which is a "turn"? <span class="answer-line"></span></li>
+<li>Which changes size? <input class="ans" data-a="Dilation" size="11"></li>
+<li>Which preserves distance between points? <input class="ans" data-a="Translation, reflection, rotation" size="22"></li>
+<li>Which is a "flip"? <input class="ans" data-a="Reflection" size="13"></li>
+<li>Which is a "turn"? <input class="ans" data-a="Rotation" size="11"></li>
 </ol>
-<button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak"><h4>Answer Key — Section 5</h4>(1) Dilation (2) Translation, reflection, rotation (3) Reflection (4) Rotation</div>
 </section>
 
-<section class="card">
+<section class="card" id="wsec6">
 <h2>6️⃣ Prove Congruence with a Sequence of Transformations</h2>
 
 <div class="intro">Two figures are <strong>CONGRUENT</strong> if one can be mapped onto the other by a sequence of RIGID motions (translations, reflections, rotations — in any combination). Rigid motions preserve BOTH size and shape.</div>
@@ -128,25 +175,25 @@ footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;paddi
 
 <h3>Practice — Describe a sequence of rigid motions to prove congruence:</h3>
 <ol class="qlist">
-<li>Triangle A has vertices (0,0), (2,0), (0,3). Triangle B has vertices (5,0), (7,0), (5,3). What single transformation maps A onto B? <span class="answer-line"></span></li>
-<li>Triangle A: (0,0), (2,0), (0,3). Triangle B: (0,0), (-2,0), (0,3). Describe the transformation. <span class="answer-line"></span></li>
-<li>Triangle A: (1,1), (3,1), (3,4). Triangle B: (1,-1), (3,-1), (3,-4). Describe. <span class="answer-line"></span></li>
-<li>Triangle A: (0,0), (4,0), (0,3). Triangle B: (5,2), (9,2), (5,5). Describe the sequence. <span class="answer-line"></span></li>
-<li>Square A: (0,0), (2,0), (2,2), (0,2). Square B: (3,-1), (5,-1), (5,1), (3,1). Describe. <span class="answer-line"></span></li>
-<li>Triangle A: (0,0), (3,0), (0,4). Triangle B: (0,0), (0,3), (-4,0). Describe (hint: rotation). <span class="answer-line"></span></li>
+<li>Triangle A has vertices (0,0), (2,0), (0,3). Triangle B has vertices (5,0), (7,0), (5,3). What single transformation maps A onto B? <input class="ans" data-a="Translate 5 right (each vertex shifts by (5, 0))." size="22"></li>
+<li>Triangle A: (0,0), (2,0), (0,3). Triangle B: (0,0), (-2,0), (0,3). Describe the transformation. <input class="ans" data-a="Reflect over the y-axis (or x-axis flip won&#x27;t work — check: (2,0) → (-2,0) ✓)." size="22"></li>
+<li>Triangle A: (1,1), (3,1), (3,4). Triangle B: (1,-1), (3,-1), (3,-4). Describe. <input class="ans" data-a="Reflect over the x-axis." size="22"></li>
+<li>Triangle A: (0,0), (4,0), (0,3). Triangle B: (5,2), (9,2), (5,5). Describe the sequence. <input class="ans" data-a="Translate 5 right AND 2 up. Check all three vertices." size="22"></li>
+<li>Square A: (0,0), (2,0), (2,2), (0,2). Square B: (3,-1), (5,-1), (5,1), (3,1). Describe. <input class="ans" data-a="Translate 3 right AND 1 down." size="22"></li>
+<li>Triangle A: (0,0), (3,0), (0,4). Triangle B: (0,0), (0,3), (-4,0). Describe (hint: rotation). <input class="ans" data-a="Rotate 90° counter-clockwise around origin. (3,0) → (0,3) ✓ and (0,4) → (-4,0) ✓." size="22"></li>
 </ol>
 
 <h3>Show that these ARE congruent (yes/no + reason):</h3>
 <ol class="qlist">
-<li>Both triangles have sides 3-4-5. Congruent? <span class="answer-line"></span></li>
-<li>One triangle has sides 3, 4, 5. Another has sides 6, 8, 10. Congruent? <span class="answer-line"></span></li>
-<li>Two rectangles both 4×6. Congruent? <span class="answer-line"></span></li>
-<li>Two rectangles: 4×6 and 3×8 (same area). Congruent? <span class="answer-line"></span></li>
+<li>Both triangles have sides 3-4-5. Congruent? <input class="ans" data-a="Yes — SSS congruence (same three sides), so a rigid motion sequence exists." size="22"></li>
+<li>One triangle has sides 3, 4, 5. Another has sides 6, 8, 10. Congruent? <input class="ans" data-a="NO — same shape but bigger. That&#x27;s SIMILAR (dilation ×2), not congruent." size="22"></li>
+<li>Two rectangles both 4×6. Congruent? <input class="ans" data-a="Yes — same dimensions, so a rigid motion sequence maps one to the other." size="22"></li>
+<li>Two rectangles: 4×6 and 3×8 (same area). Congruent? <input class="ans" data-a="NO — same AREA but different dimensions; no rigid motion turns 4×6 into 3×8." size="22"></li>
 </ol>
 
 <div class="rule"><strong>Key idea:</strong> Rigid motions (translations, reflections, rotations) prove CONGRUENCE. Dilations don't — dilations change size, so they prove SIMILARITY (same shape, different size).</div>
 
-<button class="reveal-btn" onclick="toggle('ak6')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec6')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec6')">↺ Clear</button><span class="score" id="score-wsec6">—</span> <button class="reveal-btn" onclick="toggle('ak6')">Show / Hide Answer Key</button>
 <div id="ak6" class="ak">
   <h4>Answer Key — Section 6</h4>
   <p><strong>Sequences:</strong></p>
@@ -167,4 +214,110 @@ footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;paddi
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Transformations · Dr. Park</footer>
 </div>
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s) {
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  s = s.replace(/\s+/g, '');
+  s = s.replace(/,/g, '');
+  s = s.replace(/\$/g, '');
+  s = s.replace(/−/g, '-');
+  s = s.replace(/×/g, '*').replace(/·/g, '*');
+  s = s.replace(/x/g, '*');
+  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
+  s = s.replace(/10\^(-?\d+)/g, '1e$1');
+  return s;
+}
+function toNumber(s) {
+  const cleaned = normalizeAns(s);
+  if (!cleaned) return null;
+  // handle fractions like "3/4"
+  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
+  if (frac) return Number(frac[1]) / Number(frac[3]);
+  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
+  const n = Number(cleaned);
+  return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    const sec = e.target.closest('section.card');
+    if (sec && sec.id) checkSection(sec.id);
+  }
+});
+
+</script>
 </body></html>
