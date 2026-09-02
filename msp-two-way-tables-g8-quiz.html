@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Joint frequency =  <input class="ans" data-a="specific cel" size="15"></li>
 <li>Marginal = row or col ___ <input class="ans" data-a="tota" size="7"></li>
 <li>Relative freq = divide by ___ <input class="ans" data-a="tota" size="7"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "In a 2×2 table, totals of rows should equal: ", "a": "grand total"}, {"q": "Table shows 60 males, 40 females. Total = ", "a": "100"}, {"q": "Of 60 males, 30 prefer A. Fraction of males preferring A = ", "a": "1/2"}, {"q": "Row total 40 with 25 in column X. Conditional P(X | row) = ", "a": "5/8"}, {"q": "Joint frequency: males who prefer A = 30, total 100. Joint relative freq = ", "a": "0.3"}, {"q": "Marginal freq of males = 60/100 = ", "a": "0.6"}, {"q": "Marginal freq of A preference = (30+20)/100 with 20 females for A. = ", "a": "0.5"}, {"q": "P(male AND prefers A) with 30/100 = ", "a": "0.3"}, {"q": "P(male OR prefers A). Males=60, A=50, overlap=30. = ", "a": "0.8"}, {"q": "P(male GIVEN prefers A) = 30/50 = ", "a": "0.6"}, {"q": "P(prefers A GIVEN male) = 30/60 = ", "a": "0.5"}, {"q": "Two-way table: are gender and preference independent if P(A|male) = P(A|female)? (yes/no)", "a": "yes"}, {"q": "If P(A|male) = 0.5 and P(A|female) = 0.5, independent? ", "a": "yes"}, {"q": "If P(A|male) = 0.7 and P(A|female) = 0.3, independent? ", "a": "no"}, {"q": "Table cell 12 with row total 40, column total 30, grand total 100. Expected cell = (30×40)/100 = ", "a": "12"}, {"q": "40 like pizza, 60 like burgers, 100 total. P(like pizza) = ", "a": "0.4"}, {"q": "Conditional P(pizza | teens) with 20 teens like pizza out of 50 teens = ", "a": "0.4"}, {"q": "In 2-way table, sum of joint relative frequencies = ", "a": "1"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) specific cell | (2) total | (3) total | (4) 30 | (5) 40% | (6) total | (7) 25% | (8) 50% | (9) 60% | (10) categorical</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Two-Way Tables · Dr. Park</footer>

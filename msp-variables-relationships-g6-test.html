@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Define independent variable <input class="ans" data-a="What you change/contro" size="22"></li>
 <li>Define dependent variable <input class="ans" data-a="What responds/depends" size="22"></li>
 <li>In # ice creams sold vs. temperature: IV? DV? <input class="ans" data-a="sales" size="8"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Independent variable is typically graphed on the: (x-axis/y-axis)", "a": "x-axis"}, {"q": "Dependent variable is graphed on the: ", "a": "y-axis"}, {"q": "y = 2x + 3. Which is independent? (x/y)", "a": "x"}, {"q": "Distance vs. time (constant speed): what type of relationship? (linear/nonlinear)", "a": "linear"}, {"q": "y = kx is called: (proportional/nonproportional)", "a": "proportional"}, {"q": "y = mx + b with b ≠ 0: is it proportional? ", "a": "no"}, {"q": "y = 4x. Constant of proportionality k = ", "a": "4"}, {"q": "If y = 6 when x = 2, and y ∝ x, then k = ", "a": "3"}, {"q": "If y = kx and (5,15) is on the line, k = ", "a": "3"}, {"q": "If y = kx and k=7, y when x=4 = ", "a": "28"}, {"q": "A table: x = 1,2,3, y = 2,4,6. Proportional? (yes/no)", "a": "yes"}, {"q": "Table: x=1,2,3, y=3,5,7. Proportional? ", "a": "no"}, {"q": "Table: x=2,4,6, y=6,12,18. k = ", "a": "3"}, {"q": "y = 5x + 2. y when x=3 = ", "a": "17"}, {"q": "y = 3x. y when x=8 = ", "a": "24"}, {"q": "y = 2x + 1. y when x = 10 = ", "a": "21"}, {"q": "Slope of the line y = 5x: ", "a": "5"}, {"q": "y-intercept of y = 5x: ", "a": "0"}, {"q": "In d = 60t (miles vs. hours), rate = ", "a": "60"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) What you change/control | (2) What responds/depends | (3) IV=temp, DV=sales | (4) IV=hours, DV=score | (5) IV=pizzas, DV=cost | (6) 6 | (7) 20 | (8) 11 | (9) 14 | (10) 7 | (11) 16 | (12) 200 | (13) 30 | (14) 0,4,8,12 | (15) 1,2,3,4 | (16) p = 12h | (17) c = 0.5x | (18) d = 45t | (19) y = 2x + 1 | (20) y = 2x + 3</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · Two-Variable Relationships · Dr. Park</footer>

@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Distance = ___ × ___ <input class="ans" data-a="rate, time" size="13"></li>
 <li>Rate = ___ ÷ ___ <input class="ans" data-a="distance, time" size="17"></li>
 <li>4 cm/yr = ? mm/yr <input class="ans" data-a="40 mm/yr" size="11"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Plate speed 5 cm/yr. Distance in 100 yr (cm) = ", "a": "500"}, {"q": "Plate speed 3 cm/yr. Distance in 1,000,000 yr (km, hint: 100,000 cm = 1 km) = ", "a": "30"}, {"q": "Plate moves 40 km in 1 million years. Rate (cm/yr) = ", "a": "4"}, {"q": "Distance 60 km, rate 2 cm/yr. Time (Myr) = ", "a": "3"}, {"q": "Convergent boundary means plates move: (toward/apart/past)", "a": "toward"}, {"q": "Divergent boundary: plates move ", "a": "apart"}, {"q": "Transform boundary: plates slide ", "a": "past"}, {"q": "Mid-Atlantic Ridge is what type of boundary? ", "a": "divergent"}, {"q": "San Andreas fault is what type? ", "a": "transform"}, {"q": "Himalayas formed at what type of boundary? ", "a": "convergent"}, {"q": "Plate rate 5 cm/yr. Time to move 500 km (Myr, 1 km = 100,000 cm) = ", "a": "10"}, {"q": "Hawaii moves NW at ~10 cm/yr. Distance in 1 Myr (km) = ", "a": "100"}, {"q": "Kaua'i is ~5 Myr old, ~500 km from active hotspot. Plate rate (cm/yr) = ", "a": "10"}, {"q": "Number of major tectonic plates on Earth (approximate)? ", "a": "7"}, {"q": "Convection currents in the mantle drive plate motion. True or false? ", "a": "true"}, {"q": "Volcanoes at convergent boundaries are usually associated with: (subduction/spreading)", "a": "subduction"}, {"q": "The Ring of Fire circles which ocean? ", "a": "Pacific"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) rate, time | (2) distance, time | (3) 40 mm/yr | (4) 6 m | (5) 100 km/Myr | (6) 2 m | (7) 30 km | (8) 2000 yr | (9) 25,000 yr | (10) 30 m | (11) 800 m | (12) 4 cm/yr | (13) 5 cm/yr | (14) 1000 km | (15) 5000 km | (16) 1 Myr | (17) 5 m | (18) Because plates move only a few cm per year — over human lifetimes the motion is tiny, but over millions of years it adds up to thousands of kilometers. | (19) 0.00005 km/yr | (20) 50 km/Myr</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · Plate Tectonic Rates · Dr. Park</footer>

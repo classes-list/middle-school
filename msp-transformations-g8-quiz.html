@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Translate (2,3) by (4,1). New =  <input class="ans" data-a="" size="11"></li>
 <li>Reflect (5,2) over x-axis. New =  <input class="ans" data-a="" size="11"></li>
 <li>Reflect (5,2) over y-axis. New =  <input class="ans" data-a="" size="11"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Translate (3,2) right 4 down 1. New point (x,y): ", "a": "7,1"}, {"q": "Translate (−2,5) left 3 up 2. New point: ", "a": "-5,7"}, {"q": "Reflect (4,3) across x-axis: ", "a": "4,-3"}, {"q": "Reflect (4,3) across y-axis: ", "a": "-4,3"}, {"q": "Reflect (−2,5) across x-axis: ", "a": "-2,-5"}, {"q": "Rotate (3,0) 90° CCW about origin: ", "a": "0,3"}, {"q": "Rotate (0,4) 90° CCW: ", "a": "-4,0"}, {"q": "Rotate (5,2) 180° about origin: ", "a": "-5,-2"}, {"q": "Rotate (−3,4) 180°: ", "a": "3,-4"}, {"q": "Dilation by scale factor 2 centered at origin. (3,4) → ", "a": "6,8"}, {"q": "Dilation by 1/2 at origin. (8,10) → ", "a": "4,5"}, {"q": "Dilation by 3 at origin. (2,−1) → ", "a": "6,-3"}, {"q": "Rigid motions preserve: (size and shape/only shape)", "a": "size and shape"}, {"q": "Dilations preserve: (shape only/size and shape)", "a": "shape only"}, {"q": "Translation, rotation, reflection are all: (rigid/non-rigid)", "a": "rigid"}, {"q": "Congruent figures have (equal/proportional) sides? ", "a": "equal"}, {"q": "Similar figures have (equal/proportional) sides? ", "a": "proportional"}, {"q": "Reflect (3,-2) across the line y=x: (write x,y)", "a": "-2,3"}, {"q": "Rotate (1,0) 270° CCW about origin: ", "a": "0,-1"}, {"q": "Two triangles have sides in ratio 1:2. Their areas ratio: ", "a": "1:4"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) (6, 4) | (2) (5, -2) | (3) (-5, 2) | (4) (-3, -4) | (5) (8, 12) | (6) (5, 4) | (7) Dilation | (8) Translation | (9) Reflection | (10) Rotation</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Transformations · Dr. Park</footer>

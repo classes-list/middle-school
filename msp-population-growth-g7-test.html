@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Linear growth adds a ___ <input class="ans" data-a="constant" size="11"></li>
 <li>Exponential growth multiplies by a ___ <input class="ans" data-a="constant" size="11"></li>
 <li>Bacteria doubles/hr. Growth type? <input class="ans" data-a="exponentia" size="13"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Population doubles every 10 yr. Start 100. After 10 yr = ", "a": "200"}, {"q": "Start 100, doubling time 10 yr. After 20 yr = ", "a": "400"}, {"q": "Start 100, doubling time 10 yr. After 30 yr = ", "a": "800"}, {"q": "Start 500, doubling time 5 yr. After 10 yr = ", "a": "2000"}, {"q": "Start 200, doubling time 20 yr. After 60 yr = ", "a": "1600"}, {"q": "Growth rate 4% per year. Doubling time (yr, use 70/r rule) ≈ ", "a": "17.5"}, {"q": "Growth rate 7% per year. Doubling time ≈ ", "a": "10"}, {"q": "Growth rate 2% per year. Doubling time ≈ ", "a": "35"}, {"q": "Doubling time 14 yr → growth rate % (rule of 70) ≈ ", "a": "5"}, {"q": "Population 1000, grows at 10%/yr. After 1 yr = ", "a": "1100"}, {"q": "Population 2000, decays at 20%/yr. After 1 yr = ", "a": "1600"}, {"q": "Carrying capacity K limits: (exponential/logistic) growth", "a": "logistic"}, {"q": "Unlimited resources model: (exponential/logistic)", "a": "exponential"}, {"q": "Bacteria colony doubles every 30 min. Start 100, after 2 hr = ", "a": "1600"}, {"q": "Population 800 halves every 5 yr. After 15 yr = ", "a": "100"}, {"q": "Growth model N(t) = 500·2^(t/8). N(16) = ", "a": "2000"}, {"q": "Growth model N(t) = 300·2^(t/5). N(10) = ", "a": "1200"}, {"q": "If a population triples every 6 yr and starts at 100, after 12 yr N = ", "a": "900"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) constant | (2) constant | (3) exponential | (4) linear | (5) exponential | (6) linear | (7) 800 | (8) 3200 | (9) ≈ 1,048,576 | (10) 4500 | (11) 2500 | (12) 500 | (13) ≈ 665 | (14) 1102.5 | (15) 50 | (16) 30 | (17) 1280 | (18) 200 | (19) 450 | (20) exponential (multiplication compounds)</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Population Growth · Dr. Park</footer>

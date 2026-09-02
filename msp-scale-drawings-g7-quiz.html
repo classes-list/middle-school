@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Scale 1:100. 3 cm = real cm? <input class="ans" data-a="300" size="6"></li>
 <li>Scale 1 in = 20 ft. 5 in = real ft? <input class="ans" data-a="100 ft" size="9"></li>
 <li>Scale 1:50. real 200 = drawing ? <input class="ans" data-a="4" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Scale 1 in : 20 mi. 3 in on map = ? mi", "a": "60"}, {"q": "Scale 1 in : 50 ft. 4 in = ? ft", "a": "200"}, {"q": "Scale 1 in : 100 mi. 2.5 in = ? mi", "a": "250"}, {"q": "Scale 1 cm : 5 m. 8 cm = ? m", "a": "40"}, {"q": "Scale 1 cm : 25 km. 6 cm = ? km", "a": "150"}, {"q": "Actual distance 150 mi. Scale 1 in : 30 mi. Map distance (in) = ", "a": "5"}, {"q": "Actual 480 ft. Scale 1 in : 60 ft. Map (in) = ", "a": "8"}, {"q": "Actual 12 m. Scale 1 cm : 4 m. Drawing (cm) = ", "a": "3"}, {"q": "Model:actual scale 1:10. Actual 50 cm → model (cm) = ", "a": "5"}, {"q": "Model:actual 1:100. Model 3 m → actual (m) = ", "a": "300"}, {"q": "Blueprint 1/4 in = 1 ft. 8 ft wall on blueprint = (in)", "a": "2"}, {"q": "Blueprint 1/4 in = 1 ft. 12 in wall on blueprint = (ft)", "a": "48"}, {"q": "Scale 1:50 (unitless). 10 cm on model = ? cm actual", "a": "500"}, {"q": "Scale drawing area vs. actual area ratio when scale is 1:5: (1:25)", "a": "1:25"}, {"q": "Scale 1:10 for lengths. Area ratio = ", "a": "1:100"}, {"q": "Scale 1:2 for lengths. Volume ratio = ", "a": "1:8"}, {"q": "Enlargement scale factor 3. Original 4 cm → new (cm)", "a": "12"}, {"q": "Reduction scale factor 1/4. Original 20 in → new (in)", "a": "5"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 300 cm | (2) 100 ft | (3) 4 | (4) 40 mi | (5) 6 in | (6) 12 ft | (7) 4 in | (8) 9× | (9) 8× | (10) 180</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Scale Drawings & Maps · Dr. Park</footer>

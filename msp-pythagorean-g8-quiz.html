@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Pythagorean theorem:  <input class="ans" data-a="c²" size="6"></li>
 <li>c represents which side? <input class="ans" data-a="Hypotenuse" size="13"></li>
 <li>Legs 3, 4. Hypotenuse? <input class="ans" data-a="5" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Legs 3 and 4. Hypotenuse = ", "a": "5"}, {"q": "Legs 6 and 8. Hypotenuse = ", "a": "10"}, {"q": "Legs 5 and 12. Hypotenuse = ", "a": "13"}, {"q": "Legs 8 and 15. Hypotenuse = ", "a": "17"}, {"q": "Legs 9 and 40. Hypotenuse = ", "a": "41"}, {"q": "Legs 7 and 24. Hypotenuse = ", "a": "25"}, {"q": "Hypotenuse 10, leg 6. Other leg = ", "a": "8"}, {"q": "Hypotenuse 13, leg 12. Other leg = ", "a": "5"}, {"q": "Hypotenuse 17, leg 8. Other leg = ", "a": "15"}, {"q": "Hypotenuse 25, leg 24. Other leg = ", "a": "7"}, {"q": "Legs 1 and 1. Hypotenuse (√ form)= ", "a": "√2"}, {"q": "Legs 2 and 2. Hypotenuse = ", "a": "2√2"}, {"q": "Distance from (0,0) to (3,4) = ", "a": "5"}, {"q": "Distance from (1,2) to (4,6) = ", "a": "5"}, {"q": "Distance from (−1,1) to (2,5) = ", "a": "5"}, {"q": "Diagonal of a square with side 6 (√ form) = ", "a": "6√2"}, {"q": "Right triangle with sides 3, 4, 5. Verify: 3² + 4² = ", "a": "25"}, {"q": "Is (5, 12, 13) a Pythagorean triple? (yes/no)", "a": "yes"}, {"q": "Is (6, 8, 12) a Pythagorean triple? ", "a": "no"}, {"q": "Ladder 13 ft against wall, base 5 ft out. Height on wall = ", "a": "12"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) a² + b² = c² | (2) Hypotenuse (longest, opposite right angle) | (3) 5 | (4) 10 | (5) 13 | (6) 8 | (7) 5 | (8) 17 | (9) 25 | (10) 30</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Pythagorean Theorem · Dr. Park</footer>

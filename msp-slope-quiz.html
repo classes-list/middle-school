@@ -143,6 +143,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -232,6 +233,12 @@ function setMode(mode) {
 <main>
   <h2>Quiz — 10 Problems</h2>
   <div class="instructions">Answer all 10 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>Slope formula: slope =  <input class="ans" data-a="rise/run OR (y₂-y₁)/" size="22"></li>
 <li>Rise 4, run 2 → slope =  <input class="ans" data-a="2" size="6"></li>
@@ -248,7 +255,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Slope through (1,2) and (4,8) = ", "a": "2"}, {"q": "Slope through (0,1) and (3,7) = ", "a": "2"}, {"q": "Slope through (2,5) and (6,13) = ", "a": "2"}, {"q": "Slope through (0,0) and (4,10) = ", "a": "5/2"}, {"q": "Slope through (1,3) and (5,3) = ", "a": "0"}, {"q": "Slope through (2,1) and (2,7) = ", "a": "undefined"}, {"q": "Slope through (−1,2) and (3,−6) = ", "a": "-2"}, {"q": "Slope through (0,4) and (2,0) = ", "a": "-2"}, {"q": "In y = 3x + 5, slope = ", "a": "3"}, {"q": "In y = −4x + 1, slope = ", "a": "-4"}, {"q": "In y = (1/2)x − 7, slope = ", "a": "1/2"}, {"q": "In y = 5, slope = ", "a": "0"}, {"q": "In x = 3, slope = ", "a": "undefined"}, {"q": "Rise = 6, run = 3. Slope = ", "a": "2"}, {"q": "Rise = −8, run = 4. Slope = ", "a": "-2"}, {"q": "Two lines with slopes 3 and 3 are: (parallel/perpendicular)", "a": "parallel"}, {"q": "Two lines with slopes 2 and −1/2 are: (parallel/perpendicular)", "a": "perpendicular"}, {"q": "Slope through (5,0) and (0,5) = ", "a": "-1"}, {"q": "Slope of the line 2x + 3y = 6 (write as fraction). ", "a": "-2/3"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) rise/run OR (y₂-y₁)/(x₂-x₁) | (2) 2 | (3) 2 | (4) -1/2 | (5) 0 | (6) Undefined | (7) 3 | (8) 3 | (9) 0 | (10) Undefined

@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Probability formula: P =  <input class="ans" data-a="favorable/tota" size="17"></li>
 <li>P(heads on coin) =  <input class="ans" data-a="1/2" size="6"></li>
 <li>P(3 on die) =  <input class="ans" data-a="1/6" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Flip fair coin. P(heads) = (fraction)", "a": "1/2"}, {"q": "Roll fair die. P(6) = ", "a": "1/6"}, {"q": "Roll fair die. P(even) = ", "a": "1/2"}, {"q": "Roll fair die. P(prime: 2,3,5) = ", "a": "1/2"}, {"q": "Roll fair die. P(> 4) = ", "a": "1/3"}, {"q": "Draw from a standard 52-card deck. P(heart) = ", "a": "1/4"}, {"q": "P(ace) from a 52-card deck = ", "a": "1/13"}, {"q": "Bag: 4 red, 6 blue. P(red) = ", "a": "2/5"}, {"q": "Bag: 3 red, 5 green, 2 blue. P(green) = ", "a": "1/2"}, {"q": "Bag: 5 marbles, 2 red. P(not red) = ", "a": "3/5"}, {"q": "Two coin flips. P(both heads) = ", "a": "1/4"}, {"q": "Two dice rolled. P(both 6) = ", "a": "1/36"}, {"q": "Two dice rolled. P(sum = 7) = ", "a": "1/6"}, {"q": "Two dice rolled. P(sum = 2) = ", "a": "1/36"}, {"q": "Bag: 3 red, 5 blue. Draw 2 without replacement. P(both red) = ", "a": "3/28"}, {"q": "Expected value: roll die, expected value = ", "a": "3.5"}, {"q": "Rain forecast 30%. As decimal = ", "a": "0.3"}, {"q": "P(A) = 0.4, P(B) = 0.5, independent. P(A and B) = ", "a": "0.2"}, {"q": "P(A) = 0.3, P(B) = 0.5, mutually exclusive. P(A or B) = ", "a": "0.8"}, {"q": "Spinner divided into 8 equal sectors, 3 red. P(red) = ", "a": "3/8"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) favorable/total | (2) 1/2 | (3) 1/6 | (4) 4/10 = 2/5 | (5) 4/9 | (6) 1/4 | (7) 1/36 | (8) 2/6 = 1/3 | (9) 4/52 = 1/13 | (10) 1,2,3,4,5,6</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Probability · Dr. Park</footer>

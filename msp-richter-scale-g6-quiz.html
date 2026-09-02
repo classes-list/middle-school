@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Each Richter step = ___× amplitude <input class="ans" data-a="10" size="6"></li>
 <li>Each Richter step ≈ ___× energy <input class="ans" data-a="32" size="6"></li>
 <li>Magnitude 6 vs 4 → amplitude? <input class="ans" data-a="100×" size="7"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Richter scale is logarithmic base 10. Each whole # is how many × stronger amplitude? ", "a": "10"}, {"q": "A magnitude 6 quake has how many × the amplitude of magnitude 5? ", "a": "10"}, {"q": "Magnitude 7 vs 5: amplitude ratio = ", "a": "100"}, {"q": "Magnitude 8 vs 5: amplitude ratio = ", "a": "1000"}, {"q": "Magnitude 6 vs 3: amplitude ratio = ", "a": "1000"}, {"q": "Magnitude 4 vs 2: amplitude ratio = ", "a": "100"}, {"q": "Energy released roughly multiplies by ~32 per whole step. M6 releases ~how many × the energy of M5? ", "a": "32"}, {"q": "M7 vs M5 energy ratio (~32²) ≈ ", "a": "1024"}, {"q": "A quake with amplitude 1000 μm has magnitude (log₁₀ 1000) = ", "a": "3"}, {"q": "Amplitude 10⁶ μm → magnitude = ", "a": "6"}, {"q": "Amplitude 10⁵ μm → magnitude = ", "a": "5"}, {"q": "M2 quakes are typically: (barely felt/major)", "a": "barely felt"}, {"q": "M8 quakes are: (rare/common)", "a": "rare"}, {"q": "Richter magnitude scale uses base ", "a": "10"}, {"q": "log₁₀(100) = ", "a": "2"}, {"q": "log₁₀(10000) = ", "a": "4"}, {"q": "If M4 releases E, M6 releases how many × E (energy, ~32×/step)? ", "a": "1024"}, {"q": "Ordering by amplitude, biggest first: M3, M6, M4, M5. ", "a": "M6,M5,M4,M3"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 10 | (2) 32 (about 1000× for 2 steps) | (3) 100× | (4) 100× | (5) 1000× | (6) 10,000 | (7) 1,000,000 | (8) 6 | (9) 10× | (10) 1000×</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · Richter Scale (Powers of 10) · Dr. Park</footer>

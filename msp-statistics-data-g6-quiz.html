@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Statistical question requires ___ answers <input class="ans" data-a="varied" size="9"></li>
 <li>Mean = ___ ÷ count <input class="ans" data-a="su" size="6"></li>
 <li>Range =  <input class="ans" data-a="max − min" size="12"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Mean of {2, 4, 6, 8, 10} = ", "a": "6"}, {"q": "Mean of {5, 10, 15, 20} = ", "a": "12.5"}, {"q": "Median of {3, 7, 9, 12, 15} = ", "a": "9"}, {"q": "Median of {2, 4, 6, 8} = ", "a": "5"}, {"q": "Mode of {3, 5, 5, 7, 8, 5, 2} = ", "a": "5"}, {"q": "Range of {2, 8, 15, 4, 11} = ", "a": "13"}, {"q": "Range of {10, 25, 15, 30, 20} = ", "a": "20"}, {"q": "Mean of {10, 20, 30} = ", "a": "20"}, {"q": "Median of {1, 3, 5, 7, 9, 11} = ", "a": "6"}, {"q": "Add 100 to {5, 10, 15}. New mean = ", "a": "35"}, {"q": "Best measure of center when data has outliers: (mean/median)", "a": "median"}, {"q": "Data {2,4,4,6,8}: mean = ", "a": "4.8"}, {"q": "Data {2,4,4,6,8}: median = ", "a": "4"}, {"q": "Data {2,4,4,6,8}: mode = ", "a": "4"}, {"q": "Data {2,4,4,6,8}: range = ", "a": "6"}, {"q": "Q1 of {1,3,5,7,9,11,13,15} = ", "a": "4"}, {"q": "Q3 of {1,3,5,7,9,11,13,15} = ", "a": "12"}, {"q": "IQR = Q3 − Q1 for the above. IQR = ", "a": "8"}, {"q": "In a box plot the middle line represents the: ", "a": "median"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) varied | (2) sum | (3) max − min | (4) 7 | (5) 8 | (6) 25 | (7) 0 | (8) pie chart | (9) histogram | (10) 8</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · Statistics & Data Displays · Dr. Park</footer>

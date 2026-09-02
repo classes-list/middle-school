@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Half-life = time for ___ of sample to decay. <input class="ans" data-a="hal" size="6"></li>
 <li>Start 200 g, after 1 half-life =  <input class="ans" data-a="100" size="6"></li>
 <li>After 2 half-lives =  <input class="ans" data-a="50" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Half-life = time for half the material to decay. Start 100 g, half-life 10 yr. After 10 yr: g", "a": "50"}, {"q": "Start 100 g, half-life 10 yr. After 20 yr: g", "a": "25"}, {"q": "Start 100 g, half-life 10 yr. After 30 yr: g", "a": "12.5"}, {"q": "Start 200 g, half-life 5 yr. After 10 yr (2 half-lives): g", "a": "50"}, {"q": "Start 80 g, half-life 4 yr. After 12 yr (3 half-lives): g", "a": "10"}, {"q": "Start 400 g, half-life 20 yr. After 60 yr (3 half-lives): g", "a": "50"}, {"q": "Sample decays 100→50→25→12.5. Number of half-lives elapsed = ", "a": "3"}, {"q": "If half-life is 6 hr, after 24 hr how many half-lives passed? ", "a": "4"}, {"q": "Fraction remaining after 4 half-lives = ", "a": "1/16"}, {"q": "Fraction remaining after 5 half-lives = ", "a": "1/32"}, {"q": "% remaining after 2 half-lives = ", "a": "25%"}, {"q": "% remaining after 3 half-lives = ", "a": "12.5%"}, {"q": "Carbon-14 half-life ≈ 5730 yr. After 11,460 yr, fraction of C-14 remaining = ", "a": "1/4"}, {"q": "Start 1000 atoms, half-life 1 hr. After 3 hr: atoms", "a": "125"}, {"q": "If 25% remains, how many half-lives? ", "a": "2"}, {"q": "If 6.25% remains, how many half-lives? ", "a": "4"}, {"q": "How much of a 64 g sample is left after 3 half-lives? g", "a": "8"}, {"q": "How much of 500 g remains after 4 half-lives? g", "a": "31.25"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) half | (2) 100 g | (3) 50 g | (4) 25 g | (5) 6.25% | (6) 1/32 | (7) 1/4 | (8) 20 g | (9) 4 half-lives | (10) 1/64</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · Radioactive Half-Life · Dr. Park</footer>

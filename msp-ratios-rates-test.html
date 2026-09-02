@@ -143,6 +143,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -232,6 +233,12 @@ function setMode(mode) {
 <main>
   <h2>Unit Test — 20 Problems</h2>
   <div class="instructions">Answer all 20 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>A recipe: 2 c flour to 3 c milk. Flour : milk =  <input class="ans" data-a="2 : 3" size="8"></li>
 <li>15 wins, 5 losses. Simplified =  <input class="ans" data-a="3 : 1" size="8"></li>
@@ -258,7 +265,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Simplify the ratio 12:18 (lowest terms, use colon)", "a": "2:3"}, {"q": "Simplify 20:15. ", "a": "4:3"}, {"q": "Simplify 24:36. ", "a": "2:3"}, {"q": "Simplify 45:60. ", "a": "3:4"}, {"q": "In a bag of 30 marbles, 12 are red. Ratio of red to total, simplified. ", "a": "2:5"}, {"q": "Boys to girls = 8:12. Simplify. ", "a": "2:3"}, {"q": "Unit rate: 240 miles in 4 hours = (mph)", "a": "60"}, {"q": "Unit rate: $18 for 6 items = $ per item", "a": "3"}, {"q": "Unit rate: 500 words in 5 min = words per min", "a": "100"}, {"q": "Better buy: $6 for 3 lb OR $10 for 4 lb? (write first or second)", "a": "second"}, {"q": "A car uses 12 gal to go 300 mi. Miles per gallon (mpg) = ", "a": "25"}, {"q": "16 pens for $8. Unit price per pen ($) = ", "a": "0.5"}, {"q": "Runner covers 3 mi in 24 min. Rate (min per mi) = ", "a": "8"}, {"q": "Convert 60 mph to feet per second (rounded to 0.1). Hint: 1 mi = 5280 ft. ", "a": "88"}, {"q": "If 5 lb of apples cost $7.50, cost per pound = $", "a": "1.5"}, {"q": "A recipe uses 4 cups sugar per 12 cookies. Sugar per cookie (cup) = ", "a": "1/3"}, {"q": "A printer prints 45 pages in 3 min. Pages per minute = ", "a": "15"}, {"q": "The ratio of length to width of a rectangle is 5:2. If width is 8, length = ", "a": "20"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) 2 : 3 | (2) 3 : 1 | (3) 2 : 3 | (4) 2 : 5 | (5) 8 | (6) 12 | (7) 50 | (8) $9 | (9) 50 | (10) 72 | (11) 2 | (12) 8/3 ≈ 2.67 | (13) 2 | (14) 5/4 = 1.25 | (15) 5 lb ($1.80/lb) | (16) 20 for $4.50 ($0.225 ea) | (17) 1 mi/min | (18) 12.5 mi | (19) 30 mpg | (20) 5 cents/min

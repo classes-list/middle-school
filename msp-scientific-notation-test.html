@@ -138,6 +138,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -227,6 +228,12 @@ function setMode(mode) {
 <main>
   <h2>Unit Test — 20 Problems</h2>
   <div class="instructions">Answer all 20 problems. Show all work. When finished, click <strong>Show Answer Key</strong> to check your answers.</div>
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>10² =  <input class="ans" data-a="100" size="6"></li>
 <li>10⁻² =  <input class="ans" data-a="0.01" size="7"></li>
@@ -253,7 +260,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Write 500 in scientific notation. ", "a": "5 × 10²"}, {"q": "Write 7,200 in scientific notation. ", "a": "7.2 × 10³"}, {"q": "Write 45,000 in scientific notation. ", "a": "4.5 × 10⁴"}, {"q": "Write 3,600,000 in scientific notation. ", "a": "3.6 × 10⁶"}, {"q": "Write 0.08 in scientific notation. ", "a": "8 × 10⁻²"}, {"q": "Write 0.00042 in scientific notation. ", "a": "4.2 × 10⁻⁴"}, {"q": "Write 6 × 10³ in standard form. ", "a": "6000"}, {"q": "Write 2.5 × 10⁴ in standard form. ", "a": "25000"}, {"q": "Write 9.1 × 10² in standard form. ", "a": "910"}, {"q": "Write 7 × 10⁻³ in standard form. ", "a": "0.007"}, {"q": "Write 1.4 × 10⁻² in standard form. ", "a": "0.014"}, {"q": "10⁰ = ", "a": "1"}, {"q": "10² = ", "a": "100"}, {"q": "10⁻⁴ = ", "a": "0.0001"}, {"q": "(2 × 10³) × (3 × 10⁴) = ", "a": "6 × 10⁷"}, {"q": "(5 × 10⁵) × (2 × 10²) = ", "a": "1 × 10⁸"}, {"q": "(8 × 10⁶) ÷ (4 × 10²) = ", "a": "2 × 10⁴"}, {"q": "(6 × 10⁴) + (4 × 10⁴) = ", "a": "1 × 10⁵"}, {"q": "(7 × 10³) − (2 × 10³) = ", "a": "5 × 10³"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) 100 | (2) 0.01 (1/100) | (3) 1,000,000 | (4) 0.00001 (1/100,000) | (5) 3 × 10² | (6) 6.2 × 10⁴ | (7) 7.2 × 10⁶ | (8) 5 × 10⁻² | (9) 1.2 × 10⁻⁵ | (10) 4,500 | (11) 850,000 | (12) 0.0034 | (13) 0.000012 | (14) 8 × 10⁹ | (15) 1 × 10⁴ | (16) 3 × 10³ | (17) 2 × 10⁷ | (18) 4.8 × 10⁶ (or 48 × 10⁵ → 4.8 × 10⁶) | (19) 17 × 10⁴ = 1.7 × 10⁵ | (20) So every number has one unique scientific-notation form, making comparison and computation clear/unambiguous.

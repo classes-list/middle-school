@@ -143,6 +143,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -232,6 +233,12 @@ function setMode(mode) {
 <main>
   <h2>Quiz — 10 Problems</h2>
   <div class="instructions">Answer all 10 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>12 apples for $6 → cost per apple =  <input class="ans" data-a="0.50/apple" size="13"></li>
 <li>150 miles in 3 hours → mph =  <input class="ans" data-a="50 mph" size="9"></li>
@@ -248,7 +255,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Solve for x: 3/4 = x/8. x = ", "a": "6"}, {"q": "Solve for x: 5/6 = x/24. x = ", "a": "20"}, {"q": "Solve for x: 7/x = 21/9. x = ", "a": "3"}, {"q": "Solve for x: x/12 = 5/6. x = ", "a": "10"}, {"q": "Is 4/6 proportional to 6/9? (yes/no)", "a": "yes"}, {"q": "Is 3/5 proportional to 6/12? (yes/no)", "a": "no"}, {"q": "If 3 pens cost $2.40, cost of 5 pens = $", "a": "4"}, {"q": "If 4 apples cost $3.20, cost of 7 apples = $", "a": "5.6"}, {"q": "If a car travels 150 mi in 3 hr, distance in 5 hr at the same rate = (mi)", "a": "250"}, {"q": "12 oz for $3. Unit price ($/oz) = ", "a": "0.25"}, {"q": "A map scale is 1 in : 20 mi. Distance for 4 in = (mi)", "a": "80"}, {"q": "Constant of proportionality if y = 3x when x = 5: k = ", "a": "3"}, {"q": "If y = kx and y = 20 when x = 4, k = ", "a": "5"}, {"q": "If y = kx and k = 7, then y when x = 3: y = ", "a": "21"}, {"q": "8 workers finish a job in 6 days. If pay is proportional, 4 workers get paid what fraction of the total? ", "a": "1/2"}, {"q": "Recipe: 2 cups flour per 5 cookies. Flour for 20 cookies (cups) = ", "a": "8"}, {"q": "Solve: x/9 = 4/12. x = ", "a": "3"}, {"q": "3 gallons of paint cover 240 sq ft. Coverage per gallon (sq ft) = ", "a": "80"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) $0.50/apple | (2) 50 mph | (3) Yes, k = 3 | (4) No (ratios differ) | (5) 240 mi | (6) $15 | (7) 3 | (8) No (misses origin) | (9) 56 | (10) 10 eggs

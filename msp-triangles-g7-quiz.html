@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Sum of angles in any triangle =  <input class="ans" data-a="180" size="6"></li>
 <li>Sides 5, 5, 5 → type? <input class="ans" data-a="Equilatera" size="13"></li>
 <li>Sides 3, 4, 6 → type? <input class="ans" data-a="Scalene" size="10"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Sum of angles in any triangle (degrees) = ", "a": "180"}, {"q": "Two angles are 40° and 70°. Third = ", "a": "70"}, {"q": "Two angles are 30° and 60°. Third = ", "a": "90"}, {"q": "All three sides equal: type of triangle = ", "a": "equilateral"}, {"q": "Two sides equal: type = ", "a": "isosceles"}, {"q": "No sides equal: type = ", "a": "scalene"}, {"q": "Right triangle has one angle equal to ", "a": "90"}, {"q": "Equilateral triangle has each angle = ", "a": "60"}, {"q": "Isosceles: vertex angle 40°. Each base angle = ", "a": "70"}, {"q": "Isosceles: base angles 55° each. Vertex angle = ", "a": "70"}, {"q": "Can sides 3, 4, 8 form a triangle? (yes/no)", "a": "no"}, {"q": "Can sides 5, 6, 10 form a triangle? ", "a": "yes"}, {"q": "Can sides 2, 3, 4 form a triangle? ", "a": "yes"}, {"q": "Right triangle legs 3 and 4. Hypotenuse = ", "a": "5"}, {"q": "Right triangle legs 6 and 8. Hypotenuse = ", "a": "10"}, {"q": "Right triangle legs 5 and 12. Hypotenuse = ", "a": "13"}, {"q": "Right triangle: hypotenuse 13, one leg 5. Other leg = ", "a": "12"}, {"q": "Area of triangle base 10, height 6 = ", "a": "30"}, {"q": "Area of triangle base 8, height 5 = ", "a": "20"}, {"q": "Exterior angle of a triangle equals the sum of the two: (adjacent/remote interior)", "a": "remote interior"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 180° | (2) Equilateral | (3) Scalene | (4) 90° | (5) 50° | (6) No (2+4<7) | (7) 60° | (8) 50° | (9) 90° | (10) greater than 90°</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Triangles & Angles · Dr. Park</footer>

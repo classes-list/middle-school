@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Slope = ___ / ___ <input class="ans" data-a="rise, run" size="12"></li>
 <li>Rise 30, run 150. Slope? <input class="ans" data-a="0.2" size="6"></li>
 <li>Rise 80 ft, run 400 ft. Slope as %? <input class="ans" data-a="20" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Contour lines that are close together show terrain that is: (steep or gentle)", "a": "steep"}, {"q": "Contour lines far apart show: (steep or gentle)", "a": "gentle"}, {"q": "Contour interval 20 m. From line labeled 100 to line labeled 160, elevation change (m) = ", "a": "60"}, {"q": "Contour interval 10 ft. From 300 ft line up 4 lines: elevation = ", "a": "340"}, {"q": "Contour interval 25 m. Between lines labeled 175 and 250, how many contour lines in between? ", "a": "2"}, {"q": "Concentric closed loops on a topo map usually indicate a: (hill or valley)", "a": "hill"}, {"q": "V-shape contour lines pointing UPHILL indicate a: ", "a": "stream"}, {"q": "Do contour lines cross each other? (yes/no)", "a": "no"}, {"q": "Highest point on a map is 850 ft, lowest is 200 ft. Relief (ft) = ", "a": "650"}, {"q": "Contour interval 15 m. Point A at 45 m, point B at 120 m. Elevation difference (m) = ", "a": "75"}, {"q": "Two hills separated by lower ground: the low area between them is called a: ", "a": "saddle"}, {"q": "Distance on map = 3 in, scale 1 in : 200 ft. Real distance (ft) = ", "a": "600"}, {"q": "Slope = rise/run. Rise 50 m, run 200 m. Slope (as decimal) = ", "a": "0.25"}, {"q": "Elevation change 100 ft over 500 ft. Slope % = ", "a": "20"}, {"q": "The index contour is usually drawn every how many lines? ", "a": "5"}, {"q": "Contour interval 20 ft. Point on 5th line above the 200 ft index: elevation = ", "a": "300"}, {"q": "Which direction does water flow across contour lines? (perpendicular/parallel)", "a": "perpendicular"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) rise, run | (2) 0.2 | (3) 20% | (4) 20% | (5) 520 m | (6) 250 ft | (7) steeper | (8) gentler | (9) 3/8 | (10) 0.2 (20%) | (11) 10% | (12) 0.1 | (13) 20 m | (14) 500 m | (15) 230 m | (16) 0.15 | (17) 1/10 (0.1) > 1/12 → too steep, NOT OK | (18) 75 m | (19) 9 lines | (20) Because closer contours mean the elevation changes faster over the same horizontal distance — that's the definition of steeper.</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · Topographic Maps & Slope · Dr. Park</footer>
