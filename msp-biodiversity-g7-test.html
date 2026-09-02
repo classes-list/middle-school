@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Ratio compares ___ <input class="ans" data-a="two quantities" size="17"></li>
 <li>Diversity: more species = ___ diverse <input class="ans" data-a="more" size="7"></li>
 <li>Simplify 15:10 <input class="ans" data-a="3:2" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Species richness = number of different species. If a plot has 5 species, richness = ", "a": "5"}, {"q": "A plot has species A(20), B(10), C(5), D(2), E(1). Total individuals = ", "a": "38"}, {"q": "Same plot: richness (# species) = ", "a": "5"}, {"q": "If you double the number of species but keep individuals same, richness: (increases/decreases)", "a": "increases"}, {"q": "Two areas: A has 8 species, B has 3 species. Higher biodiversity? (A/B)", "a": "A"}, {"q": "Diversity index: measures both richness and: ", "a": "evenness"}, {"q": "Even distribution of species means diversity is: (higher/lower)", "a": "higher"}, {"q": "One species making up 95% of individuals: evenness is (high/low)", "a": "low"}, {"q": "Sampling: 4 quadrats each have 10 birds. Average birds per quadrat = ", "a": "10"}, {"q": "Total 40 birds in 100 m². Density = birds per m²", "a": "0.4"}, {"q": "40 birds in 100 m². Estimate for 500 m² = ", "a": "200"}, {"q": "Estimated population: mark-recapture. Marked 20, recapture 50 with 10 marked. N ≈ ", "a": "100"}, {"q": "Mark-recapture: M=30, C=60, R=15. N ≈ ", "a": "120"}, {"q": "Simpson's D formula includes Σ(n(n−1))/N(N−1). If 2 species each with n=5, N=10: numerator = ", "a": "40"}, {"q": "Extinction rate is number of species lost per: (unit time/individual)", "a": "unit time"}, {"q": "Biodiversity hotspot: area with high species number and high: ", "a": "endemism"}, {"q": "Which has more species: tropical rainforest or tundra? ", "a": "tropical rainforest"}, {"q": "% of species already documented is approximately: (10-20%/50%/90%)", "a": "10-20%"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) two quantities | (2) more | (3) 3:2 | (4) 2:3:1 | (5) 25% | (6) 20% | (7) 4:2:1 | (8) 3:4:5 | (9) 40% | (10) 60% | (11) 1/5 | (12) B | (13) 75% | (14) 180 | (15) 100 | (16) 3:5:2 | (17) 3:2 | (18) 20% | (19) 0.5% vs 25% | (20) Because % lets you compare ecosystems of different sizes fairly.</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Biodiversity Statistics · Dr. Park</footer>

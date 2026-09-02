@@ -128,6 +128,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -226,6 +227,12 @@ function setMode(mode) {
   </div>
 
   
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>Convert 4.5 km to meters. <input class="ans" data-a="4,500" size="8"></li>
 <li>Convert 2,500 mL to liters. <input class="ans" data-a="2.5" size="6"></li>
@@ -242,7 +249,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Convert 4.5 km to meters.", "a": "4,500"}, {"q": "Convert 2,500 mL to liters.", "a": "2.5"}, {"q": "Convert 750 g to kilograms.", "a": "0.75"}, {"q": "A student measures a cat as <strong>7 kg</strong>. Actual mass is <strong>8 kg</strong>. Compute the ERROR (in kg) and the PERCENT ERROR.", "a": "12.5"}, {"q": "A student measures a blue whale as <strong>175,000 kg</strong>. Actual mass is <strong>180,000 kg</strong>. Compute the ERROR (in kg) and the PERCENT ERROR.", "a": "2.78"}, {"q": "The whale measurement has a MUCH larger error in kilograms (5,000 kg vs 1 kg). Which measurement is actually MORE ACCURATE, and why? Explain using percent error.", "a": "The whale (2.78% error is much smaller than 12.5%). Absolute error can mislead — 5,000 kg sounds huge, but relative to a 180,000 kg whale it's less than 3%. Percent error compares the mistake to the size of the thing being measured, so it's the fair way to compare accuracy across very different scales."}, {"q": "You weigh a piece of paper as <strong>0.9 g</strong> (actual 1.0 g) vs an elephant as <strong>5,900 kg</strong> (actual 6,000 kg). Compute percent error for both. Which is more accurate?", "a": "Paper:"}, {"q": "Which graph best shows PARTS OF A WHOLE (percentages of beach trash)?", "a": "Pie chart"}, {"q": "Which graph best shows the RELATIONSHIP between two continuous variables (ocean depth vs temperature)?", "a": "Scatter plot"}, {"q": "Find the mean (average) and range of: 4, 6, 8, 10, 12", "a": "8"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) 4,500 m | (2) 2.5 L | (3) 0.75 kg | (4) Error = 1 kg; %Error = 1/8 × 100 = <strong>12.5%</strong> | (5) Error = 5,000 kg; %Error = 5000/180000 × 100 = <strong>2.78%</strong> | (6) The whale (2.78% error is much smaller than 12.5%). Absolute error can mislead — 5,000 kg sounds huge, but relative to a 180,000 kg whale it's less than 3%. Percent error compares the mistake to the size of the thing being measured, so it's the fair way to compare accuracy across very different scales. | (7) Paper: |0.9−1.0|/1.0 × 100 = <strong>10%</strong>. Elephant: |5900−6000|/6000 × 100 = <strong>1.67%</strong>. The elephant measurement is more accurate — 100 kg off a 6,000 kg animal is a smaller percent of the real value than 0.1 g off a 1 g paper. | (8) Pie chart (circle graph) | (9) Scatter plot (X-Y plot) | (10) Mean = (4+6+8+10+12)/5 = 40/5 = <strong>8</strong>; Range = 12 − 4 = <strong>8</strong>

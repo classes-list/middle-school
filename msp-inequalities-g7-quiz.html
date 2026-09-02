@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Symbol for 'greater than' =  <input class="ans" data-a="&amp;gt;" size="7"></li>
 <li>Symbol for 'less than or equal to' =  <input class="ans" data-a="≤" size="6"></li>
 <li>Solve x + 3 &gt; 8 <input class="ans" data-a="x &amp;gt; 5" size="11"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Solve: x + 3 > 7. x > ", "a": "4"}, {"q": "Solve: x − 5 < 2. x < ", "a": "7"}, {"q": "Solve: 2x > 10. x > ", "a": "5"}, {"q": "Solve: 3x ≤ 12. x ≤ ", "a": "4"}, {"q": "Solve: −2x > 8. x < ", "a": "-4"}, {"q": "Solve: −3x ≤ 15. x ≥ ", "a": "-5"}, {"q": "Solve: 2x + 5 > 11. x > ", "a": "3"}, {"q": "Solve: 4x − 3 ≤ 13. x ≤ ", "a": "4"}, {"q": "Solve: 5x + 2 < 27. x < ", "a": "5"}, {"q": "Solve: 3(x − 2) ≥ 9. x ≥ ", "a": "5"}, {"q": "When you multiply/divide both sides by a negative: flip the ", "a": "inequality"}, {"q": "Solve: x/3 > 4. x > ", "a": "12"}, {"q": "Solve: −x < 5. x > ", "a": "-5"}, {"q": "Which is x > 3 as interval notation? (write like (a, b))", "a": "(3, ∞)"}, {"q": "Which is x ≤ 7? (write like [a, b])", "a": "(-∞, 7]"}, {"q": "Solve: 2x + 3 ≥ x + 8. x ≥ ", "a": "5"}, {"q": "Solve: 4 − x > 1. x < ", "a": "3"}, {"q": "Solve: 6 − 2x ≥ 0. x ≤ ", "a": "3"}, {"q": "If x is between −2 and 5 inclusive, write as compound: __ ≤ x ≤ __. Fill: ", "a": "-2,5"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) &gt; | (2) ≤ | (3) x &gt; 5 | (4) x &lt; 8 | (5) x ≥ 20 | (6) x &lt; -4 | (7) closed | (8) x ≤ 5 | (9) x ≤ 20 | (10) x ≥ 50</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Inequalities · Dr. Park</footer>

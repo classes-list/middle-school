@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Lens equation <input class="ans" data-a="1/dₒ + 1/dᵢ" size="14"></li>
 <li>Magnification formula <input class="ans" data-a="dᵢ/dₒ" size="8"></li>
 <li>f = 10, dₒ = 20. dᵢ =  <input class="ans" data-a="20" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Speed of light in vacuum (m/s, sci) = ", "a": "3 × 10⁸"}, {"q": "Angle of incidence = angle of ", "a": "reflection"}, {"q": "Incidence angle 30° on a mirror. Reflection angle = ", "a": "30"}, {"q": "Incidence 45°. Reflection = ", "a": "45"}, {"q": "Refraction: light bends when passing between: ", "a": "media"}, {"q": "Light entering denser medium bends: (toward/away from) normal", "a": "toward"}, {"q": "Light exiting to less dense medium bends: (away from/toward) normal", "a": "away from"}, {"q": "Index of refraction n = c/v. n_water ≈ 1.33. Speed of light in water (m/s, sci) = ", "a": "2.26 × 10⁸"}, {"q": "n_glass ≈ 1.5. Speed in glass (m/s, sci) = ", "a": "2 × 10⁸"}, {"q": "Snell's law: n₁sinθ₁ = n₂sinθ₂. n₁=1, θ₁=30°. n₂=1.5. sinθ₂ = ", "a": "1/3"}, {"q": "Focal length 10 cm, object 30 cm. Image distance from 1/f = 1/do + 1/di. di (cm) = ", "a": "15"}, {"q": "Focal length 20 cm, object 40 cm. di = ", "a": "40"}, {"q": "Convex lens: converges or diverges light? ", "a": "converges"}, {"q": "Concave lens: converges or diverges? ", "a": "diverges"}, {"q": "Real image forms on which side of lens? (same/opposite from object)", "a": "opposite"}, {"q": "Magnification m = -di/do. do=10, di=20. m = ", "a": "-2"}, {"q": "Wavelength of visible red light approximately (nm): ", "a": "700"}, {"q": "Wavelength of visible violet light approximately (nm): ", "a": "400"}, {"q": "White light passing through prism produces a: ", "a": "spectrum"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 1/f = 1/dₒ + 1/dᵢ | (2) dᵢ/dₒ | (3) 20 | (4) 30 | (5) 10 | (6) 30 | (7) 33.3 | (8) 2 | (9) 0.25 | (10) 0.5 | (11) 3 | (12) At 2f (also 2× focal length away) | (13) At focal point | (14) toward | (15) 1.0 | (16) 1.33 | (17) 3 × 10⁸ m/s | (18) 300,000 km/s | (19) Violet | (20) Red (bends less)</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Optics (Lens Equation) · Dr. Park</footer>

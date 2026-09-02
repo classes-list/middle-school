@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Opposite of 12 =  <input class="ans" data-a="-12" size="6"></li>
 <li>Opposite of -25 =  <input class="ans" data-a="25" size="6"></li>
 <li>|17| =  <input class="ans" data-a="17" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "|−9| = ", "a": "9"}, {"q": "|−15| = ", "a": "15"}, {"q": "|7| = ", "a": "7"}, {"q": "|0| = ", "a": "0"}, {"q": "Which is greater: −4 or −8? ", "a": "-4"}, {"q": "Which is greater: −2 or −10? ", "a": "-2"}, {"q": "Which is greater: 0 or −6? ", "a": "0"}, {"q": "Order least to greatest (commas): −5, 2, −8, 0, 4. ", "a": "-8,-5,0,2,4"}, {"q": "Order least to greatest: −12, −3, 0, 5, −7. ", "a": "-12,-7,-3,0,5"}, {"q": "The opposite of −6 = ", "a": "6"}, {"q": "The opposite of 15 = ", "a": "-15"}, {"q": "Temperature drops from 5°F by 12°. New temp = ", "a": "-7"}, {"q": "Diver at −20 ft rises 8 ft. New depth = ", "a": "-12"}, {"q": "Elevation of Death Valley is −282 ft. Absolute distance from sea level = ", "a": "282"}, {"q": "Bank balance: −$35 (overdrawn). Deposit $50. New balance = $", "a": "15"}, {"q": "Point A is at 4, point B is at −3. Distance between them = ", "a": "7"}, {"q": "Point A is at −6, point B is at 5. Distance = ", "a": "11"}, {"q": "On a number line, which is farther from 0: −9 or 7? ", "a": "-9"}, {"q": "−5 + 3 = ", "a": "-2"}, {"q": "8 − 12 = ", "a": "-4"}, {"q": "−7 + 7 = ", "a": "0"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) -12 | (2) 25 | (3) 17 | (4) 17 | (5) 0 | (6) -2 | (7) 0 | (8) -7, -3, 0, 2, 4 | (9) -15, -10, -1, 0, 5 | (10) -30 | (11) -50 | (12) +7 | (13) +10 | (14) -5 | (15) 11 | (16) 15 | (17) 30 | (18) 4 | (19) 8 | (20) 6</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · Integers & Number System · Dr. Park</footer>

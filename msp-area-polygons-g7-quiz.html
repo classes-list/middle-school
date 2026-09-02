@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Area of rectangle =  <input class="ans" data-a="lw" size="6"></li>
 <li>Area of triangle =  <input class="ans" data-a="½bh" size="6"></li>
 <li>Area of parallelogram =  <input class="ans" data-a="bh" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Area of square side 7 = ", "a": "49"}, {"q": "Area of rectangle 8 × 5 = ", "a": "40"}, {"q": "Area of rectangle 12 × 4 = ", "a": "48"}, {"q": "Area of parallelogram base 10, height 6 = ", "a": "60"}, {"q": "Area of parallelogram base 8, height 5 = ", "a": "40"}, {"q": "Area of triangle base 12, height 5 = ", "a": "30"}, {"q": "Area of triangle base 9, height 8 = ", "a": "36"}, {"q": "Area of triangle base 14, height 6 = ", "a": "42"}, {"q": "Area of trapezoid: bases 6 and 10, height 4 = ", "a": "32"}, {"q": "Area of trapezoid: bases 5 and 11, height 6 = ", "a": "48"}, {"q": "Area of trapezoid: bases 4 and 8, height 5 = ", "a": "30"}, {"q": "Area of rhombus: diagonals 8 and 6 = ", "a": "24"}, {"q": "Area of rhombus: diagonals 10 and 12 = ", "a": "60"}, {"q": "Perimeter of square side 9 = ", "a": "36"}, {"q": "Perimeter of rectangle 7 × 3 = ", "a": "20"}, {"q": "Regular hexagon side 5, apothem 4.33. Perimeter = ", "a": "30"}, {"q": "Regular pentagon side 6. Perimeter = ", "a": "30"}, {"q": "Area of composite: rectangle 10×4 + triangle base 4 height 3 = ", "a": "46"}, {"q": "Rectangle L=15, W=8. Area = ", "a": "120"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) lw | (2) ½bh | (3) bh | (4) ½(b₁+b₂)h | (5) 80 | (6) 20 | (7) 42 | (8) 18 | (9) 29 | (10) 180</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Area of Polygons · Dr. Park</footer>

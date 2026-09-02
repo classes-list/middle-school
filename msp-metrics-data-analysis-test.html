@@ -128,6 +128,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -304,6 +305,12 @@ function setMode(mode) {
     </div>
   </div>
 
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>Convert 3.6 km to meters. <input class="ans" data-a="3,600" size="8"></li>
 <li>Convert 4,250 mg to grams. <input class="ans" data-a="4.25" size="7"></li>
@@ -330,7 +337,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Convert 3.6 km to meters.", "a": "3,600"}, {"q": "Convert 4,250 mg to grams.", "a": "4.25"}, {"q": "Convert 0.5 L to milliliters.", "a": "500"}, {"q": "Convert 250 cm to meters.", "a": "2.5"}, {"q": "Convert 2.4 kg to grams.", "a": "2,400"}, {"q": "Convert 0.008 kg to milligrams.", "a": "8,000 m"}, {"q": "State the ERROR formula and the PERCENT ERROR formula.", "a": "Error"}, {"q": "Measured mass of a rock: 45 g. Actual: 50 g. Compute Error and %Error.", "a": "Error"}, {"q": "Measured a cat as <strong>7 kg</strong>. Actual: <strong>8 kg</strong>. Error = ? %Error = ?", "a": "12.5"}, {"q": "Measured a blue whale as <strong>175,000 kg</strong>. Actual: <strong>180,000 kg</strong>. Error = ? %Error = ?", "a": "2.78"}, {"q": "Big idea: the whale is off by 5,000 kg (huge!) and the cat is off by only 1 kg. Which measurement is MORE ACCURATE, and why? Explain with percent error.", "a": "The whale (2.78% error) is more accurate than the cat (12.5% error). Absolute error alone is misleading — 5,000 kg sounds huge, but relative to a 180,000 kg whale it's less than 3% of the real value. Percent error compares the mistake to the size of the thing being measured, so it fairly compares accuracy across different scales."}, {"q": "Piece of paper: measured 0.9 g, actual 1.0 g. Elephant: measured 5,900 kg, actual 6,000 kg. Compute %Error for each. Which is more accurate?", "a": "Paper: 10%. Elephant: 1.67%. Elephant is more accurate."}, {"q": "Pencil length: measured 18.5 cm, actual 20 cm. Length of a road: measured 9,900 m, actual 10,000 m. Compute %Error for each. Which is more accurate?", "a": "Pencil: 7.5%. Road: 1%. Road is more accurate (even though the road was off by 100 meters vs the pencil's 1.5 cm)."}, {"q": "Using the target diagram above: which target shows <strong>ACCURATE AND PRECISE</strong> shots?", "a": "Top-left target (shots grouped tightly at the bullseye)."}, {"q": "Which target shows <strong>PRECISE but INACCURATE</strong>? What kind of error is this?", "a": "Top-right target — shots grouped tightly but not near the bullseye. This is systematic error (a bias — like a scale that always reads 2 g too high)."}, {"q": "Which target shows <strong>ACCURATE but IMPRECISE</strong>? What kind of error is this?", "a": "Bottom-left target — shots scattered but centered around the bullseye. This is reproducibility (random) error."}, {"q": "In your own words, what is the difference between ACCURACY and PRECISION?", "a": "how close repeated measurements are to each other. You can be one, both, or neither."}, {"q": "Best graph to compare Regular vs Double Stuf Oreo icing masses (2 categories)?", "a": "Bar graph"}, {"q": "Best graph to show water temperature at various ocean depths (2 continuous variables)?", "a": "Scatter plot"}, {"q": "Find the mean and range of: 12, 18, 25, 30, 22", "a": "18"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     <p style="margin-bottom:8px;"><strong>Fill-in-the-blanks (under the target diagram):</strong><br>

@@ -143,6 +143,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -232,6 +233,12 @@ function setMode(mode) {
 <main>
   <h2>Unit Test — 20 Problems</h2>
   <div class="instructions">Answer all 20 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>Reciprocal of 2/3 =  <input class="ans" data-a="3/2" size="6"></li>
 <li>Reciprocal of 7 =  <input class="ans" data-a="1/7" size="6"></li>
@@ -258,7 +265,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Reciprocal of 3/5 = ", "a": "5/3"}, {"q": "Reciprocal of 7/2 = ", "a": "2/7"}, {"q": "Reciprocal of 4 = ", "a": "1/4"}, {"q": "Reciprocal of 1/9 = ", "a": "9"}, {"q": "1/2 ÷ 1/4 = ", "a": "2"}, {"q": "3/4 ÷ 1/2 = ", "a": "3/2"}, {"q": "2/3 ÷ 1/6 = ", "a": "4"}, {"q": "5/8 ÷ 1/4 = ", "a": "5/2"}, {"q": "6 ÷ 2/3 = ", "a": "9"}, {"q": "8 ÷ 1/2 = ", "a": "16"}, {"q": "10 ÷ 5/2 = ", "a": "4"}, {"q": "9/10 ÷ 3/5 = ", "a": "3/2"}, {"q": "4/7 ÷ 2/7 = ", "a": "2"}, {"q": "3/8 ÷ 3/4 = ", "a": "1/2"}, {"q": "A ribbon is 3/4 yard long. How many 1/8-yard pieces can be cut? ", "a": "6"}, {"q": "A recipe uses 2/3 cup sugar per batch. How many batches from 4 cups? ", "a": "6"}, {"q": "5 ÷ 1/3 = ", "a": "15"}, {"q": "7/8 ÷ 7 = ", "a": "1/8"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) 3/2 | (2) 1/7 | (3) 3/4 | (4) 2 | (5) 9/8 = 1 1/8 | (6) 5/4 = 1 1/4 | (7) 2/3 | (8) 7/2 = 3 1/2 | (9) 8 | (10) 18 | (11) 1/8 | (12) 25 | (13) 32/3 = 10 2/3 | (14) 7/3 | (15) 14/3 = 4 2/3 | (16) 2 | (17) 3 | (18) 2 | (19) 10 cups | (20) 4

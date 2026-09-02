@@ -143,6 +143,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -232,6 +233,12 @@ function setMode(mode) {
 <main>
   <h2>Unit Test — 20 Problems</h2>
   <div class="instructions">Answer all 20 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>3⁴ =  <input class="ans" data-a="81" size="6"></li>
 <li>10⁴ =  <input class="ans" data-a="10,000" size="9"></li>
@@ -258,7 +265,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "2³ = ", "a": "8"}, {"q": "3⁴ = ", "a": "81"}, {"q": "5² = ", "a": "25"}, {"q": "10⁴ = ", "a": "10000"}, {"q": "2⁵ = ", "a": "32"}, {"q": "4³ = ", "a": "64"}, {"q": "x² · x³ = x^? (integer answer)", "a": "5"}, {"q": "y⁵ · y² = y^", "a": "7"}, {"q": "m³ · m⁴ = m^", "a": "7"}, {"q": "x⁸ ÷ x³ = x^", "a": "5"}, {"q": "y¹⁰ ÷ y⁴ = y^", "a": "6"}, {"q": "(x²)³ = x^", "a": "6"}, {"q": "(y⁴)² = y^", "a": "8"}, {"q": "x⁰ = (any nonzero x)", "a": "1"}, {"q": "2⁻³ = (as a fraction)", "a": "1/8"}, {"q": "5⁻² = ", "a": "1/25"}, {"q": "4⁻¹ = ", "a": "1/4"}, {"q": "(2·3)² = ", "a": "36"}, {"q": "(a·b)³ = a³·b^", "a": "3"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) 81 | (2) 10,000 | (3) 32 | (4) 36 | (5) 5⁷ | (6) x⁷ | (7) a⁶ | (8) 3⁹ | (9) x⁴ | (10) 10⁵ | (11) 5² = 25 | (12) a⁶ | (13) 10⁶ | (14) a¹⁰ | (15) 5⁸ | (16) 1 | (17) 1 + 1 = 2 | (18) 1/5 | (19) 1/1000 | (20) 1/x⁴

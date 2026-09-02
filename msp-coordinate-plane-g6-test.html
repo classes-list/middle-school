@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Name the axes and their orientation. <input class="ans" data-a="x-axis horizontal, y-axis vertica" size="22"></li>
 <li>Name the four quadrants in order. <input class="ans" data-a="I (top-right), II (top-left), III (bottom-left), IV" size="22"></li>
 <li>(4,7) is in quadrant  <input class="ans" data-a="I" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "In which quadrant is (3, 5)? (I, II, III, IV)", "a": "I"}, {"q": "In which quadrant is (−4, 2)? ", "a": "II"}, {"q": "In which quadrant is (−3, −6)? ", "a": "III"}, {"q": "In which quadrant is (5, −2)? ", "a": "IV"}, {"q": "Point (0, 4) is on which axis? (x-axis or y-axis)", "a": "y-axis"}, {"q": "Point (−7, 0) is on which axis? ", "a": "x-axis"}, {"q": "Reflect (3, 5) across the x-axis. New point (write as x,y): ", "a": "3,-5"}, {"q": "Reflect (−4, 2) across the y-axis. ", "a": "4,2"}, {"q": "Reflect (6, −3) across the x-axis. ", "a": "6,3"}, {"q": "Distance from (2, 3) to (2, 8) = ", "a": "5"}, {"q": "Distance from (−1, 4) to (−1, −3) = ", "a": "7"}, {"q": "Distance from (5, 2) to (−4, 2) = ", "a": "9"}, {"q": "The origin has coordinates (write x,y): ", "a": "0,0"}, {"q": "Point (−2, 5): x-coord = ", "a": "-2"}, {"q": "Point (−2, 5): y-coord = ", "a": "5"}, {"q": "Perimeter of rectangle with vertices (0,0), (4,0), (4,3), (0,3): ", "a": "14"}, {"q": "Area of the same rectangle: ", "a": "12"}, {"q": "Reflect (3, −4) across the y-axis. ", "a": "-3,-4"}, {"q": "Translate (2, 5) right 3 and down 4. New point: ", "a": "5,1"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) x-axis horizontal, y-axis vertical | (2) I (top-right), II (top-left), III (bottom-left), IV (bottom-right) | (3) I | (4) II | (5) III | (6) IV | (7) y-axis | (8) x-axis | (9) 5 | (10) 8 | (11) 11 | (12) 8 | (13) (4,-3) | (14) (-5,0) | (15) (3,-4) | (16) (-3,4) | (17) (2,-5) | (18) III | (19) (1,4) | (20) positive, negative</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · Coordinate Plane · Dr. Park</footer>

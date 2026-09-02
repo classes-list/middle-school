@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Complementary sum =  <input class="ans" data-a="90" size="6"></li>
 <li>Supplementary sum =  <input class="ans" data-a="180" size="6"></li>
 <li>Around a point =  <input class="ans" data-a="360" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Complementary of 40° = ", "a": "50"}, {"q": "Complementary of 25° = ", "a": "65"}, {"q": "Supplementary of 110° = ", "a": "70"}, {"q": "Supplementary of 55° = ", "a": "125"}, {"q": "Vertical angles are: (equal/supplementary)", "a": "equal"}, {"q": "Linear pair angles sum to: ", "a": "180"}, {"q": "Parallel lines cut by transversal: corresponding angles are: (equal/supplementary)", "a": "equal"}, {"q": "Parallel lines: co-interior (same-side interior) angles sum to ", "a": "180"}, {"q": "One angle in a linear pair is 78°. The other = ", "a": "102"}, {"q": "Vertical angle to 47° = ", "a": "47"}, {"q": "Alternate interior angles for parallel lines are: (equal/supplementary)", "a": "equal"}, {"q": "Angle acute if less than: ", "a": "90"}, {"q": "Angle obtuse if between 90° and: ", "a": "180"}, {"q": "Angle straight = ", "a": "180"}, {"q": "Angle reflex is greater than: ", "a": "180"}, {"q": "Sum of interior angles of a quadrilateral = ", "a": "360"}, {"q": "Sum of interior angles of a pentagon = ", "a": "540"}, {"q": "Sum of interior angles of a hexagon = ", "a": "720"}, {"q": "Each interior angle of a regular hexagon = ", "a": "120"}, {"q": "Each interior angle of a regular pentagon = ", "a": "108"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 90° | (2) 180° | (3) 360° | (4) equal | (5) 180° | (6) 80° | (7) 50° | (8) 2° | (9) 160° | (10) 90° | (11) 5° | (12) 30° | (13) 145° | (14) 120° | (15) 45° | (16) 150° | (17) 130° | (18) 65° | (19) 117° | (20) 75°, 105°, 105°</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Angle Relationships · Dr. Park</footer>

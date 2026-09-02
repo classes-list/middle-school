@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>(-4)(3) =  <input class="ans" data-a="-12" size="6"></li>
 <li>(-6)(-2) =  <input class="ans" data-a="12" size="6"></li>
 <li>(-15)/5 =  <input class="ans" data-a="-3" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "(−3) × 4 = ", "a": "-12"}, {"q": "(−5) × (−6) = ", "a": "30"}, {"q": "8 × (−7) = ", "a": "-56"}, {"q": "(−9) × 0 = ", "a": "0"}, {"q": "(−12) ÷ 3 = ", "a": "-4"}, {"q": "(−24) ÷ (−6) = ", "a": "4"}, {"q": "36 ÷ (−9) = ", "a": "-4"}, {"q": "(−48) ÷ 8 = ", "a": "-6"}, {"q": "(−1.2) × 5 = ", "a": "-6"}, {"q": "(−0.4) × (−0.5) = ", "a": "0.2"}, {"q": "2.5 × (−4) = ", "a": "-10"}, {"q": "(−7.2) ÷ 4 = ", "a": "-1.8"}, {"q": "(−1/2) × (2/3) = ", "a": "-1/3"}, {"q": "(−3/4) × (−8/9) = ", "a": "2/3"}, {"q": "(−3/5) ÷ (1/5) = ", "a": "-3"}, {"q": "(−2/3) ÷ (−4/9) = ", "a": "3/2"}, {"q": "(−2)³ = ", "a": "-8"}, {"q": "(−3)² = ", "a": "9"}, {"q": "(−4) × (−2) × (−1) = ", "a": "-8"}, {"q": "(−3) × 5 × (−2) = ", "a": "30"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) -12 | (2) 12 | (3) -3 | (4) 8 | (5) -10 | (6) 3 | (7) 2/5 | (8) -4 | (9) negative (odd count) | (10) -10</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Multiply & Divide Rational Numbers · Dr. Park</footer>

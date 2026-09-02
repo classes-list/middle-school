@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>x + 4 = 11 <input class="ans" data-a="7" size="6"></li>
 <li>x + 20 = 25 <input class="ans" data-a="5" size="6"></li>
 <li>x − 5 = 12 <input class="ans" data-a="17" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Solve: x + 8 = 15. x = ", "a": "7"}, {"q": "Solve: x − 6 = 11. x = ", "a": "17"}, {"q": "Solve: 4x = 32. x = ", "a": "8"}, {"q": "Solve: x/5 = 6. x = ", "a": "30"}, {"q": "Solve: 2x + 3 = 15. x = ", "a": "6"}, {"q": "Solve: 5x − 4 = 26. x = ", "a": "6"}, {"q": "Solve: 3x + 7 = 19. x = ", "a": "4"}, {"q": "Solve: 6x − 5 = 25. x = ", "a": "5"}, {"q": "Solve: 2(x + 5) = 18. x = ", "a": "4"}, {"q": "Solve: 4(x − 3) = 20. x = ", "a": "8"}, {"q": "Solve: 3(2x + 1) = 21. x = ", "a": "3"}, {"q": "Solve: 5x + 2 = 3x + 14. x = ", "a": "6"}, {"q": "Solve: 7x − 3 = 4x + 9. x = ", "a": "4"}, {"q": "Solve: 2x + 6 = x + 10. x = ", "a": "4"}, {"q": "Solve: 5 − 2x = 13. x = ", "a": "-4"}, {"q": "Solve: −3x + 8 = 20. x = ", "a": "-4"}, {"q": "Solve: (x/3) − 4 = 2. x = ", "a": "18"}, {"q": "Solve: 8 − x = 3. x = ", "a": "5"}, {"q": "Solve: 2x + 5 = 2x + 7. (how many solutions?)", "a": "none"}, {"q": "Solve: 3(x − 1) = 3x − 3. (how many solutions?)", "a": "infinite"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) x = 7 | (2) x = 5 | (3) x = 17 | (4) x = 12 | (5) x = 8 | (6) x = 9 | (7) x = 5 | (8) x = 20 | (9) x = 24 | (10) x = 36 | (11) x = 50 | (12) x = 10 | (13) x = 25 | (14) x = 50 | (15) x = 18 | (16) x = 7 | (17) x = 30 | (18) x = 7 | (19) 6 ft | (20) x = 6</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 6 · One-Step Equations · Dr. Park</footer>

@@ -143,6 +143,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -232,6 +233,12 @@ function setMode(mode) {
 <main>
   <h2>Unit Test — 20 Problems</h2>
   <div class="instructions">Answer all 20 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>4.2 + 7.5 =  <input class="ans" data-a="11.7" size="7"></li>
 <li>15.8 − 6.3 =  <input class="ans" data-a="9.5" size="6"></li>
@@ -258,7 +265,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "5.6 + 3.9 = ", "a": "9.5"}, {"q": "12.3 + 4.5 = ", "a": "16.8"}, {"q": "7.4 + 2.9 = ", "a": "10.3"}, {"q": "9.7 − 3.4 = ", "a": "6.3"}, {"q": "15.2 − 8.7 = ", "a": "6.5"}, {"q": "20.4 − 15.9 = ", "a": "4.5"}, {"q": "12.5 − 3.75 = ", "a": "8.75"}, {"q": "0.5 × 0.6 = ", "a": "0.3"}, {"q": "0.8 × 0.4 = ", "a": "0.32"}, {"q": "2.4 × 1.5 = ", "a": "3.6"}, {"q": "3.5 × 2.2 = ", "a": "7.7"}, {"q": "7.2 ÷ 3 = ", "a": "2.4"}, {"q": "9.6 ÷ 4 = ", "a": "2.4"}, {"q": "0.24 ÷ 0.06 = ", "a": "4"}, {"q": "0.35 ÷ 0.05 = ", "a": "7"}, {"q": "Round 5.291 to the nearest tenth. ", "a": "5.3"}, {"q": "Round 2.876 to the nearest tenth. ", "a": "2.9"}, {"q": "Which is larger: 0.4 or 0.35? ", "a": "0.4"}, {"q": "Which is larger: 0.65 or 0.6? ", "a": "0.65"}, {"q": "Movie tickets cost $9.75 each. Cost for 4 tickets = $", "a": "39"}, {"q": "Gas is $4.25 per gallon. Cost for 6 gallons = $", "a": "25.5"}, {"q": "A recipe needs 0.75 cup flour per batch. Flour for 4 batches = ", "a": "3"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) 11.7 | (2) 9.5 | (3) 1.35 | (4) 6.28 | (5) 0.20 = 0.2 | (6) 6.28 | (7) 0.060 = 0.06 | (8) 3.2 | (9) 24 | (10) 31 | (11) 4.9 | (12) 12.35 | (13) 3.14 | (14) five and three tenths | (15) 17.968 | (16) 2.1 | (17) 4.05 | (18) $11.00 | (19) $1.01 | (20) 26 mpg

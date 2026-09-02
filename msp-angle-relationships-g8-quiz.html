@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Corresponding angles are ___ <input class="ans" data-a="equa" size="7"></li>
 <li>Alternate interior angles are ___ <input class="ans" data-a="equa" size="7"></li>
 <li>Co-interior angles sum to ___ <input class="ans" data-a="180" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Complementary of 35° = ", "a": "55"}, {"q": "Complementary of 62° = ", "a": "28"}, {"q": "Supplementary of 120° = ", "a": "60"}, {"q": "Supplementary of 85° = ", "a": "95"}, {"q": "Vertical angles are: (congruent/supplementary)", "a": "congruent"}, {"q": "Linear pair sums to: ", "a": "180"}, {"q": "Adjacent angle to 40° in linear pair = ", "a": "140"}, {"q": "Vertical angle to 128° = ", "a": "128"}, {"q": "Corresponding angles for parallel lines: (equal/supplementary)", "a": "equal"}, {"q": "Alternate interior angles for parallel lines: ", "a": "equal"}, {"q": "Co-interior (same-side interior) sum to: ", "a": "180"}, {"q": "One co-interior is 105°. Its partner = ", "a": "75"}, {"q": "Two parallel lines cut by a transversal. One corresponding angle is 65°. Partner = ", "a": "65"}, {"q": "Sum of triangle angles = ", "a": "180"}, {"q": "Sum of quadrilateral angles = ", "a": "360"}, {"q": "Exterior angle of triangle = sum of two ", "a": "remote interior"}, {"q": "Exterior angle 130°. Two remote interior sum = ", "a": "130"}, {"q": "Regular pentagon: each interior angle = ", "a": "108"}, {"q": "Regular hexagon: each interior angle = ", "a": "120"}, {"q": "Regular octagon: each interior angle = ", "a": "135"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) equal | (2) equal | (3) 180° | (4) equal | (5) 40° | (6) 140° | (7) 40° | (8) 180° | (9) 70° | (10) 70° each</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Angle Relationships (Parallel Lines) · Dr. Park</footer>

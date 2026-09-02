@@ -143,6 +143,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -232,6 +233,12 @@ function setMode(mode) {
 <main>
   <h2>Quiz — 10 Problems</h2>
   <div class="instructions">Answer all 10 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
+  <div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
   <ol class="qlist" id="qlist">
   <li>x + 5 = 12 <input class="ans" data-a="7" size="6"></li>
 <li>x − 3 = 8 <input class="ans" data-a="11" size="6"></li>
@@ -248,7 +255,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Solve: x + 5 = 12. x = ", "a": "7"}, {"q": "Solve: x − 4 = 9. x = ", "a": "13"}, {"q": "Solve: 3x = 21. x = ", "a": "7"}, {"q": "Solve: x/4 = 5. x = ", "a": "20"}, {"q": "Solve: 2x + 3 = 11. x = ", "a": "4"}, {"q": "Solve: 5x − 2 = 18. x = ", "a": "4"}, {"q": "Solve: 4x + 7 = 3x + 12. x = ", "a": "5"}, {"q": "Solve: 6x − 1 = 4x + 9. x = ", "a": "5"}, {"q": "Solve: 3(x − 2) = 9. x = ", "a": "5"}, {"q": "Solve: 2(x + 4) = 14. x = ", "a": "3"}, {"q": "Solve: −3x + 12 = 3. x = ", "a": "3"}, {"q": "Solve: 5 − 2x = 1. x = ", "a": "2"}, {"q": "Solve: (x/3) + 2 = 5. x = ", "a": "9"}, {"q": "Solve: 7x + 3 = 5x + 15. x = ", "a": "6"}, {"q": "Slope-intercept form of y − 4 = 2(x − 1). Write as y = mx + b. ", "a": "y = 2x + 2"}, {"q": "Solve: 2x − 5 = 3(x − 4). x = ", "a": "7"}, {"q": "Solve: 4x + 6 = 2x. x = ", "a": "-3"}, {"q": "Solve: 9 − x = 4x − 6. x = ", "a": "3"}, {"q": "y-intercept of y = 3x − 7. b = ", "a": "-7"}, {"q": "How many solutions does 2x + 4 = 2x + 4 have? (write: none, one, infinite)", "a": "infinite"}, {"q": "How many solutions does 3x = 3x + 5 have? ", "a": "none"}]
   </script>
-  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) x = 7 | (2) x = 11 | (3) x = 5 | (4) x = 21 | (5) x = 4 | (6) x = 4 | (7) x = 2 | (8) x = 3 | (9) Infinite solutions | (10) No solution

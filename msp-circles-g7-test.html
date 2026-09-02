@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>π ≈ (to 2 decimals) <input class="ans" data-a="3.14" size="7"></li>
 <li>d = 2___ <input class="ans" data-a="r" size="6"></li>
 <li>r = d ÷ ___ <input class="ans" data-a="2" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Radius 5. Diameter = ", "a": "10"}, {"q": "Diameter 14. Radius = ", "a": "7"}, {"q": "Circumference formula: C = ", "a": "2πr"}, {"q": "Area formula: A = ", "a": "πr²"}, {"q": "C when r=3, use π. C = (in terms of π)", "a": "6π"}, {"q": "C when r=7, use π = 3.14. C ≈ ", "a": "43.96"}, {"q": "C when d=10, use π = 3.14. C ≈ ", "a": "31.4"}, {"q": "A when r=4, use π. A = ", "a": "16π"}, {"q": "A when r=6, use π = 3.14. A ≈ ", "a": "113.04"}, {"q": "A when d=8, use π = 3.14. A ≈ ", "a": "50.24"}, {"q": "Radius 10. Area in terms of π = ", "a": "100π"}, {"q": "Radius 2. Circumference in terms of π = ", "a": "4π"}, {"q": "How many radians in 360°? ", "a": "2π"}, {"q": "How many degrees in a full circle? ", "a": "360"}, {"q": "Radius doubles. Circumference multiplies by: ", "a": "2"}, {"q": "Radius doubles. Area multiplies by: ", "a": "4"}, {"q": "Half circle with r=6 has area (π) = ", "a": "18π"}, {"q": "Quarter circle with r=4 has area (π) = ", "a": "4π"}, {"q": "π ≈ (2 decimal places)", "a": "3.14"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 3.14 | (2) r | (3) 2 | (4) 2πr or πd | (5) πr² | (6) 6 | (7) 10 | (8) 14 | (9) 7 | (10) 37.68 | (11) 25.12 | (12) 62.8 | (13) 50.24 | (14) 78.5 | (15) 200.96 | (16) 78.5 | (17) 314 | (18) 157 cm | (19) 28.26 m² | (20) 78.5 in²</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Circles · Dr. Park</footer>

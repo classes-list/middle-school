@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Cross Aa × Aa: fraction AA? <input class="ans" data-a="1/4" size="6"></li>
 <li>Aa × Aa: fraction aa? <input class="ans" data-a="1/4" size="6"></li>
 <li>AA × aa: what genotype? <input class="ans" data-a="Aa" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Punnett Aa × Aa. P(AA offspring) = ", "a": "1/4"}, {"q": "Punnett Aa × Aa. P(Aa) = ", "a": "1/2"}, {"q": "Aa × Aa. P(aa) = ", "a": "1/4"}, {"q": "Aa × Aa. P(dominant phenotype) = ", "a": "3/4"}, {"q": "Aa × aa. P(Aa offspring) = ", "a": "1/2"}, {"q": "AA × aa. All offspring genotype = ", "a": "Aa"}, {"q": "AA × Aa. P(AA) = ", "a": "1/2"}, {"q": "Aa × aa. P(aa) = ", "a": "1/2"}, {"q": "Two heterozygous parents. Fraction of offspring showing recessive trait = ", "a": "1/4"}, {"q": "Dominant allele shown with what case letter? (upper/lower)", "a": "upper"}, {"q": "Recessive allele shown with what case? ", "a": "lower"}, {"q": "Homozygous dominant genotype (using A/a): ", "a": "AA"}, {"q": "Heterozygous genotype: ", "a": "Aa"}, {"q": "Homozygous recessive: ", "a": "aa"}, {"q": "Aa × Aa gives phenotype ratio (dominant:recessive): ", "a": "3:1"}, {"q": "AA × aa gives phenotype ratio: ", "a": "1:0"}, {"q": "Aa × aa phenotype ratio: ", "a": "1:1"}, {"q": "Two independent Aa × Aa crosses. P(both offspring show recessive) = ", "a": "1/16"}, {"q": "% of Aa × Aa offspring showing recessive trait = ", "a": "25%"}, {"q": "In sex-linked recessive on X, if father affected (X^aY) × carrier mother (X^AX^a). P(affected daughter) = ", "a": "1/4"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 1/4 | (2) 1/4 | (3) Aa | (4) 25% | (5) 75% | (6) 25 | (7) 1/2 | (8) 1/2 | (9) 1/4 | (10) 1/2</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Genetics Probability (Punnett Squares) · Dr. Park</footer>

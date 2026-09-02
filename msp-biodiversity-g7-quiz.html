@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Ratio 12:8 simplified =  <input class="ans" data-a="3:2" size="6"></li>
 <li>Ratio 10:15:5 simplified =  <input class="ans" data-a="2:3:1" size="8"></li>
 <li>% of 30 out of 150 =  <input class="ans" data-a="20" size="6"></li>
@@ -208,7 +215,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Species richness = number of different species. If a plot has 5 species, richness = ", "a": "5"}, {"q": "A plot has species A(20), B(10), C(5), D(2), E(1). Total individuals = ", "a": "38"}, {"q": "Same plot: richness (# species) = ", "a": "5"}, {"q": "If you double the number of species but keep individuals same, richness: (increases/decreases)", "a": "increases"}, {"q": "Two areas: A has 8 species, B has 3 species. Higher biodiversity? (A/B)", "a": "A"}, {"q": "Diversity index: measures both richness and: ", "a": "evenness"}, {"q": "Even distribution of species means diversity is: (higher/lower)", "a": "higher"}, {"q": "One species making up 95% of individuals: evenness is (high/low)", "a": "low"}, {"q": "Sampling: 4 quadrats each have 10 birds. Average birds per quadrat = ", "a": "10"}, {"q": "Total 40 birds in 100 m². Density = birds per m²", "a": "0.4"}, {"q": "40 birds in 100 m². Estimate for 500 m² = ", "a": "200"}, {"q": "Estimated population: mark-recapture. Marked 20, recapture 50 with 10 marked. N ≈ ", "a": "100"}, {"q": "Mark-recapture: M=30, C=60, R=15. N ≈ ", "a": "120"}, {"q": "Simpson's D formula includes Σ(n(n−1))/N(N−1). If 2 species each with n=5, N=10: numerator = ", "a": "40"}, {"q": "Extinction rate is number of species lost per: (unit time/individual)", "a": "unit time"}, {"q": "Biodiversity hotspot: area with high species number and high: ", "a": "endemism"}, {"q": "Which has more species: tropical rainforest or tundra? ", "a": "tropical rainforest"}, {"q": "% of species already documented is approximately: (10-20%/50%/90%)", "a": "10-20%"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 3:2 | (2) 2:3:1 | (3) 20% | (4) A | (5) 1/20 | (6) 25% | (7) 2:3 | (8) 50% | (9) 10:15 = 2:3 | (10) 60%</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Biodiversity Statistics · Dr. Park</footer>

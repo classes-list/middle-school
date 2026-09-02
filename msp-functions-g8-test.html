@@ -110,6 +110,7 @@ function restorePracticeQuestions(){
 }
 
 function applyMode(mode) {
+  savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
   document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
@@ -192,7 +193,13 @@ function setMode(mode) {
 <main>
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
-<ol class="qlist" id="qlist">
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
 <li>Define function. <input class="ans" data-a="A relation where each input has exactly one output" size="22"></li>
 <li>Vertical Line Test: not a function if line hits ___ <input class="ans" data-a="more than once" size="17"></li>
 <li>f(x) = 3x + 2. f(0) =  <input class="ans" data-a="2" size="6"></li>
@@ -218,7 +225,12 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Is {(1,2),(2,3),(3,4)} a function? (yes/no)", "a": "yes"}, {"q": "Is {(1,2),(1,3),(2,4)} a function? ", "a": "no"}, {"q": "Vertical line test: pass = function? (yes/no)", "a": "yes"}, {"q": "f(x)=2x+3. f(4) = ", "a": "11"}, {"q": "f(x)=x²−1. f(3) = ", "a": "8"}, {"q": "f(x)=3x−7. f(5) = ", "a": "8"}, {"q": "f(x)=x/2+4. f(6) = ", "a": "7"}, {"q": "f(x)=−2x+5. f(3) = ", "a": "-1"}, {"q": "f(x)=x². f(−4) = ", "a": "16"}, {"q": "Linear if graph is a: ", "a": "line"}, {"q": "Nonlinear if graph is: (curve/line)", "a": "curve"}, {"q": "Is y = 2x + 5 linear? ", "a": "yes"}, {"q": "Is y = x² linear? ", "a": "no"}, {"q": "Is y = 3/x linear? ", "a": "no"}, {"q": "Slope of y = −3x + 8: ", "a": "-3"}, {"q": "y-intercept of y = 4x − 9: ", "a": "-9"}, {"q": "Function passes (0,3) and (2,7). Slope = ", "a": "2"}, {"q": "Function passes (1,5) and (4,14). Slope = ", "a": "3"}, {"q": "Domain of {(1,2),(3,4),(5,6)} (write with commas)= ", "a": "1,3,5"}, {"q": "Range of {(1,2),(3,4),(5,6)} = ", "a": "2,4,6"}]
   </script>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) A relation where each input has exactly one output | (2) more than once | (3) 2 | (4) 14 | (5) 36 | (6) 9 | (7) -1 | (8) -10 | (9) 0 | (10) Yes | (11) No | (12) Yes | (13) Yes | (14) No | (15) No | (16) Yes | (17) No (parabola) | (18) No (hyperbola) | (19) Yes | (20) No (cubic)</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Functions · Dr. Park</footer>
