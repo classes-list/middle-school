@@ -27,35 +27,62 @@ ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:12px;width:3
 .ak h4{color:#3f6212;margin-bottom:8px;font-size:1rem}
 footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
 @media print{body{background:#fff;padding:0} main{box-shadow:none;border:1px solid #cbd5e1} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans { display:inline-block; min-width:120px; max-width:280px; padding:5px 10px; margin-left:6px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.98rem; font-weight:700; background:#fff; color:#1f2937; transition:all .15s ease; }
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn { display:inline-block; background:#2563eb; color:#fff; border:1px solid #1e40af; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; }
+.check-btn:hover { background:#1e40af; }
+.reset-btn { display:inline-block; background:#f1f5f9; color:#1a2a4a; border:1px solid #cbd5e1; padding:10px 14px; border-radius:6px; font-weight:700; font-size:.9rem; cursor:pointer; margin:16px 4px 6px 0; }
+.reset-btn:hover { background:#e2e8f0; }
+.score { display:inline-block; padding:8px 16px; margin-left:6px; font-weight:800; font-size:1rem; border-radius:6px; background:#f1f5f9; color:#1a2a4a; min-width:140px; text-align:center; vertical-align:middle; }
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+@media print { .check-btn, .reset-btn, .score { display:none !important; } input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; } }
+
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 8 · Quiz</div>
   <h1>🧊 Volume of Cylinders, Cones, Spheres Quiz</h1>
   <p class="tagline">V formulas for round solids.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p></header>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
 <ol class="qlist">
-<li>V cylinder =  <span class="answer-line"></span></li>
-<li>V cone =  <span class="answer-line"></span></li>
-<li>V sphere =  <span class="answer-line"></span></li>
-<li>Cylinder r=2, h=5. V (π=3.14) <span class="answer-line"></span></li>
-<li>Cone r=2, h=5. V <span class="answer-line"></span></li>
-<li>Sphere r=3. V <span class="answer-line"></span></li>
-<li>Cylinder vs cone same r, h. Ratio =  <span class="answer-line"></span></li>
-<li>Sphere r=6. V ≈ <span class="answer-line"></span></li>
-<li>r=1 sphere. V ≈ <span class="answer-line"></span></li>
-<li>r=10 cylinder h=5. V ≈ <span class="answer-line"></span></li>
+<li>V cylinder =  <input class="ans" data-a="πr²h" size="7"></li>
+<li>V cone =  <input class="ans" data-a="⅓πr²h" size="8"></li>
+<li>V sphere =  <input class="ans" data-a="(4/3)πr³" size="11"></li>
+<li>Cylinder r=2, h=5. V (π=3.14) <input class="ans" data-a="62.8" size="7"></li>
+<li>Cone r=2, h=5. V <input class="ans" data-a="20.93" size="8"></li>
+<li>Sphere r=3. V <input class="ans" data-a="113.04" size="9"></li>
+<li>Cylinder vs cone same r, h. Ratio =  <input class="ans" data-a="3:1" size="6"></li>
+<li>Sphere r=6. V ≈ <input class="ans" data-a="904.32" size="9"></li>
+<li>r=1 sphere. V ≈ <input class="ans" data-a="4.19" size="7"></li>
+<li>r=10 cylinder h=5. V ≈ <input class="ans" data-a="1570" size="7"></li>
 
 </ol>
-<button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) πr²h | (2) ⅓πr²h | (3) (4/3)πr³ | (4) 62.8 | (5) 20.93 | (6) 113.04 | (7) 3:1 | (8) 904.32 | (9) 4.19 | (10) 1570</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Volume of Cylinders, Cones, Spheres · Dr. Park</footer>
 </div>
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';s=s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*').replace(/x/g,'*').replace(/\*10\^(-?\d+)/g,'e$1').replace(/10\^(-?\d+)/g,'1e$1');return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(s,e){if(!e)return null;const ns=toNumber(s),ne=toNumber(e);if(ns!==null&&ne!==null){if(Math.abs(ne)<1e-12)return Math.abs(ns)<1e-9;return Math.abs(ns-ne)/Math.abs(ne)<5e-3;}return normalizeAns(s)===normalizeAns(e);}
+function checkAllQuiz(){const r=document.querySelector('main');if(!r)return;let c=0,ck=0;r.querySelectorAll('input.ans').forEach(i=>{const e=i.dataset.a||'';if(!e){i.classList.add('nocheck');return;}ck++;const s=i.value;if(!s.trim()){i.classList.remove('correct','wrong');return;}const ok=isCorrect(s,e);i.classList.toggle('correct',ok===true);i.classList.toggle('wrong',ok===false);if(ok===true)c++;});const se=document.getElementById('score-quiz');if(se){const p=ck?Math.round(100*c/ck):0;se.textContent=`${c} / ${ck}  (${p}%)`;se.classList.remove('good','mid','low');if(p>=90)se.classList.add('good');else if(p>=70)se.classList.add('mid');else se.classList.add('low');}}
+function resetQuiz(){document.querySelectorAll('main input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');});const se=document.getElementById('score-quiz');if(se){se.textContent='—';se.classList.remove('good','mid','low');}}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();checkAllQuiz();}});
+
+</script>
 </body></html>
