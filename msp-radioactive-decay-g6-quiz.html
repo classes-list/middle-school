@@ -42,7 +42,24 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 .score.good { background:#dcfce7; color:#14532d; }
 .score.mid { background:#fef9c3; color:#713f12; }
 .score.low { background:#fee2e2; color:#7f1d1d; }
-@media print { .check-btn, .reset-btn, .score, .submit-btn, .name-bar { display:none !important; } input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; } }
+@media print {
+  body { background:#fff !important; padding:0 !important; }
+  main { box-shadow:none !important; border:none !important; }
+  .container { max-width:100% !important; }
+  .check-btn, .reset-btn, .score, .submit-btn, .name-bar, .print-btn, .reveal-btn,
+  #mode-practice, #mode-graded, #mode-badge, .digitally-fillable-note,
+  .back-to-unit, #submit-block, #locked-msg, #prior-attempt-banner,
+  .correction-label, .instructions, footer, .ak, .submit-note, .mode-toolbar { display:none !important; }
+  input.ans { border:none !important; border-bottom:1.5px solid #000 !important; background:transparent !important; border-radius:0 !important; color:#000 !important; min-width:100px !important; }
+  .container::before {
+    content: "Name: ______________________________     Date: ______________     Grade / Class: __________";
+    display:block; font-size:.95rem; margin-bottom:14px; font-weight:600; padding-bottom:8px; border-bottom:1px solid #000;
+  }
+  h1 { font-size:1.4rem !important; }
+  .tagline { display:none; }
+  header { text-align:left !important; margin-bottom:14px !important; }
+  ol.qlist > li { page-break-inside:avoid; }
+}
 
 .name-bar { background:#f0f9ff; border:1.5px solid #93c5fd; border-radius:8px; padding:10px 14px; margin:10px 0 16px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; font-size:.95rem; }
 .name-bar label { font-weight:800; color:#1e40af; }
@@ -56,11 +73,12 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
   <div class="eyebrow">Grade 6 · Quiz</div>
   <h1>☢️ Radioactive Half-Life Quiz</h1>
   <p class="tagline">Model exponential decay with a simple constant ratio.</p>
-<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p><div style="margin-top:10px; display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap;">
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p><div class="mode-toolbar" style="margin-top:10px; display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap;">
   <span style="font-size:.85rem; color:#64748b; font-weight:700;">Mode:</span>
   <button id="mode-practice" type="button" onclick="setMode('practice')" style="padding:6px 14px; border-radius:6px; border:1.5px solid #16a34a; background:#dcfce7; color:#14532d; font-weight:800; font-size:.85rem; cursor:pointer;">📖 Practice</button>
   <button id="mode-graded" type="button" onclick="setMode('graded')" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.85rem; cursor:pointer;">📝 Graded</button>
   <div id="mode-badge" style="display:inline-block; margin-left:6px; padding:4px 12px; border-radius:999px; font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;"></div>
+  <button type="button" onclick="window.print()" class="print-btn" style="margin-left:12px; padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#e0f2fe; color:#0c4a6e; font-weight:800; font-size:.85rem; cursor:pointer;">🖨 Print Quiz</button>
 </div>
 </header>
 <script>
