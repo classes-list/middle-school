@@ -42,21 +42,157 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 .score.good { background:#dcfce7; color:#14532d; }
 .score.mid { background:#fef9c3; color:#713f12; }
 .score.low { background:#fee2e2; color:#7f1d1d; }
-@media print { .check-btn, .reset-btn, .score { display:none !important; } input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; } }
+@media print { .check-btn, .reset-btn, .score, .submit-btn, .name-bar { display:none !important; } input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; } }
 
+.name-bar { background:#f0f9ff; border:1.5px solid #93c5fd; border-radius:8px; padding:10px 14px; margin:10px 0 16px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; font-size:.95rem; }
+.name-bar label { font-weight:800; color:#1e40af; }
+.name-bar input { flex:1; min-width:180px; padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.submit-btn { display:inline-block; background:#059669; color:#fff; border:1px solid #047857; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; text-decoration:none; }
+.submit-btn:hover { background:#047857; color:#fff; }
+.submit-note { display:block; font-size:.85rem; color:#64748b; margin:6px 0 0; }
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 7 · Quiz</div>
   <h1>🧬 Genetics Probability (Punnett Squares) Quiz</h1>
   <p class="tagline">Predict offspring traits using probability.</p>
-<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p></header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p><div style="margin-top:10px; display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap;">
+  <span style="font-size:.85rem; color:#64748b; font-weight:700;">Mode:</span>
+  <button id="mode-practice" type="button" onclick="setMode('practice')" style="padding:6px 14px; border-radius:6px; border:1.5px solid #16a34a; background:#dcfce7; color:#14532d; font-weight:800; font-size:.85rem; cursor:pointer;">📖 Practice</button>
+  <button id="mode-graded" type="button" onclick="setMode('graded')" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.85rem; cursor:pointer;">📝 Graded</button>
+  <div id="mode-badge" style="display:inline-block; margin-left:6px; padding:4px 12px; border-radius:999px; font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;"></div>
+</div>
+</header>
+<script>
+
+// --- Randomized graded question pool support ---
+let __practiceQlistHTML = null;
+function savePracticeIfNeeded(){
+  if (__practiceQlistHTML === null) {
+    const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+    if (ol) __practiceQlistHTML = ol.innerHTML;
+  }
+}
+function loadGradedPool(){
+  const el = document.getElementById('graded-pool');
+  if (!el) return null;
+  try { return JSON.parse(el.textContent); } catch(e){ return null; }
+}
+function pickGradedSelection(poolSize, n){
+  const key = 'msp-graded-'+location.pathname.split('/').pop()+'-selection';
+  try { const s = localStorage.getItem(key); if (s) { const arr = JSON.parse(s); if (Array.isArray(arr) && arr.length && arr.every(x=>Number.isInteger(x)&&x<poolSize)) return arr; } } catch(e){}
+  const idx = Array.from({length: poolSize}, (_,i)=>i);
+  for (let i = idx.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  const sel = idx.slice(0, Math.min(n, poolSize));
+  try { localStorage.setItem(key, JSON.stringify(sel)); } catch(e){}
+  return sel;
+}
+function escAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function renderGradedQuestions(){
+  const pool = loadGradedPool();
+  if (!pool || !pool.length) return false;
+  const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+  if (!ol) return false;
+  const practiceCount = (__practiceQlistHTML || ol.innerHTML).match(/<li\b/gi);
+  const N = practiceCount ? practiceCount.length : 10;
+  const sel = pickGradedSelection(pool.length, N);
+  ol.innerHTML = sel.map(i => {
+    const item = pool[i];
+    const size = Math.max(6, Math.min(20, (String(item.a).length || 8) + 3));
+    return `<li>${item.q} <input class="ans" data-a="${escAttr(item.a)}" size="${size}"></li>`;
+  }).join('\n');
+  return true;
+}
+function restorePracticeQuestions(){
+  if (__practiceQlistHTML === null) return;
+  const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+  if (ol) ol.innerHTML = __practiceQlistHTML;
+}
+
+function applyMode(mode) {
+  document.querySelectorAll('.correction-label').forEach(n=>n.remove());
+  document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
+  const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
+  const chkBtn=document.querySelector('.check-btn'); if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='✓ Check Answers';}
+  const resetBtnEl=document.querySelector('.reset-btn'); if(resetBtnEl){resetBtnEl.style.display='';}
+  const priorB = document.getElementById('prior-attempt-banner'); if(priorB) priorB.remove();
+  if (mode === 'graded') { renderGradedQuestions(); } else { restorePracticeQuestions(); }
+  const badge = document.getElementById('mode-badge');
+  const revealBtn = document.getElementById('reveal-ak');
+  const submitBlock = document.getElementById('submit-block');
+  const nameBar = document.querySelector('.name-bar');
+  const btnP = document.getElementById('mode-practice');
+  const btnG = document.getElementById('mode-graded');
+  const active = 'padding:6px 14px; border-radius:6px; font-weight:800; font-size:.85rem; cursor:pointer;';
+  const inactive = 'padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.85rem; cursor:pointer;';
+  if (mode === 'graded') {
+    if (badge) { badge.textContent = '📝 Graded Mode'; badge.style.background='#fee2e2'; badge.style.color='#7f1d1d'; }
+    if (revealBtn) revealBtn.style.display = 'none';
+    const akDiv = document.getElementById('ak'); if (akDiv) akDiv.classList.remove('open');
+    if (submitBlock) submitBlock.style.display = 'block';
+    if (nameBar) nameBar.style.display = 'flex';
+    if (resetBtnEl) resetBtnEl.style.display = 'none';
+    if (btnP) btnP.setAttribute('style', inactive);
+    if (btnG) btnG.setAttribute('style', active + ' border:1.5px solid #dc2626; background:#fee2e2; color:#7f1d1d;');
+  } else {
+    if (badge) { badge.textContent = '📖 Practice Mode'; badge.style.background='#dcfce7'; badge.style.color='#14532d'; }
+    if (revealBtn) revealBtn.style.display = 'inline-block';
+    if (submitBlock) submitBlock.style.display = 'none';
+    if (nameBar) nameBar.style.display = 'none';
+    if (resetBtnEl) resetBtnEl.style.display = 'inline-block';
+    if (btnP) btnP.setAttribute('style', active + ' border:1.5px solid #16a34a; background:#dcfce7; color:#14532d;');
+    if (btnG) btnG.setAttribute('style', inactive);
+  }
+}
+function setMode(mode) {
+  const url = new URL(location.href);
+  if (mode === 'graded') url.searchParams.set('mode','graded'); else url.searchParams.delete('mode');
+  history.replaceState(null, '', url.toString());
+  applyMode(mode);
+}
+(function(){
+  const params = new URLSearchParams(location.search);
+  const g = params.get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    const eb = document.getElementById('grade-eyebrow');
+    if (eb) eb.textContent = `Grade ${g} · Quiz`;
+  }
+  const mode = (params.get('mode')||'practice').toLowerCase();
+  applyMode(mode === 'graded' ? 'graded' : 'practice');
+  if (mode === 'graded') {
+    bumpAttemptCount();
+    const state = loadGradedState();
+    if (state && state.checkedAt) {
+      const inputs = document.querySelectorAll('main input.ans');
+      inputs.forEach((i,idx)=>{ if(state.answers && state.answers[idx]!=null) i.value = state.answers[idx]; });
+      const nEl = document.getElementById('student-name'); if(nEl && state.name) nEl.value = state.name;
+      const pEl = document.getElementById('student-period'); if(pEl && state.period) pEl.value = state.period;
+      const main = document.querySelector('main');
+      if(main && !document.getElementById('prior-attempt-banner')){
+        const banner = document.createElement('div');
+        banner.id = 'prior-attempt-banner';
+        banner.style.cssText = 'margin:0 0 14px; padding:12px 16px; background:#fee2e2; border-left:5px solid #dc2626; border-radius:6px; font-size:.95rem; color:#7f1d1d; font-weight:700;';
+        const submittedNote = state.submittedAt ? ` and submitted at <strong>${fmtTime(state.submittedAt)}</strong>` : '';
+        banner.innerHTML = `⚠️ This quiz was already checked on <strong>${fmtTime(state.checkedAt)}</strong>${submittedNote}. Your original answers and score are shown below. You cannot retake in graded mode. (Attempts: ${getAttemptCount()})`;
+        main.insertBefore(banner, main.firstChild);
+      }
+      setTimeout(checkAllQuiz, 0);
+    } else {
+      const prevStart = parseInt(localStorage.getItem(storageKey()+'-start')||'0',10);
+      if (prevStart) __quizStartTime = prevStart;
+      document.querySelectorAll('main input.ans').forEach(i=>{
+        i.addEventListener('input', markStart, {once:false});
+      });
+    }
+  }
+})();
+</script>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
-<ol class="qlist">
+<ol class="qlist" id="qlist">
 <li>Cross Aa × Aa: fraction AA? <input class="ans" data-a="1/4" size="6"></li>
 <li>Aa × Aa: fraction aa? <input class="ans" data-a="1/4" size="6"></li>
 <li>AA × aa: what genotype? <input class="ans" data-a="Aa" size="6"></li>
@@ -69,7 +205,10 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>P(heterozygous) from Aa × Aa? <input class="ans" data-a="1/2" size="6"></li>
 
 </ol>
-<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <script id="graded-pool" type="application/json">
+  [{"q": "Punnett Aa × Aa. P(AA offspring) = ", "a": "1/4"}, {"q": "Punnett Aa × Aa. P(Aa) = ", "a": "1/2"}, {"q": "Aa × Aa. P(aa) = ", "a": "1/4"}, {"q": "Aa × Aa. P(dominant phenotype) = ", "a": "3/4"}, {"q": "Aa × aa. P(Aa offspring) = ", "a": "1/2"}, {"q": "AA × aa. All offspring genotype = ", "a": "Aa"}, {"q": "AA × Aa. P(AA) = ", "a": "1/2"}, {"q": "Aa × aa. P(aa) = ", "a": "1/2"}, {"q": "Two heterozygous parents. Fraction of offspring showing recessive trait = ", "a": "1/4"}, {"q": "Dominant allele shown with what case letter? (upper/lower)", "a": "upper"}, {"q": "Recessive allele shown with what case? ", "a": "lower"}, {"q": "Homozygous dominant genotype (using A/a): ", "a": "AA"}, {"q": "Heterozygous genotype: ", "a": "Aa"}, {"q": "Homozygous recessive: ", "a": "aa"}, {"q": "Aa × Aa gives phenotype ratio (dominant:recessive): ", "a": "3:1"}, {"q": "AA × aa gives phenotype ratio: ", "a": "1:0"}, {"q": "Aa × aa phenotype ratio: ", "a": "1:1"}, {"q": "Two independent Aa × Aa crosses. P(both offspring show recessive) = ", "a": "1/16"}, {"q": "% of Aa × Aa offspring showing recessive trait = ", "a": "25%"}, {"q": "In sex-linked recessive on X, if father affected (X^aY) × carrier mother (X^AX^a). P(affected daughter) = ", "a": "1/4"}]
+  </script>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) 1/4 | (2) 1/4 | (3) Aa | (4) 25% | (5) 75% | (6) 25 | (7) 1/2 | (8) 1/2 | (9) 1/4 | (10) 1/2</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 7 · Genetics Probability (Punnett Squares) · Dr. Park</footer>
@@ -77,12 +216,137 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
 <script>
 
-function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';s=s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*').replace(/x/g,'*').replace(/\*10\^(-?\d+)/g,'e$1').replace(/10\^(-?\d+)/g,'1e$1');return s;}
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';var supMap={'\u2070':'0','\u00b9':'1','\u00b2':'2','\u00b3':'3','\u2074':'4','\u2075':'5','\u2076':'6','\u2077':'7','\u2078':'8','\u2079':'9','\u207b':'-'};s=s.replace(/10([\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079\u207b]+)/g,function(m,g){return'10^'+g.split('').map(function(c){return supMap[c]||c;}).join('');});s=s.replace(/[\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079]/g,function(c){return supMap[c];}).replace(/\u207b/g,'-');s=s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/\u2212/g,'-').replace(/\u00d7/g,'*').replace(/\u00b7/g,'*').replace(/x/g,'*').replace(/\*10\^(-?\d+)/g,'e$1').replace(/10\^(-?\d+)/g,'1e$1');return s;}
 function toNumber(s){const c=normalizeAns(s);if(!c)return null;const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);const n=Number(c);return isFinite(n)?n:null;}
 function isCorrect(s,e){if(!e)return null;const ns=toNumber(s),ne=toNumber(e);if(ns!==null&&ne!==null){if(Math.abs(ne)<1e-12)return Math.abs(ns)<1e-9;return Math.abs(ns-ne)/Math.abs(ne)<5e-3;}return normalizeAns(s)===normalizeAns(e);}
-function checkAllQuiz(){const r=document.querySelector('main');if(!r)return;let c=0,ck=0;r.querySelectorAll('input.ans').forEach(i=>{const e=i.dataset.a||'';if(!e){i.classList.add('nocheck');return;}ck++;const s=i.value;if(!s.trim()){i.classList.remove('correct','wrong');return;}const ok=isCorrect(s,e);i.classList.toggle('correct',ok===true);i.classList.toggle('wrong',ok===false);if(ok===true)c++;});const se=document.getElementById('score-quiz');if(se){const p=ck?Math.round(100*c/ck):0;se.textContent=`${c} / ${ck}  (${p}%)`;se.classList.remove('good','mid','low');if(p>=90)se.classList.add('good');else if(p>=70)se.classList.add('mid');else se.classList.add('low');}}
-function resetQuiz(){document.querySelectorAll('main input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');});const se=document.getElementById('score-quiz');if(se){se.textContent='—';se.classList.remove('good','mid','low');}}
+function isGradedMode(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+function clearCorrectionLabels(){ document.querySelectorAll('.correction-label').forEach(n=>n.remove()); }
+function storageKey(){ return 'msp-graded-'+location.pathname.split('/').pop(); }
+function loadGradedState(){ try { return JSON.parse(localStorage.getItem(storageKey())||'null'); } catch(e){ return null; } }
+function saveGradedState(s){ try { localStorage.setItem(storageKey(), JSON.stringify(s)); } catch(e){} }
+function bumpAttemptCount(){ const k = storageKey()+'-attempts'; const n = (parseInt(localStorage.getItem(k)||'0',10)||0) + 1; try { localStorage.setItem(k, String(n)); } catch(e){} return n; }
+function getAttemptCount(){ return parseInt(localStorage.getItem(storageKey()+'-attempts')||'0',10) || 0; }
+function fmtTime(ts){ try { return new Date(ts).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); } catch(e){ return String(ts); } }
+let __quizStartTime = null;
+function markStart(){ if(!__quizStartTime && isGradedMode()){ __quizStartTime = Date.now(); try { localStorage.setItem(storageKey()+'-start', String(__quizStartTime)); } catch(e){} } }
+function checkAllQuiz(){
+  const r=document.querySelector('main');if(!r)return;
+  const graded = isGradedMode();
+  clearCorrectionLabels();
+  let c=0,ck=0;
+  r.querySelectorAll('input.ans').forEach(i=>{
+    const e=i.dataset.a||'';
+    if(!e){i.classList.add('nocheck');return;}
+    ck++;
+    const s=i.value;
+    if(!s.trim()){i.classList.remove('correct','wrong');return;}
+    const ok=isCorrect(s,e);
+    i.classList.toggle('correct',ok===true);
+    i.classList.toggle('wrong',ok===false);
+    if(ok===true) c++;
+    if(graded && ok===false){
+      const lbl=document.createElement('span');
+      lbl.className='correction-label';
+      lbl.style.cssText='display:inline-block; margin-left:8px; padding:3px 8px; background:#fef3c7; border:1px solid #b8860b; border-radius:6px; font-size:.85rem; font-weight:800; color:#78350f;';
+      lbl.textContent='\u2192 correct: '+e;
+      i.insertAdjacentElement('afterend', lbl);
+    }
+  });
+  const se=document.getElementById('score-quiz');
+  if(se){const p=ck?Math.round(100*c/ck):0;se.textContent=`${c} / ${ck}  (${p}%)`;se.classList.remove('good','mid','low');if(p>=90)se.classList.add('good');else if(p>=70)se.classList.add('mid');else se.classList.add('low');}
+  if(graded){
+    r.querySelectorAll('input.ans').forEach(i=>{i.readOnly=true; i.style.opacity='0.9'; i.style.cursor='not-allowed';});
+    const chkBtn=document.querySelector('.check-btn');
+    if(chkBtn){chkBtn.disabled=true; chkBtn.style.opacity='0.5'; chkBtn.style.cursor='not-allowed'; chkBtn.textContent='\u2713 Checked (locked)';}
+    const resetBtn=document.querySelector('.reset-btn');
+    if(resetBtn){resetBtn.style.display='none';}
+    let lock=document.getElementById('locked-msg');
+    if(!lock){
+      lock=document.createElement('div');
+      lock.id='locked-msg';
+      lock.style.cssText='margin:10px 0; padding:10px 14px; background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; font-size:.92rem; color:#78350f; font-weight:700;';
+      lock.innerHTML='\U0001F512 Your answers are locked. Review the corrections above, then click <strong>Submit to Dr. Park</strong> below.';
+      const sb=document.getElementById('submit-block');
+      if(sb) sb.parentNode.insertBefore(lock, sb);
+    }
+    const answers = {};
+    r.querySelectorAll('input.ans').forEach((i,idx)=>{ answers[idx]=i.value; });
+    const state = loadGradedState() || {};
+    if(!state.checkedAt){
+      state.checkedAt = Date.now();
+      state.startAt = __quizStartTime || parseInt(localStorage.getItem(storageKey()+'-start')||Date.now(),10);
+      state.answers = answers;
+      state.score = (se && se.textContent) || '';
+      state.attempts = getAttemptCount();
+      state.name = (document.getElementById('student-name')||{}).value || '';
+      state.period = (document.getElementById('student-period')||{}).value || '';
+      saveGradedState(state);
+    }
+  }
+}
+function resetQuiz(){
+  document.querySelectorAll('main input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');i.readOnly=false;i.style.opacity='';i.style.cursor='';});
+  clearCorrectionLabels();
+  const se=document.getElementById('score-quiz');
+  if(se){se.textContent='—';se.classList.remove('good','mid','low');}
+  const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
+  const chkBtn=document.querySelector('.check-btn');
+  if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='\u2713 Check Answers';}
+  const resetBtn=document.querySelector('.reset-btn'); if(resetBtn){resetBtn.style.display='';}
+}
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();checkAllQuiz();}});
+
+function submitToTeacher(){
+  const nameEl = document.getElementById('student-name');
+  const periodEl = document.getElementById('student-period');
+  const name = (nameEl && nameEl.value || '').trim();
+  const period = (periodEl && periodEl.value || '').trim();
+  if(!name){ alert('Please enter your name first, then click Submit again.'); nameEl && nameEl.focus(); return; }
+  if(!period){ alert('Please enter your Grade / Class (e.g. 7A) first, then click Submit again.'); periodEl && periodEl.focus(); return; }
+  checkAllQuiz();
+  const title = (document.querySelector('h1')||{}).textContent || document.title || 'Math Quiz';
+  const scoreText = (document.getElementById('score-quiz')||{}).textContent || '(not scored)';
+  const lines = [];
+  document.querySelectorAll('ol.qlist > li').forEach((li,idx)=>{
+    const inp = li.querySelector('input.ans');
+    if(!inp) return;
+    const clone = li.cloneNode(true);
+    clone.querySelectorAll('input, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
+    const qText = clone.textContent.trim().replace(/\s+/g,' ').slice(0,120);
+    const student = (inp.value||'').trim() || '(blank)';
+    let mark = '';
+    if(inp.classList.contains('correct')) mark = ' \u2713';
+    else if(inp.classList.contains('wrong')) mark = ` \u2717 (correct: ${inp.dataset.a||''})`;
+    lines.push(`${idx+1}. ${qText}\n    Answer: ${student}${mark}`);
+  });
+  const subject = `${title.replace(/^[^A-Za-z0-9]+/,'').trim()} \u2014 ${name}`;
+  const state = loadGradedState() || {};
+  const startTs = state.startAt ? new Date(state.startAt) : null;
+  const checkedTs = state.checkedAt ? new Date(state.checkedAt) : null;
+  const submitTs = new Date();
+  const durationSec = startTs ? Math.round((submitTs - startTs)/1000) : null;
+  const durStr = durationSec != null ? (durationSec >= 60 ? `${Math.floor(durationSec/60)} min ${durationSec%60} sec` : `${durationSec} sec`) : 'unknown';
+  const attempts = getAttemptCount();
+  state.submittedAt = submitTs.getTime();
+  saveGradedState(state);
+  const body =
+`Student: ${name}
+${period ? 'Grade/Class: '+period+'\n' : ''}Score: ${scoreText}
+
+\u23F1 Timing:
+  Started:   ${startTs ? startTs.toLocaleString('en-US') : '(not recorded)'}
+  Checked:   ${checkedTs ? checkedTs.toLocaleString('en-US') : '(not recorded)'}
+  Submitted: ${submitTs.toLocaleString('en-US')}
+  Duration:  ${durStr}
+  Page load attempts: ${attempts}${attempts>1?'  \u26A0\uFE0F (multiple loads \u2014 possible retake)':''}
+
+${lines.join('\n\n')}
+
+\u2014
+Submitted from ${location.href}`;
+  const gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  window.open(gmail, '_blank');
+}
 
 </script>
 </body></html>
