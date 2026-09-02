@@ -27,35 +27,62 @@ ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:12px;width:3
 .ak h4{color:#3f6212;margin-bottom:8px;font-size:1rem}
 footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
 @media print{body{background:#fff;padding:0} main{box-shadow:none;border:1px solid #cbd5e1} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans { display:inline-block; min-width:120px; max-width:280px; padding:5px 10px; margin-left:6px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.98rem; font-weight:700; background:#fff; color:#1f2937; transition:all .15s ease; }
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn { display:inline-block; background:#2563eb; color:#fff; border:1px solid #1e40af; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; }
+.check-btn:hover { background:#1e40af; }
+.reset-btn { display:inline-block; background:#f1f5f9; color:#1a2a4a; border:1px solid #cbd5e1; padding:10px 14px; border-radius:6px; font-weight:700; font-size:.9rem; cursor:pointer; margin:16px 4px 6px 0; }
+.reset-btn:hover { background:#e2e8f0; }
+.score { display:inline-block; padding:8px 16px; margin-left:6px; font-weight:800; font-size:1rem; border-radius:6px; background:#f1f5f9; color:#1a2a4a; min-width:140px; text-align:center; vertical-align:middle; }
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+@media print { .check-btn, .reset-btn, .score { display:none !important; } input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; } }
+
 </style></head><body>
 <div class="container">
 <header>
   <div class="eyebrow">Grade 8 · Quiz</div>
   <h1>📈 Linear Functions & Slope-Intercept Quiz</h1>
   <p class="tagline">y = mx + b: slope + y-intercept.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p></header>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
 <ol class="qlist">
-<li>Slope-intercept form: y = ___ <span class="answer-line"></span></li>
-<li>In y = 3x + 4, m = ? b = ? <span class="answer-line"></span></li>
-<li>In y = -2x, m = ? b = ? <span class="answer-line"></span></li>
-<li>Graph y = x + 2. y-intercept? <span class="answer-line"></span></li>
-<li>Slope of y = 5x − 1? <span class="answer-line"></span></li>
-<li>Slope of y = -3? <span class="answer-line"></span></li>
-<li>m=2, b=5. Equation? <span class="answer-line"></span></li>
-<li>Line through (0,3), (2,7). Slope? <span class="answer-line"></span></li>
-<li>Line through (0,3), (2,7). Equation? <span class="answer-line"></span></li>
-<li>y-intercept means the point where the line crosses ___ axis <span class="answer-line"></span></li>
+<li>Slope-intercept form: y = ___ <input class="ans" data-a="mx + b" size="9"></li>
+<li>In y = 3x + 4, m = ? b = ? <input class="ans" data-a="4" size="6"></li>
+<li>In y = -2x, m = ? b = ? <input class="ans" data-a="0" size="6"></li>
+<li>Graph y = x + 2. y-intercept? <input class="ans" data-a="" size="11"></li>
+<li>Slope of y = 5x − 1? <input class="ans" data-a="5" size="6"></li>
+<li>Slope of y = -3? <input class="ans" data-a="0" size="6"></li>
+<li>m=2, b=5. Equation? <input class="ans" data-a="2x+5" size="7"></li>
+<li>Line through (0,3), (2,7). Slope? <input class="ans" data-a="2" size="6"></li>
+<li>Line through (0,3), (2,7). Equation? <input class="ans" data-a="2x+3" size="7"></li>
+<li>y-intercept means the point where the line crosses ___ axis <input class="ans" data-a="y" size="6"></li>
 
 </ol>
-<button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
 <div id="ak" class="ak"><h4>Answer Key</h4>(1) mx + b | (2) m=3, b=4 | (3) m=-2, b=0 | (4) (0,2) | (5) 5 | (6) 0 | (7) y=2x+5 | (8) 2 | (9) y=2x+3 | (10) y</div>
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Grade 8 · Linear Functions & Slope-Intercept · Dr. Park</footer>
 </div>
 <script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';s=s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*').replace(/x/g,'*').replace(/\*10\^(-?\d+)/g,'e$1').replace(/10\^(-?\d+)/g,'1e$1');return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(s,e){if(!e)return null;const ns=toNumber(s),ne=toNumber(e);if(ns!==null&&ne!==null){if(Math.abs(ne)<1e-12)return Math.abs(ns)<1e-9;return Math.abs(ns-ne)/Math.abs(ne)<5e-3;}return normalizeAns(s)===normalizeAns(e);}
+function checkAllQuiz(){const r=document.querySelector('main');if(!r)return;let c=0,ck=0;r.querySelectorAll('input.ans').forEach(i=>{const e=i.dataset.a||'';if(!e){i.classList.add('nocheck');return;}ck++;const s=i.value;if(!s.trim()){i.classList.remove('correct','wrong');return;}const ok=isCorrect(s,e);i.classList.toggle('correct',ok===true);i.classList.toggle('wrong',ok===false);if(ok===true)c++;});const se=document.getElementById('score-quiz');if(se){const p=ck?Math.round(100*c/ck):0;se.textContent=`${c} / ${ck}  (${p}%)`;se.classList.remove('good','mid','low');if(p>=90)se.classList.add('good');else if(p>=70)se.classList.add('mid');else se.classList.add('low');}}
+function resetQuiz(){document.querySelectorAll('main input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');});const se=document.getElementById('score-quiz');if(se){se.textContent='—';se.classList.remove('good','mid','low');}}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();checkAllQuiz();}});
+
+</script>
 </body></html>

@@ -58,6 +58,23 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   cursor:pointer;
 }
 .back-to-unit:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+
+/* --- Digital fillable additions --- */
+input.ans { display:inline-block; min-width:120px; max-width:280px; padding:5px 10px; margin-left:6px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.98rem; font-weight:700; background:#fff; color:#1f2937; transition:all .15s ease; }
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn { display:inline-block; background:#2563eb; color:#fff; border:1px solid #1e40af; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; }
+.check-btn:hover { background:#1e40af; }
+.reset-btn { display:inline-block; background:#f1f5f9; color:#1a2a4a; border:1px solid #cbd5e1; padding:10px 14px; border-radius:6px; font-weight:700; font-size:.9rem; cursor:pointer; margin:16px 4px 6px 0; }
+.reset-btn:hover { background:#e2e8f0; }
+.score { display:inline-block; padding:8px 16px; margin-left:6px; font-weight:800; font-size:1rem; border-radius:6px; background:#f1f5f9; color:#1a2a4a; min-width:140px; text-align:center; vertical-align:middle; }
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+@media print { .check-btn, .reset-btn, .score { display:none !important; } input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; } }
+
 </style>
 </head>
 <body>
@@ -66,7 +83,7 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   <div class="eyebrow" id="grade-eyebrow">Middle School · Unit Test</div>
   <h1>📐 Ratios & Unit Rates Unit Test</h1>
   <p class="tagline">Compare and simplify ratios, find unit rates.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p></header>
 <script>
 (function(){
   const g = new URLSearchParams(location.search).get('grade');
@@ -80,29 +97,29 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   <h2>Unit Test — 20 Problems</h2>
   <div class="instructions">Answer all 20 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
   <ol class="qlist">
-  <li>A recipe: 2 c flour to 3 c milk. Flour : milk =  <span class="answer-line"></span></li>
-<li>15 wins, 5 losses. Simplified =  <span class="answer-line"></span></li>
-<li>Simplify 24 : 36 =  <span class="answer-line"></span></li>
-<li>Simplify 8 : 20 =  <span class="answer-line"></span></li>
-<li>2 : 5 = ? : 20 → missing =  <span class="answer-line"></span></li>
-<li>6 : 8 = 9 : ? → missing =  <span class="answer-line"></span></li>
-<li>150 mi in 3 hr → mph =  <span class="answer-line"></span></li>
-<li>$36 for 4 tickets → per ticket =  <span class="answer-line"></span></li>
-<li>250 words in 5 min → wpm =  <span class="answer-line"></span></li>
-<li>144 heartbeats in 2 min → per min =  <span class="answer-line"></span></li>
-<li>1/2 mi in 1/4 hr → mph =  <span class="answer-line"></span></li>
-<li>2/3 book in 1/4 wk → books/wk =  <span class="answer-line"></span></li>
-<li>1/3 wall in 1/6 hr → walls/hr =  <span class="answer-line"></span></li>
-<li>5/8 tank in 1/2 hr → tanks/hr =  <span class="answer-line"></span></li>
-<li>3 lb apples $6 or 5 lb $9 — better? <span class="answer-line"></span></li>
-<li>8 crackers $2 or 20 crackers $4.50 — better? <span class="answer-line"></span></li>
-<li>Convert 60 mph to miles per minute. <span class="answer-line"></span></li>
-<li>At 1.25 mi/min, how far in 10 min? <span class="answer-line"></span></li>
-<li>A car burns 3 gal in 90 mi. Miles per gallon? <span class="answer-line"></span></li>
-<li>A phone plan: 500 min for $25. Cost per min (cents)? <span class="answer-line"></span></li>
+  <li>A recipe: 2 c flour to 3 c milk. Flour : milk =  <input class="ans" data-a="2 : 3" size="8"></li>
+<li>15 wins, 5 losses. Simplified =  <input class="ans" data-a="3 : 1" size="8"></li>
+<li>Simplify 24 : 36 =  <input class="ans" data-a="2 : 3" size="8"></li>
+<li>Simplify 8 : 20 =  <input class="ans" data-a="2 : 5" size="8"></li>
+<li>2 : 5 = ? : 20 → missing =  <input class="ans" data-a="8" size="6"></li>
+<li>6 : 8 = 9 : ? → missing =  <input class="ans" data-a="12" size="6"></li>
+<li>150 mi in 3 hr → mph =  <input class="ans" data-a="50" size="6"></li>
+<li>$36 for 4 tickets → per ticket =  <input class="ans" data-a="9" size="6"></li>
+<li>250 words in 5 min → wpm =  <input class="ans" data-a="50" size="6"></li>
+<li>144 heartbeats in 2 min → per min =  <input class="ans" data-a="72" size="6"></li>
+<li>1/2 mi in 1/4 hr → mph =  <input class="ans" data-a="2" size="6"></li>
+<li>2/3 book in 1/4 wk → books/wk =  <input class="ans" data-a="8/3 ≈ 2.67" size="13"></li>
+<li>1/3 wall in 1/6 hr → walls/hr =  <input class="ans" data-a="2" size="6"></li>
+<li>5/8 tank in 1/2 hr → tanks/hr =  <input class="ans" data-a="1.25" size="7"></li>
+<li>3 lb apples $6 or 5 lb $9 — better? <input class="ans" data-a="5 lb" size="7"></li>
+<li>8 crackers $2 or 20 crackers $4.50 — better? <input class="ans" data-a="20 for $4.50" size="15"></li>
+<li>Convert 60 mph to miles per minute. <input class="ans" data-a="1 mi/min" size="11"></li>
+<li>At 1.25 mi/min, how far in 10 min? <input class="ans" data-a="12.5 mi" size="10"></li>
+<li>A car burns 3 gal in 90 mi. Miles per gallon? <input class="ans" data-a="30" size="6"></li>
+<li>A phone plan: 500 min for $25. Cost per min (cents)? <input class="ans" data-a="5 cents/min" size="14"></li>
 
   </ol>
-  <button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) 2 : 3 | (2) 3 : 1 | (3) 2 : 3 | (4) 2 : 5 | (5) 8 | (6) 12 | (7) 50 | (8) $9 | (9) 50 | (10) 72 | (11) 2 | (12) 8/3 ≈ 2.67 | (13) 2 | (14) 5/4 = 1.25 | (15) 5 lb ($1.80/lb) | (16) 20 for $4.50 ($0.225 ea) | (17) 1 mi/min | (18) 12.5 mi | (19) 30 mpg | (20) 5 cents/min
@@ -111,5 +128,15 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <footer>Mary, Star of the Sea School · Middle School Math · Ratios & Unit Rates · Dr. Park</footer>
 </div>
 <script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+<script>
+
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';s=s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*').replace(/x/g,'*').replace(/\*10\^(-?\d+)/g,'e$1').replace(/10\^(-?\d+)/g,'1e$1');return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(s,e){if(!e)return null;const ns=toNumber(s),ne=toNumber(e);if(ns!==null&&ne!==null){if(Math.abs(ne)<1e-12)return Math.abs(ns)<1e-9;return Math.abs(ns-ne)/Math.abs(ne)<5e-3;}return normalizeAns(s)===normalizeAns(e);}
+function checkAllQuiz(){const r=document.querySelector('main');if(!r)return;let c=0,ck=0;r.querySelectorAll('input.ans').forEach(i=>{const e=i.dataset.a||'';if(!e){i.classList.add('nocheck');return;}ck++;const s=i.value;if(!s.trim()){i.classList.remove('correct','wrong');return;}const ok=isCorrect(s,e);i.classList.toggle('correct',ok===true);i.classList.toggle('wrong',ok===false);if(ok===true)c++;});const se=document.getElementById('score-quiz');if(se){const p=ck?Math.round(100*c/ck):0;se.textContent=`${c} / ${ck}  (${p}%)`;se.classList.remove('good','mid','low');if(p>=90)se.classList.add('good');else if(p>=70)se.classList.add('mid');else se.classList.add('low');}}
+function resetQuiz(){document.querySelectorAll('main input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');});const se=document.getElementById('score-quiz');if(se){se.textContent='—';se.classList.remove('good','mid','low');}}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();checkAllQuiz();}});
+
+</script>
 </body>
 </html>

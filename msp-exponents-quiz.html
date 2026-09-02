@@ -58,6 +58,23 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   cursor:pointer;
 }
 .back-to-unit:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+
+/* --- Digital fillable additions --- */
+input.ans { display:inline-block; min-width:120px; max-width:280px; padding:5px 10px; margin-left:6px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.98rem; font-weight:700; background:#fff; color:#1f2937; transition:all .15s ease; }
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn { display:inline-block; background:#2563eb; color:#fff; border:1px solid #1e40af; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; }
+.check-btn:hover { background:#1e40af; }
+.reset-btn { display:inline-block; background:#f1f5f9; color:#1a2a4a; border:1px solid #cbd5e1; padding:10px 14px; border-radius:6px; font-weight:700; font-size:.9rem; cursor:pointer; margin:16px 4px 6px 0; }
+.reset-btn:hover { background:#e2e8f0; }
+.score { display:inline-block; padding:8px 16px; margin-left:6px; font-weight:800; font-size:1rem; border-radius:6px; background:#f1f5f9; color:#1a2a4a; min-width:140px; text-align:center; vertical-align:middle; }
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+@media print { .check-btn, .reset-btn, .score { display:none !important; } input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; } }
+
 </style>
 </head>
 <body>
@@ -66,7 +83,7 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   <div class="eyebrow" id="grade-eyebrow">Middle School · Quiz</div>
   <h1>✴️ Exponents Quiz</h1>
   <p class="tagline">Laws of exponents.</p>
-</header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p></header>
 <script>
 (function(){
   const g = new URLSearchParams(location.search).get('grade');
@@ -80,19 +97,19 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
   <h2>Quiz — 10 Problems</h2>
   <div class="instructions">Answer all 10 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
   <ol class="qlist">
-  <li>2³ =  <span class="answer-line"></span></li>
-<li>5² =  <span class="answer-line"></span></li>
-<li>2³ × 2⁴ =  <span class="answer-line"></span></li>
-<li>10⁶ × 10² =  <span class="answer-line"></span></li>
-<li>2⁵ ÷ 2² =  <span class="answer-line"></span></li>
-<li>(2³)² =  <span class="answer-line"></span></li>
-<li>(x⁴)⁵ =  <span class="answer-line"></span></li>
-<li>7⁰ =  <span class="answer-line"></span></li>
-<li>2⁻² =  <span class="answer-line"></span></li>
-<li>1/2⁻³ =  <span class="answer-line"></span></li>
+  <li>2³ =  <input class="ans" data-a="8" size="6"></li>
+<li>5² =  <input class="ans" data-a="25" size="6"></li>
+<li>2³ × 2⁴ =  <input class="ans" data-a="128" size="6"></li>
+<li>10⁶ × 10² =  <input class="ans" data-a="10⁸" size="6"></li>
+<li>2⁵ ÷ 2² =  <input class="ans" data-a="8" size="6"></li>
+<li>(2³)² =  <input class="ans" data-a="64" size="6"></li>
+<li>(x⁴)⁵ =  <input class="ans" data-a="x²⁰" size="6"></li>
+<li>7⁰ =  <input class="ans" data-a="1" size="6"></li>
+<li>2⁻² =  <input class="ans" data-a="1/4" size="6"></li>
+<li>1/2⁻³ =  <input class="ans" data-a="8" size="6"></li>
 
   </ol>
-  <button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+  <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div><button class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
   <div id="ak" class="ak">
     <h4>Answer Key</h4>
     (1) 8 | (2) 25 | (3) 2⁷ = 128 | (4) 10⁸ | (5) 2³ = 8 | (6) 2⁶ = 64 | (7) x²⁰ | (8) 1 | (9) 1/4 | (10) 8
@@ -101,5 +118,15 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <footer>Mary, Star of the Sea School · Middle School Math · Exponents · Dr. Park</footer>
 </div>
 <script>function toggle(id){ document.getElementById(id).classList.toggle('open'); }</script>
+<script>
+
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';s=s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*').replace(/x/g,'*').replace(/\*10\^(-?\d+)/g,'e$1').replace(/10\^(-?\d+)/g,'1e$1');return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(s,e){if(!e)return null;const ns=toNumber(s),ne=toNumber(e);if(ns!==null&&ne!==null){if(Math.abs(ne)<1e-12)return Math.abs(ns)<1e-9;return Math.abs(ns-ne)/Math.abs(ne)<5e-3;}return normalizeAns(s)===normalizeAns(e);}
+function checkAllQuiz(){const r=document.querySelector('main');if(!r)return;let c=0,ck=0;r.querySelectorAll('input.ans').forEach(i=>{const e=i.dataset.a||'';if(!e){i.classList.add('nocheck');return;}ck++;const s=i.value;if(!s.trim()){i.classList.remove('correct','wrong');return;}const ok=isCorrect(s,e);i.classList.toggle('correct',ok===true);i.classList.toggle('wrong',ok===false);if(ok===true)c++;});const se=document.getElementById('score-quiz');if(se){const p=ck?Math.round(100*c/ck):0;se.textContent=`${c} / ${ck}  (${p}%)`;se.classList.remove('good','mid','low');if(p>=90)se.classList.add('good');else if(p>=70)se.classList.add('mid');else se.classList.add('low');}}
+function resetQuiz(){document.querySelectorAll('main input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');});const se=document.getElementById('score-quiz');if(se){se.textContent='—';se.classList.remove('good','mid','low');}}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();checkAllQuiz();}});
+
+</script>
 </body>
 </html>
