@@ -249,16 +249,7 @@ function setMode(mode) {
 </script>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 <main>
-<!-- Save/Load Answers toolbar (hidden in graded mode) -->
-<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
-  <h2>Unit Test — 20 Problems</h2>
+<h2>Unit Test — 20 Problems</h2>
   <div class="instructions">Answer all 20 problems. Show your work in your notebook if needed. Click <strong>Show Answer Key</strong> at the bottom when finished to check.</div>
   <div class="name-bar">
     <label for="student-name">Your name:</label>
@@ -292,6 +283,15 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "A block has mass 30 g and volume 6 cm³. Density = (g/cm³)", "a": "5"}, {"q": "A liquid weighs 48 g and has volume 24 mL. Density = (g/mL)", "a": "2"}, {"q": "A rock's mass is 210 g and volume 30 cm³. Density = ", "a": "7"}, {"q": "A cube has density 2 g/cm³ and volume 15 cm³. Mass = (g)", "a": "30"}, {"q": "Density = 4 g/mL, volume = 12 mL. Mass = ", "a": "48"}, {"q": "Density = 8 g/cm³, mass = 40 g. Volume = (cm³)", "a": "5"}, {"q": "Density = 3 g/mL, mass = 27 g. Volume = ", "a": "9"}, {"q": "Object has D = 1.5 g/cm³. Does it sink or float in water (D = 1.0 g/cm³)? ", "a": "sink"}, {"q": "Object has D = 0.6 g/cm³. Sink or float in water? ", "a": "float"}, {"q": "Ice: D = 0.92 g/cm³. Water: 1.0 g/cm³. Ice sinks or floats? ", "a": "float"}, {"q": "Mercury has D = 13.6 g/cm³. Would a lead ball (D = 11.3) sink in mercury? ", "a": "no"}, {"q": "A 100 g gold bar has D = 19.3 g/cm³. Volume (cm³) rounded to 2 dp = ", "a": "5.18"}, {"q": "Aluminum has D = 2.7 g/cm³. Mass of a 50 cm³ block = (g)", "a": "135"}, {"q": "A liquid: 60 g in 40 mL. Density (g/mL) = ", "a": "1.5"}, {"q": "A container holds 500 mL of a liquid with D = 0.8 g/mL. Mass (g) = ", "a": "400"}, {"q": "Two objects have equal mass. One has volume 10 cm³, the other 20 cm³. Which is denser? ", "a": "first"}]
   </script>
+  <!-- Save/Load Answers toolbar (hidden in graded mode) -->
+<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
+  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
+  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
+  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
+  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
+</div>
+
   <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
   <div id="submit-block" style="margin:8px 0 4px; display:none;">
     <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>

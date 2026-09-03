@@ -217,15 +217,6 @@ function setMode(mode) {
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<!-- Save/Load Answers toolbar (hidden in graded mode) -->
-<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
 <div class="name-bar">
@@ -250,6 +241,15 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "5 + (−8) = ", "a": "-3"}, {"q": "−3 + 7 = ", "a": "4"}, {"q": "−4 + (−9) = ", "a": "-13"}, {"q": "6 − (−4) = ", "a": "10"}, {"q": "−8 − 2 = ", "a": "-10"}, {"q": "−12 − (−5) = ", "a": "-7"}, {"q": "9 − 15 = ", "a": "-6"}, {"q": "4.3 + (−1.8) = ", "a": "2.5"}, {"q": "−2.7 − 3.4 = ", "a": "-6.1"}, {"q": "0.5 + (−0.75) = ", "a": "-0.25"}, {"q": "1/3 + (−1/6) = ", "a": "1/6"}, {"q": "−3/4 + 1/2 = ", "a": "-1/4"}, {"q": "−1/2 − 1/4 = ", "a": "-3/4"}, {"q": "2/5 − 3/10 = ", "a": "1/10"}, {"q": "−7 + 4 − 2 = ", "a": "-5"}, {"q": "10 − 3 − 8 = ", "a": "-1"}, {"q": "Temp −5°C rises 12°C. New temp = ", "a": "7"}, {"q": "Balance −$18. Deposit $30. New balance = $", "a": "12"}, {"q": "Diver at −25 ft descends 8 ft more. New depth = ", "a": "-33"}, {"q": "−0.6 + 0.9 = ", "a": "0.3"}]
   </script>
+<!-- Save/Load Answers toolbar (hidden in graded mode) -->
+<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
+  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
+  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
+  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
+  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
+</div>
+
 <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
   <div id="submit-block" style="margin:8px 0 4px; display:none;">
     <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>

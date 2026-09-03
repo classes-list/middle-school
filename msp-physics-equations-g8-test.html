@@ -209,15 +209,6 @@ function setMode(mode) {
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<!-- Save/Load Answers toolbar (hidden in graded mode) -->
-<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
 <div class="name-bar">
@@ -252,6 +243,15 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Speed = distance / time. Distance 60 mi, time 3 hr. Speed (mph) = ", "a": "20"}, {"q": "d = rt. r = 50 mph, t = 4 hr. d (mi) = ", "a": "200"}, {"q": "d = rt. d = 240 mi, r = 60 mph. t (hr) = ", "a": "4"}, {"q": "F = ma. m = 5 kg, a = 3 m/s². F (N) = ", "a": "15"}, {"q": "F = ma. F = 20 N, m = 4 kg. a (m/s²) = ", "a": "5"}, {"q": "F = ma. F = 30 N, a = 6 m/s². m (kg) = ", "a": "5"}, {"q": "V = IR. I = 2 A, R = 5 Ω. V (volts) = ", "a": "10"}, {"q": "V = IR. V = 12 V, R = 4 Ω. I (A) = ", "a": "3"}, {"q": "V = IR. V = 24 V, I = 3 A. R (Ω) = ", "a": "8"}, {"q": "P = IV (power). I = 2 A, V = 120 V. P (W) = ", "a": "240"}, {"q": "P = IV. P = 60 W, V = 12 V. I (A) = ", "a": "5"}, {"q": "KE = (1/2)mv². m = 4 kg, v = 3 m/s. KE (J) = ", "a": "18"}, {"q": "KE = (1/2)mv². m = 2 kg, v = 5 m/s. KE (J) = ", "a": "25"}, {"q": "PE = mgh. m = 5 kg, g = 10 m/s², h = 4 m. PE (J) = ", "a": "200"}, {"q": "W = Fd (work). F = 20 N, d = 5 m. W (J) = ", "a": "100"}, {"q": "a = Δv/t. Δv = 20 m/s, t = 4 s. a (m/s²) = ", "a": "5"}, {"q": "a = Δv/t. a = 3 m/s², t = 6 s. Δv (m/s) = ", "a": "18"}, {"q": "Momentum p = mv. m = 4 kg, v = 5 m/s. p (kg·m/s) = ", "a": "20"}, {"q": "Frequency f = 1/T. T = 0.5 s. f (Hz) = ", "a": "2"}, {"q": "Density = mass/volume. m = 40 g, V = 8 mL. D (g/mL) = ", "a": "5"}]
   </script>
+<!-- Save/Load Answers toolbar (hidden in graded mode) -->
+<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
+  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
+  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
+  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
+  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
+</div>
+
 <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
   <div id="submit-block" style="margin:8px 0 4px; display:none;">
     <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
