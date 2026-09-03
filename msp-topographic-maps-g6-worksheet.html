@@ -95,15 +95,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<!-- Save/Load Answers toolbar -->
-<div class="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Your answers are auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
 <section class="card" id="wsec1">
 <h2>1️⃣ What Is a Topographic Map?</h2>
 <div class="intro">A topographic map shows elevation using CONTOUR LINES. Each line connects points of equal elevation. Numbered lines give the elevation.</div>
@@ -114,7 +106,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>Two points 50 m apart horizontally, one at 200 m elevation, other at 250 m. Slope? <input class="ans" data-a="1" size="6"></li>
 <li>Which is steeper: 100 m rise over 500 m run, or 50 m rise over 100 m run? <input class="ans" data-a="0.2" size="6"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) 100 ft (2) 50/50 = 1 (or 100%) (3) 50/100 = 0.5 is steeper than 100/500 = 0.2</div>
 </section>
 <section class="card" id="wsec2">
@@ -126,7 +118,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>Rise 400 ft, run 4000 ft. Slope as %? <input class="ans" data-a="10" size="6"></li>
 <li>Rise 15 m, run 60 m. Slope? <input class="ans" data-a="0.25 or 25" size="13"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) 0.3 or 30% (2) 10% (3) 0.25 or 25%</div>
 </section>
 <section class="card" id="wsec3">
@@ -137,7 +129,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>Interval 10 m: lines at 100, 110, 120... What is elevation of a point on the 4th line above 100? <input class="ans" data-a="140" size="6"></li>
 <li>Interval 20 ft: from line labeled 500 to line labeled 600, how many lines in between? <input class="ans" data-a="100 ft)" size="10"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>(1) 140 m (2) 4 lines between (5 total intervals of 20 ft = 100 ft)</div>
 </section>
 <section class="card" id="wsec4">
@@ -149,7 +141,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>A road grade is 8%. If run is 500 m, rise = ? <input class="ans" data-a="40" size="6"></li>
 <li>Steepest paved road: 35%. If run 100 m, rise? <input class="ans" data-a="35" size="6"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) 5% (2) 40 m (3) 35 m</div>
 </section>
 

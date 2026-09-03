@@ -135,16 +135,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 </script>
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 <main>
-<!-- Save/Load Answers toolbar -->
-<div class="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Your answers are auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
-
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
 <!-- Embedded scientific calculator -->
 <section class="card" id="wsec-calc" style="border-top-color:#0891b2;">
   <h2>🧮 Calculator</h2>
@@ -283,7 +274,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>Classify π = 3.14159… as rational or irrational. <input class="ans" data-a="irrational" size="12"></li>
 <li>Classify 0.101001000100001… <input class="ans" data-a="irrational" size="12"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak">
   <h4>Answer Key — Section 1</h4>
   (1) rational | (2) rational (repeating) | (3) rational (√16 = 4) | (4) irrational (17 not a perfect square) | (5) irrational | (6) irrational (no repeating pattern)
@@ -304,7 +295,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>√64 =  <input class="ans" data-a="8" size="6"></li>
 </ol>
 <table class="rules"><tr><th>n</th><th>n²</th><th>√n²</th></tr><tr><td>1</td><td>1</td><td>1</td></tr><tr><td>2</td><td>4</td><td>2</td></tr><tr><td>3</td><td>9</td><td>3</td></tr><tr><td>4</td><td>16</td><td>4</td></tr><tr><td>5</td><td>25</td><td>5</td></tr><tr><td>6</td><td>36</td><td>6</td></tr><tr><td>7</td><td>49</td><td>7</td></tr><tr><td>8</td><td>64</td><td>8</td></tr><tr><td>9</td><td>81</td><td>9</td></tr><tr><td>10</td><td>100</td><td>10</td></tr><tr><td>11</td><td>121</td><td>11</td></tr><tr><td>12</td><td>144</td><td>12</td></tr></table>
-<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak">
   <h4>Answer Key — Section 2</h4>
   (1) 5 | (2) 9 | (3) 12 | (4) 10 | (5) 1 | (6) 7 | (7) 8
@@ -323,7 +314,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>√75 is between which two whole numbers? <input class="ans" data-a="9)" size="6"></li>
 <li>Estimate √11 to nearest tenth. <input class="ans" data-a="≈ 3.3" size="8"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak">
   <h4>Answer Key — Section 3</h4>
   (1) 5 and 6 (√25=5, √36=6) | (2) 7 and 8 | (3) ≈ 2.8 | (4) 8 and 9 (√64=8, √81=9) | (5) ≈ 3.3
@@ -341,7 +332,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>Which is greater: π or √10? <input class="ans" data-a="√17 ≈ 4.12 &gt; 4.1 → √17" size="22"></li>
 <li>Order: -√4, -1.5, -1, -√2 <input class="ans" data-a="√10 ≈ 3.16, π ≈ 3.14 → √10 is greater" size="22"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak">
   <h4>Answer Key — Section 4</h4>
   (1) 3.14, √9 (=3), 3.5 → wait: √9 = 3, so order is √9 (3), 3.14, 3.5 | (2) 2, 2.3, √5 (≈2.24), 5/2 (=2.5) → 2, √5, 2.3, 5/2 | (3) √17 ≈ 4.12 > 4.1 → √17 | (4) √10 ≈ 3.16, π ≈ 3.14 → √10 is greater | (5) -√4 (-2), -√2 (-1.41), -1.5, -1 → -2, -1.5, -√2, -1
@@ -393,7 +384,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>0.666… =  <input class="ans" data-a="2/3" size="6"></li>
 <li>0.121212… =  <input class="ans" data-a="4/33" size="7"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec5')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec5')">↺ Clear</button><span class="score" id="score-wsec5">—</span> <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
 <div id="ak5" class="ak">
   <h4>Answer Key — Section 5</h4>
   (1) 1/2 | (2) 3/4 | (3) 1/3 | (4) 2/3 | (5) 12/99 = 4/33

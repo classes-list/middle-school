@@ -94,15 +94,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<!-- Save/Load Answers toolbar -->
-<div class="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Your answers are auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
 <section class="card" id="wsec1">
 <h2>1️⃣ Kepler's Third Law</h2>
 <div class="intro"><strong>T² = k · a³</strong> where T = orbital period (years), a = semi-major axis (AU). For solar system, k = 1.</div>
@@ -112,7 +104,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>If T = 8 years, a = ? <input class="ans" data-a="4 AU" size="7"></li>
 <li>If a = 4 AU, T = ? <input class="ans" data-a="8 yr" size="7"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
 <div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) 1 yr (2) a³ = 64 → a = 4 AU (3) T² = 64, T = 8 yr</div>
 </section>
 <section class="card" id="wsec2">
@@ -124,7 +116,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>Jupiter a = 5.2 AU. T ≈ ? <input class="ans" data-a="140.6, T ≈ 11.86 yr" size="22"></li>
 <li>Neptune a ≈ 30 AU. T ≈ ? <input class="ans" data-a="27000, T ≈ 164 yr" size="20"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) T² = 3.51, T ≈ 1.87 yr (2) T² = 140.6, T ≈ 11.86 yr (3) T² = 27000, T ≈ 164 yr</div>
 </section>
 <section class="card" id="wsec3">
@@ -136,7 +128,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>Earth around Sun r ≈ 1.5×10⁸ km, T = 1 yr. v ≈ (in km/s) <input class="ans" data-a="/90 ≈ 489 km/min ≈ 8.15 k" size="22"></li>
 <li>Moon around Earth r ≈ 384,000 km, T = 27.3 days. v ≈  <input class="ans" data-a="2π(1.5E8)/(365×24×3600) ≈ 30 k" size="22"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
 <div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>(1) 2π(7000)/90 ≈ 489 km/min ≈ 8.15 km/s (2) 2π(1.5E8)/(365×24×3600) ≈ 30 km/s (3) 2π(384000)/(27.3×24×3600) ≈ 1 km/s</div>
 </section>
 <section class="card" id="wsec4">
@@ -148,7 +140,7 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 <li>Does a comet move faster near the sun or far away? <input class="ans" data-a="Near the sun" size="15"></li>
 <li>At perihelion (closest), a planet is ___ (fast/slow)? <input class="ans" data-a="Fast" size="7"></li>
 </ol>
-<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
 <div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) Ellipse (2) Near the sun (2nd law) (3) Fast</div>
 </section>
 
