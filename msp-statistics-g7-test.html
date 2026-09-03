@@ -209,15 +209,6 @@ function setMode(mode) {
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<!-- Save/Load Answers toolbar (hidden in graded mode) -->
-<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
 <h2>Unit Test — 20 Problems</h2>
 <div class="instructions">Answer all 20 problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
 <div class="name-bar">
@@ -252,6 +243,15 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Mean of {4, 6, 8, 10, 12} = ", "a": "8"}, {"q": "Mean of {5, 10, 15, 20, 25} = ", "a": "15"}, {"q": "Median of {2, 5, 8, 11, 14} = ", "a": "8"}, {"q": "Median of {1, 3, 5, 7} = ", "a": "4"}, {"q": "Mode of {2, 3, 3, 5, 7, 3, 8} = ", "a": "3"}, {"q": "Range of {3, 15, 8, 22, 11} = ", "a": "19"}, {"q": "Q1 of {2,4,5,7,9,10,12} = ", "a": "4"}, {"q": "Q3 of {2,4,5,7,9,10,12} = ", "a": "10"}, {"q": "IQR of {2,4,5,7,9,10,12} = ", "a": "6"}, {"q": "Adding 10 to every value shifts mean by: ", "a": "10"}, {"q": "Adding 10 changes range by: ", "a": "0"}, {"q": "Multiplying every value by 2: mean multiplies by ", "a": "2"}, {"q": "Multiplying by 2: standard deviation multiplies by ", "a": "2"}, {"q": "Best center for skewed data: (mean/median)", "a": "median"}, {"q": "Best center for symmetric data: ", "a": "mean"}, {"q": "Data 5,5,5,5,5. Standard deviation = ", "a": "0"}, {"q": "Data 2,4,6,8,10. Mean = ", "a": "6"}, {"q": "Sample size 100, mean 50, add one value 100. New mean = ", "a": "50.5"}, {"q": "Median is affected by outliers? ", "a": "no"}]
   </script>
+<!-- Save/Load Answers toolbar (hidden in graded mode) -->
+<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
+  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
+  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
+  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
+  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
+</div>
+
 <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
   <div id="submit-block" style="margin:8px 0 4px; display:none;">
     <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>

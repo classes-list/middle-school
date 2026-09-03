@@ -209,15 +209,6 @@ function setMode(mode) {
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<!-- Save/Load Answers toolbar (hidden in graded mode) -->
-<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
 <div class="name-bar">
@@ -242,6 +233,15 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "v = fλ. f=10 Hz, λ=2 m. v (m/s) = ", "a": "20"}, {"q": "v = fλ. v=340 m/s (sound in air), f=170 Hz. λ (m) = ", "a": "2"}, {"q": "v = fλ. v=3×10⁸ m/s (light), λ=600 nm. f (Hz, use scientific notation) = ", "a": "5 × 10¹⁴"}, {"q": "Period T = 1/f. f=50 Hz. T (s) = ", "a": "0.02"}, {"q": "T = 1/f. f=2 Hz. T = ", "a": "0.5"}, {"q": "T = 1/f. T=0.25 s. f = ", "a": "4"}, {"q": "Wavelength doubles, speed constant. Frequency: (doubles/halves)", "a": "halves"}, {"q": "Frequency triples, speed constant. Wavelength: (thirds/triples)", "a": "thirds"}, {"q": "Higher frequency = higher: (pitch/amplitude)", "a": "pitch"}, {"q": "Higher amplitude = louder or quieter? ", "a": "louder"}, {"q": "Speed of light in vacuum (m/s, sci notation) = ", "a": "3 × 10⁸"}, {"q": "Speed of sound in air ≈ (m/s) = ", "a": "340"}, {"q": "Transverse wave: vibration is perpendicular or parallel to wave direction? ", "a": "perpendicular"}, {"q": "Longitudinal wave: vibration is: ", "a": "parallel"}, {"q": "Light is transverse or longitudinal? ", "a": "transverse"}, {"q": "Sound is transverse or longitudinal? ", "a": "longitudinal"}, {"q": "Wave with f=100 Hz in string moving at 20 m/s. λ (m) = ", "a": "0.2"}, {"q": "Doppler: source moving toward you. Frequency you hear is: (higher/lower)", "a": "higher"}, {"q": "Doppler: source moving away. Frequency: ", "a": "lower"}, {"q": "Two waves in phase, same amplitude: constructive result amplitude = ", "a": "doubles"}]
   </script>
+<!-- Save/Load Answers toolbar (hidden in graded mode) -->
+<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
+  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
+  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
+  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
+  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
+</div>
+
 <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
   <div id="submit-block" style="margin:8px 0 4px; display:none;">
     <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>

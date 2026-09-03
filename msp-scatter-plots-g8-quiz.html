@@ -209,15 +209,6 @@ function setMode(mode) {
 <a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
 
 <main>
-<!-- Save/Load Answers toolbar (hidden in graded mode) -->
-<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
-  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
-  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
-  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
-  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
-  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
-</div>
-
 <h2>Quiz — 10 Problems</h2>
 <div class="instructions">Answer all 10 problems. Show work in your notebook. Click <strong>Show Answer Key</strong> when done.</div>
 <div class="name-bar">
@@ -242,6 +233,15 @@ function setMode(mode) {
   <script id="graded-pool" type="application/json">
   [{"q": "Correlation types: positive, negative, or ", "a": "none"}, {"q": "As x increases, y increases: what correlation? ", "a": "positive"}, {"q": "As x increases, y decreases: what correlation? ", "a": "negative"}, {"q": "Random cloud of points: what correlation? ", "a": "none"}, {"q": "Line of best fit is used to: (predict/observe)", "a": "predict"}, {"q": "Point far off the pattern is called: ", "a": "outlier"}, {"q": "Best-fit line y = 2x + 3. Predict y when x = 5. ", "a": "13"}, {"q": "Best-fit line y = −x + 20. Predict y at x = 4. ", "a": "16"}, {"q": "Best-fit line y = 0.5x + 10. Predict y at x = 20. ", "a": "20"}, {"q": "Slope of best-fit line = 4, y-int = 2. Predict y at x = 3: ", "a": "14"}, {"q": "Correlation coefficient r = 1 means: (perfect positive/none)", "a": "perfect positive"}, {"q": "r = −1 means: ", "a": "perfect negative"}, {"q": "r = 0 means: ", "a": "no correlation"}, {"q": "|r| closer to 1 means correlation is: (stronger/weaker)", "a": "stronger"}, {"q": "Study time vs. test score: typical correlation? ", "a": "positive"}, {"q": "Number of siblings vs. shoe size: typical correlation? ", "a": "none"}, {"q": "Best-fit line y = 3x − 1. Actual value at x = 4 is 12. Residual = ", "a": "1"}, {"q": "Best-fit line y = 2x + 3. Actual y at x = 5 is 11. Residual = ", "a": "-2"}, {"q": "A cluster on a scatter plot means: (grouped data/spread)", "a": "grouped data"}]
   </script>
+<!-- Save/Load Answers toolbar (hidden in graded mode) -->
+<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
+  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
+  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
+  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
+  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
+</div>
+
 <div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
   <div id="submit-block" style="margin:8px 0 4px; display:none;">
     <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
