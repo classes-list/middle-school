@@ -1493,21 +1493,31 @@ function showLesson(unitId) {
   if (sb) sb.classList.remove('active');
   const unit = UNITS.find(u => u.id === unitId);
   document.getElementById('lesson-content').innerHTML = LESSONS[unitId] + resourceCardHTML(unit);
-  // Inject Worksheet / Quiz / Unit Test buttons on the right of the unit title
+  // Inject Resources + Worksheet / Quiz / Unit Test buttons on the right of the unit title
   (function(){
     const hideExtras = (unitId === 'metrics-sci-process');
-    const wsBtn = (!hideExtras && unit && unit.worksheetUrl) ? `<button class="btn" onclick="showWorksheet()" style="padding:6px 12px; font-size:.85rem;">📋 Worksheet</button>` : '';
-    const qzBtn = (unit && unit.quizUrl) ? `<button class="btn" onclick="showQuizExternal()" style="padding:6px 12px; font-size:.85rem;">📝 Quiz</button>` : '';
-    const utBtn = (unit && unit.unitTestUrl) ? `<button class="btn" onclick="showUnitTest()" style="padding:6px 12px; font-size:.85rem;">📊 Unit Test</button>` : '';
-    if (!(wsBtn || qzBtn || utBtn)) return;
+    const S = 'padding:6px 12px; font-size:.85rem; text-decoration:none; display:inline-block;';
+    const resBtns = [];
+    if (unit) {
+      if (unit.phetUrl)   resBtns.push(`<a class="btn-phet"  href="${unit.phetUrl}"  target="_blank" rel="noopener" style="${S}">🧪 PhET</a>`);
+      if (unit.ixlUrl)    resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
+      if (unit.bpUrl)     resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
+      if (unit.ytSearch)  resBtns.push(`<a class="btn-yt"    href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
+      if (unit.labUrl)    resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
+      if (unit.graphLabUrl) resBtns.push(`<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank" rel="noopener" style="${S}">📊 Data Analysis</a>`);
+    }
+    const wsBtn = (!hideExtras && unit && unit.worksheetUrl) ? `<button class="btn" onclick="showWorksheet()" style="${S}">📋 Worksheet</button>` : '';
+    const qzBtn = (unit && unit.quizUrl) ? `<button class="btn" onclick="showQuizExternal()" style="${S}">📝 Quiz</button>` : '';
+    const utBtn = (unit && unit.unitTestUrl) ? `<button class="btn" onclick="showUnitTest()" style="${S}">📊 Unit Test</button>` : '';
+    if (!(resBtns.length || wsBtn || qzBtn || utBtn)) return;
     const lc = document.getElementById('lesson-content');
     const h2 = lc.querySelector('h2');
     if (!h2) return;
     const wrap = document.createElement('div');
     wrap.style.cssText = 'display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 14px 0;';
     const btnBar = document.createElement('div');
-    btnBar.style.cssText = 'display:flex; gap:8px; flex-wrap:wrap;';
-    btnBar.innerHTML = wsBtn + qzBtn + utBtn;
+    btnBar.style.cssText = 'display:flex; gap:6px; flex-wrap:wrap; align-items:center;';
+    btnBar.innerHTML = resBtns.join('') + wsBtn + qzBtn + utBtn;
     h2.parentNode.insertBefore(wrap, h2);
     wrap.appendChild(h2);
     wrap.appendChild(btnBar);
