@@ -350,8 +350,9 @@ function checkAllWorksheet() {
 document.addEventListener('keydown', function(e){
   if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
     e.preventDefault();
-    const sec = e.target.closest('section.card');
-    if (sec && sec.id) checkSection(sec.id);
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
   }
 });
 

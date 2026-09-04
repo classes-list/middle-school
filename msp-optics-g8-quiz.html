@@ -351,7 +351,7 @@ function resetQuiz(){
   if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='\u2713 Check Answers';}
   const resetBtn=document.querySelector('.reset-btn'); if(resetBtn){resetBtn.style.display='';}
 }
-document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();if(isGradedMode()){var inputs=Array.from(document.querySelectorAll('main input.ans'));var i=inputs.indexOf(e.target);if(i>=0&&i<inputs.length-1){inputs[i+1].focus();}else{e.target.blur();}}else{checkAllQuiz();}}});
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();var inputs=Array.from(document.querySelectorAll('main input.ans'));var i=inputs.indexOf(e.target);if(i>=0&&i<inputs.length-1){inputs[i+1].focus();}else{e.target.blur();}}});
 
 function submitToTeacher(){
   const nameEl = document.getElementById('student-name');
