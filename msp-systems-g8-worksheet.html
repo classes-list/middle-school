@@ -175,29 +175,20 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 <script>
 
 // --- Digital fillable check logic (auto-injected) ---
-function normalizeAns(s) {
-  s = String(s || '').trim().toLowerCase();
-  if (!s) return '';
-  s = s.replace(/\s+/g, '');
-  s = s.replace(/,/g, '');
-  s = s.replace(/\$/g, '');
-  s = s.replace(/−/g, '-');
-  s = s.replace(/×/g, '*').replace(/·/g, '*');
-  s = s.replace(/x/g, '*');
-  s = s.replace(/\*10\^(-?\d+)/g, 'e$1');
-  s = s.replace(/10\^(-?\d+)/g, '1e$1');
-  return s;
-}
-function toNumber(s) {
-  const cleaned = normalizeAns(s);
-  if (!cleaned) return null;
-  // handle fractions like "3/4"
-  const frac = cleaned.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);
-  if (frac) return Number(frac[1]) / Number(frac[3]);
-  // handle mixed like "1 1/8" - already whitespace-stripped so "11/8"; skip
-  const n = Number(cleaned);
-  return isFinite(n) ? n : null;
-}
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
 function isCorrect(student, expected) {
   if (!expected) return null; // uncheckable
   const ns = toNumber(student);
@@ -272,8 +263,9 @@ function checkAllWorksheet() {
 document.addEventListener('keydown', function(e){
   if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
     e.preventDefault();
-    const sec = e.target.closest('section.card');
-    if (sec && sec.id) checkSection(sec.id);
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
   }
 });
 
