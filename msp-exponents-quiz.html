@@ -184,6 +184,9 @@ function applyMode(mode) {
     if (submitBlock) submitBlock.style.display = 'block';
     if (nameBar) nameBar.style.display = 'flex';
     if (resetBtnEl) resetBtnEl.style.display = 'none';
+    var chkBtnG = document.querySelector('.check-btn');
+    if (chkBtnG) { chkBtnG.textContent = '📧 Submit to Dr. Park'; chkBtnG.style.background = '#059669'; chkBtnG.style.borderColor = '#047857'; chkBtnG.setAttribute('onclick', 'submitToTeacher()'); }
+    if (submitBlock) submitBlock.style.display = 'none';
     if (btnP) btnP.setAttribute('style', inactive);
     if (btnG) btnG.setAttribute('style', active + ' border:1.5px solid #dc2626; background:#fee2e2; color:#7f1d1d;');
   } else {
@@ -192,6 +195,8 @@ function applyMode(mode) {
     if (submitBlock) submitBlock.style.display = 'none';
     if (nameBar) nameBar.style.display = 'none';
     if (resetBtnEl) resetBtnEl.style.display = 'inline-block';
+    var chkBtnP = document.querySelector('.check-btn');
+    if (chkBtnP) { chkBtnP.textContent = '✓ Check Answers'; chkBtnP.style.background = ''; chkBtnP.style.borderColor = ''; chkBtnP.setAttribute('onclick', 'checkAllQuiz()'); }
     if (btnP) btnP.setAttribute('style', active + ' border:1.5px solid #16a34a; background:#dcfce7; color:#14532d;');
     if (btnG) btnG.setAttribute('style', inactive);
   }
