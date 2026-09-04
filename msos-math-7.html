@@ -1534,6 +1534,35 @@ function showLesson(unitId) {
   const utb = document.getElementById('unittest-btn');
   if (qbe) qbe.style.display = (unit && unit.quizUrl) ? '' : 'none';
   if (utb) utb.style.display = (unit && unit.unitTestUrl) ? '' : 'none';
+  // Restructure bottom: put resources + all action buttons on one row, Back on its own row below
+  (function(){
+    const S = 'padding:6px 12px; font-size:.85rem; text-decoration:none; display:inline-block;';
+    const resBtns = [];
+    if (unit) {
+      if (unit.phetUrl)     resBtns.push(`<a class="btn-phet"  href="${unit.phetUrl}"  target="_blank" rel="noopener" style="${S}">🧪 PhET</a>`);
+      if (unit.ixlUrl)      resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
+      if (unit.bpUrl)       resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
+      if (unit.ytSearch)    resBtns.push(`<a class="btn-yt"    href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
+      if (unit.labUrl)      resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
+      if (unit.graphLabUrl) resBtns.push(`<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank" rel="noopener" style="${S}">📊 Data Analysis</a>`);
+    }
+    const nav = document.querySelector('#lesson-screen .nav-buttons');
+    if (!nav) return;
+    nav.querySelectorAll('.back-btn').forEach(b => b.remove());
+    if (resBtns.length) nav.insertAdjacentHTML('afterbegin', resBtns.join(''));
+    nav.style.flexWrap = 'wrap';
+    nav.style.alignItems = 'center';
+    let backRow = document.getElementById('lesson-back-row');
+    if (!backRow) {
+      backRow = document.createElement('div');
+      backRow.id = 'lesson-back-row';
+      backRow.style.cssText = 'margin: 6px 0 20px 0;';
+      backRow.innerHTML = '<button class="btn back-btn" onclick="showHome()">← Back to Units</button>';
+      nav.parentNode.insertBefore(backRow, nav.nextSibling);
+    }
+    const card = document.querySelector('#lesson-content .resource-card');
+    if (card) card.style.display = 'none';
+  })();
   renderSidebar();
   setTopbar();
 }
