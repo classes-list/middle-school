@@ -1501,6 +1501,7 @@ function showLesson(unitId) {
     if (unit) {
       if (unit.phetUrl)   resBtns.push(`<a class="btn-phet"  href="${unit.phetUrl}"  target="_blank" rel="noopener" style="${S}">🧪 PhET</a>`);
       if (unit.ixlUrl)    resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
+      if (typeof SSAT_BANK !== 'undefined' && SSAT_BANK[unit.id]) resBtns.push(`<button class="btn-ssat" onclick="openSSAT('${unit.id}')" style="${S}">🎯 SSAT Prep</button>`);
       if (unit.bpUrl)     resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
       if (unit.ytSearch)  resBtns.push(`<a class="btn-yt"    href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
       if (unit.labUrl)    resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
@@ -1541,6 +1542,7 @@ function showLesson(unitId) {
     if (unit) {
       if (unit.phetUrl)     resBtns.push(`<a class="btn-phet"  href="${unit.phetUrl}"  target="_blank" rel="noopener" style="${S}">🧪 PhET</a>`);
       if (unit.ixlUrl)      resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
+      if (typeof SSAT_BANK !== 'undefined' && SSAT_BANK[unit.id]) resBtns.push(`<button class="btn-ssat" onclick="openSSAT('${unit.id}')" style="${S}">🎯 SSAT Prep</button>`);
       if (unit.bpUrl)       resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
       if (unit.ytSearch)    resBtns.push(`<a class="btn-yt"    href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
       if (unit.labUrl)      resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
@@ -2242,6 +2244,18 @@ function showRealWorld() {
 
 // SSAT Prep question banks for Math 7 (Upper Level style, 5 answer choices)
 const SSAT_BANK = {
+'scientific-notation': [
+  {q:'Write 4,500,000 in scientific notation.',choices:['4.5 × 10⁵','45 × 10⁵','4.5 × 10⁶','4.5 × 10⁷','0.45 × 10⁷'],correct:2,exp:'Move the decimal 6 places left: 4.5 × 10⁶.'},
+  {q:'Write 3.2 × 10⁴ in standard form.',choices:['320','3,200','32,000','320,000','3,200,000'],correct:2,exp:'Move the decimal 4 places right: 32,000.'},
+  {q:'Which of the following is written correctly in scientific notation?',choices:['12 × 10⁴','0.7 × 10⁵','5.6 × 10³','8.1 × 10^(1/2)','10 × 10²'],correct:2,exp:'The coefficient must satisfy 1 ≤ |a| < 10. Only 5.6 × 10³ qualifies.'},
+  {q:'Write 0.00074 in scientific notation.',choices:['7.4 × 10⁻³','7.4 × 10⁻⁴','7.4 × 10⁻⁵','74 × 10⁻⁵','0.74 × 10⁻³'],correct:1,exp:'Move the decimal 4 places right: 7.4 × 10⁻⁴.'},
+  {q:'Which number is greatest?',choices:['3.2 × 10³','2.5 × 10⁴','9.9 × 10²','4.7 × 10³','1.1 × 10⁴'],correct:1,exp:'Compare exponents first: 10⁴ > 10³ > 10². Of the 10⁴ values, 2.5 > 1.1.'},
+  {q:'Which number is smallest?',choices:['6.1 × 10⁻²','3.4 × 10⁻³','8.2 × 10⁻¹','5.5 × 10⁻²','9.8 × 10⁻³'],correct:1,exp:'Most negative exponent wins; between 3.4 × 10⁻³ and 9.8 × 10⁻³, 3.4 is smaller.'},
+  {q:'Write 6.02 × 10⁵ in standard form.',choices:['60,200','602,000','6,020,000','60,000,200','6,020'],correct:1,exp:'Move the decimal 5 places right: 602,000.'},
+  {q:'Which is the correct scientific notation for 0.0000045?',choices:['4.5 × 10⁻⁶','4.5 × 10⁻⁷','45 × 10⁻⁶','4.5 × 10⁶','0.45 × 10⁻⁵'],correct:0,exp:'Move the decimal 6 places right: 4.5 × 10⁻⁶.'},
+  {q:'Scientific notation is most useful for expressing which type of numbers?',choices:['Whole numbers between 1 and 10','Very large or very small numbers','Only negative numbers','Repeating decimals','Fractions'],correct:1,exp:'Scientific notation compactly writes very large or very small values.'},
+  {q:'What is 2 × (8 × 10³)?',choices:['16 × 10³','1.6 × 10³','1.6 × 10⁴','16 × 10⁶','8 × 10⁶'],correct:2,exp:'2 × 8 = 16 = 1.6 × 10, so answer is 1.6 × 10⁴.'}
+],
 'proportional': [
   {q:'If <em>y</em> is proportional to <em>x</em> and <em>y</em> = 12 when <em>x</em> = 3, what is <em>y</em> when <em>x</em> = 8?',choices:['4','24','32','36','96'],correct:2,exp:'k = 12/3 = 4, so y = 4·8 = 32.'},
   {q:'Which pair (x, y) is <strong>NOT</strong> part of the same proportional relationship as the others?',choices:['(2, 6)','(3, 9)','(4, 12)','(5, 14)','(6, 18)'],correct:3,exp:'All others have y/x = 3; (5,14) has y/x = 2.8.'},

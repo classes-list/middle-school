@@ -1474,6 +1474,7 @@ function showLesson(unitId) {
     if (unit) {
       if (unit.phetUrl)   resBtns.push(`<a class="btn-phet"  href="${unit.phetUrl}"  target="_blank" rel="noopener" style="${S}">🧪 PhET</a>`);
       if (unit.ixlUrl)    resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
+      if (typeof SSAT_BANK !== 'undefined' && SSAT_BANK[unit.id]) resBtns.push(`<button class="btn-ssat" onclick="openSSAT('${unit.id}')" style="${S}">🎯 SSAT Prep</button>`);
       if (unit.bpUrl)     resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
       if (unit.ytSearch)  resBtns.push(`<a class="btn-yt"    href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
       if (unit.labUrl)    resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
@@ -1514,6 +1515,7 @@ function showLesson(unitId) {
     if (unit) {
       if (unit.phetUrl)     resBtns.push(`<a class="btn-phet"  href="${unit.phetUrl}"  target="_blank" rel="noopener" style="${S}">🧪 PhET</a>`);
       if (unit.ixlUrl)      resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
+      if (typeof SSAT_BANK !== 'undefined' && SSAT_BANK[unit.id]) resBtns.push(`<button class="btn-ssat" onclick="openSSAT('${unit.id}')" style="${S}">🎯 SSAT Prep</button>`);
       if (unit.bpUrl)       resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
       if (unit.ytSearch)    resBtns.push(`<a class="btn-yt"    href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
       if (unit.labUrl)      resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
@@ -2189,6 +2191,18 @@ function showRealWorld() {
 
 // SSAT Prep question banks for Math 8 (Upper Level style, 5 answer choices)
 const SSAT_BANK = {
+'scientific-notation': [
+  {q:'Write 3.6 × 10⁻⁵ in standard form.',choices:['0.0036','0.00036','0.000036','0.0000036','36,000'],correct:2,exp:'Move the decimal 5 places left: 0.000036.'},
+  {q:'Which value is written correctly in scientific notation?',choices:['0.32 × 10⁶','7.5 × 10⁻⁴','15.6 × 10²','3 × 10^(1.5)','8.0 × 10^(1/2)'],correct:1,exp:'The coefficient must satisfy 1 ≤ |a| < 10 and the exponent must be an integer.'},
+  {q:'Multiply: (3 × 10⁴)(2 × 10³) =',choices:['6 × 10⁷','5 × 10⁷','6 × 10¹²','6 × 10¹','5 × 10¹²'],correct:0,exp:'Multiply coefficients: 3·2 = 6. Add exponents: 4+3 = 7.'},
+  {q:'Divide: (8 × 10⁶) ÷ (2 × 10²) =',choices:['4 × 10³','4 × 10⁴','6 × 10⁴','4 × 10⁸','6 × 10⁸'],correct:1,exp:'Divide coefficients: 8/2 = 4. Subtract exponents: 6−2 = 4.'},
+  {q:'Simplify: (4 × 10³)² =',choices:['8 × 10⁶','16 × 10⁵','1.6 × 10⁷','8 × 10⁹','1.6 × 10⁶'],correct:2,exp:'(4)² = 16 and (10³)² = 10⁶, so 16 × 10⁶ = 1.6 × 10⁷.'},
+  {q:'About how many times larger is 6 × 10⁸ than 3 × 10⁵?',choices:['2','20','200','2,000','20,000'],correct:3,exp:'(6 × 10⁸)/(3 × 10⁵) = 2 × 10³ = 2,000.'},
+  {q:'Country A has population 3.2 × 10⁷ and Country B has 8 × 10⁶. Combined population in scientific notation?',choices:['1.12 × 10⁷','4.0 × 10⁷','4.0 × 10⁸','1.12 × 10¹³','1.12 × 10⁸'],correct:1,exp:'8 × 10⁶ = 0.8 × 10⁷. Add: 3.2 + 0.8 = 4.0, so 4.0 × 10⁷.'},
+  {q:'Which value equals 5.4 × 10⁻³?',choices:['0.0054','0.054','5,400','0.00054','540'],correct:0,exp:'Move the decimal 3 places left: 0.0054.'},
+  {q:'Which is the greatest?',choices:['4.5 × 10⁵','9.9 × 10⁴','6.7 × 10⁵','8.8 × 10⁴','2.3 × 10⁶'],correct:4,exp:'Highest exponent wins: 10⁶ > 10⁵ > 10⁴, so 2.3 × 10⁶.'},
+  {q:'Light travels 3 × 10⁵ km/s. How far in 60 seconds?',choices:['1.8 × 10⁶ km','1.8 × 10⁷ km','3 × 10⁶ km','1.8 × 10⁵ km','3 × 10⁷ km'],correct:1,exp:'60 · 3 × 10⁵ = 180 × 10⁵ = 1.8 × 10⁷ km.'}
+],
 'exponents': [
   {q:'Simplify: 3² · 3⁴',choices:['3⁶','3⁸','9⁶','9⁸','12'],correct:0,exp:'Same base — add exponents: 3^(2+4) = 3⁶ = 729.'},
   {q:'Simplify: (5²)³',choices:['5⁵','5⁶','5⁸','25³','125²'],correct:1,exp:'Power of a power — multiply: 5^(2·3) = 5⁶.'},
