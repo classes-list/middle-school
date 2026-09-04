@@ -139,7 +139,7 @@ function restorePracticeQuestions(){
 function applyMode(mode) {
   savePracticeIfNeeded();
   document.querySelectorAll('.correction-label').forEach(n=>n.remove());
-  document.querySelectorAll('main input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
+  document.querySelectorAll('input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
   const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
   const chkBtn=document.querySelector('.check-btn'); if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='✓ Check Answers';}
   const resetBtnEl=document.querySelector('.reset-btn'); if(resetBtnEl){resetBtnEl.style.display='';}
@@ -196,7 +196,7 @@ function setMode(mode) {
     bumpAttemptCount();
     const state = loadGradedState();
     if (state && state.checkedAt) {
-      const inputs = document.querySelectorAll('main input.ans');
+      const inputs = document.querySelectorAll('input.ans');
       inputs.forEach((i,idx)=>{ if(state.answers && state.answers[idx]!=null) i.value = state.answers[idx]; });
       const nEl = document.getElementById('student-name'); if(nEl && state.name) nEl.value = state.name;
       const pEl = document.getElementById('student-period'); if(pEl && state.period) pEl.value = state.period;
@@ -213,7 +213,7 @@ function setMode(mode) {
     } else {
       const prevStart = parseInt(localStorage.getItem(storageKey()+'-start')||'0',10);
       if (prevStart) __quizStartTime = prevStart;
-      document.querySelectorAll('main input.ans').forEach(i=>{
+      document.querySelectorAll('input.ans').forEach(i=>{
         i.addEventListener('input', markStart, {once:false});
       });
     }
@@ -342,7 +342,7 @@ function checkAllQuiz(){
   }
 }
 function resetQuiz(){
-  document.querySelectorAll('main input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');i.readOnly=false;i.style.opacity='';i.style.cursor='';});
+  document.querySelectorAll('input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');i.readOnly=false;i.style.opacity='';i.style.cursor='';});
   clearCorrectionLabels();
   const se=document.getElementById('score-quiz');
   if(se){se.textContent='—';se.classList.remove('good','mid','low');}
@@ -351,7 +351,7 @@ function resetQuiz(){
   if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='\u2713 Check Answers';}
   const resetBtn=document.querySelector('.reset-btn'); if(resetBtn){resetBtn.style.display='';}
 }
-document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();var inputs=Array.from(document.querySelectorAll('main input.ans'));var i=inputs.indexOf(e.target);if(i>=0&&i<inputs.length-1){inputs[i+1].focus();}else{e.target.blur();}}});
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();var inputs=Array.from(document.querySelectorAll('input.ans'));var i=inputs.indexOf(e.target);if(i>=0&&i<inputs.length-1){inputs[i+1].focus();}else{e.target.blur();}}});
 
 function submitToTeacher(){
   const nameEl = document.getElementById('student-name');
