@@ -1443,10 +1443,20 @@ function renderSidebar() {
   sidebar.innerHTML = '';
   const Q_MAP = {  'metrics-sci-process': 1, 'scientific-notation': 1, 'proportional': 1, 'ratios-rates': 1, 'percents': 2, 'add-sub-rational': 2, 'mult-div-rational': 2, 'alg-expressions': 2, 'equations': 2, 'rearranging-formulas': 2, 'surface-area-volume-ratio': 3, 'triangles': 3, 'circles': 3, 'area-polygons': 3, 'surface-area-volume': 3, 'angles': 3, 'inequalities': 3, 'probability': 3, 'genetics-probability': 4, 'population-growth': 4, 'pharmacokinetics': 4, 'statistics': 4, 'scale-drawings': 4, 'biodiversity': 4, 'word-problems': 4};
   const Q_LABELS = { 1: 'Q1 · Lab Math · Proportional Relationships', 2: 'Q2 · Percents · Rational Numbers · Algebra', 3: 'Q3 · Geometry · Inequalities · Probability', 4: 'Q4 · Genetics · Statistics · Scale' };
+  const EOQ_GRADE = '7';
+  function appendEoq(quarterNum){
+    const eoq = document.createElement('div');
+    eoq.className = 'sidebar-item';
+    eoq.style.cssText = 'margin-top:6px; background:#fef3c7; color:#78350f; font-weight:800; border-left:3px solid #b8860b; padding:8px 10px;';
+    eoq.textContent = '📘 Q' + quarterNum + ' End of Quarter Test';
+    eoq.onclick = () => window.open('msp-eoq-q' + quarterNum + '-g' + EOQ_GRADE + '.html?grade=' + EOQ_GRADE, '_blank', 'noopener');
+    sidebar.appendChild(eoq);
+  }
   let lastQ = 0;
   UNITS.forEach((unit, idx) => {
     const q = Q_MAP[unit.id] || 0;
     if (q !== lastQ && Q_LABELS[q]) {
+      if (lastQ > 0) appendEoq(lastQ);
       const hdr = document.createElement('div');
       hdr.className = 'sidebar-quarter';
       hdr.textContent = Q_LABELS[q];
@@ -1459,6 +1469,7 @@ function renderSidebar() {
     item.onclick = () => showLesson(unit.id);
     sidebar.appendChild(item);
   });
+  if (lastQ > 0) appendEoq(lastQ);
 }
 
 function setTopbar() {

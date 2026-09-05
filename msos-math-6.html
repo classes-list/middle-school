@@ -1359,10 +1359,20 @@ function renderSidebar() {
   sidebar.innerHTML = '';
   const Q_MAP = {  'metrics-sci-process': 1, 'decimal-ops': 1, 'scientific-notation': 1, 'factors-multiples': 1, 'fraction-division': 1, 'density': 1, 'ratios-rates': 2, 'percents': 2, 'integers': 2, 'coordinate-plane': 2, 'topographic-maps': 3, 'plate-tectonics': 3, 'richter-scale': 3, 'radioactive-decay': 3, 'alg-expressions': 3, 'equations': 3, 'statistics-data': 4, 'inequalities': 4, 'variables-relationships': 4, 'area-polygons': 4, 'surface-area': 4, 'volume': 4, 'word-problems': 4};
   const Q_LABELS = { 1: 'Q1 · Lab Math Foundations · Density', 2: 'Q2 · Ratios · Percents · Universe Scale', 3: 'Q3 · Algebra · Earth Science Math', 4: 'Q4 · Statistics · Geometry' };
+  const EOQ_GRADE = '6';
+  function appendEoq(quarterNum){
+    const eoq = document.createElement('div');
+    eoq.className = 'sidebar-item';
+    eoq.style.cssText = 'margin-top:6px; background:#fef3c7; color:#78350f; font-weight:800; border-left:3px solid #b8860b; padding:8px 10px;';
+    eoq.textContent = '📘 Q' + quarterNum + ' End of Quarter Test';
+    eoq.onclick = () => window.open('msp-eoq-q' + quarterNum + '-g' + EOQ_GRADE + '.html?grade=' + EOQ_GRADE, '_blank', 'noopener');
+    sidebar.appendChild(eoq);
+  }
   let lastQ = 0;
   UNITS.forEach((unit, idx) => {
     const q = Q_MAP[unit.id] || 0;
     if (q !== lastQ && Q_LABELS[q]) {
+      if (lastQ > 0) appendEoq(lastQ);
       const hdr = document.createElement('div');
       hdr.className = 'sidebar-quarter';
       hdr.textContent = Q_LABELS[q];
@@ -1375,6 +1385,7 @@ function renderSidebar() {
     item.onclick = () => showLesson(unit.id);
     sidebar.appendChild(item);
   });
+  if (lastQ > 0) appendEoq(lastQ);
 }
 
 function setTopbar() {
