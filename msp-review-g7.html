@@ -59,10 +59,21 @@ input.ans.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
 .pe-calc-result { margin-top: 10px; font-family: 'Consolas', 'Courier New', monospace; font-size: 1rem; font-weight: 700; }
 .pe-slot { display: inline-block; min-width: 2.5em; padding: 2px 6px; border-bottom: 1.5px solid #0369a1; text-align: center; color: #065f46; margin: 0 2px; }
 .pe-final { display: inline-block; min-width: 3em; padding: 3px 10px; background: #dcfce7; border: 1.5px solid #16a34a; border-radius: 4px; color: #14532d; margin-left: 2px; }
-.mean-inputs { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 6px 0 10px; }
-.mean-inputs label { font-family: 'Consolas','Courier New',monospace; font-size: .92rem; color: #0c4a6e; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
-.mean-inputs input.mean-in { width: 4.5em; padding: 4px 6px; border: 1.5px solid #94a3b8; border-radius: 4px; text-align: center; font-family: inherit; font-size: .95rem; font-weight: 700; background: #fff; color: #0c4a6e; }
-.mean-inputs input.mean-in:focus { outline: none; border-color: #0369a1; box-shadow: 0 0 0 2px rgba(3,105,161,.2); }
+.sci-calc { margin: 14px 0; padding: 14px 16px; background: #ecfeff; border: 1.5px solid #0891b2; border-radius: 10px; color: #0c4a6e; }
+.sci-calc-title { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+.sci-calc-hint { font-size: .85rem; color: #64748b; margin-bottom: 10px; }
+#calc { max-width: 360px; margin: 0 auto; border: 1.5px solid #94a3b8; border-radius: 12px; background: #f8fafc; padding: 14px; box-shadow: 0 3px 8px rgba(0,0,0,.08); }
+#calc-display { width: 100%; box-sizing: border-box; padding: 12px 14px; font-family: 'Courier New',monospace; font-size: 1.35rem; font-weight: 700; text-align: right; border: 1.5px solid #cbd5e1; border-radius: 8px; background: #fff; color: #0e7490; margin-bottom: 6px; }
+#calc-history { font-size: .8rem; color: #64748b; text-align: right; min-height: 16px; margin-bottom: 8px; font-family: 'Courier New',monospace; }
+.calc-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+#calc button.ck { padding: 12px 6px; border: 1.5px solid #cbd5e1; border-radius: 8px; background: #fff; color: #1a2a4a; font-size: 1.05rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: transform .05s ease; }
+#calc button.ck:hover { background: #f1f5f9; }
+#calc button.ck:active { transform: scale(.95); }
+#calc button.ck-clear { background: #fee2e2; color: #7f1d1d; }
+#calc button.ck-func { background: #dbeafe; color: #1e40af; }
+#calc button.ck-op { background: #fef3c7; color: #78350f; }
+#calc button.ck-eq { background: #059669; color: #fff; font-weight: 900; }
+#calc button.ck-eq:hover { background: #047857; }
 footer { margin-top: 30px; padding-top: 12px; border-top: 1px dashed #cbd5e1; text-align: center; color: #64748b; font-size: .85rem; }
 @media print {
   body { background: #fff !important; padding: 0; }
@@ -151,18 +162,46 @@ footer { margin-top: 30px; padding-top: 12px; border-top: 1px dashed #cbd5e1; te
   </div>
 </div>
 
-<div class="pe-calc mean-calc no-print">
-  <div class="pe-calc-title">📊 Mean (Average) Calculator — for Problem 2a</div>
-  <div class="mean-inputs">
-    <label>Trial 1 <input type="text" class="mean-in" data-mean="1" placeholder="24.6"></label>
-    <label>Trial 2 <input type="text" class="mean-in" data-mean="1" placeholder="24.8"></label>
-    <label>Trial 3 <input type="text" class="mean-in" data-mean="1" placeholder="24.5"></label>
-    <label>Trial 4 <input type="text" class="mean-in" data-mean="1" placeholder="24.9"></label>
-  </div>
-  <div class="pe-calc-result">
-    Sum = <span class="pe-slot" id="mean-sum">—</span>
-    ÷ Count = <span class="pe-slot" id="mean-count">—</span>
-    → Average = <span class="pe-final" id="mean-avg">—</span>
+<div class="sci-calc no-print">
+  <div class="sci-calc-title">🧮 Calculator — use for averages, percent error, and any arithmetic</div>
+  <div class="sci-calc-hint">Type on the display, click buttons, or use your keyboard (0-9, + − × ÷ ( ) ^ Enter Backspace Esc).</div>
+  <div id="calc">
+    <input id="calc-display" type="text" readonly value="0">
+    <div id="calc-history"></div>
+    <div class="calc-grid">
+      <button class="ck ck-clear" data-a="C" style="grid-column:span 2;">C</button>
+      <button class="ck" data-a="⌫">⌫</button>
+      <button class="ck" data-a="(">(</button>
+      <button class="ck" data-a=")">)</button>
+
+      <button class="ck ck-func" data-a="√">√</button>
+      <button class="ck ck-func" data-a="^">x^y</button>
+      <button class="ck ck-func" data-a="^2">x²</button>
+      <button class="ck ck-func" data-a="π">π</button>
+      <button class="ck ck-op" data-a="÷">÷</button>
+
+      <button class="ck" data-a="7">7</button>
+      <button class="ck" data-a="8">8</button>
+      <button class="ck" data-a="9">9</button>
+      <button class="ck ck-op" data-a="×">×</button>
+      <button class="ck ck-func" data-a="1/x">1/x</button>
+
+      <button class="ck" data-a="4">4</button>
+      <button class="ck" data-a="5">5</button>
+      <button class="ck" data-a="6">6</button>
+      <button class="ck ck-op" data-a="−">−</button>
+      <button class="ck ck-func" data-a="±">±</button>
+
+      <button class="ck" data-a="1">1</button>
+      <button class="ck" data-a="2">2</button>
+      <button class="ck" data-a="3">3</button>
+      <button class="ck ck-op" data-a="+">+</button>
+      <button class="ck ck-func" data-a="%">%</button>
+
+      <button class="ck" data-a="0" style="grid-column:span 2;">0</button>
+      <button class="ck" data-a=".">.</button>
+      <button class="ck ck-eq" data-a="=" style="grid-column:span 2;">=</button>
+    </div>
   </div>
 </div>
 
@@ -372,30 +411,77 @@ document.addEventListener('keydown', function(e){
     if (e.target && e.target.classList && e.target.classList.contains('pe-in')) updatePE();
   });
 })();
-// Mean (Average) Calculator live update
+// Full Scientific Calculator
 (function(){
-  function fmt(n){
-    if (isNaN(n) || !isFinite(n)) return '—';
-    if (Number.isInteger(n)) return String(n);
-    return String(Math.round(n * 10000) / 10000);
+  var disp = document.getElementById('calc-display');
+  var hist = document.getElementById('calc-history');
+  if (!disp) return;
+  var expr = '';
+  function render(){ disp.value = expr || '0'; }
+  function toJS(s){
+    return s
+      .replace(/×/g,'*')
+      .replace(/÷/g,'/')
+      .replace(/−/g,'-')
+      .replace(/π/g, String(Math.PI))
+      .replace(/√\(?/g,'Math.sqrt(')
+      .replace(/\^/g,'**');
   }
-  function updateMean(){
-    var inputs = document.querySelectorAll('.mean-inputs input.mean-in');
-    var sum = 0, count = 0;
-    inputs.forEach(function(i){
-      var v = parseFloat(i.value);
-      if (!isNaN(v)){ sum += v; count += 1; }
+  function balance(s){
+    var opens = 0;
+    for (var i = 0; i < s.length; i++){
+      var c = s[i];
+      if (c === '(') opens++;
+      else if (c === ')') opens--;
+      if (opens < 0) opens = 0;
+    }
+    return s + ')'.repeat(opens);
+  }
+  function evaluate(){
+    if (!expr) return;
+    try {
+      var js = balance(toJS(expr));
+      var val = Function('"use strict";return (' + js + ')')();
+      if (!isFinite(val) || isNaN(val)) throw new Error('NaN');
+      hist.textContent = expr + ' =';
+      var rounded = Number(val.toPrecision(12));
+      expr = String(rounded);
+      render();
+    } catch(e){ hist.textContent = 'Error — check parentheses'; }
+  }
+  document.querySelectorAll('#calc .ck').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var a = this.dataset.a;
+      if (a === 'C'){ expr = ''; hist.textContent = ''; render(); return; }
+      if (a === '⌫'){ expr = expr.slice(0, -1); render(); return; }
+      if (a === '='){ evaluate(); return; }
+      if (a === '±'){
+        if (expr) expr = expr.startsWith('-(') && expr.endsWith(')') ? expr.slice(2, -1) : '-(' + expr + ')';
+        render(); return;
+      }
+      if (a === '1/x'){ if (expr) expr = '1/(' + expr + ')'; render(); return; }
+      if (a === '^2'){ expr += '^2'; render(); return; }
+      if (a === '%'){ expr += '/100'; render(); return; }
+      if (a === '√'){ expr += '√('; render(); return; }
+      expr += a;
+      render();
     });
-    var sumEl = document.getElementById('mean-sum');
-    var cEl = document.getElementById('mean-count');
-    var avgEl = document.getElementById('mean-avg');
-    if (sumEl) sumEl.textContent = count === 0 ? '—' : fmt(sum);
-    if (cEl) cEl.textContent = count === 0 ? '—' : String(count);
-    if (avgEl) avgEl.textContent = count === 0 ? '—' : fmt(sum / count);
-  }
-  document.addEventListener('input', function(e){
-    if (e.target && e.target.classList && e.target.classList.contains('mean-in')) updateMean();
   });
+  // Keyboard support (only when not typing in another input)
+  document.addEventListener('keydown', function(e){
+    if (document.activeElement && document.activeElement.tagName === 'INPUT' && document.activeElement.id !== 'calc-display') return;
+    var k = e.key;
+    if ('0123456789.'.includes(k)){ expr += k; render(); }
+    else if (k === '+' || k === '-' || k === '*' || k === '/'){
+      var map = { '+': '+', '-': '−', '*': '×', '/': '÷' };
+      expr += map[k]; render();
+    } else if (k === 'Enter' || k === '='){ e.preventDefault(); evaluate(); }
+    else if (k === 'Backspace'){ expr = expr.slice(0, -1); render(); }
+    else if (k === 'Escape'){ expr = ''; hist.textContent = ''; render(); }
+    else if (k === '(' || k === ')'){ expr += k; render(); }
+    else if (k === '^'){ expr += '^'; render(); }
+  });
+  render();
 })();
 </script>
 </body>
