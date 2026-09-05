@@ -1480,10 +1480,12 @@ function showLesson(unitId) {
       if (unit.labUrl)    resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
       if (unit.graphLabUrl) resBtns.push(`<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank" rel="noopener" style="${S}">📊 Data Analysis</a>`);
     }
+    const scBtn = (!hideExtras) ? `<button class="btn" onclick="showHandout()" style="${S}">🔬 Science Connection</button>` : '';
+    const rwBtn2 = (typeof REALWORLD_8 !== 'undefined' && REALWORLD_8 && REALWORLD_8[unitId]) ? `<button class="btn" onclick="showRealWorld()" style="${S}">🎨 Real-World Project</button>` : '';
     const wsBtn = (!hideExtras && unit && unit.worksheetUrl) ? `<button class="btn" onclick="showWorksheet()" style="${S}">📋 Worksheet</button>` : '';
     const qzBtn = (unit && unit.quizUrl) ? `<button class="btn" onclick="showQuizExternal()" style="${S}">📝 Quiz</button>` : '';
     const utBtn = (unit && unit.unitTestUrl) ? `<button class="btn" onclick="showUnitTest()" style="${S}">📊 Unit Test</button>` : '';
-    if (!(resBtns.length || wsBtn || qzBtn || utBtn)) return;
+    if (!(resBtns.length || scBtn || rwBtn2 || wsBtn || qzBtn || utBtn)) return;
     const lc = document.getElementById('lesson-content');
     const h2 = lc.querySelector('h2');
     if (!h2) return;
@@ -1491,7 +1493,7 @@ function showLesson(unitId) {
     wrap.style.cssText = 'display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:0 0 14px 0;';
     const btnBar = document.createElement('div');
     btnBar.style.cssText = 'display:flex; gap:6px; flex-wrap:wrap; align-items:center;';
-    btnBar.innerHTML = resBtns.join('') + wsBtn + qzBtn + utBtn;
+    btnBar.innerHTML = resBtns.join('') + scBtn + rwBtn2 + wsBtn + qzBtn + utBtn;
     h2.parentNode.insertBefore(wrap, h2);
     wrap.appendChild(h2);
     wrap.appendChild(btnBar);
@@ -1508,30 +1510,15 @@ function showLesson(unitId) {
   const utb = document.getElementById('unittest-btn');
   if (qbe) qbe.style.display = (unit && unit.quizUrl) ? '' : 'none';
   if (utb) utb.style.display = (unit && unit.unitTestUrl) ? '' : 'none';
-  // Restructure bottom: put resources + all action buttons on one row, Back on its own row below
+  // Bottom: hide the duplicated nav row and Resources card; only show a single Back to Units button
   (function(){
-    const S = 'padding:6px 12px; font-size:.85rem; text-decoration:none; display:inline-block;';
-    const resBtns = [];
-    if (unit) {
-      if (unit.phetUrl)     resBtns.push(`<a class="btn-phet"  href="${unit.phetUrl}"  target="_blank" rel="noopener" style="${S}">🧪 PhET</a>`);
-      if (unit.ixlUrl)      resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
-      if (typeof SSAT_BANK !== 'undefined' && SSAT_BANK[unit.id]) resBtns.push(`<button class="btn-ssat" onclick="openSSAT('${unit.id}')" style="${S}">🎯 SSAT Prep</button>`);
-      if (unit.bpUrl)       resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
-      if (unit.ytSearch)    resBtns.push(`<a class="btn-yt"    href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
-      if (unit.labUrl)      resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
-      if (unit.graphLabUrl) resBtns.push(`<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank" rel="noopener" style="${S}">📊 Data Analysis</a>`);
-    }
     const nav = document.querySelector('#lesson-screen .nav-buttons');
-    if (!nav) return;
-    nav.querySelectorAll('.back-btn').forEach(b => b.remove());
-    if (resBtns.length) nav.insertAdjacentHTML('afterbegin', resBtns.join(''));
-    nav.style.flexWrap = 'wrap';
-    nav.style.alignItems = 'center';
+    if (nav) nav.style.display = 'none';
     let backRow = document.getElementById('lesson-back-row');
-    if (!backRow) {
+    if (!backRow && nav) {
       backRow = document.createElement('div');
       backRow.id = 'lesson-back-row';
-      backRow.style.cssText = 'margin: 6px 0 20px 0;';
+      backRow.style.cssText = 'margin: 16px 0 20px 0;';
       backRow.innerHTML = '<button class="btn back-btn" onclick="showHome()">← Back to Units</button>';
       nav.parentNode.insertBefore(backRow, nav.nextSibling);
     }
