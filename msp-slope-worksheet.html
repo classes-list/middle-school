@@ -563,5 +563,82 @@ li[data-plot]::after { content:""; display:table; clear:both; }
   }
 })();
 </script>
+
+<style>
+.slope-calc { display:block; margin:8px 0 6px; padding:10px 14px; background:#f0f9ff; border:1.5px solid #0369a1; border-radius:8px; font-size:.92rem; color:#0c4a6e; clear:both; max-width:520px; }
+.slope-calc .sc-label { font-weight:800; margin-bottom:6px; font-size:.85rem; letter-spacing:.02em; }
+.slope-calc .sc-row { display:flex; align-items:center; gap:4px; flex-wrap:wrap; font-family:'Consolas','Courier New',monospace; font-size:.98rem; }
+.slope-calc input.sc-in { width:3em; padding:3px 6px; border:1.5px solid #94a3b8; border-radius:4px; text-align:center; font-family:inherit; font-size:.95rem; font-weight:700; background:#fff; color:#0c4a6e; }
+.slope-calc input.sc-in:focus { outline:none; border-color:#0369a1; box-shadow:0 0 0 2px rgba(3,105,161,.2); }
+.slope-calc .sc-result { margin-top:6px; font-family:'Consolas','Courier New',monospace; font-size:.98rem; font-weight:700; }
+.slope-calc .sc-num, .slope-calc .sc-den, .slope-calc .sc-m { display:inline-block; min-width:2em; padding:2px 6px; border-bottom:1.5px solid #0369a1; text-align:center; color:#065f46; }
+.slope-calc .sc-m { background:#dcfce7; border:1.5px solid #16a34a; border-radius:4px; color:#14532d; margin-left:2px; }
+</style>
+<script>
+(function(){
+  function fmtFrac(n, d) {
+    if (isNaN(n) || isNaN(d) || d === 0) return d === 0 ? 'undefined' : '—';
+    var val = n / d;
+    if (Number.isInteger(val)) return String(val);
+    // try to reduce as fraction if numerator/denominator are integers
+    if (Number.isInteger(n) && Number.isInteger(d)) {
+      var a = Math.abs(n), b = Math.abs(d);
+      while (b) { var t = b; b = a % b; a = t; }
+      var g = a || 1;
+      var sign = (n < 0) !== (d < 0) ? '-' : '';
+      var nn = Math.abs(n)/g, dd = Math.abs(d)/g;
+      if (dd === 1) return sign + nn;
+      return sign + nn + '/' + dd + ' (' + val.toFixed(3).replace(/\.?0+$/,'') + ')';
+    }
+    return val.toFixed(3).replace(/\.?0+$/,'');
+  }
+  function attachCalc(li) {
+    if (li.querySelector('.slope-calc')) return;
+    var calc = document.createElement('div');
+    calc.className = 'slope-calc';
+    calc.innerHTML = '<div class="sc-label">📐 Slope formula — plug in numbers:</div>' +
+      '<div class="sc-row">m = (<input type="text" class="sc-in" data-var="y2" placeholder="y₂"> − <input type="text" class="sc-in" data-var="y1" placeholder="y₁">) ÷ (<input type="text" class="sc-in" data-var="x2" placeholder="x₂"> − <input type="text" class="sc-in" data-var="x1" placeholder="x₁">)</div>' +
+      '<div class="sc-result">m = <span class="sc-num">—</span> / <span class="sc-den">—</span> = <span class="sc-m">—</span></div>';
+    // Append after the last child of li (after answer input)
+    li.appendChild(calc);
+    var inputs = calc.querySelectorAll('input.sc-in');
+    var numEl = calc.querySelector('.sc-num');
+    var denEl = calc.querySelector('.sc-den');
+    var mEl = calc.querySelector('.sc-m');
+    function update() {
+      var y2 = parseFloat(inputs[0].value);
+      var y1 = parseFloat(inputs[1].value);
+      var x2 = parseFloat(inputs[2].value);
+      var x1 = parseFloat(inputs[3].value);
+      var n = (!isNaN(y2) && !isNaN(y1)) ? (y2 - y1) : NaN;
+      var d = (!isNaN(x2) && !isNaN(x1)) ? (x2 - x1) : NaN;
+      numEl.textContent = isNaN(n) ? '—' : n;
+      denEl.textContent = isNaN(d) ? '—' : d;
+      mEl.textContent = fmtFrac(n, d);
+    }
+    inputs.forEach(function(i){ i.addEventListener('input', update); });
+    // Prevent Enter in these inputs from jumping to next .ans
+    inputs.forEach(function(i){ 
+      i.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.stopPropagation(); e.preventDefault(); }});
+    });
+  }
+  function addCalculators() {
+    // Sections 2, 3, 4: any <li data-plot> that has p1 & p2, OR rise/run in section 3, OR table problems
+    var sections = ['wsec2','wsec3','wsec4'];
+    sections.forEach(function(id){
+      var sec = document.getElementById(id);
+      if (!sec) return;
+      sec.querySelectorAll('li[data-plot]').forEach(function(li){
+        attachCalc(li);
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addCalculators);
+  } else {
+    addCalculators();
+  }
+})();
+</script>
 </body>
 </html>
