@@ -1567,6 +1567,33 @@ function resourceCardHTML(unit) {
 function renderHome() {
   const grid = document.getElementById('units-grid');
   grid.innerHTML = '';
+  const REVIEW_AFTER_IDX = 3; // insert review card after Unit 4
+  const REVIEW_URL = 'msp-review-g8.html';
+  const REVIEW_DOCX = 'Math-8-Review.docx';
+  const REVIEW_TITLE = 'Unit 1, 2, 3 & 4 Review';
+  const REVIEW_DESC = 'Printable review sheet covering Metric Conversion, Experimental Error, Integer Operations & Sign Rules, Scientific Notation, Real Numbers, and Laws of Exponents. Rules, examples, and practice problems all in one place.';
+  function appendReviewCard() {
+    const rc = document.createElement('div');
+    rc.className = 'unit-card';
+    rc.style.background = 'linear-gradient(135deg, #fef3c7, #fef9c3)';
+    rc.style.borderLeft = '5px solid #b8860b';
+    rc.onclick = () => window.open(REVIEW_URL, '_blank', 'noopener');
+    rc.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">📘</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title"><span class="unit-badge" style="background:#b8860b;">REVIEW</span>${REVIEW_TITLE}</div>
+          <div class="unit-card-cc">Study Guide · Rules · Examples · Practice</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${REVIEW_DESC}</div>
+      <div class="unit-card-pills" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+        <a class="pill" href="${REVIEW_URL}" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#059669; color:#fff; padding:4px 10px;">📖 Open Review</a>
+        <a class="pill" href="${REVIEW_URL}" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#0284c7; color:#fff; padding:4px 10px;">🖨 Print Review</a>
+        <a class="pill" href="${REVIEW_DOCX}" download onclick="event.stopPropagation();" style="text-decoration:none; background:#7c3aed; color:#fff; padding:4px 10px;">📄 Word (.docx)</a>
+      </div>`;
+    grid.appendChild(rc);
+  }
   UNITS.forEach((unit, idx) => {
     const card = document.createElement('div');
     card.className = 'unit-card';
@@ -1586,6 +1613,7 @@ function renderHome() {
         <div class="pill">▶️ YouTube</div>
       </div>`;
     grid.appendChild(card);
+    if (idx === REVIEW_AFTER_IDX) appendReviewCard();
   });
 }
 

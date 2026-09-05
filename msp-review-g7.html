@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Algebra (Grade 7) — Unit 1 & 2 Review</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: #1f2937; line-height: 1.5; padding: 24px 16px; }
+.container { max-width: 900px; margin: 0 auto; background: #fff; padding: 30px 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.06); }
+header { text-align: center; padding-bottom: 12px; border-bottom: 2px solid #000; }
+h1 { color: #1a2a4a; font-size: 1.8rem; margin: 0 0 6px; }
+header .sub { font-style: italic; color: #64748b; font-size: .95rem; }
+.name-bar { display: flex; gap: 22px; margin: 16px 0 20px; padding: 10px 14px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: .95rem; }
+.name-bar .line { flex: 1; border-bottom: 1.5px solid #94a3b8; }
+.toolbar { display: flex; gap: 10px; justify-content: center; margin: 10px 0 20px; flex-wrap: wrap; }
+.toolbar button, .toolbar a.btn-a { padding: 10px 20px; border-radius: 8px; font-weight: 800; font-size: 1rem; cursor: pointer; border: 1.5px solid #0369a1; background: #0284c7; color: #fff; text-decoration: none; display: inline-block; }
+.toolbar button:hover, .toolbar a.btn-a:hover { background: #0369a1; }
+.toolbar .btn-print { background: #059669; border-color: #047857; }
+.toolbar .btn-print:hover { background: #047857; }
+.review-section { margin: 22px 0; padding: 16px 0 4px; border-top: 2px solid #000; }
+.review-section h2 { color: #1a2a4a; font-size: 1.25rem; margin: 6px 0 12px; }
+.review-section h3 { color: #0f766e; font-size: 1.05rem; margin: 14px 0 6px; padding-bottom: 3px; border-bottom: 1px solid #cbd5e1; }
+.review-section h3.practice-h { color: #78350f; }
+ul.rules { list-style: none; padding: 0; margin: 6px 0 10px; }
+ul.rules li { padding: 4px 0 4px 20px; position: relative; }
+ul.rules li::before { content: '▸'; position: absolute; left: 4px; color: #1a2a4a; font-weight: 700; }
+table.viz { width: 100%; border-collapse: collapse; margin: 10px 0 14px; font-size: .93rem; }
+table.viz th { background: #e5e7eb; padding: 8px 10px; text-align: left; border: 1px solid #333; font-weight: 700; }
+table.viz td { padding: 8px 10px; border: 1px solid #333; vertical-align: top; }
+table.viz tr td:first-child { font-weight: 700; }
+.example { padding: 8px 12px 8px 16px; margin: 8px 0; border-left: 4px solid #000; background: #f8fafc; font-size: .95rem; }
+.example strong { color: #1a2a4a; }
+.problem { padding: 8px 0 4px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.problem .pnum { font-weight: 700; color: #1a2a4a; min-width: 28px; }
+.problem .ptext { flex: 1 1 auto; min-width: 200px; }
+input.ans { display: inline-block; min-width: 100px; max-width: 260px; padding: 5px 10px; border: 1.5px solid #94a3b8; border-radius: 6px; font-family: inherit; font-size: .98rem; font-weight: 700; background: #fff; color: #1f2937; transition: all .15s ease; }
+input.ans:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background: #dcfce7; border-color: #16a34a; color: #14532d; }
+input.ans.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+.check-row { margin: 14px 0 6px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.check-btn { background: #2563eb; color: #fff; border: 1px solid #1e40af; padding: 8px 16px; border-radius: 6px; font-weight: 800; font-size: .95rem; cursor: pointer; }
+.check-btn:hover { background: #1e40af; }
+.reset-btn { background: #f1f5f9; color: #1a2a4a; border: 1px solid #cbd5e1; padding: 8px 14px; border-radius: 6px; font-weight: 700; font-size: .9rem; cursor: pointer; }
+.reset-btn:hover { background: #e2e8f0; }
+.score { padding: 6px 12px; font-weight: 800; font-size: .95rem; border-radius: 6px; background: #f1f5f9; color: #1a2a4a; min-width: 110px; text-align: center; }
+.score.good { background: #dcfce7; color: #14532d; }
+.score.mid { background: #fef9c3; color: #713f12; }
+.score.low { background: #fee2e2; color: #7f1d1d; }
+footer { margin-top: 30px; padding-top: 12px; border-top: 1px dashed #cbd5e1; text-align: center; color: #64748b; font-size: .85rem; }
+@media print {
+  body { background: #fff !important; padding: 0; }
+  .container { box-shadow: none; padding: 20px 30px; max-width: 100%; }
+  .toolbar, .no-print, .check-row { display: none !important; }
+  .review-section { page-break-inside: avoid; }
+  .example { background: transparent; }
+  input.ans { border: none; border-bottom: 1.5px solid #000; background: transparent !important; border-radius: 0; color: #000 !important; min-width: 100px; }
+  input.ans.correct, input.ans.wrong { background: transparent !important; color: #000 !important; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>Pre-Algebra (Grade 7) — Unit 1 & 2 Review</h1>
+  <div class="sub">Metric Conversion · Experimental Error · Integer Operations · Scientific Notation  |  Dr. Park</div>
+</header>
+
+<div class="toolbar no-print">
+  <button class="btn-print" onclick="window.print()">🖨 Print Review</button>
+  <a class="btn-a" href="Math-7-Review.docx" download>📄 Download Word (.docx)</a>
+</div>
+
+<div class="name-bar">
+  <span><strong>Name:</strong></span><span class="line"></span>
+  <span><strong>Date:</strong></span><span class="line" style="max-width:120px;"></span>
+  <span><strong>Class:</strong></span><span class="line" style="max-width:80px;"></span>
+</div>
+
+
+<section class="review-section" id="sec1">
+  <h2>Section 1. Metric Conversion</h2>
+  <h3>The Rules</h3>
+  <ul class="rules">
+  <li>Metric units are based on powers of 10 — each step on the metric staircase = ×10.</li>
+  <li>Base units: meter — length (m). Liter — volume (L, capital). Gram — mass (g). Prefixes work the same across all three.</li>
+  <li>Moving DOWN the staircase (to a SMALLER unit) → decimal moves to the RIGHT (multiply by 10 per step).</li>
+  <li>Moving UP the staircase (to a LARGER unit) → decimal moves to the LEFT (divide by 10 per step).</li>
+  <li>Count the STEPS between the two units — that is how many places the decimal moves.</li>
+  <li>Add trailing zeros when needed (3.5 → 3500) or leading zeros (250 → 0.250) so the shift works.</li>
+</ul>
+  <p><strong>The Metric Staircase</strong> <em>(each step down: multiply by 10 · each step up: divide by 10)</em></p>
+<table class="viz"><thead><tr><th>kilo (k)</th><th>hecto (h)</th><th>deka (da)</th><th>UNIT (m,L,g)</th><th>deci (d)</th><th>centi (c)</th><th>milli (m)</th></tr></thead><tbody><tr><td>1000</td><td>100</td><td>10</td><td>1</td><td>0.1</td><td>0.01</td><td>0.001</td></tr></tbody></table>
+  <h3>Examples</h3>
+  <div class="example"><strong>Example 1</strong>  Convert 3.5 km to meters. km → m is 3 steps DOWN. Move the decimal 3 places RIGHT: 3.5 → 3500.  Answer: 3,500 m.</div>
+<div class="example"><strong>Example 2</strong>  Convert 250 mg to grams. mg → g is 3 steps UP. Move the decimal 3 places LEFT: 250. → 0.250.  Answer: 0.25 g.</div>
+  <h3 class="practice-h">Practice Problems</h3>
+  <div class="problem"><span class="pnum">1.</span> <span class="ptext">Convert 4.2 km to meters. Answer (in m):</span> <input class="ans" data-a="4200" size="7"></div>
+<div class="problem"><span class="pnum">2.</span> <span class="ptext">A doctor prescribes 0.75 L of solution. How many milliliters (mL) is that?</span> <input class="ans" data-a="750" size="6"></div>
+  <div class="check-row no-print">
+    <button class="check-btn" onclick="checkSection('sec1')">✓ Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec1')">↺ Clear</button>
+    <span class="score" id="score-sec1">—</span>
+  </div>
+</section>
+
+
+<section class="review-section" id="sec2">
+  <h2>Section 2. Experimental Error — Accuracy & Precision</h2>
+  <h3>The Rules</h3>
+  <ul class="rules">
+  <li>ACCURACY = how close your measurement is to the ACTUAL (accepted) value.</li>
+  <li>PRECISION = how close REPEATED measurements are to EACH OTHER.</li>
+  <li>Error = the absolute value of ( Measured Value − Actual Value ). Always positive.</li>
+  <li>Percent Error = ( |Measured Value − Actual Value| ÷ Actual Value ) × 100%.</li>
+  <li>Smaller percent error → more accurate. 0% error means measured value = actual value exactly.</li>
+  <li>Average of trials = (sum of all trials) ÷ (number of trials).</li>
+  <li>More trials averaged together usually reduces random error — that is why scientists repeat measurements.</li>
+</ul>
+  <p><strong>Accuracy vs Precision at a glance</strong></p>
+<table class="viz"><thead><tr><th></th><th>Accuracy</th><th>Precision</th></tr></thead><tbody><tr><td>What it measures</td><td>How close to the ACTUAL value</td><td>How close REPEATED measurements are to each other</td></tr><tr><td>Dartboard analogy</td><td>Darts land near the bullseye</td><td>Darts land clustered together (anywhere on the board)</td></tr><tr><td>How to check</td><td>Compare measurement to a known / accepted value</td><td>Take 3+ trials and see how tight the group is</td></tr><tr><td>Formula</td><td>Percent Error = ( |Measured − Actual| ÷ Actual ) × 100%</td><td>(none — judged by how tightly repeated trials cluster)</td></tr></tbody></table>
+  <h3>Examples</h3>
+  <div class="example"><strong>Example 1</strong>  A student measures a book's mass as 195 g. The actual mass is 200 g.  Error = |195 − 200| = 5 g.  Percent Error = ( 5 ÷ 200 ) × 100 = 2.5%.</div>
+<div class="example"><strong>Example 2</strong>  Three trials give 12.1, 12.3, 12.2 mL.  Average = (12.1 + 12.3 + 12.2) ÷ 3 = 36.6 ÷ 3 = 12.2 mL.  The trials are precise (close together); accuracy depends on the actual value.</div>
+  <h3 class="practice-h">Practice Problems</h3>
+  <div class="problem"><span class="pnum">1.</span> <span class="ptext">A student measures a bottle as 48 mL. The actual volume is 50 mL. What is the percent error? (enter as a number)</span> <input class="ans" data-a="4" size="6"></div>
+<div class="problem"><span class="pnum">2a.</span> <span class="ptext">Four trials for a rock's mass give 24.6, 24.8, 24.5, 24.9 g. What is the average? (g)</span> <input class="ans" data-a="24.7" size="7"></div>
+<div class="problem"><span class="pnum">2b.</span> <span class="ptext">Given the average from 2a and the actual mass of 25.0 g, what is the percent error? (enter as a number)</span> <input class="ans" data-a="1.2" size="6"></div>
+  <div class="check-row no-print">
+    <button class="check-btn" onclick="checkSection('sec2')">✓ Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec2')">↺ Clear</button>
+    <span class="score" id="score-sec2">—</span>
+  </div>
+</section>
+
+
+<section class="review-section" id="sec3">
+  <h2>Section 3. Integer Operations & Sign Rules</h2>
+  <h3>The ONE Sign Rule (works for × ÷ AND every stacked sign)</h3>
+<ul class="rules">
+  <li>SAME signs → POSITIVE.   ( + · + ) = +   and   ( − · − ) = +</li>
+  <li>DIFFERENT signs → NEGATIVE.   ( + · − ) = −   and   ( − · + ) = −</li>
+  <li>This one rule works for multiplication, division, AND every time two signs sit next to each other (like −(−9) or 5 + (−2)).</li>
+</ul>
+<h3>The Trick — "Hidden Multiplication"</h3>
+<ul class="rules">
+  <li>Every sign in front of a number is really "multiplied by ±1."  −a  really means  (−1)(a).  +a  really means  (+1)(a).</li>
+  <li>Two stacked signs like  −(−9)  are really  (−1)(−1)(9)  =  (+1)(9)  =  +9.  Apply the sign rule to the two signs first, THEN multiply the number.</li>
+  <li>Same idea for  +(−2)  =  (+1)(−2)  =  −2.  And  −(+2)  =  (−1)(+2)  =  −2.  And  +(+2)  =  (+1)(+2)  =  +2.</li>
+  <li>Once you collapse the stacked signs, you are left with a single sign and a number — a much easier problem.</li>
+</ul>
+<h3>Subtraction is really addition in disguise</h3>
+<ul class="rules">
+  <li>GOLDEN RULE:  a − b  =  a + (−b).  ALWAYS rewrite subtraction as "adding the opposite."</li>
+  <li>After you rewrite, use the sign-collapse trick to clean up any stacked signs, then add on the number line.</li>
+  <li>Number-line story for addition:  positive → move RIGHT.  negative → move LEFT.  Start at the first number and move by the second.</li>
+</ul>
+<p><strong>Sign-Collapse Cheat Sheet</strong></p>
+<table class="viz"><thead><tr><th>Stacked signs</th><th>Hidden multiplication</th><th>Collapses to</th><th>Because</th></tr></thead><tbody><tr><td>+ +</td><td>(+1)(+1)</td><td>+</td><td>Same signs → POSITIVE</td></tr><tr><td>+ −</td><td>(+1)(−1)</td><td>−</td><td>Different signs → NEGATIVE</td></tr><tr><td>− +</td><td>(−1)(+1)</td><td>−</td><td>Different signs → NEGATIVE</td></tr><tr><td>− −</td><td>(−1)(−1)</td><td>+</td><td>Same signs → POSITIVE</td></tr></tbody></table>
+  <h3>Examples — collapse signs first, then finish</h3>
+  <div class="example"><strong>Example 1 — multiply, different signs</strong>  (−3) × 4.  Sign rule: − and + → answer is NEGATIVE.  3 × 4 = 12.  Answer: −12.</div>
+<div class="example"><strong>Example 2 — multiply, same signs</strong>  (−5) × (−2).  Sign rule: − and − → POSITIVE.  5 × 2 = 10.  Answer: +10.</div>
+<div class="example"><strong>Example 3 — divide, different signs</strong>  −20 ÷ 4.  Sign rule: − and + → NEGATIVE.  20 ÷ 4 = 5.  Answer: −5.</div>
+<div class="example"><strong>Example 4 — standalone double negative</strong>  −(−9).  The two stacked signs (− and −) collapse to a + by the sign rule.  So −(−9) = +9.  Answer: +9.</div>
+<div class="example"><strong>Example 5 — plus a negative</strong>  5 + (−2).  The stacked signs (+ and −) collapse to a single −.  So 5 + (−2) becomes 5 − 2 = 3.  Answer: 3.</div>
+<div class="example"><strong>Example 6 — minus a negative</strong>  5 − (−2).  The stacked signs (− and −) collapse to a +.  So 5 − (−2) becomes 5 + 2 = 7.  Answer: 7.</div>
+<div class="example"><strong>Example 7 — negative minus positive</strong>  −7 − 2.  Rewrite as −7 + (−2).  Nothing to collapse (already a single − in front of 2).  Number-line: start at −7, move 2 more LEFT.  Answer: −9.</div>
+<div class="example"><strong>Example 8 — negative plus negative</strong>  −7 + (−3).  Collapse (+ and −) to a single −.  So −7 + (−3) becomes −7 − 3.  Number-line: start at −7, move 3 more LEFT.  Answer: −10.</div>
+<div class="example"><strong>Example 9 — same-sign addition</strong>  (−6) + (−8).  Collapse (+ and −) → −.  So (−6) + (−8) = −6 − 8.  Both signs pull LEFT on the number line: 6 + 8 = 14, and it is negative.  Answer: −14.</div>
+  <h3 class="practice-h">Practice Problems</h3>
+  <div class="problem"><span class="pnum">1.</span> <span class="ptext">(−6) + (−8) =</span> <input class="ans" data-a="-14" size="6"></div>
+<div class="problem"><span class="pnum">2.</span> <span class="ptext">5 + (−2) =</span> <input class="ans" data-a="3" size="6"></div>
+<div class="problem"><span class="pnum">3.</span> <span class="ptext">5 − (−2) =</span> <input class="ans" data-a="7" size="6"></div>
+<div class="problem"><span class="pnum">4.</span> <span class="ptext">−7 − 2 =</span> <input class="ans" data-a="-9" size="6"></div>
+<div class="problem"><span class="pnum">5.</span> <span class="ptext">−7 + (−3) =</span> <input class="ans" data-a="-10" size="6"></div>
+<div class="problem"><span class="pnum">6.</span> <span class="ptext">−(−9) =</span> <input class="ans" data-a="9" size="6"></div>
+<div class="problem"><span class="pnum">7.</span> <span class="ptext">8 + (−15) =</span> <input class="ans" data-a="-7" size="6"></div>
+<div class="problem"><span class="pnum">8.</span> <span class="ptext">(−4) × (−6) =</span> <input class="ans" data-a="24" size="6"></div>
+<div class="problem"><span class="pnum">9.</span> <span class="ptext">−30 ÷ 5 =</span> <input class="ans" data-a="-6" size="6"></div>
+<div class="problem"><span class="pnum">10.</span> <span class="ptext">(−12) − (−4) =</span> <input class="ans" data-a="-8" size="6"></div>
+  <div class="check-row no-print">
+    <button class="check-btn" onclick="checkSection('sec3')">✓ Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec3')">↺ Clear</button>
+    <span class="score" id="score-sec3">—</span>
+  </div>
+</section>
+
+
+<section class="review-section" id="sec4">
+  <h2>Section 4. Scientific Notation</h2>
+  <h3>The Rules</h3>
+  <ul class="rules">
+  <li>Scientific notation form:  a × 10ⁿ  where  1 ≤ |a| < 10  and n is an integer (positive or negative).</li>
+  <li>LARGE numbers → decimal moves LEFT → POSITIVE exponent.  SMALL numbers (< 1) → decimal moves RIGHT → NEGATIVE exponent.</li>
+  <li>MULTIPLY:  (a × 10ᵐ)(b × 10ⁿ) = (a·b) × 10^(m+n).  Multiply coefficients, ADD exponents.</li>
+  <li>DIVIDE:  (a × 10ᵐ) ÷ (b × 10ⁿ) = (a÷b) × 10^(m−n).  Divide coefficients, SUBTRACT exponents.</li>
+  <li>ADD / SUBTRACT:  MATCH the exponents first, then add or subtract the coefficients, then adjust.</li>
+  <li>ADJUST if the coefficient is not between 1 and 10 — shift the decimal to fix, then update the exponent.</li>
+</ul>
+  <p><strong>Scientific Notation at a glance</strong></p>
+<table class="viz"><thead><tr><th>Number</th><th>Move decimal</th><th>Direction</th><th>Scientific notation</th></tr></thead><tbody><tr><td>4,500,000</td><td>6 places</td><td>LEFT</td><td>4.5 × 10⁶</td></tr><tr><td>320</td><td>2 places</td><td>LEFT</td><td>3.2 × 10²</td></tr><tr><td>0.0045</td><td>3 places</td><td>RIGHT</td><td>4.5 × 10⁻³</td></tr><tr><td>0.00007</td><td>5 places</td><td>RIGHT</td><td>7 × 10⁻⁵</td></tr><tr><td>10 × 10⁴  (adjust)</td><td>1 place LEFT · bump exp UP</td><td>LEFT</td><td>1.0 × 10⁵</td></tr><tr><td>0.3 × 10⁵  (adjust)</td><td>1 place RIGHT · drop exp DOWN</td><td>RIGHT</td><td>3.0 × 10⁴</td></tr></tbody></table>
+  <h3>Examples</h3>
+  <div class="example"><strong>Example 1 — simple conversion</strong>  Write 0.00074 in scientific notation. Move the decimal 4 places RIGHT so 7 is in front: 0.00074 → 7.4.  Answer: 7.4 × 10⁻⁴.</div>
+<div class="example"><strong>Example 2 — must adjust</strong>  Simplify 10 × 10⁴. Rewrite 10 = 1.0 × 10¹. Combine: 10 × 10⁴ = 1.0 × 10¹ × 10⁴ = 1.0 × 10⁵.  Answer: 1.0 × 10⁵.</div>
+<div class="example"><strong>Example 3 — multiply</strong>  Multiply (3 × 10⁴)(2 × 10³). Multiply the coefficients: 3 × 2 = 6. Add the exponents: 4 + 3 = 7.  Answer: 6 × 10⁷.</div>
+<div class="example"><strong>Example 4 — multiply (must adjust)</strong>  Multiply (5 × 10³)(4 × 10²). Coefficients: 5 × 4 = 20. Exponents: 3 + 2 = 5. Result 20 × 10⁵ needs adjusting: 20 = 2.0 × 10¹, so 20 × 10⁵ = 2.0 × 10⁶.  Answer: 2.0 × 10⁶.</div>
+<div class="example"><strong>Example 5 — divide</strong>  Divide (8 × 10⁶) ÷ (2 × 10²). Divide the coefficients: 8 ÷ 2 = 4. Subtract the exponents: 6 − 2 = 4.  Answer: 4 × 10⁴.</div>
+<div class="example"><strong>Example 6 — divide (must adjust)</strong>  Divide (3 × 10⁵) ÷ (6 × 10²). Coefficients: 3 ÷ 6 = 0.5. Exponents: 5 − 2 = 3. Result 0.5 × 10³ needs adjusting: 0.5 = 5.0 × 10⁻¹, so 0.5 × 10³ = 5.0 × 10².  Answer: 5.0 × 10².</div>
+<div class="example"><strong>Example 7 — add (match exponents)</strong>  Add (3.2 × 10⁵) + (4.5 × 10⁴). Rewrite 4.5 × 10⁴ = 0.45 × 10⁵. Add coefficients: (3.2 + 0.45) × 10⁵ = 3.65 × 10⁵.  Answer: 3.65 × 10⁵.</div>
+<div class="example"><strong>Example 8 — subtract (match exponents)</strong>  Subtract (7.2 × 10⁶) − (5 × 10⁵). Rewrite 5 × 10⁵ = 0.5 × 10⁶. Subtract coefficients: (7.2 − 0.5) × 10⁶ = 6.7 × 10⁶.  Answer: 6.7 × 10⁶.</div>
+  <h3 class="practice-h">Practice Problems</h3>
+  <div class="problem"><span class="pnum">1.</span> <span class="ptext">Write 0.0052 in scientific notation:</span> <input class="ans" data-a="5.2 × 10⁻³" size="13"></div>
+<div class="problem"><span class="pnum">2.</span> <span class="ptext">Simplify and write in true scientific notation: 25 × 10³ =</span> <input class="ans" data-a="2.5 × 10⁴" size="12"></div>
+<div class="problem"><span class="pnum">3.</span> <span class="ptext">Multiply: (4 × 10³) × (6 × 10²) =</span> <input class="ans" data-a="2.4 × 10⁶" size="12"></div>
+<div class="problem"><span class="pnum">4.</span> <span class="ptext">Divide: (9 × 10⁷) ÷ (3 × 10²) =</span> <input class="ans" data-a="3 × 10⁵" size="10"></div>
+<div class="problem"><span class="pnum">5.</span> <span class="ptext">Add: (6.2 × 10⁴) + (3.5 × 10³) =</span> <input class="ans" data-a="6.55 × 10⁴" size="13"></div>
+<div class="problem"><span class="pnum">6.</span> <span class="ptext">Subtract: (8 × 10⁵) − (2 × 10⁴) =</span> <input class="ans" data-a="7.8 × 10⁵" size="12"></div>
+  <div class="check-row no-print">
+    <button class="check-btn" onclick="checkSection('sec4')">✓ Check Answers</button>
+    <button class="reset-btn" onclick="resetSection('sec4')">↺ Clear</button>
+    <span class="score" id="score-sec4">—</span>
+  </div>
+</section>
+
+
+<footer>Mary, Star of the Sea School · Middle School Math · Dr. Park</footer>
+</div>
+<script>
+function normalizeAns(s){
+  s = String(s || '').trim().toLowerCase();
+  if (!s) return '';
+  // sqrt handling
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m,n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m,n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  // Unicode superscripts → ^N
+  var __SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, function(m){ var out='^'; for (var i=0; i<m.length; i++) out += (__SUP[m[i]] || m[i]); return out; });
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;
+}
+function toNumber(s){
+  var c = normalizeAns(s); if (!c) return null;
+  var f = c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/); if (f) return Number(f[1])/Number(f[3]);
+  var pw = c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/); if (pw) return Math.pow(Number(pw[1]), Number(pw[2]));
+  var ipw = c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/); if (ipw){ var v = Math.pow(Number(ipw[1]), Number(ipw[2])); return v!==0 ? 1/v : null; }
+  var n = Number(c); return isFinite(n) ? n : null;
+}
+function isCorrect(student, expected){
+  if (!expected) return null;
+  var ns = toNumber(student), ne = toNumber(expected);
+  if (ns !== null && ne !== null){
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(secId){
+  var sec = document.getElementById(secId); if (!sec) return;
+  var inputs = sec.querySelectorAll('input.ans');
+  var correct = 0, checked = 0;
+  inputs.forEach(function(i){
+    var e = i.dataset.a || '';
+    if (!e) return;
+    checked++;
+    var v = i.value;
+    if (!v.trim()){ i.classList.remove('correct','wrong'); return; }
+    var ok = isCorrect(v, e);
+    i.classList.toggle('correct', ok);
+    i.classList.toggle('wrong', !ok);
+    if (ok) correct++;
+  });
+  var se = document.getElementById('score-' + secId);
+  if (se){
+    var pct = checked ? Math.round(100 * correct / checked) : 0;
+    se.textContent = correct + ' / ' + checked + '  (' + pct + '%)';
+    se.classList.remove('good','mid','low');
+    if (pct >= 90) se.classList.add('good');
+    else if (pct >= 70) se.classList.add('mid');
+    else se.classList.add('low');
+  }
+}
+function resetSection(secId){
+  var sec = document.getElementById(secId); if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(function(i){ i.value = ''; i.classList.remove('correct','wrong'); });
+  var se = document.getElementById('score-' + secId);
+  if (se){ se.textContent = '—'; se.classList.remove('good','mid','low'); }
+}
+// Enter = jump to next input
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')){
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('input.ans'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus();
+    else e.target.blur();
+  }
+});
+</script>
+</body>
+</html>
