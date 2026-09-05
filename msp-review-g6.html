@@ -51,6 +51,7 @@ input.ans.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
 .pe-calc-title { font-weight: 800; margin-bottom: 8px; font-size: .95rem; letter-spacing: .02em; }
 .pe-calc-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-family: 'Consolas', 'Courier New', monospace; font-size: 1rem; }
 .pe-calc-row input.pe-in { width: 4.5em; padding: 4px 6px; border: 1.5px solid #94a3b8; border-radius: 4px; text-align: center; font-family: inherit; font-size: .95rem; font-weight: 700; background: #fff; color: #0c4a6e; }
+.pe-calc-row input.pe-in-wide { width: 6.5em; }
 .pe-calc-row input.pe-in:focus { outline: none; border-color: #0369a1; box-shadow: 0 0 0 2px rgba(3,105,161,.2); }
 .pe-frac { display: inline-flex; flex-direction: column; align-items: center; margin: 0 6px; }
 .pe-frac .pe-num, .pe-frac .pe-den { padding: 2px 6px; }
@@ -58,6 +59,10 @@ input.ans.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
 .pe-calc-result { margin-top: 10px; font-family: 'Consolas', 'Courier New', monospace; font-size: 1rem; font-weight: 700; }
 .pe-slot { display: inline-block; min-width: 2.5em; padding: 2px 6px; border-bottom: 1.5px solid #0369a1; text-align: center; color: #065f46; margin: 0 2px; }
 .pe-final { display: inline-block; min-width: 3em; padding: 3px 10px; background: #dcfce7; border: 1.5px solid #16a34a; border-radius: 4px; color: #14532d; margin-left: 2px; }
+.mean-inputs { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin: 6px 0 10px; }
+.mean-inputs label { font-family: 'Consolas','Courier New',monospace; font-size: .92rem; color: #0c4a6e; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+.mean-inputs input.mean-in { width: 4.5em; padding: 4px 6px; border: 1.5px solid #94a3b8; border-radius: 4px; text-align: center; font-family: inherit; font-size: .95rem; font-weight: 700; background: #fff; color: #0c4a6e; }
+.mean-inputs input.mean-in:focus { outline: none; border-color: #0369a1; box-shadow: 0 0 0 2px rgba(3,105,161,.2); }
 footer { margin-top: 30px; padding-top: 12px; border-top: 1px dashed #cbd5e1; text-align: center; color: #64748b; font-size: .85rem; }
 @media print {
   body { background: #fff !important; padding: 0; }
@@ -135,14 +140,29 @@ footer { margin-top: 30px; padding-top: 12px; border-top: 1px dashed #cbd5e1; te
   <div class="pe-calc-row">
     <span>Percent Error =</span>
     <span class="pe-frac">
-      <span class="pe-num">| <input type="text" class="pe-in" id="pe-m" placeholder="Measured"> − <input type="text" class="pe-in" id="pe-a" placeholder="Actual"> |</span>
+      <span class="pe-num">| <input type="text" class="pe-in pe-in-wide" id="pe-m" placeholder="Measured"> − <input type="text" class="pe-in pe-in-wide" id="pe-a" placeholder="Actual"> |</span>
       <span class="pe-bar"></span>
-      <span class="pe-den"><input type="text" class="pe-in" id="pe-a2" placeholder="Actual" readonly></span>
+      <span class="pe-den"><input type="text" class="pe-in pe-in-wide" id="pe-a2" placeholder="Actual" readonly></span>
     </span>
     <span>× 100%</span>
   </div>
   <div class="pe-calc-result">
     = <span class="pe-slot" id="pe-abs">—</span> ÷ <span class="pe-slot" id="pe-adiv">—</span> × 100% = <span class="pe-final" id="pe-pct">—</span>
+  </div>
+</div>
+
+<div class="pe-calc mean-calc no-print">
+  <div class="pe-calc-title">📊 Mean (Average) Calculator — for Problem 2a</div>
+  <div class="mean-inputs">
+    <label>Trial 1 <input type="text" class="mean-in" data-mean="1" placeholder="24.6"></label>
+    <label>Trial 2 <input type="text" class="mean-in" data-mean="1" placeholder="24.8"></label>
+    <label>Trial 3 <input type="text" class="mean-in" data-mean="1" placeholder="24.5"></label>
+    <label>Trial 4 <input type="text" class="mean-in" data-mean="1" placeholder="24.9"></label>
+  </div>
+  <div class="pe-calc-result">
+    Sum = <span class="pe-slot" id="mean-sum">—</span>
+    ÷ Count = <span class="pe-slot" id="mean-count">—</span>
+    → Average = <span class="pe-final" id="mean-avg">—</span>
   </div>
 </div>
 
@@ -353,6 +373,31 @@ document.addEventListener('keydown', function(e){
   }
   document.addEventListener('input', function(e){
     if (e.target && e.target.classList && e.target.classList.contains('pe-in')) updatePE();
+  });
+})();
+// Mean (Average) Calculator live update
+(function(){
+  function fmt(n){
+    if (isNaN(n) || !isFinite(n)) return '—';
+    if (Number.isInteger(n)) return String(n);
+    return String(Math.round(n * 10000) / 10000);
+  }
+  function updateMean(){
+    var inputs = document.querySelectorAll('.mean-inputs input.mean-in');
+    var sum = 0, count = 0;
+    inputs.forEach(function(i){
+      var v = parseFloat(i.value);
+      if (!isNaN(v)){ sum += v; count += 1; }
+    });
+    var sumEl = document.getElementById('mean-sum');
+    var cEl = document.getElementById('mean-count');
+    var avgEl = document.getElementById('mean-avg');
+    if (sumEl) sumEl.textContent = count === 0 ? '—' : fmt(sum);
+    if (cEl) cEl.textContent = count === 0 ? '—' : String(count);
+    if (avgEl) avgEl.textContent = count === 0 ? '—' : fmt(sum / count);
+  }
+  document.addEventListener('input', function(e){
+    if (e.target && e.target.classList && e.target.classList.contains('mean-in')) updateMean();
   });
 })();
 </script>
