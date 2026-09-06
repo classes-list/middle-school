@@ -118,7 +118,7 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
   <div id="mode-badge" style="display:inline-block; margin-left:6px; padding:4px 12px; border-radius:999px; font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;"></div>
   <button type="button" onclick="window.print()" class="print-btn" style="margin-left:12px; padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#e0f2fe; color:#0c4a6e; font-weight:800; font-size:.85rem; cursor:pointer;">🖨 Print Test</button>
 </div>
-</header>
+</header><div style="background:#eff6ff; border-left:5px solid #2563eb; padding:10px 14px; border-radius:6px; margin:12px 0; font-size:.94rem; color:#1e3a8a;"><strong>💡 Answer format:</strong> You can write your answer as either an <strong>improper fraction</strong> (like <code>5/4</code>) OR a <strong>mixed number</strong> (like <code>1 1/4</code>). Both are accepted. Just use a space between the whole number and the fraction when writing mixed numbers.</div>
 <script>
 
 // --- Randomized graded question pool support ---
@@ -323,6 +323,7 @@ function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
   s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
   var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
   s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/(-?\d+)\s+(\d+)\/(\d+)/g, function(m, w, n, d){ var W = parseInt(w,10); var N = parseInt(n,10); var D = parseInt(d,10); var sign = W < 0 ? -1 : 1; var val = Math.abs(W)*D + N; return (sign*val) + '/' + D; });
   s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
   s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
   s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');

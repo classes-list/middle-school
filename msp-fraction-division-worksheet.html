@@ -133,7 +133,7 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
   <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
   <h1>➗ Fraction Division Worksheet</h1>
   <p class="tagline">Keep, Change, Flip — and understand why.</p>
-<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header><div style="background:#eff6ff; border-left:5px solid #2563eb; padding:10px 14px; border-radius:6px; margin:12px 0; font-size:.94rem; color:#1e3a8a;"><strong>💡 Answer format:</strong> You can write your answer as either an <strong>improper fraction</strong> (like <code>5/4</code>) OR a <strong>mixed number</strong> (like <code>1 1/4</code>). Both are accepted. Just use a space between the whole number and the fraction when writing mixed numbers.</div>
 <script>
 (function(){
   const g = new URLSearchParams(location.search).get('grade');
@@ -256,6 +256,7 @@ function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
   s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
   var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
   s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/(-?\d+)\s+(\d+)\/(\d+)/g, function(m, w, n, d){ var W = parseInt(w,10); var N = parseInt(n,10); var D = parseInt(d,10); var sign = W < 0 ? -1 : 1; var val = Math.abs(W)*D + N; return (sign*val) + '/' + D; });
   s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
   s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
   s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
