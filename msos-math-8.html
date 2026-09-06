@@ -1627,7 +1627,8 @@ function renderSidebar() {
     const eoq = document.createElement('div');
     eoq.className = 'sidebar-item';
     eoq.style.cssText = 'margin-top:6px; background:#fef3c7; color:#78350f; font-weight:800; border-left:3px solid #b8860b; padding:8px 10px;';
-    eoq.textContent = '📘 Q' + quarterNum + ' End of Quarter Test';
+    var __weekMap = {1:'Week of 9/28', 2:'Week of 12/14', 3:'Week of 3/8', 4:'Week of 5/24'};
+    eoq.textContent = '📘 Q' + quarterNum + ' End of Quarter Test (' + (__weekMap[quarterNum]||'') + ')';
     eoq.onclick = () => window.open('msp-eoq-q' + quarterNum + '-g' + EOQ_GRADE + '.html?grade=' + EOQ_GRADE, '_blank', 'noopener');
     sidebar.appendChild(eoq);
   }
