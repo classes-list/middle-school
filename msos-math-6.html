@@ -3164,17 +3164,17 @@ function dlabDrop(){
   D_el.textContent = D.toFixed(2);
   if (work) work.innerHTML = 'D = m ÷ V = ' + m + ' ÷ ' + v + ' = <strong>' + D.toFixed(2) + ' g/mL</strong>';
   if (D < 1) {
-    verdict.textContent = '→ FLOATS (density < 1.0)';
+    verdict.textContent = '→ FLOATS (density < 1.0)  — sits ON the water';
     verdict.style.color = '#065f46';
-    if (obj){ obj.setAttribute('y', 70); obj.setAttribute('fill', '#f59e0b'); }
+    if (obj){ obj.setAttribute('y', 85); obj.setAttribute('fill', '#f59e0b'); }
   } else if (D > 1) {
-    verdict.textContent = '→ SINKS (density > 1.0)';
+    verdict.textContent = '→ SINKS (density > 1.0)  — drops to the bottom';
     verdict.style.color = '#7f1d1d';
-    if (obj){ obj.setAttribute('y', 170); obj.setAttribute('fill', '#dc2626'); }
+    if (obj){ obj.setAttribute('y', 185); obj.setAttribute('fill', '#dc2626'); }
   } else {
-    verdict.textContent = '→ HOVERS (density = 1.0, same as water)';
+    verdict.textContent = '→ NEUTRAL BUOYANCY (density = 1.0, same as water) — stays right where you put it';
     verdict.style.color = '#0369a1';
-    if (obj){ obj.setAttribute('y', 120); obj.setAttribute('fill', '#0284c7'); }
+    if (obj){ obj.setAttribute('y', 140); obj.setAttribute('fill', '#0284c7'); }
   }
   mat.textContent = dlabMaterialGuess(D) + ' (D ≈ ' + D.toFixed(2) + ' g/mL)';
 }
