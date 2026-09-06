@@ -1111,6 +1111,58 @@ const LESSONS = {
   <li><strong>Density = 1.0 g/mL → neutral</strong> (hovers, like some fish).</li>
 </ul>
 
+<h3>🧪 Interactive Density Lab — try it yourself</h3>
+<div style="border:2px solid #0891b2; background:#ecfeff; border-radius:12px; padding:14px 16px; margin:10px 0;">
+  <p style="margin:0 0 8px 0; font-size:.94rem; color:#0c4a6e;">Type in a mass and a volume, then click <strong>Drop it in!</strong> The lab computes the density, drops the block into water, tells you whether it floats or sinks, and guesses what material it might be.</p>
+  <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin:10px 0;">
+    <label style="font-weight:700; color:#0c4a6e;">Mass (g): <input type="number" id="dlab-m" step="0.1" placeholder="e.g. 60" style="width:80px; padding:5px 8px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; font-weight:700;"></label>
+    <label style="font-weight:700; color:#0c4a6e;">Volume (mL): <input type="number" id="dlab-v" step="0.1" placeholder="e.g. 20" style="width:80px; padding:5px 8px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; font-weight:700;"></label>
+    <button onclick="dlabDrop()" style="padding:7px 16px; background:#0891b2; color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer;">Drop it in!</button>
+    <button onclick="dlabReset()" style="padding:7px 14px; background:#f1f5f9; color:#0c4a6e; border:1.5px solid #cbd5e1; border-radius:6px; font-weight:700; cursor:pointer;">↻ Reset</button>
+  </div>
+  <div style="display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start;">
+    <svg viewBox="0 0 220 240" style="width:220px; height:240px; background:#fff; border:1px solid #cbd5e1; border-radius:8px;">
+      <path d="M 20 20 L 20 220 L 200 220 L 200 20" fill="none" stroke="#334155" stroke-width="2"/>
+      <rect x="20" y="100" width="180" height="120" fill="#bae6fd" opacity="0.7"/>
+      <line x1="20" y1="100" x2="200" y2="100" stroke="#0284c7" stroke-width="1.5"/>
+      <text x="196" y="95" font-size="10" fill="#0284c7" text-anchor="end" font-weight="700">water (D=1.0)</text>
+      <rect id="dlab-obj" x="80" y="55" width="60" height="35" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/>
+    </svg>
+    <div style="flex:1; min-width:220px;">
+      <div style="font-family:'Consolas','Courier New',monospace; font-size:1rem; margin-bottom:6px;">
+        <div id="dlab-work" style="color:#0c4a6e; font-weight:700; margin-bottom:6px; min-height:20px;"></div>
+        Density = <span id="dlab-D" style="display:inline-block; min-width:50px; padding:3px 10px; background:#dcfce7; border:1.5px solid #16a34a; border-radius:5px; color:#14532d; font-weight:800;">—</span> g/mL
+      </div>
+      <div id="dlab-verdict" style="font-weight:800; margin:8px 0; min-height:20px;"></div>
+      <div style="margin-top:6px; font-size:.9rem; color:#334155;">Best material match: <strong id="dlab-mat">—</strong></div>
+      <div style="margin-top:10px; font-size:.85rem; color:#0c4a6e;"><strong>Quick presets:</strong>
+        <button onclick="dlabPreset(5,10)" style="margin:2px; padding:4px 8px; border:1.5px solid #0369a1; background:#e0f2fe; color:#0c4a6e; border-radius:4px; cursor:pointer; font-size:.82rem;">Wood (5 g, 10 mL)</button>
+        <button onclick="dlabPreset(20,20)" style="margin:2px; padding:4px 8px; border:1.5px solid #0369a1; background:#e0f2fe; color:#0c4a6e; border-radius:4px; cursor:pointer; font-size:.82rem;">Water (20 g, 20 mL)</button>
+        <button onclick="dlabPreset(158,20)" style="margin:2px; padding:4px 8px; border:1.5px solid #0369a1; background:#e0f2fe; color:#0c4a6e; border-radius:4px; cursor:pointer; font-size:.82rem;">Iron (158 g, 20 mL)</button>
+        <button onclick="dlabPreset(500,1000)" style="margin:2px; padding:4px 8px; border:1.5px solid #78350f; background:#fef3c7; color:#78350f; border-radius:4px; cursor:pointer; font-size:.82rem;">Boat-shape (500 g, 1000 mL)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>🚢 Why does a huge boat float?</h3>
+<p>This is the question that trips everyone up. A steel battleship weighs <em>thousands of tons</em>. A steel paperclip weighs almost nothing. Yet the paperclip sinks and the battleship floats. What's going on?</p>
+
+<p>The answer: <strong>a boat is not solid steel.</strong> The hull is mostly a giant <em>hollow shell</em> full of AIR. When you calculate the density of the boat, you have to use the boat's <em>total</em> volume — steel + air — and its <em>total</em> mass. The air adds almost no mass but a HUGE amount of volume, so the OVERALL density drops below 1.0 g/mL. Under water's threshold → the boat floats.</p>
+
+<p><strong>Try it in the lab above:</strong> click the <em>"Boat-shape (500 g, 1000 mL)"</em> preset. The mass is 500 g (like a steel-hulled toy boat) but the boat encloses 1000 mL of mostly-air interior. Density = 500 ÷ 1000 = <strong>0.5 g/mL</strong> — well below water. It floats.</p>
+
+<p>Now try the <em>Iron</em> preset — solid iron, 158 g in only 20 mL. Density = 7.9 g/mL. Straight to the bottom.</p>
+
+<div class="den-tip"><strong>The rule scales to everything:</strong>
+<ul style="margin:6px 0 0 18px;">
+  <li>A submarine <em>changes its density</em> by pumping water in (heavier → sinks) or air in (lighter → floats).</li>
+  <li>Your body floats better in salt water than fresh water because salt water is denser (~1.03 g/mL vs 1.00), so YOUR density is smaller compared to it.</li>
+  <li>An ice cube floats in soda not because ice is "light," but because ice (0.92 g/mL) is less dense than soda.</li>
+  <li>A hot-air balloon floats in air for the same reason a boat floats in water — the whole balloon (fabric + hot air) is less dense than the cool air around it.</li>
+</ul>
+</div>
+
 <h3>Worked examples</h3>
 <p><strong>Example 1 — find density.</strong> A rock has mass 60 g and volume 20 cm³. D = 60 ÷ 20 = <strong>3 g/cm³</strong>.</p>
 <p><strong>Example 2 — sink or float?</strong> An object has density 2.5 g/mL. Water is 1.0 g/mL. Since 2.5 &gt; 1.0, the object <strong>sinks</strong>.</p>
@@ -3074,6 +3126,72 @@ function showSyllabus() {
   document.getElementById('topbar-title').textContent = 'Course Syllabus';
   renderSidebar();
   { const _b=document.getElementById('syllabus-btn'); if(_b) _b.classList.add('active'); }
+}
+
+// --- Density Lab helpers (used by unit-6 tutorial) ---
+function dlabMaterialGuess(D){
+  var mats = [
+    ['Wood (pine)', 0.5], ['Ice', 0.92], ['Water', 1.0],
+    ['Plastic', 1.2], ['Aluminum', 2.7], ['Titanium', 4.5],
+    ['Iron', 7.9], ['Copper', 8.9], ['Silver', 10.5], ['Lead', 11.3],
+    ['Gold', 19.3]
+  ];
+  var best = mats[0], bestDiff = Math.abs(D - mats[0][1]);
+  for (var i = 1; i < mats.length; i++){
+    var d = Math.abs(D - mats[i][1]);
+    if (d < bestDiff){ best = mats[i]; bestDiff = d; }
+  }
+  var pctOff = bestDiff / best[1];
+  return pctOff < 0.10 ? best[0] : 'no close match (unusual material)';
+}
+function dlabDrop(){
+  var m = parseFloat((document.getElementById('dlab-m')||{}).value);
+  var v = parseFloat((document.getElementById('dlab-v')||{}).value);
+  var D_el = document.getElementById('dlab-D');
+  var verdict = document.getElementById('dlab-verdict');
+  var mat = document.getElementById('dlab-mat');
+  var obj = document.getElementById('dlab-obj');
+  var work = document.getElementById('dlab-work');
+  if (isNaN(m) || isNaN(v) || v <= 0){
+    D_el.textContent = '—';
+    verdict.textContent = 'enter mass and a positive volume';
+    verdict.style.color = '#78350f';
+    mat.textContent = '—';
+    if (work) work.innerHTML = '';
+    return;
+  }
+  var D = m / v;
+  D_el.textContent = D.toFixed(2);
+  if (work) work.innerHTML = 'D = m ÷ V = ' + m + ' ÷ ' + v + ' = <strong>' + D.toFixed(2) + ' g/mL</strong>';
+  if (D < 1) {
+    verdict.textContent = '→ FLOATS (density < 1.0)';
+    verdict.style.color = '#065f46';
+    if (obj){ obj.setAttribute('y', 70); obj.setAttribute('fill', '#f59e0b'); }
+  } else if (D > 1) {
+    verdict.textContent = '→ SINKS (density > 1.0)';
+    verdict.style.color = '#7f1d1d';
+    if (obj){ obj.setAttribute('y', 170); obj.setAttribute('fill', '#dc2626'); }
+  } else {
+    verdict.textContent = '→ HOVERS (density = 1.0, same as water)';
+    verdict.style.color = '#0369a1';
+    if (obj){ obj.setAttribute('y', 120); obj.setAttribute('fill', '#0284c7'); }
+  }
+  mat.textContent = dlabMaterialGuess(D) + ' (D ≈ ' + D.toFixed(2) + ' g/mL)';
+}
+function dlabReset(){
+  var m = document.getElementById('dlab-m'); if (m) m.value = '';
+  var v = document.getElementById('dlab-v'); if (v) v.value = '';
+  var D_el = document.getElementById('dlab-D'); if (D_el) D_el.textContent = '—';
+  var verdict = document.getElementById('dlab-verdict'); if (verdict){ verdict.textContent = ''; }
+  var mat = document.getElementById('dlab-mat'); if (mat) mat.textContent = '—';
+  var work = document.getElementById('dlab-work'); if (work) work.innerHTML = '';
+  var obj = document.getElementById('dlab-obj');
+  if (obj){ obj.setAttribute('y', 55); obj.setAttribute('fill', '#94a3b8'); }
+}
+function dlabPreset(mass, vol){
+  var m = document.getElementById('dlab-m'); if (m) m.value = mass;
+  var v = document.getElementById('dlab-v'); if (v) v.value = vol;
+  dlabDrop();
 }
 
 function showLesson(unitId) {
