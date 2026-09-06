@@ -1551,69 +1551,238 @@ At x = 0 miles you still owe $3 (the base fee). Each extra mile adds $2. The for
 .lf-tip strong { color:#0c4a6e; }
 .lf-warn { background:#fef3c7; border-left:5px solid #b8860b; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.94rem; color:#78350f; }
 .lf-key { display:inline-block; background:#f0f9ff; border:2px solid #0369a1; padding:8px 14px; border-radius:8px; font-family:'Consolas','Courier New',monospace; font-size:1.15rem; margin:6px 8px 6px 0; color:#0c4a6e; font-weight:800; }
+.lf-table { width:100%; border-collapse:collapse; margin:10px 0; font-size:.95rem; }
+.lf-table th { background:#0f766e; color:#fff; padding:8px 10px; text-align:center; border:1px solid #0f766e; }
+.lf-table td { padding:8px 10px; border:1px solid #cbd5e1; text-align:center; vertical-align:top; }
+.lf-flex { display:flex; flex-wrap:wrap; gap:14px; align-items:flex-start; margin:10px 0; }
 </style>
 
-<div class="lf-tip"><strong>Big idea:</strong> A linear function is just a function whose graph is a straight LINE. The formula is always <em>f(x) = mx + b</em>. Given ANY two points on the line, you can find the equation. Given the equation, you can graph the line.</div>
+<div class="lf-tip"><strong>Big idea:</strong> A linear function is a rule that takes an input, multiplies it by a constant, adds a starting number, and gives back an output. When you graph the inputs and outputs, you get a straight LINE. Master four skills: read it, plug into it, graph it, and build it from data.</div>
 
-<h3>The Formula — same story as y = mx + b</h3>
+<h3>The Formula and Its Four Representations</h3>
 <div class="lf-key">f(x) = m · x + b</div>
-<p>Same idea as y = mx + b, just written with function notation. <strong>m</strong> = slope, <strong>b</strong> = y-intercept.</p>
+<p>Every linear function can be shown in FOUR different ways — same relationship, different form. Learn to move between them.</p>
 
-<h3>Writing a Linear Function When You KNOW the Slope and Intercept</h3>
-<p><strong>Example:</strong> slope 3, y-intercept −2. Answer: <strong>f(x) = 3x − 2</strong>.</p>
-<p><strong>Example:</strong> slope ½, passes through the origin (y-intercept 0). Answer: <strong>f(x) = ½x</strong>.</p>
+<svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" style="max-width:720px; width:100%; height:auto; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:6px;">
+  <text x="350" y="16" font-size="12" font-weight="800" fill="#1a2a4a" text-anchor="middle">One linear function — f(x) = 3x + 2 — shown 4 ways</text>
+  <!-- Words box -->
+  <rect x="10" y="35" width="150" height="190" fill="#fee2e2" stroke="#dc2626" rx="6"/>
+  <text x="85" y="55" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle">1. WORDS</text>
+  <text x="20" y="85" font-size="10" fill="#7f1d1d">"Start with 2.</text>
+  <text x="20" y="102" font-size="10" fill="#7f1d1d">Each time input</text>
+  <text x="20" y="119" font-size="10" fill="#7f1d1d">goes up by 1,</text>
+  <text x="20" y="136" font-size="10" fill="#7f1d1d">output goes up</text>
+  <text x="20" y="153" font-size="10" fill="#7f1d1d">by 3."</text>
+  <text x="20" y="185" font-size="10" font-style="italic" fill="#7f1d1d">Real: pizza $2</text>
+  <text x="20" y="202" font-size="10" font-style="italic" fill="#7f1d1d">delivery fee +</text>
+  <text x="20" y="219" font-size="10" font-style="italic" fill="#7f1d1d">$3 per slice.</text>
+  <!-- Equation box -->
+  <rect x="170" y="35" width="150" height="190" fill="#dcfce7" stroke="#059669" rx="6"/>
+  <text x="245" y="55" font-size="11" font-weight="800" fill="#059669" text-anchor="middle">2. EQUATION</text>
+  <text x="245" y="120" font-size="22" font-weight="800" fill="#065f46" text-anchor="middle">f(x) = 3x + 2</text>
+  <text x="245" y="155" font-size="10" fill="#065f46" text-anchor="middle">m = 3 (slope)</text>
+  <text x="245" y="172" font-size="10" fill="#065f46" text-anchor="middle">b = 2 (starting)</text>
+  <!-- Table -->
+  <rect x="330" y="35" width="160" height="190" fill="#dbeafe" stroke="#0369a1" rx="6"/>
+  <text x="410" y="55" font-size="11" font-weight="800" fill="#0369a1" text-anchor="middle">3. TABLE</text>
+  <g font-size="12" font-family="'Courier New',monospace" fill="#0c4a6e">
+    <text x="370" y="80">x</text><text x="440" y="80">f(x)</text>
+    <line x1="360" y1="86" x2="480" y2="86" stroke="#0369a1"/>
+    <text x="370" y="105">0</text><text x="440" y="105">2</text>
+    <text x="370" y="125">1</text><text x="440" y="125">5</text>
+    <text x="370" y="145">2</text><text x="440" y="145">8</text>
+    <text x="370" y="165">3</text><text x="440" y="165">11</text>
+    <text x="370" y="185">4</text><text x="440" y="185">14</text>
+    <text x="370" y="205" font-size="9" fill="#0c4a6e" font-style="italic">each row: +3</text>
+  </g>
+  <!-- Graph -->
+  <rect x="500" y="35" width="190" height="190" fill="#fef3c7" stroke="#f59e0b" rx="6"/>
+  <text x="595" y="55" font-size="11" font-weight="800" fill="#b45309" text-anchor="middle">4. GRAPH</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="520" y1="85" x2="670" y2="85"/><line x1="520" y1="125" x2="670" y2="125"/><line x1="520" y1="165" x2="670" y2="165"/><line x1="520" y1="205" x2="670" y2="205"/>
+    <line x1="560" y1="70" x2="560" y2="215"/><line x1="600" y1="70" x2="600" y2="215"/><line x1="640" y1="70" x2="640" y2="215"/>
+  </g>
+  <line x1="520" y1="180" x2="670" y2="180" stroke="#78350f" stroke-width="1.5"/>
+  <line x1="520" y1="70" x2="520" y2="215" stroke="#78350f" stroke-width="1.5"/>
+  <line x1="510" y1="228" x2="680" y2="60" stroke="#dc2626" stroke-width="2.5"/>
+  <circle cx="520" cy="145" r="4" fill="#f59e0b"/>
+  <text x="530" y="140" font-size="9" font-weight="700" fill="#78350f">(0,2)</text>
+  <text x="595" y="230" font-size="9" fill="#78350f" text-anchor="middle" font-style="italic">line rises 3 per 1 right</text>
+</svg>
 
-<h3>Writing a Linear Function from TWO Points</h3>
-<p>This is the workhorse technique of the year. Two steps: find m, then find b.</p>
-<p><strong>Example:</strong> The function passes through (1, 5) and (3, 11).</p>
+<h3>Reading a Linear Function — plug in the input</h3>
+<p>To evaluate f(x), replace every x with the given number.</p>
+<div class="lf-key">If f(x) = 3x + 2, then f(4) = 3(4) + 2 = 14</div>
+<ul>
+  <li>f(0) = 3(0) + 2 = <strong>2</strong>  (that's the y-intercept!)</li>
+  <li>f(1) = 3(1) + 2 = <strong>5</strong></li>
+  <li>f(−2) = 3(−2) + 2 = <strong>−4</strong></li>
+</ul>
+
+<h3>Writing a Function from Slope and Intercept</h3>
+<p>Just plug the numbers into f(x) = mx + b.</p>
+<table class="lf-table">
+  <tr><th>Given</th><th>Function</th></tr>
+  <tr><td>slope 3, y-intercept −2</td><td><strong>f(x) = 3x − 2</strong></td></tr>
+  <tr><td>slope ½, passes through origin (b = 0)</td><td><strong>f(x) = ½x</strong></td></tr>
+  <tr><td>slope −4, y-intercept 10</td><td><strong>f(x) = −4x + 10</strong></td></tr>
+</table>
+
+<h3>Writing a Function from TWO Points — with a visual walkthrough</h3>
+<p>The workhorse technique of the year. Given two points, do TWO steps: find m, then find b.</p>
+
+<svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" style="max-width:420px; width:100%; height:auto; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:6px;">
+  <text x="200" y="18" font-size="12" font-weight="800" fill="#1a2a4a" text-anchor="middle">Given (1, 5) and (3, 11) — find the linear function</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="40" y1="60" x2="380" y2="60"/><line x1="40" y1="100" x2="380" y2="100"/><line x1="40" y1="140" x2="380" y2="140"/><line x1="40" y1="180" x2="380" y2="180"/><line x1="40" y1="220" x2="380" y2="220"/><line x1="40" y1="260" x2="380" y2="260"/>
+    <line x1="80" y1="40" x2="80" y2="280"/><line x1="120" y1="40" x2="120" y2="280"/><line x1="160" y1="40" x2="160" y2="280"/><line x1="200" y1="40" x2="200" y2="280"/><line x1="240" y1="40" x2="240" y2="280"/><line x1="280" y1="40" x2="280" y2="280"/><line x1="320" y1="40" x2="320" y2="280"/><line x1="360" y1="40" x2="360" y2="280"/>
+  </g>
+  <line x1="40" y1="280" x2="380" y2="280" stroke="#374151" stroke-width="1.6"/>
+  <line x1="40" y1="40" x2="40" y2="280" stroke="#374151" stroke-width="1.6"/>
+  <g font-size="10" fill="#64748b" text-anchor="middle"><text x="40" y="295">0</text><text x="80" y="295">1</text><text x="120" y="295">2</text><text x="160" y="295">3</text></g>
+  <g font-size="10" fill="#64748b" text-anchor="end"><text x="36" y="263">1</text><text x="36" y="243">2</text><text x="36" y="223">3</text><text x="36" y="203">4</text><text x="36" y="183">5</text><text x="36" y="163">6</text><text x="36" y="143">7</text><text x="36" y="123">8</text><text x="36" y="103">9</text><text x="36" y="83">10</text><text x="36" y="63">11</text></g>
+  <!-- Points (1,5)→(80,180) and (3,11)→(160,60). Line from -->
+  <line x1="40" y1="220" x2="200" y2="20" stroke="#0f766e" stroke-width="2.5"/>
+  <!-- Slope triangle -->
+  <line x1="80" y1="180" x2="160" y2="180" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3"/>
+  <line x1="160" y1="180" x2="160" y2="60" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="120" y="196" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle">Δx = 2</text>
+  <text x="170" y="120" font-size="11" font-weight="800" fill="#dc2626">Δy = 6</text>
+  <!-- Endpoints -->
+  <circle cx="80" cy="180" r="6" fill="#0369a1"/>
+  <text x="88" y="176" font-size="11" font-weight="800" fill="#0369a1">(1, 5)</text>
+  <circle cx="160" cy="60" r="6" fill="#0369a1"/>
+  <text x="168" y="56" font-size="11" font-weight="800" fill="#0369a1">(3, 11)</text>
+  <!-- y-intercept -->
+  <circle cx="40" cy="220" r="6" fill="#f59e0b"/>
+  <text x="48" y="216" font-size="11" font-weight="800" fill="#78350f">(0, b) = (0, 2)</text>
+</svg>
+
 <ol>
   <li><strong>Find m (slope)</strong>: m = (y₂ − y₁) / (x₂ − x₁) = (11 − 5) / (3 − 1) = 6/2 = <strong>3</strong>.</li>
-  <li><strong>Find b (y-intercept)</strong>: pick either point and plug into f(x) = 3x + b. Using (1, 5):  5 = 3(1) + b → b = 2.</li>
-  <li><strong>Write the function</strong>: <strong>f(x) = 3x + 2</strong>.</li>
+  <li><strong>Find b (y-intercept)</strong>: plug either point into f(x) = 3x + b. Using (1, 5):  5 = 3(1) + b → b = <strong>2</strong>.</li>
+  <li><strong>Write the function</strong>: <strong>f(x) = 3x + 2</strong>. Verify with the other point: f(3) = 3(3) + 2 = 11 ✓.</li>
 </ol>
 
-<h3>Writing a Linear Function from a Table</h3>
-<p><strong>Example:</strong> Table shows x: 0, 1, 2, 3 and y: 4, 7, 10, 13.</p>
-<ul>
-  <li>y jumps by 3 every time x jumps by 1 → slope m = <strong>3</strong>.</li>
-  <li>When x = 0, y = 4 → y-intercept b = <strong>4</strong>.</li>
-  <li>Function: <strong>f(x) = 3x + 4</strong>.</li>
-</ul>
+<h3>Writing a Function from a TABLE — spot the pattern</h3>
 
-<h3>Graphing a Linear Function</h3>
-<ol>
-  <li>Plot the y-intercept (0, b) FIRST.</li>
-  <li>From that point, use the slope to move: "rise over run" — up m units, right 1 unit (or down and right if m is negative).</li>
-  <li>Plot the next point. Draw a straight line through both.</li>
-</ol>
+<div class="lf-flex">
+  <table class="lf-table" style="max-width:240px;">
+    <tr><th>x</th><th>f(x)</th><th>change</th></tr>
+    <tr><td>0</td><td>4</td><td>← b (start)</td></tr>
+    <tr><td>1</td><td>7</td><td>+3</td></tr>
+    <tr><td>2</td><td>10</td><td>+3</td></tr>
+    <tr><td>3</td><td>13</td><td>+3</td></tr>
+  </table>
+  <div style="flex:1; min-width:200px;">
+    <p><strong>Read it:</strong></p>
+    <ul>
+      <li>Output jumps by <strong>+3</strong> each time x jumps by 1 → slope <strong>m = 3</strong>.</li>
+      <li>When x = 0, f(0) = 4 → <strong>b = 4</strong>.</li>
+      <li>Function: <strong>f(x) = 3x + 4</strong>.</li>
+    </ul>
+    <p><strong>Tip:</strong> if the x-column isn't 0, 1, 2, 3… (say it's 2, 4, 6, 8), find the change in y ÷ change in x for slope. Then extend back to x = 0 to find b (or plug in a point to solve for b).</p>
+  </div>
+</div>
 
-<h3>Rate of Change — what slope MEANS</h3>
-<p>Slope isn't just a number — it's a <em>rate</em>. It answers: "for every 1-unit change in x, how much does y change?"</p>
-<ul>
-  <li>f(x) = 3x + 4: for every hour, cost goes up by $3. Starting fee is $4.</li>
-  <li>f(x) = −2x + 100: for every day, savings drop by $2. Started with $100.</li>
-  <li>f(x) = 60x: for every hour of driving, distance grows by 60 miles.</li>
-</ul>
+<h3>Graphing a Linear Function — 3-step recipe</h3>
 
-<h3>Real-life uses</h3>
-<ul>
-  <li><strong>Phone plan:</strong> f(x) = 0.10x + 30 (per-text + monthly base).</li>
-  <li><strong>Distance:</strong> f(t) = 60t (miles as a function of hours).</li>
-  <li><strong>Depreciation:</strong> f(y) = 25,000 − 2,000y (car value drops $2k/year).</li>
-</ul>
+<svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" style="max-width:740px; width:100%; height:auto; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:6px;">
+  <text x="360" y="16" font-size="12" font-weight="800" fill="#1a2a4a" text-anchor="middle">Graph f(x) = 2x − 1  (m = 2, b = −1)</text>
+  <!-- STEP 1: plot b -->
+  <g transform="translate(0,25)">
+    <text x="110" y="15" font-size="11" font-weight="800" fill="#f59e0b" text-anchor="middle">Step 1: plot (0, −1)</text>
+    <g stroke="#e5e7eb" stroke-width="1"><line x1="30" y1="50" x2="190" y2="50"/><line x1="30" y1="90" x2="190" y2="90"/><line x1="30" y1="130" x2="190" y2="130"/><line x1="30" y1="170" x2="190" y2="170"/><line x1="70" y1="30" x2="70" y2="180"/><line x1="150" y1="30" x2="150" y2="180"/></g>
+    <line x1="30" y1="105" x2="190" y2="105" stroke="#374151" stroke-width="1.5"/><line x1="110" y1="30" x2="110" y2="180" stroke="#374151" stroke-width="1.5"/>
+    <circle cx="110" cy="130" r="6" fill="#f59e0b" stroke="#78350f" stroke-width="1.5"/>
+    <text x="120" y="126" font-size="10" font-weight="700" fill="#78350f">(0, −1)</text>
+  </g>
+  <!-- STEP 2: use slope -->
+  <g transform="translate(240,25)">
+    <text x="110" y="15" font-size="11" font-weight="800" fill="#0369a1" text-anchor="middle">Step 2: right 1, up 2 → (1, 1)</text>
+    <g stroke="#e5e7eb" stroke-width="1"><line x1="30" y1="50" x2="190" y2="50"/><line x1="30" y1="90" x2="190" y2="90"/><line x1="30" y1="130" x2="190" y2="130"/><line x1="30" y1="170" x2="190" y2="170"/><line x1="70" y1="30" x2="70" y2="180"/><line x1="150" y1="30" x2="150" y2="180"/></g>
+    <line x1="30" y1="105" x2="190" y2="105" stroke="#374151" stroke-width="1.5"/><line x1="110" y1="30" x2="110" y2="180" stroke="#374151" stroke-width="1.5"/>
+    <circle cx="110" cy="130" r="6" fill="#f59e0b"/>
+    <line x1="110" y1="130" x2="150" y2="130" stroke="#0369a1" stroke-width="2" stroke-dasharray="3,2"/>
+    <line x1="150" y1="130" x2="150" y2="90" stroke="#0369a1" stroke-width="2" stroke-dasharray="3,2"/>
+    <circle cx="150" cy="90" r="6" fill="#dc2626"/>
+    <text x="130" y="147" font-size="9" font-weight="800" fill="#0369a1">1</text>
+    <text x="155" y="112" font-size="9" font-weight="800" fill="#0369a1">2</text>
+  </g>
+  <!-- STEP 3: draw line -->
+  <g transform="translate(480,25)">
+    <text x="110" y="15" font-size="11" font-weight="800" fill="#059669" text-anchor="middle">Step 3: connect with a straight line</text>
+    <g stroke="#e5e7eb" stroke-width="1"><line x1="30" y1="50" x2="190" y2="50"/><line x1="30" y1="90" x2="190" y2="90"/><line x1="30" y1="130" x2="190" y2="130"/><line x1="30" y1="170" x2="190" y2="170"/><line x1="70" y1="30" x2="70" y2="180"/><line x1="150" y1="30" x2="150" y2="180"/></g>
+    <line x1="30" y1="105" x2="190" y2="105" stroke="#374151" stroke-width="1.5"/><line x1="110" y1="30" x2="110" y2="180" stroke="#374151" stroke-width="1.5"/>
+    <line x1="45" y1="200" x2="180" y2="30" stroke="#059669" stroke-width="2.5"/>
+    <circle cx="110" cy="130" r="6" fill="#f59e0b"/>
+    <circle cx="150" cy="90" r="6" fill="#dc2626"/>
+  </g>
+</svg>
+
+<h3>Positive vs Negative Slope — one visual per case</h3>
+
+<div class="lf-flex" style="justify-content:center;">
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:220px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px;">
+    <text x="100" y="16" font-size="11" font-weight="800" fill="#059669" text-anchor="middle">f(x) = 3x + 4  (m > 0)</text>
+    <g stroke="#e5e7eb" stroke-width="1"><line x1="20" y1="60" x2="180" y2="60"/><line x1="20" y1="150" x2="180" y2="150"/><line x1="60" y1="30" x2="60" y2="180"/><line x1="140" y1="30" x2="140" y2="180"/></g>
+    <line x1="20" y1="105" x2="180" y2="105" stroke="#374151" stroke-width="1.5"/><line x1="100" y1="30" x2="100" y2="180" stroke="#374151" stroke-width="1.5"/>
+    <line x1="30" y1="180" x2="150" y2="35" stroke="#059669" stroke-width="2.5"/>
+    <text x="100" y="200" font-size="10" fill="#059669" text-anchor="middle" font-weight="700">costs go UP each hour</text>
+  </svg>
+  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:220px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px;">
+    <text x="100" y="16" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle">f(x) = −2x + 100  (m < 0)</text>
+    <g stroke="#e5e7eb" stroke-width="1"><line x1="20" y1="60" x2="180" y2="60"/><line x1="20" y1="150" x2="180" y2="150"/><line x1="60" y1="30" x2="60" y2="180"/><line x1="140" y1="30" x2="140" y2="180"/></g>
+    <line x1="20" y1="105" x2="180" y2="105" stroke="#374151" stroke-width="1.5"/><line x1="100" y1="30" x2="100" y2="180" stroke="#374151" stroke-width="1.5"/>
+    <line x1="30" y1="45" x2="170" y2="170" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="100" y="200" font-size="10" fill="#dc2626" text-anchor="middle" font-weight="700">savings drop each day</text>
+  </svg>
+</div>
+
+<h3>Rate of Change — what slope MEANS in words</h3>
+<p>Slope is a <em>rate</em>. It tells you: <strong>"for every 1-unit increase in x, how much does f(x) change?"</strong></p>
+<table class="lf-table">
+  <tr><th>Function</th><th>Real-life interpretation</th></tr>
+  <tr><td>f(x) = 3x + 4</td><td>Cost starts at $4, rises $3 per hour.</td></tr>
+  <tr><td>f(x) = −2x + 100</td><td>Started with $100, losing $2 per day.</td></tr>
+  <tr><td>f(x) = 60x</td><td>Distance grows 60 mi per hour; starts at 0.</td></tr>
+  <tr><td>f(x) = 25000 − 2000x</td><td>Car worth $25,000, depreciates $2,000 per year.</td></tr>
+</table>
+
+<h3>Real-life graph — car depreciation</h3>
+
+<svg viewBox="0 0 440 260" xmlns="http://www.w3.org/2000/svg" style="max-width:460px; width:100%; height:auto; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:6px;">
+  <text x="220" y="18" font-size="12" font-weight="800" fill="#1a2a4a" text-anchor="middle">Car value: f(x) = 25000 − 2000x  (drops $2,000/year)</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="60" y1="60" x2="420" y2="60"/><line x1="60" y1="100" x2="420" y2="100"/><line x1="60" y1="140" x2="420" y2="140"/><line x1="60" y1="180" x2="420" y2="180"/>
+    <line x1="120" y1="40" x2="120" y2="220"/><line x1="180" y1="40" x2="180" y2="220"/><line x1="240" y1="40" x2="240" y2="220"/><line x1="300" y1="40" x2="300" y2="220"/><line x1="360" y1="40" x2="360" y2="220"/><line x1="420" y1="40" x2="420" y2="220"/>
+  </g>
+  <line x1="60" y1="220" x2="420" y2="220" stroke="#374151" stroke-width="1.6"/>
+  <line x1="60" y1="40" x2="60" y2="220" stroke="#374151" stroke-width="1.6"/>
+  <text x="240" y="248" font-size="11" fill="#374151" text-anchor="middle" font-weight="700">Years owned (x)</text>
+  <text x="18" y="130" font-size="11" fill="#374151" text-anchor="middle" font-weight="700" transform="rotate(-90 18 130)">Car value ($) f(x)</text>
+  <g font-size="10" fill="#64748b" text-anchor="middle"><text x="60" y="236">0</text><text x="120" y="236">1</text><text x="180" y="236">2</text><text x="240" y="236">3</text><text x="300" y="236">4</text><text x="360" y="236">5</text><text x="420" y="236">6</text></g>
+  <g font-size="10" fill="#64748b" text-anchor="end"><text x="56" y="223">$0</text><text x="56" y="183">$10k</text><text x="56" y="143">$15k</text><text x="56" y="103">$20k</text><text x="56" y="63">$25k</text></g>
+  <!-- line from (0, 25k) → (60, 60) to (6, 13k) → (420, 168) -->
+  <line x1="60" y1="60" x2="420" y2="168" stroke="#dc2626" stroke-width="2.5"/>
+  <circle cx="60" cy="60" r="6" fill="#f59e0b" stroke="#78350f" stroke-width="1.5"/>
+  <text x="70" y="55" font-size="10" font-weight="700" fill="#78350f">b = $25,000 (starting)</text>
+  <text x="230" y="130" font-size="11" font-weight="800" fill="#dc2626" transform="rotate(15 230 130)">m = −$2,000/year</text>
+</svg>
 
 <h3>Three moves that stick</h3>
 <ol>
-  <li><strong>Slope = rise ÷ run = (y₂−y₁) / (x₂−x₁).</strong></li>
-  <li><strong>y-intercept</strong> = value when x = 0.</li>
-  <li><strong>To write a function from two points:</strong> find m first, then plug in a point to find b.</li>
+  <li><strong>Slope m = rise / run = (y₂ − y₁) / (x₂ − x₁).</strong></li>
+  <li><strong>y-intercept b</strong> = value of f(0) — the "starting value" before any x happens.</li>
+  <li><strong>Two points? Find m first, then plug in a point to solve for b.</strong></li>
 </ol>
 
 <div class="lf-warn"><strong>Common mistakes:</strong>
 <ul style="margin:6px 0 0 18px;">
-  <li>Subtracting y's on top but x's on the bottom in the wrong order — be consistent.</li>
-  <li>Forgetting the sign of b when reading from an equation like f(x) = 3x − 5 (b = −5, not 5).</li>
-  <li>Confusing the SLOPE (rate) with the y-INTERCEPT (starting value).</li>
+  <li>Subtracting y's in one order but x's in the reverse — be CONSISTENT. Whichever point is "point 2" for y must also be "point 2" for x.</li>
+  <li>Forgetting the sign of b: in f(x) = 3x − 5, b is −5, not 5.</li>
+  <li>Confusing SLOPE (the rate) with y-INTERCEPT (the starting value).</li>
+  <li>Assuming a table represents a linear function without checking. The differences in y must be CONSTANT for equal jumps in x.</li>
 </ul>
 </div>`,
   'scatter-plots': `<h2>Scatter Plots & Line of Best Fit</h2>
