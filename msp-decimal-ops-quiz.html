@@ -257,7 +257,8 @@ function setMode(mode) {
     } else {
       // Fresh graded attempt: restore any prior start time (incomplete session), or record on first keystroke
       const prevStart = parseInt(localStorage.getItem(storageKey()+'-start')||'0',10);
-      if (prevStart) __quizStartTime = prevStart;
+      if (prevStart) { __quizStartTime = prevStart; }
+      else { __quizStartTime = Date.now(); try { localStorage.setItem(storageKey()+'-start', String(__quizStartTime)); } catch(e){} }
       document.querySelectorAll('input.ans').forEach(i=>{
         i.addEventListener('input', markStart, {once:false});
       });
