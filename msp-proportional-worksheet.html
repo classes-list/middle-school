@@ -231,6 +231,199 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 </div>
 </section>
 
+<section class="card" id="wsec6">
+  <h2>6️⃣ Table & Graph — See Proportionality</h2>
+  <div class="intro">Enter x, y pairs into the table. The lab computes <strong>k = y ÷ x</strong> for each row and plots the points on the graph. A <strong>proportional</strong> relationship shows one straight line THROUGH THE ORIGIN with the SAME k in every row.</div>
+
+  <style>
+    .pt-table { width:100%; max-width:520px; border-collapse:collapse; margin:12px 0; font-size:.95rem; }
+    .pt-table th { background:#0f766e; color:#fff; padding:8px 10px; text-align:center; border:1px solid #0f766e; }
+    .pt-table td { padding:6px 8px; border:1px solid #cbd5e1; text-align:center; background:#fff; }
+    .pt-table input { width:70px; padding:5px 8px; border:1.5px solid #94a3b8; border-radius:5px; font-family:inherit; font-size:.95rem; font-weight:700; text-align:center; }
+    .pt-table input:focus { outline:none; border-color:#0369a1; box-shadow:0 0 0 2px rgba(3,105,161,.2); }
+    .pt-table .pt-k { font-family:'Consolas','Courier New',monospace; font-weight:800; color:#0369a1; min-width:70px; display:inline-block; }
+    .pt-verdict { margin:10px 0; padding:12px 16px; border-radius:8px; font-size:1.05rem; font-weight:800; text-align:center; }
+    .pt-verdict.prop { background:#dcfce7; color:#14532d; border:2px solid #16a34a; }
+    .pt-verdict.notprop { background:#fee2e2; color:#7f1d1d; border:2px solid #dc2626; }
+    .pt-verdict.pending { background:#f1f5f9; color:#334155; border:2px solid #cbd5e1; }
+    .pt-graph-wrap { display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; }
+  </style>
+
+  <div class="pt-graph-wrap">
+    <div style="flex:1; min-width:260px;">
+      <table class="pt-table">
+        <thead><tr><th>x</th><th>y</th><th>k = y ÷ x</th></tr></thead>
+        <tbody id="pt-rows">
+          <tr><td><input type="number" step="any" class="pt-x" data-r="0"></td><td><input type="number" step="any" class="pt-y" data-r="0"></td><td><span class="pt-k" id="pt-k-0">—</span></td></tr>
+          <tr><td><input type="number" step="any" class="pt-x" data-r="1"></td><td><input type="number" step="any" class="pt-y" data-r="1"></td><td><span class="pt-k" id="pt-k-1">—</span></td></tr>
+          <tr><td><input type="number" step="any" class="pt-x" data-r="2"></td><td><input type="number" step="any" class="pt-y" data-r="2"></td><td><span class="pt-k" id="pt-k-2">—</span></td></tr>
+          <tr><td><input type="number" step="any" class="pt-x" data-r="3"></td><td><input type="number" step="any" class="pt-y" data-r="3"></td><td><span class="pt-k" id="pt-k-3">—</span></td></tr>
+        </tbody>
+      </table>
+      <div style="display:flex; gap:8px; margin:6px 0 12px; flex-wrap:wrap;">
+        <button type="button" onclick="ptClear()" style="padding:6px 12px; background:#f1f5f9; border:1.5px solid #cbd5e1; border-radius:6px; font-weight:700; cursor:pointer;">↺ Clear</button>
+        <button type="button" onclick="ptSample('prop')" style="padding:6px 12px; background:#dcfce7; border:1.5px solid #16a34a; color:#14532d; border-radius:6px; font-weight:700; cursor:pointer;">Try proportional (2, 6), (4, 12)…</button>
+        <button type="button" onclick="ptSample('nonprop')" style="padding:6px 12px; background:#fee2e2; border:1.5px solid #dc2626; color:#7f1d1d; border-radius:6px; font-weight:700; cursor:pointer;">Try NOT proportional</button>
+      </div>
+      <div id="pt-verdict" class="pt-verdict pending">Enter values above to see the verdict.</div>
+    </div>
+
+    <svg id="pt-graph" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" style="width:320px; max-width:100%; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:8px;">
+      <text x="160" y="16" font-size="12" font-weight="800" fill="#1a2a4a" text-anchor="middle">Graph — points and line</text>
+      <g id="pt-grid" stroke="#e5e7eb" stroke-width="1"></g>
+      <line id="pt-xaxis" stroke="#374151" stroke-width="1.6"/>
+      <line id="pt-yaxis" stroke="#374151" stroke-width="1.6"/>
+      <g id="pt-labels"></g>
+      <line id="pt-line" stroke="#0f766e" stroke-width="2.5" stroke-dasharray="none" style="display:none;"/>
+      <g id="pt-points"></g>
+      <text x="10" y="310" font-size="10" fill="#64748b">x-axis (independent)</text>
+      <text x="10" y="30" font-size="10" fill="#64748b">y-axis (dependent)</text>
+    </svg>
+  </div>
+
+  <script>
+    (function(){
+      function ptUpdate(){
+        var rows = 4;
+        var points = [];
+        var ks = [];
+        for (var r = 0; r < rows; r++){
+          var xEl = document.querySelector('.pt-x[data-r="'+r+'"]');
+          var yEl = document.querySelector('.pt-y[data-r="'+r+'"]');
+          var kEl = document.getElementById('pt-k-'+r);
+          var xv = parseFloat(xEl.value);
+          var yv = parseFloat(yEl.value);
+          if (!isNaN(xv) && !isNaN(yv)) {
+            points.push({x: xv, y: yv});
+            if (xv !== 0) {
+              var k = yv / xv;
+              kEl.textContent = (Math.round(k * 10000) / 10000);
+              ks.push(k);
+            } else {
+              kEl.textContent = 'x = 0';
+            }
+          } else {
+            kEl.textContent = '—';
+          }
+        }
+        // Determine verdict
+        var verdict = document.getElementById('pt-verdict');
+        if (points.length < 2) {
+          verdict.className = 'pt-verdict pending';
+          verdict.textContent = 'Enter at least 2 rows to see the verdict.';
+        } else if (ks.length >= 2) {
+          var allSame = ks.every(function(k){ return Math.abs(k - ks[0]) < 1e-6; });
+          if (allSame) {
+            verdict.className = 'pt-verdict prop';
+            verdict.innerHTML = '✅ PROPORTIONAL — all rows share k = ' + (Math.round(ks[0]*10000)/10000) + '. Equation: y = ' + (Math.round(ks[0]*10000)/10000) + '·x';
+          } else {
+            verdict.className = 'pt-verdict notprop';
+            verdict.innerHTML = '❌ NOT proportional — k values differ (' + ks.map(function(k){return Math.round(k*10000)/10000;}).join(', ') + ')';
+          }
+        }
+        // Draw graph
+        ptDrawGraph(points, ks);
+      }
+      function ptDrawGraph(points, ks){
+        var svg = document.getElementById('pt-graph');
+        var padL = 40, padR = 20, padT = 30, padB = 40;
+        var W = 320, H = 320;
+        var plotW = W - padL - padR;
+        var plotH = H - padT - padB;
+        // Determine ranges
+        var xs = points.map(function(p){return p.x;});
+        var ys = points.map(function(p){return p.y;});
+        var xmax = xs.length ? Math.max.apply(null, xs.concat([1])) : 10;
+        var ymax = ys.length ? Math.max.apply(null, ys.concat([1])) : 10;
+        xmax = Math.max(xmax, 1) * 1.15;
+        ymax = Math.max(ymax, 1) * 1.15;
+        // include a bit of negative area if any negative values
+        var xmin = xs.length ? Math.min(0, Math.min.apply(null, xs)) : 0;
+        var ymin = ys.length ? Math.min(0, Math.min.apply(null, ys)) : 0;
+        function px(x){ return padL + (x - xmin) / (xmax - xmin) * plotW; }
+        function py(y){ return padT + plotH - (y - ymin) / (ymax - ymin) * plotH; }
+        // Grid + axes
+        var grid = '';
+        var steps = 5;
+        for (var i = 0; i <= steps; i++){
+          var xv = xmin + (xmax - xmin) * i / steps;
+          var yv = ymin + (ymax - ymin) * i / steps;
+          grid += '<line x1="'+px(xv)+'" y1="'+padT+'" x2="'+px(xv)+'" y2="'+(padT+plotH)+'" stroke="#e5e7eb" stroke-width="1"/>';
+          grid += '<line x1="'+padL+'" y1="'+py(yv)+'" x2="'+(padL+plotW)+'" y2="'+py(yv)+'" stroke="#e5e7eb" stroke-width="1"/>';
+        }
+        document.getElementById('pt-grid').innerHTML = grid;
+        // Axes
+        document.getElementById('pt-xaxis').setAttribute('x1', padL);
+        document.getElementById('pt-xaxis').setAttribute('x2', padL + plotW);
+        document.getElementById('pt-xaxis').setAttribute('y1', py(0));
+        document.getElementById('pt-xaxis').setAttribute('y2', py(0));
+        document.getElementById('pt-yaxis').setAttribute('x1', px(0));
+        document.getElementById('pt-yaxis').setAttribute('x2', px(0));
+        document.getElementById('pt-yaxis').setAttribute('y1', padT);
+        document.getElementById('pt-yaxis').setAttribute('y2', padT + plotH);
+        // Axis labels
+        var labels = '';
+        for (var i = 0; i <= steps; i++){
+          var xv = xmin + (xmax - xmin) * i / steps;
+          var yv = ymin + (ymax - ymin) * i / steps;
+          labels += '<text x="'+px(xv)+'" y="'+(padT+plotH+14)+'" font-size="9" fill="#64748b" text-anchor="middle">'+(Math.round(xv*100)/100)+'</text>';
+          labels += '<text x="'+(padL-4)+'" y="'+(py(yv)+3)+'" font-size="9" fill="#64748b" text-anchor="end">'+(Math.round(yv*100)/100)+'</text>';
+        }
+        document.getElementById('pt-labels').innerHTML = labels;
+        // Line
+        var lineEl = document.getElementById('pt-line');
+        var proportional = ks.length >= 2 && ks.every(function(k){ return Math.abs(k - ks[0]) < 1e-6; });
+        if (proportional) {
+          var k = ks[0];
+          lineEl.setAttribute('x1', px(0));
+          lineEl.setAttribute('y1', py(0));
+          lineEl.setAttribute('x2', px(xmax));
+          lineEl.setAttribute('y2', py(k * xmax));
+          lineEl.setAttribute('stroke', '#0f766e');
+          lineEl.style.display = 'block';
+        } else if (points.length >= 2) {
+          // draw a segment through the first and last points as a rough visual
+          var p0 = points[0], p1 = points[points.length - 1];
+          lineEl.setAttribute('x1', px(p0.x));
+          lineEl.setAttribute('y1', py(p0.y));
+          lineEl.setAttribute('x2', px(p1.x));
+          lineEl.setAttribute('y2', py(p1.y));
+          lineEl.setAttribute('stroke', '#dc2626');
+          lineEl.style.display = 'block';
+        } else {
+          lineEl.style.display = 'none';
+        }
+        // Points
+        var pointsHtml = '';
+        // Highlight origin
+        pointsHtml += '<circle cx="'+px(0)+'" cy="'+py(0)+'" r="3.5" fill="#94a3b8"/>';
+        pointsHtml += '<text x="'+(px(0)+6)+'" y="'+(py(0)-4)+'" font-size="9" fill="#64748b">O(0,0)</text>';
+        points.forEach(function(p, i){
+          pointsHtml += '<circle cx="'+px(p.x)+'" cy="'+py(p.y)+'" r="5" fill="#dc2626"/>';
+          pointsHtml += '<text x="'+(px(p.x)+8)+'" y="'+(py(p.y)-6)+'" font-size="9" font-weight="700" fill="#7f1d1d">('+p.x+', '+p.y+')</text>';
+        });
+        document.getElementById('pt-points').innerHTML = pointsHtml;
+      }
+      window.ptClear = function(){
+        document.querySelectorAll('.pt-x, .pt-y').forEach(function(i){ i.value = ''; });
+        ptUpdate();
+      };
+      window.ptSample = function(kind){
+        var xs, ys;
+        if (kind === 'prop') { xs = [2, 4, 6, 8]; ys = [6, 12, 18, 24]; }
+        else { xs = [1, 2, 3, 4]; ys = [3, 5, 8, 10]; }
+        document.querySelectorAll('.pt-x').forEach(function(i,idx){ i.value = xs[idx]; });
+        document.querySelectorAll('.pt-y').forEach(function(i,idx){ i.value = ys[idx]; });
+        ptUpdate();
+      };
+      document.querySelectorAll('.pt-x, .pt-y').forEach(function(i){
+        i.addEventListener('input', ptUpdate);
+      });
+      ptUpdate();
+    })();
+  </script>
+</section>
+
 </main>
 <footer>Mary, Star of the Sea School · Middle School Math · Proportional Relationships · Dr. Park</footer>
 </div>
