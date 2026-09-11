@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Architect's Blueprint — Scale-Down a Real Building</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    background: #f4f6fa; color: #1f2937;
+    padding: 20px;
+  }
+  h1 { color: #1a2a4a; margin: 0 0 6px; font-size: 1.35rem; }
+  h2 { color: #0f766e; margin: 20px 0 10px; font-size: 1.1rem; }
+  h3 { color: #1a2a4a; margin: 14px 0 6px; font-size: 1rem; }
+  p, li { line-height: 1.55; font-size: .95rem; }
+
+  .page {
+    background: #fff;
+    max-width: 8.5in;
+    margin: 0 auto 24px;
+    padding: 0.4in 0.45in;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+
+  .top-actions {
+    max-width: 8.5in; margin: 0 auto 12px;
+    display: flex; gap: 10px; justify-content: flex-end;
+  }
+  .btn {
+    padding: 8px 16px; border-radius: 6px; border: none;
+    font-weight: 700; font-size: .9rem; cursor: pointer;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-print { background: #059669; color: #fff; }
+  .btn-back  { background: #475569; color: #fff; }
+
+  .name-row {
+    display: flex; gap: 16px; align-items: center;
+    margin: 8px 0 12px; padding: 6px 12px; font-size: .9rem;
+    background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px;
+  }
+  .name-row .line { flex: 1; border-bottom: 1.5px solid #94a3b8; height: 18px; }
+
+  .big-idea {
+    background: #ecfeff; border-left: 5px solid #0891b2;
+    padding: 12px 16px; border-radius: 6px;
+    font-size: .95rem; color: #0c4a6e; margin: 12px 0;
+  }
+  .big-idea strong { color: #0c4a6e; }
+
+  .callout {
+    background: #fef3c7; border: 2px solid #b8860b;
+    padding: 10px 14px; border-radius: 6px;
+    text-align: center; font-weight: 800; font-size: 1rem;
+    color: #78350f; margin: 12px 0;
+  }
+
+  .warning {
+    background: #fef2f2; border-left: 5px solid #dc2626;
+    padding: 10px 14px; border-radius: 6px;
+    color: #7f1d1d; margin: 12px 0; font-size: .92rem;
+  }
+
+  /* Scale calculator */
+  .calc {
+    background: #f0f9ff; border: 1.5px solid #7dd3fc;
+    border-radius: 8px; padding: 14px 16px; margin: 12px 0;
+  }
+  .calc-row {
+    display: grid; grid-template-columns: 1fr 90px 90px 100px; gap: 8px;
+    align-items: center; margin: 6px 0; font-size: .9rem;
+  }
+  .calc-row.header {
+    font-weight: 800; color: #0c4a6e;
+    border-bottom: 1px solid #7dd3fc; padding-bottom: 4px; margin-bottom: 8px;
+  }
+  .calc input[type="number"] {
+    padding: 6px 8px; border: 1px solid #94a3b8; border-radius: 4px;
+    font-size: .9rem; width: 100%; font-family: inherit;
+  }
+  .calc .result {
+    background: #dcfce7; border: 1px solid #16a34a;
+    padding: 6px 8px; border-radius: 4px; font-weight: 800;
+    color: #14532d; text-align: center; font-family: Consolas, monospace;
+  }
+  .scale-input {
+    display: flex; gap: 10px; align-items: center;
+    margin: 10px 0; font-size: .95rem;
+  }
+  .scale-input input {
+    padding: 6px 10px; border: 1px solid #94a3b8; border-radius: 4px;
+    font-size: 1rem; width: 90px; font-family: inherit; font-weight: 800;
+    color: #0c4a6e; text-align: center;
+  }
+  .scale-input .label { font-weight: 800; color: #0c4a6e; }
+  #k-derived {
+    padding: 4px 10px; background: #fef3c7; border: 1px solid #b8860b;
+    border-radius: 4px; font-weight: 800; color: #78350f;
+    font-family: Consolas, monospace;
+  }
+
+  /* Worked example */
+  .example {
+    background: #fefce8; border: 1.5px solid #eab308;
+    border-radius: 8px; padding: 14px 16px; margin: 12px 0;
+  }
+  .example h3 { margin-top: 0; color: #78350f; }
+  .example table {
+    width: 100%; border-collapse: collapse;
+    font-size: .9rem; margin: 8px 0;
+  }
+  .example th, .example td {
+    padding: 6px 10px; border: 1px solid #d4d4d4; text-align: center;
+  }
+  .example th { background: #fef3c7; color: #78350f; font-weight: 800; }
+  .example .compute {
+    font-family: Consolas, monospace; color: #78350f;
+  }
+
+  /* Grid paper for drawing */
+  .grid-paper {
+    width: 100%; max-width: 7.5in; aspect-ratio: 17 / 11;
+    margin: 12px auto; border: 2px solid #1a2a4a; background: #fff;
+    background-image:
+      linear-gradient(to right, rgba(30,64,175,.25) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(30,64,175,.25) 1px, transparent 1px);
+    background-size: 0.25in 0.25in;
+    position: relative;
+  }
+  .grid-paper::before {
+    content: 'Draw your building floor plan here — each small square = ¼ inch';
+    position: absolute; top: 8px; left: 8px;
+    font-size: .75rem; color: #64748b; font-style: italic;
+  }
+
+  /* Reflection */
+  .reflect {
+    margin: 12px 0;
+  }
+  .reflect .q {
+    background: #f8fafc; border: 1px solid #cbd5e1;
+    border-radius: 6px; padding: 10px 14px; margin: 8px 0;
+    font-size: .93rem;
+  }
+  .reflect .q .num {
+    color: #0f766e; font-weight: 800; margin-right: 6px;
+  }
+  .reflect .ans-line {
+    border-bottom: 1px solid #94a3b8; height: 18px; margin: 4px 0;
+  }
+
+  .link-row {
+    margin: 12px 0; padding: 10px 14px; background: #f0f9ff;
+    border: 1px solid #7dd3fc; border-radius: 6px; font-size: .9rem;
+  }
+  .link-row a { color: #0369a1; font-weight: 700; text-decoration: none; }
+  .link-row a:hover { text-decoration: underline; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page {
+      box-shadow: none; border-radius: 0;
+      max-width: none; margin: 0; padding: 0.3in 0.35in;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+    .top-actions, .link-row { display: none; }
+    @page { size: letter; margin: 0.3in; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-actions">
+  <a class="btn btn-back" href="msos-math-7.html">← Back to Math 7</a>
+  <button class="btn btn-print" onclick="window.print()">Print</button>
+</div>
+
+<!-- =================== PAGE 1: Instructions + Worked Example =================== -->
+<div class="page">
+
+<h1>📐 Architect&apos;s Blueprint — Scale-Down a Real Building</h1>
+<p style="color:#64748b; margin:0 0 8px; font-size:.85rem; font-style:italic;">
+  Mary, Star of the Sea School · 7th Grade Math · Dr. Park
+</p>
+
+<div class="name-row">
+  <strong>Name:</strong><span class="line"></span>
+  <strong>Date:</strong><span class="line" style="max-width:110px;"></span>
+  <strong>Class:</strong><span class="line" style="max-width:70px;"></span>
+</div>
+
+<div class="big-idea">
+  <strong>The big idea:</strong> A scale drawing is a proportional relationship in action. Every real measurement gets multiplied by the same number <em>k</em> — the <strong>scale factor</strong> — to get the drawing measurement. Same rule as always: <em>y = k · x</em>. This time <em>k</em> is a fraction because we&apos;re shrinking a building down to fit on paper.
+</div>
+
+<h2>Your Mission</h2>
+<p>Pick a real building. Look up (or measure) its real dimensions. Choose a scale factor that lets it fit on 8½&quot; × 11&quot; paper. Draw the floor plan (top-down view) to scale. Then answer the reflection questions.</p>
+
+<h3>Choose your building</h3>
+<ol style="margin:6px 0 6px 22px; padding:0;">
+  <li><strong>Mary, Star of the Sea School</strong> (recommended — walk and measure it yourself)</li>
+  <li>Your own house or apartment (measure with a family member)</li>
+  <li>A famous building (White House 168&apos; × 152&apos;, Alamo, Fallingwater, Independence Hall, Taj Mahal base 240&apos; × 240&apos;)</li>
+  <li>A dream house from Zillow (listings show sq ft; some include floor plans)</li>
+</ol>
+
+<h2>✨ Worked Example — Mary, Star of the Sea School</h2>
+
+<div class="example">
+  <h3>Given (example dimensions — measure your own!)</h3>
+  <p style="margin:4px 0;">Suppose the school&apos;s main building is:</p>
+  <ul style="margin:4px 0 4px 22px;">
+    <li>Length = <strong>160 ft</strong></li>
+    <li>Width = <strong>80 ft</strong></li>
+    <li>Height = <strong>30 ft</strong></li>
+  </ul>
+
+  <h3>Choose a scale</h3>
+  <p style="margin:4px 0;">Try the &quot;1 ft = ⅒ inch&quot; scale. That means:</p>
+  <p class="compute" style="margin:4px 0;">1 ft = 0.1 in &nbsp;&nbsp;&rArr;&nbsp;&nbsp; scale factor <em>k</em> = 0.1 in ÷ 12 in = <strong>1/120</strong></p>
+  <p style="margin:4px 0;">Written as a ratio: <strong>1 : 120</strong> &nbsp;(every 120 real inches becomes 1 drawing inch).</p>
+
+  <h3>Apply k to every dimension</h3>
+  <table>
+    <thead>
+      <tr><th>Dimension</th><th>Real</th><th>× k (=1/120)</th><th>Scaled</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Length</td><td>160 ft</td><td class="compute">160 × 0.1 in/ft</td><td><strong>16 in</strong></td></tr>
+      <tr><td>Width</td><td>80 ft</td><td class="compute">80 × 0.1 in/ft</td><td><strong>8 in</strong></td></tr>
+      <tr><td>Height</td><td>30 ft</td><td class="compute">30 × 0.1 in/ft</td><td><strong>3 in</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="margin:8px 0 4px;"><strong>Check:</strong> Does 16 in × 8 in fit on 11 in × 8½ in paper? &nbsp; No — 16&quot; is too long. Try a smaller scale.</p>
+
+  <h3>Try a smaller scale — 1 ft = 1/16 inch</h3>
+  <p class="compute" style="margin:4px 0;">1 ft = 0.0625 in &nbsp;&rArr;&nbsp; <em>k</em> = 1/192 &nbsp;&nbsp;(ratio 1 : 192)</p>
+  <table>
+    <thead>
+      <tr><th>Dimension</th><th>Real</th><th>× k</th><th>Scaled</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Length</td><td>160 ft</td><td class="compute">160 × 0.0625</td><td><strong>10 in</strong></td></tr>
+      <tr><td>Width</td><td>80 ft</td><td class="compute">80 × 0.0625</td><td><strong>5 in</strong></td></tr>
+      <tr><td>Height</td><td>30 ft</td><td class="compute">30 × 0.0625</td><td><strong>1.875 in</strong></td></tr>
+    </tbody>
+  </table>
+  <p style="margin:8px 0 4px;">10 in × 5 in fits on 11 × 8½ paper with room for labels. ✓ Use this scale.</p>
+</div>
+
+<div class="callout">The Big Surprise: linear scales by k, but AREA scales by k² and VOLUME by k³.</div>
+
+<p style="font-size:.9rem;">The school&apos;s real floor area is 160 × 80 = <strong>12,800 sq ft</strong>. Your drawing&apos;s floor area is 10 × 5 = <strong>50 sq in</strong>. Convert: 12,800 sq ft × 144 sq in/sq ft = 1,843,200 sq in. Ratio: 1,843,200 ÷ 50 = <strong>36,864</strong>. And 192² = <strong>36,864</strong>. ✓ Area really does scale by k².</p>
+
+</div>
+
+<!-- =================== PAGE 2: Scale Calculator + Grid =================== -->
+<div class="page">
+
+<h2>🧮 Your Turn — Scale Calculator</h2>
+
+<div class="calc">
+  <h3 style="margin-top:0;">Step 1 — Pick your scale</h3>
+  <div class="scale-input">
+    <span class="label">1 ft on the real building =</span>
+    <input type="number" id="in-per-ft" value="0.0625" step="0.001" min="0.001">
+    <span class="label">inches on paper</span>
+    <span>&rArr;</span>
+    <span class="label">k =</span>
+    <span id="k-derived">1 / 192</span>
+  </div>
+  <p style="margin:4px 0; font-size:.85rem; color:#64748b;">Common choices: 1/16 in = <em>k</em> 1/192 &nbsp;·&nbsp; 1/12 in = <em>k</em> 1/144 &nbsp;·&nbsp; 1/10 in = <em>k</em> 1/120 &nbsp;·&nbsp; 1/8 in = <em>k</em> 1/96</p>
+
+  <h3>Step 2 — Enter real dimensions, watch scaled values update</h3>
+  <div class="calc-row header">
+    <span>Dimension</span>
+    <span style="text-align:center;">Real (ft)</span>
+    <span style="text-align:center;">× k</span>
+    <span style="text-align:center;">Scaled (in)</span>
+  </div>
+  <div class="calc-row">
+    <label for="real-l">Length</label>
+    <input type="number" id="real-l" class="real" value="160" step="1">
+    <span style="text-align:center; color:#64748b; font-family:Consolas,monospace;">×  <span class="k-echo">0.0625</span></span>
+    <span class="result" id="scaled-l">10.00 in</span>
+  </div>
+  <div class="calc-row">
+    <label for="real-w">Width</label>
+    <input type="number" id="real-w" class="real" value="80" step="1">
+    <span style="text-align:center; color:#64748b; font-family:Consolas,monospace;">×  <span class="k-echo">0.0625</span></span>
+    <span class="result" id="scaled-w">5.00 in</span>
+  </div>
+  <div class="calc-row">
+    <label for="real-h">Height</label>
+    <input type="number" id="real-h" class="real" value="30" step="1">
+    <span style="text-align:center; color:#64748b; font-family:Consolas,monospace;">×  <span class="k-echo">0.0625</span></span>
+    <span class="result" id="scaled-h">1.875 in</span>
+  </div>
+
+  <p id="fit-check" style="margin:10px 0 0; padding:8px 12px; border-radius:6px; font-weight:800; text-align:center;"></p>
+</div>
+
+<h2>📝 Draw Your Floor Plan</h2>
+<p style="font-size:.9rem;">Use the scale you chose above. Measure once, draw twice — check every wall length against your scaled dimensions before you commit to a line.</p>
+
+<div class="grid-paper"></div>
+
+<div class="warning">
+  <strong>Common mistake:</strong> Drawing the outer walls first, then squeezing rooms in. Instead, plan the layout on scratch paper: how many rooms, what shape, where are the doors? Then draw to scale.
+</div>
+
+</div>
+
+<!-- =================== PAGE 3: Reflection =================== -->
+<div class="page">
+
+<h2>🤔 Reflection Questions</h2>
+
+<div class="reflect">
+  <div class="q">
+    <span class="num">1.</span> Write your scale as a ratio: <strong>1 : ______</strong>. Show your work — how did you get this from &quot;1 ft = ___ inches&quot;?
+    <div class="ans-line"></div>
+    <div class="ans-line"></div>
+  </div>
+
+  <div class="q">
+    <span class="num">2.</span> Real length of your building = ______ ft. Scaled length = ______ in. Show that scaled ÷ real (with matching units!) equals your <em>k</em>.
+    <div class="ans-line"></div>
+    <div class="ans-line"></div>
+  </div>
+
+  <div class="q">
+    <span class="num">3.</span> Real floor area = ______ sq ft. Scaled floor area = ______ sq in. Show the ratio and check it equals <strong>k²</strong>.
+    <div class="ans-line"></div>
+    <div class="ans-line"></div>
+    <div class="ans-line"></div>
+  </div>
+
+  <div class="q">
+    <span class="num">4.</span> Real volume = ______ cubic ft. Scaled volume = ______ cubic in. Compare the ratio to <strong>k³</strong>. What is the shocking result?
+    <div class="ans-line"></div>
+    <div class="ans-line"></div>
+    <div class="ans-line"></div>
+  </div>
+
+  <div class="q">
+    <span class="num">5.</span> If your scaled building doubled in size on paper (2× every side) but the real building stayed the same, what happens to <em>k</em>? What happens to the area ratio? Explain in one sentence.
+    <div class="ans-line"></div>
+    <div class="ans-line"></div>
+  </div>
+
+  <div class="q">
+    <span class="num">6.</span> <strong>Real-world payoff:</strong> Give one job or situation (besides architects) where people use scale drawings every day. Explain how proportional reasoning is essential in that job.
+    <div class="ans-line"></div>
+    <div class="ans-line"></div>
+  </div>
+</div>
+
+<div class="link-row">
+  Related activity: <a href="msp-scale-drawings-g7-template.html">Scale Drawing Challenge (enlarge a small character)</a> — that&apos;s scale factor <em>k</em> &gt; 1. This activity is <em>k</em> &lt; 1. Same equation, opposite direction.
+</div>
+
+</div>
+
+<script>
+function fmt(n) {
+  if (!isFinite(n)) return '—';
+  return (Math.round(n * 1000) / 1000).toFixed(n < 1 ? 3 : 2) + ' in';
+}
+function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+function simpleFraction(inches_per_ft) {
+  // k = inches_per_ft / 12 (both in inches)
+  const denom = 12 / inches_per_ft;
+  const rounded = Math.round(denom);
+  if (Math.abs(denom - rounded) < 0.05 && rounded > 0) {
+    return '1 / ' + rounded;
+  }
+  return '1 / ' + denom.toFixed(1);
+}
+function update() {
+  const ipf = parseFloat(document.getElementById('in-per-ft').value) || 0;
+  const realL = parseFloat(document.getElementById('real-l').value) || 0;
+  const realW = parseFloat(document.getElementById('real-w').value) || 0;
+  const realH = parseFloat(document.getElementById('real-h').value) || 0;
+  const scaledL = realL * ipf;
+  const scaledW = realW * ipf;
+  const scaledH = realH * ipf;
+  document.getElementById('scaled-l').textContent = fmt(scaledL);
+  document.getElementById('scaled-w').textContent = fmt(scaledW);
+  document.getElementById('scaled-h').textContent = fmt(scaledH);
+  document.getElementById('k-derived').textContent = simpleFraction(ipf);
+  document.querySelectorAll('.k-echo').forEach(function(e){
+    e.textContent = ipf.toFixed(4).replace(/0+$/,'').replace(/\.$/,'');
+  });
+  // fit check on 8.5 x 11 paper (with 1" margins → 7.5 x 10 drawable)
+  const fitEl = document.getElementById('fit-check');
+  const fits = (scaledL <= 10 && scaledW <= 7.5) || (scaledL <= 7.5 && scaledW <= 10);
+  if (scaledL > 0 && scaledW > 0) {
+    if (fits) {
+      fitEl.textContent = '✓ Fits on 8½" × 11" paper with 1" margins.';
+      fitEl.style.background = '#dcfce7';
+      fitEl.style.color = '#14532d';
+      fitEl.style.border = '1.5px solid #16a34a';
+    } else {
+      fitEl.textContent = '✗ Too big — pick a smaller "inches per foot" value.';
+      fitEl.style.background = '#fee2e2';
+      fitEl.style.color = '#7f1d1d';
+      fitEl.style.border = '1.5px solid #dc2626';
+    }
+  } else {
+    fitEl.textContent = '';
+  }
+}
+document.querySelectorAll('#in-per-ft, #real-l, #real-w, #real-h').forEach(function(inp){
+  inp.addEventListener('input', update);
+});
+update();
+</script>
+
+</body>
+</html>
