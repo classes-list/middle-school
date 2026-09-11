@@ -208,7 +208,7 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 <ol class="qlist">
 <li data-plot='{"p1":[1,3],"p2":[2,7]}'>From (1,3) to (2,7): slope =  <input class="ans" data-a="4" size="6"></li>
 <li data-plot='{"p1":[2,7],"p2":[3,11]}'>From (2,7) to (3,11): slope =  <input class="ans" data-a="4" size="6"></li>
-<li>Are all slopes equal? Is this linear? <input class="ans" data-a="Yes, all equal 4 → linear" size="22"></li>
+<li>Are all slopes equal? Is this linear? <input class="ans" data-a="yes|y|yes linear|yes, linear|linear|yes all equal|yes all equal 4|yes all equal 4 linear|Yes, all equal 4 → linear" size="22"></li>
 <li data-plot='{"type":"table","points":[[0,5],[2,9],[4,13]]}'>Table: (0,5), (2,9), (4,13). Slope? <input class="ans" data-a="2" size="6"></li>
 <li data-plot='{"type":"table","points":[[1,4],[3,10],[5,16]]}'>Table: (1,4), (3,10), (5,16). Slope? <input class="ans" data-a="3" size="6"></li>
 </ol>
@@ -312,6 +312,14 @@ function toNumber(s){const c=normalizeAns(s);if(!c)return null;
   const n=Number(c);return isFinite(n)?n:null;}
 function isCorrect(student, expected) {
   if (!expected) return null; // uncheckable
+  // Accept pipe-separated alternates: "yes|linear|yes linear"
+  if (String(expected).indexOf('|') !== -1) {
+    const alts = String(expected).split('|');
+    for (let i = 0; i < alts.length; i++) {
+      if (isCorrect(student, alts[i].trim()) === true) return true;
+    }
+    return false;
+  }
   const ns = toNumber(student);
   const ne = toNumber(expected);
   if (ns !== null && ne !== null) {
