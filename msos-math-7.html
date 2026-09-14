@@ -739,7 +739,14 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 const UNITS = [
   { id:'metrics-sci-process', title:'Metrics & Data Analysis', icon:'🔬', cc:'7.MP + Skill', desc:'A 6-lesson unit hub covering metric units, the lab tools, three hands-on labs, and Google Sheets graphing. Foundation for every experiment this year.', ytSearch:'metric system scientific method middle school introduction', graphLabUrl:'metrics-scientific-process.html', bpUrl:'https://www.brainpop.com/topic/scientific-method/', quizUrl:'msp-metrics-data-analysis-quiz.html?grade=7', unitTestUrl:'msp-metrics-data-analysis-test.html?grade=7'},
   { id:'scientific-notation', ixlUrl:'https://www.ixl.com/math/grade-7/scientific-notation', title:'Scientific Notation', icon:'🔬', cc:'7.EE + Science', desc:'Extend scientific notation to very small numbers using negative exponents, and compute with numbers in scientific notation — multiply, divide, and compare.', kaUrl:'https://www.khanacademy.org/math/cc-eighth-grade-math/cc-8th-numbers-operations', ytSearch:'khan academy scientific notation negative exponents multiply divide 7th grade', bpUrl:'https://www.brainpop.com/topic/standard-and-scientific-notation/', worksheetUrl:'msp-scientific-notation-worksheet.html?grade=7', quizUrl:'msp-scientific-notation-quiz.html?grade=7', unitTestUrl:'msp-scientific-notation-test.html?grade=7'},
-  { id:'proportional', ixlUrl:'https://www.ixl.com/math/grade-7/identify-proportional-relationships', title:'Proportional Relationships', icon:'⚖️', cc:'7.RP.1-3', desc:'Identify proportional relationships and apply to real-world problems.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-ratio-proportion', ytSearch:'khan academy 7th grade proportional relationships', phetUrl:'https://phet.colorado.edu/en/simulations/proportion-playground', bpUrl:'https://www.brainpop.com/topic/proportional-relationships/', worksheetUrl:'msp-proportional-worksheet.html?grade=7', quizUrl:'msp-proportional-quiz.html?grade=7', unitTestUrl:'msp-proportional-test.html?grade=7'},
+  { id:'proportional', ixlUrl:'https://www.ixl.com/math/grade-7/identify-proportional-relationships', title:'Proportional Relationships', icon:'⚖️', cc:'7.RP.1-3', desc:'Identify proportional relationships and apply to real-world problems.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-ratio-proportion', ytVideos:[
+      {title:'⭐ Math with Mr. J — How to Solve Proportions Using Relationships', url:'https://www.youtube.com/watch?v=rLqMwoU349E', desc:'Best starter — Mr. J walks through solving proportions using the underlying proportional relationship.'},
+      {title:'Math with Mr. J — How to Solve Proportions (basics)', url:'https://www.youtube.com/watch?v=g92xsLTyPdc', desc:'Foundations: cross-multiplying and setting up proportions.'},
+      {title:'Math with Mr. J — Solving Proportions with Variables', url:'https://www.youtube.com/watch?v=wT8tGc-SwKk', desc:'Extension: proportions where the missing value is inside an expression.'},
+      {title:'Constant of Proportionality | 7th Grade Math Lesson', url:'https://www.youtube.com/watch?v=iY7fAbzmVIo', desc:'Focused lesson on finding k, the constant of proportionality.'},
+      {title:'Tables & Graphs — Is There a Proportional Relationship? (7.RP.A.2)', url:'https://www.youtube.com/watch?v=tRlj2AZQ2yU', desc:'How to test whether a table or graph shows a proportional relationship.'},
+      {title:'What is a Proportional Relationship? — Mathcation', url:'https://www.youtube.com/watch?v=CMPvYn0MaHI', desc:'Clean introduction to proportional relationships and y = kx.'}
+    ], ytSearch:'math with mr j 7th grade proportional relationships constant of proportionality', phetUrl:'https://phet.colorado.edu/en/simulations/proportion-playground', bpUrl:'https://www.brainpop.com/topic/proportional-relationships/', worksheetUrl:'msp-proportional-worksheet.html?grade=7', quizUrl:'msp-proportional-quiz.html?grade=7', unitTestUrl:'msp-proportional-test.html?grade=7'},
   { id:'ratios-rates', ixlUrl:'https://www.ixl.com/math/grade-7/unit-rates', title:'Ratios & Unit Rates', icon:'📐', cc:'7.RP.1', desc:'Compute unit rates with ratios of fractions.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-ratio-proportion', ytSearch:'khan academy 7th grade ratios unit rates', phetUrl:'https://phet.colorado.edu/en/simulations/unit-rates', bpUrl:'https://www.brainpop.com/topic/ratios/', worksheetUrl:'msp-ratios-rates-worksheet.html?grade=7', quizUrl:'msp-ratios-rates-quiz.html?grade=7', unitTestUrl:'msp-ratios-rates-test.html?grade=7'},
   { id:'percents', ixlUrl:'https://www.ixl.com/math/grade-7/percent-of-change', title:'Percents & Percent Change', icon:'%', cc:'7.RP.3', desc:'Solve percent problems including percent increase and decrease.', kaUrl:'https://www.khanacademy.org/math/pre-algebra/pre-algebra-ratios-rates', ytSearch:'khan academy 7th grade percent change increase decrease', phetUrl:'https://phet.colorado.edu/en/simulations/unit-rates', bpUrl:'https://www.brainpop.com/topic/percents/', worksheetUrl:'msp-percents-g7-worksheet.html?grade=7', quizUrl:'msp-percents-g7-quiz.html?grade=7', unitTestUrl:'msp-percents-g7-test.html?grade=7'},
   { id:'add-sub-rational', ixlUrl:'https://www.ixl.com/math/grade-7/add-and-subtract-rational-numbers', title:'Adding & Subtracting Rational Numbers', icon:'➕', cc:'7.NS.1', desc:'Add and subtract rational numbers including negatives.', kaUrl:'https://www.khanacademy.org/math/cc-seventh-grade-math/cc-7th-negative-numbers', ytSearch:'khan academy 7th grade adding subtracting rational numbers', phetUrl:'https://phet.colorado.edu/en/simulations/number-line-operations', bpUrl:'https://www.brainpop.com/topic/adding-and-subtracting-integers/', worksheetUrl:'msp-add-sub-rational-g7-worksheet.html?grade=7', quizUrl:'msp-add-sub-rational-g7-quiz.html?grade=7', unitTestUrl:'msp-add-sub-rational-g7-test.html?grade=7'},
@@ -2866,7 +2873,9 @@ let currentUnit = null;
 
 function resourceCardHTML(unit) {
   const phetBtn = unit.phetUrl ? `<a class="btn-phet" href="${unit.phetUrl}" target="_blank">🧪 PhET Simulation</a>` : '';
-  const ytBtn = `<a class="btn-yt" href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
+  const ytBtn = (unit.ytVideos && unit.ytVideos.length)
+    ? `<button class="btn-yt" onclick="showVideoPicker('${unit.id}')">▶️ YouTube</button>`
+    : `<a class="btn-yt" href="${unit.ytUrl || 'https://www.youtube.com/results?search_query=' + encodeURIComponent(unit.ytSearch)}" target="_blank">▶️ YouTube</a>`;
   const ixlBtn = unit.ixlUrl ? `<a class="btn-ixl" href="${unit.ixlUrl}" target="_blank" rel="noopener">📚 IXL Practice</a>` : '';
   const labBtn = unit.labUrl ? `<a class="btn-lab" href="${unit.labUrl}" target="_blank">🎯 Percent Error Lab</a>` : '';
   const graphBtn = unit.graphLabUrl ? `<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank">📊 Data Analysis</a>` : '';
@@ -3005,7 +3014,11 @@ function showLesson(unitId) {
       if (unit.ixlUrl)    resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
       if (typeof SSAT_BANK !== 'undefined' && SSAT_BANK[unit.id]) resBtns.push(`<button class="btn-ssat" onclick="openSSAT('${unit.id}')" style="${S}">🎯 SSAT Prep</button>`);
       if (unit.bpUrl)     resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
-      if (unit.ytSearch)  resBtns.push(`<a class="btn-yt"    href="https://www.youtube.com/results?search_query=${encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
+      if (unit.ytVideos && unit.ytVideos.length) {
+        resBtns.push(`<button class="btn-yt" onclick="showVideoPicker('${unit.id}')" style="${S}">▶️ YouTube</button>`);
+      } else if (unit.ytUrl || unit.ytSearch) {
+        resBtns.push(`<a class="btn-yt"    href="${unit.ytUrl || 'https://www.youtube.com/results?search_query=' + encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
+      }
       if (unit.labUrl)    resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
       if (unit.graphLabUrl && unit.id !== 'metrics-sci-process') resBtns.push(`<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank" rel="noopener" style="${S}">📊 Data Analysis</a>`);
     }
@@ -4048,6 +4061,50 @@ function renderSSATResult() {
     </div>`;
 }
 
+</script>
+
+<!-- Video Picker Modal -->
+<div id="video-modal" class="ssat-modal" onclick="if(event.target===this)closeVideoPicker()">
+  <div class="ssat-panel">
+    <div class="ssat-header">
+      <div>
+        <h2 id="video-title">▶️ Tutorial Videos</h2>
+        <div class="ssat-meta" id="video-meta">Recommended videos — starred video is the best starting point.</div>
+      </div>
+      <button class="ssat-close" onclick="closeVideoPicker()">×</button>
+    </div>
+    <div id="video-body" style="padding: 12px 0;"></div>
+  </div>
+</div>
+
+<script>
+function showVideoPicker(unitId) {
+  const unit = UNITS.find(u => u.id === unitId);
+  if (!unit || !unit.ytVideos || !unit.ytVideos.length) return;
+  document.getElementById('video-title').textContent = '▶️ Tutorial Videos · ' + unit.title;
+  const body = document.getElementById('video-body');
+  const items = unit.ytVideos.map(function(v, i) {
+    const starred = i === 0;
+    const badge = starred
+      ? '<span style="display:inline-block; background:#fbbf24; color:#78350f; font-weight:800; font-size:.75rem; padding:2px 8px; border-radius:4px; margin-right:8px; letter-spacing:.03em;">RECOMMENDED</span>'
+      : '';
+    return (
+      '<a href="' + v.url + '" target="_blank" rel="noopener" ' +
+      'style="display:block; padding:14px 18px; margin:8px 0; background:' + (starred ? '#fefce8' : '#f8fafc') + '; ' +
+      'border:' + (starred ? '2px solid #eab308' : '1.5px solid #cbd5e1') + '; border-radius:8px; text-decoration:none; color:#1a2a4a; transition:background .15s;" ' +
+      'onmouseover="this.style.background=\'#e0f2fe\'" onmouseout="this.style.background=\'' + (starred ? '#fefce8' : '#f8fafc') + '\'">' +
+      badge +
+      '<strong style="font-size:1rem;">' + v.title + '</strong>' +
+      '<div style="color:#475569; font-size:.88rem; margin-top:4px;">' + (v.desc || '') + '</div>' +
+      '</a>'
+    );
+  }).join('');
+  body.innerHTML = items;
+  document.getElementById('video-modal').classList.add('active');
+}
+function closeVideoPicker() {
+  document.getElementById('video-modal').classList.remove('active');
+}
 </script>
 
 <!-- SSAT Prep Modal -->
