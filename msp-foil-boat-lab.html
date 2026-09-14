@@ -307,25 +307,35 @@
     <span class="val" id="c-pred">—</span>
   </div>
   <div class="compare-line">
-    <span>🚢 What really happened:</span>
+    <span>🚢 What actually happened:</span>
     <span class="val" id="c-actual">—</span>
   </div>
   <div class="compare-line">
     <span>👉 Difference:</span>
     <span class="val" id="c-result" style="min-width:180px;">—</span>
   </div>
-  <div class="compare-line" style="border-top:1.5px dashed #16a34a; padding-top:8px; margin-top:8px;">
-    <span>📊 Percent Error:</span>
-    <span class="val" id="c-pcterr" style="min-width:120px;">—</span>
   </div>
-</div>
 
 <div class="rule-box" style="margin-top:14px;">
   <div class="headline">📐 Percent Error Formula</div>
-  <div class="eq">% Error = |Guess − Actual| ÷ Guess × 100</div>
-  <div class="why">The straight lines mean &quot;take the positive value&quot; (no negatives). A small % error means your prediction was close!</div>
-  <div id="pe-worked" style="background:#fff8dc; border:1.5px dashed #b8860b; border-radius:6px; padding:10px 14px; margin-top:10px; font-family:Consolas,monospace; font-size:.98rem; color:#78350f; text-align:left; line-height:1.7;">
-    <em>Enter your numbers above to see the calculation with your values.</em>
+  <div class="eq">% Error = |Guess − Actual| ÷ Actual × 100</div>
+  <div class="why">The straight lines mean &quot;take the positive value&quot; (no negatives). Fill in the boxes below step by step. Each one turns green when correct.</div>
+
+  <div id="pe-worked" style="background:#fff8dc; border:1.5px dashed #b8860b; border-radius:8px; padding:14px 16px; margin-top:12px; font-family:Consolas,monospace; font-size:1rem; color:#78350f; text-align:left; line-height:2.4;">
+    <div><strong>Step 1 —</strong> Error: &nbsp;|
+      <input type="number" id="pe-guess-in" placeholder="Guess" style="width:80px; padding:4px 6px; border:1.5px solid #94a3b8; border-radius:4px; font-family:inherit; text-align:center; font-weight:800;">
+      −
+      <input type="number" id="pe-actual-in" placeholder="Actual" style="width:80px; padding:4px 6px; border:1.5px solid #94a3b8; border-radius:4px; font-family:inherit; text-align:center; font-weight:800;">
+      | = <span id="pe-a-auto" style="display:inline-block; min-width:60px; padding:4px 12px; background:#dcfce7; border:1.5px solid #16a34a; border-radius:4px; color:#14532d; font-weight:800; text-align:center;">?</span>
+    </div>
+    <div><strong>Step 2 —</strong> Percent Error: &nbsp;<span id="pe-a-echo" style="display:inline-block; min-width:60px; padding:4px 12px; background:#dcfce7; border:1.5px solid #16a34a; border-radius:4px; color:#14532d; font-weight:800; text-align:center;">?</span>
+      ÷
+      <input type="number" id="pe-actual2-in" placeholder="Actual" style="width:80px; padding:4px 6px; border:1.5px solid #94a3b8; border-radius:4px; font-family:inherit; text-align:center; font-weight:800;">
+      × 100 = <span id="pe-c-auto" style="display:inline-block; min-width:80px; padding:4px 12px; background:#dbeafe; border:1.5px solid #1e40af; border-radius:4px; color:#1e3a8a; font-weight:800; text-align:center;">?</span> %
+    </div>
+    <div style="border-top:1px dashed #b8860b; margin-top:8px; padding-top:6px; font-size:.9rem;">
+      <em>The blue box is your Percent Error!</em>
+    </div>
   </div>
 </div>
 
@@ -346,24 +356,31 @@
   </div>
 </div>
 
+<p style="font-size:.92rem; color:#64748b; font-style:italic; margin:6px 0 4px;">
+  Your turn — do the math yourself. Boxes turn green when your answer is close to correct.
+</p>
 <table class="data">
   <tr>
-    <td class="label">Total mass m = Skittles × 1 (g)</td>
-    <td class="computed" id="d-mtotal">—</td>
+    <td class="label">Total mass m = Skittles × 1 (g) &nbsp;<span style="font-weight:400; color:#64748b;">You calculate:</span></td>
+    <td><input type="number" id="d-mtotal-in" step="0.1" placeholder="___ g"></td>
   </tr>
   <tr>
-    <td class="label">Boat volume V (cm³)</td>
+    <td class="label">Boat volume V (cm³) &nbsp;<span style="font-weight:400; color:#64748b;">(from top)</span></td>
     <td class="computed" id="d-Vcheck">—</td>
   </tr>
   <tr>
-    <td class="label">Density D = m ÷ V (g/cm³)</td>
-    <td class="computed" id="d-Davg" style="font-size:1.15rem;">—</td>
+    <td class="label">Density D = m ÷ V (g/cm³) &nbsp;<span style="font-weight:400; color:#64748b;">(auto-calculated from m ÷ V):</span></td>
+    <td class="computed" id="d-Davg-auto" style="font-size:1.15rem;">—</td>
   </tr>
   <tr>
     <td class="label">Compare with water (1.0 g/cm³)</td>
     <td class="computed" id="d-verdict">—</td>
   </tr>
 </table>
+
+<div style="background:#fef3c7; border:1.5px dashed #b8860b; border-radius:6px; padding:8px 12px; margin:8px 0; font-size:.88rem; color:#78350f; font-family:Consolas,monospace;">
+  <strong>💡 Hint:</strong> Type in <strong>m</strong> (Skittles × 1) and D will auto-calculate as m ÷ V.
+</div>
 
 <div class="big-idea">
   <strong>The connection:</strong> A boat floats when its density is LESS than water. It sinks when its density REACHES water&apos;s density (1.0 g/cm³). Your D value should be very close to 1.0 — that&apos;s the whole point of the density formula!
@@ -427,7 +444,6 @@ function update() {
   }
 
   const resultEl = document.getElementById('c-result');
-  const pctErrEl = document.getElementById('c-pcterr');
   if (maxP != null && actual != null && maxP > 0) {
     const diff = actual - maxP;
     if (diff === 0) {
@@ -440,44 +456,92 @@ function update() {
       resultEl.textContent = diff + ' short';
       resultEl.style.background = '#fef3c7';
     }
-    const pct = Math.abs(diff) / maxP * 100;
+    const pct = Math.abs(diff) / actual * 100;
     const absDiff = Math.abs(diff);
-    pctErrEl.textContent = pct.toFixed(1) + ' %';
-    if (pct <= 10) {
-      pctErrEl.style.background = '#dcfce7'; pctErrEl.style.color = '#14532d';
-    } else if (pct <= 25) {
-      pctErrEl.style.background = '#fef3c7'; pctErrEl.style.color = '#78350f';
-    } else {
-      pctErrEl.style.background = '#fee2e2'; pctErrEl.style.color = '#7f1d1d';
+
+    // Helper: check an input against an expected value with a tolerance
+    function checkInput(id, expected, tol) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const v = num(id);
+      if (v == null) {
+        el.style.background = '#fff'; el.style.borderColor = '#94a3b8'; return;
+      }
+      const ok = Math.abs(v - expected) < tol;
+      el.style.background = ok ? '#dcfce7' : '#fee2e2';
+      el.style.borderColor = ok ? '#16a34a' : '#dc2626';
     }
-    // Dynamic worked-out percent error calculation
-    const peEl = document.getElementById('pe-worked');
-    if (peEl) {
-      peEl.innerHTML =
-        '<strong>With YOUR numbers:</strong><br>' +
-        '% Error = |' + maxP + ' − ' + actual + '| ÷ ' + maxP + ' × 100<br>' +
-        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= ' + absDiff + ' ÷ ' + maxP + ' × 100<br>' +
-        '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <strong>' + pct.toFixed(1) + ' %</strong>';
+
+    // Step 1: student plugs in Guess and Actual → error auto-computes
+    checkInput('pe-guess-in', maxP, 0.5);
+    checkInput('pe-actual-in', actual, 0.5);
+    const gIn = num('pe-guess-in');
+    const aIn = num('pe-actual-in');
+    let step1Result = null;
+    if (gIn != null && aIn != null) {
+      step1Result = Math.abs(gIn - aIn);
+      setText('pe-a-auto', String(step1Result));
+      setText('pe-a-echo', String(step1Result));
+    } else {
+      setText('pe-a-auto', '?');
+      setText('pe-a-echo', '?');
+    }
+
+    // Step 2: student plugs in Actual (again) → percent error auto-computes
+    checkInput('pe-actual2-in', actual, 0.5);
+    const a2In = num('pe-actual2-in');
+    if (step1Result != null && a2In != null && a2In !== 0) {
+      const percentResult = (step1Result / a2In) * 100;
+      setText('pe-c-auto', percentResult.toFixed(1));
+    } else {
+      setText('pe-c-auto', '?');
     }
   } else {
     resultEl.textContent = '—';
     resultEl.style.background = '#dcfce7';
-    pctErrEl.textContent = '—';
-    pctErrEl.style.background = '#dcfce7';
-    pctErrEl.style.color = '#14532d';
-    const peEl = document.getElementById('pe-worked');
-    if (peEl) peEl.innerHTML = '<em>Enter your numbers above to see the calculation with your values.</em>';
+    // Reset percent-error step boxes to neutral (leave input boxes visible)
+    ['pe-guess-in','pe-actual-in','pe-actual2-in'].forEach(function(id){
+      const el = document.getElementById(id);
+      if (el) { el.style.background = '#fff'; el.style.borderColor = '#94a3b8'; }
+    });
+    setText('pe-a-auto', '?');
+    setText('pe-a-echo', '?');
+    setText('pe-c-auto', '?');
   }
 
-  // D = M / V section
+  // D = m / V section — student inputs m; D auto-calculates
   const verdictEl = document.getElementById('d-verdict');
-  if (V != null && V > 0 && actual != null) {
-    const mTotal = actual * 1.0;
-    const D = mTotal / V;
-    setText('d-mtotal', actual + ' × 1 = ' + mTotal.toFixed(1) + ' g');
-    setText('d-Vcheck', V.toFixed(1) + ' cm³');
-    setText('d-Davg', mTotal.toFixed(1) + ' ÷ ' + V.toFixed(1) + ' = ' + D.toFixed(2) + ' g/cm³');
-    const diffFromWater = Math.abs(D - 1.0);
+  const mIn = document.getElementById('d-mtotal-in');
+  const studentM = num('d-mtotal-in');
+
+  // Volume shows automatically since they measured above
+  setText('d-Vcheck', V != null ? V.toFixed(1) + ' cm³' : '—');
+
+  // Check student's mass answer (expected = actual Skittles × 1)
+  if (mIn) {
+    if (actual != null && studentM != null) {
+      const expectedM = actual * 1.0;
+      const closeM = Math.abs(studentM - expectedM) <= 0.5;
+      mIn.style.background = closeM ? '#dcfce7' : '#fee2e2';
+      mIn.style.borderColor = closeM ? '#16a34a' : '#dc2626';
+    } else {
+      mIn.style.background = '#fff';
+      mIn.style.borderColor = '#94a3b8';
+    }
+  }
+
+  // Auto-calculate density D = m ÷ V using student's m input
+  let autoD = null;
+  if (studentM != null && V != null && V > 0) {
+    autoD = studentM / V;
+    setText('d-Davg-auto', studentM.toFixed(1) + ' ÷ ' + V.toFixed(1) + ' = ' + autoD.toFixed(2) + ' g/cm³');
+  } else {
+    setText('d-Davg-auto', '—');
+  }
+
+  // Verdict: compare auto-calculated D to water (1.0)
+  if (autoD != null) {
+    const diffFromWater = Math.abs(autoD - 1.0);
     if (diffFromWater <= 0.1) {
       verdictEl.textContent = '✓ Very close to 1.0!';
       verdictEl.style.background = '#dcfce7'; verdictEl.style.color = '#14532d';
@@ -485,17 +549,18 @@ function update() {
       verdictEl.textContent = '≈ Close to 1.0';
       verdictEl.style.background = '#fef3c7'; verdictEl.style.color = '#78350f';
     } else {
-      verdictEl.textContent = 'Not close — remeasure';
+      verdictEl.textContent = 'Not close — check your mass';
       verdictEl.style.background = '#fee2e2'; verdictEl.style.color = '#7f1d1d';
     }
   } else {
-    setText('d-mtotal', '—');
-    setText('d-Vcheck', V != null ? V.toFixed(1) + ' cm³' : '—');
-    setText('d-Davg', '—');
     verdictEl.textContent = '—';
     verdictEl.style.background = '#dcfce7'; verdictEl.style.color = '#14532d';
   }
 }
+// Also listen to the new student-input fields
+document.querySelectorAll('#d-mtotal-in, #pe-guess-in, #pe-actual-in, #pe-actual2-in').forEach(function(inp){
+  inp.addEventListener('input', update);
+});
 document.querySelectorAll('#d-L, #d-W, #d-H, #d-actual').forEach(function(inp){
   inp.addEventListener('input', update);
 });
