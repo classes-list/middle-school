@@ -251,23 +251,27 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
     </p>
     <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
       <a href="msp-slope-mrj-worksheet.html" target="_blank" style="display:inline-block; padding:10px 20px; background:#059669; color:#fff; font-weight:800; border-radius:6px; text-decoration:none; font-size:.95rem;">📝 Open Practice Worksheet</a>
-      <a href="msp-slope-mrj-worksheet.pdf" target="_blank" style="display:inline-block; padding:10px 20px; background:#7c3aed; color:#fff; font-weight:800; border-radius:6px; text-decoration:none; font-size:.95rem;">📄 Download PDF</a>
-      <button onclick="printMrJPDF()" style="padding:10px 20px; background:#0891b2; color:#fff; font-weight:800; border-radius:6px; border:none; cursor:pointer; font-size:.95rem;">🖨️ Print PDF</button>
       <a href="https://www.youtube.com/watch?v=my6PjMZ3_PE" target="_blank" style="display:inline-block; padding:10px 20px; background:#dc2626; color:#fff; font-weight:800; border-radius:6px; text-decoration:none; font-size:.95rem;">▶️ Watch Tutorial</a>
+    </div>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:12px;">
+      <button onclick="printPDF('msp-slope-mrj-worksheet.pdf')" style="padding:12px 24px; background:#0891b2; color:#fff; font-weight:800; border-radius:6px; border:none; cursor:pointer; font-size:1rem;">🖨️ Print Problem Set #1</button>
+      <button onclick="printPDF('msp-slope-practice-b.pdf')" style="padding:12px 24px; background:#b45309; color:#fff; font-weight:800; border-radius:6px; border:none; cursor:pointer; font-size:1rem;">🖨️ Print Problem Set #2</button>
     </div>
   </div>
 </section>
 
 <script>
-function printMrJPDF() {
-  // Open the PDF in a new tab and trigger print
-  const w = window.open('msp-slope-mrj-worksheet.pdf', '_blank');
+function printPDF(url) {
+  // Open a PDF in a new tab and trigger print automatically
+  const w = window.open(url, '_blank');
   if (w) {
     w.addEventListener('load', function() {
       try { w.print(); } catch (e) {}
     });
   }
 }
+// Legacy alias (kept in case old code paths still call it)
+function printMrJPDF() { printPDF('msp-slope-mrj-worksheet.pdf'); }
 </script>
 
 </main>
