@@ -118,6 +118,13 @@ table.check .sf-select.wrong { border-color:#dc2626; background:#fee2e2; color:#
   border:1.5px solid #94a3b8; border-radius:6px;
   font-family:inherit; font-size:.95rem; resize:vertical;
 }
+.q-feedback {
+  margin-top:8px; padding:8px 12px; border-radius:6px;
+  font-size:.9rem; display:none;
+}
+.q-feedback.good { display:block; background:#dcfce7; border-left:5px solid #16a34a; color:#14532d; }
+.q-feedback.partial { display:block; background:#fef3c7; border-left:5px solid #b8860b; color:#78350f; }
+.q-feedback.miss { display:block; background:#fee2e2; border-left:5px solid #dc2626; color:#7f1d1d; }
 
 .actions {
   display:flex; gap:12px; flex-wrap:wrap; align-items:center;
@@ -234,16 +241,19 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <div class="q">
   <div class="q-text"><span class="num">1</span><span>Which object had the HIGHEST density? Which had the LOWEST? Why does the highest-density object sink so hard?</span></div>
   <textarea id="q1"></textarea>
+  <div class="q-feedback" id="fb-q1"></div>
 </div>
 
 <div class="q">
   <div class="q-text"><span class="num">2</span><span>The ice cube's density (0.92 g/cm³) is very close to water's (1.00 g/cm³). Why does it still float instead of sinking?</span></div>
   <textarea id="q2"></textarea>
+  <div class="q-feedback" id="fb-q2"></div>
 </div>
 
 <div class="q">
   <div class="q-text"><span class="num">3</span><span>If you broke the rock into smaller pieces, would each piece still sink? Explain using D = m ÷ V.</span></div>
   <textarea id="q3"></textarea>
+  <div class="q-feedback" id="fb-q3"></div>
 </div>
 
 </section>
@@ -251,14 +261,18 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <!-- === Actions === -->
 <section class="card">
 <div class="actions">
-  <button class="btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+  <button class="btn-check" onclick="checkAll()">✓ Check My Answers</button>
   <button class="btn-reset" onclick="resetAll()">↻ Reset</button>
+  <span class="score" id="score">— / 12</span>
+</div>
+
+<div class="actions">
+  <button class="btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
 </div>
 
 <div class="submit-note">
   <strong>How submit works:</strong> Clicking the button opens your email app with all your answers filled in.
   Just click "Send" in your email app to send your work to Dr. Park (<em>ppark@starofthesea.org</em>).
-  Dr. Park will grade your answers and return them to you.
 </div>
 </section>
 
@@ -317,14 +331,117 @@ function updateCalc() {
 document.getElementById('calc-m').addEventListener('input', updateCalc);
 document.getElementById('calc-v').addEventListener('input', updateCalc);
 
-// Feedback is intentionally hidden until Dr. Park grades and returns the work.
-// No live green/red highlighting, no "Check My Answers" button.
+// ===== Live green/red feedback on the six objects =====
+function checkRow(i) {
+  const dIn = document.getElementById('d-' + i);
+  const sfIn = document.getElementById('sf-' + i);
+  const expected = OBJECTS[i];
+  const student = parseFloat(dIn.value);
+  if (isFinite(student)) {
+    const ok = Math.abs(student - expected.d) < 0.05;
+    dIn.classList.toggle('correct', ok);
+    dIn.classList.toggle('wrong', !ok);
+  } else {
+    dIn.classList.remove('correct', 'wrong');
+  }
+  if (sfIn.value) {
+    const ok = sfIn.value === expected.sf;
+    sfIn.classList.toggle('correct', ok);
+    sfIn.classList.toggle('wrong', !ok);
+  } else {
+    sfIn.classList.remove('correct', 'wrong');
+  }
+}
+OBJECTS.forEach((_, i) => {
+  document.getElementById('d-' + i).addEventListener('input', () => checkRow(i));
+  document.getElementById('sf-' + i).addEventListener('change', () => checkRow(i));
+});
+
+// ===== Reflection-answer keyword feedback =====
+// Each rubric lists the KEY CONCEPTS students need to hit.
+// concept = { name, patterns:[regex or lowercase phrase list], hint:"if missing, say this" }
+const RUBRICS = {
+  q1: {
+    concepts: [
+      { name:'highest', patterns:[/iron/, /nail/], hint:'Name the object with the highest density (hint: check row 6).' },
+      { name:'lowest',  patterns:[/cork/], hint:'Name the object with the lowest density (hint: check row 5).' },
+      { name:'reason',  patterns:[/dens/, /mass/, /than water/, /gram/], hint:'Explain WHY the highest-density object sinks so hard (use the word "density" or compare to water).' }
+    ]
+  },
+  q2: {
+    concepts: [
+      { name:'lessThan', patterns:[/less than/, /below/, /under/, /smaller than/, /\b0\.92\b/, /0\.9/], hint:'Say that 0.92 is LESS than water (1.0).' },
+      { name:'floatRule', patterns:[/float/, /less than 1/, /below 1/, /below water/], hint:'Explain the rule: density less than water → floats.' }
+    ]
+  },
+  q3: {
+    concepts: [
+      { name:'yes',       patterns:[/yes/, /still sink/, /sinks/, /it sinks/], hint:'Give a clear "yes" — each piece still sinks.' },
+      { name:'sameDens',  patterns:[/same density/, /density stays/, /stays the same/, /doesn.t change/, /still 2\.6/, /still 2\.60/], hint:'Explain that the density STAYS THE SAME when you break it.' },
+      { name:'ratio',     patterns:[/mass and volume/, /both.*shrink/, /both change/, /proportion/, /ratio/, /half.*half/, /material/], hint:'Explain WHY density stays the same — mass AND volume both shrink together (same ratio).' }
+    ]
+  }
+};
+
+function scoreReflection(qid) {
+  const text = (document.getElementById(qid).value || '').toLowerCase().trim();
+  const fb = document.getElementById('fb-' + qid);
+  fb.className = 'q-feedback';
+  fb.innerHTML = '';
+  if (!text) return {hit:0, total:0};
+  const rubric = RUBRICS[qid];
+  let hit = 0;
+  const missingHints = [];
+  rubric.concepts.forEach(concept => {
+    const found = concept.patterns.some(p => (p instanceof RegExp) ? p.test(text) : text.indexOf(p) !== -1);
+    if (found) hit++;
+    else missingHints.push(concept.hint);
+  });
+  const total = rubric.concepts.length;
+  if (hit === total) {
+    fb.classList.add('good');
+    fb.innerHTML = '<strong>✓ Great answer!</strong> You covered all the key ideas.';
+  } else if (hit >= Math.ceil(total / 2)) {
+    fb.classList.add('partial');
+    fb.innerHTML = '<strong>⚠ Almost there.</strong> You have some key ideas. Try adding: <ul style="margin:4px 0 0 22px;">' +
+                   missingHints.map(h => '<li>' + h + '</li>').join('') + '</ul>';
+  } else {
+    fb.classList.add('miss');
+    fb.innerHTML = '<strong>✗ Try again.</strong> Add these ideas: <ul style="margin:4px 0 0 22px;">' +
+                   missingHints.map(h => '<li>' + h + '</li>').join('') + '</ul>';
+  }
+  return {hit, total};
+}
+['q1','q2','q3'].forEach(id => {
+  document.getElementById(id).addEventListener('blur', () => scoreReflection(id));
+});
+
+// ===== Check All =====
+function checkAll() {
+  let correct = 0;
+  OBJECTS.forEach((o, i) => {
+    checkRow(i);
+    const student = parseFloat(document.getElementById('d-' + i).value);
+    if (isFinite(student) && Math.abs(student - o.d) < 0.05) correct++;
+    if (document.getElementById('sf-' + i).value === o.sf) correct++;
+  });
+  document.getElementById('score').textContent = correct + ' / 12';
+  ['q1','q2','q3'].forEach(scoreReflection);
+}
+
 function resetAll() {
   OBJECTS.forEach((_, i) => {
-    document.getElementById('d-' + i).value = '';
-    document.getElementById('sf-' + i).value = '';
+    const d = document.getElementById('d-' + i);
+    d.value = ''; d.classList.remove('correct', 'wrong');
+    const sf = document.getElementById('sf-' + i);
+    sf.value = ''; sf.classList.remove('correct', 'wrong');
   });
-  ['q1','q2','q3'].forEach(id => document.getElementById(id).value = '');
+  ['q1','q2','q3'].forEach(id => {
+    document.getElementById(id).value = '';
+    const fb = document.getElementById('fb-' + id);
+    if (fb) { fb.className = 'q-feedback'; fb.innerHTML = ''; }
+  });
+  document.getElementById('score').textContent = '— / 12';
   document.getElementById('calc-m').value = '';
   document.getElementById('calc-v').value = '';
   updateCalc();
