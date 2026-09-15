@@ -180,7 +180,8 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 <!-- === Name row === -->
 <section class="card">
   <div class="name-row">
-    <label>Name: <input type="text" id="stu-name"></label>
+    <label>First Name: <input type="text" id="stu-first"></label>
+    <label>Last Name: <input type="text" id="stu-last"></label>
     <label>Class: <input type="text" id="stu-class" style="max-width:120px;"></label>
   </div>
 </section>
@@ -448,7 +449,9 @@ function resetAll() {
 }
 
 function submitToTeacher() {
-  const name = document.getElementById('stu-name').value || '(no name)';
+  const firstName = document.getElementById('stu-first').value.trim();
+  const lastName = document.getElementById('stu-last').value.trim();
+  const name = (firstName || lastName) ? `${firstName} ${lastName}`.trim() : '(no name)';
   const cls = document.getElementById('stu-class').value || '';
 
   let body = `Density Check-Up — Sink or Float?\n`;
