@@ -272,8 +272,8 @@ footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem;
 </div>
 
 <div class="submit-note">
-  <strong>How submit works:</strong> Clicking the button opens your email app with all your answers filled in.
-  Just click "Send" in your email app to send your work to Dr. Park (<em>ppark@starofthesea.org</em>).
+  <strong>How submit works:</strong> Clicking the button opens Gmail in a new tab with all your answers filled in.
+  Make sure you&apos;re signed in with your <strong>school Gmail account</strong>, then click <strong>Send</strong> to submit your work to Dr. Park (<em>ppark@starofthesea.org</em>).
 </div>
 </section>
 
@@ -472,7 +472,10 @@ function submitToTeacher() {
 
   const subject = encodeURIComponent(`Density Check-Up — ${name}`);
   const bodyEnc = encodeURIComponent(body);
-  window.location.href = `mailto:ppark@starofthesea.org?subject=${subject}&body=${bodyEnc}`;
+  // Open Gmail compose directly in a new tab (bypasses default mail app prompt).
+  // If the student is signed in with their school Gmail, this opens compose right in Gmail.
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su=${subject}&body=${bodyEnc}`;
+  window.open(gmailUrl, '_blank');
 }
 </script>
 
