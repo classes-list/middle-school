@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Density Check-Up — Sink or Float?</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --accent:#0369a1; --accent-deep:#0c4a6e;
+  --accent-soft:#bae6fd; --gold:#b8860b; --paper:#fef3c7;
+  --pos:#059669; --neg:#dc2626; --dim:#64748b; --ink:#1f2937;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.55;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.75rem; font-weight:800; text-transform:uppercase; letter-spacing:.12em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; line-height:1.15; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.95rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:18px; }
+section.card {
+  background:#fff; border-radius:14px; padding:18px 22px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.07); border-top:5px solid var(--accent);
+}
+section.card h2 {
+  color:var(--accent-deep); font-size:1.15rem; font-weight:800;
+  margin-bottom:10px; display:flex; align-items:center; gap:8px;
+}
+
+.name-row {
+  display:flex; gap:14px; flex-wrap:wrap; align-items:center;
+  padding:10px 14px; background:#f8fafc; border:1px solid #cbd5e1;
+  border-radius:8px; margin-bottom:10px; font-size:.95rem;
+}
+.name-row label { font-weight:700; color:var(--navy); }
+.name-row input {
+  padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.95rem; flex:1 1 auto; min-width:120px;
+}
+
+.formula-box {
+  background:#fef3c7; border:2.5px solid #b8860b; border-radius:10px;
+  padding:14px 18px; text-align:center; color:#78350f;
+}
+.formula-box .eq {
+  font-size:1.35rem; font-weight:800; margin:4px 0;
+  font-family:'Cambria Math', Cambria, Georgia, serif;
+}
+.formula-box .rule {
+  font-size:.95rem; margin-top:6px; color:#92400e;
+}
+
+.calc-widget {
+  background:#f0f9ff; border:2px dashed var(--accent);
+  border-radius:8px; padding:12px 16px; margin:12px 0;
+  display:flex; flex-wrap:wrap; gap:12px; align-items:center;
+  font-size:.95rem;
+}
+.calc-widget label { font-weight:700; color:var(--accent-deep); }
+.calc-widget input {
+  padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:1rem; width:100px; text-align:center;
+  font-weight:700;
+}
+.calc-widget .result {
+  background:#dcfce7; border:1.5px solid #16a34a; color:#14532d;
+  padding:6px 14px; border-radius:6px; font-weight:800;
+  font-family:Consolas, monospace; font-size:1rem;
+  min-width:140px; text-align:center;
+}
+
+table.check {
+  width:100%; border-collapse:collapse; margin:12px 0; font-size:.95rem;
+}
+table.check th, table.check td {
+  border:1.5px solid #94a3b8; padding:10px 12px; vertical-align:middle;
+}
+table.check th {
+  background:var(--navy); color:#fff; font-weight:800;
+  font-size:.9rem; text-align:center;
+}
+table.check td { text-align:center; }
+table.check td.object { text-align:left; font-weight:700; color:var(--navy); }
+table.check td.given { background:#f8fafc; font-weight:800; color:var(--navy); }
+table.check .d-input {
+  width:80px; padding:6px 8px; border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:1rem; font-weight:800; text-align:center;
+}
+table.check .d-input.correct { border-color:#16a34a; background:#dcfce7; color:#14532d; }
+table.check .d-input.wrong { border-color:#dc2626; background:#fee2e2; color:#7f1d1d; }
+table.check .sf-select {
+  padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.95rem; font-weight:800;
+}
+table.check .sf-select.correct { border-color:#16a34a; background:#dcfce7; color:#14532d; }
+table.check .sf-select.wrong { border-color:#dc2626; background:#fee2e2; color:#7f1d1d; }
+
+.reflect .q {
+  background:#f8fafc; border:1px solid #cbd5e1;
+  border-radius:8px; padding:12px 16px; margin:10px 0;
+}
+.reflect .q-text {
+  font-size:1rem; color:var(--navy); font-weight:700; margin-bottom:8px;
+  display:flex; align-items:flex-start; gap:8px;
+}
+.reflect .q-text .num {
+  background:var(--accent); color:#fff; font-weight:800; font-size:.9rem;
+  min-width:26px; height:26px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.reflect textarea {
+  width:100%; min-height:70px; padding:10px 12px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.95rem; resize:vertical;
+}
+
+.actions {
+  display:flex; gap:12px; flex-wrap:wrap; align-items:center;
+  margin:12px 0; justify-content:center;
+}
+.btn-check {
+  padding:12px 22px; background:#059669; color:#fff;
+  border:none; border-radius:8px; font-weight:800; cursor:pointer;
+  font-size:1rem;
+}
+.btn-reset {
+  padding:12px 22px; background:#64748b; color:#fff;
+  border:none; border-radius:8px; font-weight:800; cursor:pointer;
+  font-size:1rem;
+}
+.btn-submit {
+  padding:14px 32px; background:#7c3aed; color:#fff;
+  border:none; border-radius:8px; font-weight:800; cursor:pointer;
+  font-size:1.1rem; box-shadow:0 4px 14px rgba(124,58,237,0.35);
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+}
+.btn-submit:hover { background:#6d28d9; }
+.score {
+  padding:10px 18px; background:#fef3c7; border:2px solid #b8860b;
+  border-radius:8px; font-weight:800; color:#78350f; font-size:1rem;
+}
+.submit-note {
+  background:#f0fdf4; border-left:5px solid #16a34a; border-radius:6px;
+  padding:10px 14px; font-size:.9rem; color:#14532d; margin-top:10px;
+}
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+.back-link {
+  display:inline-block; background:var(--gold); color:var(--navy);
+  padding:9px 18px; border-radius:8px; text-decoration:none;
+  font-weight:800; font-size:.9rem; margin-bottom:14px;
+}
+.back-link:hover { background:#a16b0a; color:#fff; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Density Check-Up</div>
+  <h1>🧪 Sink or Float? — Predict with D = m ÷ V</h1>
+  <p class="tagline">Calculate each object's density. Compare to water. Predict.</p>
+</header>
+
+<main>
+
+<!-- === Name row === -->
+<section class="card">
+  <div class="name-row">
+    <label>Name: <input type="text" id="stu-name"></label>
+    <label>Class: <input type="text" id="stu-class" style="max-width:120px;"></label>
+  </div>
+</section>
+
+<!-- === Formula reminder + calculator === -->
+<section class="card">
+<h2>📐 The Rule</h2>
+<div class="formula-box">
+  <div class="eq">D = m ÷ V</div>
+  <div class="rule">
+    Water = <strong>1.0 g/cm³</strong>. &nbsp;
+    Density &lt; 1.0 → <strong>FLOATS</strong>. &nbsp;
+    Density &gt; 1.0 → <strong>SINKS</strong>. &nbsp;
+    Density = 1.0 → hovers.
+  </div>
+</div>
+
+<h2 style="margin-top:14px;">🧮 Scratch Calculator</h2>
+<p style="font-size:.9rem; color:var(--dim); margin-bottom:8px;">
+  Use this to divide mass by volume. Or use a real calculator — the answer boxes below still check your work!
+</p>
+<div class="calc-widget">
+  <label>Mass (g):</label>
+  <input type="number" id="calc-m" step="0.1" placeholder="?">
+  <label>÷ Volume (cm³):</label>
+  <input type="number" id="calc-v" step="0.1" placeholder="?">
+  <span>=</span>
+  <span class="result" id="calc-result">— g/cm³</span>
+</div>
+</section>
+
+<!-- === Data table === -->
+<section class="card">
+<h2>📋 Six Objects — Compute the density and predict</h2>
+<p style="font-size:.9rem; color:var(--dim); margin-bottom:6px;">
+  Use the scratch calculator or your own. Round density to 2 decimals. Boxes turn green when correct.
+</p>
+
+<table class="check">
+  <thead>
+    <tr>
+      <th style="width:5%;">#</th>
+      <th style="width:22%;">Object</th>
+      <th style="width:14%;">Mass (g)</th>
+      <th style="width:14%;">Volume (cm³)</th>
+      <th style="width:20%;">Density = m ÷ V</th>
+      <th style="width:25%;">Prediction</th>
+    </tr>
+  </thead>
+  <tbody id="check-body"></tbody>
+</table>
+</section>
+
+<!-- === Reflection === -->
+<section class="card reflect">
+<h2>🤔 Reflection</h2>
+
+<div class="q">
+  <div class="q-text"><span class="num">1</span><span>Which object had the HIGHEST density? Which had the LOWEST? Why does the highest-density object sink so hard?</span></div>
+  <textarea id="q1"></textarea>
+</div>
+
+<div class="q">
+  <div class="q-text"><span class="num">2</span><span>The ice cube's density (0.92 g/cm³) is very close to water's (1.00 g/cm³). Why does it still float instead of sinking?</span></div>
+  <textarea id="q2"></textarea>
+</div>
+
+<div class="q">
+  <div class="q-text"><span class="num">3</span><span>If you broke the rock into smaller pieces, would each piece still sink? Explain using D = m ÷ V.</span></div>
+  <textarea id="q3"></textarea>
+</div>
+
+</section>
+
+<!-- === Actions === -->
+<section class="card">
+<div class="actions">
+  <button class="btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+  <button class="btn-reset" onclick="resetAll()">↻ Reset</button>
+</div>
+
+<div class="submit-note">
+  <strong>How submit works:</strong> Clicking the button opens your email app with all your answers filled in.
+  Just click "Send" in your email app to send your work to Dr. Park (<em>ppark@starofthesea.org</em>).
+  Dr. Park will grade your answers and return them to you.
+</div>
+</section>
+
+</main>
+
+<footer>
+  Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Density Unit
+</footer>
+</div>
+
+<script>
+// The 6 objects with expected answers
+const OBJECTS = [
+  { obj:'Ice cube',       m:27.6, v:30,  d:0.92, sf:'float' },
+  { obj:'Wooden block',   m:12,   v:20,  d:0.60, sf:'float' },
+  { obj:'Rock',           m:65,   v:25,  d:2.60, sf:'sink'  },
+  { obj:'Golf ball',      m:45,   v:41,  d:1.10, sf:'sink'  },
+  { obj:'Cork stopper',   m:4,    v:16,  d:0.25, sf:'float' },
+  { obj:'Iron nail',      m:47.4, v:6,   d:7.90, sf:'sink'  },
+];
+
+// Build table
+const tbody = document.getElementById('check-body');
+OBJECTS.forEach((o, i) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><strong>${i+1}</strong></td>
+    <td class="object">${o.obj}</td>
+    <td class="given">${o.m}</td>
+    <td class="given">${o.v}</td>
+    <td>
+      <input type="number" step="0.01" class="d-input" id="d-${i}" placeholder="?"> g/cm³
+    </td>
+    <td>
+      <select class="sf-select" id="sf-${i}">
+        <option value="">— pick —</option>
+        <option value="float">FLOAT</option>
+        <option value="sink">SINK</option>
+      </select>
+    </td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// Scratch calculator
+function updateCalc() {
+  const m = parseFloat(document.getElementById('calc-m').value);
+  const v = parseFloat(document.getElementById('calc-v').value);
+  const out = document.getElementById('calc-result');
+  if (isFinite(m) && isFinite(v) && v !== 0) {
+    out.textContent = (m / v).toFixed(3) + ' g/cm³';
+  } else {
+    out.textContent = '— g/cm³';
+  }
+}
+document.getElementById('calc-m').addEventListener('input', updateCalc);
+document.getElementById('calc-v').addEventListener('input', updateCalc);
+
+// Feedback is intentionally hidden until Dr. Park grades and returns the work.
+// No live green/red highlighting, no "Check My Answers" button.
+function resetAll() {
+  OBJECTS.forEach((_, i) => {
+    document.getElementById('d-' + i).value = '';
+    document.getElementById('sf-' + i).value = '';
+  });
+  ['q1','q2','q3'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('calc-m').value = '';
+  document.getElementById('calc-v').value = '';
+  updateCalc();
+}
+
+function submitToTeacher() {
+  const name = document.getElementById('stu-name').value || '(no name)';
+  const cls = document.getElementById('stu-class').value || '';
+
+  let body = `Density Check-Up — Sink or Float?\n`;
+  body += `Name: ${name}\n`;
+  if (cls) body += `Class: ${cls}\n`;
+  body += `\n`;
+  body += `=== Object Data ===\n`;
+  OBJECTS.forEach((o, i) => {
+    const d = document.getElementById('d-' + i).value || '(blank)';
+    const sf = document.getElementById('sf-' + i).value || '(blank)';
+    body += `${i+1}. ${o.obj} — m=${o.m} g, V=${o.v} cm³\n`;
+    body += `   Density: ${d} g/cm³   Prediction: ${sf.toUpperCase()}\n`;
+  });
+  body += `\n=== Reflection ===\n`;
+  ['q1','q2','q3'].forEach((id, i) => {
+    body += `\nQ${i+1}: ${document.getElementById(id).value || '(no answer)'}\n`;
+  });
+
+  const subject = encodeURIComponent(`Density Check-Up — ${name}`);
+  const bodyEnc = encodeURIComponent(body);
+  window.location.href = `mailto:ppark@starofthesea.org?subject=${subject}&body=${bodyEnc}`;
+}
+</script>
+
+</body>
+</html>
