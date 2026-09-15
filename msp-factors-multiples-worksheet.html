@@ -149,12 +149,96 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
   <h2>1️⃣ Divisibility Rules</h2>
   <div class="intro">Quick tests for whether one number divides evenly into another.</div>
 <h3>Practice:</h3>
-<ol class="qlist">
-<li>Is 342 divisible by 3? <input class="ans" data-a="9, ÷3)" size="9"></li>
-<li>Is 465 divisible by 5? <input class="ans" data-a="Yes" size="6"></li>
-<li>Is 156 divisible by 4? <input class="ans" data-a="Yes" size="6"></li>
-<li>Is 720 divisible by 6? <input class="ans" data-a="Yes" size="6"></li>
-<li>Is 288 divisible by 9? <input class="ans" data-a="18, ÷9)" size="10"></li>
+<style>
+.div-q { background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:8px; padding:10px 14px; margin:10px 0; }
+.div-q .q-head { font-weight:800; color:#1a2a4a; font-size:1rem; }
+.div-q .rule-box { background:#fef3c7; border-left:4px solid #b8860b; padding:6px 12px; margin:6px 0; border-radius:4px; font-size:.9rem; color:#78350f; }
+.div-q .rule-box strong { color:#78350f; }
+.div-q .work-row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:6px 0; font-size:.95rem; }
+.div-q .work-row label { font-weight:700; color:#0f766e; min-width:110px; }
+.div-q .work-row input { padding:5px 8px; border:1.5px solid #94a3b8; border-radius:5px; font-family:inherit; font-size:.95rem; font-weight:700; }
+.div-q .work-row select { padding:5px 8px; border:1.5px solid #94a3b8; border-radius:5px; font-family:inherit; font-size:.95rem; font-weight:800; }
+.div-q input.correct, .div-q select.correct { border-color:#16a34a; background:#dcfce7; color:#14532d; }
+.div-q input.wrong, .div-q select.wrong { border-color:#dc2626; background:#fee2e2; color:#7f1d1d; }
+</style>
+
+<div class="div-q">
+  <div class="q-head">1. Is 342 divisible by 3?</div>
+  <div class="rule-box"><strong>Rule for 3:</strong> The <strong>sum of the digits</strong> must be divisible by 3.</div>
+  <div class="work-row">
+    <label>Show work:</label>
+    <span>3 + 4 + 2 =</span>
+    <input class="ans" data-a="9" size="4">
+  </div>
+  <div class="work-row">
+    <label>Divisible by 3?</label>
+    <select class="ans" data-a="yes"><option value="">— pick —</option><option value="yes">YES</option><option value="no">NO</option></select>
+  </div>
+</div>
+
+<div class="div-q">
+  <div class="q-head">2. Is 465 divisible by 5?</div>
+  <div class="rule-box"><strong>Rule for 5:</strong> The number must <strong>end in 0 or 5</strong>.</div>
+  <div class="work-row">
+    <label>Last digit is:</label>
+    <input class="ans" data-a="5" size="4">
+  </div>
+  <div class="work-row">
+    <label>Divisible by 5?</label>
+    <select class="ans" data-a="yes"><option value="">— pick —</option><option value="yes">YES</option><option value="no">NO</option></select>
+  </div>
+</div>
+
+<div class="div-q">
+  <div class="q-head">3. Is 156 divisible by 4?</div>
+  <div class="rule-box"><strong>Rule for 4:</strong> The <strong>last two digits</strong> must form a number divisible by 4.</div>
+  <div class="work-row">
+    <label>Last two digits:</label>
+    <input class="ans" data-a="56" size="4">
+    <span>÷ 4 =</span>
+    <input class="ans" data-a="14" size="4">
+  </div>
+  <div class="work-row">
+    <label>Divisible by 4?</label>
+    <select class="ans" data-a="yes"><option value="">— pick —</option><option value="yes">YES</option><option value="no">NO</option></select>
+  </div>
+</div>
+
+<div class="div-q">
+  <div class="q-head">4. Is 720 divisible by 6?</div>
+  <div class="rule-box"><strong>Rule for 6:</strong> The number must be divisible by <strong>BOTH 2 AND 3</strong>.</div>
+  <div class="work-row">
+    <label>Divisible by 2?</label>
+    <select class="ans" data-a="yes"><option value="">— pick —</option><option value="yes">YES</option><option value="no">NO</option></select>
+  </div>
+  <div class="work-row">
+    <label>Sum of digits:</label>
+    <span>7 + 2 + 0 =</span>
+    <input class="ans" data-a="9" size="4">
+    <span>Divisible by 3?</span>
+    <select class="ans" data-a="yes"><option value="">— pick —</option><option value="yes">YES</option><option value="no">NO</option></select>
+  </div>
+  <div class="work-row">
+    <label>Divisible by 6?</label>
+    <select class="ans" data-a="yes"><option value="">— pick —</option><option value="yes">YES</option><option value="no">NO</option></select>
+  </div>
+</div>
+
+<div class="div-q">
+  <div class="q-head">5. Is 288 divisible by 9?</div>
+  <div class="rule-box"><strong>Rule for 9:</strong> The <strong>sum of the digits</strong> must be divisible by 9.</div>
+  <div class="work-row">
+    <label>Show work:</label>
+    <span>2 + 8 + 8 =</span>
+    <input class="ans" data-a="18" size="4">
+  </div>
+  <div class="work-row">
+    <label>Divisible by 9?</label>
+    <select class="ans" data-a="yes"><option value="">— pick —</option><option value="yes">YES</option><option value="no">NO</option></select>
+  </div>
+</div>
+
+<ol class="qlist" start="6" style="counter-reset:q 5;">
 <li>List all divisors of 24. <input class="ans" data-a="1, 2, 3, 4, 6, 8, 12, 24" size="22"></li>
 <li>List all divisors of 36. <input class="ans" data-a="1, 2, 3, 4, 6, 9, 12, 18, 36" size="22"></li>
 </ol>
@@ -281,13 +365,13 @@ function checkSection(id) {
   const sec = document.getElementById(id);
   if (!sec) return {correct:0, total:0, checkable:0};
   let correct = 0, total = 0, checkable = 0;
-  sec.querySelectorAll('input.ans').forEach(inp => {
+  sec.querySelectorAll('input.ans, select.ans').forEach(inp => {
     total++;
     const expected = inp.dataset.a || '';
     if (!expected) { inp.classList.add('nocheck'); return; }
     checkable++;
     const student = inp.value;
-    if (!student.trim()) {
+    if (!student || !String(student).trim()) {
       inp.classList.remove('correct','wrong');
       return;
     }
@@ -311,7 +395,7 @@ function checkSection(id) {
 function resetSection(id) {
   const sec = document.getElementById(id);
   if (!sec) return;
-  sec.querySelectorAll('input.ans').forEach(inp => {
+  sec.querySelectorAll('input.ans, select.ans').forEach(inp => {
     inp.value = '';
     inp.classList.remove('correct','wrong');
   });
