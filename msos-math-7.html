@@ -3526,14 +3526,10 @@ In this project you will build a Microscopic World Data Table that stores real l
       `Set up Sheet 1: type in the base recipe (24 cookies) with columns for Ingredient, Amount, and Unit. Add a target cookies cell (B15) and a scale factor cell (B16) with formula <code>=B15/24</code>.`,
       `Write the scaling formula: in each ingredient&apos;s scaled-amount cell use <code>=B4*$B$16</code>. Discuss why <code>$B$16</code> (absolute reference) is the &quot;pushpin&quot; — it stays put when you copy the formula down.`,
       `Handle whole eggs with <code>=CEILING(B11*$B$16, 1)</code> so a scaled recipe never asks for 1.7 eggs.`,
-      `Test the calculator: scale to 12, 36, 48, and 72 cookies. Confirm every ingredient doubles / halves / triples correctly. Where do you SEE the constant of proportionality k?`,
-      `Share your finished sheet with <strong>ppark@starofthesea.org</strong> using the blue Share button in Google Sheets.`
+      `Test the calculator: scale to 12, 36, 48, and 72 cookies. Confirm every ingredient doubles / halves / triples correctly. Where do you SEE the constant of proportionality k?`
       ],
-      deliverable: `Submit by sharing your Google Sheet titled &quot;Recipe Scaler — [Your Name]&quot; with Dr. Park at ppark@starofthesea.org (Editor or Viewer permission). Include at least the four preset tests (12, 36, 48, 72 cookies) and one custom scale of your choice.`,
-      reflect: [
-      `Is <em>scaled amount = k × base amount</em> a proportional relationship? Show that it passes through (0, 0) and that the ratio stays constant across every ingredient.`,
-      `Why does the egg column use <code>CEILING</code> instead of the plain <code>=B4*$B$16</code> formula? What real-world constraint does that model?`
-      ]
+      deliverable: ``,
+      reflect: []
     },
     'scale-drawings': {
       title: `Tiny House Floor Plan`,
@@ -3715,7 +3711,17 @@ function showRealWorld() {
     return;
   }
   const stepsHtml = h.steps.map(s => `<li>${s}</li>`).join('');
-  const reflectHtml = h.reflect.map((r,i) => `<li>${r}</li>`).join('');
+  const reflectHtml = (h.reflect || []).map((r,i) => `<li>${r}</li>`).join('');
+  const deliverableBlock = (h.deliverable && h.deliverable.trim()) ? `
+      <div class="handout-deliverable">
+        <strong>🎯 What to Submit:</strong>
+        ${h.deliverable}
+      </div>` : '';
+  const reflectBlock = (h.reflect && h.reflect.length) ? `
+      <div class="handout-reflect">
+        <strong>💭 Reflection Questions:</strong>
+        <ol>${reflectHtml}</ol>
+      </div>` : '';
   document.getElementById('realworld-content').innerHTML = `
     <div class="handout-card">
       <h3>${h.title}</h3>
@@ -3723,14 +3729,8 @@ function showRealWorld() {
       <div class="handout-mission">${h.mission}</div>
       <p><strong>📋 Step-by-Step Instructions</strong></p>
       <ol class="handout-steps">${stepsHtml}</ol>
-      <div class="handout-deliverable">
-        <strong>🎯 What to Submit:</strong>
-        ${h.deliverable}
-      </div>
-      <div class="handout-reflect">
-        <strong>💭 Reflection Questions:</strong>
-        <ol>${reflectHtml}</ol>
-      </div>
+      ${deliverableBlock}
+      ${reflectBlock}
     </div>`;
 }
 
