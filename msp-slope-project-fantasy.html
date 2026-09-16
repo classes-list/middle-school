@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fantasy Football Draft — Slope & y-Intercept Project</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root { --navy:#1a2a4a; --accent:#0369a1; --accent-deep:#0c4a6e; --gold:#b8860b; --dim:#64748b; --ink:#1f2937; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:var(--ink); min-height:100vh; padding:20px 16px; line-height:1.55; }
+.container { max-width:1100px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:8px; }
+h1 { font-size:2rem; font-weight:900; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:18px; }
+section.card { background:#fff; border-radius:14px; padding:20px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:12px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:12px 0 8px; }
+.hook { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:10px 0; color:#78350f; }
+.plan-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:700px) { .plan-grid { grid-template-columns:1fr; } }
+.plan { background:#f8fafc; border:2px solid #cbd5e1; border-radius:10px; padding:14px 16px; }
+.plan.a { border-color:#0284c7; background:#f0f9ff; }
+.plan.b { border-color:#65a30d; background:#f7fee7; }
+.plan .title { font-size:1.05rem; font-weight:800; margin-bottom:6px; }
+.plan.a .title { color:#0284c7; }
+.plan.b .title { color:#65a30d; }
+.plan ul { margin:6px 0 6px 22px; font-size:.92rem; }
+.plan .eq-preview { background:#fff; padding:8px 12px; border:1px dashed #94a3b8; border-radius:6px; font-family:Consolas,monospace; font-size:1rem; margin-top:8px; text-align:center; font-weight:800; }
+.setup-row { display:grid; grid-template-columns:auto 1fr; gap:12px 8px; align-items:center; margin:8px 0; }
+.setup-row label { font-weight:700; color:var(--navy); }
+.setup-row input { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:1rem; width:100px; font-weight:800; text-align:center; }
+.setup-row input.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+.setup-row input.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+.setup-row .hint { font-size:.82rem; color:var(--dim); font-style:italic; margin-left:4px; }
+.graph-panel { background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:14px; text-align:center; }
+.graph-panel svg { max-width:100%; height:auto; }
+.calc-widget { background:#f0f9ff; border:2px dashed var(--accent); border-radius:8px; padding:12px 16px; margin:10px 0; }
+.calc-widget .step { margin:6px 0; font-family:Consolas,monospace; font-size:.98rem; }
+.calc-widget .step input { padding:5px 10px; border:1.5px solid #94a3b8; border-radius:5px; font-family:inherit; font-size:1rem; width:80px; text-align:center; font-weight:800; }
+.calc-widget .step input.correct { background:#dcfce7; border-color:#16a34a; }
+.calc-widget .step input.wrong { background:#fee2e2; border-color:#dc2626; }
+.calc-widget .verdict { margin-top:10px; padding:8px 12px; border-radius:6px; font-weight:800; text-align:center; }
+.calc-widget .verdict.right { background:#dcfce7; border:2px solid #16a34a; color:#14532d; }
+.reveal-btn { background:var(--gold); color:var(--navy); border:1.5px solid #a16b0a; padding:6px 14px; border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer; margin:6px 0; }
+.reveal-btn:hover { background:#a16b0a; color:#fff; }
+.explanation { display:none; background:#ecfeff; border-left:5px solid var(--accent); padding:12px 16px; border-radius:6px; margin:8px 0; font-size:.94rem; color:var(--accent-deep); }
+.explanation.open { display:block; }
+.reflect textarea { width:100%; min-height:70px; padding:10px 12px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; resize:vertical; margin-top:6px; }
+.q-feedback { margin-top:8px; padding:8px 12px; border-radius:6px; font-size:.9rem; display:none; }
+.q-feedback.good { display:block; background:#dcfce7; border-left:5px solid #16a34a; color:#14532d; }
+.q-feedback.partial { display:block; background:#fef3c7; border-left:5px solid #b8860b; color:#78350f; }
+.q-feedback.miss { display:block; background:#fee2e2; border-left:5px solid #dc2626; color:#7f1d1d; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+.summary-box { background:#f5f3ff; border:2px solid #7c3aed; border-radius:10px; padding:14px 18px; margin:10px 0; }
+.summary-box h3 { color:#6d28d9; margin-top:0; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msp-slope-projects-hub.html" class="back-link">← All Projects</a>
+
+<header>
+  <div class="eyebrow">Math 8 · Real-World Project · Sports</div>
+  <h1>🏈 Fantasy Football Draft</h1>
+  <p class="tagline">Two players. Different starting points. Different scoring rates. Who scores more by season&apos;s end?</p>
+</header>
+
+<main>
+
+<section class="card">
+<h2>🎯 The Situation</h2>
+<div class="hook">
+  It&apos;s week 3 of the fantasy football season. You&apos;re about to make a trade for a new player. You have two options:<br><br>
+  <strong>Player A (veteran):</strong> Already has <strong>20 fantasy points</strong> this season. Averages <strong>8 points per game</strong> going forward.<br>
+  <strong>Player B (rookie):</strong> Started slow — <strong>0 points</strong> so far. But has been averaging <strong>12 points per game</strong> in preseason.<br><br>
+  <strong>Question:</strong> After how many more games will Player B catch up to Player A? Will B still be better by week 17?
+</div>
+
+<div class="plan-grid">
+  <div class="plan a">
+    <div class="title">🏈 Player A (Veteran)</div>
+    <ul>
+      <li>Points already scored: <strong>20</strong></li>
+      <li>Average per game: <strong>8 pts/game</strong></li>
+    </ul>
+    <div class="eq-preview">Equation: <span id="a-eq" style="color:#0284c7;">try to figure it out ↓</span></div>
+  </div>
+  <div class="plan b">
+    <div class="title">🚀 Player B (Rookie)</div>
+    <ul>
+      <li>Points already scored: <strong>0</strong></li>
+      <li>Average per game: <strong>12 pts/game</strong></li>
+    </ul>
+    <div class="eq-preview">Equation: <span id="b-eq" style="color:#65a30d;">try to figure it out ↓</span></div>
+  </div>
+</div>
+</section>
+
+<section class="card">
+<h2>1️⃣ Set Up the Equations</h2>
+<p>Write each player&apos;s total points as <strong>y = mx + b</strong>, where <em>y = total season points</em> and <em>x = number of additional games played</em>.</p>
+
+<h3>🏈 Player A (Veteran)</h3>
+<div class="setup-row">
+  <label>Slope (m) = pts per game =</label>
+  <span><input type="number" id="a-m" placeholder="?"> <span class="hint">how fast they score</span></span>
+</div>
+<div class="setup-row">
+  <label>y-intercept (b) = points already scored =</label>
+  <span><input type="number" id="a-b" placeholder="?"> <span class="hint">head start / starting value</span></span>
+</div>
+<button class="reveal-btn" onclick="toggle('explain-a')">💡 Why is &quot;points so far&quot; the y-intercept?</button>
+<div class="explanation" id="explain-a">
+  <strong>Points already scored = the y-intercept b</strong> because that&apos;s their total <em>before</em> any more games (x = 0). It&apos;s their <em>head start</em>.<br><br>
+  <strong>Pts per game = the slope m</strong> because it&apos;s the rate their total grows each game.
+</div>
+
+<h3>🚀 Player B (Rookie)</h3>
+<div class="setup-row">
+  <label>Slope (m) = pts per game =</label>
+  <span><input type="number" id="b-m" placeholder="?"> <span class="hint">rookie&apos;s scoring rate</span></span>
+</div>
+<div class="setup-row">
+  <label>y-intercept (b) = points already scored =</label>
+  <span><input type="number" id="b-b" placeholder="?"> <span class="hint">rookie&apos;s head start</span></span>
+</div>
+</section>
+
+<section class="card">
+<h2>2️⃣ See the Graph</h2>
+<div class="graph-panel">
+  <svg viewBox="0 0 500 380" xmlns="http://www.w3.org/2000/svg" style="background:#fff; border:1px solid #cbd5e1; border-radius:6px;">
+    <g id="grid-lines" stroke="#e5e7eb" stroke-width="1"></g>
+    <line x1="50" y1="330" x2="470" y2="330" stroke="#334155" stroke-width="1.5"/>
+    <line x1="50" y1="30" x2="50" y2="330" stroke="#334155" stroke-width="1.5"/>
+    <text x="260" y="365" font-size="12" font-weight="700" fill="#1a2a4a" text-anchor="middle">Additional games played (x)</text>
+    <text x="18" y="180" font-size="12" font-weight="700" fill="#1a2a4a" text-anchor="middle" transform="rotate(-90 18 180)">Total season points (y)</text>
+    <g id="x-ticks" font-size="10" fill="#334155"></g>
+    <g id="y-ticks" font-size="10" fill="#334155"></g>
+    <line id="line-a" stroke="#0284c7" stroke-width="3"/>
+    <line id="line-b" stroke="#65a30d" stroke-width="3"/>
+    <circle id="be-marker" fill="#7c3aed" stroke="#5b21b6" stroke-width="2" style="display:none;"/>
+    <text id="be-label" font-size="12" font-weight="800" fill="#5b21b6" style="display:none;"></text>
+    <rect x="330" y="42" width="130" height="46" fill="#fff" stroke="#cbd5e1" stroke-width="1" rx="6"/>
+    <line x1="340" y1="55" x2="360" y2="55" stroke="#0284c7" stroke-width="3"/>
+    <text x="365" y="59" font-size="11" font-weight="700" fill="#0284c7">Player A</text>
+    <line x1="340" y1="75" x2="360" y2="75" stroke="#65a30d" stroke-width="3"/>
+    <text x="365" y="79" font-size="11" font-weight="700" fill="#65a30d">Player B</text>
+  </svg>
+</div>
+<p style="font-size:.9rem; color:var(--dim); font-style:italic;">
+  🎯 Notice: Player A&apos;s line starts HIGHER (20 pt head start) but rises SLOWER. Player B starts at 0 but rises FASTER. Where they cross is when B catches up.
+</p>
+</section>
+
+<section class="card">
+<h2>3️⃣ Find the Break-Even Point</h2>
+<p>When are their totals equal? Set the equations equal: 8x + 20 = 12x + 0</p>
+<div class="calc-widget">
+  <div class="step"><strong>Start:</strong> &nbsp; 8x + 20 = 12x</div>
+  <div class="step"><strong>Subtract 8x from both sides:</strong> &nbsp; 20 = <input type="number" id="be-1" placeholder="?"> x</div>
+  <div class="step"><strong>Divide both sides by 4:</strong> &nbsp; x = <input type="number" id="be-2" placeholder="?"> <strong>games</strong></div>
+  <div class="verdict" id="be-verdict"></div>
+</div>
+<button class="reveal-btn" onclick="toggle('explain-be')">💡 What does this mean?</button>
+<div class="explanation" id="explain-be">
+  <strong>x = 5 games</strong> is the tipping point.<br>
+  &nbsp;&nbsp; Player A after 5 more games: 8(5) + 20 = <strong>60 points</strong> ✓<br>
+  &nbsp;&nbsp; Player B after 5 more games: 12(5) + 0 = <strong>60 points</strong> ✓<br><br>
+  <ul style="margin:6px 0 6px 22px;">
+    <li>Fewer than 5 more games → <strong>Player A is winning</strong> (his head start still matters)</li>
+    <li>Exactly 5 games → <strong>Tie</strong></li>
+    <li>More than 5 games → <strong>Player B is winning</strong> (his faster scoring caught up)</li>
+  </ul>
+  There are 14 more games in the season. Player B will lead by 4 × (14 − 5) = <strong>36 more points</strong>!
+</div>
+</section>
+
+<section class="card">
+<h2>4️⃣ Make the Draft Pick</h2>
+<div style="margin:10px 0;">
+  <p><strong>Scenario 1:</strong> The trade goes through this week, and only <strong>3 games</strong> remain in the season. Who should you keep?</p>
+  <label>Best choice:
+    <select id="rec-1" style="padding:6px 10px; border:1.5px solid #94a3b8; border-radius:5px; font-weight:800;">
+      <option value="">— pick —</option>
+      <option value="a">Player A (Veteran)</option>
+      <option value="b">Player B (Rookie)</option>
+    </select>
+  </label>
+  <button class="reveal-btn" style="padding:4px 10px; font-size:.8rem;" onclick="checkRec(1, 'a')">Check</button>
+  <span id="rec-1-fb"></span>
+</div>
+
+<div style="margin:10px 0;">
+  <p><strong>Scenario 2:</strong> The trade goes through this week, and <strong>14 games</strong> remain. Who should you keep?</p>
+  <label>Best choice:
+    <select id="rec-2" style="padding:6px 10px; border:1.5px solid #94a3b8; border-radius:5px; font-weight:800;">
+      <option value="">— pick —</option>
+      <option value="a">Player A (Veteran)</option>
+      <option value="b">Player B (Rookie)</option>
+    </select>
+  </label>
+  <button class="reveal-btn" style="padding:4px 10px; font-size:.8rem;" onclick="checkRec(2, 'b')">Check</button>
+  <span id="rec-2-fb"></span>
+</div>
+</section>
+
+<section class="card summary-box">
+<h3>🎓 What You Learned</h3>
+<p>Every &quot;current stats + future rate&quot; problem is y = mx + b in disguise. The y-intercept b is your <strong>head start</strong>. The slope m is your <strong>rate of growth</strong>. When two lines have different starts AND different slopes, they always cross — and that crossing tells you WHEN a faster-growing option overtakes a leader.</p>
+<p>This is the same math for: race pacing, career stats, college savings, book reading progress, fitness goals, and comeback wins.</p>
+</section>
+
+<section class="card reflect">
+<h2>🤔 Reflect (feedback appears after you type)</h2>
+<div style="margin:10px 0;">
+  <label><strong>1.</strong> Why does Player B eventually beat Player A, even though A started with more points?</label>
+  <textarea id="q1" data-key="q1"></textarea>
+  <div class="q-feedback" id="fb-q1"></div>
+</div>
+<div style="margin:10px 0;">
+  <label><strong>2.</strong> If the season had only 4 games left instead of 14, who would you draft? Explain using the graph.</label>
+  <textarea id="q2" data-key="q2"></textarea>
+  <div class="q-feedback" id="fb-q2"></div>
+</div>
+<div style="margin:10px 0;">
+  <label><strong>3.</strong> Name another sports situation where a &quot;faster rate&quot; player catches up to a &quot;head start&quot; player. Explain the m and b.</label>
+  <textarea id="q3" data-key="q3"></textarea>
+  <div class="q-feedback" id="fb-q3"></div>
+</div>
+</section>
+
+
+<section class="card" style="border-top:5px solid #7c3aed;">
+<h2>📧 Submit Your Answers to Dr. Park</h2>
+<div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:14px; padding:12px 14px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px;">
+  <label style="font-weight:700; color:#1a2a4a;">First Name: <input type="text" id="stu-first" style="padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; margin-left:4px;"></label>
+  <label style="font-weight:700; color:#1a2a4a;">Last Name: <input type="text" id="stu-last" style="padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; margin-left:4px;"></label>
+  <label style="font-weight:700; color:#1a2a4a;">Class: <input type="text" id="stu-class" style="padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; max-width:120px; margin-left:4px;"></label>
+</div>
+<div style="text-align:center; margin:14px 0;">
+  <button onclick="submitToTeacher()" style="padding:14px 32px; background:#7c3aed; color:#fff; border:none; border-radius:8px; font-weight:800; cursor:pointer; font-size:1.1rem; box-shadow:0 4px 14px rgba(124,58,237,0.35);">📧 Submit to Dr. Park</button>
+</div>
+<div style="padding:10px 14px; background:#f0fdf4; border-left:5px solid #16a34a; border-radius:6px; font-size:.9rem; color:#14532d;">
+  <strong>How this works:</strong> Clicking Submit opens Gmail in a new tab with your answers filled in. Make sure you&apos;re signed in with your <strong>school Gmail account</strong>, then click <strong>Send</strong> to submit your work to Dr. Park (<em>ppark@starofthesea.org</em>).
+</div>
+</section>
+
+</main>
+
+<footer>
+  Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Slope Real-World Project
+</footer>
+</div>
+
+<script>
+function checkInput(id, expected, tol) {
+  const el = document.getElementById(id);
+  const v = parseFloat(el.value);
+  if (!isFinite(v)) { el.classList.remove('correct','wrong'); return false; }
+  const ok = Math.abs(v - expected) < tol;
+  el.classList.toggle('correct', ok);
+  el.classList.toggle('wrong', !ok);
+  return ok;
+}
+function updateEquations() {
+  const am = parseFloat(document.getElementById('a-m').value);
+  const ab = parseFloat(document.getElementById('a-b').value);
+  const bm = parseFloat(document.getElementById('b-m').value);
+  const bb = parseFloat(document.getElementById('b-b').value);
+  const aOk = checkInput('a-m', 8, 0.01) && checkInput('a-b', 20, 0.01);
+  const bOk = checkInput('b-m', 12, 0.01) && checkInput('b-b', 0, 0.01);
+  const aEq = document.getElementById('a-eq');
+  const bEq = document.getElementById('b-eq');
+  if (aOk) { aEq.textContent = 'y = 8x + 20'; aEq.style.color = '#059669'; }
+  else { aEq.textContent = 'try to figure it out ↓'; aEq.style.color = '#0284c7'; }
+  if (bOk) { bEq.textContent = 'y = 12x'; bEq.style.color = '#059669'; }
+  else { bEq.textContent = 'try to figure it out ↓'; bEq.style.color = '#65a30d'; }
+  updateGraph(am, ab, bm, bb, aOk, bOk);
+}
+document.querySelectorAll('#a-m,#a-b,#b-m,#b-b').forEach(inp => inp.addEventListener('input', updateEquations));
+
+const X_MIN=0, X_MAX=14, Y_MIN=0, Y_MAX=200;
+const SVG_L=50, SVG_R=470, SVG_T=30, SVG_B=330;
+function xToPx(x){return SVG_L+(x-X_MIN)/(X_MAX-X_MIN)*(SVG_R-SVG_L);}
+function yToPx(y){return SVG_B-(y-Y_MIN)/(Y_MAX-Y_MIN)*(SVG_B-SVG_T);}
+function drawGrid() {
+  const g = document.getElementById('grid-lines');
+  const xT = document.getElementById('x-ticks');
+  const yT = document.getElementById('y-ticks');
+  g.innerHTML=''; xT.innerHTML=''; yT.innerHTML='';
+  for (let x=2; x<=X_MAX; x+=2) { const px = xToPx(x); g.innerHTML += `<line x1="${px}" y1="${SVG_T}" x2="${px}" y2="${SVG_B}"/>`; xT.innerHTML += `<text x="${px}" y="${SVG_B+14}" text-anchor="middle">${x}</text>`; }
+  for (let y=25; y<=Y_MAX; y+=25) { const py = yToPx(y); g.innerHTML += `<line x1="${SVG_L}" y1="${py}" x2="${SVG_R}" y2="${py}"/>`; yT.innerHTML += `<text x="${SVG_L-6}" y="${py+4}" text-anchor="end">${y}</text>`; }
+  xT.innerHTML += `<text x="${SVG_L}" y="${SVG_B+14}" text-anchor="middle">0</text>`;
+}
+drawGrid();
+
+function updateGraph(am, ab, bm, bb, aOk, bOk) {
+  const lineA = document.getElementById('line-a');
+  const lineB = document.getElementById('line-b');
+  const beMarker = document.getElementById('be-marker');
+  const beLabel = document.getElementById('be-label');
+  if (isFinite(am) && isFinite(ab)) { lineA.setAttribute('x1', xToPx(0)); lineA.setAttribute('y1', yToPx(ab)); lineA.setAttribute('x2', xToPx(X_MAX)); lineA.setAttribute('y2', yToPx(am*X_MAX+ab)); lineA.style.display=''; } else lineA.style.display='none';
+  if (isFinite(bm) && isFinite(bb)) { lineB.setAttribute('x1', xToPx(0)); lineB.setAttribute('y1', yToPx(bb)); lineB.setAttribute('x2', xToPx(X_MAX)); lineB.setAttribute('y2', yToPx(bm*X_MAX+bb)); lineB.style.display=''; } else lineB.style.display='none';
+  if (aOk && bOk) {
+    const denom = am - bm;
+    if (Math.abs(denom) > 1e-9) {
+      const beX = (bb - ab) / denom;
+      const beY = am*beX + ab;
+      if (isFinite(beX) && beX >= X_MIN && beX <= X_MAX) {
+        beMarker.setAttribute('cx', xToPx(beX)); beMarker.setAttribute('cy', yToPx(beY)); beMarker.setAttribute('r', 6);
+        beMarker.style.display='';
+        beLabel.setAttribute('x', xToPx(beX)+8); beLabel.setAttribute('y', yToPx(beY)-10);
+        beLabel.textContent = `Tie at (${beX}, ${beY})`;
+        beLabel.style.display='';
+      }
+    }
+  } else { beMarker.style.display='none'; beLabel.style.display='none'; }
+}
+updateEquations();
+
+function checkBE() {
+  const s1 = checkInput('be-1', 4, 0.01);
+  const s2 = checkInput('be-2', 5, 0.01);
+  const v = document.getElementById('be-verdict');
+  if (s1 && s2) { v.className = 'verdict right'; v.textContent = '✓ Yes! They tie at game 5. Both have 60 points at that point.'; }
+  else { v.className = 'verdict'; v.textContent = ''; }
+}
+document.querySelectorAll('#be-1,#be-2').forEach(inp => inp.addEventListener('input', checkBE));
+
+function checkRec(n, correct) {
+  const el = document.getElementById('rec-'+n);
+  const fb = document.getElementById('rec-'+n+'-fb');
+  if (el.value === correct) fb.innerHTML = ' <span style="color:#059669; font-weight:800;">✓ Right!</span>';
+  else if (el.value === '') fb.innerHTML = ' <span style="color:#dc2626;">Pick an answer first.</span>';
+  else fb.innerHTML = ' <span style="color:#dc2626; font-weight:800;">✗ Try again — is the number of games before or after the break-even at 5?</span>';
+}
+
+function toggle(id) { document.getElementById(id).classList.toggle('open'); }
+
+// ================================================================
+// Reflection feedback (keyword-based)
+// ================================================================
+const RUBRICS = {
+  q1: [
+    { patterns:[/faster/, /higher slope/, /bigger rate/, /12.*pts/, /steeper/, /rises faster/, /grows faster/], hint:'Explain that Player B has a STEEPER SLOPE (higher rate of scoring — 12 vs 8 points per game).' },
+    { patterns:[/catches up/, /overtakes/, /passes/, /breaks even/, /crosses/, /intersect/, /20.*head start/, /advantage/, /erase/, /make up/], hint:'Explain that the head start (b) eventually gets ERASED because B is scoring faster.' }
+  ],
+  q2: [
+    { patterns:[/player a/, /veteran/, /keep a/, /choose a/, /pick a/, /a wins/], hint:'Say clearly which player you would pick — Player A (Veteran) is the right answer if only 4 games remain.' },
+    { patterns:[/before.*break/, /before.*5/, /less than 5/, /fewer than 5/, /4.*game/, /head start/, /still winning/, /hasn.t caught up/], hint:'Explain WHY: with only 4 games left, we haven&apos;t reached the break-even at 5 games yet. Player A&apos;s head start still puts him ahead.' }
+  ],
+  q3: [
+    { patterns:[/basketball/, /baseball/, /soccer/, /tennis/, /race/, /marathon/, /run/, /point/, /score/, /game/, /race/, /lap/, /shot/, /goal/, /hit/, /win/, /championship/, /home run/, /golf/, /stroke/, /cycl/, /swim/], hint:'Name a specific sport situation (e.g., basketball scoring, baseball hits, marathon distance, golf strokes).' },
+    { patterns:[/slope/, /rate/, /per game/, /per race/, /per week/, /per day/, /per hour/, /per lap/, /per shot/, /per point/, /pace/, /speed/], hint:'Identify what the SLOPE (m) represents in your example — the rate at which something grows (per game, per week, etc.).' },
+    { patterns:[/intercept/, /head start/, /already/, /starting/, /current/, /before/, /so far/], hint:'Identify what the Y-INTERCEPT (b) represents in your example — the starting value / head start.' }
+  ]
+};
+function scoreReflection(qid) {
+  const text = (document.getElementById(qid).value || '').toLowerCase().trim();
+  const fb = document.getElementById('fb-' + qid);
+  fb.className = 'q-feedback';
+  fb.innerHTML = '';
+  if (!text) return;
+  const rubric = RUBRICS[qid];
+  let hit = 0;
+  const missingHints = [];
+  rubric.forEach(concept => {
+    const found = concept.patterns.some(p => p.test(text));
+    if (found) hit++;
+    else missingHints.push(concept.hint);
+  });
+  const total = rubric.length;
+  if (hit === total) {
+    fb.classList.add('good');
+    fb.innerHTML = '<strong>✓ Great answer!</strong> You covered all the key ideas.';
+  } else if (hit >= Math.ceil(total / 2)) {
+    fb.classList.add('partial');
+    fb.innerHTML = '<strong>⚠ Almost there.</strong> Try adding: <ul style="margin:4px 0 0 22px;">' + missingHints.map(h => '<li>' + h + '</li>').join('') + '</ul>';
+  } else {
+    fb.classList.add('miss');
+    fb.innerHTML = '<strong>✗ Try again.</strong> Add these ideas: <ul style="margin:4px 0 0 22px;">' + missingHints.map(h => '<li>' + h + '</li>').join('') + '</ul>';
+  }
+}
+['q1','q2','q3'].forEach(qid => {
+  document.getElementById(qid).addEventListener('blur', () => scoreReflection(qid));
+});
+
+// Submit reflection + student work to Dr. Park via Gmail
+function submitToTeacher() {
+  const firstName = (document.getElementById('stu-first') || {value:''}).value.trim();
+  const lastName = (document.getElementById('stu-last') || {value:''}).value.trim();
+  const name = (firstName || lastName) ? (firstName + ' ' + lastName).trim() : '(no name)';
+  const cls = (document.getElementById('stu-class') || {value:''}).value || '';
+
+  let body = 'Fantasy Football Draft — Slope Real-World Project\n';
+  body += 'Name: ' + name + '\n';
+  if (cls) body += 'Class: ' + cls + '\n';
+
+  body += '\n=== My Setup & Work ===\n';
+  body += 'Player A slope (pts/game): ' + ((document.getElementById('a-m') || {value:''}).value || '(blank)') + '\n';
+  body += 'Player A y-intercept (starting pts): ' + ((document.getElementById('a-b') || {value:''}).value || '(blank)') + '\n';
+  body += 'Player B slope (pts/game): ' + ((document.getElementById('b-m') || {value:''}).value || '(blank)') + '\n';
+  body += 'Player B y-intercept (starting pts): ' + ((document.getElementById('b-b') || {value:''}).value || '(blank)') + '\n';
+  body += 'Break-even step (coefficient after subtracting 8x): ' + ((document.getElementById('be-1') || {value:''}).value || '(blank)') + '\n';
+  body += 'Break-even x (games): ' + ((document.getElementById('be-2') || {value:''}).value || '(blank)') + '\n';
+  body += '\n=== My Recommendations ===\n';
+  body += '3 games left: Keep who?: ' + ((document.getElementById('rec-1') || {value:''}).value || '(blank)').toUpperCase() + '\n';
+  body += '14 games left: Keep who?: ' + ((document.getElementById('rec-2') || {value:''}).value || '(blank)').toUpperCase() + '\n';
+
+  body += '\n=== Reflection Answers ===\n';
+  ['q1','q2','q3'].forEach(function(id, i) {
+    const el = document.getElementById(id);
+    const val = el ? el.value : '';
+    body += '\nQ' + (i+1) + ': ' + (val || '(no answer)') + '\n';
+  });
+
+  const subject = encodeURIComponent('Fantasy Football Draft — ' + name);
+  const bodyEnc = encodeURIComponent(body);
+  const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su=' + subject + '&body=' + bodyEnc;
+  window.open(gmailUrl, '_blank');
+}
+</script>
+</body>
+</html>
