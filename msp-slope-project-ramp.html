@@ -385,6 +385,18 @@ function updateDiagram(rise, run, hyp) {
   const ra = document.getElementById('right-angle');
   const rs = 10;
   ra.setAttribute('d', `M ${rightX-rs} ${groundY} L ${rightX-rs} ${groundY-rs} L ${rightX} ${groundY-rs}`);
+
+  // Entrance/step box — height matches the risePx so top aligns with ramp
+  const stepRect = document.getElementById('step-rect');
+  const stepW = 180;
+  stepRect.setAttribute('x', rightX);
+  stepRect.setAttribute('y', groundY - risePx);
+  stepRect.setAttribute('width', stepW);
+  stepRect.setAttribute('height', risePx);
+  // "Entrance" label sits just above the top of the box
+  const stepLabel = document.getElementById('step-label');
+  stepLabel.setAttribute('x', rightX + stepW / 2);
+  stepLabel.setAttribute('y', groundY - risePx - 8);
 }
 
 document.querySelectorAll('#rise, #slope-ratio, #skate-rise, #skate-length, #bonus-rise').forEach(inp => {
