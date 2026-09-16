@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recipe Scaler — Google Sheets Assignment</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root { --navy:#1a2a4a; --accent:#0284c7; --accent-deep:#0c4a6e; --gold:#b8860b; --dim:#64748b; --ink:#1f2937; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#fef3c7 0%,#fed7aa 30%,#f5e6ff 100%); color:var(--ink); min-height:100vh; padding:20px 16px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:8px; }
+h1 { font-size:2.1rem; font-weight:900; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:1rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:18px; }
+section.card { background:#fff; border-radius:14px; padding:20px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.3rem; font-weight:800; margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:14px 0 8px; }
+section.card p { margin-bottom:10px; }
+section.card ul, section.card ol { margin:6px 0 10px 26px; }
+section.card li { margin:5px 0; }
+.hook { background:linear-gradient(120deg,#fef3c7,#fed7aa); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:10px 0; color:#78350f; }
+.hook strong { color:#78350f; }
+
+.step-num { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:1.1rem; }
+
+.sheet-table { border-collapse:collapse; margin:10px 0; font-family:Consolas, monospace; font-size:.92rem; width:100%; max-width:720px; }
+.sheet-table th, .sheet-table td { border:1px solid #94a3b8; padding:8px 12px; text-align:left; }
+.sheet-table th { background:#e0f2fe; color:#0c4a6e; font-weight:800; font-family:'Segoe UI', sans-serif; }
+.sheet-table td.cell { background:#f8fafc; font-weight:800; color:#0c4a6e; width:50px; text-align:center; }
+.sheet-table td.formula { background:#f0fdf4; color:#14532d; font-weight:700; }
+.sheet-table td.label { background:#fff; }
+.sheet-table td.input { background:#fef3c7; color:#78350f; font-weight:800; text-align:center; }
+.sheet-table caption { caption-side:top; font-weight:800; color:var(--navy); font-size:.95rem; padding:6px 0; text-align:left; }
+
+.formula-callout { background:#f0fdf4; border-left:5px solid #16a34a; padding:10px 14px; border-radius:6px; margin:10px 0; font-family:Consolas, monospace; color:#14532d; font-size:.98rem; font-weight:700; }
+.formula-callout strong { color:#14532d; }
+
+.tip { background:#ecfeff; border-left:5px solid var(--accent); padding:10px 14px; border-radius:6px; margin:10px 0; color:var(--accent-deep); font-size:.95rem; }
+.warning { background:#fef2f2; border-left:5px solid #dc2626; padding:10px 14px; border-radius:6px; margin:10px 0; color:#7f1d1d; font-size:.95rem; }
+
+.rubric-table { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95rem; }
+.rubric-table th, .rubric-table td { border:1.5px solid #94a3b8; padding:10px 12px; text-align:left; }
+.rubric-table th { background:var(--navy); color:#fff; font-weight:800; }
+.rubric-table td:last-child { text-align:center; font-weight:800; background:#fef3c7; }
+.rubric-table tr.total { background:#f0fdf4; font-weight:800; }
+.rubric-table tr.total td:last-child { background:#dcfce7; color:#14532d; }
+
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+
+.submit-note { background:#f0fdf4; border-left:5px solid #16a34a; border-radius:6px; padding:10px 14px; font-size:.9rem; color:#14532d; margin-top:10px; }
+.btn-submit { padding:14px 32px; background:#7c3aed; color:#fff; border:none; border-radius:8px; font-weight:800; cursor:pointer; font-size:1.1rem; box-shadow:0 4px 14px rgba(124,58,237,0.35); }
+.btn-submit:hover { background:#6d28d9; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-7.html" class="back-link">← Back to Math 7</a>
+
+<header>
+  <div class="eyebrow">Math 7 · Proportional Relationships · Google Sheets Build</div>
+  <h1>🍪 Build a Recipe Scaler in Google Sheets</h1>
+  <p class="tagline">Turn a 24-cookie recipe into a 6-cookie or 60-cookie recipe with the tap of a key.</p>
+</header>
+
+<main>
+
+<!-- =========================================== -->
+<section class="card">
+<h2>🎯 The Assignment</h2>
+<div class="hook">
+  Your grandma&apos;s <strong>chocolate chip cookie recipe</strong> makes 24 cookies. But sometimes you want to bake for just yourself (say, 6 cookies), and sometimes you want to bake for a whole party (60 cookies). Instead of doing the math by hand every time, you&apos;re going to <strong>build a calculator</strong> that scales the recipe automatically.
+</div>
+<p>Your finished spreadsheet will:</p>
+<ul>
+  <li>✅ Show the <strong>original recipe</strong> for 24 cookies (fixed)</li>
+  <li>✅ Have <strong>one input cell</strong>: how many cookies do you WANT?</li>
+  <li>✅ Use a <strong>scale factor k = new ÷ old</strong> that updates automatically</li>
+  <li>✅ Show every ingredient <strong>scaled to the new amount</strong></li>
+  <li>✅ Round eggs UP (you can&apos;t use 2.5 eggs!)</li>
+  <li>✅ Have <strong>&quot;preset&quot; buttons</strong> for common batch sizes (12, 36, 48)</li>
+</ul>
+
+<div class="tip">
+  💡 <strong>Why this works:</strong> Every ingredient in the scaled recipe = original amount × k. That&apos;s the definition of a <strong>proportional relationship</strong> — y = kx.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">1</span> Set Up Your Sheet</h2>
+<ol>
+  <li>Go to <strong>sheets.google.com</strong> and sign in with your school Gmail.</li>
+  <li>Click <strong>+ Blank spreadsheet</strong>.</li>
+  <li>Rename it: <strong>Recipe Scaler — [Your Name]</strong></li>
+  <li>In cell <strong>A1</strong>, type a big title: <strong>🍪 Grandma&apos;s Chocolate Chip Cookies</strong>. Format bold, font size 18.</li>
+</ol>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">2</span> Enter the Original Recipe</h2>
+<p>Enter the recipe exactly as it appears here:</p>
+
+<table class="sheet-table">
+  <caption>Rows 3–13 in your sheet</caption>
+  <tr><th></th><th>A</th><th>B</th><th>C</th></tr>
+  <tr><td class="cell">3</td><td class="label"><strong>Ingredient</strong></td><td class="label"><strong>Original (24 cookies)</strong></td><td class="label"><strong>Unit</strong></td></tr>
+  <tr><td class="cell">4</td><td class="label">Flour</td><td class="label">2.25</td><td class="label">cups</td></tr>
+  <tr><td class="cell">5</td><td class="label">Baking soda</td><td class="label">1</td><td class="label">tsp</td></tr>
+  <tr><td class="cell">6</td><td class="label">Salt</td><td class="label">1</td><td class="label">tsp</td></tr>
+  <tr><td class="cell">7</td><td class="label">Butter</td><td class="label">1</td><td class="label">cup</td></tr>
+  <tr><td class="cell">8</td><td class="label">White sugar</td><td class="label">0.75</td><td class="label">cup</td></tr>
+  <tr><td class="cell">9</td><td class="label">Brown sugar</td><td class="label">0.75</td><td class="label">cup</td></tr>
+  <tr><td class="cell">10</td><td class="label">Vanilla extract</td><td class="label">1</td><td class="label">tsp</td></tr>
+  <tr><td class="cell">11</td><td class="label">Eggs</td><td class="label">2</td><td class="label">whole</td></tr>
+  <tr><td class="cell">12</td><td class="label">Chocolate chips</td><td class="label">2</td><td class="label">cups</td></tr>
+</table>
+
+<div class="tip">
+  💡 <strong>Format Column B</strong> so the numbers look nice. Select B4:B12 → Format → Number → Number (2 decimal places).
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">3</span> Add the &quot;How Many Cookies?&quot; Input</h2>
+<p>This is the <strong>only cell the user changes</strong>. Everything else recomputes from it.</p>
+
+<table class="sheet-table">
+  <caption>Rows 15–16 in your sheet</caption>
+  <tr><th></th><th>A</th><th>B</th></tr>
+  <tr><td class="cell">15</td><td class="label"><strong>How many cookies do you want?</strong></td><td class="input">36</td></tr>
+  <tr><td class="cell">16</td><td class="label">Scale factor k =</td><td class="formula">=B15/24</td></tr>
+</table>
+
+<div class="formula-callout">
+  <strong>The scale factor:</strong> &nbsp; =B15/24<br>
+  🧠 <strong>What it means:</strong> new number of cookies ÷ original 24 cookies<br>
+  For 36 cookies: k = 36 ÷ 24 = <strong>1.5</strong> &nbsp; (1.5× everything!)<br>
+  For 6 cookies: k = 6 ÷ 24 = <strong>0.25</strong> &nbsp; (quarter of everything)<br>
+  For 48 cookies: k = 48 ÷ 24 = <strong>2</strong> &nbsp; (double batch)
+</div>
+
+<div class="tip">
+  💡 <strong>Format B15 yellow</strong> so users know that&apos;s where they type. Select B15 → Fill color → light yellow. Make B16 <strong>bold</strong>.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">4</span> Write the Scaled-Amount Formulas</h2>
+<p>Now add <strong>Column D</strong> — the scaled amount for each ingredient:</p>
+
+<table class="sheet-table">
+  <caption>Rows 3–12, add Column D</caption>
+  <tr><th></th><th>B</th><th>C</th><th>D</th></tr>
+  <tr><td class="cell">3</td><td class="label"><strong>Original</strong></td><td class="label"><strong>Unit</strong></td><td class="label"><strong>Scaled amount</strong></td></tr>
+  <tr><td class="cell">4</td><td class="label">2.25</td><td class="label">cups</td><td class="formula">=B4*$B$16</td></tr>
+  <tr><td class="cell">5</td><td class="label">1</td><td class="label">tsp</td><td class="formula">=B5*$B$16</td></tr>
+  <tr><td class="cell">6</td><td class="label">1</td><td class="label">tsp</td><td class="formula">=B6*$B$16</td></tr>
+  <tr><td class="cell">7</td><td class="label">1</td><td class="label">cup</td><td class="formula">=B7*$B$16</td></tr>
+  <tr><td class="cell">8</td><td class="label">0.75</td><td class="label">cup</td><td class="formula">=B8*$B$16</td></tr>
+</table>
+
+<div class="formula-callout">
+  <strong>The proportional formula:</strong> &nbsp; =B4*$B$16<br>
+  🧠 <strong>What it means:</strong> original amount × k = new amount<br>
+  📌 The <strong>$</strong> signs on $B$16 lock it, so when you drag down, it always points at the scale factor.<br>
+  📌 This IS y = kx — where x is the original amount, k is the scale factor, and y is the new amount!
+</div>
+
+<h3>Speed trick: fill down</h3>
+<ol>
+  <li>Type <code>=B4*$B$16</code> in cell D4. Press Enter.</li>
+  <li>Click D4 again, grab the little blue square in the bottom-right corner, drag down through D12.</li>
+  <li>Every ingredient auto-fills with its scaled amount.</li>
+</ol>
+
+<div class="tip">
+  💡 Change B15 to <strong>60</strong>. Watch every ingredient in column D update INSTANTLY. That&apos;s the power of proportional formulas.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">5</span> Handle the Egg Problem</h2>
+<p>Eggs are a whole number — you can&apos;t use 2.5 eggs! Update the egg row (D11) with a <strong>rounding formula</strong>:</p>
+
+<div class="formula-callout">
+  D11: &nbsp; =CEILING(B11*$B$16, 1)
+</div>
+
+<p><strong>What CEILING does:</strong> rounds UP to the nearest whole number. So 2.5 eggs → 3 eggs. 4.2 eggs → 5 eggs.</p>
+
+<div class="warning">
+  ⚠️ <strong>Why round UP?</strong> When baking, having a little extra egg is fine, but too little is disaster. You&apos;d rather waste half an egg than have a dry cookie. Real chefs round up.
+</div>
+
+<h3>Optional: Also round chocolate chips</h3>
+<p>Chocolate chips come in bags. You might want to round chips to the nearest 0.25 cup (a quarter cup):</p>
+<div class="formula-callout">
+  D12: &nbsp; =CEILING(B12*$B$16, 0.25)
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">6</span> Add Preset Buttons</h2>
+<p>Make it easy for users. Add quick-fill cells they can copy-paste into B15:</p>
+
+<table class="sheet-table">
+  <caption>Rows 18–21 in your sheet</caption>
+  <tr><th></th><th>A</th><th>B</th></tr>
+  <tr><td class="cell">18</td><td class="label"><strong>Quick presets:</strong></td><td class="label"></td></tr>
+  <tr><td class="cell">19</td><td class="label">Half batch</td><td class="input">12</td></tr>
+  <tr><td class="cell">20</td><td class="label">Large batch (1.5×)</td><td class="input">36</td></tr>
+  <tr><td class="cell">21</td><td class="label">Double batch</td><td class="input">48</td></tr>
+</table>
+
+<p>To use a preset: click the number, copy it (Cmd/Ctrl+C), then paste into B15. Or just type the number directly in B15.</p>
+
+<div class="tip">
+  🎨 <strong>Advanced move:</strong> use a data-validation dropdown in B15 so users can PICK a preset instead of typing. Data → Data validation → List of items → 6, 12, 24, 36, 48, 60.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">7</span> Final Formatting</h2>
+<ul>
+  <li>🎨 <strong>Color-code sections:</strong> input cells (B15) yellow, scale factor (B16) light green, scaled amounts (D4:D12) light blue.</li>
+  <li>📏 <strong>Widen columns:</strong> right-click column headers → Resize column to fit.</li>
+  <li>🔢 <strong>Format Column D as numbers</strong> with 2 decimal places (except D11 which is a whole number).</li>
+  <li>🔒 <strong>Bold the important cells:</strong> B15 (input), B16 (scale factor), and all of Column D.</li>
+  <li>🖼️ <strong>Add a border</strong> around your input area (A15:B16) to make it stand out.</li>
+</ul>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">8</span> Test Your Calculator</h2>
+<p>Try each test case. If the numbers don&apos;t match, you have a formula bug!</p>
+
+<table class="rubric-table">
+  <tr><th>Test case</th><th>How many cookies?</th><th>Scale factor k</th><th>Flour should be</th><th>Eggs should be</th></tr>
+  <tr><td>Just for me</td><td style="text-align:center;">6</td><td style="text-align:center;">0.25</td><td style="text-align:center;">0.56 cups</td><td style="text-align:center;">1 (rounded up from 0.5)</td></tr>
+  <tr><td>Grandma&apos;s original</td><td style="text-align:center;">24</td><td style="text-align:center;">1.0</td><td style="text-align:center;">2.25 cups</td><td style="text-align:center;">2</td></tr>
+  <tr><td>Party!</td><td style="text-align:center;">36</td><td style="text-align:center;">1.5</td><td style="text-align:center;">3.375 cups</td><td style="text-align:center;">3</td></tr>
+  <tr><td>Bake sale</td><td style="text-align:center;">60</td><td style="text-align:center;">2.5</td><td style="text-align:center;">5.625 cups</td><td style="text-align:center;">5</td></tr>
+  <tr><td>Whole class</td><td style="text-align:center;">72</td><td style="text-align:center;">3.0</td><td style="text-align:center;">6.75 cups</td><td style="text-align:center;">6</td></tr>
+</table>
+
+<div class="warning">
+  ⚠️ If your calculator gives a different answer than the expected column, check that your D-column formulas use <strong>$B$16</strong> (with dollar signs) so they always point at the scale factor when you drag.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2>🤔 Reflection Questions</h2>
+<p>After building your calculator, answer these on paper or in a Google Doc:</p>
+<ol>
+  <li>What is the scale factor k when someone types 30 cookies? Show your math: k = ___ ÷ ___ = ___</li>
+  <li>Why do we use <strong>$B$16</strong> instead of just <strong>B16</strong> in the formulas?</li>
+  <li>Grandma&apos;s recipe uses 2 eggs for 24 cookies. That&apos;s <strong>1 egg per 12 cookies</strong>. Explain how you can see this ratio (1:12) in your spreadsheet.</li>
+  <li>If you wanted to make 100 cookies, would your calculator work? Test it and describe what happens.</li>
+</ol>
+</section>
+
+</main>
+
+<footer>
+  Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Google Sheets Proportions Assignment
+</footer>
+</div>
+
+</body>
+</html>
