@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wheelchair Ramp Designer — Slope & Engineering Project</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root { --navy:#1a2a4a; --accent:#0891b2; --accent-deep:#0e7490; --gold:#b8860b; --dim:#64748b; --ink:#1f2937; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:var(--ink); min-height:100vh; padding:20px 16px; line-height:1.55; }
+.container { max-width:1100px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:8px; }
+h1 { font-size:2rem; font-weight:900; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:18px; }
+section.card { background:#fff; border-radius:14px; padding:20px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:12px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:12px 0 8px; }
+.hook { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:10px 0; color:#78350f; }
+.setup-row { display:grid; grid-template-columns:auto 1fr; gap:12px 8px; align-items:center; margin:8px 0; }
+.setup-row label { font-weight:700; color:var(--navy); }
+.setup-row input, .setup-row select { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:1rem; width:130px; font-weight:800; text-align:center; }
+.setup-row input.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+.setup-row input.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+.setup-row .hint { font-size:.82rem; color:var(--dim); font-style:italic; margin-left:4px; }
+.result-callout { background:linear-gradient(90deg, #dbeafe, #ede9fe); border:2px solid var(--accent); border-radius:10px; padding:14px 18px; text-align:center; font-size:1.05rem; font-weight:800; color:var(--navy); margin:12px 0; }
+.result-callout .big { color:var(--accent); font-size:1.4rem; }
+.diagram-panel { background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:10px; padding:14px; text-align:center; }
+.diagram-panel svg { max-width:100%; height:auto; }
+.calc-widget { background:#f0f9ff; border:2px dashed var(--accent); border-radius:8px; padding:12px 16px; margin:10px 0; }
+.calc-widget .step { margin:6px 0; font-family:Consolas,monospace; font-size:.98rem; line-height:1.7; }
+.reveal-btn { background:var(--gold); color:var(--navy); border:1.5px solid #a16b0a; padding:6px 14px; border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer; margin:6px 0; }
+.reveal-btn:hover { background:#a16b0a; color:#fff; }
+.explanation { display:none; background:#ecfeff; border-left:5px solid var(--accent); padding:12px 16px; border-radius:6px; margin:8px 0; font-size:.94rem; color:var(--accent-deep); }
+.explanation.open { display:block; }
+.reflect textarea { width:100%; min-height:70px; padding:10px 12px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; resize:vertical; margin-top:6px; }
+.q-feedback { margin-top:8px; padding:8px 12px; border-radius:6px; font-size:.9rem; display:none; }
+.q-feedback.good { display:block; background:#dcfce7; border-left:5px solid #16a34a; color:#14532d; }
+.q-feedback.partial { display:block; background:#fef3c7; border-left:5px solid #b8860b; color:#78350f; }
+.q-feedback.miss { display:block; background:#fee2e2; border-left:5px solid #dc2626; color:#7f1d1d; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+.summary-box { background:#f5f3ff; border:2px solid #7c3aed; border-radius:10px; padding:14px 18px; margin:10px 0; }
+.summary-box h3 { color:#6d28d9; margin-top:0; }
+.formula-box { background:#fef3c7; border:2px solid var(--gold); border-radius:8px; padding:10px 14px; margin:8px 0; text-align:center; color:#78350f; }
+.formula-box .eq { font-family:'Cambria Math', Georgia, serif; font-size:1.15rem; font-weight:800; }
+.btn-submit { padding:14px 32px; background:#7c3aed; color:#fff; border:none; border-radius:8px; font-weight:800; cursor:pointer; font-size:1.1rem; box-shadow:0 4px 14px rgba(124,58,237,0.35); }
+.btn-submit:hover { background:#6d28d9; }
+.submit-note { background:#f0fdf4; border-left:5px solid #16a34a; border-radius:6px; padding:10px 14px; font-size:.9rem; color:#14532d; margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msp-slope-projects-hub.html" class="back-link">← All Projects</a>
+
+<header>
+  <div class="eyebrow">Math 8 · Real-World Project · Engineering</div>
+  <h1>♿ Wheelchair Ramp Designer</h1>
+  <p class="tagline">Slope + Pythagorean theorem = ADA-compliant ramps that everyone can use.</p>
+</header>
+
+<main>
+
+<section class="card">
+<h2>🎯 The Mission</h2>
+<div class="hook">
+  The <strong>Americans with Disabilities Act (ADA)</strong> requires wheelchair ramps to have a slope no steeper than <strong>1:12</strong> — meaning 1 unit of rise for every 12 units of run.<br><br>
+  Your job: <strong>design a ramp for a real entrance</strong> with a step-up you can measure. Compute the rise, run, ramp length, and slope in every form (ratio, decimal, and percent).
+</div>
+</section>
+
+<section class="card">
+<h2>1️⃣ Enter Your Ramp Numbers</h2>
+<p>Change the rise (how tall the step is) and slope ratio to see the ramp update live. The diagram, ramp length, and other numbers all recompute automatically.</p>
+
+<div class="setup-row">
+  <label>Rise (vertical step-up) — inches:</label>
+  <span><input type="number" id="rise" value="30" step="1"> <span class="hint">How tall is the step? (typical entrance: 6–36 in)</span></span>
+</div>
+<div class="setup-row">
+  <label>Slope ratio (rise : run):</label>
+  <span>1 : <input type="number" id="slope-ratio" value="12" step="1" min="2"> <span class="hint">ADA maximum is 1:12 — smaller number = steeper</span></span>
+</div>
+
+<button class="reveal-btn" onclick="toggle('explain-ratio')">💡 What does &quot;1:12&quot; really mean?</button>
+<div class="explanation" id="explain-ratio">
+  <strong>1:12 = for every 1 unit of rise, there are 12 units of run.</strong><br><br>
+  It doesn&apos;t matter what unit — inches, feet, or meters — the ratio stays the same:<br>
+  &nbsp;&nbsp; 1 inch up per 12 inches across<br>
+  &nbsp;&nbsp; 1 foot up per 12 feet across<br><br>
+  A steeper ratio like <strong>1:8</strong> is TOO STEEP for a wheelchair. A gentler ratio like <strong>1:20</strong> takes more space but is easier to roll up.
+</div>
+</section>
+
+<section class="card">
+<h2>2️⃣ Your Ramp — Live Diagram</h2>
+<div class="diagram-panel">
+  <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" style="background:#fff; border:1px solid #cbd5e1; border-radius:6px;">
+    <!-- Ground line -->
+    <line x1="20" y1="260" x2="680" y2="260" stroke="#334155" stroke-width="2"/>
+    <text x="20" y="280" font-size="11" fill="#64748b">ground</text>
+    <!-- Step/entrance rectangle -->
+    <rect id="step-rect" x="500" y="180" width="180" height="80" fill="#94a3b8" stroke="#334155" stroke-width="1.5"/>
+    <text id="step-label" x="590" y="150" font-size="12" font-weight="800" fill="#334155" text-anchor="middle">Entrance</text>
+    <!-- Ramp triangle -->
+    <polygon id="ramp-triangle" fill="#bae6fd" stroke="#0369a1" stroke-width="2" opacity="0.9"/>
+    <!-- Labels -->
+    <text id="rise-label" font-size="12" font-weight="800" fill="#dc2626" text-anchor="middle"></text>
+    <text id="run-label" font-size="12" font-weight="800" fill="#059669" text-anchor="middle"></text>
+    <text id="hyp-label" font-size="12" font-weight="800" fill="#6d28d9" text-anchor="middle"></text>
+    <!-- Small right-angle mark -->
+    <path id="right-angle" d="" fill="none" stroke="#334155" stroke-width="1.5"/>
+  </svg>
+</div>
+</section>
+
+<section class="card">
+<h2>3️⃣ The Answers (Auto-Calculated)</h2>
+
+<div class="result-callout">
+  <div>Run (horizontal length) needed:</div>
+  <div class="big" id="run-val">— inches</div>
+</div>
+
+<div class="formula-box">
+  <div class="eq">Ramp Length = √(rise² + run²) &nbsp; (Pythagorean Theorem)</div>
+</div>
+<div class="result-callout">
+  <div>Ramp surface length (the hypotenuse):</div>
+  <div class="big" id="hyp-val">— inches</div>
+</div>
+
+<h3>Slope in every form:</h3>
+<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
+  <div style="background:#f8fafc; padding:10px 12px; border-radius:8px; border:1.5px solid #cbd5e1; text-align:center;">
+    <div style="font-size:.85rem; color:#64748b; font-weight:700;">As a Ratio</div>
+    <div id="ratio-val" style="font-family:Consolas,monospace; font-size:1.15rem; font-weight:800; color:#0369a1;">1 : 12</div>
+  </div>
+  <div style="background:#f8fafc; padding:10px 12px; border-radius:8px; border:1.5px solid #cbd5e1; text-align:center;">
+    <div style="font-size:.85rem; color:#64748b; font-weight:700;">As a Decimal</div>
+    <div id="decimal-val" style="font-family:Consolas,monospace; font-size:1.15rem; font-weight:800; color:#059669;">0.0833</div>
+  </div>
+  <div style="background:#f8fafc; padding:10px 12px; border-radius:8px; border:1.5px solid #cbd5e1; text-align:center;">
+    <div style="font-size:.85rem; color:#64748b; font-weight:700;">As a Percent</div>
+    <div id="percent-val" style="font-family:Consolas,monospace; font-size:1.15rem; font-weight:800; color:#b45309;">8.33%</div>
+  </div>
+</div>
+
+<button class="reveal-btn" onclick="toggle('explain-forms')">💡 Why three forms?</button>
+<div class="explanation" id="explain-forms">
+  <strong>Engineers use different forms in different contexts:</strong>
+  <ul style="margin:6px 0 6px 22px;">
+    <li><strong>Ratio (1:12)</strong> — the standard ADA specification. Easiest to check on paper.</li>
+    <li><strong>Decimal (0.0833)</strong> — used in calculators and CAD software.</li>
+    <li><strong>Percent (8.33%)</strong> — how road grades and highway signs display slope.</li>
+  </ul>
+  All three describe the SAME slope!
+</div>
+
+<div id="ada-verdict" style="margin-top:14px; padding:12px 16px; border-radius:8px; font-weight:800; text-align:center; font-size:1.05rem;"></div>
+</section>
+
+<section class="card">
+<h2>4️⃣ Compare: Wheelchair vs. Skate Ramp</h2>
+<p>A skate quarter-pipe has a MUCH steeper slope — often <strong>1:1</strong> (45°). Enter one to compare:</p>
+
+<div class="setup-row">
+  <label>Skate ramp rise:</label>
+  <span><input type="number" id="skate-rise" value="4" step="0.5"> <span class="hint">feet</span></span>
+</div>
+<div class="setup-row">
+  <label>Skate ramp surface length:</label>
+  <span><input type="number" id="skate-length" value="6" step="0.5"> <span class="hint">feet (the hypotenuse)</span></span>
+</div>
+
+<div class="calc-widget">
+  <div class="step"><strong>Solving for the run using Pythagorean:</strong> &nbsp; run = √(length² − rise²)</div>
+  <div class="step"><strong>Skate run:</strong> &nbsp; <span id="skate-run">?</span></div>
+  <div class="step"><strong>Skate slope:</strong> &nbsp; <span id="skate-slope">?</span></div>
+  <div class="step" style="border-top:1px dashed #94a3b8; padding-top:8px; margin-top:8px;"><strong>Comparison:</strong> <span id="skate-compare"></span></div>
+</div>
+
+<button class="reveal-btn" onclick="toggle('explain-skate')">💡 Why are these so different?</button>
+<div class="explanation" id="explain-skate">
+  <strong>Because the users are different!</strong><br><br>
+  A skateboarder WANTS speed and vertical air — a steep 1:1 ramp lets them build momentum.<br>
+  A wheelchair user needs to push themselves up SAFELY — a gentle 1:12 slope is manageable even for elderly or fatigued users.<br><br>
+  Same math (rise, run, slope), completely different design goals.
+</div>
+</section>
+
+<section class="card">
+<h2>5️⃣ Bonus: The Landing Rule</h2>
+<p>ADA requires a level &quot;landing&quot; every 30 feet of ramp. If a building has a taller step-up, you need to break the ramp into sections with landings between them.</p>
+
+<div class="setup-row">
+  <label>Step-up height (bonus scenario):</label>
+  <span><input type="number" id="bonus-rise" value="60" step="1"> <span class="hint">inches</span></span>
+</div>
+
+<div class="calc-widget">
+  <div class="step" id="bonus-explain">
+    A <span id="b-rise-in">60</span> in step-up at 1:12 slope needs <span id="b-run-ft">60</span> ft of ramp.
+    That&apos;s <span id="b-landings">2</span> section(s) of 30 ft or less, plus <span id="b-landings-num">1</span> landing(s) between them.
+  </div>
+</div>
+</section>
+
+<section class="card summary-box">
+<h3>🎓 What You Learned</h3>
+<p>Ramp design combines <strong>slope</strong> (rise/run) with the <strong>Pythagorean theorem</strong> (to find the ramp surface length). The same 1:12 ratio can be written as 1/12, 0.0833, or 8.33% — three different disguises for the same slope.</p>
+<p>Engineers, architects, and city planners use these calculations every day to make buildings accessible. Now you can, too.</p>
+</section>
+
+<section class="card reflect">
+<h2>🤔 Reflect (feedback appears after you type)</h2>
+<div style="margin:10px 0;">
+  <label><strong>1.</strong> Why does a wheelchair ramp use 1:12 while a skate ramp uses something close to 1:1?</label>
+  <textarea id="q1"></textarea>
+  <div class="q-feedback" id="fb-q1"></div>
+</div>
+<div style="margin:10px 0;">
+  <label><strong>2.</strong> If you double the rise but keep the slope at 1:12, what happens to the run? What about the ramp&apos;s diagonal length?</label>
+  <textarea id="q2"></textarea>
+  <div class="q-feedback" id="fb-q2"></div>
+</div>
+<div style="margin:10px 0;">
+  <label><strong>3.</strong> Name another engineering situation where slope and the Pythagorean theorem work together (roof pitch, road grade, staircase design, etc.).</label>
+  <textarea id="q3"></textarea>
+  <div class="q-feedback" id="fb-q3"></div>
+</div>
+</section>
+
+<section class="card" style="border-top:5px solid #7c3aed;">
+<h2>📧 Submit Your Answers to Dr. Park</h2>
+<div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center; margin-bottom:14px; padding:12px 14px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px;">
+  <label style="font-weight:700; color:var(--navy);">First Name: <input type="text" id="stu-first" style="padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; margin-left:4px;"></label>
+  <label style="font-weight:700; color:var(--navy);">Last Name: <input type="text" id="stu-last" style="padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; margin-left:4px;"></label>
+  <label style="font-weight:700; color:var(--navy);">Class: <input type="text" id="stu-class" style="padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; max-width:120px; margin-left:4px;"></label>
+</div>
+<div style="text-align:center; margin:14px 0;">
+  <button onclick="submitToTeacher()" class="btn-submit">📧 Submit to Dr. Park</button>
+</div>
+<div class="submit-note">
+  <strong>How this works:</strong> Clicking Submit opens Gmail in a new tab with your answers filled in. Make sure you&apos;re signed in with your <strong>school Gmail account</strong>, then click <strong>Send</strong> to submit your work to Dr. Park (<em>ppark@starofthesea.org</em>).
+</div>
+</section>
+
+</main>
+
+<footer>
+  Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Slope Real-World Project
+</footer>
+</div>
+
+<script>
+function n(id) { const v = parseFloat(document.getElementById(id).value); return isFinite(v) ? v : null; }
+function setText(id, txt) { document.getElementById(id).textContent = txt; }
+function toggle(id) { document.getElementById(id).classList.toggle('open'); }
+
+// ============================================================
+// Live update — recalculate everything when inputs change
+// ============================================================
+function updateAll() {
+  const rise = n('rise');
+  const ratio = n('slope-ratio');
+
+  if (rise == null || ratio == null || ratio <= 0) return;
+
+  const run = rise * ratio;
+  const hyp = Math.sqrt(rise*rise + run*run);
+  const decimal = 1 / ratio;
+  const percent = decimal * 100;
+
+  setText('run-val', run.toFixed(1) + ' inches (= ' + (run/12).toFixed(2) + ' ft)');
+  setText('hyp-val', hyp.toFixed(2) + ' inches (= ' + (hyp/12).toFixed(2) + ' ft)');
+  setText('ratio-val', '1 : ' + ratio);
+  setText('decimal-val', decimal.toFixed(4));
+  setText('percent-val', percent.toFixed(2) + '%');
+
+  // ADA verdict
+  const verdict = document.getElementById('ada-verdict');
+  if (ratio >= 12) {
+    verdict.style.background = '#dcfce7';
+    verdict.style.color = '#14532d';
+    verdict.style.border = '2px solid #16a34a';
+    verdict.textContent = '✓ ADA-Compliant — slope is 1:' + ratio + ' (max allowed is 1:12).';
+  } else {
+    verdict.style.background = '#fee2e2';
+    verdict.style.color = '#7f1d1d';
+    verdict.style.border = '2px solid #dc2626';
+    verdict.textContent = '✗ TOO STEEP — 1:' + ratio + ' exceeds the ADA 1:12 max. Not safe for wheelchairs.';
+  }
+
+  updateDiagram(rise, run, hyp);
+
+  // Bonus scenario
+  const bRise = n('bonus-rise');
+  if (bRise != null) {
+    const bRunIn = bRise * 12;   // at 1:12 slope
+    const bRunFt = bRunIn / 12;
+    const landings = Math.max(1, Math.ceil(bRunFt / 30));
+    setText('b-rise-in', bRise);
+    setText('b-run-ft', bRunFt.toFixed(1));
+    setText('b-landings', landings);
+    setText('b-landings-num', Math.max(0, landings - 1));
+  }
+
+  // Skate ramp
+  updateSkate();
+}
+
+function updateSkate() {
+  const sRise = n('skate-rise');
+  const sLen = n('skate-length');
+  const skateRun = document.getElementById('skate-run');
+  const skateSlope = document.getElementById('skate-slope');
+  const compare = document.getElementById('skate-compare');
+  if (sRise == null || sLen == null || sLen <= sRise) {
+    skateRun.textContent = '?';
+    skateSlope.textContent = '?';
+    compare.textContent = '';
+    return;
+  }
+  const sRun = Math.sqrt(sLen*sLen - sRise*sRise);
+  const sSlope = sRise / sRun;
+  const sPercent = sSlope * 100;
+  const sRatioDenom = 1 / sSlope;
+  skateRun.innerHTML = sRun.toFixed(2) + ' ft &nbsp;<em>(= √(' + sLen + '² − ' + sRise + '²) = √' + (sLen*sLen - sRise*sRise) + ')</em>';
+  skateSlope.innerHTML = sRise + '/' + sRun.toFixed(2) + ' = <strong>' + sSlope.toFixed(3) + '</strong> = <strong>' + sPercent.toFixed(1) + '%</strong> &nbsp;(≈ 1:' + sRatioDenom.toFixed(2) + ')';
+  const wheelchairRatio = n('slope-ratio') || 12;
+  const wheelSlope = 1 / wheelchairRatio;
+  const timesSteeper = sSlope / wheelSlope;
+  compare.innerHTML = 'The skate ramp is <strong>' + timesSteeper.toFixed(1) + 'x steeper</strong> than the wheelchair ramp!';
+}
+
+// ============================================================
+// Diagram: scale ramp triangle to fit the SVG viewport
+// ============================================================
+function updateDiagram(rise, run, hyp) {
+  const svgW = 700, svgH = 300;
+  const groundY = 260;
+  const rightX = 500;
+
+  // Scale so the run fits within svg width
+  const maxRunPx = 460;   // pixels available for the run
+  const maxRisePx = 200;  // pixels available for the rise
+
+  let scale = Math.min(maxRunPx / run, maxRisePx / rise);
+  if (!isFinite(scale) || scale <= 0) scale = 1;
+
+  const runPx = run * scale;
+  const risePx = rise * scale;
+
+  // Right angle corner is at (rightX, groundY)
+  // Rise goes UP from corner
+  const topX = rightX;
+  const topY = groundY - risePx;
+  // Run goes LEFT from corner
+  const leftX = rightX - runPx;
+  const leftY = groundY;
+
+  const triangle = document.getElementById('ramp-triangle');
+  triangle.setAttribute('points', `${leftX},${leftY} ${rightX},${leftY} ${topX},${topY}`);
+
+  // Rise label (to the right of rise line)
+  const riseLabel = document.getElementById('rise-label');
+  riseLabel.setAttribute('x', rightX + 25);
+  riseLabel.setAttribute('y', groundY - risePx/2);
+  riseLabel.textContent = 'rise = ' + rise + ' in';
+  // Run label (below run line)
+  const runLabel = document.getElementById('run-label');
+  runLabel.setAttribute('x', rightX - runPx/2);
+  runLabel.setAttribute('y', groundY + 20);
+  runLabel.textContent = 'run = ' + run.toFixed(0) + ' in';
+  // Hypotenuse label (along the diagonal, offset above)
+  const hypLabel = document.getElementById('hyp-label');
+  hypLabel.setAttribute('x', (leftX + topX)/2 - 30);
+  hypLabel.setAttribute('y', (leftY + topY)/2 - 10);
+  hypLabel.textContent = 'ramp = ' + hyp.toFixed(0) + ' in';
+
+  // Right angle marker (small square at bottom-right corner)
+  const ra = document.getElementById('right-angle');
+  const rs = 10;
+  ra.setAttribute('d', `M ${rightX-rs} ${groundY} L ${rightX-rs} ${groundY-rs} L ${rightX} ${groundY-rs}`);
+}
+
+document.querySelectorAll('#rise, #slope-ratio, #skate-rise, #skate-length, #bonus-rise').forEach(inp => {
+  inp.addEventListener('input', updateAll);
+});
+updateAll();
+
+// ============================================================
+// Reflection feedback (keyword rubrics)
+// ============================================================
+const RUBRICS = {
+  q1: [
+    { patterns:[/wheelchair.*safe|wheelchair.*use|elderly|self.?propell|gentle|manageable|slower|effort|push|easier/], hint:'Explain that wheelchair users need a GENTLE slope to push themselves up safely.' },
+    { patterns:[/skate|speed|momentum|air|jump|tricks|fast|steep.*fun|trick/], hint:'Explain that skateboarders WANT steepness for speed and vertical air.' }
+  ],
+  q2: [
+    { patterns:[/run.*double|run.*twice|run.*multipl|both.*double|stays.*proportion|scales.*same/], hint:'Explain that the run also DOUBLES (since slope is constant, run = 12 × rise).' },
+    { patterns:[/diagonal.*double|hypotenuse.*double|hypotenuse.*twice|ramp.*length.*double|scales|proportional/], hint:'Explain that the diagonal (ramp surface) also roughly doubles — everything scales proportionally.' }
+  ],
+  q3: [
+    { patterns:[/roof|pitch|rafter|attic|shingle/], hint:'Roof pitch — rise per run, and rafter length uses Pythagorean.' },
+    { patterns:[/road|highway|grade|hill|mountain|driving/], hint:'Road/highway grade — slope + hypotenuse calculations for warning signs.' },
+    { patterns:[/stair|step|riser|tread/], hint:'Stair design — rise per step, run per step, and the stringer length.' },
+    { patterns:[/cable|tower|antenna|stay|guy|zipline|zip line/], hint:'Cable or zipline design uses slope and Pythagorean to find cable length.' },
+    { patterns:[/bridge|truss|beam/], hint:'Bridge or truss design uses right triangles with known rise, run, and hypotenuse.' },
+    { patterns:[/slide|water.?slide|escalator|conveyor/], hint:'Slides, escalators, and conveyors — all use slope and hypotenuse math.' }
+  ]
+};
+function scoreReflection(qid) {
+  const text = (document.getElementById(qid).value || '').toLowerCase().trim();
+  const fb = document.getElementById('fb-' + qid);
+  fb.className = 'q-feedback'; fb.innerHTML = '';
+  if (!text) return;
+  const rubric = RUBRICS[qid];
+  let hit = 0;
+  const missingHints = [];
+  rubric.forEach(concept => {
+    const found = concept.patterns.some(p => p.test(text));
+    if (found) hit++; else missingHints.push(concept.hint);
+  });
+  const total = rubric.length;
+  const passThreshold = (qid === 'q3') ? 1 : Math.ceil(total / 2);
+  const fullPass = (qid === 'q3') ? 1 : total;
+  if (hit >= fullPass) {
+    fb.classList.add('good');
+    fb.innerHTML = '<strong>✓ Great answer!</strong> You covered all the key ideas.';
+  } else if (hit >= passThreshold) {
+    fb.classList.add('partial');
+    fb.innerHTML = '<strong>⚠ Almost there.</strong> Try adding: <ul style="margin:4px 0 0 22px;">' + missingHints.slice(0,3).map(h => '<li>' + h + '</li>').join('') + '</ul>';
+  } else {
+    fb.classList.add('miss');
+    fb.innerHTML = '<strong>✗ Try again.</strong> Consider these ideas: <ul style="margin:4px 0 0 22px;">' + missingHints.slice(0,3).map(h => '<li>' + h + '</li>').join('') + '</ul>';
+  }
+}
+['q1','q2','q3'].forEach(qid => {
+  document.getElementById(qid).addEventListener('blur', () => scoreReflection(qid));
+});
+
+// ============================================================
+// Submit to Dr. Park via Gmail
+// ============================================================
+function submitToTeacher() {
+  const firstName = (document.getElementById('stu-first') || {value:''}).value.trim();
+  const lastName = (document.getElementById('stu-last') || {value:''}).value.trim();
+  const name = (firstName || lastName) ? (firstName + ' ' + lastName).trim() : '(no name)';
+  const cls = (document.getElementById('stu-class') || {value:''}).value || '';
+
+  let body = 'Wheelchair Ramp Designer — Slope Real-World Project\n';
+  body += 'Name: ' + name + '\n';
+  if (cls) body += 'Class: ' + cls + '\n';
+
+  body += '\n=== My Ramp Design ===\n';
+  body += 'Rise: ' + (document.getElementById('rise').value || '(blank)') + ' inches\n';
+  body += 'Slope ratio: 1:' + (document.getElementById('slope-ratio').value || '(blank)') + '\n';
+  body += 'Run: ' + document.getElementById('run-val').textContent + '\n';
+  body += 'Ramp length (hypotenuse): ' + document.getElementById('hyp-val').textContent + '\n';
+  body += 'Slope as ratio: ' + document.getElementById('ratio-val').textContent + '\n';
+  body += 'Slope as decimal: ' + document.getElementById('decimal-val').textContent + '\n';
+  body += 'Slope as percent: ' + document.getElementById('percent-val').textContent + '\n';
+
+  body += '\n=== Skate Ramp Comparison ===\n';
+  body += 'Skate rise: ' + (document.getElementById('skate-rise').value || '(blank)') + ' ft\n';
+  body += 'Skate length: ' + (document.getElementById('skate-length').value || '(blank)') + ' ft\n';
+
+  body += '\n=== Bonus Scenario ===\n';
+  body += 'Bonus step-up: ' + (document.getElementById('bonus-rise').value || '(blank)') + ' inches\n';
+
+  body += '\n=== Reflection Answers ===\n';
+  ['q1','q2','q3'].forEach(function(id, i) {
+    const el = document.getElementById(id);
+    const val = el ? el.value : '';
+    body += '\nQ' + (i+1) + ': ' + (val || '(no answer)') + '\n';
+  });
+
+  const subject = encodeURIComponent('Wheelchair Ramp Designer — ' + name);
+  const bodyEnc = encodeURIComponent(body);
+  const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su=' + subject + '&body=' + bodyEnc;
+  window.open(gmailUrl, '_blank');
+}
+</script>
+
+</body>
+</html>
