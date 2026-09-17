@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCF & LCM Visual Explorer — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.big-idea strong { color:#7c2d12; }
+
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card.gcf { border-top-color:var(--green); }
+.card.lcm { border-top-color:var(--purple); }
+.card.lcm2 { border-top-color:var(--red); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.card .clue { font-size:.88rem; color:#64748b; margin-bottom:14px; font-style:italic; }
+.problem-text { background:#f1f5f9; padding:12px 16px; border-left:4px solid var(--navy); border-radius:6px; margin:12px 0 18px; font-size:1rem; }
+
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:12px 14px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; }
+.controls label { font-weight:700; color:var(--navy); }
+.controls input[type=number] { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; width:80px; }
+.controls input[type=range] { width:200px; }
+.controls .btn { padding:8px 16px; border-radius:6px; border:none; font-weight:800; cursor:pointer; font-size:.9rem; }
+.btn-play { background:var(--green); color:#fff; }
+.btn-play:hover { background:#047857; }
+.btn-reset { background:#64748b; color:#fff; }
+.btn-reset:hover { background:#475569; }
+
+.bags-area { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:16px 0; min-height:120px; }
+.bag { background:#fff; border:2.5px solid var(--green); border-radius:10px 10px 6px 6px; padding:10px 8px 8px; min-width:100px; text-align:center; box-shadow:0 3px 8px rgba(0,0,0,0.08); position:relative; }
+.bag.uneven { border-color:var(--red); background:#fee2e2; }
+.bag .bag-label { font-size:.75rem; font-weight:800; color:var(--navy); margin-bottom:6px; }
+.bag .items { font-size:1.35rem; line-height:1.2; }
+.bag .item-count { display:block; font-size:.72rem; color:#475569; margin-top:2px; }
+.leftover { background:#fef3c7; border:2px dashed var(--gold); border-radius:8px; padding:8px 12px; text-align:center; min-width:100px; }
+.leftover .lbl { font-size:.72rem; font-weight:800; color:#78350f; }
+.leftover .items { font-size:1.15rem; }
+
+.status-banner { padding:12px 18px; border-radius:8px; margin:12px 0; font-weight:800; text-align:center; }
+.status-good { background:#d1fae5; border:2px solid var(--green); color:#065f46; }
+.status-bad { background:#fee2e2; border:2px solid var(--red); color:#7f1d1d; }
+.status-best { background:linear-gradient(120deg,#fef3c7,#fde68a); border:2px solid var(--gold); color:#78350f; font-size:1.05rem; }
+
+.timeline-wrap { background:#0f172a; border-radius:12px; padding:16px 12px; margin:14px 0; overflow-x:auto; }
+.timeline-label { color:#fbbf24; font-weight:800; margin-bottom:8px; font-size:.85rem; letter-spacing:.05em; }
+.timeline { position:relative; height:200px; min-width:600px; }
+.tl-track { position:absolute; left:40px; right:20px; height:2px; background:#334155; }
+.tl-track.a { top:60px; }
+.tl-track.b { top:130px; }
+.tl-label { position:absolute; left:0; color:#fbbf24; font-weight:800; font-size:.85rem; }
+.tl-label.a { top:50px; }
+.tl-label.b { top:120px; }
+.tl-tick { position:absolute; width:2px; height:12px; background:#64748b; top:-5px; }
+.tl-tick-label { position:absolute; top:14px; color:#94a3b8; font-size:.72rem; transform:translateX(-50%); }
+.tl-blink { position:absolute; width:22px; height:22px; border-radius:50%; top:-10px; transform:translateX(-50%); box-shadow:0 0 0 0 rgba(251,191,36,0); transition:box-shadow .2s; }
+.tl-blink.a { background:radial-gradient(circle,#fbbf24 40%,#f59e0b); }
+.tl-blink.b { background:radial-gradient(circle,#22d3ee 40%,#0891b2); }
+.tl-blink.flashing { box-shadow:0 0 25px 10px rgba(251,191,36,0.7); }
+.tl-blink.b.flashing { box-shadow:0 0 25px 10px rgba(34,211,238,0.7); }
+.tl-meet { position:absolute; top:0; bottom:0; width:3px; background:#22c55e; opacity:.6; }
+.tl-meet-label { position:absolute; top:-24px; background:#22c55e; color:#fff; font-weight:800; font-size:.72rem; padding:2px 6px; border-radius:4px; transform:translateX(-50%); white-space:nowrap; }
+.tl-cursor { position:absolute; top:-5px; bottom:-5px; width:3px; background:#f97316; box-shadow:0 0 8px #f97316; }
+
+.lighthouse-scene { display:flex; justify-content:center; gap:60px; margin:16px 0; min-height:180px; align-items:flex-end; background:linear-gradient(180deg,#1e3a8a 0%,#0c4a6e 60%,#0f172a 100%); border-radius:12px; padding:20px; position:relative; overflow:hidden; }
+.lh { text-align:center; position:relative; }
+.lh-tower { width:36px; height:110px; background:linear-gradient(90deg,#f8fafc 0%,#cbd5e1 50%,#94a3b8 100%); border:2px solid #475569; border-radius:6px 6px 3px 3px; margin:0 auto; position:relative; }
+.lh-tower::before { content:''; position:absolute; top:20px; left:0; right:0; height:8px; background:repeating-linear-gradient(90deg,#dc2626 0 8px,#f8fafc 8px 16px); }
+.lh-tower::after { content:''; position:absolute; top:60px; left:0; right:0; height:8px; background:repeating-linear-gradient(90deg,#dc2626 0 8px,#f8fafc 8px 16px); }
+.lh-light { width:44px; height:24px; background:#374151; border-radius:6px 6px 0 0; margin:0 auto; position:relative; }
+.lh-beam { position:absolute; top:6px; left:50%; width:14px; height:14px; border-radius:50%; transform:translateX(-50%); transition:all .15s; background:#334155; }
+.lh-beam.on { background:#fef08a; box-shadow:0 0 40px 20px rgba(254,240,138,0.9), 0 0 80px 30px rgba(254,240,138,0.5); }
+.lh-beam.b.on { background:#67e8f9; box-shadow:0 0 40px 20px rgba(103,232,249,0.9), 0 0 80px 30px rgba(103,232,249,0.5); }
+.lh-label { color:#fbbf24; font-weight:800; margin-top:6px; font-size:.85rem; }
+.lh-count { color:#94a3b8; font-size:.75rem; }
+
+.bus-scene { background:linear-gradient(180deg,#dbeafe 0%,#e0f2fe 60%,#a3a3a3 60%,#737373 100%); border-radius:12px; padding:20px; margin:16px 0; position:relative; overflow:hidden; min-height:200px; }
+.bus-station { position:absolute; top:20px; left:20px; background:#facc15; border:3px solid var(--navy); border-radius:8px; padding:8px 14px; font-weight:800; color:var(--navy); font-size:.85rem; }
+.bus-lane { position:relative; height:55px; margin-top:60px; border-top:2px dashed #fff; border-bottom:2px dashed #fff; }
+.bus-lane + .bus-lane { margin-top:8px; }
+.bus { position:absolute; left:20px; bottom:6px; font-size:2.2rem; transition:left .3s linear; }
+.bus-b { color:#dc2626; }
+.bus-label { position:absolute; left:80px; top:-2px; color:var(--navy); font-weight:800; font-size:.8rem; background:rgba(255,255,255,0.85); padding:2px 8px; border-radius:4px; }
+.time-display { text-align:center; font-size:1.6rem; font-weight:900; color:var(--navy); background:#facc15; padding:8px 16px; border-radius:8px; display:inline-block; margin:10px 0; box-shadow:0 3px 8px rgba(0,0,0,0.15); }
+.meeting-flash { position:absolute; inset:0; background:#22c55e; opacity:0; pointer-events:none; animation:none; }
+.meeting-flash.on { animation:flashPulse 1.2s ease-out; }
+@keyframes flashPulse { 0%{opacity:0;} 30%{opacity:.55;} 100%{opacity:0;} }
+
+.formula-box { background:#f8fafc; border:1px dashed #94a3b8; border-radius:8px; padding:12px 16px; margin:12px 0; font-size:.95rem; }
+.formula-box code { background:#e0e7ff; padding:2px 6px; border-radius:4px; color:var(--navy); font-weight:700; }
+.answer-highlight { display:inline-block; background:#fef08a; padding:2px 8px; border-radius:6px; font-weight:900; color:var(--navy); border:2px solid var(--gold); }
+
+.compare-table { width:100%; border-collapse:collapse; margin:12px 0; font-size:.9rem; }
+.compare-table th { background:var(--navy); color:#fff; padding:10px; text-align:left; }
+.compare-table td { padding:10px; border-bottom:1px solid #e2e8f0; }
+.compare-table tr:nth-child(even) { background:#f8fafc; }
+
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Factors & Multiples · Visual Explorer</div>
+  <h1>🎯 GCF &amp; LCM — See It, Then Solve It</h1>
+  <p class="tagline">Three word problems. Three interactive visuals. One decider.</p>
+</header>
+
+<div class="big-idea">
+  <strong>The one-question decider:</strong> Before touching numbers, ask yourself —<br>
+  <em>&quot;Am I splitting stuff APART into equal groups, or waiting for two events to LINE UP again?&quot;</em><br>
+  <strong>Splitting apart</strong> → GCF (biggest group size, answer is SMALLER).<br>
+  <strong>Lining up</strong> → LCM (next meeting time, answer is BIGGER).
+</div>
+
+<!-- =============================================== -->
+<!-- PROBLEM 1: EMMA'S GIFT BAGS (GCF) -->
+<!-- =============================================== -->
+<section class="card gcf">
+  <h2>1️⃣ Emma&apos;s Gift Bags (GCF)</h2>
+  <div class="clue">Clue words: <em>identical, no leftovers, largest number</em> → GCF</div>
+  <div class="problem-text">
+    Emma has <strong>15 stickers</strong> 🌟 and <strong>20 pencils</strong> ✏️. She wants to make identical gift bags with no leftovers. What is the <strong>largest number of bags</strong> she can make?
+  </div>
+
+  <div class="controls">
+    <label>Try: <input type="range" id="bagSlider" min="1" max="20" value="1"> bags</label>
+    <label>Or type: <input type="number" id="bagInput" min="1" max="20" value="1"></label>
+    <button class="btn btn-reset" onclick="setBags(1)">↺ Start Over</button>
+    <button class="btn btn-play" onclick="showBest()">💡 Show Best Answer</button>
+  </div>
+
+  <div id="bagsArea" class="bags-area"></div>
+
+  <div id="bagStatus" class="status-banner status-bad">Pick a number of bags to try!</div>
+
+  <div class="formula-box">
+    <strong>GCF method — list the factors:</strong><br>
+    Factors of 15: 1, 3, <strong>5</strong>, 15<br>
+    Factors of 20: 1, 2, 4, <strong>5</strong>, 10, 20<br>
+    Biggest shared factor = <span class="answer-highlight">GCF(15, 20) = 5 bags</span><br>
+    Each bag: <strong>3 stickers + 4 pencils</strong>. Nothing left over. ✓
+  </div>
+
+  <div class="tip">
+    <strong>Sanity check:</strong> A GCF answer is always <em>less than or equal to</em> the smaller number.
+    5 ≤ 15 ✓
+  </div>
+</section>
+
+<!-- =============================================== -->
+<!-- PROBLEM 2: LIGHTHOUSES (LCM) -->
+<!-- =============================================== -->
+<section class="card lcm">
+  <h2>2️⃣ The Two Lighthouses (LCM)</h2>
+  <div class="clue">Clue words: <em>every ___ seconds, blink together, next</em> → LCM</div>
+  <div class="problem-text">
+    One lighthouse blinks every <strong>6 seconds</strong> 🟡. Another blinks every <strong>8 seconds</strong> 🔵. If they blink together at time 0, when will they <strong>next</strong> blink together?
+  </div>
+
+  <div class="lighthouse-scene">
+    <div class="lh">
+      <div class="lh-light"><div id="beamA" class="lh-beam"></div></div>
+      <div class="lh-tower"></div>
+      <div class="lh-label">Lighthouse A</div>
+      <div class="lh-count">every 6 sec</div>
+    </div>
+    <div class="lh">
+      <div class="lh-light"><div id="beamB" class="lh-beam b"></div></div>
+      <div class="lh-tower"></div>
+      <div class="lh-label">Lighthouse B</div>
+      <div class="lh-count">every 8 sec</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <div class="time-display">⏱️ <span id="lhTime">0</span> sec</div>
+  </div>
+
+  <div class="controls" style="justify-content:center;">
+    <button class="btn btn-play" onclick="startLighthouse()">▶ Play Animation</button>
+    <button class="btn btn-reset" onclick="stopLighthouse()">⏸ Pause</button>
+    <button class="btn btn-reset" onclick="resetLighthouse()">↺ Reset</button>
+  </div>
+
+  <div class="timeline-wrap">
+    <div class="timeline-label">Timeline (seconds) — watch where 🟡 and 🔵 land on the same tick</div>
+    <div id="lhTimeline" class="timeline"></div>
+  </div>
+
+  <div class="formula-box">
+    <strong>LCM method — list the multiples:</strong><br>
+    Multiples of 6: 6, 12, 18, <strong>24</strong>, 30, 36<br>
+    Multiples of 8: 8, 16, <strong>24</strong>, 32, 40<br>
+    First shared multiple = <span class="answer-highlight">LCM(6, 8) = 24 seconds</span>
+  </div>
+
+  <div class="tip">
+    <strong>Sanity check:</strong> An LCM answer is always <em>greater than or equal to</em> the larger number.
+    24 ≥ 8 ✓
+  </div>
+</section>
+
+<!-- =============================================== -->
+<!-- PROBLEM 3: BUSES (LCM) -->
+<!-- =============================================== -->
+<section class="card lcm2">
+  <h2>3️⃣ The Two Buses (LCM)</h2>
+  <div class="clue">Clue words: <em>every ___ minutes, leave together, next</em> → LCM</div>
+  <div class="problem-text">
+    Bus A leaves the station every <strong>12 minutes</strong> 🚌. Bus B every <strong>15 minutes</strong> 🚍. Both just left at <strong>noon</strong>. When will they next leave together?
+  </div>
+
+  <div class="bus-scene">
+    <div id="busFlash" class="meeting-flash"></div>
+    <div class="bus-station">🏢 Station</div>
+    <div class="bus-lane">
+      <div class="bus-label">Bus A — every 12 min</div>
+      <div id="busA" class="bus">🚌</div>
+    </div>
+    <div class="bus-lane">
+      <div class="bus-label">Bus B — every 15 min</div>
+      <div id="busB" class="bus bus-b">🚍</div>
+    </div>
+  </div>
+
+  <div style="text-align:center;">
+    <div class="time-display">🕐 <span id="busTime">12:00</span></div>
+  </div>
+
+  <div class="controls" style="justify-content:center;">
+    <button class="btn btn-play" onclick="startBus()">▶ Play Animation</button>
+    <button class="btn btn-reset" onclick="stopBus()">⏸ Pause</button>
+    <button class="btn btn-reset" onclick="resetBus()">↺ Reset</button>
+  </div>
+
+  <div class="timeline-wrap">
+    <div class="timeline-label">Timeline (minutes past noon) — 🚌 and 🚍 meet at minute 60</div>
+    <div id="busTimeline" class="timeline"></div>
+  </div>
+
+  <div class="formula-box">
+    <strong>LCM method — list the multiples:</strong><br>
+    Multiples of 12: 12, 24, 36, 48, <strong>60</strong>, 72<br>
+    Multiples of 15: 15, 30, 45, <strong>60</strong>, 75<br>
+    First shared multiple = <span class="answer-highlight">LCM(12, 15) = 60 minutes = 1:00 PM</span>
+  </div>
+
+  <div class="tip">
+    <strong>Sanity check:</strong> 60 ≥ 15 ✓ &nbsp; &nbsp; And 12 × 15 = 180 is a common multiple, but not the LEAST — students who multiply usually miss the earlier meet at 60.
+  </div>
+</section>
+
+<!-- =============================================== -->
+<!-- COMPARE & CONTRAST -->
+<!-- =============================================== -->
+<section class="card">
+  <h2>🧠 Put It All Together</h2>
+  <table class="compare-table">
+    <thead>
+      <tr><th>Problem</th><th>Clue words</th><th>GCF or LCM?</th><th>Answer</th><th>Sanity check</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Emma&apos;s gift bags (15 &amp; 20)</td>
+        <td>identical, no leftovers</td>
+        <td style="color:var(--green); font-weight:800;">GCF(15, 20)</td>
+        <td><strong>5 bags</strong></td>
+        <td>5 ≤ 15 ✓ smaller</td>
+      </tr>
+      <tr>
+        <td>Lighthouses (6 &amp; 8)</td>
+        <td>blink together next</td>
+        <td style="color:var(--purple); font-weight:800;">LCM(6, 8)</td>
+        <td><strong>24 seconds</strong></td>
+        <td>24 ≥ 8 ✓ bigger</td>
+      </tr>
+      <tr>
+        <td>Buses (12 &amp; 15)</td>
+        <td>leave together next</td>
+        <td style="color:var(--red); font-weight:800;">LCM(12, 15)</td>
+        <td><strong>60 min = 1:00 PM</strong></td>
+        <td>60 ≥ 15 ✓ bigger</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="big-idea" style="margin-top:16px;">
+    <strong>🌟 The two sentences worth memorizing:</strong><br>
+    &quot;Sharing things → GCF → answer is SMALLER.&quot;<br>
+    &quot;Waiting for things → LCM → answer is BIGGER.&quot;
+  </div>
+</section>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · GCF &amp; LCM Visual Explorer</footer>
+</div>
+
+<script>
+// ==================== PROBLEM 1: EMMA'S GIFT BAGS ====================
+const STICKERS = 15, PENCILS = 20;
+const bagSlider = document.getElementById('bagSlider');
+const bagInput = document.getElementById('bagInput');
+const bagsArea = document.getElementById('bagsArea');
+const bagStatus = document.getElementById('bagStatus');
+
+function renderBags(n){
+  bagsArea.innerHTML = '';
+  const stickersPer = STICKERS / n;
+  const pencilsPer = PENCILS / n;
+  const stickersLeft = STICKERS % n;
+  const pencilsLeft = PENCILS % n;
+  const evenSplit = (stickersLeft === 0 && pencilsLeft === 0);
+
+  // Show up to 20 bags
+  const showN = Math.min(n, 20);
+  for (let i = 0; i < showN; i++){
+    const bag = document.createElement('div');
+    bag.className = 'bag' + (evenSplit ? '' : ' uneven');
+    const sInt = Math.floor(stickersPer);
+    const pInt = Math.floor(pencilsPer);
+    bag.innerHTML = `
+      <div class="bag-label">Bag ${i+1}</div>
+      <div class="items">${'🌟'.repeat(sInt)}${evenSplit ? '' : (stickersLeft > 0 ? '<span style="opacity:.4">?</span>' : '')}</div>
+      <span class="item-count">${evenSplit ? sInt : stickersPer.toFixed(2)} stickers</span>
+      <div class="items">${'✏️'.repeat(pInt)}${evenSplit ? '' : (pencilsLeft > 0 ? '<span style="opacity:.4">?</span>' : '')}</div>
+      <span class="item-count">${evenSplit ? pInt : pencilsPer.toFixed(2)} pencils</span>
+    `;
+    bagsArea.appendChild(bag);
+  }
+
+  if (stickersLeft > 0 || pencilsLeft > 0){
+    const lo = document.createElement('div');
+    lo.className = 'leftover';
+    lo.innerHTML = `<div class="lbl">LEFTOVER 🚫</div>
+      <div class="items">${'🌟'.repeat(stickersLeft)} ${'✏️'.repeat(pencilsLeft)}</div>
+      <span class="item-count">${stickersLeft} st, ${pencilsLeft} pen</span>`;
+    bagsArea.appendChild(lo);
+  }
+
+  // Status
+  if (evenSplit){
+    if (n === 5){
+      bagStatus.className = 'status-banner status-best';
+      bagStatus.innerHTML = `🎉 <strong style="font-size:1.15rem;">THAT&apos;S IT! 5 bags is your answer!</strong> 🎉<br>Each bag has ${sInt} stickers + ${pInt} pencils. Nothing left over. This is the LARGEST number of identical bags Emma can make — <strong>GCF(15, 20) = 5</strong>. ⭐`;
+    } else {
+      bagStatus.className = 'status-banner status-good';
+      bagStatus.innerHTML = `✅ <strong>${n} bags works!</strong> Each bag gets ${Math.floor(stickersPer)} stickers &amp; ${Math.floor(pencilsPer)} pencils. But can she make MORE bags with no leftovers? Try bigger numbers!`;
+    }
+  } else {
+    bagStatus.className = 'status-banner status-bad';
+    let msg = `❌ <strong>${n} bags does NOT work.</strong> `;
+    if (stickersLeft > 0) msg += `${stickersLeft} sticker(s) left over. `;
+    if (pencilsLeft > 0) msg += `${pencilsLeft} pencil(s) left over. `;
+    msg += ` &nbsp; The bags wouldn&apos;t be identical.`;
+    bagStatus.innerHTML = msg;
+  }
+}
+function setBags(n){
+  n = Math.max(1, Math.min(20, parseInt(n) || 1));
+  bagSlider.value = n;
+  bagInput.value = n;
+  renderBags(n);
+}
+function showBest(){ setBags(5); }
+bagSlider.addEventListener('input', e => {
+  const n = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
+  bagInput.value = n;
+  renderBags(n);
+});
+// Don't overwrite input while user is typing — only sync slider + visual
+bagInput.addEventListener('input', e => {
+  const raw = e.target.value;
+  if (raw === '') return; // let them clear the field mid-type
+  const parsed = parseInt(raw);
+  if (isNaN(parsed)) return;
+  const n = Math.max(1, Math.min(20, parsed));
+  bagSlider.value = n;
+  renderBags(n);
+});
+bagInput.addEventListener('change', e => setBags(e.target.value));
+bagInput.addEventListener('blur', e => setBags(e.target.value));
+setBags(1);
+
+// ==================== PROBLEM 2: LIGHTHOUSES ====================
+const lhTimeline = document.getElementById('lhTimeline');
+const beamA = document.getElementById('beamA');
+const beamB = document.getElementById('beamB');
+const lhTimeSpan = document.getElementById('lhTime');
+const LH_MAX = 32;
+
+function buildLhTimeline(){
+  lhTimeline.innerHTML = '';
+  const trackA = document.createElement('div'); trackA.className = 'tl-track a'; lhTimeline.appendChild(trackA);
+  const trackB = document.createElement('div'); trackB.className = 'tl-track b'; lhTimeline.appendChild(trackB);
+  const labA = document.createElement('div'); labA.className = 'tl-label a'; labA.textContent = '🟡 A (6s)'; lhTimeline.appendChild(labA);
+  const labB = document.createElement('div'); labB.className = 'tl-label b'; labB.textContent = '🔵 B (8s)'; lhTimeline.appendChild(labB);
+  // Ticks every 2 sec
+  for (let t = 0; t <= LH_MAX; t += 2){
+    const x = 40 + (t / LH_MAX) * (600 - 60);
+    const tick = document.createElement('div'); tick.className = 'tl-tick'; tick.style.left = x + 'px'; tick.style.top = '55px'; lhTimeline.appendChild(tick);
+    const tick2 = document.createElement('div'); tick2.className = 'tl-tick'; tick2.style.left = x + 'px'; tick2.style.top = '125px'; lhTimeline.appendChild(tick2);
+    if (t % 4 === 0){
+      const lbl = document.createElement('div'); lbl.className = 'tl-tick-label'; lbl.style.left = x + 'px'; lbl.style.top = '180px'; lbl.textContent = t; lhTimeline.appendChild(lbl);
+    }
+  }
+  // Blink markers for A (every 6): 6,12,18,24,30
+  for (let t = 6; t <= LH_MAX; t += 6){
+    const x = 40 + (t / LH_MAX) * (600 - 60);
+    const dot = document.createElement('div'); dot.className = 'tl-blink a'; dot.style.left = x + 'px'; dot.style.top = '55px'; dot.dataset.t = t;
+    lhTimeline.appendChild(dot);
+  }
+  // Blink markers for B (every 8): 8,16,24,32
+  for (let t = 8; t <= LH_MAX; t += 8){
+    const x = 40 + (t / LH_MAX) * (600 - 60);
+    const dot = document.createElement('div'); dot.className = 'tl-blink b'; dot.style.left = x + 'px'; dot.style.top = '125px'; dot.dataset.t = t;
+    lhTimeline.appendChild(dot);
+  }
+  // Meet marker at 24
+  const meetX = 40 + (24 / LH_MAX) * (600 - 60);
+  const meet = document.createElement('div'); meet.className = 'tl-meet'; meet.style.left = meetX + 'px'; lhTimeline.appendChild(meet);
+  const meetLbl = document.createElement('div'); meetLbl.className = 'tl-meet-label'; meetLbl.style.left = meetX + 'px'; meetLbl.textContent = 'LCM = 24s ✓'; lhTimeline.appendChild(meetLbl);
+  // Cursor
+  const cursor = document.createElement('div'); cursor.className = 'tl-cursor'; cursor.id = 'lhCursor'; cursor.style.left = '40px'; cursor.style.top = '50px'; cursor.style.height = '90px'; lhTimeline.appendChild(cursor);
+}
+buildLhTimeline();
+
+let lhTimer = null; let lhT = 0;
+function stepLighthouse(){
+  lhT += 0.2;
+  if (lhT > LH_MAX){ stopLighthouse(); return; }
+  lhTimeSpan.textContent = lhT.toFixed(1);
+  const cursor = document.getElementById('lhCursor');
+  if (cursor){
+    const x = 40 + (lhT / LH_MAX) * (600 - 60);
+    cursor.style.left = x + 'px';
+  }
+  // Beam on if at multiple of 6 (within 0.15)
+  const aOn = (Math.abs(lhT % 6) < 0.2 || Math.abs((lhT % 6) - 6) < 0.2) && lhT > 0.1;
+  const bOn = (Math.abs(lhT % 8) < 0.2 || Math.abs((lhT % 8) - 8) < 0.2) && lhT > 0.1;
+  beamA.classList.toggle('on', aOn);
+  beamB.classList.toggle('on', bOn);
+  // Flash timeline dots when passed
+  document.querySelectorAll('#lhTimeline .tl-blink').forEach(d => {
+    const dt = parseFloat(d.dataset.t);
+    if (Math.abs(lhT - dt) < 0.3){ d.classList.add('flashing'); }
+    else { d.classList.remove('flashing'); }
+  });
+}
+function startLighthouse(){ if (lhTimer) return; lhTimer = setInterval(stepLighthouse, 100); }
+function stopLighthouse(){ if (lhTimer){ clearInterval(lhTimer); lhTimer = null; } }
+function resetLighthouse(){ stopLighthouse(); lhT = 0; lhTimeSpan.textContent = '0'; beamA.classList.remove('on'); beamB.classList.remove('on'); document.querySelectorAll('#lhTimeline .tl-blink').forEach(d=>d.classList.remove('flashing')); const c = document.getElementById('lhCursor'); if (c) c.style.left = '40px'; }
+
+// ==================== PROBLEM 3: BUSES ====================
+const busTimeline = document.getElementById('busTimeline');
+const busA_el = document.getElementById('busA');
+const busB_el = document.getElementById('busB');
+const busTimeSpan = document.getElementById('busTime');
+const busFlash = document.getElementById('busFlash');
+const BUS_MAX = 75;
+
+function buildBusTimeline(){
+  busTimeline.innerHTML = '';
+  const trackA = document.createElement('div'); trackA.className = 'tl-track a'; busTimeline.appendChild(trackA);
+  const trackB = document.createElement('div'); trackB.className = 'tl-track b'; busTimeline.appendChild(trackB);
+  const labA = document.createElement('div'); labA.className = 'tl-label a'; labA.textContent = '🚌 A (12)'; busTimeline.appendChild(labA);
+  const labB = document.createElement('div'); labB.className = 'tl-label b'; labB.textContent = '🚍 B (15)'; busTimeline.appendChild(labB);
+  // Ticks every 5 min
+  for (let t = 0; t <= BUS_MAX; t += 5){
+    const x = 40 + (t / BUS_MAX) * (600 - 60);
+    const tick = document.createElement('div'); tick.className = 'tl-tick'; tick.style.left = x + 'px'; tick.style.top = '55px'; busTimeline.appendChild(tick);
+    const tick2 = document.createElement('div'); tick2.className = 'tl-tick'; tick2.style.left = x + 'px'; tick2.style.top = '125px'; busTimeline.appendChild(tick2);
+    if (t % 15 === 0){
+      const lbl = document.createElement('div'); lbl.className = 'tl-tick-label'; lbl.style.left = x + 'px'; lbl.style.top = '180px'; lbl.textContent = t; busTimeline.appendChild(lbl);
+    }
+  }
+  // A departs every 12: 12,24,36,48,60,72
+  for (let t = 12; t <= BUS_MAX; t += 12){
+    const x = 40 + (t / BUS_MAX) * (600 - 60);
+    const dot = document.createElement('div'); dot.className = 'tl-blink a'; dot.style.left = x + 'px'; dot.style.top = '55px'; dot.dataset.t = t;
+    busTimeline.appendChild(dot);
+  }
+  // B departs every 15: 15,30,45,60,75
+  for (let t = 15; t <= BUS_MAX; t += 15){
+    const x = 40 + (t / BUS_MAX) * (600 - 60);
+    const dot = document.createElement('div'); dot.className = 'tl-blink b'; dot.style.left = x + 'px'; dot.style.top = '125px'; dot.dataset.t = t;
+    busTimeline.appendChild(dot);
+  }
+  // Meet at 60
+  const meetX = 40 + (60 / BUS_MAX) * (600 - 60);
+  const meet = document.createElement('div'); meet.className = 'tl-meet'; meet.style.left = meetX + 'px'; busTimeline.appendChild(meet);
+  const meetLbl = document.createElement('div'); meetLbl.className = 'tl-meet-label'; meetLbl.style.left = meetX + 'px'; meetLbl.textContent = 'LCM = 60 min ✓'; busTimeline.appendChild(meetLbl);
+  const cursor = document.createElement('div'); cursor.className = 'tl-cursor'; cursor.id = 'busCursor'; cursor.style.left = '40px'; cursor.style.top = '50px'; cursor.style.height = '90px'; busTimeline.appendChild(cursor);
+}
+buildBusTimeline();
+
+let busTimer = null; let busT = 0;
+function fmtTime(m){
+  const totalMin = 12*60 + m;
+  const h = Math.floor(totalMin/60);
+  const mn = Math.floor(totalMin%60);
+  const hDisp = ((h + 11) % 12) + 1;
+  return `${hDisp}:${String(mn).padStart(2,'0')}`;
+}
+function stepBus(){
+  busT += 1;
+  if (busT > BUS_MAX){ stopBus(); return; }
+  busTimeSpan.textContent = fmtTime(busT);
+  const cursor = document.getElementById('busCursor');
+  if (cursor){ const x = 40 + (busT / BUS_MAX) * (600 - 60); cursor.style.left = x + 'px'; }
+
+  // Move buses: Bus A slides right when just departed (during 3 min after each departure), then resets to left
+  const aPhase = busT % 12;
+  const bPhase = busT % 15;
+  // Simple: buses "leave" position (jump left) at each interval, drift right otherwise
+  const aX = 20 + (aPhase / 12) * 220;
+  const bX = 20 + (bPhase / 15) * 220;
+  busA_el.style.left = aX + 'px';
+  busB_el.style.left = bX + 'px';
+
+  // Flash timeline dots when passed
+  document.querySelectorAll('#busTimeline .tl-blink').forEach(d => {
+    const dt = parseFloat(d.dataset.t);
+    if (Math.abs(busT - dt) < 1){ d.classList.add('flashing'); }
+    else { d.classList.remove('flashing'); }
+  });
+
+  // Meeting flash at 60
+  if (busT === 60){
+    busFlash.classList.add('on');
+    setTimeout(() => busFlash.classList.remove('on'), 1300);
+  }
+}
+function startBus(){ if (busTimer) return; busTimer = setInterval(stepBus, 250); }
+function stopBus(){ if (busTimer){ clearInterval(busTimer); busTimer = null; } }
+function resetBus(){ stopBus(); busT = 0; busTimeSpan.textContent = '12:00'; busA_el.style.left = '20px'; busB_el.style.left = '20px'; document.querySelectorAll('#busTimeline .tl-blink').forEach(d=>d.classList.remove('flashing')); const c = document.getElementById('busCursor'); if (c) c.style.left = '40px'; }
+</script>
+</body>
+</html>
