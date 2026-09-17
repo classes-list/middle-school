@@ -85,32 +85,49 @@ function render(){
   const V = L * W * H;
   document.getElementById('volResult').innerHTML = `📦 <strong>Volume = length × width × height = ${L} × ${W} × ${H}</strong><span class="big">V = ${V} cubic units</span>`;
 
-  // Draw isometric box with unit cubes
-  const svg = document.getElementById('boxGraph');
-  const cubeSize = Math.min(50, 250 / Math.max(L, W, H));
-  const isoX = cubeSize * 0.866; // cos(30)
-  const isoY = cubeSize * 0.5;   // sin(30)
+  // Compute bounding box of the whole isometric arrangement, then auto-scale + center
+  const VIEW_W = 500, VIEW_H = 400, PAD = 30;
+  // With cubeSize=1 to compute layout:
+  // isoX = 0.866, isoY = 0.5
+  // Cube at (l, w, h) has top-front corner at:
+  //   x = l*isoX - w*isoX
+  //   y = -h + l*isoY + w*isoY
+  // Cube extents: x from (x_pos - isoX) to (x_pos + isoX). y from y_pos to y_pos + 2*isoY + 1
+  const isoX0 = 0.866, isoY0 = 0.5;
+  // Loop through all cube corners to find bounding box
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (let h = 0; h < H; h++) for (let w = 0; w < W; w++) for (let l = 0; l < L; l++){
+    const x = l*isoX0 - w*isoX0;
+    const y = -h + l*isoY0 + w*isoY0;
+    minX = Math.min(minX, x - isoX0);
+    maxX = Math.max(maxX, x + isoX0);
+    minY = Math.min(minY, y);
+    maxY = Math.max(maxY, y + 2*isoY0 + 1);
+  }
+  const bboxW = maxX - minX;
+  const bboxH = maxY - minY;
+  // Fit into (VIEW_W - 2*PAD) × (VIEW_H - 2*PAD)
+  const scale = Math.min((VIEW_W - 2*PAD) / bboxW, (VIEW_H - 2*PAD) / bboxH);
+  const cubeSize = scale; // scale factor becomes our cube size
+  const isoX = cubeSize * 0.866;
+  const isoY = cubeSize * 0.5;
+  const drawW = bboxW * scale, drawH = bboxH * scale;
+  const offsetX = PAD + (VIEW_W - 2*PAD - drawW)/2 - minX*scale;
+  const offsetY = PAD + (VIEW_H - 2*PAD - drawH)/2 - minY*scale;
 
-  // Compute origin so box is centered
-  const boxW = L * isoX + W * isoX;
-  const boxH = L * isoY + W * isoY + H * cubeSize;
-  const originX = 250 - (L * isoX)/2 - (W * isoX)/2 + (W * isoX);
-  const originY = 380 - H * cubeSize;
-
-  // Draw unit cubes back-to-front, bottom-to-top
+  // Draw cubes back-to-front, bottom-to-top for proper occlusion
   let cubes = '';
   for (let h = 0; h < H; h++){
     for (let w = W - 1; w >= 0; w--){
       for (let l = 0; l < L; l++){
-        // Cube position (top-front corner)
-        const x = originX + l * isoX - w * isoX;
-        const y = originY - h * cubeSize + l * isoY + w * isoY;
+        const x = offsetX + (l*isoX0 - w*isoX0)*scale;
+        const y = offsetY + (-h + l*isoY0 + w*isoY0)*scale;
         cubes += drawCube(x, y, cubeSize);
       }
     }
   }
 
-  svg.innerHTML = cubes;
+  document.getElementById('boxGraph').innerHTML = cubes;
 }
 
 function drawCube(x, y, s){
