@@ -3025,7 +3025,7 @@ function showLesson(unitId) {
       } else if (unit.ytUrl || unit.ytSearch) {
         resBtns.push(`<a class="btn-yt"    href="${unit.ytUrl || 'https://www.youtube.com/results?search_query=' + encodeURIComponent(unit.ytSearch)}" target="_blank" rel="noopener" style="${S}">▶️ YouTube</a>`);
       }
-      if (unit.labUrl)    resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">🎯 Lab</a>`);
+      if (unit.labUrl)    resBtns.push(`<a class="btn-lab"   href="${unit.labUrl}"   target="_blank" rel="noopener" style="${S}">${unit.labTitle || '🎯 Visual Lab'}</a>`);
       if (unit.graphLabUrl && unit.id !== 'metrics-sci-process') resBtns.push(`<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank" rel="noopener" style="${S}">📊 Data Analysis</a>`);
     }
     const scBtn = (!hideExtras) ? `<button class="btn" onclick="showHandout()" style="${S}">🔬 Science Connection</button>` : '';
