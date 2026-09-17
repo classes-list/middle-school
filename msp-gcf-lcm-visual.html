@@ -227,13 +227,11 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
   <div class="bus-scene">
     <div id="busFlash" class="meeting-flash"></div>
     <div class="bus-station">🏢 Station</div>
-    <div class="bus-lane">
+    <div class="bus-lane" id="laneA">
       <div class="bus-label">Bus A — every 12 min</div>
-      <div id="busA" class="bus">🚌</div>
     </div>
-    <div class="bus-lane">
+    <div class="bus-lane" id="laneB">
       <div class="bus-label">Bus B — every 15 min</div>
-      <div id="busB" class="bus bus-b">🚍</div>
     </div>
   </div>
 
@@ -477,11 +475,16 @@ function resetLighthouse(){ stopLighthouse(); lhT = 0; lhTimeSpan.textContent = 
 
 // ==================== PROBLEM 3: BUSES ====================
 const busTimeline = document.getElementById('busTimeline');
-const busA_el = document.getElementById('busA');
-const busB_el = document.getElementById('busB');
+const laneA_el = document.getElementById('laneA');
+const laneB_el = document.getElementById('laneB');
 const busTimeSpan = document.getElementById('busTime');
 const busFlash = document.getElementById('busFlash');
 const BUS_MAX = 75;
+const BUS_SPEED = 32; // pixels per minute after departure
+const BUS_STATION_X = 20; // starting x for a new bus
+const BUS_OFFSCREEN_X = 900; // remove buses past this point
+let activeBusesA = []; // {el, birthT}
+let activeBusesB = [];
 
 function buildBusTimeline(){
   busTimeline.innerHTML = '';
@@ -526,6 +529,35 @@ function fmtTime(m){
   const hDisp = ((h + 11) % 12) + 1;
   return `${hDisp}:${String(mn).padStart(2,'0')}`;
 }
+function spawnBus(lane, birthT){
+  const laneEl = lane === 'A' ? laneA_el : laneB_el;
+  const bus = document.createElement('div');
+  bus.className = 'bus dyn-bus' + (lane === 'B' ? ' bus-b' : '');
+  bus.textContent = lane === 'A' ? '🚌' : '🚍';
+  bus.style.left = BUS_STATION_X + 'px';
+  laneEl.appendChild(bus);
+  const arr = lane === 'A' ? activeBusesA : activeBusesB;
+  arr.push({el: bus, birthT: birthT});
+}
+function clearAllBuses(){
+  document.querySelectorAll('#laneA .dyn-bus, #laneB .dyn-bus').forEach(b => b.remove());
+  activeBusesA = [];
+  activeBusesB = [];
+}
+function updateBusPositions(){
+  [activeBusesA, activeBusesB].forEach(arr => {
+    for (let i = arr.length - 1; i >= 0; i--){
+      const age = busT - arr[i].birthT;
+      const x = BUS_STATION_X + age * BUS_SPEED;
+      if (x > BUS_OFFSCREEN_X){
+        arr[i].el.remove();
+        arr.splice(i, 1);
+      } else {
+        arr[i].el.style.left = x + 'px';
+      }
+    }
+  });
+}
 function stepBus(){
   busT += 1;
   if (busT > BUS_MAX){ stopBus(); return; }
@@ -533,14 +565,12 @@ function stepBus(){
   const cursor = document.getElementById('busCursor');
   if (cursor){ const x = 40 + (busT / BUS_MAX) * (600 - 60); cursor.style.left = x + 'px'; }
 
-  // Move buses: Bus A slides right when just departed (during 3 min after each departure), then resets to left
-  const aPhase = busT % 12;
-  const bPhase = busT % 15;
-  // Simple: buses "leave" position (jump left) at each interval, drift right otherwise
-  const aX = 20 + (aPhase / 12) * 220;
-  const bX = 20 + (bPhase / 15) * 220;
-  busA_el.style.left = aX + 'px';
-  busB_el.style.left = bX + 'px';
+  // Spawn new buses at scheduled departure times
+  if (busT % 12 === 0) spawnBus('A', busT);
+  if (busT % 15 === 0) spawnBus('B', busT);
+
+  // Move all existing buses (older ones keep going right until they exit)
+  updateBusPositions();
 
   // Flash timeline dots when passed
   document.querySelectorAll('#busTimeline .tl-blink').forEach(d => {
@@ -557,7 +587,20 @@ function stepBus(){
 }
 function startBus(){ if (busTimer) return; busTimer = setInterval(stepBus, 250); }
 function stopBus(){ if (busTimer){ clearInterval(busTimer); busTimer = null; } }
-function resetBus(){ stopBus(); busT = 0; busTimeSpan.textContent = '12:00'; busA_el.style.left = '20px'; busB_el.style.left = '20px'; document.querySelectorAll('#busTimeline .tl-blink').forEach(d=>d.classList.remove('flashing')); const c = document.getElementById('busCursor'); if (c) c.style.left = '40px'; }
+function resetBus(){
+  stopBus();
+  busT = 0;
+  busTimeSpan.textContent = '12:00';
+  clearAllBuses();
+  // Initial buses at station (the noon departure)
+  spawnBus('A', 0);
+  spawnBus('B', 0);
+  document.querySelectorAll('#busTimeline .tl-blink').forEach(d=>d.classList.remove('flashing'));
+  const c = document.getElementById('busCursor'); if (c) c.style.left = '40px';
+}
+// Initialize with buses at station at 12:00
+spawnBus('A', 0);
+spawnBus('B', 0);
 </script>
 </body>
 </html>
