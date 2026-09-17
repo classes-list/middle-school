@@ -2943,6 +2943,30 @@ function renderHome() {
         <a class="pill" href="msp-midquarter-answers-g7.pdf" download onclick="event.stopPropagation();" style="text-decoration:none; background:#7c3aed; color:#fff; padding:4px 10px;">🔑 Answer Key</a>
       </div>`;
     grid.appendChild(mq);
+    appendEndquarterCard();
+  }
+  function appendEndquarterCard() {
+    const eq = document.createElement('div');
+    eq.className = 'unit-card';
+    eq.style.background = 'linear-gradient(135deg, #dbeafe, #bfdbfe)';
+    eq.style.borderLeft = '5px solid #1e3a8a';
+    eq.onclick = () => window.open('msp-endquarter-g7.html?mode=practice', '_blank', 'noopener');
+    eq.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">🎯</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title"><span class="unit-badge" style="background:#1e3a8a;">END TEST</span>End of Q1 Test</div>
+          <div class="unit-card-cc">20 Questions · End-of-Q1 Content</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">Cumulative Quarter 1 test covering all Q1 topics: Metric Conversion, Experimental Error, Integer Operations, Rational Number Operations (fractions), Scientific Notation, and Density. Try the practice version first, then submit the graded version to Dr. Park.</div>
+      <div class="unit-card-pills" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+        <a class="pill" href="msp-endquarter-g7.html?mode=practice" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#059669; color:#fff; padding:4px 10px;">📚 Practice</a>
+        <a class="pill" href="msp-endquarter-g7.html?mode=graded" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#1e3a8a; color:#fff; padding:4px 10px;">✅ Take Graded</a>
+        <a class="pill" href="msp-endquarter-print-g7.pdf" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#0284c7; color:#fff; padding:4px 10px;">🖨 Print PDF</a>
+        <a class="pill" href="msp-endquarter-answers-g7.pdf" download onclick="event.stopPropagation();" style="text-decoration:none; background:#7c3aed; color:#fff; padding:4px 10px;">🔑 Answer Key</a>
+      </div>`;
+    grid.appendChild(eq);
   }
   UNITS.forEach((unit, idx) => {
     const card = document.createElement('div');
@@ -2986,7 +3010,6 @@ function renderSidebar() {
   UNITS.forEach((unit, idx) => {
     const q = Q_MAP[unit.id] || 0;
     if (q !== lastQ && Q_LABELS[q]) {
-      if (lastQ > 0) appendEoq(lastQ);
       const hdr = document.createElement('div');
       hdr.className = 'sidebar-quarter';
       hdr.textContent = Q_LABELS[q];
@@ -2999,7 +3022,6 @@ function renderSidebar() {
     item.onclick = () => showLesson(unit.id);
     sidebar.appendChild(item);
   });
-  if (lastQ > 0) appendEoq(lastQ);
 }
 
 function setTopbar() {
