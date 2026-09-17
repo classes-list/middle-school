@@ -315,21 +315,30 @@ const bagInput = document.getElementById('bagInput');
 const bagsArea = document.getElementById('bagsArea');
 const bagStatus = document.getElementById('bagStatus');
 
-function renderBags(n){
+// Single source of truth
+let currentBags = 1;
+
+function clampN(v){
+  const n = parseInt(v);
+  if (isNaN(n)) return currentBags;
+  return Math.max(1, Math.min(20, n));
+}
+
+function renderBags(){
+  const n = currentBags;
   bagsArea.innerHTML = '';
   const stickersPer = STICKERS / n;
   const pencilsPer = PENCILS / n;
   const stickersLeft = STICKERS % n;
   const pencilsLeft = PENCILS % n;
   const evenSplit = (stickersLeft === 0 && pencilsLeft === 0);
+  const sInt = Math.floor(stickersPer);
+  const pInt = Math.floor(pencilsPer);
 
-  // Show up to 20 bags
   const showN = Math.min(n, 20);
   for (let i = 0; i < showN; i++){
     const bag = document.createElement('div');
     bag.className = 'bag' + (evenSplit ? '' : ' uneven');
-    const sInt = Math.floor(stickersPer);
-    const pInt = Math.floor(pencilsPer);
     bag.innerHTML = `
       <div class="bag-label">Bag ${i+1}</div>
       <div class="items">${'🌟'.repeat(sInt)}${evenSplit ? '' : (stickersLeft > 0 ? '<span style="opacity:.4">?</span>' : '')}</div>
@@ -349,14 +358,17 @@ function renderBags(n){
     bagsArea.appendChild(lo);
   }
 
-  // Status
+  // Status — always reflects currentBags
   if (evenSplit){
     if (n === 5){
       bagStatus.className = 'status-banner status-best';
       bagStatus.innerHTML = `🎉 <strong style="font-size:1.15rem;">THAT&apos;S IT! 5 bags is your answer!</strong> 🎉<br>Each bag has ${sInt} stickers + ${pInt} pencils. Nothing left over. This is the LARGEST number of identical bags Emma can make — <strong>GCF(15, 20) = 5</strong>. ⭐`;
+    } else if (n === 1){
+      bagStatus.className = 'status-banner status-good';
+      bagStatus.innerHTML = `🤔 <strong>1 bag works</strong> — but that&apos;s just putting everything in one bag! Emma wants the LARGEST number of identical bags. Slide up to try more.`;
     } else {
       bagStatus.className = 'status-banner status-good';
-      bagStatus.innerHTML = `✅ <strong>${n} bags works!</strong> Each bag gets ${Math.floor(stickersPer)} stickers &amp; ${Math.floor(pencilsPer)} pencils. But can she make MORE bags with no leftovers? Try bigger numbers!`;
+      bagStatus.innerHTML = `✅ <strong>${n} bags works!</strong> Each bag gets ${sInt} stickers &amp; ${pInt} pencils. But can she make MORE bags with no leftovers? Try bigger numbers!`;
     }
   } else {
     bagStatus.className = 'status-banner status-bad';
@@ -367,30 +379,31 @@ function renderBags(n){
     bagStatus.innerHTML = msg;
   }
 }
-function setBags(n){
-  n = Math.max(1, Math.min(20, parseInt(n) || 1));
-  bagSlider.value = n;
-  bagInput.value = n;
-  renderBags(n);
+
+function setBags(v){
+  const n = clampN(v);
+  currentBags = n;
+  bagSlider.value = String(n);
+  bagInput.value = String(n);
+  renderBags();
 }
+
 function showBest(){ setBags(5); }
-bagSlider.addEventListener('input', e => {
-  const n = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
-  bagInput.value = n;
-  renderBags(n);
+
+// Slider drives everything
+bagSlider.addEventListener('input', () => setBags(bagSlider.value));
+bagSlider.addEventListener('change', () => setBags(bagSlider.value));
+// Input field: sync on any change
+bagInput.addEventListener('input', () => {
+  const raw = bagInput.value;
+  if (raw === '' || raw === '-') return; // let them clear mid-type
+  setBags(raw);
 });
-// Don't overwrite input while user is typing — only sync slider + visual
-bagInput.addEventListener('input', e => {
-  const raw = e.target.value;
-  if (raw === '') return; // let them clear the field mid-type
-  const parsed = parseInt(raw);
-  if (isNaN(parsed)) return;
-  const n = Math.max(1, Math.min(20, parsed));
-  bagSlider.value = n;
-  renderBags(n);
-});
-bagInput.addEventListener('change', e => setBags(e.target.value));
-bagInput.addEventListener('blur', e => setBags(e.target.value));
+bagInput.addEventListener('change', () => setBags(bagInput.value));
+bagInput.addEventListener('blur', () => setBags(bagInput.value));
+bagInput.addEventListener('keyup', () => setBags(bagInput.value));
+
+// Initial render
 setBags(1);
 
 // ==================== PROBLEM 2: LIGHTHOUSES ====================
