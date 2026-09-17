@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pythagorean Theorem Visual — Math 8</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:20px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; flex-direction:column; align-items:center; gap:6px; }
+.controls input[type=range] { width:180px; }
+.controls .val { font-weight:900; color:var(--navy); font-size:1.1rem; background:#fff; padding:2px 10px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:12px; margin:16px 0; text-align:center; }
+.graph-svg { max-width:100%; height:auto; }
+.equation-display { text-align:center; margin:16px 0; font-family:'Courier New', monospace; font-size:1.3rem; font-weight:900; color:var(--navy); background:#fef08a; padding:14px 18px; border-radius:10px; border:2px solid var(--gold); }
+.equation-display .a2 { color:var(--red); }
+.equation-display .b2 { color:var(--blue); }
+.equation-display .c2 { color:var(--green); }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset-btn:hover { background:#0f172a; }
+.triple-tag { display:inline-block; background:#22c55e; color:#fff; font-weight:800; padding:4px 10px; border-radius:6px; font-size:.85rem; margin-left:8px; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-8.html" class="back-link">← Back to Math 8</a>
+
+<header>
+  <div class="eyebrow">Math 8 · Pythagorean Theorem · Visual Explorer</div>
+  <h1>📐 a² + b² = c² — See The Squares Add Up</h1>
+  <p class="tagline">The theorem isn&apos;t about lengths. It&apos;s about the AREAS of the squares on each side.</p>
+</header>
+
+<div class="big-idea">
+  <strong>The visual truth:</strong> For any right triangle, the <strong>square</strong> built on the hypotenuse has the SAME area as the two squares on the legs, added together. Change the legs — watch the squares change size — the equation always balances.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Set The Legs, Watch The Squares</h2>
+
+  <div class="controls">
+    <label>Leg a (horizontal) <input type="range" id="legA" min="1" max="12" step="1" value="3"><span class="val" id="aVal">3</span></label>
+    <label>Leg b (vertical) <input type="range" id="legB" min="1" max="12" step="1" value="4"><span class="val" id="bVal">4</span></label>
+  </div>
+
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setPreset(3,4)">3-4-5 ✨</button>
+    <button class="preset-btn" onclick="setPreset(5,12)">5-12-13 ✨</button>
+    <button class="preset-btn" onclick="setPreset(6,8)">6-8-10 ✨</button>
+    <button class="preset-btn" onclick="setPreset(8,15)">8-15-17 ✨</button>
+    <button class="preset-btn" onclick="setPreset(2,3)">Non-integer</button>
+  </div>
+
+  <div class="graph-wrap">
+    <svg class="graph-svg" id="pythagGraph" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div class="equation-display" id="eqDisplay"></div>
+
+  <div id="tripleTag" style="text-align:center;"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip">
+    <strong>Pythagorean Triples:</strong> Some triangles have all-integer sides — like <strong>3-4-5</strong>, <strong>5-12-13</strong>, <strong>6-8-10</strong>, <strong>8-15-17</strong>, <strong>7-24-25</strong>, <strong>9-40-41</strong>. Memorize these; they show up EVERYWHERE on tests.
+  </div>
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;">
+    <strong>Finding c:</strong> c = √(a² + b²). Always TAKE THE SQUARE ROOT at the end — a common mistake is stopping at c² and forgetting the last step.
+  </div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;">
+    <strong>Finding a missing leg:</strong> Rearrange to a² = c² − b². Then a = √(c² − b²). The hypotenuse is always the LONGEST side and always OPPOSITE the right angle.
+  </div>
+</section>
+
+<footer>Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Pythagorean Visual Explorer</footer>
+</div>
+
+<script>
+let A = 3, B = 4;
+const TRIPLES = [[3,4,5],[5,12,13],[6,8,10],[8,15,17],[7,24,25],[9,40,41],[9,12,15],[12,16,20]];
+
+function setPreset(a, b){
+  A = a; B = b;
+  document.getElementById('legA').value = a;
+  document.getElementById('legB').value = b;
+  render();
+}
+
+function render(){
+  document.getElementById('aVal').textContent = A;
+  document.getElementById('bVal').textContent = B;
+
+  const c2 = A*A + B*B;
+  const c = Math.sqrt(c2);
+  const isInt = Math.abs(c - Math.round(c)) < 0.001;
+
+  // Draw
+  const svg = document.getElementById('pythagGraph');
+  const W = 500, H = 500;
+  // Fit triangle so squares fit too: scale so (A + max(A,B)) squares fit
+  const maxDim = Math.max(A + Math.max(A, B), B + Math.max(A, B));
+  const scale = Math.min(220 / (A + Math.max(A,B)), 220 / (B + Math.max(A,B)));
+  const s = Math.max(6, Math.min(30, scale));
+
+  // Triangle vertices — right angle at bottom-left
+  const originX = 200, originY = 350;
+  const rightBL = [originX, originY];
+  const rightBR = [originX + A*s, originY];
+  const rightTL = [originX, originY - B*s];
+
+  let g = '';
+  // Square on hypotenuse (rotated) — on the outside of triangle
+  // Hypotenuse from rightBR to rightTL
+  const hx = rightTL[0] - rightBR[0], hy = rightTL[1] - rightBR[1];
+  const hLen = Math.sqrt(hx*hx + hy*hy);
+  // Perpendicular direction (outward from triangle - which is to the upper right)
+  const perpX = -hy / hLen, perpY = hx / hLen;
+  // But we need it on the OTHER side (outward). Test:
+  // Center of triangle relative to hypotenuse midpoint:
+  const midHx = (rightBR[0] + rightTL[0])/2, midHy = (rightBR[1] + rightTL[1])/2;
+  const cxT = (rightBL[0] + rightBR[0] + rightTL[0])/3, cyT = (rightBL[1] + rightBR[1] + rightTL[1])/3;
+  // Vector from mid to triangle center
+  const inX = cxT - midHx, inY = cyT - midHy;
+  // If perpX*inX + perpY*inY > 0, we're pointing inward — flip
+  let outX = perpX, outY = perpY;
+  if (perpX*inX + perpY*inY > 0){ outX = -perpX; outY = -perpY; }
+  // Square corners
+  const sqC1 = rightBR;
+  const sqC2 = rightTL;
+  const sqC3 = [rightTL[0] + outX*hLen, rightTL[1] + outY*hLen];
+  const sqC4 = [rightBR[0] + outX*hLen, rightBR[1] + outY*hLen];
+
+  // Square on leg a (below)
+  const aSq = `<rect x="${originX}" y="${originY}" width="${A*s}" height="${A*s}" fill="rgba(220,38,38,0.25)" stroke="#dc2626" stroke-width="2"/>`;
+  const aLabel = `<text x="${originX + A*s/2}" y="${originY + A*s/2 + 6}" text-anchor="middle" font-size="16" font-weight="900" fill="#7f1d1d">a² = ${A*A}</text>`;
+  // Square on leg b (left)
+  const bSq = `<rect x="${originX - B*s}" y="${originY - B*s}" width="${B*s}" height="${B*s}" fill="rgba(37,99,235,0.25)" stroke="#2563eb" stroke-width="2"/>`;
+  const bLabel = `<text x="${originX - B*s/2}" y="${originY - B*s/2 + 6}" text-anchor="middle" font-size="16" font-weight="900" fill="#1e3a8a">b² = ${B*B}</text>`;
+  // Square on hypotenuse
+  const cSqPath = `M ${sqC1[0]} ${sqC1[1]} L ${sqC2[0]} ${sqC2[1]} L ${sqC3[0]} ${sqC3[1]} L ${sqC4[0]} ${sqC4[1]} Z`;
+  const cSq = `<path d="${cSqPath}" fill="rgba(34,197,94,0.25)" stroke="#059669" stroke-width="2"/>`;
+  // c² label at square center
+  const cSqCx = (sqC1[0] + sqC2[0] + sqC3[0] + sqC4[0])/4;
+  const cSqCy = (sqC1[1] + sqC2[1] + sqC3[1] + sqC4[1])/4;
+  const cLabel = `<text x="${cSqCx}" y="${cSqCy+6}" text-anchor="middle" font-size="16" font-weight="900" fill="#064e3b">c² = ${c2}</text>`;
+
+  // Triangle on top
+  const triPath = `M ${rightBL[0]} ${rightBL[1]} L ${rightBR[0]} ${rightBR[1]} L ${rightTL[0]} ${rightTL[1]} Z`;
+  const tri = `<path d="${triPath}" fill="#fef3c7" stroke="#1a2a4a" stroke-width="3"/>`;
+  // Right angle marker
+  const rm = `<rect x="${rightBL[0]}" y="${rightBL[1]-12}" width="12" height="12" fill="none" stroke="#1a2a4a" stroke-width="2"/>`;
+  // Leg labels
+  const legALabel = `<text x="${originX + A*s/2}" y="${originY - 6}" text-anchor="middle" font-size="14" font-weight="900" fill="#dc2626">a = ${A}</text>`;
+  const legBLabel = `<text x="${originX + 6}" y="${originY - B*s/2}" font-size="14" font-weight="900" fill="#2563eb">b = ${B}</text>`;
+  // Hypotenuse label
+  const hMidX = (rightBR[0] + rightTL[0])/2, hMidY = (rightBR[1] + rightTL[1])/2;
+  const cText = isInt ? c : c.toFixed(2);
+  const hypLabel = `<text x="${hMidX + outX*15}" y="${hMidY + outY*15 + 4}" text-anchor="middle" font-size="14" font-weight="900" fill="#059669">c = ${cText}</text>`;
+
+  svg.innerHTML = aSq + bSq + cSq + aLabel + bLabel + cLabel + tri + rm + legALabel + legBLabel + hypLabel;
+
+  // Equation
+  const eq = document.getElementById('eqDisplay');
+  eq.innerHTML = `<span class="a2">${A}²</span> + <span class="b2">${B}²</span> = <span class="c2">${c2}</span><br>
+    <span style="font-size:.9em;">${A*A} + ${B*B} = ${c2}</span><br>
+    <span style="font-size:.9em;">c = √${c2} = <strong>${cText}</strong></span>`;
+
+  // Check for Pythagorean triple
+  const tag = document.getElementById('tripleTag');
+  const found = TRIPLES.find(t => (t[0]===A && t[1]===B) || (t[1]===A && t[0]===B));
+  if (found){
+    tag.innerHTML = `<span class="triple-tag">🎉 Pythagorean Triple: ${found[0]}-${found[1]}-${found[2]}</span>`;
+  } else if (isInt){
+    tag.innerHTML = `<span class="triple-tag" style="background:#0369a1;">✨ Integer hypotenuse: ${A}-${B}-${Math.round(c)}</span>`;
+  } else {
+    tag.innerHTML = `<span style="color:#64748b; font-size:.85rem;">Hypotenuse c ≈ ${cText} (not a whole number)</span>`;
+  }
+}
+
+['legA','legB'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => {
+    const v = parseInt(e.target.value);
+    if (id === 'legA') A = v;
+    if (id === 'legB') B = v;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>

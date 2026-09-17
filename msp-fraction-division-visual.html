@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fraction Division Visual Explorer — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--purple); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.problem-text { background:#f5f3ff; padding:14px 18px; border-left:4px solid var(--purple); border-radius:6px; margin:12px 0 18px; font-size:1.1rem; text-align:center; font-weight:700; color:var(--navy); }
+.problem-text .frac { display:inline-block; vertical-align:middle; text-align:center; padding:0 4px; }
+.problem-text .frac .n { display:block; border-bottom:2px solid var(--navy); padding:0 4px; }
+.controls { display:flex; gap:16px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); }
+.controls input[type=number] { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; width:60px; }
+.cups-area { display:flex; gap:20px; justify-content:center; align-items:flex-end; padding:20px; background:linear-gradient(180deg,#e0f2fe 0%,#fde68a 100%); border-radius:12px; margin:18px 0; min-height:280px; flex-wrap:wrap; }
+.cup { position:relative; width:120px; height:180px; }
+.cup-svg { width:100%; height:100%; }
+.cup-label { text-align:center; font-weight:900; color:var(--navy); font-size:.9rem; margin-top:4px; }
+.answer-banner { background:linear-gradient(120deg,#d1fae5,#a7f3d0); border:2px solid var(--green); border-radius:10px; padding:16px 22px; text-align:center; font-size:1.15rem; font-weight:800; color:#065f46; margin:16px 0; }
+.answer-banner .big { font-size:1.6rem; color:var(--green); display:block; margin:4px 0; }
+.formula-box { background:#f8fafc; border:1px dashed #94a3b8; border-radius:8px; padding:14px 18px; margin:12px 0; font-size:1rem; }
+.formula-box code { background:#e0e7ff; padding:2px 6px; border-radius:4px; color:var(--navy); font-weight:700; }
+.formula-box .step { margin:6px 0; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--purple); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset-btn:hover { background:#6d28d9; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Fraction Division · Visual Explorer</div>
+  <h1>🥤 Fraction Division — How Many Fit?</h1>
+  <p class="tagline">Dividing by a fraction means: <em>how many of THIS size fit inside THAT?</em></p>
+</header>
+
+<div class="big-idea">
+  <strong>Reframe division:</strong> <code>6 ÷ 2 = 3</code> asks &quot;how many 2s fit in 6?&quot; The answer is 3.<br>
+  Same idea for fractions: <code>2 ÷ ⅓</code> asks &quot;how many ⅓-cups fit in 2 whole cups?&quot; Watch it fill up.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: How Many Small Cups Fit in the Big One?</h2>
+  <div class="problem-text">
+    How many <span class="frac"><span class="n" id="divNum">1</span><span id="divDen">3</span></span>-cups fit in <span id="wholeDisplay">2</span> whole cups?
+  </div>
+
+  <div class="controls">
+    <label>Whole cups: <input type="number" id="whole" min="1" max="6" value="2"></label>
+    <label>Divide by:
+      <input type="number" id="divN" min="1" max="6" value="1"> /
+      <input type="number" id="divD" min="2" max="8" value="3">
+    </label>
+  </div>
+
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setPreset(2,1,3)">2 ÷ ⅓</button>
+    <button class="preset-btn" onclick="setPreset(3,1,2)">3 ÷ ½</button>
+    <button class="preset-btn" onclick="setPreset(1,1,4)">1 ÷ ¼</button>
+    <button class="preset-btn" onclick="setPreset(2,2,3)">2 ÷ ⅔</button>
+    <button class="preset-btn" onclick="setPreset(4,1,2)">4 ÷ ½</button>
+  </div>
+
+  <div class="cups-area" id="cupsArea"></div>
+
+  <div class="answer-banner" id="answerBanner"></div>
+
+  <div class="formula-box" id="formulaBox"></div>
+
+  <div class="tip">
+    <strong>Why &quot;flip and multiply&quot; works:</strong> Dividing by ⅓ is the same as multiplying by 3, because there are 3 thirds in every whole. So <code>2 ÷ ⅓ = 2 × 3 = 6</code>. The trick just does the counting for you.
+  </div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 The Big Pattern</h2>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;">
+    <strong>Dividing by a fraction less than 1 makes the answer BIGGER.</strong> That feels wrong at first — but it&apos;s true. Smaller pieces mean MORE of them fit inside a whole.
+  </div>
+  <div class="tip">
+    <strong>Dividing by a fraction greater than 1</strong> (like 3/2) makes the answer SMALLER, just like whole-number division. The fraction&apos;s size vs. 1 tells you which way it goes.
+  </div>
+</section>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Fraction Division Visual</footer>
+</div>
+
+<script>
+let wholeCups = 2, divN = 1, divD = 3;
+
+function clamp(v, min, max){const n = parseInt(v); return isNaN(n) ? min : Math.max(min, Math.min(max, n));}
+
+function setPreset(w, n, d){
+  wholeCups = w; divN = n; divD = d;
+  document.getElementById('whole').value = w;
+  document.getElementById('divN').value = n;
+  document.getElementById('divD').value = d;
+  render();
+}
+
+function drawCup(fillFractions, colors, label){
+  // fillFractions: array of fractional heights [0-1] to fill in order, each with a color
+  const cup = document.createElement('div');
+  cup.className = 'cup';
+  const svgH = 160, svgW = 100;
+  const cupTop = 10, cupBot = 150;
+  const cupInnerH = cupBot - cupTop;
+  let segments = '';
+  let totalFilled = 0;
+  fillFractions.forEach((f, i) => {
+    const startY = cupBot - totalFilled * cupInnerH - f * cupInnerH;
+    const endY = cupBot - totalFilled * cupInnerH;
+    const h = endY - startY;
+    const color = colors[i % colors.length];
+    segments += `<rect x="12" y="${startY}" width="76" height="${h}" fill="${color}" stroke="#0284c7" stroke-width="1" opacity="0.85"/>`;
+    // Label the piece
+    if (h > 12){
+      segments += `<text x="50" y="${startY + h/2 + 4}" text-anchor="middle" font-size="11" font-weight="800" fill="#075985">${divN}/${divD}</text>`;
+    }
+    totalFilled += f;
+  });
+  cup.innerHTML = `
+    <svg class="cup-svg" viewBox="0 0 ${svgW} ${svgH}">
+      <!-- Cup outline -->
+      <path d="M 10 5 L 10 150 Q 10 155 15 155 L 85 155 Q 90 155 90 150 L 90 5" fill="#fff" stroke="#0369a1" stroke-width="3"/>
+      <!-- Fill -->
+      ${segments}
+      <!-- Rim -->
+      <ellipse cx="50" cy="5" rx="40" ry="4" fill="none" stroke="#0369a1" stroke-width="3"/>
+    </svg>
+    <div class="cup-label">${label}</div>
+  `;
+  return cup;
+}
+
+function render(){
+  document.getElementById('divNum').textContent = divN;
+  document.getElementById('divDen').textContent = divD;
+  document.getElementById('wholeDisplay').textContent = wholeCups;
+
+  // How many divN/divD fit in wholeCups?
+  // Answer = wholeCups × divD / divN
+  const answerNum = wholeCups * divD;
+  const answerDen = divN;
+  const g = gcd(answerNum, answerDen);
+  const reducedN = answerNum / g, reducedD = answerDen / g;
+  const decimalAnswer = answerNum / answerDen;
+
+  // Draw cups: each whole cup filled with divN/divD pieces
+  const cupsArea = document.getElementById('cupsArea');
+  cupsArea.innerHTML = '';
+  const pieceSize = divN / divD; // fractional height each piece fills
+  const colors = ['#67e8f9','#fbbf24','#a7f3d0','#fca5a5','#c4b5fd','#fdba74'];
+
+  let pieceCounter = 0;
+  for (let c = 0; c < wholeCups; c++){
+    // How many complete pieces + partial in this cup?
+    const fills = [];
+    const cs = [];
+    let remaining = 1; // fraction remaining to fill in this cup
+    let carryOver = (c > 0) ? -1 : -1; // simplification
+    // Just fill piece by piece:
+    while (remaining > 0.001){
+      const f = Math.min(pieceSize, remaining);
+      fills.push(f);
+      cs.push(colors[pieceCounter % colors.length]);
+      remaining -= f;
+      pieceCounter++;
+    }
+    cupsArea.appendChild(drawCup(fills, cs, `Cup ${c+1}`));
+  }
+
+  // Answer banner
+  const banner = document.getElementById('answerBanner');
+  let answerText;
+  if (reducedD === 1){
+    answerText = `<span class="big">${reducedN}</span> pieces of size ${divN}/${divD} fit in ${wholeCups} whole cup${wholeCups>1?'s':''}!`;
+  } else {
+    answerText = `<span class="big">${reducedN}/${reducedD}</span> ≈ ${decimalAnswer.toFixed(2)} pieces of size ${divN}/${divD} fit in ${wholeCups} whole cup${wholeCups>1?'s':''}!`;
+  }
+  banner.innerHTML = `🎯 <strong>Answer:</strong> ${answerText}`;
+
+  // Formula box
+  const fb = document.getElementById('formulaBox');
+  fb.innerHTML = `
+    <strong>The math (the &quot;flip and multiply&quot; way):</strong>
+    <div class="step">Question: <code>${wholeCups} ÷ ${divN}/${divD}</code></div>
+    <div class="step">Step 1 — Flip the divisor: <code>${divN}/${divD}</code> becomes <code>${divD}/${divN}</code></div>
+    <div class="step">Step 2 — Change ÷ to ×: <code>${wholeCups} × ${divD}/${divN}</code></div>
+    <div class="step">Step 3 — Multiply: <code>${wholeCups} × ${divD}/${divN} = ${wholeCups*divD}/${divN}</code></div>
+    <div class="step">Step 4 — Simplify: <code>${wholeCups*divD}/${divN} = ${reducedD===1 ? reducedN : reducedN+'/'+reducedD}</code></div>
+    <div class="step" style="margin-top:8px; padding-top:8px; border-top:1px solid #cbd5e1;"><strong>Matches the visual?</strong> Count the colored pieces in the cups above. Same answer. ✓</div>
+  `;
+}
+
+function gcd(a,b){return b===0?Math.abs(a):gcd(b,a%b);}
+
+document.getElementById('whole').addEventListener('input', e => { wholeCups = clamp(e.target.value, 1, 6); render(); });
+document.getElementById('divN').addEventListener('input', e => { divN = clamp(e.target.value, 1, 6); render(); });
+document.getElementById('divD').addEventListener('input', e => { divD = clamp(e.target.value, 2, 8); render(); });
+
+render();
+</script>
+</body>
+</html>

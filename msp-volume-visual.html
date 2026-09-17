@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volume Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:16px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.controls input[type=range] { width:140px; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:2px 10px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:16px; margin:14px 0; text-align:center; }
+.result-banner { padding:14px 18px; border-radius:10px; margin:14px 0; font-weight:800; text-align:center; background:#d1fae5; border:2px solid var(--green); color:#065f46; font-size:1.1rem; }
+.result-banner .big { display:block; font-size:1.5rem; margin:4px 0; color:var(--navy); }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Volume · Visual Explorer</div>
+  <h1>📦 Volume — Count The Unit Cubes</h1>
+  <p class="tagline">Volume is just how many 1×1×1 cubes fit inside a box.</p>
+</header>
+
+<div class="big-idea">
+  <strong>The formula IS the picture:</strong> <code>V = length × width × height</code> works because you count cubes by rows, then layers. Change any dimension and the volume changes with it.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Build A Box</h2>
+  <div class="controls">
+    <label>Length: <input type="range" id="dL" min="1" max="7" value="4"><span class="val" id="lVal">4</span></label>
+    <label>Width: <input type="range" id="dW" min="1" max="7" value="3"><span class="val" id="wVal">3</span></label>
+    <label>Height: <input type="range" id="dH" min="1" max="7" value="2"><span class="val" id="hVal">2</span></label>
+  </div>
+
+  <div class="graph-wrap">
+    <svg id="boxGraph" width="500" height="400" viewBox="0 0 500 400" style="max-width:100%; height:auto;"></svg>
+  </div>
+
+  <div class="result-banner" id="volResult"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip">
+    <strong>Volume is always CUBED units:</strong> cm³, in³, ft³. That&apos;s because you multiplied THREE dimensions (length × width × height).
+  </div>
+  <div class="tip">
+    <strong>Area is squared, volume is cubed.</strong> Area (2D) = length × width → units². Volume (3D) = length × width × height → units³.
+  </div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;">
+    <strong>Order doesn&apos;t matter</strong> for multiplication: 4 × 3 × 2 = 3 × 2 × 4 = 24. The box looks the same volume no matter which side you call &quot;length.&quot;
+  </div>
+</section>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Volume Visual</footer>
+</div>
+
+<script>
+let L = 4, W = 3, H = 2;
+
+function render(){
+  document.getElementById('lVal').textContent = L;
+  document.getElementById('wVal').textContent = W;
+  document.getElementById('hVal').textContent = H;
+
+  const V = L * W * H;
+  document.getElementById('volResult').innerHTML = `📦 <strong>Volume = length × width × height = ${L} × ${W} × ${H}</strong><span class="big">V = ${V} cubic units</span>`;
+
+  // Draw isometric box with unit cubes
+  const svg = document.getElementById('boxGraph');
+  const cubeSize = Math.min(50, 250 / Math.max(L, W, H));
+  const isoX = cubeSize * 0.866; // cos(30)
+  const isoY = cubeSize * 0.5;   // sin(30)
+
+  // Compute origin so box is centered
+  const boxW = L * isoX + W * isoX;
+  const boxH = L * isoY + W * isoY + H * cubeSize;
+  const originX = 250 - (L * isoX)/2 - (W * isoX)/2 + (W * isoX);
+  const originY = 380 - H * cubeSize;
+
+  // Draw unit cubes back-to-front, bottom-to-top
+  let cubes = '';
+  for (let h = 0; h < H; h++){
+    for (let w = W - 1; w >= 0; w--){
+      for (let l = 0; l < L; l++){
+        // Cube position (top-front corner)
+        const x = originX + l * isoX - w * isoX;
+        const y = originY - h * cubeSize + l * isoY + w * isoY;
+        cubes += drawCube(x, y, cubeSize);
+      }
+    }
+  }
+
+  svg.innerHTML = cubes;
+}
+
+function drawCube(x, y, s){
+  const iX = s * 0.866, iY = s * 0.5;
+  // Top face (rhombus)
+  const top = `M ${x} ${y} L ${x + iX} ${y + iY} L ${x + iX - iX} ${y + iY + iY} L ${x - iX} ${y + iY} Z`;
+  // Actually simpler: three parallelograms
+  // Top: (x,y), (x+iX, y+iY), (x, y+2*iY), (x-iX, y+iY)  — a diamond
+  // Left face: (x-iX, y+iY), (x, y+2*iY), (x, y+2*iY+s), (x-iX, y+iY+s)
+  // Right face: (x, y+2*iY), (x+iX, y+iY), (x+iX, y+iY+s), (x, y+2*iY+s)
+  const topPath = `M ${x} ${y} L ${x+iX} ${y+iY} L ${x} ${y+2*iY} L ${x-iX} ${y+iY} Z`;
+  const leftPath = `M ${x-iX} ${y+iY} L ${x} ${y+2*iY} L ${x} ${y+2*iY+s} L ${x-iX} ${y+iY+s} Z`;
+  const rightPath = `M ${x} ${y+2*iY} L ${x+iX} ${y+iY} L ${x+iX} ${y+iY+s} L ${x} ${y+2*iY+s} Z`;
+  return `
+    <path d="${topPath}" fill="#93c5fd" stroke="#1e3a8a" stroke-width="1.5"/>
+    <path d="${leftPath}" fill="#3b82f6" stroke="#1e3a8a" stroke-width="1.5"/>
+    <path d="${rightPath}" fill="#2563eb" stroke="#1e3a8a" stroke-width="1.5"/>
+  `;
+}
+
+['dL','dW','dH'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => {
+    const v = parseInt(e.target.value);
+    if (id === 'dL') L = v;
+    if (id === 'dW') W = v;
+    if (id === 'dH') H = v;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>

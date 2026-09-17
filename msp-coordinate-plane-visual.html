@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coordinate Plane Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:16px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:12px 14px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); }
+.controls input[type=number] { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; width:70px; }
+.controls .btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.controls .btn:hover { background:#0f172a; }
+.controls .btn.red { background:var(--red); }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:12px; margin:14px 0; text-align:center; }
+.graph-svg { max-width:100%; height:auto; cursor:crosshair; }
+.point-list { display:flex; flex-wrap:wrap; gap:6px; margin:12px 0; justify-content:center; }
+.point-chip { background:var(--navy); color:#fff; padding:5px 10px; border-radius:6px; font-weight:800; font-size:.9rem; }
+.quadrant-info { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0; }
+.q-box { padding:10px; border-radius:8px; text-align:center; font-weight:700; font-size:.85rem; }
+.q1 { background:#dbeafe; color:#1e3a8a; }
+.q2 { background:#fee2e2; color:#7f1d1d; }
+.q3 { background:#f3e8ff; color:#4c1d95; }
+.q4 { background:#d1fae5; color:#065f46; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Coordinate Plane · Visual Explorer</div>
+  <h1>📍 Coordinate Plane — Click, Plot, Discover</h1>
+  <p class="tagline">Click anywhere on the grid to plot a point. See which quadrant it lands in.</p>
+</header>
+
+<div class="big-idea">
+  <strong>The rule:</strong> A point is written <strong>(x, y)</strong>. The <strong>x</strong> tells you how far LEFT (negative) or RIGHT (positive). The <strong>y</strong> tells you how far DOWN (negative) or UP (positive). <em>Along the hallway, then up the stairs.</em>
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Click The Grid Or Type Coordinates</h2>
+
+  <div class="controls">
+    <label>x: <input type="number" id="ptX" min="-10" max="10" step="1" value="3"></label>
+    <label>y: <input type="number" id="ptY" min="-10" max="10" step="1" value="4"></label>
+    <button class="btn" onclick="addPoint()">➕ Add Point</button>
+    <button class="btn red" onclick="clearPoints()">🗑️ Clear All</button>
+  </div>
+
+  <div class="graph-wrap">
+    <svg id="coordGraph" class="graph-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div class="quadrant-info">
+    <div class="q-box q2">Quadrant II<br>(−, +)<br>left of x-axis, above y-axis</div>
+    <div class="q-box q1">Quadrant I<br>(+, +)<br>right of x-axis, above y-axis</div>
+    <div class="q-box q3">Quadrant III<br>(−, −)<br>left of x-axis, below y-axis</div>
+    <div class="q-box q4">Quadrant IV<br>(+, −)<br>right of x-axis, below y-axis</div>
+  </div>
+
+  <div id="pointList" class="point-list"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Origin:</strong> (0, 0) — where the axes cross. Belongs to no quadrant.</div>
+  <div class="tip"><strong>On the x-axis</strong> means y = 0. <strong>On the y-axis</strong> means x = 0. Points on the axes aren&apos;t in any quadrant.</div>
+  <div class="tip"><strong>Always read x FIRST, then y.</strong> The point (3, 4) is DIFFERENT from (4, 3). Order matters!</div>
+</section>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Coordinate Plane Visual</footer>
+</div>
+
+<script>
+const svg = document.getElementById('coordGraph');
+let points = [{x:3, y:4}];
+const scale = 20, cx = 250, cy = 250;
+
+function quadrant(x, y){
+  if (x === 0 && y === 0) return 'Origin (0, 0)';
+  if (x === 0) return 'On y-axis';
+  if (y === 0) return 'On x-axis';
+  if (x > 0 && y > 0) return 'Quadrant I';
+  if (x < 0 && y > 0) return 'Quadrant II';
+  if (x < 0 && y < 0) return 'Quadrant III';
+  if (x > 0 && y < 0) return 'Quadrant IV';
+}
+function quadColor(x, y){
+  if (x > 0 && y > 0) return '#2563eb';
+  if (x < 0 && y > 0) return '#dc2626';
+  if (x < 0 && y < 0) return '#7c3aed';
+  if (x > 0 && y < 0) return '#059669';
+  return '#64748b';
+}
+
+function draw(){
+  let g = '';
+  // Quadrant backgrounds
+  g += `<rect x="${cx}" y="0" width="${cx}" height="${cy}" fill="#dbeafe" opacity="0.3"/>`;
+  g += `<rect x="0" y="0" width="${cx}" height="${cy}" fill="#fee2e2" opacity="0.3"/>`;
+  g += `<rect x="0" y="${cy}" width="${cx}" height="${cy}" fill="#f3e8ff" opacity="0.3"/>`;
+  g += `<rect x="${cx}" y="${cy}" width="${cx}" height="${cy}" fill="#d1fae5" opacity="0.3"/>`;
+  // Quadrant labels (Roman numerals)
+  g += `<text x="${cx+120}" y="35" text-anchor="middle" font-size="18" font-weight="900" fill="#1e3a8a" opacity="0.5">I</text>`;
+  g += `<text x="${cx-120}" y="35" text-anchor="middle" font-size="18" font-weight="900" fill="#7f1d1d" opacity="0.5">II</text>`;
+  g += `<text x="${cx-120}" y="475" text-anchor="middle" font-size="18" font-weight="900" fill="#4c1d95" opacity="0.5">III</text>`;
+  g += `<text x="${cx+120}" y="475" text-anchor="middle" font-size="18" font-weight="900" fill="#065f46" opacity="0.5">IV</text>`;
+  // Grid
+  for (let i = -10; i <= 10; i++){
+    const x = cx + i*scale;
+    const y = cy + i*scale;
+    g += `<line x1="${x}" y1="0" x2="${x}" y2="500" stroke="#cbd5e1" stroke-width="1"/>`;
+    g += `<line x1="0" y1="${y}" x2="500" y2="${y}" stroke="#cbd5e1" stroke-width="1"/>`;
+  }
+  // Axes
+  g += `<line x1="0" y1="${cy}" x2="500" y2="${cy}" stroke="#0f172a" stroke-width="2.5"/>`;
+  g += `<line x1="${cx}" y1="0" x2="${cx}" y2="500" stroke="#0f172a" stroke-width="2.5"/>`;
+  // Arrows on axes
+  g += `<polygon points="495,${cy} 485,${cy-5} 485,${cy+5}" fill="#0f172a"/>`;
+  g += `<polygon points="5,${cy} 15,${cy-5} 15,${cy+5}" fill="#0f172a"/>`;
+  g += `<polygon points="${cx},5 ${cx-5},15 ${cx+5},15" fill="#0f172a"/>`;
+  g += `<polygon points="${cx},495 ${cx-5},485 ${cx+5},485" fill="#0f172a"/>`;
+  // Axis labels
+  g += `<text x="485" y="${cy-10}" font-size="14" font-weight="800" fill="#0f172a">x</text>`;
+  g += `<text x="${cx+10}" y="18" font-size="14" font-weight="800" fill="#0f172a">y</text>`;
+  // Numbers
+  for (let i = -10; i <= 10; i += 2){
+    if (i === 0) continue;
+    const x = cx + i*scale;
+    g += `<text x="${x}" y="${cy+16}" text-anchor="middle" font-size="10" fill="#475569">${i}</text>`;
+    const y = cy - i*scale;
+    g += `<text x="${cx-8}" y="${y+4}" text-anchor="end" font-size="10" fill="#475569">${i}</text>`;
+  }
+  // Origin label
+  g += `<text x="${cx-8}" y="${cy+16}" text-anchor="end" font-size="10" fill="#475569">0</text>`;
+
+  // Points
+  points.forEach((p, i) => {
+    const px = cx + p.x * scale, py = cy - p.y * scale;
+    const color = quadColor(p.x, p.y);
+    g += `<circle cx="${px}" cy="${py}" r="7" fill="${color}" stroke="#fff" stroke-width="3"/>`;
+    g += `<text x="${px+11}" y="${py-8}" font-size="12" font-weight="800" fill="${color}">(${p.x}, ${p.y})</text>`;
+  });
+
+  svg.innerHTML = g;
+
+  // Point list
+  const list = document.getElementById('pointList');
+  list.innerHTML = points.map(p =>
+    `<div class="point-chip" style="background:${quadColor(p.x,p.y)};">
+      (${p.x}, ${p.y}) — ${quadrant(p.x, p.y)}
+    </div>`
+  ).join('');
+}
+
+function addPoint(){
+  const x = parseInt(document.getElementById('ptX').value);
+  const y = parseInt(document.getElementById('ptY').value);
+  if (isNaN(x) || isNaN(y)) return;
+  points.push({x, y});
+  draw();
+}
+function clearPoints(){
+  points = [];
+  draw();
+}
+
+// Click to plot
+svg.addEventListener('click', e => {
+  const rect = svg.getBoundingClientRect();
+  const sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+  const svgX = sx * (500 / rect.width), svgY = sy * (500 / rect.height);
+  const x = Math.round((svgX - cx) / scale);
+  const y = Math.round((cy - svgY) / scale);
+  if (Math.abs(x) <= 10 && Math.abs(y) <= 10){
+    points.push({x, y});
+    document.getElementById('ptX').value = x;
+    document.getElementById('ptY').value = y;
+    draw();
+  }
+});
+
+draw();
+</script>
+</body>
+</html>

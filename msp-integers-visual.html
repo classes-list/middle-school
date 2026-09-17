@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integers Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); }
+.controls input[type=number] { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; width:70px; }
+.controls select { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; font-weight:800; color:var(--navy); }
+.number-line { background:#f8fafc; border-radius:10px; padding:20px 12px 40px; margin:14px 0; overflow-x:auto; }
+.nl-svg { display:block; margin:0 auto; }
+.result-banner { padding:14px 18px; border-radius:10px; margin:12px 0; font-weight:800; text-align:center; font-size:1.1rem; background:#d1fae5; border:2px solid var(--green); color:#065f46; }
+.result-banner .expr { font-family:'Courier New', monospace; font-size:1.35rem; color:var(--navy); display:block; margin:4px 0; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset-btn:hover { background:#0f172a; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Integers · Visual Explorer</div>
+  <h1>➕➖ Integer Operations — Arrows On The Number Line</h1>
+  <p class="tagline">Every add is an arrow. Every subtract is a flip.</p>
+</header>
+
+<div class="big-idea">
+  <strong>The rule:</strong> Adding a <em>positive</em> means <strong>move RIGHT</strong>. Adding a <em>negative</em> means <strong>move LEFT</strong>.<br>
+  <em>Subtracting</em> a number is the same as <em>adding its opposite</em>: <code>5 − 3 = 5 + (−3)</code>. Flip the sign and add.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Watch The Arrows Add Up</h2>
+  <div class="controls">
+    <label>Start: <input type="number" id="numA" min="-15" max="15" value="3"></label>
+    <label>Operation:
+      <select id="op">
+        <option value="+">+ (add)</option>
+        <option value="-">− (subtract)</option>
+      </select>
+    </label>
+    <label>Number: <input type="number" id="numB" min="-15" max="15" value="-5"></label>
+  </div>
+
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setInputs(3,'+',-5)">3 + (−5)</button>
+    <button class="preset-btn" onclick="setInputs(-4,'+',6)">−4 + 6</button>
+    <button class="preset-btn" onclick="setInputs(5,'-',8)">5 − 8</button>
+    <button class="preset-btn" onclick="setInputs(-3,'-',-4)">−3 − (−4)</button>
+    <button class="preset-btn" onclick="setInputs(-2,'+',-3)">−2 + (−3)</button>
+  </div>
+
+  <div class="number-line">
+    <svg id="numLine" class="nl-svg" width="800" height="140" viewBox="0 0 800 140"></svg>
+  </div>
+
+  <div id="resultBanner" class="result-banner"></div>
+
+  <div class="tip">
+    <strong>Two rules cover almost every case:</strong><br>
+    (1) <strong>Same signs?</strong> Add the numbers, keep the sign. <em>−5 + −3 = −8.</em><br>
+    (2) <strong>Different signs?</strong> Subtract the smaller from the bigger, keep the sign of the bigger. <em>−7 + 3 = −4 (the −7 wins).</em>
+  </div>
+</section>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Integers Visual</footer>
+</div>
+
+<script>
+let A = 3, OP = '+', B = -5;
+
+function setInputs(a, op, b){
+  A = a; OP = op; B = b;
+  document.getElementById('numA').value = a;
+  document.getElementById('op').value = op;
+  document.getElementById('numB').value = b;
+  render();
+}
+
+function render(){
+  // If subtract, convert to add opposite for visualization
+  const effectiveB = (OP === '+') ? B : -B;
+  const result = A + effectiveB;
+
+  const svg = document.getElementById('numLine');
+  const W = 800, H = 140, cy = 80, scale = 24, cx = W/2;
+  let g = '';
+  // Number line
+  g += `<line x1="20" y1="${cy}" x2="${W-20}" y2="${cy}" stroke="#0f172a" stroke-width="2.5"/>`;
+  // Ticks & labels
+  for (let n = -15; n <= 15; n++){
+    const x = cx + n*scale;
+    if (x < 20 || x > W-20) continue;
+    const tickH = n === 0 ? 14 : 7;
+    g += `<line x1="${x}" y1="${cy-tickH}" x2="${x}" y2="${cy+tickH}" stroke="#0f172a" stroke-width="${n===0?2.5:1.5}"/>`;
+    if (n % 1 === 0){
+      g += `<text x="${x}" y="${cy+28}" text-anchor="middle" font-size="12" font-weight="${n===0?900:600}" fill="${n===0?'#0f172a':'#475569'}">${n}</text>`;
+    }
+  }
+  // Start dot at A
+  const startX = cx + A*scale;
+  g += `<circle cx="${startX}" cy="${cy}" r="8" fill="#0284c7" stroke="#fff" stroke-width="2"/>`;
+  g += `<text x="${startX}" y="${cy-16}" text-anchor="middle" font-size="12" font-weight="800" fill="#0284c7">Start: ${A}</text>`;
+
+  // Arrow from A to A+effectiveB
+  const endX = cx + result*scale;
+  const arrowY = cy - 40;
+  const dir = effectiveB > 0 ? 1 : -1;
+  const arrowColor = effectiveB > 0 ? '#059669' : '#dc2626';
+  const midArrX = (startX + endX) / 2;
+  if (Math.abs(effectiveB) > 0){
+    // Curved arrow above
+    g += `<path d="M ${startX} ${cy-8} Q ${midArrX} ${arrowY - 15} ${endX} ${cy-8}" fill="none" stroke="${arrowColor}" stroke-width="3" marker-end="url(#arrow${effectiveB>0?'R':'L'})"/>`;
+    // Arrow marker
+    g += `<defs>
+      <marker id="arrowR" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><polygon points="0,0 10,5 0,10" fill="${arrowColor}"/></marker>
+      <marker id="arrowL" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><polygon points="0,0 10,5 0,10" fill="${arrowColor}"/></marker>
+    </defs>`;
+    // Label on arrow
+    g += `<text x="${midArrX}" y="${arrowY - 20}" text-anchor="middle" font-size="14" font-weight="900" fill="${arrowColor}">${effectiveB > 0 ? '+' : ''}${effectiveB} (${dir>0?'right':'left'})</text>`;
+  }
+  // End dot
+  g += `<circle cx="${endX}" cy="${cy}" r="10" fill="#f59e0b" stroke="#fff" stroke-width="3"/>`;
+  g += `<text x="${endX}" y="${cy+52}" text-anchor="middle" font-size="14" font-weight="900" fill="#b45309">Result: ${result}</text>`;
+
+  svg.innerHTML = g;
+
+  // Result banner
+  const banner = document.getElementById('resultBanner');
+  let expr;
+  if (OP === '+'){
+    expr = `${A} + ${B < 0 ? '('+B+')' : B} = ${result}`;
+  } else {
+    expr = `${A} − ${B < 0 ? '('+B+')' : B} = ${A} + ${-B < 0 ? '('+(-B)+')' : (-B)} = ${result}`;
+  }
+  banner.innerHTML = `🎯 <span class="expr">${expr}</span>`;
+}
+
+['numA','numB','op'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => {
+    if (id === 'numA') A = parseInt(e.target.value) || 0;
+    if (id === 'numB') B = parseInt(e.target.value) || 0;
+    if (id === 'op') OP = e.target.value;
+    render();
+  });
+});
+document.getElementById('op').addEventListener('change', e => { OP = e.target.value; render(); });
+
+render();
+</script>
+</body>
+</html>

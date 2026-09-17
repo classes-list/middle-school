@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circles Visual — Math 7</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:16px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.controls input[type=range] { width:220px; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:2px 10px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:12px; margin:14px 0; text-align:center; }
+.results-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+@media (max-width:600px) { .results-grid { grid-template-columns:1fr; } }
+.result-box { padding:14px 18px; border-radius:10px; border:2px solid var(--navy); text-align:center; }
+.result-box.circ { background:#dbeafe; border-color:var(--blue); }
+.result-box.area { background:#d1fae5; border-color:var(--green); }
+.result-box .label { font-size:.85rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; }
+.result-box .value { font-size:1.4rem; font-weight:900; color:var(--navy); margin-top:4px; }
+.result-box .formula { font-family:'Courier New', monospace; font-size:.9rem; color:#475569; margin-top:4px; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-7.html" class="back-link">← Back to Math 7</a>
+
+<header>
+  <div class="eyebrow">Math 7 · Circles · Visual Explorer</div>
+  <h1>⚪ Circles — Radius, Circumference, Area</h1>
+  <p class="tagline">Change the radius. Watch the diameter, circumference, and area update live.</p>
+</header>
+
+<div class="big-idea">
+  <strong>The three formulas:</strong><br>
+  Diameter: <strong>d = 2r</strong> (twice the radius)<br>
+  Circumference: <strong>C = 2πr</strong> (or πd) — how far around the outside<br>
+  Area: <strong>A = πr²</strong> — how much space inside
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Slide The Radius</h2>
+
+  <div class="controls">
+    <label>Radius r: <input type="range" id="rad" min="1" max="10" step="0.5" value="5"><span class="val" id="rVal">5</span></label>
+  </div>
+
+  <div class="graph-wrap">
+    <svg id="circleGraph" width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="max-width:100%; height:auto;"></svg>
+  </div>
+
+  <div class="results-grid">
+    <div class="result-box">
+      <div class="label">Diameter</div>
+      <div class="value" id="diamVal">10</div>
+      <div class="formula">d = 2r = 2 × <span id="rShow">5</span></div>
+    </div>
+    <div class="result-box circ">
+      <div class="label">Circumference</div>
+      <div class="value" id="circVal">31.42</div>
+      <div class="formula">C = 2πr ≈ 2 × 3.14 × <span id="rShow2">5</span></div>
+    </div>
+    <div class="result-box area" style="grid-column:span 2;">
+      <div class="label">Area</div>
+      <div class="value" id="areaVal">78.54</div>
+      <div class="formula">A = πr² ≈ 3.14 × <span id="rShow3">5</span>² = 3.14 × <span id="rSqShow">25</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip">
+    <strong>π (pi) ≈ 3.14</strong> — the ratio of any circle&apos;s circumference to its diameter. <em>Always</em>. Big pizza or small pizza, C ÷ d = π.
+  </div>
+  <div class="tip">
+    <strong>Double the radius, DOUBLE the circumference, but QUADRUPLE the area.</strong> Because area has r² in it — the r gets squared. Try it: r=3 vs r=6 above.
+  </div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;">
+    <strong>Sanity check:</strong> Area is always in <em>square units</em> (r²). Circumference is always in <em>plain units</em> (r). If you get 78 for the &quot;circumference,&quot; you probably confused it with area — check your formula.
+  </div>
+</section>
+
+<footer>Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Circles Visual</footer>
+</div>
+
+<script>
+let r = 5;
+const PI = Math.PI;
+
+function render(){
+  document.getElementById('rVal').textContent = r;
+  document.getElementById('rShow').textContent = r;
+  document.getElementById('rShow2').textContent = r;
+  document.getElementById('rShow3').textContent = r;
+  document.getElementById('rSqShow').textContent = (r*r).toFixed(2).replace(/\.00$/,'');
+  const d = 2*r;
+  const C = 2*PI*r;
+  const A = PI*r*r;
+  document.getElementById('diamVal').textContent = d;
+  document.getElementById('circVal').textContent = C.toFixed(2);
+  document.getElementById('areaVal').textContent = A.toFixed(2) + ' sq units';
+
+  const svg = document.getElementById('circleGraph');
+  const cx = 200, cy = 200, scale = 15;
+  const radiusPx = r * scale;
+  let g = '';
+  // Area circle (filled)
+  g += `<circle cx="${cx}" cy="${cy}" r="${radiusPx}" fill="rgba(5,150,105,0.15)" stroke="none"/>`;
+  // Circumference stroke (thicker highlight)
+  g += `<circle cx="${cx}" cy="${cy}" r="${radiusPx}" fill="none" stroke="#2563eb" stroke-width="4"/>`;
+  // Diameter line
+  g += `<line x1="${cx - radiusPx}" y1="${cy}" x2="${cx + radiusPx}" y2="${cy}" stroke="#dc2626" stroke-width="2" stroke-dasharray="6,4"/>`;
+  // Radius line
+  g += `<line x1="${cx}" y1="${cy}" x2="${cx + radiusPx}" y2="${cy}" stroke="#7c3aed" stroke-width="3"/>`;
+  // Labels
+  g += `<text x="${cx + radiusPx/2}" y="${cy - 8}" text-anchor="middle" font-size="14" font-weight="900" fill="#7c3aed">r = ${r}</text>`;
+  g += `<text x="${cx}" y="${cy + 22}" text-anchor="middle" font-size="13" font-weight="800" fill="#dc2626">d = ${d}</text>`;
+  g += `<text x="${cx}" y="${cy - radiusPx - 10}" text-anchor="middle" font-size="13" font-weight="800" fill="#2563eb">C ≈ ${C.toFixed(2)}</text>`;
+  g += `<text x="${cx}" y="${cy}" text-anchor="middle" font-size="13" font-weight="800" fill="#059669" dy="-2">A ≈ ${A.toFixed(1)}</text>`;
+  // Center dot
+  g += `<circle cx="${cx}" cy="${cy}" r="3" fill="#0f172a"/>`;
+
+  svg.innerHTML = g;
+}
+
+document.getElementById('rad').addEventListener('input', e => {
+  r = parseFloat(e.target.value);
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
