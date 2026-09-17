@@ -3088,6 +3088,29 @@ function renderHome() {
         <a class="pill" href="${REVIEW_DOCX}" download onclick="event.stopPropagation();" style="text-decoration:none; background:#7c3aed; color:#fff; padding:4px 10px;">📄 Word (.docx)</a>
       </div>`;
     grid.appendChild(rc);
+    appendMidquarterCard();
+  }
+  function appendMidquarterCard() {
+    const mq = document.createElement('div');
+    mq.className = 'unit-card';
+    mq.style.background = 'linear-gradient(135deg, #fee2e2, #fecaca)';
+    mq.style.borderLeft = '5px solid #dc2626';
+    mq.onclick = () => window.open('msp-midquarter-g6.html?mode=practice', '_blank', 'noopener');
+    mq.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">📝</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title"><span class="unit-badge" style="background:#dc2626;">TEST</span>Mid-Quarter Test</div>
+          <div class="unit-card-cc">20 Questions · Q1&ndash;Q2 Content</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">Covers metric conversions, density, factors &amp; multiples, fractions, ratios &amp; rates, percents, integers, and the coordinate plane. Try the practice version to prepare, then submit the graded version to Dr. Park.</div>
+      <div class="unit-card-pills" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+        <a class="pill" href="msp-midquarter-g6.html?mode=practice" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#059669; color:#fff; padding:4px 10px;">📚 Practice</a>
+        <a class="pill" href="msp-midquarter-g6.html?mode=graded" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#dc2626; color:#fff; padding:4px 10px;">✅ Take Graded</a>
+        <a class="pill" href="msp-midquarter-print-g6.pdf" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#0284c7; color:#fff; padding:4px 10px;">🖨 Print PDF</a>
+      </div>`;
+    grid.appendChild(mq);
   }
   UNITS.forEach((unit, idx) => {
     const card = document.createElement('div');
