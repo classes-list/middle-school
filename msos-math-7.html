@@ -2995,7 +2995,23 @@ function renderHome() {
       </div>`;
     grid.appendChild(c);
   }
+  const Q_MAP_HOME = {  'metrics-sci-process': 1, 'scientific-notation': 1, 'proportional': 1, 'ratios-rates': 1, 'percents': 2, 'add-sub-rational': 2, 'mult-div-rational': 2, 'alg-expressions': 2, 'equations': 2, 'rearranging-formulas': 2, 'surface-area-volume-ratio': 3, 'triangles': 3, 'circles': 3, 'area-polygons': 3, 'surface-area-volume': 3, 'angles': 3, 'inequalities': 3, 'probability': 3, 'genetics-probability': 4, 'population-growth': 4, 'pharmacokinetics': 4, 'statistics': 4, 'scale-drawings': 4, 'biodiversity': 4, 'word-problems': 4};
+  const Q_LABELS_HOME = { 1: 'Q1 · Lab Math · Proportional Relationships', 2: 'Q2 · Percents · Rational Numbers · Algebra', 3: 'Q3 · Geometry · Inequalities · Probability', 4: 'Q4 · Genetics · Statistics · Scale' };
+  const Q_COLORS = { 1: {bg:'linear-gradient(135deg,#0369a1,#0c4a6e)', border:'#075985'}, 2: {bg:'linear-gradient(135deg,#059669,#065f46)', border:'#047857'}, 3: {bg:'linear-gradient(135deg,#b8860b,#78350f)', border:'#92400e'}, 4: {bg:'linear-gradient(135deg,#7c3aed,#4c1d95)', border:'#6d28d9'} };
+  function appendQuarterSeparator(q) {
+    const label = Q_LABELS_HOME[q];
+    if (!label) return;
+    const c = Q_COLORS[q];
+    const sep = document.createElement('div');
+    sep.className = 'unit-card';
+    sep.style.cssText = `grid-column: 1/-1; background:${c.bg}; color:#fff; border-left:none; border-top:6px solid ${c.border}; padding:20px 26px; box-shadow:0 6px 18px rgba(0,0,0,0.15); cursor:default;`;
+    sep.innerHTML = `<div style="font-size:.75rem; font-weight:800; opacity:.85; letter-spacing:.14em; text-transform:uppercase;">Quarter ${q}</div><div style="font-size:1.3rem; font-weight:900; margin-top:4px;">${label}</div>`;
+    grid.appendChild(sep);
+  }
+  let __lastQ = 0;
   UNITS.forEach((unit, idx) => {
+    const __q = Q_MAP_HOME[unit.id] || 0;
+    if (__q !== __lastQ && Q_LABELS_HOME[__q]) { appendQuarterSeparator(__q); __lastQ = __q; }
     const card = document.createElement('div');
     card.className = 'unit-card';
     card.onclick = () => showLesson(unit.id);

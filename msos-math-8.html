@@ -2948,7 +2948,23 @@ function renderHome() {
       </div>`;
     grid.appendChild(c);
   }
+  const Q_MAP_HOME = {  'metrics-sci-process': 1, 'scientific-notation': 1, 'real-numbers': 1, 'exponents': 1, 'slope': 1, 'linear-equations': 1, 'systems': 2, 'rearranging-formulas': 2, 'weighted-averages': 2, 'physics-equations': 2, 'functions': 3, 'linear-functions': 3, 'scatter-plots': 3, 'pythagorean': 3, 'transformations': 3, 'angle-relationships': 3, 'electricity': 4, 'waves': 4, 'optics': 4, 'keplers-laws': 4, 'volume': 4, 'two-way-tables': 4, 'word-problems': 4};
+  const Q_LABELS_HOME = { 1: 'Q1 · Lab Math · Lines & Slopes', 2: 'Q2 · Systems · Stoichiometry', 3: 'Q3 · Functions · Motion · Pythagorean', 4: 'Q4 · Electricity · Waves · Cosmos' };
+  const Q_COLORS = { 1: {bg:'linear-gradient(135deg,#0369a1,#0c4a6e)', border:'#075985'}, 2: {bg:'linear-gradient(135deg,#059669,#065f46)', border:'#047857'}, 3: {bg:'linear-gradient(135deg,#b8860b,#78350f)', border:'#92400e'}, 4: {bg:'linear-gradient(135deg,#7c3aed,#4c1d95)', border:'#6d28d9'} };
+  function appendQuarterSeparator(q) {
+    const label = Q_LABELS_HOME[q];
+    if (!label) return;
+    const c = Q_COLORS[q];
+    const sep = document.createElement('div');
+    sep.className = 'unit-card';
+    sep.style.cssText = `grid-column: 1/-1; background:${c.bg}; color:#fff; border-left:none; border-top:6px solid ${c.border}; padding:20px 26px; box-shadow:0 6px 18px rgba(0,0,0,0.15); cursor:default;`;
+    sep.innerHTML = `<div style="font-size:.75rem; font-weight:800; opacity:.85; letter-spacing:.14em; text-transform:uppercase;">Quarter ${q}</div><div style="font-size:1.3rem; font-weight:900; margin-top:4px;">${label}</div>`;
+    grid.appendChild(sep);
+  }
+  let __lastQ = 0;
   UNITS.forEach((unit, idx) => {
+    const __q = Q_MAP_HOME[unit.id] || 0;
+    if (__q !== __lastQ && Q_LABELS_HOME[__q]) { appendQuarterSeparator(__q); __lastQ = __q; }
     const card = document.createElement('div');
     card.className = 'unit-card';
     card.onclick = () => showLesson(unit.id);
