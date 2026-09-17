@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math 8 End of Q3 Test</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:900px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+.eyebrow.graded { background:var(--red); }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.info-banner { background:#fef3c7; border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; font-size:.95rem; }
+.info-banner.graded { background:#fee2e2; border-color:var(--red); color:#7f1d1d; }
+.mode-switcher { display:flex; justify-content:center; gap:10px; margin:16px 0; }
+.mode-btn { padding:10px 20px; border:2px solid var(--navy); background:#fff; color:var(--navy); border-radius:8px; text-decoration:none; font-weight:800; font-size:.95rem; }
+.mode-btn.active { background:var(--navy); color:#fff; }
+.name-row { background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:14px 0; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:center; }
+.name-row label { font-weight:700; color:var(--navy); }
+.name-row input { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.q-card { background:#fff; border-radius:10px; padding:16px 20px; box-shadow:0 3px 10px rgba(0,0,0,0.06); margin:14px 0; border-left:5px solid var(--blue); }
+.q-num { display:inline-block; background:var(--navy); color:#fff; padding:3px 10px; border-radius:5px; font-weight:800; font-size:.85rem; margin-right:8px; }
+.q-text { font-size:1rem; color:var(--navy); font-weight:600; margin-bottom:10px; }
+.q-input { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.q-input input { padding:8px 12px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:1rem; width:220px; }
+.q-input .unit { color:#64748b; font-size:.9rem; }
+.q-feedback { margin-top:8px; padding:8px 12px; border-radius:6px; font-size:.9rem; font-weight:700; display:none; }
+.q-feedback.correct { background:#d1fae5; color:#065f46; border:1px solid var(--green); display:block; }
+.q-feedback.wrong { background:#fee2e2; color:#7f1d1d; border:1px solid var(--red); display:block; }
+.q-card.correct { border-left-color:var(--green); }
+.q-card.wrong { border-left-color:var(--red); }
+.action-row { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin:24px 0; }
+.btn { padding:12px 24px; border:none; border-radius:8px; font-weight:800; font-size:1rem; cursor:pointer; }
+.btn-check { background:var(--green); color:#fff; }
+.btn-reset { background:#64748b; color:#fff; }
+.btn-submit { background:var(--red); color:#fff; }
+.btn-print { background:var(--blue); color:#fff; }
+@media print {
+  body { background:#fff; padding:8px; }
+  .back-link, .mode-switcher, .info-banner, .action-row, .btn, footer, .q-feedback { display:none !important; }
+  .q-card { break-inside:avoid; box-shadow:none; border:1px solid #ccc; }
+  .q-input input { border:1px solid #999; background:#fff; }
+}
+.score-banner { padding:16px 20px; border-radius:10px; margin:16px 0; font-weight:800; text-align:center; font-size:1.1rem; background:#f0f9ff; border:2px solid var(--blue); color:var(--navy); }
+.score-banner.excellent { background:#d1fae5; border-color:var(--green); color:#065f46; }
+.score-banner.needs-work { background:#fef3c7; border-color:var(--gold); color:#78350f; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-8.html" class="back-link">← Back to Math 8</a>
+<header>
+  <div class="eyebrow" id="modeEyebrow">Math 8 · End of Q3 Test · Practice</div>
+  <h1>🎯 Math 8 End of Q3 Test</h1>
+  <p class="tagline">End-of-Q3 Content · 20 questions</p>
+</header>
+<div class="mode-switcher">
+  <a href="?mode=practice" class="mode-btn" id="modeP">📚 Practice Version</a>
+  <a href="?mode=graded" class="mode-btn" id="modeG">✅ Graded Version</a>
+</div>
+<div class="info-banner" id="infoBanner">
+  <strong>Practice mode:</strong> Answer all 20 questions. Click <strong>Check Answers</strong> to see which you got right. You can try again as many times as you like. No grades submitted.
+</div>
+<div class="name-row" id="nameRow" style="display:none;">
+  <label>First Name: <input type="text" id="fName"></label>
+  <label>Last Name: <input type="text" id="lName"></label>
+  <label>Class: <input type="text" id="cls" placeholder="e.g., Math 8"></label>
+</div>
+<div id="questions"></div>
+<div class="action-row" id="actionRow">
+  <button class="btn btn-check" onclick="checkAll()">✓ Check Answers</button>
+  <button class="btn btn-print" onclick="window.print()">🖨 Print</button>
+  <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
+</div>
+<div id="scoreBanner"></div>
+<footer>Mary, Star of the Sea School · 8th Grade Math · Dr. Park · End of Q3 Test</footer>
+</div>
+<script>
+const QUESTIONS = [{"q": "f(x) = 3x + 2. Find f(4).", "ans": "14"}, {"q": "Domain of {(1,2),(3,4),(5,6)}?", "ans": ["{1,3,5}", "1,3,5"]}, {"q": "Is y = x² a function? (yes/no)", "ans": ["yes", "y"]}, {"q": "Slope of y = 4x − 3?", "ans": "4"}, {"q": "y-intercept of y = −2x + 7?", "ans": "7"}, {"q": "Slope of line through (0, 0) and (3, 6)?", "ans": "2"}, {"q": "Right triangle with legs 6 and 8. Hypotenuse?", "ans": "10"}, {"q": "Right triangle with legs 5 and 12. Hypotenuse?", "ans": "13"}, {"q": "Distance from (0, 0) to (3, 4)?", "ans": "5"}, {"q": "Translate (1, 4) by (+2, −3). New point?", "ans": ["(3,1)", "(3, 1)", "3,1"]}, {"q": "Reflect (2, 5) across x-axis. New point?", "ans": ["(2,-5)", "(2, -5)", "2,-5"]}, {"q": "Rotate (3, 0) 90° CCW about origin. New point?", "ans": ["(0,3)", "(0, 3)", "0,3"]}, {"q": "Two parallel lines cut by a transversal: corresponding angles are ___?", "ans": ["equal", "congruent", "same"]}, {"q": "Alternate interior angles are ___?", "ans": ["equal", "congruent", "same"]}, {"q": "Scatter plot positive correlation: as x increases, y ___?", "ans": ["increases", "goes up", "up"]}, {"q": "Function notation: f(x) = 2x. Find f(−3).", "ans": "-6"}, {"q": "Slope through (2, 3) and (5, 11)?", "ans": "8/3"}, {"q": "Right triangle legs 9 and 12. Hypotenuse?", "ans": "15"}, {"q": "Reflect (−4, 3) across y-axis. New point?", "ans": ["(4,3)", "(4, 3)", "4,3"]}, {"q": "Slope of y = 5 (horizontal line)?", "ans": "0"}];
+function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
+function renderQuestions(){const c=document.getElementById('questions');c.innerHTML='';QUESTIONS.forEach((q,i)=>{const card=document.createElement('div');card.className='q-card';card.id='q'+i;card.innerHTML=`<div class="q-text"><span class="q-num">${i+1}</span>${q.q}</div><div class="q-input"><input type="text" id="ans${i}" placeholder="Your answer">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div><div class="q-feedback" id="fb${i}"></div>`;c.appendChild(card);});}
+function normalize(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'x').replace(/·/g,'*');}
+function isCorrect(u,e){const un=normalize(u);if(!un)return false;const ans=Array.isArray(e)?e:[e];return ans.some(a=>normalize(a)===un);}
+function checkAll(){let correct=0;const results=[];QUESTIONS.forEach((q,i)=>{const u=document.getElementById('ans'+i).value;const card=document.getElementById('q'+i);const fb=document.getElementById('fb'+i);const r=isCorrect(u,q.ans);card.classList.remove('correct','wrong');fb.classList.remove('correct','wrong');if(r){card.classList.add('correct');fb.classList.add('correct');fb.innerHTML='✓ Correct!';correct++;}else{card.classList.add('wrong');fb.classList.add('wrong');const at=Array.isArray(q.ans)?q.ans[0]:q.ans;fb.innerHTML=getMode()==='practice'?`✗ Not quite. Correct: <strong>${at}</strong>`:'✗ Incorrect.';}results.push({q:q.q,userAns:u,correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans,right:r});});showScore(correct);return {correct,results};}
+function showScore(c){const pct=Math.round((c/QUESTIONS.length)*100);const b=document.getElementById('scoreBanner');let cls='score-banner',m;if(pct>=85){cls+=' excellent';m='🌟 Excellent work!';}else if(pct>=70)m="👍 Nice — you're on track.";else{cls+=' needs-work';m='📚 Review the topics you missed and try again.';}b.className=cls;b.innerHTML=`📊 <strong>Score: ${c} / ${QUESTIONS.length} (${pct}%)</strong> — ${m}`;}
+function resetAll(){QUESTIONS.forEach((q,i)=>{document.getElementById('ans'+i).value='';document.getElementById('q'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).innerHTML='';});document.getElementById('scoreBanner').innerHTML='';}
+function submitToTeacher(){const f=document.getElementById('fName').value.trim();const l=document.getElementById('lName').value.trim();const cl=document.getElementById('cls').value.trim();if(!f||!l){alert('Enter your first and last name.');return;}const {correct,results}=checkAll();const name=f+' '+l;let body=`Math 8 End of Q3 Test — Graded Submission\nName: ${name}\n`;if(cl)body+=`Class: ${cl}\n`;body+=`Score: ${correct}/20 (${Math.round(correct/20*100)}%)\n\nAnswers:\n`;results.forEach((r,i)=>{body+=`${i+1}. ${r.right?'✓':'✗'} Your answer: "${r.userAns}" | Correct: ${r.correctAns}\n`;});const subject=encodeURIComponent(`Math 8 End of Q3 Test — ${name}`);const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+subject+'&body='+encodeURIComponent(body);const w=window.open(gmailUrl,'_blank','noopener,noreferrer');if(!w)window.location.href=gmailUrl;}
+function applyMode(){const m=getMode();const e=document.getElementById('modeEyebrow');const b=document.getElementById('infoBanner');const n=document.getElementById('nameRow');const a=document.getElementById('actionRow');document.getElementById('modeP').classList.toggle('active',m==='practice');document.getElementById('modeG').classList.toggle('active',m==='graded');if(m==='graded'){e.className='eyebrow graded';e.textContent='Math 8 · End of Q3 Test · GRADED';b.className='info-banner graded';b.innerHTML='<strong>Graded mode:</strong> Enter your name, answer all 20 questions, then click <strong>Submit to Dr. Park</strong>. Your answers and score will be emailed for grading. Work carefully — this counts.';n.style.display='flex';a.innerHTML='<button class="btn btn-check" onclick="checkAll()">✓ Check My Work</button><button class="btn btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button><button class="btn btn-print" onclick="window.print()">🖨 Print</button><button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>';}}
+renderQuestions();applyMode();
+</script>
+</body>
+</html>

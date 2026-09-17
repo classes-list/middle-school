@@ -2965,6 +2965,36 @@ function renderHome() {
       </div>`;
     grid.appendChild(eq);
   }
+  function appendQtrTest(quarter, type) {
+    const isM = (type === 'mid');
+    const url = `msp-${isM?'midquarter':'endquarter'}-g7-q${quarter}.html`;
+    const pdfUrl = `msp-${isM?'midquarter':'endquarter'}-print-g7-q${quarter}.pdf`;
+    const title = isM ? `Mid-Q${quarter} Test` : `End of Q${quarter} Test`;
+    const badge = isM ? 'TEST' : 'END TEST';
+    const badgeColor = isM ? '#dc2626' : '#1e3a8a';
+    const cardBg = isM ? 'linear-gradient(135deg, #fee2e2, #fecaca)' : 'linear-gradient(135deg, #dbeafe, #bfdbfe)';
+    const icon = isM ? '📝' : '🎯';
+    const c = document.createElement('div');
+    c.className = 'unit-card';
+    c.style.background = cardBg;
+    c.style.borderLeft = `5px solid ${badgeColor}`;
+    c.onclick = () => window.open(`${url}?mode=practice`, '_blank', 'noopener');
+    c.innerHTML = `
+      <div class="unit-card-header">
+        <div class="unit-card-icon">${icon}</div>
+        <div class="unit-card-meta">
+          <div class="unit-card-title"><span class="unit-badge" style="background:${badgeColor};">${badge}</span>${title}</div>
+          <div class="unit-card-cc">20 Questions · ${isM?'Mid-Q'+quarter:'End-of-Q'+quarter} Content</div>
+        </div>
+      </div>
+      <div class="unit-card-desc">${isM?'Mid-quarter check-in':'Cumulative end-of-quarter test'} for Quarter ${quarter}. Try the practice version first, then submit the graded version to Dr. Park.</div>
+      <div class="unit-card-pills" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
+        <a class="pill" href="${url}?mode=practice" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#059669; color:#fff; padding:4px 10px;">📚 Practice</a>
+        <a class="pill" href="${url}?mode=graded" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:${badgeColor}; color:#fff; padding:4px 10px;">✅ Take Graded</a>
+        <a class="pill" href="${pdfUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="text-decoration:none; background:#0284c7; color:#fff; padding:4px 10px;">🖨 Print PDF</a>
+      </div>`;
+    grid.appendChild(c);
+  }
   UNITS.forEach((unit, idx) => {
     const card = document.createElement('div');
     card.className = 'unit-card';
@@ -2986,6 +3016,12 @@ function renderHome() {
     grid.appendChild(card);
     if (idx === REVIEW_AFTER_IDX) appendReviewCard();
     if (unit.id === 'ratios-rates') appendEndquarterCard();
+    if (unit.id === 'mult-div-rational') appendQtrTest(2, 'mid');
+    if (unit.id === 'rearranging-formulas') appendQtrTest(2, 'end');
+    if (unit.id === 'area-polygons') appendQtrTest(3, 'mid');
+    if (unit.id === 'probability') appendQtrTest(3, 'end');
+    if (unit.id === 'statistics') appendQtrTest(4, 'mid');
+    if (unit.id === 'word-problems') appendQtrTest(4, 'end');
   });
 }
 
