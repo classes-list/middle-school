@@ -64,7 +64,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <header>
   <div class="eyebrow" id="modeEyebrow">Math 6 · Mid-Quarter Test · Practice</div>
   <h1>📝 Math 6 Mid-Quarter Test</h1>
-  <p class="tagline">Mid-Q1 Content · 20 questions</p>
+  <p class="tagline">Mid-Q1 Content · 15 questions</p>
 </header>
 
 <div class="mode-switcher">
@@ -73,7 +73,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 </div>
 
 <div class="info-banner" id="infoBanner">
-  <strong>Practice mode:</strong> Answer all 20 questions. Click <strong>Check Answers</strong> to see which you got right. You can try again as many times as you like. No grades submitted.
+  <strong>Practice mode:</strong> Answer all 15 questions. Click <strong>Check Answers</strong> to see which you got right. You can try again as many times as you like. No grades submitted.
 </div>
 
 <div class="name-row" id="nameRow" style="display:none;">
@@ -111,12 +111,7 @@ const QUESTIONS = [
   {q:'Evaluate: (−36) ÷ (−9).', ans:'4'},
   {q:'Simplify: −(−12).', ans:'12'},
   {q:'Which is larger: −5 or −8?', ans:['-5','−5']},
-  {q:'What is |−15| (absolute value of −15)?', ans:'15'},
-  {q:'Order from least to greatest: −4, 3, −7, 0. (Separate with commas.)', ans:['-7,-4,0,3','-7, -4, 0, 3']},
-  {q:'Write 4,300,000 in scientific notation.', ans:['4.3 × 10^6','4.3e6','4.3 x 10^6','4.3*10^6']},
-  {q:'Write 0.00062 in scientific notation.', ans:['6.2 × 10^-4','6.2e-4','6.2 x 10^-4','6.2*10^-4']},
-  {q:'Write 3.5 × 10^4 in standard form.', ans:['35000','35,000']},
-  {q:'Which is larger: 2.5 × 10^3 or 3 × 10^2?', ans:['2.5 × 10^3','2.5e3','2.5 x 10^3','2.5*10^3','2500']}
+  {q:'What is |−15| (absolute value of −15)?', ans:'15'}
 ];
 
 function getMode(){
@@ -220,7 +215,7 @@ function submitToTeacher(){
   let body = `Math 6 Mid-Quarter Test — Graded Submission\n`;
   body += `Name: ${name}\n`;
   if (cls) body += `Class: ${cls}\n`;
-  body += `Score: ${correct}/20 (${Math.round(correct/20*100)}%)\n\n`;
+  body += `Score: ${correct}/15 (${Math.round(correct/15*100)}%)\n\n`;
   body += `Answers:\n`;
   results.forEach((r, i) => {
     body += `${i+1}. ${r.right ? '✓' : '✗'} Your answer: "${r.userAns}" | Correct: ${r.correctAns}\n`;
@@ -251,7 +246,7 @@ function applyMode(){
     eyebrow.className = 'eyebrow graded';
     eyebrow.textContent = 'Math 6 · Mid-Quarter Test · GRADED';
     banner.className = 'info-banner graded';
-    banner.innerHTML = `<strong>Graded mode:</strong> Enter your name, answer all 20 questions, then click <strong>Submit to Dr. Park</strong>. Your answers and score will be emailed for grading. Work carefully — this counts.`;
+    banner.innerHTML = `<strong>Graded mode:</strong> Enter your name, answer all 15 questions, then click <strong>Submit to Dr. Park</strong>. Your answers and score will be emailed for grading. Work carefully — this counts.`;
     nameRow.style.display = 'flex';
     actionRow.innerHTML = `
       <button class="btn btn-check" onclick="checkAll()">✓ Check My Work</button>

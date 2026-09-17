@@ -201,23 +201,40 @@ function renderMult(){
 function renderDiv(){
   const bP = decimalPlaces(B);
   const moved = bP;
-  const newA = A * Math.pow(10, moved);
-  const newB = B * Math.pow(10, moved);
+  const newA = Number((A * Math.pow(10, moved)).toFixed(6));
+  const newB = Number((B * Math.pow(10, moved)).toFixed(6));
   const result = A / B;
   const resStr = Number(result.toFixed(6)).toString();
-  return `<div class="stack">
-    <div class="stack-row" style="letter-spacing:2px;">
-      Original: ${A} ÷ ${B}
-    </div>
-    <div class="stack-row" style="letter-spacing:2px; color:#7c3aed;">
-      Move decimal ${moved} place${moved!==1?'s':''} in BOTH numbers
-    </div>
-    <div class="stack-row op-row" style="letter-spacing:2px;">
-      Rewritten: ${Number(newA.toFixed(6))} ÷ ${Number(newB.toFixed(6))}
-    </div>
-    <div class="stack-row result" style="letter-spacing:2px;">
-      = ${resStr}
-    </div>
+  // Build traditional long-division layout
+  // Divisor on left, dividend inside the ) bracket, quotient on top
+  // Pad dividend with ".0" (or more zeros) to match quotient's decimal precision
+  // so quotient digits after the decimal align above trailing zeros in the dividend
+  let dividendStr = String(newA);
+  const quotDecPart = resStr.indexOf('.') === -1 ? 0 : resStr.length - resStr.indexOf('.') - 1;
+  if (quotDecPart > 0) {
+    if (dividendStr.indexOf('.') === -1) dividendStr += '.';
+    const currentDecs = dividendStr.length - dividendStr.indexOf('.') - 1;
+    if (currentDecs < quotDecPart) dividendStr += '0'.repeat(quotDecPart - currentDecs);
+  }
+  // Align quotient decimal point directly above dividend decimal point
+  const divDecPos = dividendStr.indexOf('.') === -1 ? dividendStr.length : dividendStr.indexOf('.');
+  const quotDecPos = resStr.indexOf('.') === -1 ? resStr.length : resStr.indexOf('.');
+  const quotPadCh = Math.max(0, divDecPos - quotDecPos);
+  const barLen = Math.max(quotPadCh + resStr.length, dividendStr.length);
+  const longDivHTML = `
+    <div style="display:inline-flex; align-items:flex-end; font-family:'Courier New', monospace; font-size:1.8rem; font-weight:900; color:#1a2a4a;">
+      <div style="padding-right:6px; padding-bottom:6px;">${newB}</div>
+      <div style="font-size:3rem; line-height:.75; padding:0 4px 2px 0;">)</div>
+      <div style="display:inline-block;">
+        <div style="color:#059669; text-align:left; padding-left:${quotPadCh}ch; letter-spacing:0;">${resStr}</div>
+        <div style="border-top:3px solid #1a2a4a; padding-top:4px; text-align:left; width:${barLen}ch; letter-spacing:0;">${dividendStr}</div>
+      </div>
+    </div>`;
+  return `<div class="stack" style="text-align:center;">
+    <div style="letter-spacing:2px; margin-bottom:8px;">Original: <strong>${A} ÷ ${B}</strong></div>
+    <div style="color:#7c3aed; font-size:1rem; margin-bottom:14px;">Move decimal <strong>${moved}</strong> place${moved!==1?'s':''} to the right in BOTH numbers → whole-number divisor.</div>
+    ${longDivHTML}
+    <div style="font-size:.85rem; color:#64748b; margin-top:12px;">↑ quotient sits on top of the bar &nbsp;·&nbsp; divisor on the left &nbsp;·&nbsp; dividend inside the bracket</div>
   </div>`;
 }
 
