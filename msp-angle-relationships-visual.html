@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angle Relationships Visual — Math 8</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.controls input[type=range] { width:200px; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:4px 12px; border-radius:6px; border:1.5px solid #cbd5e1; font-size:1.1rem; }
+.diagram-wrap { background:#f8fafc; border-radius:10px; padding:16px; margin:12px 0; text-align:center; }
+.legend { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:14px 0; font-size:.9rem; }
+@media (max-width:600px) { .legend { grid-template-columns:1fr; } }
+.leg-item { padding:8px 12px; border-radius:6px; background:#f1f5f9; }
+.leg-item .dot { display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-8.html" class="back-link">← Back to Math 8</a>
+<header>
+  <div class="eyebrow">Math 8 · Parallel Lines & Transversal · Visual Explorer</div>
+  <h1>📐 Parallel Lines Cut By A Transversal</h1>
+  <p class="tagline">Eight angles from three lines. Only two unique values.</p>
+</header>
+<div class="big-idea">
+  <strong>Two parallel lines + one transversal = 8 angles</strong>, but they only come in TWO sizes: an <strong>acute</strong> value and its <strong>supplement</strong> (adds to 180°). Corresponding, alternate interior, and alternate exterior angles are all <strong>equal</strong>.
+</div>
+<section class="card">
+  <h2>🎯 Try It: Change The Transversal Angle</h2>
+  <div class="controls">
+    <label>Angle of transversal: <input type="range" id="ang" min="20" max="160" step="5" value="60"><span class="val" id="angVal">60°</span></label>
+  </div>
+  <div class="diagram-wrap">
+    <svg id="diag" width="500" height="400" viewBox="0 0 500 400" style="max-width:100%; height:auto;"></svg>
+  </div>
+  <div class="legend">
+    <div class="leg-item"><span class="dot" style="background:#dc2626;"></span><strong>Acute value:</strong> <span id="acuteVal">60°</span> — angles 1, 4, 5, 8</div>
+    <div class="leg-item"><span class="dot" style="background:#2563eb;"></span><strong>Obtuse value:</strong> <span id="obtVal">120°</span> — angles 2, 3, 6, 7</div>
+  </div>
+  <div class="tip"><strong>All same-color angles are EQUAL.</strong> All different-color pairs are SUPPLEMENTARY (add to 180°).</div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Angle Names</h2>
+  <div class="tip"><strong>Corresponding angles</strong> (same corner position on each parallel line): 1&amp;5, 2&amp;6, 3&amp;7, 4&amp;8. <strong>Equal.</strong></div>
+  <div class="tip"><strong>Alternate interior angles</strong> (between the parallels, on opposite sides of transversal): 3&amp;5, 4&amp;6. <strong>Equal.</strong></div>
+  <div class="tip"><strong>Alternate exterior angles</strong> (outside the parallels, on opposite sides): 1&amp;7, 2&amp;8. <strong>Equal.</strong></div>
+  <div class="tip" style="border-left-color:var(--red); background:#fef2f2;"><strong>Co-interior (same-side interior) angles</strong>: 3&amp;6, 4&amp;5. <strong>Supplementary (add to 180°).</strong></div>
+</section>
+<footer>Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Angle Relationships Visual</footer>
+</div>
+<script>
+let A = 60;
+function render(){
+  document.getElementById('angVal').textContent = A+'°';
+  document.getElementById('acuteVal').textContent = A+'°';
+  document.getElementById('obtVal').textContent = (180-A)+'°';
+  const svg = document.getElementById('diag');
+  const W=500, H=400;
+  const line1Y = 130, line2Y = 300;
+  let g='';
+  // Parallel lines
+  g += `<line x1="30" y1="${line1Y}" x2="${W-30}" y2="${line1Y}" stroke="#0f172a" stroke-width="3"/>`;
+  g += `<line x1="30" y1="${line2Y}" x2="${W-30}" y2="${line2Y}" stroke="#0f172a" stroke-width="3"/>`;
+  g += `<text x="${W-20}" y="${line1Y-6}" text-anchor="end" font-size="12" font-weight="800" fill="#0f172a">m ∥</text>`;
+  g += `<text x="${W-20}" y="${line2Y+18}" text-anchor="end" font-size="12" font-weight="800" fill="#0f172a">n ∥</text>`;
+  // Transversal from top-left to bottom-right (angle A with horizontal from line1)
+  const rad = A * Math.PI/180;
+  // pt1 on line1: pick center-ish (250, 130)
+  const int1 = [250, line1Y];
+  // Direction along transversal
+  const dx = Math.cos(rad), dy = Math.sin(rad); // pointing down-right if A<90
+  // Draw transversal extending both ways
+  const t1 = [int1[0] - dx*180, int1[1] - dy*180];
+  const t2 = [int1[0] + dx*(line2Y-line1Y)/dy + dx*50, line2Y + dy*50];
+  const int2 = [int1[0] + dx*(line2Y-line1Y)/dy, line2Y];
+  g += `<line x1="${t1[0]}" y1="${t1[1]}" x2="${t2[0]}" y2="${t2[1]}" stroke="#7c3aed" stroke-width="3"/>`;
+  g += `<text x="${t2[0]+8}" y="${t2[1]-4}" font-size="12" font-weight="800" fill="#7c3aed">t (transversal)</text>`;
+
+  // Label 8 angles
+  // At intersection 1: 4 angles
+  // Angle 1: top-left of int1 (between line going left and transversal going up-left)
+  //         angle 2: top-right
+  //         angle 3: bottom-left (interior)
+  //         angle 4: bottom-right (interior)
+  // Similarly at int2
+  const acute = A, obt = 180-A;
+  // Position labels around each intersection
+  const label = (x, y, text, color) => `<text x="${x}" y="${y}" text-anchor="middle" font-size="13" font-weight="900" fill="${color}">${text}</text>`;
+
+  // Intersection 1 labels
+  const off = 18;
+  // Angle 1 (upper-left of int1): between line-left ray and transversal-up ray
+  g += label(int1[0] - off - 5, int1[1] - 10, `1: ${obt}°`, '#2563eb');
+  g += label(int1[0] + off + 5, int1[1] - 10, `2: ${acute}°`, '#dc2626');
+  g += label(int1[0] - off - 5, int1[1] + 22, `3: ${acute}°`, '#dc2626');
+  g += label(int1[0] + off + 5, int1[1] + 22, `4: ${obt}°`, '#2563eb');
+  // Intersection 2 labels
+  g += label(int2[0] - off - 5, int2[1] - 10, `5: ${obt}°`, '#2563eb');
+  g += label(int2[0] + off + 5, int2[1] - 10, `6: ${acute}°`, '#dc2626');
+  g += label(int2[0] - off - 5, int2[1] + 22, `7: ${acute}°`, '#dc2626');
+  g += label(int2[0] + off + 5, int2[1] + 22, `8: ${obt}°`, '#2563eb');
+
+  svg.innerHTML = g;
+}
+document.getElementById('ang').addEventListener('input', e=>{A=parseInt(e.target.value);render();});
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Functions Visual — Math 8</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--purple); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.machine { display:flex; align-items:center; gap:14px; justify-content:center; padding:22px 14px; background:linear-gradient(180deg,#f8fafc 0%,#e0e7ff 100%); border-radius:14px; margin:14px 0; flex-wrap:wrap; }
+.input-box, .output-box { background:#fff; border:3px solid var(--navy); border-radius:12px; padding:18px 22px; text-align:center; min-width:110px; box-shadow:0 3px 8px rgba(0,0,0,0.1); }
+.input-box .lbl, .output-box .lbl { font-size:.75rem; font-weight:800; color:#64748b; text-transform:uppercase; }
+.input-box .val, .output-box .val { font-size:2rem; font-weight:900; color:var(--navy); margin-top:4px; }
+.output-box { border-color:var(--green); background:#ecfdf5; }
+.output-box .val { color:var(--green); }
+.arrow { font-size:2.5rem; color:var(--purple); }
+.rule-box { background:var(--purple); color:#fff; padding:20px 28px; border-radius:14px; box-shadow:0 4px 12px rgba(124,58,237,0.4); text-align:center; }
+.rule-box .lbl { font-size:.75rem; font-weight:800; text-transform:uppercase; opacity:.85; }
+.rule-box .val { font-size:1.5rem; font-weight:900; margin-top:4px; font-family:'Courier New', monospace; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); }
+.controls input, .controls select { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.controls input[type=range] { width:180px; }
+.table-wrap { overflow-x:auto; }
+.func-table { width:100%; border-collapse:collapse; margin:14px 0; font-family:'Courier New', monospace; }
+.func-table th { background:var(--navy); color:#fff; padding:10px; }
+.func-table td { padding:8px; text-align:center; border-bottom:1px solid #e2e8f0; font-weight:700; }
+.func-table tr.current { background:#fef08a; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--purple); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-8.html" class="back-link">← Back to Math 8</a>
+<header>
+  <div class="eyebrow">Math 8 · Functions · Visual Explorer</div>
+  <h1>🔁 Functions — Input, Rule, Output</h1>
+  <p class="tagline">A function is a machine: feed it a number, follow the rule, out comes exactly ONE answer.</p>
+</header>
+<div class="big-idea">
+  <strong>The function machine:</strong> each input <strong>x</strong> gets sent through the rule (like <strong>2x + 3</strong>), and out comes exactly one <strong>y</strong>. The key property: for each x, ONE and only ONE y.
+</div>
+<section class="card">
+  <h2>🎯 Try It: Feed The Machine</h2>
+  <div class="controls">
+    <label>Rule: f(x) =
+      <select id="ruleSel">
+        <option value="2x+3">2x + 3</option>
+        <option value="x^2">x²</option>
+        <option value="3x-5">3x − 5</option>
+        <option value="x/2+1">x/2 + 1</option>
+        <option value="-x+7">−x + 7</option>
+      </select>
+    </label>
+    <label>Input x: <input type="range" id="x" min="-5" max="10" step="1" value="4"><span style="font-weight:900; margin-left:8px;" id="xVal">4</span></label>
+  </div>
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setP('2x+3',4)">f(x)=2x+3, x=4</button>
+    <button class="preset-btn" onclick="setP('x^2',5)">f(x)=x², x=5</button>
+    <button class="preset-btn" onclick="setP('3x-5',7)">f(x)=3x−5, x=7</button>
+  </div>
+  <div class="machine">
+    <div class="input-box">
+      <div class="lbl">Input x</div>
+      <div class="val" id="mIn">4</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="rule-box">
+      <div class="lbl">Rule f(x)</div>
+      <div class="val" id="mRule">2x + 3</div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="output-box">
+      <div class="lbl">Output f(x)</div>
+      <div class="val" id="mOut">11</div>
+    </div>
+  </div>
+  <div style="text-align:center; font-family:'Courier New', monospace; font-size:1.15rem; font-weight:900; color:var(--navy); background:#fef08a; padding:12px; border-radius:8px;" id="workLine">f(4) = 2(4) + 3 = 8 + 3 = 11</div>
+  <div class="table-wrap">
+    <table class="func-table">
+      <thead><tr><th>x</th><th>f(x) = <span id="ruleHdr">2x + 3</span></th></tr></thead>
+      <tbody id="funcTable"></tbody>
+    </table>
+  </div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>The vertical line test:</strong> a graph is a function if no vertical line crosses it more than once. (Each x has one y.)</div>
+  <div class="tip"><strong>Linear vs. nonlinear:</strong> f(x) = 2x + 3 is LINEAR (constant rate, straight line). f(x) = x² is NONLINEAR (rate changes, curved).</div>
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;"><strong>Function notation f(x)</strong> reads as &quot;f of x&quot;. f(4) means &quot;plug 4 in for x.&quot;</div>
+</section>
+<footer>Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Functions Visual</footer>
+</div>
+<script>
+let RULE='2x+3', X=4;
+function setP(r,x){RULE=r;X=x;document.getElementById('ruleSel').value=r;document.getElementById('x').value=x;render();}
+function evalRule(x){
+  switch(RULE){
+    case '2x+3': return 2*x+3;
+    case 'x^2': return x*x;
+    case '3x-5': return 3*x-5;
+    case 'x/2+1': return x/2+1;
+    case '-x+7': return -x+7;
+  }
+}
+function ruleText(){
+  return {'2x+3':'2x + 3','x^2':'x²','3x-5':'3x − 5','x/2+1':'x/2 + 1','-x+7':'−x + 7'}[RULE];
+}
+function workText(x){
+  const rt = ruleText();
+  const y = evalRule(x);
+  switch(RULE){
+    case '2x+3': return `f(${x}) = 2(${x}) + 3 = ${2*x} + 3 = ${y}`;
+    case 'x^2': return `f(${x}) = (${x})² = ${y}`;
+    case '3x-5': return `f(${x}) = 3(${x}) − 5 = ${3*x} − 5 = ${y}`;
+    case 'x/2+1': return `f(${x}) = ${x}/2 + 1 = ${x/2} + 1 = ${y}`;
+    case '-x+7': return `f(${x}) = −(${x}) + 7 = ${-x} + 7 = ${y}`;
+  }
+}
+function render(){
+  document.getElementById('xVal').textContent = X;
+  document.getElementById('mIn').textContent = X;
+  document.getElementById('mRule').textContent = ruleText();
+  document.getElementById('mOut').textContent = evalRule(X);
+  document.getElementById('workLine').textContent = workText(X);
+  document.getElementById('ruleHdr').textContent = ruleText();
+  // Table
+  const tb = document.getElementById('funcTable');
+  tb.innerHTML = '';
+  for (let x = -3; x <= 6; x++){
+    const tr = document.createElement('tr');
+    if (x === X) tr.className = 'current';
+    tr.innerHTML = `<td>${x}</td><td>${evalRule(x)}</td>`;
+    tb.appendChild(tr);
+  }
+}
+document.getElementById('ruleSel').addEventListener('change', e=>{RULE=e.target.value;render();});
+document.getElementById('x').addEventListener('input', e=>{X=parseInt(e.target.value);render();});
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triangles Visual — Math 7</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:6px; }
+.controls input[type=range] { width:180px; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:4px 12px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.diagram-wrap { background:#f8fafc; border-radius:10px; padding:16px; margin:12px 0; text-align:center; }
+.info-banner { padding:14px 18px; border-radius:10px; margin:12px 0; font-weight:800; text-align:center; background:#f5f3ff; border:2px solid var(--purple); color:#4c1d95; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-7.html" class="back-link">← Back to Math 7</a>
+<header>
+  <div class="eyebrow">Math 7 · Triangles · Visual Explorer</div>
+  <h1>🔺 Triangle Angles Always Sum to 180°</h1>
+</header>
+<div class="big-idea">
+  <strong>Every triangle</strong>, no matter how it&apos;s drawn — big or tiny, sharp or wide — has angles that add up to <strong>exactly 180°</strong>. Change two angles, and the third is FORCED.
+</div>
+<section class="card">
+  <h2>🎯 Try It: Set Two Angles, See The Third</h2>
+  <div class="controls">
+    <label>∠A: <input type="range" id="angA" min="10" max="150" step="5" value="60"><span class="val" id="aVal">60°</span></label>
+    <label>∠B: <input type="range" id="angB" min="10" max="150" step="5" value="80"><span class="val" id="bVal">80°</span></label>
+  </div>
+  <div class="diagram-wrap">
+    <svg id="triDiag" width="450" height="360" viewBox="0 0 450 360" style="max-width:100%; height:auto;"></svg>
+  </div>
+  <div class="info-banner" id="info"></div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Triangle Types (by angles)</h2>
+  <div class="tip"><strong>Acute triangle:</strong> all three angles &lt; 90°.</div>
+  <div class="tip"><strong>Right triangle:</strong> exactly one 90° angle.</div>
+  <div class="tip" style="border-left-color:var(--red); background:#fef2f2;"><strong>Obtuse triangle:</strong> one angle &gt; 90° (the other two must be small).</div>
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;"><strong>Since angles sum to 180°</strong>, you can never have TWO angles ≥ 90° in the same triangle.</div>
+</section>
+<footer>Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Triangles Visual</footer>
+</div>
+<script>
+let A=60, B=80;
+function render(){
+  document.getElementById('aVal').textContent = A+'°';
+  document.getElementById('bVal').textContent = B+'°';
+  const C = 180 - A - B;
+  const invalid = C <= 0;
+  const svg = document.getElementById('triDiag');
+  let g = '';
+  if (invalid){
+    g = `<text x="225" y="180" text-anchor="middle" font-size="18" font-weight="900" fill="#dc2626">Impossible triangle!</text>
+    <text x="225" y="210" text-anchor="middle" font-size="14" fill="#7f1d1d">${A}° + ${B}° = ${A+B}° already ≥ 180°</text>`;
+  } else {
+    // Construct triangle: place A at (100, 280), B at (400, 280), find C above
+    const bx1=80, by1=280, bx2=380, by2=280;
+    const baseLen = bx2 - bx1;
+    // Angle A is at bx1, angle B at bx2
+    // C is above. Use law of sines: side_opposite_A / sin A = side_opposite_B / sin B
+    // side c (opposite C) = baseLen
+    // side a (opposite A) = baseLen * sin A / sin C
+    // side b (opposite B) = baseLen * sin B / sin C
+    const rad = deg => deg*Math.PI/180;
+    const side_b = baseLen * Math.sin(rad(B)) / Math.sin(rad(C)); // from A to C
+    // Now: from A(bx1,by1), angle above horizontal = A, going toward C. C at (bx1 + side_b*cos A, by1 - side_b*sin A)
+    const cx = bx1 + side_b * Math.cos(rad(A));
+    const cy = by1 - side_b * Math.sin(rad(A));
+    g += `<polygon points="${bx1},${by1} ${bx2},${by2} ${cx},${cy}" fill="#dbeafe" stroke="#0f172a" stroke-width="3"/>`;
+    // Vertex labels
+    g += `<text x="${bx1 - 8}" y="${by1 + 20}" font-size="18" font-weight="900" fill="#dc2626">A</text>`;
+    g += `<text x="${bx2 + 5}" y="${by2 + 20}" font-size="18" font-weight="900" fill="#2563eb">B</text>`;
+    g += `<text x="${cx - 5}" y="${cy - 8}" font-size="18" font-weight="900" fill="#059669">C</text>`;
+    // Angle labels near vertices
+    g += `<text x="${bx1 + 30}" y="${by1 - 8}" font-size="14" font-weight="800" fill="#dc2626">${A}°</text>`;
+    g += `<text x="${bx2 - 40}" y="${by2 - 8}" font-size="14" font-weight="800" fill="#2563eb">${B}°</text>`;
+    g += `<text x="${cx + 6}" y="${cy + 20}" font-size="14" font-weight="800" fill="#059669">${C}°</text>`;
+  }
+  svg.innerHTML = g;
+  const info = document.getElementById('info');
+  if (invalid){
+    info.innerHTML = `⚠ ${A}° + ${B}° = ${A+B}° which is ≥ 180°. Reduce one angle.`;
+  } else {
+    let type = 'acute';
+    if (A === 90 || B === 90 || C === 90) type = 'right';
+    else if (A > 90 || B > 90 || C > 90) type = 'obtuse';
+    info.innerHTML = `📐 <strong>Angles:</strong> ${A}° + ${B}° + <strong>${C}°</strong> = 180° ✓<br>This is an <strong>${type}</strong> triangle.`;
+  }
+}
+document.getElementById('angA').addEventListener('input', e=>{A=parseInt(e.target.value);render();});
+document.getElementById('angB').addEventListener('input', e=>{B=parseInt(e.target.value);render();});
+render();
+</script>
+</body>
+</html>

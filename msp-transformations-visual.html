@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformations Visual — Math 8</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--purple); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:6px; }
+.controls select, .controls input { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.controls input[type=range] { width:150px; }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:12px; margin:12px 0; text-align:center; }
+.info-banner { padding:14px 18px; border-radius:10px; margin:12px 0; font-weight:800; background:#f5f3ff; border:2px solid var(--purple); color:#4c1d95; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-8.html" class="back-link">← Back to Math 8</a>
+<header>
+  <div class="eyebrow">Math 8 · Transformations · Visual Explorer</div>
+  <h1>🔄 Transformations — Slide, Flip, Turn, Resize</h1>
+  <p class="tagline">Four ways to move a shape while keeping (or changing) its size.</p>
+</header>
+<div class="big-idea">
+  <strong>Four transformations:</strong> <strong>Translation</strong> (slide), <strong>Reflection</strong> (flip), <strong>Rotation</strong> (turn), <strong>Dilation</strong> (resize). The first three keep the shape&apos;s size — dilation changes it.
+</div>
+<section class="card">
+  <h2>🎯 Try It: Pick A Transformation</h2>
+  <div class="controls">
+    <label>Type:
+      <select id="type">
+        <option value="translate">Translation (slide)</option>
+        <option value="reflect">Reflection (flip)</option>
+        <option value="rotate">Rotation (turn)</option>
+        <option value="dilate">Dilation (resize)</option>
+      </select>
+    </label>
+    <span id="controlSlot"></span>
+  </div>
+  <div class="graph-wrap">
+    <svg id="graph" width="450" height="450" viewBox="0 0 450 450" style="max-width:100%; height:auto;"></svg>
+  </div>
+  <div class="info-banner" id="infoBox"></div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Rigid transformations</strong> (translate, reflect, rotate) preserve shape AND size — image is CONGRUENT to preimage.</div>
+  <div class="tip"><strong>Dilation</strong> changes size by scale factor k. Image is SIMILAR (same shape, different size). k &gt; 1 = bigger, 0 &lt; k &lt; 1 = smaller.</div>
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;"><strong>Notation:</strong> preimage vertices A, B, C become A&apos;, B&apos;, C&apos; after transformation (read &quot;A prime&quot;).</div>
+</section>
+<footer>Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Transformations Visual</footer>
+</div>
+<script>
+let TYPE='translate', TX=3, TY=2, RAXIS='x', RANG=90, K=2;
+const shape = [[1,1],[4,1],[2,4]]; // Triangle
+
+function renderControls(){
+  const slot = document.getElementById('controlSlot');
+  if (TYPE==='translate'){
+    slot.innerHTML = `<label>Right: <input type="number" id="tx" value="${TX}" min="-6" max="6" style="width:60px;"></label>
+      <label>Up: <input type="number" id="ty" value="${TY}" min="-6" max="6" style="width:60px;"></label>`;
+    document.getElementById('tx').addEventListener('input', e=>{TX=parseInt(e.target.value)||0;render();});
+    document.getElementById('ty').addEventListener('input', e=>{TY=parseInt(e.target.value)||0;render();});
+  } else if (TYPE==='reflect'){
+    slot.innerHTML = `<label>Across:
+      <select id="raxis">
+        <option value="x" ${RAXIS==='x'?'selected':''}>x-axis</option>
+        <option value="y" ${RAXIS==='y'?'selected':''}>y-axis</option>
+      </select></label>`;
+    document.getElementById('raxis').addEventListener('change', e=>{RAXIS=e.target.value;render();});
+  } else if (TYPE==='rotate'){
+    slot.innerHTML = `<label>Rotate CCW:
+      <select id="rang">
+        <option value="90" ${RANG===90?'selected':''}>90°</option>
+        <option value="180" ${RANG===180?'selected':''}>180°</option>
+        <option value="270" ${RANG===270?'selected':''}>270°</option>
+      </select> about origin</label>`;
+    document.getElementById('rang').addEventListener('change', e=>{RANG=parseInt(e.target.value);render();});
+  } else {
+    slot.innerHTML = `<label>Scale factor k: <input type="range" id="k" min="0.5" max="3" step="0.5" value="${K}"><span style="font-weight:900;">×${K}</span></label>`;
+    document.getElementById('k').addEventListener('input', e=>{K=parseFloat(e.target.value); renderControls(); render();});
+  }
+}
+
+function transform(pt){
+  const [x,y] = pt;
+  if (TYPE==='translate') return [x+TX, y+TY];
+  if (TYPE==='reflect') return RAXIS==='x' ? [x, -y] : [-x, y];
+  if (TYPE==='rotate'){
+    const rad = RANG * Math.PI/180;
+    return [x*Math.cos(rad) - y*Math.sin(rad), x*Math.sin(rad) + y*Math.cos(rad)];
+  }
+  if (TYPE==='dilate') return [x*K, y*K];
+  return pt;
+}
+
+function render(){
+  const svg = document.getElementById('graph');
+  const cx=225, cy=225, scale=25, W=450, H=450;
+  let g='';
+  for (let i=-8;i<=8;i++){
+    const x=cx+i*scale, y=cy+i*scale;
+    g += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#e2e8f0" stroke-width="1"/>`;
+    g += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`;
+  }
+  g += `<line x1="0" y1="${cy}" x2="${W}" y2="${cy}" stroke="#0f172a" stroke-width="2"/>`;
+  g += `<line x1="${cx}" y1="0" x2="${cx}" y2="${H}" stroke="#0f172a" stroke-width="2"/>`;
+  for (let i=-8;i<=8;i+=2){if(i===0)continue; const x=cx+i*scale, y=cy-i*scale; g += `<text x="${x}" y="${cy+13}" text-anchor="middle" font-size="9" fill="#475569">${i}</text><text x="${cx-5}" y="${y+3}" text-anchor="end" font-size="9" fill="#475569">${i}</text>`;}
+  // Reflection axis highlight
+  if (TYPE==='reflect'){
+    if (RAXIS==='x') g += `<line x1="0" y1="${cy}" x2="${W}" y2="${cy}" stroke="#dc2626" stroke-width="3" stroke-dasharray="8,4"/>`;
+    else g += `<line x1="${cx}" y1="0" x2="${cx}" y2="${H}" stroke="#dc2626" stroke-width="3" stroke-dasharray="8,4"/>`;
+  }
+  // Preimage (blue)
+  const preP = shape.map(p => `${cx + p[0]*scale},${cy - p[1]*scale}`).join(' ');
+  g += `<polygon points="${preP}" fill="rgba(37,99,235,0.4)" stroke="#2563eb" stroke-width="3"/>`;
+  shape.forEach((p, i) => {
+    g += `<text x="${cx + p[0]*scale + 6}" y="${cy - p[1]*scale - 6}" font-size="12" font-weight="800" fill="#1e3a8a">${String.fromCharCode(65+i)}</text>`;
+  });
+  // Image (green)
+  const imgPts = shape.map(transform);
+  const imgP = imgPts.map(p => `${cx + p[0]*scale},${cy - p[1]*scale}`).join(' ');
+  g += `<polygon points="${imgP}" fill="rgba(5,150,105,0.4)" stroke="#059669" stroke-width="3"/>`;
+  imgPts.forEach((p, i) => {
+    g += `<text x="${cx + p[0]*scale + 6}" y="${cy - p[1]*scale - 6}" font-size="12" font-weight="800" fill="#065f46">${String.fromCharCode(65+i)}&apos;</text>`;
+  });
+  svg.innerHTML = g;
+
+  // Info
+  const info = document.getElementById('infoBox');
+  let msg;
+  if (TYPE==='translate') msg = `Translation: (x, y) → (x + ${TX}, y + ${TY}). Same shape, same size, just shifted.`;
+  else if (TYPE==='reflect') msg = `Reflection across ${RAXIS}-axis: ${RAXIS==='x' ? '(x, y) → (x, −y)' : '(x, y) → (−x, y)'}. Mirror image on the other side.`;
+  else if (TYPE==='rotate') msg = `Rotation ${RANG}° CCW about origin. Same shape and size, just turned.`;
+  else msg = `Dilation by scale factor ${K}: (x, y) → (${K}x, ${K}y). Same shape, ${K>1?'BIGGER':K<1?'SMALLER':'same'} size. Image is SIMILAR to preimage.`;
+  info.innerHTML = `<strong>Preimage → Image:</strong> ${msg}`;
+}
+
+document.getElementById('type').addEventListener('change', e=>{TYPE=e.target.value; renderControls(); render();});
+renderControls();
+render();
+</script>
+</body>
+</html>

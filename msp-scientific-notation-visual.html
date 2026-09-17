@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Notation Visual — Math 8</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:6px; }
+.controls input { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.controls input[type=range] { width:180px; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:4px 12px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.notation-display { text-align:center; font-family:'Courier New', monospace; font-size:1.8rem; font-weight:900; color:var(--navy); background:#fef08a; padding:16px 20px; border-radius:10px; margin:14px 0; border:2px solid var(--gold); }
+.notation-display .coef { color:#dc2626; }
+.notation-display .exp { color:#7c3aed; }
+.standard-display { text-align:center; font-family:'Courier New', monospace; font-size:1.4rem; font-weight:800; color:var(--navy); background:#e0e7ff; padding:14px 18px; border-radius:10px; margin:14px 0; word-break:break-all; }
+.compare-scale { background:#f8fafc; border-radius:10px; padding:16px; margin:14px 0; }
+.scale-item { display:grid; grid-template-columns:110px 1fr auto; gap:8px; padding:8px 12px; border-radius:6px; margin:4px 0; align-items:center; font-family:'Courier New', monospace; font-size:.85rem; }
+.scale-item.active { background:#fef08a; border:2px solid var(--gold); font-weight:900; }
+.scale-item .label { font-family:'Segoe UI', Tahoma, sans-serif; font-weight:800; color:var(--navy); }
+.scale-item .val { font-weight:700; color:var(--navy); }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--purple); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-8.html" class="back-link">← Back to Math 8</a>
+<header>
+  <div class="eyebrow">Math 8 · Scientific Notation · Visual Explorer</div>
+  <h1>🔬 Scientific Notation — Big Numbers, Tiny Numbers</h1>
+  <p class="tagline">Every number, no matter how big or small, fits into one clean pattern.</p>
+</header>
+<div class="big-idea">
+  <strong>The form:</strong> <code>a × 10ⁿ</code> where <strong>1 ≤ a &lt; 10</strong> and <strong>n</strong> is an integer.<br>
+  Positive n → BIG number (move decimal right). Negative n → TINY number (move decimal left).
+</div>
+<section class="card">
+  <h2>🎯 Try It: Build The Notation</h2>
+  <div class="controls">
+    <label>Coefficient (1 ≤ a &lt; 10): <input type="number" id="coef" min="1" max="9.99" step="0.1" value="3" style="width:80px;"></label>
+    <label>Exponent n: <input type="range" id="expN" min="-15" max="15" step="1" value="6"><span class="val" id="expVal">6</span></label>
+  </div>
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setP(3,8)">Distance Earth-Sun</button>
+    <button class="preset-btn" onclick="setP(6.02,23)">Avogadro&apos;s #</button>
+    <button class="preset-btn" onclick="setP(9.1,-31)">Electron mass</button>
+    <button class="preset-btn" onclick="setP(1,-9)">Nanometer</button>
+    <button class="preset-btn" onclick="setP(7.8,9)">World pop.</button>
+  </div>
+  <div class="notation-display">
+    <span class="coef" id="dispCoef">3</span> × 10<sup class="exp" id="dispExp">6</sup>
+  </div>
+  <div class="standard-display" id="stdDisp">3,000,000</div>
+  <div class="compare-scale" id="scaleTable"></div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Multiplying by 10ⁿ:</strong> if n is positive, move the decimal <strong>right</strong> n places. If n is negative, move the decimal <strong>left</strong> |n| places.</div>
+  <div class="tip"><strong>The coefficient must be between 1 and 10</strong> (not including 10). So 12 × 10³ is NOT in scientific notation — rewrite as 1.2 × 10⁴.</div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;"><strong>Multiplying two scientific numbers:</strong> multiply the coefficients, ADD the exponents. <em>(2 × 10³)(4 × 10⁵) = 8 × 10⁸.</em></div>
+</section>
+<footer>Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Scientific Notation Visual</footer>
+</div>
+<script>
+let COEF=3, EXP=6;
+function setP(c,e){COEF=c;EXP=e;document.getElementById('coef').value=c;document.getElementById('expN').value=e;render();}
+function render(){
+  document.getElementById('expVal').textContent = (EXP>=0?'+':'')+EXP;
+  document.getElementById('dispCoef').textContent = COEF;
+  document.getElementById('dispExp').textContent = EXP;
+  const num = COEF * Math.pow(10, EXP);
+  let s;
+  if (Math.abs(EXP) > 15){
+    s = num.toExponential(3);
+  } else if (EXP >= 0){
+    s = (num).toLocaleString('en-US', {maximumFractionDigits:20});
+  } else {
+    // Small
+    s = num.toFixed(Math.abs(EXP) + 2).replace(/0+$/,'').replace(/\.$/,'');
+    if (s === '0') s = num.toExponential(3);
+  }
+  document.getElementById('stdDisp').textContent = s;
+
+  // Scale table
+  const scales = [
+    {n:24, label:'yotta', ex:'universe distance'},
+    {n:15, label:'peta', ex:'US GDP in dollars'},
+    {n:9, label:'giga', ex:'human population'},
+    {n:6, label:'mega', ex:'city population'},
+    {n:3, label:'kilo', ex:'kilometer'},
+    {n:0, label:'unit', ex:'meter'},
+    {n:-3, label:'milli', ex:'millimeter'},
+    {n:-6, label:'micro', ex:'red blood cell'},
+    {n:-9, label:'nano', ex:'DNA width'},
+    {n:-12, label:'pico', ex:'atomic radius'},
+    {n:-15, label:'femto', ex:'proton radius'}
+  ];
+  const cs = document.getElementById('scaleTable');
+  cs.innerHTML = '<div style="font-weight:800; color:var(--navy); margin-bottom:8px;">Where does your number land?</div>' + scales.map(s => {
+    const near = Math.abs(EXP - s.n) < 2;
+    return `<div class="scale-item ${near?'active':''}"><span class="label">10<sup>${s.n>=0?'+':''}${s.n}</sup> ${s.label}</span><span class="val">${s.ex}</span><span>${s.n===EXP?'← YOU':''}</span></div>`;
+  }).join('');
+}
+document.getElementById('coef').addEventListener('input', e=>{COEF=parseFloat(e.target.value)||1;render();});
+document.getElementById('expN').addEventListener('input', e=>{EXP=parseInt(e.target.value);render();});
+render();
+</script>
+</body>
+</html>

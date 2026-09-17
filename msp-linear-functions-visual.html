@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linear Functions Visual — Math 8</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:16px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.controls input[type=range] { width:220px; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:4px 12px; border-radius:6px; border:1.5px solid #cbd5e1; font-size:1.05rem; }
+.eq-display { text-align:center; font-family:'Courier New', monospace; font-size:1.5rem; font-weight:900; color:var(--navy); background:#fef08a; padding:12px; border-radius:10px; margin:12px 0; border:2px solid var(--gold); }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:12px; margin:14px 0; text-align:center; }
+.info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+@media (max-width:600px) { .info-grid { grid-template-columns:1fr; } }
+.info-box { padding:14px; border-radius:10px; text-align:center; }
+.info-box .label { font-size:.8rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em; }
+.info-box .value { font-size:1.2rem; font-weight:900; margin-top:4px; color:var(--navy); }
+.info-box.slope { background:#dbeafe; border:2px solid var(--blue); }
+.info-box.slope .label { color:var(--blue); }
+.info-box.intercept { background:#d1fae5; border:2px solid var(--green); }
+.info-box.intercept .label { color:var(--green); }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-8.html" class="back-link">← Back to Math 8</a>
+<header>
+  <div class="eyebrow">Math 8 · Linear Functions · Visual Explorer</div>
+  <h1>📉 y = mx + b — Slope & y-Intercept</h1>
+  <p class="tagline">Two knobs control every straight line. Turn them, watch the line move.</p>
+</header>
+<div class="big-idea">
+  <strong>Two ingredients per line:</strong> <strong>m</strong> = slope (how tilted), <strong>b</strong> = y-intercept (where it crosses the y-axis). Change m to tilt. Change b to slide up/down.
+</div>
+<section class="card">
+  <h2>🎯 Try It: Turn The Knobs</h2>
+  <div class="controls">
+    <label>Slope m: <input type="range" id="m" min="-5" max="5" step="0.5" value="2"><span class="val" id="mVal">2</span></label>
+    <label>y-intercept b: <input type="range" id="b" min="-8" max="8" step="1" value="1"><span class="val" id="bVal">1</span></label>
+  </div>
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setP(2,1)">y = 2x + 1</button>
+    <button class="preset-btn" onclick="setP(-1,3)">y = −x + 3</button>
+    <button class="preset-btn" onclick="setP(0.5,0)">y = 0.5x</button>
+    <button class="preset-btn" onclick="setP(0,4)">y = 4 (horizontal)</button>
+    <button class="preset-btn" onclick="setP(-2,-2)">y = −2x − 2</button>
+  </div>
+  <div class="eq-display" id="eqDisp">y = 2x + 1</div>
+  <div class="graph-wrap">
+    <svg id="graph" width="450" height="450" viewBox="0 0 450 450" style="max-width:100%; height:auto;"></svg>
+  </div>
+  <div class="info-grid">
+    <div class="info-box slope">
+      <div class="label">Slope Meaning</div>
+      <div class="value" id="slopeMeaning">Up 2, over 1</div>
+    </div>
+    <div class="info-box intercept">
+      <div class="label">Line crosses y-axis at</div>
+      <div class="value" id="interceptPt">(0, 1)</div>
+    </div>
+  </div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Slope = rise / run.</strong> Positive slope goes UP left-to-right. Negative slope goes DOWN. Zero = flat. Undefined = vertical.</div>
+  <div class="tip"><strong>y-intercept (b)</strong> is where x = 0. To find it from any linear equation, just plug in x = 0.</div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;"><strong>Steep vs gentle:</strong> Bigger |m| = steeper. m = 5 rises 5 for every 1 right. m = 0.2 rises just 0.2 per 1 right (nearly flat).</div>
+</section>
+<footer>Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Linear Functions Visual</footer>
+</div>
+<script>
+let m=2, b=1;
+function setP(mm,bb){m=mm;b=bb;document.getElementById('m').value=mm;document.getElementById('b').value=bb;render();}
+function fmt(x){return Number.isInteger(x)?x:x.toFixed(1);}
+function render(){
+  document.getElementById('mVal').textContent = fmt(m);
+  document.getElementById('bVal').textContent = b;
+  const sign = b>=0?'+':'−';
+  document.getElementById('eqDisp').textContent = `y = ${fmt(m)}x ${sign} ${Math.abs(b)}`;
+
+  const svg = document.getElementById('graph');
+  const cx=225, cy=225, scale=20, W=450, H=450;
+  let g='';
+  // Grid
+  for (let i=-10;i<=10;i++){
+    const x=cx+i*scale, y=cy+i*scale;
+    g += `<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#e2e8f0" stroke-width="1"/>`;
+    g += `<line x1="0" y1="${y}" x2="${W}" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`;
+  }
+  // Axes
+  g += `<line x1="0" y1="${cy}" x2="${W}" y2="${cy}" stroke="#0f172a" stroke-width="2"/>`;
+  g += `<line x1="${cx}" y1="0" x2="${cx}" y2="${H}" stroke="#0f172a" stroke-width="2"/>`;
+  for (let i=-10;i<=10;i+=2){if(i===0)continue; const x=cx+i*scale, y=cy-i*scale; g += `<text x="${x}" y="${cy+13}" text-anchor="middle" font-size="9" fill="#475569">${i}</text><text x="${cx-5}" y="${y+3}" text-anchor="end" font-size="9" fill="#475569">${i}</text>`;}
+  // Line: y = mx + b, from x=-10 to x=10
+  const y1 = m*(-10) + b, y2 = m*10 + b;
+  const x1p = cx + (-10)*scale, y1p = cy - y1*scale;
+  const x2p = cx + 10*scale, y2p = cy - y2*scale;
+  g += `<line x1="${x1p}" y1="${y1p}" x2="${x2p}" y2="${y2p}" stroke="#2563eb" stroke-width="3.5"/>`;
+  // y-intercept marker
+  const ipy = cy - b*scale;
+  g += `<circle cx="${cx}" cy="${ipy}" r="7" fill="#059669" stroke="#fff" stroke-width="2"/>`;
+  g += `<text x="${cx+14}" y="${ipy-5}" font-size="11" font-weight="800" fill="#059669">(0, ${b})</text>`;
+  // Slope triangle at x=1 to x=2
+  if (m !== 0){
+    const px1 = cx + 1*scale, py1 = cy - (m+b)*scale;
+    const px2 = cx + 2*scale, py2 = cy - (2*m+b)*scale;
+    g += `<line x1="${px1}" y1="${py1}" x2="${px2}" y2="${py1}" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3"/>`;
+    g += `<line x1="${px2}" y1="${py1}" x2="${px2}" y2="${py2}" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3"/>`;
+    g += `<text x="${(px1+px2)/2}" y="${py1+ (m>0?14:-4)}" text-anchor="middle" font-size="10" font-weight="800" fill="#dc2626">run=1</text>`;
+    g += `<text x="${px2+5}" y="${(py1+py2)/2+3}" font-size="10" font-weight="800" fill="#dc2626">rise=${fmt(m)}</text>`;
+  }
+  svg.innerHTML = g;
+
+  // Info
+  let sm;
+  if (m === 0) sm = 'Flat line — no rise';
+  else if (m > 0) sm = `Up ${fmt(m)}, over 1 (rising)`;
+  else sm = `Down ${fmt(Math.abs(m))}, over 1 (falling)`;
+  document.getElementById('slopeMeaning').textContent = sm;
+  document.getElementById('interceptPt').textContent = `(0, ${b})`;
+}
+['m','b'].forEach(id => document.getElementById(id).addEventListener('input', e => { const v=parseFloat(e.target.value); if(id==='m')m=v;else b=v; render(); }));
+render();
+</script>
+</body>
+</html>

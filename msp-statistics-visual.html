@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistics Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--purple); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls input[type=text] { padding:8px 12px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:1rem; width:300px; max-width:100%; }
+.controls .btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.dot-plot { background:#f8fafc; border-radius:10px; padding:14px 8px 28px; margin:12px 0; overflow-x:auto; }
+.stats-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin:14px 0; }
+@media (max-width:640px) { .stats-grid { grid-template-columns:repeat(2, 1fr); } }
+.stat-box { background:#f0f9ff; border:2px solid var(--blue); border-radius:10px; padding:12px; text-align:center; }
+.stat-box .label { font-size:.8rem; font-weight:800; color:var(--blue); text-transform:uppercase; letter-spacing:.05em; }
+.stat-box .value { font-size:1.4rem; font-weight:900; color:var(--navy); margin-top:4px; }
+.stat-box.mean { border-color:var(--green); background:#ecfdf5; }
+.stat-box.mean .label { color:var(--green); }
+.stat-box.median { border-color:var(--purple); background:#f5f3ff; }
+.stat-box.median .label { color:var(--purple); }
+.stat-box.mode { border-color:var(--gold); background:#fef3c7; }
+.stat-box.mode .label { color:#78350f; }
+.stat-box.range { border-color:var(--red); background:#fee2e2; }
+.stat-box.range .label { color:var(--red); }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--purple); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Statistics & Data · Visual Explorer</div>
+  <h1>📊 Mean, Median, Mode, Range — See The Data</h1>
+  <p class="tagline">Type numbers. See the dot plot. Watch all four measures update instantly.</p>
+</header>
+
+<div class="big-idea">
+  <strong>The four measures:</strong> <strong>Mean</strong> = average (add them, divide by count). <strong>Median</strong> = middle value when sorted. <strong>Mode</strong> = most repeated. <strong>Range</strong> = biggest − smallest.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Type Your Data (comma-separated)</h2>
+  <div class="controls">
+    <input type="text" id="data" value="4, 7, 3, 7, 8, 5, 7, 6, 9, 4">
+  </div>
+
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setData('4, 7, 3, 7, 8, 5, 7, 6, 9, 4')">Test scores</button>
+    <button class="preset-btn" onclick="setData('2, 3, 3, 4, 5, 5, 5, 6, 7')">One mode</button>
+    <button class="preset-btn" onclick="setData('1, 2, 3, 4, 5, 6, 7, 8, 9, 10')">No repeats</button>
+    <button class="preset-btn" onclick="setData('10, 10, 20, 20, 30, 30')">Bimodal</button>
+    <button class="preset-btn" onclick="setData('5, 5, 5, 100')">Outlier warning</button>
+  </div>
+
+  <div class="dot-plot">
+    <svg id="dotPlot" width="700" height="180" viewBox="0 0 700 180" style="max-width:100%; height:auto;"></svg>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-box mean"><div class="label">Mean</div><div class="value" id="statMean">—</div></div>
+    <div class="stat-box median"><div class="label">Median</div><div class="value" id="statMedian">—</div></div>
+    <div class="stat-box mode"><div class="label">Mode</div><div class="value" id="statMode">—</div></div>
+    <div class="stat-box range"><div class="label">Range</div><div class="value" id="statRange">—</div></div>
+  </div>
+
+  <div class="tip" id="explainBox"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Outliers pull the MEAN.</strong> One giant value can drag the mean up (or down) far from where most data sits. The MEDIAN is safer for skewed data.</div>
+  <div class="tip"><strong>Mode</strong> tells you what&apos;s most common — great for shoe sizes, favorite colors, most-repeated grade.</div>
+  <div class="tip" style="border-left-color:var(--red); background:#fef2f2;"><strong>Range</strong> tells you how spread out the data is. Small range = tightly clustered. Big range = data all over the place.</div>
+</section>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Statistics Visual</footer>
+</div>
+
+<script>
+function setData(s){document.getElementById('data').value=s; render();}
+
+function parseData(s){
+  return s.split(/[,\s]+/).map(x=>parseFloat(x)).filter(x=>!isNaN(x)).sort((a,b)=>a-b);
+}
+
+function render(){
+  const raw = document.getElementById('data').value;
+  const data = parseData(raw);
+  if (data.length === 0) return;
+
+  // Stats
+  const sum = data.reduce((a,b)=>a+b,0);
+  const mean = sum / data.length;
+  const mid = Math.floor(data.length/2);
+  const median = data.length % 2 === 0 ? (data[mid-1] + data[mid])/2 : data[mid];
+  // Mode
+  const counts = {};
+  data.forEach(v => counts[v] = (counts[v]||0)+1);
+  const maxCount = Math.max(...Object.values(counts));
+  const modes = Object.keys(counts).filter(k => counts[k] === maxCount).map(Number);
+  const modeText = maxCount === 1 ? 'none' : modes.join(', ');
+  const range = data[data.length-1] - data[0];
+
+  document.getElementById('statMean').textContent = mean.toFixed(2).replace(/\.00$/,'');
+  document.getElementById('statMedian').textContent = median;
+  document.getElementById('statMode').textContent = modeText;
+  document.getElementById('statRange').textContent = range;
+
+  // Dot plot
+  const svg = document.getElementById('dotPlot');
+  const min = data[0], max = data[data.length-1];
+  const padding = 40;
+  const W = 700, H = 180;
+  const range01 = max - min || 1;
+  let g = '';
+  // Axis
+  g += `<line x1="${padding}" y1="140" x2="${W-padding}" y2="140" stroke="#0f172a" stroke-width="2"/>`;
+  // Ticks & labels
+  const step = Math.ceil((max - min + 1) / 10) || 1;
+  for (let v = Math.floor(min); v <= max; v++){
+    const x = padding + ((v - min) / range01) * (W - 2*padding);
+    g += `<line x1="${x}" y1="135" x2="${x}" y2="145" stroke="#0f172a" stroke-width="1"/>`;
+    g += `<text x="${x}" y="160" text-anchor="middle" font-size="11" fill="#334155">${v}</text>`;
+  }
+  // Dots
+  const counted = {};
+  data.forEach(v => {
+    counted[v] = (counted[v]||0)+1;
+    const x = padding + ((v - min) / range01) * (W - 2*padding);
+    const y = 130 - (counted[v]-1)*14;
+    g += `<circle cx="${x}" cy="${y}" r="6" fill="#7c3aed" stroke="#fff" stroke-width="2"/>`;
+  });
+  // Mean marker
+  const meanX = padding + ((mean - min) / range01) * (W - 2*padding);
+  g += `<line x1="${meanX}" y1="20" x2="${meanX}" y2="145" stroke="#059669" stroke-width="2" stroke-dasharray="6,3"/>`;
+  g += `<text x="${meanX}" y="15" text-anchor="middle" font-size="11" font-weight="800" fill="#059669">Mean ${mean.toFixed(1)}</text>`;
+  // Median marker
+  const medX = padding + ((median - min) / range01) * (W - 2*padding);
+  g += `<line x1="${medX}" y1="20" x2="${medX}" y2="145" stroke="#7c3aed" stroke-width="2" stroke-dasharray="3,3"/>`;
+  g += `<text x="${medX}" y="10" text-anchor="middle" font-size="11" font-weight="800" fill="#7c3aed">Med ${median}</text>`;
+
+  svg.innerHTML = g;
+
+  // Explanation
+  const eb = document.getElementById('explainBox');
+  eb.innerHTML = `<strong>How this was computed:</strong>
+  <br>Mean: (${data.join(' + ')}) ÷ ${data.length} = ${sum} ÷ ${data.length} = ${mean.toFixed(2).replace(/\.00$/,'')}
+  <br>Median: sorted → [${data.join(', ')}]. ${data.length % 2 === 0 ? `Two middle values (${data[mid-1]} and ${data[mid]}), average = ${median}.` : `Middle value = ${median}.`}
+  <br>Mode: ${modeText === 'none' ? 'every value appears once — no mode.' : `${modes.join(', ')} appears ${maxCount} times (most).`}
+  <br>Range: ${max} − ${min} = ${range}`;
+}
+
+document.getElementById('data').addEventListener('input', render);
+render();
+</script>
+</body>
+</html>

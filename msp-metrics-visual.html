@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metric Conversions Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); }
+.controls input, .controls select { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.staircase { background:#f8fafc; border-radius:12px; padding:20px 12px; margin:14px 0; overflow-x:auto; }
+.staircase-svg { display:block; margin:0 auto; }
+.result-banner { padding:16px 20px; border-radius:10px; margin:14px 0; font-weight:800; text-align:center; background:#d1fae5; border:2px solid var(--green); color:#065f46; font-size:1.15rem; }
+.result-banner .big { display:block; font-size:1.5rem; margin:4px 0; color:var(--navy); font-family:'Courier New', monospace; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+<header>
+  <div class="eyebrow">Math 6 · Metric Conversions · Visual Explorer</div>
+  <h1>📏 KHDUdcm Staircase</h1>
+</header>
+<div class="big-idea">
+  <strong>Every step on the staircase = ×10 or ÷10.</strong> Go DOWN the stairs (K → m): multiply by 10 each step. Go UP the stairs (m → K): divide by 10 each step. Equivalent to moving the decimal!
+</div>
+<section class="card">
+  <h2>🎯 Try It: Convert Any Metric Unit</h2>
+  <div class="controls">
+    <label>Value: <input type="number" id="val" value="5" step="any" style="width:100px;"></label>
+    <label>From:
+      <select id="from">
+        <option value="3">Kilo (K)</option>
+        <option value="2">Hecto (H)</option>
+        <option value="1">Deka (D)</option>
+        <option value="0" selected>Unit (m/L/g)</option>
+        <option value="-1">deci (d)</option>
+        <option value="-2">centi (c)</option>
+        <option value="-3">milli (m)</option>
+      </select>
+    </label>
+    <label>To:
+      <select id="to">
+        <option value="3">Kilo (K)</option>
+        <option value="2">Hecto (H)</option>
+        <option value="1">Deka (D)</option>
+        <option value="0">Unit (m/L/g)</option>
+        <option value="-1">deci (d)</option>
+        <option value="-2">centi (c)</option>
+        <option value="-3" selected>milli (m)</option>
+      </select>
+    </label>
+  </div>
+  <div class="staircase">
+    <svg class="staircase-svg" width="700" height="220" viewBox="0 0 700 220"></svg>
+  </div>
+  <div class="result-banner" id="banner"></div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Down the stairs</strong> (K→H→D→Unit→d→c→m): multiply by 10 per step (decimal moves RIGHT).</div>
+  <div class="tip"><strong>Up the stairs</strong> (m→c→d→Unit→D→H→K): divide by 10 per step (decimal moves LEFT).</div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;"><strong>Common needed conversions:</strong> 1 km = 1000 m, 1 m = 100 cm = 1000 mm, 1 L = 1000 mL, 1 kg = 1000 g.</div>
+</section>
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Metric Staircase Visual</footer>
+</div>
+<script>
+const STEPS = [
+  {p:3, name:'Kilo', abbr:'K'},
+  {p:2, name:'Hecto', abbr:'H'},
+  {p:1, name:'Deka', abbr:'D'},
+  {p:0, name:'Unit', abbr:'m/L/g'},
+  {p:-1, name:'deci', abbr:'d'},
+  {p:-2, name:'centi', abbr:'c'},
+  {p:-3, name:'milli', abbr:'m'}
+];
+let V=5, FROM=0, TO=-3;
+function render(){
+  const svg = document.querySelector('.staircase-svg');
+  let g = '';
+  const stepW = 90, stepH = 26, startX = 20, startY = 30;
+  STEPS.forEach((s, i) => {
+    const x = startX + i * stepW;
+    const y = startY + i * stepH;
+    const fromIdx = STEPS.findIndex(x => x.p === FROM);
+    const toIdx = STEPS.findIndex(x => x.p === TO);
+    const isFrom = i === fromIdx;
+    const isTo = i === toIdx;
+    const inRange = (fromIdx <= i && i <= toIdx) || (toIdx <= i && i <= fromIdx);
+    const bg = isFrom ? '#2563eb' : isTo ? '#059669' : inRange ? '#c7d2fe' : '#e2e8f0';
+    const fg = isFrom || isTo ? '#fff' : '#1a2a4a';
+    g += `<rect x="${x}" y="${y}" width="${stepW}" height="${stepH}" fill="${bg}" stroke="#0f172a" stroke-width="1.5"/>`;
+    g += `<text x="${x + stepW/2}" y="${y + 12}" text-anchor="middle" font-size="11" font-weight="800" fill="${fg}">${s.name} (${s.abbr})</text>`;
+    g += `<text x="${x + stepW/2}" y="${y + 22}" text-anchor="middle" font-size="9" fill="${fg}">×10^${s.p}</text>`;
+  });
+  svg.innerHTML = g;
+  const stepsDiff = FROM - TO; // positive = go down stairs
+  const factor = Math.pow(10, stepsDiff);
+  const result = V * factor;
+  const dir = stepsDiff > 0 ? 'DOWN' : stepsDiff < 0 ? 'UP' : 'no change';
+  const op = stepsDiff > 0 ? `× 10^${stepsDiff} = × ${factor}` : stepsDiff < 0 ? `÷ 10^${Math.abs(stepsDiff)} = ÷ ${1/factor}` : 'no operation needed';
+  const fromName = STEPS.find(x=>x.p===FROM).name;
+  const toName = STEPS.find(x=>x.p===TO).name;
+  document.getElementById('banner').innerHTML = `📏 <strong>${V} ${fromName} → ${toName}</strong><br>Move ${Math.abs(stepsDiff)} step(s) ${dir}: ${op}<span class="big">${V} ${fromName} = ${result.toLocaleString('en-US',{maximumFractionDigits:10})} ${toName}</span>`;
+}
+document.getElementById('val').addEventListener('input', e=>{V=parseFloat(e.target.value)||0;render();});
+document.getElementById('from').addEventListener('change', e=>{FROM=parseInt(e.target.value);render();});
+document.getElementById('to').addEventListener('change', e=>{TO=parseInt(e.target.value);render();});
+render();
+</script>
+</body>
+</html>

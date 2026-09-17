@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angles Visual — Math 7</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls select, .controls input[type=range] { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:4px 12px; border-radius:6px; border:1.5px solid #cbd5e1; font-size:1.15rem; }
+.diagram-wrap { background:#f8fafc; border-radius:10px; padding:16px; margin:12px 0; text-align:center; }
+.info { background:#eff6ff; border-left:4px solid var(--blue); padding:12px 16px; border-radius:6px; margin:10px 0; font-size:1rem; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-7.html" class="back-link">← Back to Math 7</a>
+<header>
+  <div class="eyebrow">Math 7 · Angles · Visual Explorer</div>
+  <h1>📐 Angle Pairs — Complementary, Supplementary, Vertical</h1>
+  <p class="tagline">Slide the angle. Watch its partner change with it.</p>
+</header>
+<div class="big-idea">
+  <strong>Three key pairs:</strong><br>
+  <strong>Complementary</strong> — two angles that add to <strong>90°</strong> (form a right angle).<br>
+  <strong>Supplementary</strong> — two angles that add to <strong>180°</strong> (form a straight line).<br>
+  <strong>Vertical</strong> — two angles across from each other where lines cross. Always EQUAL.
+</div>
+<section class="card">
+  <h2>🎯 Try It: Pick The Type, Slide The Angle</h2>
+  <div class="controls">
+    <label>Type:
+      <select id="pairType">
+        <option value="comp">Complementary (add to 90°)</option>
+        <option value="supp">Supplementary (add to 180°)</option>
+        <option value="vert">Vertical (equal to each other)</option>
+      </select>
+    </label>
+    <label>∠1: <input type="range" id="angle" min="10" max="170" value="35" step="5"> <span class="val" id="angVal">35°</span></label>
+  </div>
+  <div class="diagram-wrap">
+    <svg id="angleDiag" width="500" height="360" viewBox="0 0 500 360" style="max-width:100%; height:auto;"></svg>
+  </div>
+  <div class="info" id="infoBox"></div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Memory Trick</h2>
+  <div class="tip"><strong>C</strong>omplementary → <strong>C</strong>orner (90°, a right angle)</div>
+  <div class="tip"><strong>S</strong>upplementary → <strong>S</strong>traight line (180°)</div>
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;"><strong>V</strong>ertical → across the X, always the same <strong>V</strong>alue</div>
+</section>
+<footer>Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Angles Visual</footer>
+</div>
+<script>
+let TYPE='comp', A=35;
+function render(){
+  document.getElementById('angVal').textContent = A+'°';
+  const svg = document.getElementById('angleDiag');
+  const cx=250, cy=200, r=140;
+  let g='';
+  if (TYPE==='comp'){
+    // Right angle box (90°) with two angles inside
+    const a1 = A * Math.PI/180;
+    // ray 0 (horizontal right), ray at A, ray at 90 (up)
+    const p0 = [cx+r, cy];
+    const pA = [cx + r*Math.cos(-a1), cy + r*Math.sin(-a1)];
+    const p90 = [cx, cy-r];
+    // Lines
+    g += `<line x1="${cx}" y1="${cy}" x2="${p0[0]}" y2="${p0[1]}" stroke="#0f172a" stroke-width="3"/>`;
+    g += `<line x1="${cx}" y1="${cy}" x2="${pA[0]}" y2="${pA[1]}" stroke="#7c3aed" stroke-width="3"/>`;
+    g += `<line x1="${cx}" y1="${cy}" x2="${p90[0]}" y2="${p90[1]}" stroke="#0f172a" stroke-width="3"/>`;
+    // Right angle mark
+    g += `<rect x="${cx}" y="${cy-14}" width="14" height="14" fill="none" stroke="#0f172a" stroke-width="2"/>`;
+    // Arc 1
+    g += `<path d="M ${cx+50} ${cy} A 50 50 0 0 0 ${cx + 50*Math.cos(-a1)} ${cy + 50*Math.sin(-a1)}" fill="none" stroke="#dc2626" stroke-width="3"/>`;
+    g += `<text x="${cx + 70*Math.cos(-a1/2)}" y="${cy + 70*Math.sin(-a1/2) + 5}" text-anchor="middle" font-size="16" font-weight="900" fill="#dc2626">${A}°</text>`;
+    // Arc 2
+    const a2 = 90 - A;
+    const a2Rad = a2 * Math.PI/180;
+    g += `<path d="M ${cx + 50*Math.cos(-a1)} ${cy + 50*Math.sin(-a1)} A 50 50 0 0 0 ${cx} ${cy-50}" fill="none" stroke="#2563eb" stroke-width="3"/>`;
+    g += `<text x="${cx + 70*Math.cos(-(a1 + a2Rad/2))}" y="${cy + 70*Math.sin(-(a1 + a2Rad/2)) + 5}" text-anchor="middle" font-size="16" font-weight="900" fill="#2563eb">${a2}°</text>`;
+    document.getElementById('infoBox').innerHTML = `<strong>Complementary pair:</strong> ${A}° + ${a2}° = <strong>90°</strong>. If one is ${A}°, the other MUST be ${a2}°.`;
+  } else if (TYPE==='supp'){
+    // Straight line, angle on top
+    const a1 = A * Math.PI/180;
+    g += `<line x1="${cx-r}" y1="${cy}" x2="${cx+r}" y2="${cy}" stroke="#0f172a" stroke-width="3"/>`;
+    const pA = [cx + r*Math.cos(Math.PI - a1), cy - r*Math.sin(a1)];
+    g += `<line x1="${cx}" y1="${cy}" x2="${pA[0]}" y2="${pA[1]}" stroke="#7c3aed" stroke-width="3"/>`;
+    // Arc 1 (right side)
+    g += `<path d="M ${cx+50} ${cy} A 50 50 0 0 0 ${cx + 50*Math.cos(Math.PI - a1)} ${cy - 50*Math.sin(a1)}" fill="none" stroke="#dc2626" stroke-width="3"/>`;
+    const midAng1 = (Math.PI - a1)/2 + 0;
+    g += `<text x="${cx + 65*Math.cos(midAng1)}" y="${cy - 65*Math.sin(midAng1) + 5}" text-anchor="middle" font-size="16" font-weight="900" fill="#dc2626">${180-A}°</text>`;
+    // Wait: which is A? Let me redo. Angle from the ray upward to horizontal-right = 180 - A when the ray is on left side. Let me simplify:
+    // Actually let: right side of horizontal line and the ray. Angle from right to ray (measured CCW from right) = 180 - A. Angle from left to ray = A.
+    // Arc 2 (left side)
+    g += `<path d="M ${cx-50} ${cy} A 50 50 0 0 1 ${cx + 50*Math.cos(Math.PI - a1)} ${cy - 50*Math.sin(a1)}" fill="none" stroke="#2563eb" stroke-width="3"/>`;
+    g += `<text x="${cx + 65*Math.cos(Math.PI - a1/2)}" y="${cy - 65*Math.sin(a1/2)*0.7 + 5}" text-anchor="middle" font-size="16" font-weight="900" fill="#2563eb">${A}°</text>`;
+    document.getElementById('infoBox').innerHTML = `<strong>Supplementary pair:</strong> ${A}° + ${180-A}° = <strong>180°</strong>. The two angles form a straight line together.`;
+  } else {
+    // Vertical: two crossing lines
+    const a1 = A * Math.PI/180;
+    const p1 = [cx + r*Math.cos(a1), cy - r*Math.sin(a1)];
+    const p2 = [cx - r*Math.cos(a1), cy + r*Math.sin(a1)];
+    const p3 = [cx + r*Math.cos(-a1), cy - r*Math.sin(-a1)];
+    const p4 = [cx - r*Math.cos(-a1), cy + r*Math.sin(-a1)];
+    g += `<line x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="#0f172a" stroke-width="3"/>`;
+    g += `<line x1="${p3[0]}" y1="${p3[1]}" x2="${p4[0]}" y2="${p4[1]}" stroke="#0f172a" stroke-width="3"/>`;
+    // Angles at top (between p1 and p3, both go up)
+    g += `<path d="M ${cx + 55*Math.cos(a1)} ${cy - 55*Math.sin(a1)} A 55 55 0 0 0 ${cx + 55*Math.cos(-a1)} ${cy - 55*Math.sin(-a1)}" fill="none" stroke="#dc2626" stroke-width="3"/>`;
+    g += `<text x="${cx}" y="${cy - 75}" text-anchor="middle" font-size="16" font-weight="900" fill="#dc2626">${A}°</text>`;
+    // Bottom (mirror)
+    g += `<path d="M ${cx - 55*Math.cos(a1)} ${cy + 55*Math.sin(a1)} A 55 55 0 0 0 ${cx - 55*Math.cos(-a1)} ${cy + 55*Math.sin(-a1)}" fill="none" stroke="#dc2626" stroke-width="3"/>`;
+    g += `<text x="${cx}" y="${cy + 88}" text-anchor="middle" font-size="16" font-weight="900" fill="#dc2626">${A}°</text>`;
+    // Left/right
+    const other = 180 - A;
+    g += `<text x="${cx - 90}" y="${cy + 5}" text-anchor="middle" font-size="16" font-weight="900" fill="#2563eb">${other}°</text>`;
+    g += `<text x="${cx + 90}" y="${cy + 5}" text-anchor="middle" font-size="16" font-weight="900" fill="#2563eb">${other}°</text>`;
+    document.getElementById('infoBox').innerHTML = `<strong>Vertical angles:</strong> Across from each other, so they&apos;re EQUAL. Top = bottom = ${A}°. Left = right = ${other}°. (And a top-plus-left pair adds to 180°, because they&apos;re also a linear pair.)`;
+  }
+  svg.innerHTML = g;
+}
+document.getElementById('pairType').addEventListener('change', e=>{TYPE=e.target.value;render();});
+document.getElementById('angle').addEventListener('input', e=>{A=parseInt(e.target.value);render();});
+render();
+</script>
+</body>
+</html>

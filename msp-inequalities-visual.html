@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inequalities Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls select, .controls input { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.eq-display { text-align:center; font-family:'Courier New', monospace; font-size:1.5rem; font-weight:900; color:var(--navy); background:#fef08a; padding:12px; border-radius:10px; margin:12px 0; }
+.number-line { background:#f8fafc; border-radius:10px; padding:20px 12px 40px; margin:12px 0; overflow-x:auto; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+<header>
+  <div class="eyebrow">Math 6 · Inequalities · Visual Explorer</div>
+  <h1>📏 Inequalities — Shade The Solutions</h1>
+  <p class="tagline">Every inequality is a whole region of numbers, not just one.</p>
+</header>
+<div class="big-idea">
+  <strong>The circle rules:</strong> <strong>Open circle</strong> ○ for &lt; or &gt; (does NOT include the number). <strong>Closed circle</strong> ● for ≤ or ≥ (INCLUDES it). Then shade the arrow toward every number that works.
+</div>
+<section class="card">
+  <h2>🎯 Try It: Build Any Inequality</h2>
+  <div class="controls">
+    <label>x
+      <select id="ineq">
+        <option value="lt">&lt; less than</option>
+        <option value="le">≤ less than or equal</option>
+        <option value="gt">&gt; greater than</option>
+        <option value="ge">≥ greater than or equal</option>
+      </select>
+    </label>
+    <label>value: <input type="number" id="val" value="3" min="-10" max="10"></label>
+  </div>
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setP('lt',3)">x &lt; 3</button>
+    <button class="preset-btn" onclick="setP('ge',-2)">x ≥ −2</button>
+    <button class="preset-btn" onclick="setP('gt',0)">x &gt; 0</button>
+    <button class="preset-btn" onclick="setP('le',5)">x ≤ 5</button>
+  </div>
+  <div class="eq-display" id="eqDisp">x &lt; 3</div>
+  <div class="number-line">
+    <svg id="numLine" width="800" height="120" viewBox="0 0 800 120" style="max-width:100%; height:auto;"></svg>
+  </div>
+  <div class="tip" id="explainTip"></div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Solving inequalities</strong> works just like solving equations — with ONE exception: when you multiply or divide by a negative number, FLIP the inequality sign.</div>
+  <div class="tip"><strong>Test a number</strong> from the shaded region to check your work. Is it true? Then you shaded correctly.</div>
+</section>
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Inequalities Visual</footer>
+</div>
+<script>
+let INEQ='lt', V=3;
+function setP(i,v){INEQ=i;V=v;document.getElementById('ineq').value=i;document.getElementById('val').value=v;render();}
+function symbol(i){return {lt:'<',le:'≤',gt:'>',ge:'≥'}[i];}
+function render(){
+  document.getElementById('eqDisp').textContent = `x ${symbol(INEQ)} ${V}`;
+  const svg = document.getElementById('numLine');
+  const W=800, H=120, cy=60, scale=32, cx=W/2;
+  let g = '';
+  // Number line
+  g += `<line x1="20" y1="${cy}" x2="${W-20}" y2="${cy}" stroke="#0f172a" stroke-width="2"/>`;
+  for (let n=-10;n<=10;n++){
+    const x=cx+n*scale;
+    if (x<20||x>W-20) continue;
+    g += `<line x1="${x}" y1="${cy-6}" x2="${x}" y2="${cy+6}" stroke="#0f172a" stroke-width="${n===0?2.5:1.5}"/>`;
+    g += `<text x="${x}" y="${cy+22}" text-anchor="middle" font-size="12" font-weight="${n===0?900:600}" fill="${n===0?'#0f172a':'#475569'}">${n}</text>`;
+  }
+  // Shaded region + arrow
+  const vx = cx + V*scale;
+  const dir = (INEQ==='lt'||INEQ==='le') ? -1 : 1;
+  const endX = dir<0 ? 25 : W-25;
+  // Shade
+  g += `<line x1="${vx}" y1="${cy}" x2="${endX}" y2="${cy}" stroke="#7c3aed" stroke-width="7" opacity="0.65"/>`;
+  // Arrow at end
+  const arrX = dir<0 ? 30 : W-30;
+  const arrTip = dir<0 ? 20 : W-20;
+  g += `<polygon points="${arrTip},${cy} ${arrX},${cy-8} ${arrX},${cy+8}" fill="#7c3aed"/>`;
+  // Circle
+  const closed = (INEQ==='le'||INEQ==='ge');
+  g += `<circle cx="${vx}" cy="${cy}" r="10" fill="${closed?'#7c3aed':'#fff'}" stroke="#7c3aed" stroke-width="3"/>`;
+  // Value label above
+  g += `<text x="${vx}" y="${cy-20}" text-anchor="middle" font-size="14" font-weight="900" fill="#4c1d95">${V}</text>`;
+  svg.innerHTML = g;
+  // Explanation
+  const eb = document.getElementById('explainTip');
+  const inclusive = closed;
+  const dirWord = dir<0 ? 'LEFT (smaller numbers)' : 'RIGHT (bigger numbers)';
+  eb.innerHTML = `<strong>Reading this:</strong> <em>${closed?'Closed':'Open'} circle</em> at ${V} means ${V} is ${inclusive?'INCLUDED':'NOT included'}. The purple shading goes ${dirWord}, showing every value that makes <code>x ${symbol(INEQ)} ${V}</code> true. Example test: Is ${V + dir*2} a solution? ${V + dir*2} ${symbol(INEQ)} ${V}? ${(dir<0?(V+dir*2)<V:V+dir*2>V)?'YES ✓':'NO ✗'}`;
+}
+document.getElementById('ineq').addEventListener('change', e=>{INEQ=e.target.value;render();});
+document.getElementById('val').addEventListener('input', e=>{V=parseInt(e.target.value)||0;render();});
+render();
+</script>
+</body>
+</html>

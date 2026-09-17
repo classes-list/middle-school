@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scale Drawings Visual — Math 7</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:6px; }
+.controls input[type=range] { width:200px; }
+.controls input[type=number] { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; width:70px; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:4px 12px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.side-by-side { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:16px 0; }
+@media (max-width:600px) { .side-by-side { grid-template-columns:1fr; } }
+.figure-box { background:#f8fafc; border-radius:10px; padding:14px; text-align:center; border:2px solid #cbd5e1; }
+.figure-box.orig { border-color:var(--blue); background:#eff6ff; }
+.figure-box.scaled { border-color:var(--green); background:#ecfdf5; }
+.figure-box h3 { color:var(--navy); font-size:1rem; margin-bottom:8px; }
+.figure-box .dims { color:#64748b; font-size:.85rem; margin-top:4px; }
+.result-banner { padding:14px 18px; border-radius:10px; margin:14px 0; font-weight:800; text-align:center; background:#fef08a; border:2px solid var(--gold); color:#78350f; font-size:1.05rem; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-7.html" class="back-link">← Back to Math 7</a>
+<header>
+  <div class="eyebrow">Math 7 · Scale Drawings · Visual Explorer</div>
+  <h1>📏 Scale Drawings — Length vs. Area</h1>
+  <p class="tagline">Multiply length by k. Area gets multiplied by k². See it happen.</p>
+</header>
+<div class="big-idea">
+  <strong>The key insight:</strong> If a scale factor is <strong>k</strong>, then every LENGTH is multiplied by k, but every AREA is multiplied by <strong>k²</strong>. Volume would be k³.
+</div>
+<section class="card">
+  <h2>🎯 Try It: Scale The Rectangle</h2>
+  <div class="controls">
+    <label>Original width: <input type="number" id="ow" value="4" min="1" max="10"></label>
+    <label>Original height: <input type="number" id="oh" value="3" min="1" max="10"></label>
+    <label>Scale factor k: <input type="range" id="k" min="0.5" max="3" step="0.5" value="2"><span class="val" id="kVal">×2</span></label>
+  </div>
+  <div class="side-by-side">
+    <div class="figure-box orig">
+      <h3>Original (blue)</h3>
+      <svg id="origSvg" width="220" height="180" viewBox="0 0 220 180" style="max-width:100%;"></svg>
+      <div class="dims" id="origDims">4 × 3, area = 12</div>
+    </div>
+    <div class="figure-box scaled">
+      <h3>Scaled (green)</h3>
+      <svg id="scaledSvg" width="220" height="180" viewBox="0 0 220 180" style="max-width:100%;"></svg>
+      <div class="dims" id="scaledDims">8 × 6, area = 48</div>
+    </div>
+  </div>
+  <div class="result-banner" id="resultBanner"></div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Length scales by k.</strong> If k=2, every side is doubled.</div>
+  <div class="tip"><strong>Area scales by k².</strong> If k=2, area is 4× bigger. If k=3, area is 9× bigger. If k=½, area is ¼.</div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;"><strong>Volume scales by k³.</strong> Doubling all dimensions of a box gives 8× the volume. This is why elephants can&apos;t have mouse-shaped legs — grow all dimensions the same, weight grows FASTER than leg strength.</div>
+</section>
+<footer>Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Scale Drawings Visual</footer>
+</div>
+<script>
+let OW=4, OH=3, K=2;
+function render(){
+  document.getElementById('kVal').textContent = '×'+K;
+  const draw = (id, w, h, color) => {
+    const svg = document.getElementById(id);
+    const scale = Math.min(30, 180 / Math.max(w, h));
+    const px = w * scale, py = h * scale;
+    const cx = 110, cy = 90;
+    const x = cx - px/2, y = cy - py/2;
+    svg.innerHTML = `
+      <rect x="${x}" y="${y}" width="${px}" height="${py}" fill="${color}22" stroke="${color}" stroke-width="3"/>
+      <text x="${cx}" y="${y - 4}" text-anchor="middle" font-size="12" font-weight="800" fill="${color}">${w}</text>
+      <text x="${x - 8}" y="${cy + 4}" text-anchor="end" font-size="12" font-weight="800" fill="${color}">${h}</text>
+    `;
+  };
+  draw('origSvg', OW, OH, '#2563eb');
+  const nw = OW*K, nh = OH*K;
+  draw('scaledSvg', nw, nh, '#059669');
+  document.getElementById('origDims').textContent = `${OW} × ${OH}, area = ${OW*OH} sq units`;
+  document.getElementById('scaledDims').textContent = `${nw} × ${nh}, area = ${(nw*nh).toFixed(2).replace(/\.?0+$/,'')} sq units`;
+  const areaRatio = (nw*nh) / (OW*OH);
+  document.getElementById('resultBanner').innerHTML = `📏 <strong>Scale factor k = ${K}.</strong><br>
+    Lengths went from ${OW},${OH} → ${nw},${nh} (×${K} each)<br>
+    Area went from ${OW*OH} → ${(nw*nh).toFixed(2).replace(/\.?0+$/,'')} — that&apos;s ×<strong>${areaRatio.toFixed(2).replace(/\.00$/,'')}</strong>, which equals <strong>${K}² = ${K*K}</strong> ✓`;
+}
+document.getElementById('ow').addEventListener('input', e=>{OW=parseInt(e.target.value)||1;render();});
+document.getElementById('oh').addEventListener('input', e=>{OH=parseInt(e.target.value)||1;render();});
+document.getElementById('k').addEventListener('input', e=>{K=parseFloat(e.target.value);render();});
+render();
+</script>
+</body>
+</html>

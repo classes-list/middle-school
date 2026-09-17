@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equations Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); }
+.controls input[type=number] { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; width:70px; }
+.eq-display { text-align:center; font-family:'Courier New', monospace; font-size:1.6rem; font-weight:900; color:var(--navy); background:#fef08a; padding:12px 18px; border-radius:10px; border:2px solid var(--gold); margin:12px 0; }
+.balance-wrap { background:linear-gradient(180deg,#e0f2fe 0%,#f8fafc 100%); border-radius:12px; padding:18px; margin:12px 0; text-align:center; }
+.result-banner { padding:14px 18px; border-radius:10px; margin:12px 0; font-weight:800; text-align:center; background:#d1fae5; border:2px solid var(--green); color:#065f46; font-size:1.1rem; }
+.result-banner .big { display:block; font-size:1.5rem; margin:4px 0; color:var(--navy); }
+.steps { background:#f8fafc; border:1px dashed #94a3b8; border-radius:8px; padding:14px 18px; margin:12px 0; font-size:.95rem; }
+.steps .step { margin:6px 0; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Equations · Visual Explorer</div>
+  <h1>⚖ Equations — Keep Both Sides Balanced</h1>
+  <p class="tagline">Whatever you do to one side, do to the other. That&apos;s the whole rule.</p>
+</header>
+
+<div class="big-idea">
+  <strong>Think of an equation as a balance scale.</strong> The <strong>=</strong> sign says "these two sides weigh the same." To solve, undo the operation using its opposite — but always do it on BOTH sides so the scale stays level.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Solve x + b = c or ax = c</h2>
+  <div class="controls">
+    <label>Type:
+      <select id="op">
+        <option value="add">x + b = c (subtract)</option>
+        <option value="sub">x − b = c (add)</option>
+        <option value="mul">a · x = c (divide)</option>
+      </select>
+    </label>
+    <label>b or a: <input type="number" id="constB" value="5" min="1" max="30"></label>
+    <label>c: <input type="number" id="constC" value="12" min="0" max="100"></label>
+  </div>
+
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setP('add',5,12)">x + 5 = 12</button>
+    <button class="preset-btn" onclick="setP('sub',3,10)">x − 3 = 10</button>
+    <button class="preset-btn" onclick="setP('mul',4,20)">4x = 20</button>
+    <button class="preset-btn" onclick="setP('mul',3,18)">3x = 18</button>
+  </div>
+
+  <div class="eq-display" id="eqDisp">x + 5 = 12</div>
+
+  <div class="balance-wrap">
+    <svg id="balance" width="500" height="220" viewBox="0 0 500 220" style="max-width:100%; height:auto;"></svg>
+  </div>
+
+  <div class="steps" id="stepsBox"></div>
+
+  <div class="result-banner" id="resultBanner"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 The Golden Rule</h2>
+  <div class="tip">
+    <strong>Whatever you do to one side, do to the other.</strong> Subtract 5 from the left? Subtract 5 from the right. Divide by 3 on the left? Divide by 3 on the right. That keeps the scale balanced.
+  </div>
+  <div class="tip">
+    <strong>Undo with the opposite:</strong> + undoes −, × undoes ÷, and vice versa. To isolate x, do the OPPOSITE operation of whatever&apos;s next to it.
+  </div>
+</section>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Equations Visual</footer>
+</div>
+
+<script>
+let OP='add', B=5, C=12;
+
+function setP(op,b,c){
+  OP=op;B=b;C=c;
+  document.getElementById('op').value=op;
+  document.getElementById('constB').value=b;
+  document.getElementById('constC').value=c;
+  render();
+}
+
+function render(){
+  let x, eq, undoOp, steps;
+  if (OP==='add'){ eq = `x + ${B} = ${C}`; x = C - B; undoOp = `subtract ${B}`;
+    steps = [`x + ${B} = ${C}`, `x + ${B} − ${B} = ${C} − ${B}`, `x = ${x}`]; }
+  else if (OP==='sub'){ eq = `x − ${B} = ${C}`; x = C + B; undoOp = `add ${B}`;
+    steps = [`x − ${B} = ${C}`, `x − ${B} + ${B} = ${C} + ${B}`, `x = ${x}`]; }
+  else { eq = `${B}x = ${C}`; x = C / B; undoOp = `divide by ${B}`;
+    steps = [`${B}x = ${C}`, `${B}x ÷ ${B} = ${C} ÷ ${B}`, `x = ${Number.isInteger(x)?x:x.toFixed(2)}`]; }
+
+  document.getElementById('eqDisp').textContent = eq;
+
+  // Balance scale
+  const svg = document.getElementById('balance');
+  const cx = 250, pivotY = 130;
+  const leftIsHeavier = false; // always balanced when solved
+  // Just show a level balance with x on left, number on right
+  let g = '';
+  // Stand
+  g += `<rect x="245" y="130" width="10" height="70" fill="#64748b"/>`;
+  g += `<rect x="200" y="195" width="100" height="10" rx="3" fill="#64748b"/>`;
+  // Beam
+  g += `<line x1="80" y1="${pivotY}" x2="420" y2="${pivotY}" stroke="#0f172a" stroke-width="5"/>`;
+  // Pans
+  g += `<line x1="120" y1="${pivotY}" x2="120" y2="${pivotY+30}" stroke="#0f172a" stroke-width="2"/>`;
+  g += `<line x1="380" y1="${pivotY}" x2="380" y2="${pivotY+30}" stroke="#0f172a" stroke-width="2"/>`;
+  g += `<ellipse cx="120" cy="${pivotY+35}" rx="60" ry="10" fill="#94a3b8" stroke="#0f172a" stroke-width="2"/>`;
+  g += `<ellipse cx="380" cy="${pivotY+35}" rx="60" ry="10" fill="#94a3b8" stroke="#0f172a" stroke-width="2"/>`;
+  // Contents
+  let leftLabel, rightLabel;
+  if (OP === 'add') { leftLabel = `x + ${B}`; rightLabel = `${C}`; }
+  else if (OP === 'sub') { leftLabel = `x − ${B}`; rightLabel = `${C}`; }
+  else { leftLabel = `${B}x`; rightLabel = `${C}`; }
+  g += `<rect x="80" y="${pivotY-30}" width="80" height="30" rx="6" fill="#dbeafe" stroke="#0369a1" stroke-width="2"/>`;
+  g += `<text x="120" y="${pivotY-10}" text-anchor="middle" font-size="18" font-weight="900" fill="#1e3a8a">${leftLabel}</text>`;
+  g += `<rect x="340" y="${pivotY-30}" width="80" height="30" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="2"/>`;
+  g += `<text x="380" y="${pivotY-10}" text-anchor="middle" font-size="18" font-weight="900" fill="#065f46">${rightLabel}</text>`;
+  // Equal sign
+  g += `<text x="250" y="${pivotY-8}" text-anchor="middle" font-size="26" font-weight="900" fill="#1a2a4a">=</text>`;
+
+  svg.innerHTML = g;
+
+  // Steps
+  const sb = document.getElementById('stepsBox');
+  sb.innerHTML = `<strong>To isolate x, ${undoOp} on BOTH sides:</strong>` +
+    steps.map((s,i) => `<div class="step">${i+1}. <code style="background:#e0e7ff; padding:2px 6px; border-radius:4px;">${s}</code></div>`).join('');
+
+  // Result
+  const finalX = Number.isInteger(x) ? x : x.toFixed(2);
+  document.getElementById('resultBanner').innerHTML = `🎯 <strong>Solution:</strong> <span class="big">x = ${finalX}</span> Check: substitute back → ${OP==='add'?`${finalX} + ${B} = ${finalX+B}`:OP==='sub'?`${finalX} − ${B} = ${finalX-B}`:`${B} × ${finalX} = ${B*finalX}`}. ${OP==='add'?(finalX+B):OP==='sub'?(finalX-B):(B*finalX)} = ${C} ✓`;
+}
+
+['op','constB','constC'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => {
+    if (id==='op') OP = e.target.value;
+    if (id==='constB') B = parseInt(e.target.value)||1;
+    if (id==='constC') C = parseInt(e.target.value)||0;
+    render();
+  });
+});
+
+render();
+</script>
+</body>
+</html>
