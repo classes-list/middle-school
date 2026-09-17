@@ -203,9 +203,13 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 
   <div class="formula-box">
     <strong>LCM method — list the multiples:</strong><br>
-    Multiples of 6: 6, 12, 18, <strong>24</strong>, 30, 36<br>
-    Multiples of 8: 8, 16, <strong>24</strong>, 32, 40<br>
-    First shared multiple = <span class="answer-highlight">LCM(6, 8) = 24 seconds</span>
+    Multiples of 6: 6, 12, 18, <strong>24</strong>, 30, 36, 42, <strong>48</strong><br>
+    Multiples of 8: 8, 16, <strong>24</strong>, 32, 40, <strong>48</strong><br>
+    Both share <strong>24 and 48</strong> — but the LEAST (smallest) shared multiple is <span class="answer-highlight">LCM(6, 8) = 24 seconds</span>
+  </div>
+
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;">
+    <strong>Why &quot;LEAST&quot;?</strong> Watch the animation past 24 seconds — the beams line up AGAIN at 48 seconds! There are actually <em>infinitely many</em> times they blink together: 24, 48, 72, 96, ... All are common multiples. LCM asks for the <strong>smallest one</strong> — the <em>FIRST</em> time they meet.
   </div>
 
   <div class="tip">
@@ -252,9 +256,13 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 
   <div class="formula-box">
     <strong>LCM method — list the multiples:</strong><br>
-    Multiples of 12: 12, 24, 36, 48, <strong>60</strong>, 72<br>
-    Multiples of 15: 15, 30, 45, <strong>60</strong>, 75<br>
-    First shared multiple = <span class="answer-highlight">LCM(12, 15) = 60 minutes = 1:00 PM</span>
+    Multiples of 12: 12, 24, 36, 48, <strong>60</strong>, 72, 84, 96, 108, <strong>120</strong><br>
+    Multiples of 15: 15, 30, 45, <strong>60</strong>, 75, 90, 105, <strong>120</strong><br>
+    Both share <strong>60 and 120</strong> — but the LEAST (smallest) shared multiple is <span class="answer-highlight">LCM(12, 15) = 60 minutes = 1:00 PM</span>
+  </div>
+
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;">
+    <strong>Why &quot;LEAST&quot;?</strong> Play the animation past 1:00 PM — the buses meet again at <strong>2:00 PM</strong> (120 minutes)! And they&apos;d meet again at 3:00, 4:00, and so on. Every hour on the hour is a common multiple. LCM asks for the FIRST one — the <em>smallest</em>.
   </div>
 
   <div class="tip">
@@ -409,7 +417,7 @@ const lhTimeline = document.getElementById('lhTimeline');
 const beamA = document.getElementById('beamA');
 const beamB = document.getElementById('beamB');
 const lhTimeSpan = document.getElementById('lhTime');
-const LH_MAX = 32;
+const LH_MAX = 50;
 
 function buildLhTimeline(){
   lhTimeline.innerHTML = '';
@@ -422,26 +430,29 @@ function buildLhTimeline(){
     const x = 40 + (t / LH_MAX) * (600 - 60);
     const tick = document.createElement('div'); tick.className = 'tl-tick'; tick.style.left = x + 'px'; tick.style.top = '55px'; lhTimeline.appendChild(tick);
     const tick2 = document.createElement('div'); tick2.className = 'tl-tick'; tick2.style.left = x + 'px'; tick2.style.top = '125px'; lhTimeline.appendChild(tick2);
-    if (t % 4 === 0){
+    if (t % 6 === 0){
       const lbl = document.createElement('div'); lbl.className = 'tl-tick-label'; lbl.style.left = x + 'px'; lbl.style.top = '180px'; lbl.textContent = t; lhTimeline.appendChild(lbl);
     }
   }
-  // Blink markers for A (every 6): 6,12,18,24,30
+  // Blink markers for A (every 6): 6,12,18,24,30,36,42,48
   for (let t = 6; t <= LH_MAX; t += 6){
     const x = 40 + (t / LH_MAX) * (600 - 60);
     const dot = document.createElement('div'); dot.className = 'tl-blink a'; dot.style.left = x + 'px'; dot.style.top = '55px'; dot.dataset.t = t;
     lhTimeline.appendChild(dot);
   }
-  // Blink markers for B (every 8): 8,16,24,32
+  // Blink markers for B (every 8): 8,16,24,32,40,48
   for (let t = 8; t <= LH_MAX; t += 8){
     const x = 40 + (t / LH_MAX) * (600 - 60);
     const dot = document.createElement('div'); dot.className = 'tl-blink b'; dot.style.left = x + 'px'; dot.style.top = '125px'; dot.dataset.t = t;
     lhTimeline.appendChild(dot);
   }
-  // Meet marker at 24
-  const meetX = 40 + (24 / LH_MAX) * (600 - 60);
-  const meet = document.createElement('div'); meet.className = 'tl-meet'; meet.style.left = meetX + 'px'; lhTimeline.appendChild(meet);
-  const meetLbl = document.createElement('div'); meetLbl.className = 'tl-meet-label'; meetLbl.style.left = meetX + 'px'; meetLbl.textContent = 'LCM = 24s ✓'; lhTimeline.appendChild(meetLbl);
+  // Meet marker at 24 (LCM = LEAST) and 48 (2nd common multiple)
+  const meetX1 = 40 + (24 / LH_MAX) * (600 - 60);
+  const meet1 = document.createElement('div'); meet1.className = 'tl-meet'; meet1.style.left = meetX1 + 'px'; lhTimeline.appendChild(meet1);
+  const meetLbl1 = document.createElement('div'); meetLbl1.className = 'tl-meet-label'; meetLbl1.style.left = meetX1 + 'px'; meetLbl1.textContent = '1st meet: LCM = 24s ✓'; lhTimeline.appendChild(meetLbl1);
+  const meetX2 = 40 + (48 / LH_MAX) * (600 - 60);
+  const meet2 = document.createElement('div'); meet2.className = 'tl-meet'; meet2.style.left = meetX2 + 'px'; meet2.style.background = '#a3a3a3'; meet2.style.opacity = '0.5'; lhTimeline.appendChild(meet2);
+  const meetLbl2 = document.createElement('div'); meetLbl2.className = 'tl-meet-label'; meetLbl2.style.left = meetX2 + 'px'; meetLbl2.style.background = '#64748b'; meetLbl2.textContent = '2nd meet: 48s (not least)'; lhTimeline.appendChild(meetLbl2);
   // Cursor
   const cursor = document.createElement('div'); cursor.className = 'tl-cursor'; cursor.id = 'lhCursor'; cursor.style.left = '40px'; cursor.style.top = '50px'; cursor.style.height = '90px'; lhTimeline.appendChild(cursor);
 }
@@ -479,7 +490,7 @@ const laneA_el = document.getElementById('laneA');
 const laneB_el = document.getElementById('laneB');
 const busTimeSpan = document.getElementById('busTime');
 const busFlash = document.getElementById('busFlash');
-const BUS_MAX = 75;
+const BUS_MAX = 125;
 const BUS_SPEED = 32; // pixels per minute after departure
 const BUS_STATION_X = 20; // starting x for a new bus
 const BUS_OFFSCREEN_X = 900; // remove buses past this point
@@ -501,22 +512,25 @@ function buildBusTimeline(){
       const lbl = document.createElement('div'); lbl.className = 'tl-tick-label'; lbl.style.left = x + 'px'; lbl.style.top = '180px'; lbl.textContent = t; busTimeline.appendChild(lbl);
     }
   }
-  // A departs every 12: 12,24,36,48,60,72
+  // A departs every 12: 12,24,36,48,60,72,84,96,108,120
   for (let t = 12; t <= BUS_MAX; t += 12){
     const x = 40 + (t / BUS_MAX) * (600 - 60);
     const dot = document.createElement('div'); dot.className = 'tl-blink a'; dot.style.left = x + 'px'; dot.style.top = '55px'; dot.dataset.t = t;
     busTimeline.appendChild(dot);
   }
-  // B departs every 15: 15,30,45,60,75
+  // B departs every 15: 15,30,45,60,75,90,105,120
   for (let t = 15; t <= BUS_MAX; t += 15){
     const x = 40 + (t / BUS_MAX) * (600 - 60);
     const dot = document.createElement('div'); dot.className = 'tl-blink b'; dot.style.left = x + 'px'; dot.style.top = '125px'; dot.dataset.t = t;
     busTimeline.appendChild(dot);
   }
-  // Meet at 60
-  const meetX = 40 + (60 / BUS_MAX) * (600 - 60);
-  const meet = document.createElement('div'); meet.className = 'tl-meet'; meet.style.left = meetX + 'px'; busTimeline.appendChild(meet);
-  const meetLbl = document.createElement('div'); meetLbl.className = 'tl-meet-label'; meetLbl.style.left = meetX + 'px'; meetLbl.textContent = 'LCM = 60 min ✓'; busTimeline.appendChild(meetLbl);
+  // Meet at 60 (LCM = LEAST) and 120 (2nd common multiple)
+  const meetX1 = 40 + (60 / BUS_MAX) * (600 - 60);
+  const meet1 = document.createElement('div'); meet1.className = 'tl-meet'; meet1.style.left = meetX1 + 'px'; busTimeline.appendChild(meet1);
+  const meetLbl1 = document.createElement('div'); meetLbl1.className = 'tl-meet-label'; meetLbl1.style.left = meetX1 + 'px'; meetLbl1.textContent = '1st meet: LCM = 60 min ✓'; busTimeline.appendChild(meetLbl1);
+  const meetX2 = 40 + (120 / BUS_MAX) * (600 - 60);
+  const meet2 = document.createElement('div'); meet2.className = 'tl-meet'; meet2.style.left = meetX2 + 'px'; meet2.style.background = '#a3a3a3'; meet2.style.opacity = '0.5'; busTimeline.appendChild(meet2);
+  const meetLbl2 = document.createElement('div'); meetLbl2.className = 'tl-meet-label'; meetLbl2.style.left = meetX2 + 'px'; meetLbl2.style.background = '#64748b'; meetLbl2.textContent = '2nd meet: 120 min (not least)'; busTimeline.appendChild(meetLbl2);
   const cursor = document.createElement('div'); cursor.className = 'tl-cursor'; cursor.id = 'busCursor'; cursor.style.left = '40px'; cursor.style.top = '50px'; cursor.style.height = '90px'; busTimeline.appendChild(cursor);
 }
 buildBusTimeline();
@@ -579,8 +593,8 @@ function stepBus(){
     else { d.classList.remove('flashing'); }
   });
 
-  // Meeting flash at 60
-  if (busT === 60){
+  // Meeting flash at 60 (1st = LCM) and 120 (2nd common multiple)
+  if (busT === 60 || busT === 120){
     busFlash.classList.add('on');
     setTimeout(() => busFlash.classList.remove('on'), 1300);
   }
