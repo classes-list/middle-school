@@ -69,28 +69,58 @@ function render(){
     g = `<text x="225" y="180" text-anchor="middle" font-size="18" font-weight="900" fill="#dc2626">Impossible triangle!</text>
     <text x="225" y="210" text-anchor="middle" font-size="14" fill="#7f1d1d">${A}° + ${B}° = ${A+B}° already ≥ 180°</text>`;
   } else {
-    // Construct triangle: place A at (100, 280), B at (400, 280), find C above
-    const bx1=80, by1=280, bx2=380, by2=280;
-    const baseLen = bx2 - bx1;
-    // Angle A is at bx1, angle B at bx2
-    // C is above. Use law of sines: side_opposite_A / sin A = side_opposite_B / sin B
-    // side c (opposite C) = baseLen
-    // side a (opposite A) = baseLen * sin A / sin C
-    // side b (opposite B) = baseLen * sin B / sin C
+    // Compute triangle shape with base = 1, then auto-scale to fit viewport
     const rad = deg => deg*Math.PI/180;
-    const side_b = baseLen * Math.sin(rad(B)) / Math.sin(rad(C)); // from A to C
-    // Now: from A(bx1,by1), angle above horizontal = A, going toward C. C at (bx1 + side_b*cos A, by1 - side_b*sin A)
-    const cx = bx1 + side_b * Math.cos(rad(A));
-    const cy = by1 - side_b * Math.sin(rad(A));
-    g += `<polygon points="${bx1},${by1} ${bx2},${by2} ${cx},${cy}" fill="#dbeafe" stroke="#0f172a" stroke-width="3"/>`;
+    // Place A at (0,0), B at (1,0). Find C using law of sines.
+    // side b (opposite B, i.e., from A to C) = sin(B)/sin(C)
+    const sideAC = Math.sin(rad(B)) / Math.sin(rad(C));
+    const cxUnit = sideAC * Math.cos(rad(A));
+    const cyUnit = sideAC * Math.sin(rad(A));
+    // Bounding box of unit triangle: x in [min(0, cxUnit, 1), max(...)], y in [0, cyUnit]
+    const minX = Math.min(0, 1, cxUnit);
+    const maxX = Math.max(0, 1, cxUnit);
+    const minY = 0;
+    const maxY = cyUnit;
+    const boxW = maxX - minX;
+    const boxH = maxY - minY;
+    // Fit into viewport 400 wide × 300 tall (with padding)
+    const availW = 400, availH = 300, padX = 40, padY = 40;
+    const scaleX = (availW - 2*padX) / boxW;
+    const scaleY = (availH - 2*padY) / boxH;
+    const s = Math.min(scaleX, scaleY);
+    // Center in viewport
+    const drawW = boxW * s, drawH = boxH * s;
+    const offsetX = padX + (availW - 2*padX - drawW)/2;
+    const offsetY = padY + (availH - 2*padY - drawH)/2;
+    // Transform: unit point (x, y) → SVG point (offsetX + (x - minX)*s, offsetY + (maxY - y)*s)  (flip y so triangle points up)
+    const T = (ux, uy) => [offsetX + (ux - minX)*s, offsetY + (maxY - uy)*s];
+    const [ax, ay] = T(0, 0);
+    const [bx, by] = T(1, 0);
+    const [cx, cy] = T(cxUnit, cyUnit);
+    g += `<polygon points="${ax},${ay} ${bx},${by} ${cx},${cy}" fill="#dbeafe" stroke="#0f172a" stroke-width="3"/>`;
     // Vertex labels
-    g += `<text x="${bx1 - 8}" y="${by1 + 20}" font-size="18" font-weight="900" fill="#dc2626">A</text>`;
-    g += `<text x="${bx2 + 5}" y="${by2 + 20}" font-size="18" font-weight="900" fill="#2563eb">B</text>`;
-    g += `<text x="${cx - 5}" y="${cy - 8}" font-size="18" font-weight="900" fill="#059669">C</text>`;
-    // Angle labels near vertices
-    g += `<text x="${bx1 + 30}" y="${by1 - 8}" font-size="14" font-weight="800" fill="#dc2626">${A}°</text>`;
-    g += `<text x="${bx2 - 40}" y="${by2 - 8}" font-size="14" font-weight="800" fill="#2563eb">${B}°</text>`;
-    g += `<text x="${cx + 6}" y="${cy + 20}" font-size="14" font-weight="800" fill="#059669">${C}°</text>`;
+    g += `<text x="${ax - 12}" y="${ay + 20}" font-size="18" font-weight="900" fill="#dc2626">A</text>`;
+    g += `<text x="${bx + 5}" y="${by + 20}" font-size="18" font-weight="900" fill="#2563eb">B</text>`;
+    g += `<text x="${cx - 5}" y="${cy - 10}" font-size="18" font-weight="900" fill="#059669">C</text>`;
+    // Angle labels — offset inward from each vertex along the angle bisector
+    const angleLabel = (vx, vy, edge1x, edge1y, edge2x, edge2y, deg, color) => {
+      // Unit vectors from vertex toward each edge endpoint
+      const d1x = edge1x - vx, d1y = edge1y - vy;
+      const d2x = edge2x - vx, d2y = edge2y - vy;
+      const l1 = Math.hypot(d1x, d1y), l2 = Math.hypot(d2x, d2y);
+      const u1x = d1x/l1, u1y = d1y/l1;
+      const u2x = d2x/l2, u2y = d2y/l2;
+      // Bisector direction (inward)
+      let bx0 = (u1x + u2x)/2, by0 = (u1y + u2y)/2;
+      const bl = Math.hypot(bx0, by0);
+      if (bl > 0){ bx0 /= bl; by0 /= bl; }
+      // Distance for label: enough to sit inside the triangle but away from vertex
+      const dist = Math.min(28, Math.min(l1, l2) * 0.25);
+      return `<text x="${vx + bx0*dist}" y="${vy + by0*dist + 4}" text-anchor="middle" font-size="14" font-weight="800" fill="${color}">${deg}°</text>`;
+    };
+    g += angleLabel(ax, ay, bx, by, cx, cy, A, '#dc2626');
+    g += angleLabel(bx, by, ax, ay, cx, cy, B, '#2563eb');
+    g += angleLabel(cx, cy, ax, ay, bx, by, C, '#059669');
   }
   svg.innerHTML = g;
   const info = document.getElementById('info');
