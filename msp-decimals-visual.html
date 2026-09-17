@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decimal Operations Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.controls input[type=number] { padding:8px 12px; border:1.5px solid #94a3b8; border-radius:6px; font-family:'Courier New', monospace; font-size:1.2rem; width:120px; font-weight:800; text-align:center; color:var(--navy); }
+.controls select { padding:8px 12px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:1rem; font-weight:800; color:var(--navy); background:#fff; }
+.op-display { display:flex; justify-content:center; align-items:center; gap:14px; margin:16px 0; font-family:'Courier New', monospace; font-size:2.2rem; font-weight:900; }
+.op-display .num { padding:10px 18px; background:#fef08a; border:2px solid var(--gold); border-radius:10px; color:var(--navy); }
+.op-display .op { color:var(--red); font-size:2.5rem; }
+.op-display .eq { color:var(--navy); }
+.op-display .ans { padding:10px 18px; background:#d1fae5; border:2px solid var(--green); border-radius:10px; color:#065f46; }
+.stack-wrap { background:#f8fafc; border-radius:10px; padding:16px; margin:14px 0; overflow-x:auto; }
+.stack { display:inline-block; margin:0 auto; font-family:'Courier New', monospace; font-size:1.6rem; font-weight:800; }
+.stack-row { text-align:right; padding:4px 12px; letter-spacing:6px; color:var(--navy); position:relative; }
+.stack-row.op-row { border-bottom:3px solid var(--navy); padding-bottom:4px; }
+.stack-row.op-sign { text-align:left; padding-left:0; }
+.stack-row.result { color:var(--green); }
+.dec-mark { color:var(--red); font-weight:900; }
+.place-grid { display:grid; gap:6px; margin:12px 0; justify-content:center; }
+.place-col { display:flex; flex-direction:column; align-items:center; }
+.place-lbl { font-size:.7rem; font-weight:800; color:#64748b; text-transform:uppercase; margin-bottom:4px; letter-spacing:.05em; }
+.place-cell { width:44px; height:44px; border:2px solid #94a3b8; background:#fff; display:flex; align-items:center; justify-content:center; font-family:'Courier New', monospace; font-size:1.3rem; font-weight:900; color:var(--navy); border-radius:6px; }
+.place-cell.dec { border-color:var(--red); background:#fee2e2; color:var(--red); font-size:1.6rem; padding:0 2px; }
+.place-cell.empty { background:#f1f5f9; color:#cbd5e1; }
+.steps { background:#eff6ff; border-left:4px solid var(--blue); padding:12px 18px; border-radius:6px; margin:14px 0; font-size:.95rem; }
+.steps .step { margin:6px 0; }
+.steps code { background:#e0e7ff; padding:2px 8px; border-radius:4px; color:var(--navy); font-weight:800; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset-btn:hover { background:#0f172a; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Decimal Operations · Visual Explorer</div>
+  <h1>💯 Decimals — Line Up The Point</h1>
+  <p class="tagline">Set two numbers, pick an operation, watch the place values line up perfectly.</p>
+</header>
+
+<div class="big-idea">
+  <strong>Golden rule:</strong> When you <strong>add or subtract</strong> decimals, line up the decimal points. Tenths under tenths, hundredths under hundredths. When you <strong>multiply</strong>, count total decimal places in the factors. When you <strong>divide</strong>, move the decimal point to make a whole-number divisor.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Two Decimals, Any Operation</h2>
+
+  <div class="controls">
+    <label>First: <input type="number" id="a" step="any" value="3.5"></label>
+    <label>Op:
+      <select id="op">
+        <option value="+">+ Add</option>
+        <option value="-">− Subtract</option>
+        <option value="*">× Multiply</option>
+        <option value="/">÷ Divide</option>
+      </select>
+    </label>
+    <label>Second: <input type="number" id="b" step="any" value="1.25"></label>
+  </div>
+
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setP(3.5,'+',1.25)">3.5 + 1.25</button>
+    <button class="preset-btn" onclick="setP(4.2,'-',1.75)">4.2 − 1.75</button>
+    <button class="preset-btn" onclick="setP(2.4,'*',0.5)">2.4 × 0.5</button>
+    <button class="preset-btn" onclick="setP(8.4,'/',0.2)">8.4 ÷ 0.2</button>
+    <button class="preset-btn" onclick="setP(5.6,'*',0.03)">5.6 × 0.03</button>
+    <button class="preset-btn" onclick="setP(6.75,'+',2.4)">6.75 + 2.4</button>
+  </div>
+
+  <div class="op-display">
+    <div class="num" id="dispA">3.5</div>
+    <div class="op" id="dispOp">+</div>
+    <div class="num" id="dispB">1.25</div>
+    <div class="eq">=</div>
+    <div class="ans" id="dispAns">4.75</div>
+  </div>
+
+  <div class="stack-wrap">
+    <div id="stackArea"></div>
+  </div>
+
+  <div class="steps" id="stepsBox"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip">
+    <strong>Adding &amp; Subtracting:</strong> Add zeros so both numbers have the same number of decimal places. Line up the decimal points top-to-bottom. Bring the decimal straight down into the answer.
+  </div>
+  <div class="tip">
+    <strong>Multiplying:</strong> Ignore the decimal points and multiply as whole numbers. Then count the TOTAL decimal places in both factors and put that many in the answer.
+  </div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;">
+    <strong>Dividing by a decimal:</strong> Move the decimal in the DIVISOR to make it a whole number. Move the decimal in the DIVIDEND the SAME number of places. Then divide normally.
+  </div>
+</section>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Decimals Visual</footer>
+</div>
+
+<script>
+let A = 3.5, OP = '+', B = 1.25;
+
+function setP(a, op, b){
+  A = a; OP = op; B = b;
+  document.getElementById('a').value = a;
+  document.getElementById('op').value = op;
+  document.getElementById('b').value = b;
+  render();
+}
+
+function opSymbol(o){return {'+':'+','-':'−','*':'×','/':'÷'}[o];}
+
+// Get decimal places of a number
+function decimalPlaces(n){
+  const s = String(n);
+  if (s.indexOf('.') === -1) return 0;
+  return s.split('.')[1].length;
+}
+
+// Pad a number to specified decimal places as string
+function padDecimal(n, places){
+  const s = String(n);
+  if (s.indexOf('.') === -1) return s + (places > 0 ? '.' + '0'.repeat(places) : '');
+  const [whole, dec] = s.split('.');
+  return whole + '.' + dec + '0'.repeat(Math.max(0, places - dec.length));
+}
+
+function renderAddSub(){
+  const aP = decimalPlaces(A);
+  const bP = decimalPlaces(B);
+  const maxP = Math.max(aP, bP);
+  const aStr = padDecimal(A, maxP);
+  const bStr = padDecimal(B, maxP);
+  const result = OP === '+' ? (A + B) : (A - B);
+  // Round result to avoid floating point issues
+  const resStr = padDecimal(Number(result.toFixed(maxP)), maxP);
+  // Ensure column widths align — pad on left with spaces
+  const maxLen = Math.max(aStr.length, bStr.length, resStr.length);
+  const pad = s => ' '.repeat(maxLen - s.length) + s;
+  const aPad = pad(aStr), bPad = pad(bStr), rPad = pad(resStr);
+  // Highlight decimal points
+  const highlightDec = s => s.split('').map(ch => ch === '.' ? `<span class="dec-mark">.</span>` : ch).join('');
+  return `<div class="stack">
+    <div class="stack-row">${highlightDec(aPad)}</div>
+    <div class="stack-row op-row">${opSymbol(OP)} &nbsp;${highlightDec(bPad)}</div>
+    <div class="stack-row result">${highlightDec(rPad)}</div>
+  </div>`;
+}
+
+function renderMult(){
+  const aP = decimalPlaces(A);
+  const bP = decimalPlaces(B);
+  const totalP = aP + bP;
+  const aWhole = Math.round(A * Math.pow(10, aP));
+  const bWhole = Math.round(B * Math.pow(10, bP));
+  const productWhole = aWhole * bWhole;
+  const result = A * B;
+  const resStr = Number(result.toFixed(totalP + 4)).toString();
+  return `<div class="stack">
+    <div class="stack-row" style="letter-spacing:2px;">
+      ${A} <span style="color:#64748b; font-size:.85rem;">(${aP} decimal place${aP!==1?'s':''})</span>
+    </div>
+    <div class="stack-row op-row" style="letter-spacing:2px;">
+      × ${B} <span style="color:#64748b; font-size:.85rem;">(${bP} decimal place${bP!==1?'s':''})</span>
+    </div>
+    <div class="stack-row" style="letter-spacing:2px; color:#7c3aed;">
+      Ignore decimals: ${aWhole} × ${bWhole} = ${productWhole}
+    </div>
+    <div class="stack-row" style="letter-spacing:2px; color:#7c3aed;">
+      Total decimal places = ${aP} + ${bP} = ${totalP}
+    </div>
+    <div class="stack-row result" style="letter-spacing:2px;">
+      = ${resStr}
+    </div>
+  </div>`;
+}
+
+function renderDiv(){
+  const bP = decimalPlaces(B);
+  const moved = bP;
+  const newA = A * Math.pow(10, moved);
+  const newB = B * Math.pow(10, moved);
+  const result = A / B;
+  const resStr = Number(result.toFixed(6)).toString();
+  return `<div class="stack">
+    <div class="stack-row" style="letter-spacing:2px;">
+      Original: ${A} ÷ ${B}
+    </div>
+    <div class="stack-row" style="letter-spacing:2px; color:#7c3aed;">
+      Move decimal ${moved} place${moved!==1?'s':''} in BOTH numbers
+    </div>
+    <div class="stack-row op-row" style="letter-spacing:2px;">
+      Rewritten: ${Number(newA.toFixed(6))} ÷ ${Number(newB.toFixed(6))}
+    </div>
+    <div class="stack-row result" style="letter-spacing:2px;">
+      = ${resStr}
+    </div>
+  </div>`;
+}
+
+function render(){
+  document.getElementById('dispA').textContent = A;
+  document.getElementById('dispOp').textContent = opSymbol(OP);
+  document.getElementById('dispB').textContent = B;
+
+  let result;
+  if (OP === '+') result = A + B;
+  else if (OP === '-') result = A - B;
+  else if (OP === '*') result = A * B;
+  else result = B === 0 ? '(undefined)' : (A / B);
+  const rNum = (typeof result === 'number') ? Number(result.toFixed(6)).toString() : result;
+  document.getElementById('dispAns').textContent = rNum;
+
+  const stackArea = document.getElementById('stackArea');
+  const steps = document.getElementById('stepsBox');
+  if (OP === '+' || OP === '-'){
+    stackArea.innerHTML = renderAddSub();
+    steps.innerHTML = `
+      <strong>Steps:</strong>
+      <div class="step">1. Match decimal places by adding zeros so both numbers have the same length after the point.</div>
+      <div class="step">2. Line up the decimal points top-to-bottom (they stay in the same column).</div>
+      <div class="step">3. ${OP === '+' ? 'Add' : 'Subtract'} column by column, from right to left (regroup when needed).</div>
+      <div class="step">4. Bring the decimal point <em>straight down</em> into the answer.</div>
+    `;
+  } else if (OP === '*'){
+    stackArea.innerHTML = renderMult();
+    const aP = decimalPlaces(A), bP = decimalPlaces(B);
+    steps.innerHTML = `
+      <strong>Steps:</strong>
+      <div class="step">1. <strong>Ignore</strong> the decimal points for now. Multiply <code>${A}</code> and <code>${B}</code> as whole numbers.</div>
+      <div class="step">2. Count the <strong>TOTAL</strong> decimal places in both factors: ${aP} + ${bP} = <strong>${aP+bP}</strong>.</div>
+      <div class="step">3. Put that many decimal places in your answer.</div>
+      <div class="step">✓ <strong>Sanity check:</strong> multiplying by a number less than 1 makes the answer SMALLER than the other factor.</div>
+    `;
+  } else {
+    stackArea.innerHTML = renderDiv();
+    const bP = decimalPlaces(B);
+    steps.innerHTML = `
+      <strong>Steps:</strong>
+      <div class="step">1. Look at the divisor (${B}). It has <strong>${bP}</strong> decimal place${bP!==1?'s':''}.</div>
+      <div class="step">2. Move the decimal <strong>${bP}</strong> place${bP!==1?'s':''} to the RIGHT in the divisor to make it a whole number.</div>
+      <div class="step">3. Move the decimal in the dividend the SAME number of places (adding zeros if needed).</div>
+      <div class="step">4. Now divide normally. Put the decimal point straight up in the quotient.</div>
+      <div class="step">✓ <strong>Sanity check:</strong> dividing by a number less than 1 makes the answer BIGGER than the dividend.</div>
+    `;
+  }
+}
+
+['a','b','op'].forEach(id => {
+  document.getElementById(id).addEventListener('input', e => {
+    if (id === 'a') A = parseFloat(e.target.value) || 0;
+    if (id === 'b') B = parseFloat(e.target.value) || 0;
+    if (id === 'op') OP = e.target.value;
+    render();
+  });
+});
+document.getElementById('op').addEventListener('change', e => { OP = e.target.value; render(); });
+
+render();
+</script>
+</body>
+</html>
