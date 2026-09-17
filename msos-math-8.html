@@ -3078,7 +3078,8 @@ function showLesson(unitId) {
       if (unit.graphLabUrl && unit.id !== 'metrics-sci-process') resBtns.push(`<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank" rel="noopener" style="${S}">📊 Data Analysis</a>`);
     }
     const scBtn = (!hideExtras) ? `<button class="btn" onclick="showHandout()" style="${S}">🔬 Science Connection</button>` : '';
-    const rwBtn2 = (typeof REALWORLD_8 !== 'undefined' && REALWORLD_8 && REALWORLD_8[unitId]) ? `<button class="btn" onclick="showRealWorld()" style="${S}">🎨 Real-World Project</button>` : '';
+    const rwLabel = (typeof REALWORLD_8 !== 'undefined' && REALWORLD_8 && REALWORLD_8[unitId]) ? ('🎨 ' + (REALWORLD_8[unitId].title || '').split(' — ')[0]) : '';
+    const rwBtn2 = (typeof REALWORLD_8 !== 'undefined' && REALWORLD_8 && REALWORLD_8[unitId]) ? `<button class="btn" onclick="showRealWorld()" style="${S}">${rwLabel}</button>` : '';
     const wsBtn = (!hideExtras && unit && unit.worksheetUrl) ? `<button class="btn" onclick="showWorksheet()" style="${S}">📋 Worksheet</button>` : '';
     const ws2Btn = (!hideExtras && unit && unit.worksheet2Url) ? `<a class="btn" href="${unit.worksheet2Url}" target="_blank" rel="noopener" style="${S}; text-decoration:none;">${unit.worksheet2Title || '📋 Worksheet 2'}</a>` : '';
     const qzBtn = (unit && unit.quizUrl) ? `<button class="btn" onclick="showQuizExternal()" style="${S}">📝 Quiz</button>` : '';
@@ -3098,7 +3099,11 @@ function showLesson(unitId) {
     h2.style.margin = '0';
   })();
   const rwBtn = document.getElementById('realworld-btn');
-  if (rwBtn) rwBtn.style.display = (typeof REALWORLD_8 !== 'undefined' && REALWORLD_8 && REALWORLD_8[unitId]) ? '' : 'none';
+  if (rwBtn) {
+    const hasRW = (typeof REALWORLD_8 !== 'undefined' && REALWORLD_8 && REALWORLD_8[unitId]);
+    rwBtn.style.display = hasRW ? '' : 'none';
+    if (hasRW) rwBtn.textContent = '🎨 ' + (REALWORLD_8[unitId].title || '').split(' — ')[0];
+  }
   const hbtn = document.getElementById('handout-btn');
   const wbtn = document.getElementById('worksheet-btn');
   const hideExtras = (unitId === 'metrics-sci-process');
