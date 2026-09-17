@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proportional Relationships Visual — Math 7</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.big-idea strong { color:#7c2d12; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card.test { border-top-color:var(--purple); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:14px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:8px; }
+.controls select { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; font-weight:800; color:var(--navy); }
+.controls input[type=range] { width:200px; }
+.controls .val { font-weight:900; color:var(--navy); background:#fff; padding:4px 12px; border-radius:6px; border:1.5px solid #cbd5e1; font-size:1.1rem; }
+.eq-display { text-align:center; font-family:'Courier New', monospace; font-size:1.5rem; font-weight:900; color:var(--navy); background:#fef08a; padding:14px 18px; border-radius:10px; margin:14px 0; border:2px solid var(--gold); }
+.eq-display .k { color:var(--red); }
+.eq-display .var { color:var(--purple); }
+.side-by-side { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:14px 0; }
+@media (max-width:720px) { .side-by-side { grid-template-columns:1fr; } }
+.table-wrap { overflow-x:auto; background:#f8fafc; border-radius:10px; padding:10px; }
+.prop-table { width:100%; border-collapse:collapse; font-family:'Courier New', monospace; }
+.prop-table th { background:var(--navy); color:#fff; padding:8px; font-size:.85rem; text-align:center; }
+.prop-table td { padding:8px; text-align:center; font-weight:700; border-bottom:1px solid #e2e8f0; font-size:.9rem; }
+.prop-table tr:nth-child(even) { background:rgba(255,255,255,0.5); }
+.prop-table .k-col { background:#fef08a; color:#78350f; font-weight:900; }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:10px; text-align:center; }
+.graph-svg { max-width:100%; height:auto; }
+.checks { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0; }
+@media (max-width:600px) { .checks { grid-template-columns:1fr; } }
+.check-box { padding:14px; border-radius:10px; border:2px solid var(--green); background:#ecfdf5; text-align:center; }
+.check-box .label { font-size:.8rem; font-weight:800; color:var(--green); text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px; }
+.check-box .value { font-size:1rem; font-weight:900; color:var(--navy); }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset-btn:hover { background:#0f172a; }
+.compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:14px 0; }
+@media (max-width:640px) { .compare-grid { grid-template-columns:1fr; } }
+.compare-col { background:#f8fafc; border-radius:10px; padding:14px; border:2px solid #cbd5e1; }
+.compare-col.yes { border-color:var(--green); background:#ecfdf5; }
+.compare-col.no { border-color:var(--red); background:#fee2e2; }
+.compare-col h3 { font-size:1rem; color:var(--navy); margin-bottom:8px; text-align:center; }
+.compare-col .verdict { font-weight:900; font-size:1.1rem; text-align:center; margin-top:6px; }
+.compare-col.yes .verdict { color:var(--green); }
+.compare-col.no .verdict { color:var(--red); }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-7.html" class="back-link">← Back to Math 7</a>
+
+<header>
+  <div class="eyebrow">Math 7 · Proportional Relationships · Visual Explorer</div>
+  <h1>⚖️ y = kx — Everything Scales By The Same Factor</h1>
+  <p class="tagline">One constant, k, controls the whole relationship. Change it. Watch every row of the table scale together.</p>
+</header>
+
+<div class="big-idea">
+  <strong>The big idea:</strong> Two quantities are <strong>proportional</strong> when one is always the same fixed number times the other. That fixed number is called the <strong>constant of proportionality</strong>, written <em>k</em>. The equation is <strong>y = kx</strong>. Every proportional relationship graphs as a straight line through the <em>origin</em> (0, 0).
+</div>
+
+<!-- =============================================== -->
+<section class="card">
+  <h2>🎯 Try It: Set The Constant k</h2>
+
+  <div class="controls">
+    <label>Constant k: <input type="range" id="kSlider" min="0.5" max="6" step="0.5" value="3"><span class="val" id="kVal">3</span></label>
+    <label>Context:
+      <select id="ctx">
+        <option value="cookies">🍪 cookies per batch</option>
+        <option value="miles">🚗 miles per hour</option>
+        <option value="dollars">💵 $ per item</option>
+        <option value="pages">📖 pages per minute</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="setK(1)">k = 1</button>
+    <button class="preset-btn" onclick="setK(2)">k = 2</button>
+    <button class="preset-btn" onclick="setK(2.5)">k = 2.5</button>
+    <button class="preset-btn" onclick="setK(4)">k = 4</button>
+    <button class="preset-btn" onclick="setK(0.5)">k = 0.5</button>
+  </div>
+
+  <div class="eq-display" id="eqDisp"><span class="var">y</span> = <span class="k">3</span> · <span class="var">x</span></div>
+
+  <div class="side-by-side">
+    <div class="table-wrap">
+      <table class="prop-table">
+        <thead>
+          <tr><th id="xHdr">x (hours)</th><th id="yHdr">y (miles)</th><th class="k-col">y ÷ x = k?</th></tr>
+        </thead>
+        <tbody id="propTable"></tbody>
+      </table>
+    </div>
+    <div class="graph-wrap">
+      <svg id="propGraph" width="360" height="360" viewBox="0 0 360 360"></svg>
+    </div>
+  </div>
+
+  <div class="checks">
+    <div class="check-box">
+      <div class="label">✓ Passes through (0, 0)?</div>
+      <div class="value" id="chk1">YES — line starts at origin</div>
+    </div>
+    <div class="check-box">
+      <div class="label">✓ Same k for every row?</div>
+      <div class="value" id="chk2">YES — every ratio equals 3</div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================== -->
+<section class="card test">
+  <h2>🔍 Is It Proportional? Two Quick Tests</h2>
+  <div class="tip">
+    <strong>Test 1 — Table check:</strong> Compute y ÷ x for every row. If you get the <em>same number</em> every time, it&apos;s proportional and that number is k.<br>
+    <strong>Test 2 — Graph check:</strong> A proportional relationship is a <em>straight line through (0, 0)</em>. If the line misses the origin, it&apos;s NOT proportional.
+  </div>
+
+  <div class="compare-grid">
+    <div class="compare-col yes">
+      <h3>✅ Proportional: y = 3x</h3>
+      <table class="prop-table" style="font-size:.85rem;">
+        <thead><tr><th>x</th><th>y</th><th>y÷x</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>3</td><td>3</td></tr>
+          <tr><td>2</td><td>6</td><td>3</td></tr>
+          <tr><td>3</td><td>9</td><td>3</td></tr>
+          <tr><td>4</td><td>12</td><td>3</td></tr>
+        </tbody>
+      </table>
+      <svg width="200" height="150" viewBox="0 0 200 150" style="margin-top:8px;">
+        <line x1="20" y1="130" x2="190" y2="130" stroke="#0f172a" stroke-width="1.5"/>
+        <line x1="20" y1="20" x2="20" y2="130" stroke="#0f172a" stroke-width="1.5"/>
+        <line x1="20" y1="130" x2="180" y2="30" stroke="#059669" stroke-width="3"/>
+        <circle cx="20" cy="130" r="6" fill="#059669" stroke="#fff" stroke-width="2"/>
+        <text x="26" y="146" font-size="10" font-weight="800" fill="#059669">(0,0)</text>
+      </svg>
+      <div class="verdict">Same ratio + passes through origin ✓</div>
+    </div>
+    <div class="compare-col no">
+      <h3>❌ NOT Proportional: y = 2x + 1</h3>
+      <table class="prop-table" style="font-size:.85rem;">
+        <thead><tr><th>x</th><th>y</th><th>y÷x</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>3</td><td>3</td></tr>
+          <tr><td>2</td><td>5</td><td>2.5</td></tr>
+          <tr><td>3</td><td>7</td><td>2.33</td></tr>
+          <tr><td>4</td><td>9</td><td>2.25</td></tr>
+        </tbody>
+      </table>
+      <svg width="200" height="150" viewBox="0 0 200 150" style="margin-top:8px;">
+        <line x1="20" y1="130" x2="190" y2="130" stroke="#0f172a" stroke-width="1.5"/>
+        <line x1="20" y1="20" x2="20" y2="130" stroke="#0f172a" stroke-width="1.5"/>
+        <line x1="20" y1="115" x2="180" y2="30" stroke="#dc2626" stroke-width="3"/>
+        <circle cx="20" cy="115" r="6" fill="#dc2626" stroke="#fff" stroke-width="2"/>
+        <circle cx="20" cy="130" r="6" fill="none" stroke="#0f172a" stroke-width="2" stroke-dasharray="2,2"/>
+        <text x="26" y="146" font-size="10" font-weight="800" fill="#0f172a">(0,0)</text>
+        <text x="26" y="112" font-size="10" font-weight="800" fill="#dc2626">(0,1) — miss!</text>
+      </svg>
+      <div class="verdict">Ratio changes + misses origin ✗</div>
+    </div>
+  </div>
+
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;">
+    <strong>Watch out:</strong> Just because a line is straight does NOT make it proportional. It also must go through (0, 0). y = 2x + 1 is a straight line — but it starts at (0, 1), not the origin. So it&apos;s NOT proportional.
+  </div>
+</section>
+
+<!-- =============================================== -->
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Where You&apos;ll See This</h2>
+  <div class="tip"><strong>Recipes:</strong> If a recipe makes 24 cookies with 2 cups of flour, k = 2/24 = 1/12 cup per cookie. Doubling cookies doubles flour — because it&apos;s proportional.</div>
+  <div class="tip"><strong>Speed:</strong> If a car goes 60 mph, distance = 60 · time. That&apos;s y = kx with k = 60. Cruising at constant speed is a perfect proportional relationship.</div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;"><strong>Sales tax:</strong> Every $1 spent adds the SAME tax rate. Total tax = rate · price. y = kx with k = tax rate. That&apos;s why proportional thinking is the backbone of finance and shopping.</div>
+</section>
+
+<footer>Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Proportional Relationships Visual</footer>
+</div>
+
+<script>
+const CTX = {
+  cookies:  {xLbl:'x (batches)', yLbl:'y (cookies)',  vX:'batches',  vY:'cookies'},
+  miles:    {xLbl:'x (hours)',   yLbl:'y (miles)',    vX:'hours',    vY:'miles'},
+  dollars:  {xLbl:'x (items)',   yLbl:'y ($ total)',  vX:'items',    vY:'total $'},
+  pages:    {xLbl:'x (minutes)', yLbl:'y (pages)',    vX:'minutes',  vY:'pages'}
+};
+let K = 3, CTX_KEY = 'miles';
+
+function fmt(x){return Number.isInteger(x) ? x : x.toFixed(2).replace(/\.?0+$/,'');}
+
+function setK(v){
+  K = v;
+  document.getElementById('kSlider').value = v;
+  render();
+}
+
+function render(){
+  document.getElementById('kVal').textContent = fmt(K);
+  const c = CTX[CTX_KEY];
+  document.getElementById('xHdr').textContent = c.xLbl;
+  document.getElementById('yHdr').textContent = c.yLbl;
+  document.getElementById('eqDisp').innerHTML = `<span class="var">${c.vY}</span> = <span class="k">${fmt(K)}</span> · <span class="var">${c.vX}</span>`;
+
+  // Table
+  const tbody = document.getElementById('propTable');
+  tbody.innerHTML = '';
+  for (let x = 1; x <= 6; x++){
+    const y = K * x;
+    const ratio = y / x;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${x}</td><td>${fmt(y)}</td><td class="k-col">${fmt(ratio)}</td>`;
+    tbody.appendChild(tr);
+  }
+
+  // Graph
+  const svg = document.getElementById('propGraph');
+  const cx = 40, cy = 320, W = 360, H = 360;
+  const maxY = K * 6 * 1.1;
+  const scaleX = (W - 60) / 6;
+  const scaleY = (H - 60) / maxY;
+  let g = '';
+  // Grid
+  for (let i = 0; i <= 6; i++){
+    const x = cx + i*scaleX;
+    g += `<line x1="${x}" y1="20" x2="${x}" y2="${cy}" stroke="#e2e8f0" stroke-width="1"/>`;
+  }
+  const yStep = Math.max(1, Math.ceil(maxY / 6));
+  for (let i = 0; i * yStep <= maxY; i++){
+    const y = cy - i*yStep*scaleY;
+    if (y < 20) break;
+    g += `<line x1="${cx}" y1="${y}" x2="${W-20}" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`;
+  }
+  // Axes
+  g += `<line x1="${cx}" y1="20" x2="${cx}" y2="${cy}" stroke="#0f172a" stroke-width="2"/>`;
+  g += `<line x1="${cx}" y1="${cy}" x2="${W-20}" y2="${cy}" stroke="#0f172a" stroke-width="2"/>`;
+  // Axis labels
+  for (let i = 0; i <= 6; i++){
+    const x = cx + i*scaleX;
+    g += `<text x="${x}" y="${cy+14}" text-anchor="middle" font-size="10" fill="#475569">${i}</text>`;
+  }
+  for (let i = 0; i * yStep <= maxY; i++){
+    const y = cy - i*yStep*scaleY;
+    if (y < 20) break;
+    g += `<text x="${cx-6}" y="${y+3}" text-anchor="end" font-size="10" fill="#475569">${i*yStep}</text>`;
+  }
+  // The line y = Kx from (0,0) to (6, 6K)
+  g += `<line x1="${cx}" y1="${cy}" x2="${cx + 6*scaleX}" y2="${cy - 6*K*scaleY}" stroke="#2563eb" stroke-width="3"/>`;
+  // Data points
+  for (let x = 1; x <= 6; x++){
+    const y = K * x;
+    const px = cx + x*scaleX, py = cy - y*scaleY;
+    g += `<circle cx="${px}" cy="${py}" r="5" fill="#2563eb" stroke="#fff" stroke-width="2"/>`;
+  }
+  // Highlight origin
+  g += `<circle cx="${cx}" cy="${cy}" r="8" fill="#059669" stroke="#fff" stroke-width="2"/>`;
+  g += `<text x="${cx+12}" y="${cy-6}" font-size="12" font-weight="800" fill="#059669">(0, 0) origin</text>`;
+  // Axis labels (units)
+  g += `<text x="${W/2}" y="${H-4}" text-anchor="middle" font-size="11" font-weight="800" fill="#334155">${c.vX} →</text>`;
+  g += `<text x="8" y="${H/2}" text-anchor="middle" font-size="11" font-weight="800" fill="#334155" transform="rotate(-90 8 ${H/2})">${c.vY} →</text>`;
+
+  svg.innerHTML = g;
+
+  // Checks
+  document.getElementById('chk1').textContent = 'YES — line starts at (0, 0)';
+  document.getElementById('chk2').textContent = `YES — every ratio y÷x equals ${fmt(K)}`;
+}
+
+document.getElementById('kSlider').addEventListener('input', e => { K = parseFloat(e.target.value); render(); });
+document.getElementById('ctx').addEventListener('change', e => { CTX_KEY = e.target.value; render(); });
+
+render();
+</script>
+</body>
+</html>
