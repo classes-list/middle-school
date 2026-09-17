@@ -40,6 +40,13 @@ h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
 .btn-check { background:var(--green); color:#fff; }
 .btn-reset { background:#64748b; color:#fff; }
 .btn-submit { background:var(--red); color:#fff; }
+.btn-print { background:var(--blue); color:#fff; }
+@media print {
+  body { background:#fff; padding:8px; }
+  .back-link, .mode-switcher, .info-banner, .action-row, .btn, footer, .q-feedback { display:none !important; }
+  .q-card { break-inside:avoid; box-shadow:none; border:1px solid #ccc; }
+  .q-input input { border:1px solid #999; background:#fff; }
+}
 .score-banner { padding:16px 20px; border-radius:10px; margin:16px 0; font-weight:800; text-align:center; font-size:1.1rem; background:#f0f9ff; border:2px solid var(--blue); color:var(--navy); }
 .score-banner.excellent { background:#d1fae5; border-color:var(--green); color:#065f46; }
 .score-banner.needs-work { background:#fef3c7; border-color:var(--gold); color:#78350f; }
@@ -52,7 +59,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <header>
   <div class="eyebrow" id="modeEyebrow">Math 8 · Mid-Quarter Test · Practice</div>
   <h1>📝 Math 8 Mid-Quarter Test</h1>
-  <p class="tagline">20 questions covering Q1–Q2: scientific notation, exponent laws, real/rational numbers, square roots, slope, y = mx + b, linear equations, basic systems.</p>
+  <p class="tagline">Mid-Q1 Content · 20 questions</p>
 </header>
 <div class="mode-switcher">
   <a href="?mode=practice" class="mode-btn" id="modeP">📚 Practice Version</a>
@@ -69,6 +76,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <div id="questions"></div>
 <div class="action-row" id="actionRow">
   <button class="btn btn-check" onclick="checkAll()">✓ Check Answers</button>
+  <button class="btn btn-print" onclick="window.print()">🖨 Print</button>
   <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
 </div>
 <div id="scoreBanner"></div>
@@ -76,26 +84,26 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 </div>
 <script>
 const QUESTIONS = [
-  {q:'Write 5,600,000 in scientific notation.', ans:['5.6 × 10^6','5.6e6','5.6 x 10^6','5.6*10^6']},
-  {q:'Write 0.00042 in scientific notation.', ans:['4.2 × 10^-4','4.2e-4','4.2 x 10^-4','4.2*10^-4']},
-  {q:'Compute: (3 × 10^4)(2 × 10^3). Give in scientific notation.', ans:['6 × 10^7','6e7','6 x 10^7']},
-  {q:'Compute: (8 × 10^6) ÷ (2 × 10^2). Give in scientific notation.', ans:['4 × 10^4','4e4','4 x 10^4']},
-  {q:'Simplify: 2^3 · 2^4. (Answer as a power of 2 or standard number.)', ans:['2^7','128']},
-  {q:'Simplify: (5^6) ÷ (5^4).', ans:['5^2','25']},
+  {q:'Convert 3.2 km to millimeters.', ans:['3200000','3,200,000'], unit:'mm'},
+  {q:'Convert 45 cm to meters.', ans:['0.45','.45'], unit:'m'},
+  {q:'A student measured 24.5 g; actual mass is 25 g. What is the percent error?', ans:['2','2%'], unit:'%'},
+  {q:'Compute: −15 + 8.', ans:'-7'},
+  {q:'Compute: (−4) × (−7).', ans:'28'},
+  {q:'Simplify: (−6)².', ans:'36'},
+  {q:'Simplify: −6².', ans:'-36'},
+  {q:'Write 82,500,000 in scientific notation.', ans:['8.25 × 10^7','8.25e7','8.25 x 10^7']},
+  {q:'Write 0.00051 in scientific notation.', ans:['5.1 × 10^-4','5.1e-4','5.1 x 10^-4']},
+  {q:'Compute: (4 × 10^5)(3 × 10^2). Give in scientific notation.', ans:['1.2 × 10^8','1.2e8','1.2 x 10^8']},
+  {q:'Compute: (9 × 10^8) ÷ (3 × 10^3). Give in scientific notation.', ans:['3 × 10^5','3e5','3 x 10^5']},
+  {q:'Convert 3.2 × 10^−2 to standard form.', ans:'0.032'},
+  {q:'Simplify (Laws of Exponents): 3^4 · 3^2.', ans:['3^6','729']},
+  {q:'Simplify: (7^5) ÷ (7^2).', ans:['7^3','343']},
+  {q:'Simplify: (2^3)^4.', ans:['2^12','4096']},
+  {q:'Evaluate: 5^0.', ans:'1'},
+  {q:'Evaluate: 3^-2. (Fraction or decimal.)', ans:['1/9','.111','0.111']},
   {q:'Evaluate: √64.', ans:'8'},
-  {q:'Evaluate: √49.', ans:'7'},
-  {q:'Is √2 rational or irrational?', ans:['irrational','ir']},
-  {q:'Find the slope of the line through (1, 2) and (4, 8).', ans:'2'},
-  {q:'Find the slope of the line through (0, 5) and (2, 1).', ans:'-2'},
-  {q:'What is the y-intercept of y = 3x − 7?', ans:'-7'},
-  {q:'What is the slope of y = −5x + 2?', ans:'-5'},
-  {q:'Solve for x: 4x − 3 = 13.', ans:'4'},
-  {q:'Solve for x: 2(x + 5) = 18.', ans:'4'},
-  {q:'Solve for x: 3x + 7 = 5x − 3.', ans:'5'},
-  {q:'A line has slope 2 and y-intercept 3. Write its equation in slope-intercept form.', ans:['y = 2x + 3','y=2x+3']},
-  {q:'Where do y = x + 1 and y = 3x − 5 intersect? Give the x-coordinate.', ans:'3'},
-  {q:'A right triangle has legs 3 and 4. What is the hypotenuse?', ans:'5'},
-  {q:'Convert 4.5 × 10^−3 to standard form.', ans:'0.0045'}
+  {q:'Is √64 rational or irrational?', ans:['rational','r']},
+  {q:'Is √2 rational or irrational?', ans:['irrational','ir']}
 ];
 function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
 function renderQuestions(){const c=document.getElementById('questions');c.innerHTML='';QUESTIONS.forEach((q,i)=>{const card=document.createElement('div');card.className='q-card';card.id='q'+i;card.innerHTML=`<div class="q-text"><span class="q-num">${i+1}</span>${q.q}</div><div class="q-input"><input type="text" id="ans${i}" placeholder="Your answer">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div><div class="q-feedback" id="fb${i}"></div>`;c.appendChild(card);});}
@@ -105,7 +113,7 @@ function checkAll(){let correct=0;const results=[];QUESTIONS.forEach((q,i)=>{con
 function showScore(c,r){const pct=Math.round((c/QUESTIONS.length)*100);const b=document.getElementById('scoreBanner');let cls='score-banner',m;if(pct>=85){cls+=' excellent';m='🌟 Excellent work!';}else if(pct>=70)m="👍 Nice — you're on track.";else{cls+=' needs-work';m='📚 Review the topics you missed and try again.';}b.className=cls;b.innerHTML=`📊 <strong>Score: ${c} / ${QUESTIONS.length} (${pct}%)</strong> — ${m}`;}
 function resetAll(){QUESTIONS.forEach((q,i)=>{document.getElementById('ans'+i).value='';document.getElementById('q'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).innerHTML='';});document.getElementById('scoreBanner').innerHTML='';}
 function submitToTeacher(){const f=document.getElementById('fName').value.trim();const l=document.getElementById('lName').value.trim();const cl=document.getElementById('cls').value.trim();if(!f||!l){alert('Enter your first and last name.');return;}const {correct,results}=checkAll();const name=f+' '+l;let body=`Math 8 Mid-Quarter Test — Graded Submission\nName: ${name}\n`;if(cl)body+=`Class: ${cl}\n`;body+=`Score: ${correct}/20 (${Math.round(correct/20*100)}%)\n\nAnswers:\n`;results.forEach((r,i)=>{body+=`${i+1}. ${r.right?'✓':'✗'} Your answer: "${r.userAns}" | Correct: ${r.correctAns}\n`;});const subject=encodeURIComponent(`Math 8 Mid-Quarter Test — ${name}`);const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+subject+'&body='+encodeURIComponent(body);const w=window.open(gmailUrl,'_blank','noopener,noreferrer');if(!w)window.location.href=gmailUrl;}
-function applyMode(){const m=getMode();const e=document.getElementById('modeEyebrow');const b=document.getElementById('infoBanner');const n=document.getElementById('nameRow');const a=document.getElementById('actionRow');document.getElementById('modeP').classList.toggle('active',m==='practice');document.getElementById('modeG').classList.toggle('active',m==='graded');if(m==='graded'){e.className='eyebrow graded';e.textContent='Math 8 · Mid-Quarter Test · GRADED';b.className='info-banner graded';b.innerHTML='<strong>Graded mode:</strong> Enter your name, answer all 20 questions, then click <strong>Submit to Dr. Park</strong>. Your answers and score will be emailed for grading. Work carefully — this counts.';n.style.display='flex';a.innerHTML='<button class="btn btn-check" onclick="checkAll()">✓ Check My Work</button><button class="btn btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button><button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>';}}
+function applyMode(){const m=getMode();const e=document.getElementById('modeEyebrow');const b=document.getElementById('infoBanner');const n=document.getElementById('nameRow');const a=document.getElementById('actionRow');document.getElementById('modeP').classList.toggle('active',m==='practice');document.getElementById('modeG').classList.toggle('active',m==='graded');if(m==='graded'){e.className='eyebrow graded';e.textContent='Math 8 · Mid-Quarter Test · GRADED';b.className='info-banner graded';b.innerHTML='<strong>Graded mode:</strong> Enter your name, answer all 20 questions, then click <strong>Submit to Dr. Park</strong>. Your answers and score will be emailed for grading. Work carefully — this counts.';n.style.display='flex';a.innerHTML='<button class="btn btn-check" onclick="checkAll()">✓ Check My Work</button><button class="btn btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button><button class="btn btn-print" onclick="window.print()">🖨 Print</button><button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>';}}
 renderQuestions();applyMode();
 </script>
 </body>

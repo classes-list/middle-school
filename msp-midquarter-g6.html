@@ -43,6 +43,14 @@ h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
 .btn-reset:hover { background:#475569; }
 .btn-submit { background:var(--red); color:#fff; }
 .btn-submit:hover { background:#b91c1c; }
+.btn-print { background:var(--blue); color:#fff; }
+.btn-print:hover { background:#075985; }
+@media print {
+  body { background:#fff; padding:8px; }
+  .back-link, .mode-switcher, .info-banner, .action-row, .btn, footer, .q-feedback { display:none !important; }
+  .q-card { break-inside:avoid; box-shadow:none; border:1px solid #ccc; }
+  .q-input input { border:1px solid #999; background:#fff; }
+}
 .score-banner { padding:16px 20px; border-radius:10px; margin:16px 0; font-weight:800; text-align:center; font-size:1.1rem; background:#f0f9ff; border:2px solid var(--blue); color:var(--navy); }
 .score-banner.excellent { background:#d1fae5; border-color:var(--green); color:#065f46; }
 .score-banner.needs-work { background:#fef3c7; border-color:var(--gold); color:#78350f; }
@@ -56,7 +64,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <header>
   <div class="eyebrow" id="modeEyebrow">Math 6 · Mid-Quarter Test · Practice</div>
   <h1>📝 Math 6 Mid-Quarter Test</h1>
-  <p class="tagline">20 questions covering Q1–Q2: metrics, density, factors/multiples, fractions, ratios, percents, integers, coordinate plane.</p>
+  <p class="tagline">Mid-Q1 Content · 20 questions</p>
 </header>
 
 <div class="mode-switcher">
@@ -78,6 +86,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 
 <div class="action-row" id="actionRow">
   <button class="btn btn-check" id="checkBtn" onclick="checkAll()">✓ Check Answers</button>
+  <button class="btn btn-print" onclick="window.print()">🖨 Print</button>
   <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
 </div>
 
@@ -89,25 +98,25 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <script>
 const QUESTIONS = [
   {q:'Convert 5.2 km to meters.', ans:'5200', unit:'m'},
-  {q:'An object has mass 30 g and volume 6 mL. What is its density (D = m/V)?', ans:'5', unit:'g/mL'},
-  {q:'Find the GCF of 24 and 36.', ans:'12'},
-  {q:'Find the LCM of 6 and 10.', ans:'30'},
-  {q:'Compute: 3/4 ÷ 1/2. (Write as a decimal or fraction.)', ans:['1.5','3/2','1 1/2']},
-  {q:'Write 4,300,000 in scientific notation.', ans:['4.3 × 10^6','4.3e6','4.3 x 10^6','4.3*10^6']},
-  {q:'If 3 apples cost $2.10, what is the unit price per apple (in dollars)?', ans:['0.70','0.7','.70','.7']},
-  {q:'What is 15% of 80?', ans:'12'},
+  {q:'Convert 250 g to kilograms.', ans:['0.25','.25'], unit:'kg'},
+  {q:'Convert 3.5 L to milliliters.', ans:'3500', unit:'mL'},
+  {q:'Convert 1500 mm to centimeters.', ans:'150', unit:'cm'},
+  {q:'Convert 0.075 kg to grams.', ans:'75', unit:'g'},
+  {q:'The actual mass of an object is 50 g. A student measured 48 g. What is the percent error?', ans:['4','4%'], unit:'%'},
+  {q:'Actual density of water is 1.00 g/mL. A student measured 0.95 g/mL. Percent error?', ans:['5','5%'], unit:'%'},
+  {q:'A student measured a length as 12.3 cm, but the actual length is 12.0 cm. Percent error?', ans:['2.5','2.5%'], unit:'%'},
   {q:'Evaluate: −8 + 5.', ans:'-3'},
-  {q:'Compute: −7 − (−3).', ans:'-4'},
-  {q:'In which quadrant does the point (−3, 4) lie? (Roman numeral I, II, III, or IV)', ans:['II','ii','2']},
-  {q:'A rectangle is 12 cm long and 5 cm wide. What is its area in cm²?', ans:'60'},
-  {q:'Simplify the fraction 24/36 to lowest terms.', ans:['2/3','.667','0.667']},
-  {q:'Convert 250 g to kilograms.', ans:['0.25','.25']},
-  {q:'A recipe uses 2 cups of flour for every 3 cookies. How many cups are needed for 12 cookies?', ans:'8'},
-  {q:'A shirt costs $40. It is on sale for 25% off. What is the sale price in dollars?', ans:'30'},
-  {q:'Solve for x: x + 7 = 15.', ans:'8'},
-  {q:'A car travels 180 miles in 3 hours. What is its average speed in mph?', ans:'60'},
+  {q:'Evaluate: −7 − (−3).', ans:'-4'},
+  {q:'Evaluate: (−6) × 4.', ans:'-24'},
+  {q:'Evaluate: (−36) ÷ (−9).', ans:'4'},
+  {q:'Simplify: −(−12).', ans:'12'},
   {q:'Which is larger: −5 or −8?', ans:['-5','−5']},
-  {q:'Convert 3.5 L to mL.', ans:'3500'}
+  {q:'What is |−15| (absolute value of −15)?', ans:'15'},
+  {q:'Order from least to greatest: −4, 3, −7, 0. (Separate with commas.)', ans:['-7,-4,0,3','-7, -4, 0, 3']},
+  {q:'Write 4,300,000 in scientific notation.', ans:['4.3 × 10^6','4.3e6','4.3 x 10^6','4.3*10^6']},
+  {q:'Write 0.00062 in scientific notation.', ans:['6.2 × 10^-4','6.2e-4','6.2 x 10^-4','6.2*10^-4']},
+  {q:'Write 3.5 × 10^4 in standard form.', ans:['35000','35,000']},
+  {q:'Which is larger: 2.5 × 10^3 or 3 × 10^2?', ans:['2.5 × 10^3','2.5e3','2.5 x 10^3','2.5*10^3','2500']}
 ];
 
 function getMode(){
@@ -247,6 +256,7 @@ function applyMode(){
     actionRow.innerHTML = `
       <button class="btn btn-check" onclick="checkAll()">✓ Check My Work</button>
       <button class="btn btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+      <button class="btn btn-print" onclick="window.print()">🖨 Print</button>
       <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
     `;
   }

@@ -40,6 +40,13 @@ h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
 .btn-check { background:var(--green); color:#fff; }
 .btn-reset { background:#64748b; color:#fff; }
 .btn-submit { background:var(--red); color:#fff; }
+.btn-print { background:var(--blue); color:#fff; }
+@media print {
+  body { background:#fff; padding:8px; }
+  .back-link, .mode-switcher, .info-banner, .action-row, .btn, footer, .q-feedback { display:none !important; }
+  .q-card { break-inside:avoid; box-shadow:none; border:1px solid #ccc; }
+  .q-input input { border:1px solid #999; background:#fff; }
+}
 .score-banner { padding:16px 20px; border-radius:10px; margin:16px 0; font-weight:800; text-align:center; font-size:1.1rem; background:#f0f9ff; border:2px solid var(--blue); color:var(--navy); }
 .score-banner.excellent { background:#d1fae5; border-color:var(--green); color:#065f46; }
 .score-banner.needs-work { background:#fef3c7; border-color:var(--gold); color:#78350f; }
@@ -52,7 +59,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <header>
   <div class="eyebrow" id="modeEyebrow">Math 7 · Mid-Quarter Test · Practice</div>
   <h1>📝 Math 7 Mid-Quarter Test</h1>
-  <p class="tagline">20 questions covering Q1–Q2: integers, rational numbers, proportional relationships (y = kx), ratios &amp; unit rates, percents &amp; percent change, scale drawings.</p>
+  <p class="tagline">Mid-Q1 Content · 20 questions</p>
 </header>
 <div class="mode-switcher">
   <a href="?mode=practice" class="mode-btn" id="modeP">📚 Practice Version</a>
@@ -69,6 +76,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <div id="questions"></div>
 <div class="action-row" id="actionRow">
   <button class="btn btn-check" onclick="checkAll()">✓ Check Answers</button>
+  <button class="btn btn-print" onclick="window.print()">🖨 Print</button>
   <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
 </div>
 <div id="scoreBanner"></div>
@@ -76,26 +84,26 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 </div>
 <script>
 const QUESTIONS = [
-  {q:'Compute: −6 + (−8).', ans:'-14'},
-  {q:'Compute: −12 − (−5).', ans:'-7'},
-  {q:'Compute: (−4) × 7.', ans:'-28'},
-  {q:'Compute: (−36) ÷ (−4).', ans:'9'},
-  {q:'A table shows y = 4x. What is the constant of proportionality k?', ans:'4'},
-  {q:'If y is proportional to x and y = 15 when x = 3, find k.', ans:'5'},
-  {q:'If 5 lb of oranges costs $8, what is the unit price per pound (in dollars)?', ans:['1.60','1.6']},
-  {q:'A car uses 3 gal of gas to travel 90 miles. What is its mileage in mpg?', ans:'30'},
-  {q:'What is 30% of 250?', ans:'75'},
-  {q:'A price went from $40 to $50. What is the percent change (increase)?', ans:['25','25%']},
-  {q:'A jacket is 20% off $60. What is the sale price in dollars?', ans:'48'},
-  {q:'On a scale drawing, 1 in represents 4 ft. A wall is 3.5 in long on paper. How long in feet?', ans:'14'},
-  {q:'On a map, 1 cm represents 25 km. Two cities are 6 cm apart. How many km apart in real life?', ans:'150'},
-  {q:'Simplify: 3/4 + 1/2. (Write as a decimal or fraction.)', ans:['1.25','5/4','1 1/4']},
-  {q:'Compute: 2/3 × 9/10. Simplify.', ans:['3/5','.6','0.6']},
-  {q:'Is (2, 6) a solution to y = 3x? (Answer yes or no.)', ans:['yes','y']},
-  {q:'A proportional relationship passes through the origin (0, 0). True or false?', ans:['true','t']},
-  {q:'Solve: 3x = 21.', ans:'7'},
-  {q:'A recipe uses 2 cups of sugar for 24 cookies. How many cups for 60 cookies?', ans:'5'},
-  {q:'Convert 0.045 to a percent.', ans:['4.5%','4.5']}
+  {q:'Convert 4.2 km to millimeters.', ans:['4200000','4,200,000'], unit:'mm'},
+  {q:'Convert 250 mg to grams.', ans:['0.25','.25'], unit:'g'},
+  {q:'Convert 0.85 L to milliliters.', ans:'850', unit:'mL'},
+  {q:'Convert 7500 cm to kilometers.', ans:['0.075','.075'], unit:'km'},
+  {q:'Convert 2.5 kg to milligrams.', ans:['2500000','2,500,000'], unit:'mg'},
+  {q:'A student measured 48.5 g; actual mass is 50 g. What is the percent error?', ans:['3','3%'], unit:'%'},
+  {q:'A student measured a length as 25.5 cm; actual length is 25.0 cm. Percent error?', ans:['2','2%'], unit:'%'},
+  {q:'A student measured 0.98 g/mL for water; actual density is 1.00 g/mL. Percent error?', ans:['2','2%'], unit:'%'},
+  {q:'Compute: −11 + (−7).', ans:'-18'},
+  {q:'Compute: 15 − (−4).', ans:'19'},
+  {q:'Compute: (−6) × (−5).', ans:'30'},
+  {q:'Compute: (−48) ÷ 8.', ans:'-6'},
+  {q:'Simplify (order of ops): 3 − 5 · (−2).', ans:'13'},
+  {q:'Simplify: (−3)².', ans:'9'},
+  {q:'Simplify: −3².', ans:'-9'},
+  {q:'Write 65,400,000 in scientific notation.', ans:['6.54 × 10^7','6.54e7','6.54 x 10^7','6.54*10^7']},
+  {q:'Write 0.00043 in scientific notation.', ans:['4.3 × 10^-4','4.3e-4','4.3 x 10^-4','4.3*10^-4']},
+  {q:'Multiply: (2 × 10^3) × (3 × 10^4). Give in scientific notation.', ans:['6 × 10^7','6e7','6 x 10^7','6*10^7']},
+  {q:'Divide: (8 × 10^6) ÷ (2 × 10^2). Give in scientific notation.', ans:['4 × 10^4','4e4','4 x 10^4','4*10^4']},
+  {q:'Which is larger: 5 × 10^-3 or 2 × 10^-4?', ans:['5 × 10^-3','5e-3','5 x 10^-3','5*10^-3','0.005']}
 ];
 function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
 function renderQuestions(){const c=document.getElementById('questions');c.innerHTML='';QUESTIONS.forEach((q,i)=>{const card=document.createElement('div');card.className='q-card';card.id='q'+i;card.innerHTML=`<div class="q-text"><span class="q-num">${i+1}</span>${q.q}</div><div class="q-input"><input type="text" id="ans${i}" placeholder="Your answer">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div><div class="q-feedback" id="fb${i}"></div>`;c.appendChild(card);});}
@@ -105,7 +113,7 @@ function checkAll(){let correct=0;const results=[];QUESTIONS.forEach((q,i)=>{con
 function showScore(c,r){const pct=Math.round((c/QUESTIONS.length)*100);const b=document.getElementById('scoreBanner');let cls='score-banner',m;if(pct>=85){cls+=' excellent';m='🌟 Excellent work!';}else if(pct>=70)m="👍 Nice — you're on track.";else{cls+=' needs-work';m='📚 Review the topics you missed and try again.';}b.className=cls;b.innerHTML=`📊 <strong>Score: ${c} / ${QUESTIONS.length} (${pct}%)</strong> — ${m}`;}
 function resetAll(){QUESTIONS.forEach((q,i)=>{document.getElementById('ans'+i).value='';document.getElementById('q'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).innerHTML='';});document.getElementById('scoreBanner').innerHTML='';}
 function submitToTeacher(){const f=document.getElementById('fName').value.trim();const l=document.getElementById('lName').value.trim();const cl=document.getElementById('cls').value.trim();if(!f||!l){alert('Enter your first and last name.');return;}const {correct,results}=checkAll();const name=f+' '+l;let body=`Math 7 Mid-Quarter Test — Graded Submission\nName: ${name}\n`;if(cl)body+=`Class: ${cl}\n`;body+=`Score: ${correct}/20 (${Math.round(correct/20*100)}%)\n\nAnswers:\n`;results.forEach((r,i)=>{body+=`${i+1}. ${r.right?'✓':'✗'} Your answer: "${r.userAns}" | Correct: ${r.correctAns}\n`;});const subject=encodeURIComponent(`Math 7 Mid-Quarter Test — ${name}`);const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+subject+'&body='+encodeURIComponent(body);const w=window.open(gmailUrl,'_blank','noopener,noreferrer');if(!w)window.location.href=gmailUrl;}
-function applyMode(){const m=getMode();const e=document.getElementById('modeEyebrow');const b=document.getElementById('infoBanner');const n=document.getElementById('nameRow');const a=document.getElementById('actionRow');document.getElementById('modeP').classList.toggle('active',m==='practice');document.getElementById('modeG').classList.toggle('active',m==='graded');if(m==='graded'){e.className='eyebrow graded';e.textContent='Math 7 · Mid-Quarter Test · GRADED';b.className='info-banner graded';b.innerHTML='<strong>Graded mode:</strong> Enter your name, answer all 20 questions, then click <strong>Submit to Dr. Park</strong>. Your answers and score will be emailed for grading. Work carefully — this counts.';n.style.display='flex';a.innerHTML='<button class="btn btn-check" onclick="checkAll()">✓ Check My Work</button><button class="btn btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button><button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>';}}
+function applyMode(){const m=getMode();const e=document.getElementById('modeEyebrow');const b=document.getElementById('infoBanner');const n=document.getElementById('nameRow');const a=document.getElementById('actionRow');document.getElementById('modeP').classList.toggle('active',m==='practice');document.getElementById('modeG').classList.toggle('active',m==='graded');if(m==='graded'){e.className='eyebrow graded';e.textContent='Math 7 · Mid-Quarter Test · GRADED';b.className='info-banner graded';b.innerHTML='<strong>Graded mode:</strong> Enter your name, answer all 20 questions, then click <strong>Submit to Dr. Park</strong>. Your answers and score will be emailed for grading. Work carefully — this counts.';n.style.display='flex';a.innerHTML='<button class="btn btn-check" onclick="checkAll()">✓ Check My Work</button><button class="btn btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button><button class="btn btn-print" onclick="window.print()">🖨 Print</button><button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>';}}
 renderQuestions();applyMode();
 </script>
 </body>
