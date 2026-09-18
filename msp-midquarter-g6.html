@@ -232,6 +232,13 @@ function submitToTeacher(){
   }
 }
 
+
+function toggleFeedback(){
+  const hidden = document.body.classList.toggle('hide-feedback');
+  const btn = document.getElementById('toggleFbBtn');
+  if (btn) btn.textContent = hidden ? '👁 Show Answers' : '🙈 Hide Answers';
+}
+
 function applyMode(){
   const mode = getMode();
   const eyebrow = document.getElementById('modeEyebrow');
@@ -249,7 +256,7 @@ function applyMode(){
     banner.innerHTML = `<strong>Graded mode:</strong> Enter your name, answer all 15 questions, then click <strong>Submit to Dr. Park</strong>. Your answers and score will be emailed for grading. Work carefully — this counts.`;
     nameRow.style.display = 'flex';
     actionRow.innerHTML = `
-      <button class="btn btn-check" onclick="checkAll()">✓ Check My Work</button>
+      
       <button class="btn btn-submit" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
       <button class="btn btn-print" onclick="window.print()">🖨 Print</button>
       <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
