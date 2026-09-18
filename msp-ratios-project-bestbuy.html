@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Buy at the Store — Google Sheets Assignment</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root { --navy:#1a2a4a; --accent:#0284c7; --accent-deep:#0c4a6e; --gold:#b8860b; --dim:#64748b; --ink:#1f2937; --best:#059669; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#fef3c7 0%,#fed7aa 30%,#f5e6ff 100%); color:var(--ink); min-height:100vh; padding:20px 16px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:8px; }
+h1 { font-size:2.1rem; font-weight:900; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:1rem; font-style:italic; }
+main { display:flex; flex-direction:column; gap:18px; }
+section.card { background:#fff; border-radius:14px; padding:20px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); border-top:5px solid var(--accent); }
+section.card h2 { color:var(--accent-deep); font-size:1.3rem; font-weight:800; margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+section.card h3 { color:var(--navy); font-size:1.05rem; font-weight:800; margin:14px 0 8px; }
+section.card p { margin-bottom:10px; }
+section.card ul, section.card ol { margin:6px 0 10px 26px; }
+section.card li { margin:5px 0; }
+.hook { background:linear-gradient(120deg,#fef3c7,#fed7aa); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:10px 0; color:#78350f; }
+.hook strong { color:#78350f; }
+
+.step-num { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; background:var(--accent); color:#fff; border-radius:50%; font-weight:800; font-size:1.1rem; }
+
+.sheet-table { border-collapse:collapse; margin:10px 0; font-family:Consolas, monospace; font-size:.88rem; width:100%; }
+.sheet-table th, .sheet-table td { border:1px solid #94a3b8; padding:6px 10px; text-align:left; }
+.sheet-table th { background:#e0f2fe; color:#0c4a6e; font-weight:800; font-family:'Segoe UI', sans-serif; text-align:center; }
+.sheet-table td.cell { background:#f8fafc; font-weight:800; color:#0c4a6e; width:44px; text-align:center; }
+.sheet-table td.formula { background:#f0fdf4; color:#14532d; font-weight:700; }
+.sheet-table td.label { background:#fff; }
+.sheet-table td.input { background:#fef3c7; color:#78350f; font-weight:800; text-align:center; }
+.sheet-table td.best { background:#dcfce7; color:#065f46; font-weight:800; text-align:center; }
+.sheet-table caption { caption-side:top; font-weight:800; color:var(--navy); font-size:.95rem; padding:6px 0; text-align:left; }
+
+.formula-callout { background:#f0fdf4; border-left:5px solid #16a34a; padding:10px 14px; border-radius:6px; margin:10px 0; font-family:Consolas, monospace; color:#14532d; font-size:.98rem; font-weight:700; }
+.formula-callout strong { color:#14532d; }
+
+.tip { background:#ecfeff; border-left:5px solid var(--accent); padding:10px 14px; border-radius:6px; margin:10px 0; color:var(--accent-deep); font-size:.95rem; }
+.warning { background:#fef2f2; border-left:5px solid #dc2626; padding:10px 14px; border-radius:6px; margin:10px 0; color:#7f1d1d; font-size:.95rem; }
+.discuss { background:#faf5ff; border-left:5px solid #7c3aed; padding:12px 16px; border-radius:6px; margin:12px 0; color:#4c1d95; font-size:.95rem; }
+
+.rubric-table { border-collapse:collapse; width:100%; margin:10px 0; font-size:.95rem; }
+.rubric-table th, .rubric-table td { border:1.5px solid #94a3b8; padding:10px 12px; text-align:left; }
+.rubric-table th { background:var(--navy); color:#fff; font-weight:800; }
+.rubric-table td:last-child { text-align:center; font-weight:800; background:#fef3c7; }
+.rubric-table tr.total { background:#f0fdf4; font-weight:800; }
+.rubric-table tr.total td:last-child { background:#dcfce7; color:#14532d; }
+
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-7.html" class="back-link">← Back to Math 7</a>
+
+<header>
+  <div class="eyebrow">Math 7 · Ratios &amp; Unit Rates · Google Sheets Build</div>
+  <h1>🛒 Best Buy at the Store — Kalihi Edition</h1>
+  <p class="tagline">Turn Auntie Malia&apos;s Sunday potluck shopping list into a unit-price detective.</p>
+</header>
+
+<main>
+
+<!-- =========================================== -->
+<section class="card">
+<h2>🎯 The Assignment</h2>
+<div class="hook">
+  Auntie Malia is hosting her family&apos;s Sunday potluck in Kalihi. She has $80, a car, and three stores she can hit on the way home: <strong>Times Supermarket Kalihi</strong>, <strong>Don Quijote on Nimitz</strong>, and <strong>Costco Iwilei</strong>. Every store sells the same items — but in <em>different sizes</em> at <em>different prices</em>. Your job is to build a spreadsheet that figures out which package is the real <strong>best buy</strong>, and by how much.
+</div>
+<p>Your finished spreadsheet will:</p>
+<ul>
+  <li>✅ List <strong>9 shopping options</strong> across 3 items (Spam, rice, shoyu) and 3 stores</li>
+  <li>✅ Compute the <strong>unit price</strong> ($/oz or $/lb) for every option</li>
+  <li>✅ <strong>Star ★</strong> the best-buy option for each item automatically</li>
+  <li>✅ Show <strong>how much more expensive</strong> each non-winner is, in %</li>
+  <li>✅ Sort by unit price and chart the results</li>
+  <li>✅ Answer the real-life question at the bottom: <em>when is the best unit price NOT the best deal?</em></li>
+</ul>
+
+<div class="tip">
+  💡 <strong>The big idea:</strong> A unit price is a <strong>rate</strong> — dollars per one unit. That&apos;s exactly what this whole ratios &amp; rates unit is about. You&apos;re using division to reduce every option down to the same &quot;per one&quot; scale so you can actually compare them.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">1</span> Set Up Your Sheet</h2>
+<ol>
+  <li>Go to <strong>sheets.google.com</strong> and sign in with your school Gmail.</li>
+  <li>Click <strong>+ Blank spreadsheet</strong>.</li>
+  <li>Rename it: <strong>Best Buy Comparison — Kalihi</strong></li>
+  <li>In cell <strong>A1</strong>, type a big title: <strong>🛒 Auntie Malia&apos;s Sunday Potluck — Best Buy Finder</strong>. Format bold, font size 16.</li>
+</ol>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">2</span> Enter the Shopping Data</h2>
+<p>Enter these 9 rows exactly as shown. Each row is <em>one option</em> — the same item, in a specific size, at a specific store.</p>
+
+<table class="sheet-table">
+  <caption>Rows 3–12 in your sheet</caption>
+  <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+  <tr><td class="cell">3</td><td class="label"><strong>Item</strong></td><td class="label"><strong>Store</strong></td><td class="label"><strong>Size</strong></td><td class="label"><strong>Price ($)</strong></td></tr>
+  <tr><td class="cell">4</td><td class="label">Spam Classic</td><td class="label">Times Kalihi</td><td class="label">12 oz</td><td class="label">3.99</td></tr>
+  <tr><td class="cell">5</td><td class="label">Spam Classic</td><td class="label">Don Quijote</td><td class="label">25 oz</td><td class="label">6.99</td></tr>
+  <tr><td class="cell">6</td><td class="label">Spam Classic</td><td class="label">Costco Iwilei</td><td class="label">96 oz</td><td class="label">22.99</td></tr>
+  <tr><td class="cell">7</td><td class="label">Diamond G Rice</td><td class="label">Times Kalihi</td><td class="label">5 lb</td><td class="label">8.99</td></tr>
+  <tr><td class="cell">8</td><td class="label">Diamond G Rice</td><td class="label">Don Quijote</td><td class="label">10 lb</td><td class="label">16.50</td></tr>
+  <tr><td class="cell">9</td><td class="label">Diamond G Rice</td><td class="label">Costco Iwilei</td><td class="label">25 lb</td><td class="label">34.99</td></tr>
+  <tr><td class="cell">10</td><td class="label">Kikkoman Shoyu</td><td class="label">Times Kalihi</td><td class="label">10 oz</td><td class="label">2.99</td></tr>
+  <tr><td class="cell">11</td><td class="label">Kikkoman Shoyu</td><td class="label">Don Quijote</td><td class="label">20 oz</td><td class="label">5.49</td></tr>
+  <tr><td class="cell">12</td><td class="label">Kikkoman Shoyu</td><td class="label">Costco Iwilei</td><td class="label">40 oz</td><td class="label">9.99</td></tr>
+</table>
+
+<div class="tip">
+  💡 <strong>Number format</strong> Column D: Format → Number → Currency ($). Column C is a number for now — we&apos;ll add just a number in the next step so it can be used in a formula.
+</div>
+
+<h3>Split Column C into a number and a unit</h3>
+<p>Right now Column C has both the number and the unit (like &quot;12 oz&quot;). Formulas can&apos;t divide by &quot;12 oz&quot; — they need just <strong>12</strong>. Move the unit into its own column.</p>
+<ul>
+  <li>Change <strong>Column C header</strong> to <strong>Size (#)</strong> and re-enter just the numbers: 12, 25, 96, 5, 10, 25, 10, 20, 40.</li>
+  <li>Add a new <strong>Column D header</strong>: <strong>Unit</strong>. Enter: oz, oz, oz, lb, lb, lb, oz, oz, oz.</li>
+  <li>Shift the price to <strong>Column E</strong> with header <strong>Price ($)</strong>.</li>
+</ul>
+
+<div class="warning">
+  ⚠️ Notice: Spam and shoyu are in <strong>ounces (oz)</strong>. Rice is in <strong>pounds (lb)</strong>. That&apos;s fine — you never compare rice&apos;s $/lb to Spam&apos;s $/oz. You only compare within the SAME item.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">3</span> Write the Unit Price Formula</h2>
+<p>Now add <strong>Column F — Unit Price</strong>. This is the heart of the whole assignment. Unit price = <strong>price ÷ size</strong>. That&apos;s a rate: dollars per one unit.</p>
+
+<table class="sheet-table">
+  <caption>Add Column F</caption>
+  <tr><th></th><th>C (Size)</th><th>D (Unit)</th><th>E (Price)</th><th>F (Unit Price)</th></tr>
+  <tr><td class="cell">4</td><td class="label">12</td><td class="label">oz</td><td class="label">3.99</td><td class="formula">=E4/C4</td></tr>
+  <tr><td class="cell">5</td><td class="label">25</td><td class="label">oz</td><td class="label">6.99</td><td class="formula">=E5/C5</td></tr>
+  <tr><td class="cell">6</td><td class="label">96</td><td class="label">oz</td><td class="label">22.99</td><td class="formula">=E6/C6</td></tr>
+</table>
+
+<div class="formula-callout">
+  <strong>The unit price formula:</strong> &nbsp; =E4/C4<br>
+  🧠 <strong>What it means:</strong> price ÷ size = dollars per one unit<br>
+  For 12 oz Spam at $3.99: 3.99 ÷ 12 = <strong>$0.3325</strong> (per oz)<br>
+  For 25 oz Spam at $6.99: 6.99 ÷ 25 = <strong>$0.2796</strong> (per oz)<br>
+  For 96 oz Spam at $22.99: 22.99 ÷ 96 = <strong>$0.2395</strong> (per oz)
+</div>
+
+<h3>Fill it down</h3>
+<ol>
+  <li>Type <code>=E4/C4</code> in F4 and press Enter.</li>
+  <li>Click F4 again. Grab the little blue square at the bottom-right corner and drag down through F12.</li>
+  <li>Format F4:F12 as Currency with 4 decimal places (Format → Number → More Formats → Custom → <code>$0.0000</code>). Four decimals matter — the differences are pennies!</li>
+</ol>
+
+<div class="tip">
+  💬 <strong>Want the cell to actually SHOW &quot;/oz&quot; or &quot;/lb&quot; after the number?</strong> The plain formula just gives a number. You have two ways to add the unit label:
+  <ul style="margin:6px 0 0 20px;">
+    <li><strong>Option A — Custom number format:</strong> Format → Number → Custom → <code>$0.0000&quot;/oz&quot;</code>. The cell displays <em>$0.3325/oz</em> but the underlying value is still just the number, so the star formula in Step 4 still works. (Use two versions — one for oz rows, one for lb rows.)</li>
+    <li><strong>Option B — Concatenate the unit column:</strong> replace <code>=E4/C4</code> with <code>=TEXT(E4/C4,&quot;$0.0000&quot;) &amp; &quot;/&quot; &amp; D4</code>. Now the cell literally contains text like <em>$0.3325/oz</em>. Downside: it&apos;s no longer a number, so MINIFS in Step 4 won&apos;t work on it. Keep the number-only version in F for math and put the labeled text in a separate display column if you want both.</li>
+  </ul>
+</div>
+
+<div class="tip">
+  💡 <strong>Why divide?</strong> Because you want to know &quot;what does <em>ONE</em> unit cost.&quot; That&apos;s literally the definition of a <strong>unit rate</strong>. Every problem in this unit — miles per hour, cost per pound, students per teacher — is the same move: <em>quantity ÷ how many</em>.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">4</span> Star ★ the Best Buy (per Item)</h2>
+<p>Now the fun part. Add <strong>Column G — Best?</strong> A formula automatically marks the winner in each item group.</p>
+
+<div class="formula-callout">
+  G4: &nbsp; =IF(F4=MINIFS($F$4:$F$12, $A$4:$A$12, A4), &quot;★ BEST&quot;, &quot;&quot;)
+</div>
+
+<p><strong>Fill down through G12.</strong> The correct rows should light up automatically:</p>
+
+<table class="sheet-table">
+  <caption>What you should see</caption>
+  <tr><th>Row</th><th>Item</th><th>Store</th><th>Unit Price (Col F)</th><th>Best?</th></tr>
+  <tr><td class="cell">4</td><td class="label">Spam Classic</td><td class="label">Times Kalihi</td><td class="label">$0.3325</td><td class="label"></td></tr>
+  <tr><td class="cell">5</td><td class="label">Spam Classic</td><td class="label">Don Quijote</td><td class="label">$0.2796</td><td class="label"></td></tr>
+  <tr><td class="cell">6</td><td class="label">Spam Classic</td><td class="label">Costco Iwilei</td><td class="label">$0.2395</td><td class="best">★ BEST</td></tr>
+  <tr><td class="cell">7</td><td class="label">Diamond G Rice</td><td class="label">Times Kalihi</td><td class="label">$1.7980</td><td class="label"></td></tr>
+  <tr><td class="cell">8</td><td class="label">Diamond G Rice</td><td class="label">Don Quijote</td><td class="label">$1.6500</td><td class="label"></td></tr>
+  <tr><td class="cell">9</td><td class="label">Diamond G Rice</td><td class="label">Costco Iwilei</td><td class="label">$1.3996</td><td class="best">★ BEST</td></tr>
+  <tr><td class="cell">10</td><td class="label">Kikkoman Shoyu</td><td class="label">Times Kalihi</td><td class="label">$0.2990</td><td class="label"></td></tr>
+  <tr><td class="cell">11</td><td class="label">Kikkoman Shoyu</td><td class="label">Don Quijote</td><td class="label">$0.2745</td><td class="label"></td></tr>
+  <tr><td class="cell">12</td><td class="label">Kikkoman Shoyu</td><td class="label">Costco Iwilei</td><td class="label">$0.2498</td><td class="best">★ BEST</td></tr>
+</table>
+
+<div class="formula-callout">
+  <strong>What MINIFS does:</strong> finds the smallest number in one range, but only among rows where another range matches a condition.<br>
+  🧠 &quot;Give me the minimum of F4:F12, but only among rows where the Item column (A) equals the Item on this row.&quot;<br>
+  📌 That&apos;s why the star can jump to a different row for each item — Spam winner, rice winner, shoyu winner — all in one formula.
+</div>
+
+<div class="tip">
+  💡 <strong>Test it live:</strong> change the Costco Spam price (E6) to $30. Watch the star jump. Change it back — the star jumps back. That&apos;s a working <em>decision engine</em>.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">5</span> How Much Worse Is Each Non-Winner? (Column H)</h2>
+<p>Column H — <strong>% more expensive than best</strong>. This is where ratios come back in disguise.</p>
+
+<div class="formula-callout">
+  H4: &nbsp; =(F4 - MINIFS($F$4:$F$12, $A$4:$A$12, A4)) / MINIFS($F$4:$F$12, $A$4:$A$12, A4)
+</div>
+
+<p>Fill down. Format H4:H12 as a <strong>percentage with 1 decimal</strong> (Format → Number → Percent).</p>
+
+<div class="formula-callout">
+  <strong>What this is computing:</strong> <em>(this option − best option) ÷ best option</em><br>
+  🧠 That&apos;s the classic <strong>percent change</strong> formula. In this class, we&apos;ve been calling it &quot;how much bigger, as a ratio to the original.&quot;<br>
+  Times Kalihi Spam: (0.3325 − 0.2395) ÷ 0.2395 = <strong>0.388 = 38.8% more expensive per ounce</strong>.<br>
+  Don Quijote Spam: (0.2796 − 0.2395) ÷ 0.2395 = <strong>16.7% more expensive</strong>.<br>
+  Costco Spam: (0.2395 − 0.2395) ÷ 0.2395 = <strong>0% — it IS the best.</strong>
+</div>
+
+<div class="tip">
+  💡 <strong>This is why unit price matters:</strong> the $3.99 Spam and the $22.99 Spam look completely different in price. But <em>per ounce</em> the small can costs almost 40% more.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">6</span> Sort &amp; Chart</h2>
+<h3>Sort each item group cheapest → most expensive</h3>
+<ol>
+  <li>Select rows 4 through 12 (all data).</li>
+  <li>Data → Sort range → check <em>Data has header row</em> off.</li>
+  <li>Sort first by Column A (Item) A→Z, then by Column F (Unit Price) smallest → largest.</li>
+  <li>The BEST row for each item is now on top of its group.</li>
+</ol>
+
+<h3>Add a bar chart of unit prices</h3>
+<ol>
+  <li>Select columns A, B, and F (Item, Store, Unit Price). Use Ctrl/Cmd-click to select non-adjacent columns.</li>
+  <li>Insert → Chart → Column chart.</li>
+  <li>Title: <strong>Unit Prices — Auntie Malia&apos;s Shopping List</strong>.</li>
+</ol>
+
+<div class="tip">
+  🎨 Look at your chart. The bar for the <strong>same item</strong> gets shorter as the package gets bigger. That&apos;s the <em>economies of scale</em> pattern in one picture.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2><span class="step-num">7</span> Test Your Calculator</h2>
+<p>Change these values and confirm your sheet reacts the way you&apos;d expect.</p>
+
+<table class="rubric-table">
+  <tr><th>Test change</th><th>What should happen</th></tr>
+  <tr><td>Change Costco Spam (E6) from $22.99 to $30.00</td><td>Star jumps from Costco Spam row to Don Quijote Spam row</td></tr>
+  <tr><td>Change Times Kalihi shoyu (E10) from $2.99 to $2.00</td><td>Star jumps from Costco shoyu to Times Kalihi shoyu</td></tr>
+  <tr><td>Change Costco rice size (C9) from 25 to 100</td><td>Costco rice unit price drops, its % more expensive stays 0</td></tr>
+  <tr><td>Reset everything back to the original values</td><td>Stars return to all three Costco rows</td></tr>
+</table>
+
+<div class="warning">
+  ⚠️ If a star doesn&apos;t move when you change a price, check that your G-column formulas use <strong>$A$4:$A$12</strong> and <strong>$F$4:$F$12</strong> with dollar signs so the ranges stay locked when you dragged the formula down.
+</div>
+</section>
+
+<!-- =========================================== -->
+<section class="card">
+<h2>🤔 The Real-Life Question</h2>
+<div class="discuss">
+  <strong>Costco wins every single item.</strong> So Auntie Malia should just shop entirely at Costco… right?<br><br>
+  Actually, most people in Kalihi don&apos;t. Why not?
+</div>
+<p>Answer each of these in a Google Doc or on paper. These are the times when the best unit price is <em>not</em> the best deal:</p>
+<ol>
+  <li>Auntie Malia&apos;s family is 6 people. Costco Spam is a 96 oz pack. If they only eat Spam twice a month, how long before that pack goes bad? Is 96 oz really a &quot;best buy&quot; for her?</li>
+  <li>Costco requires a <strong>$65/year membership</strong>. If Auntie Malia would save $8/month by shopping there, is it worth it? Show your math.</li>
+  <li>Times Kalihi is <strong>4 minutes</strong> from her house. Costco Iwilei is <strong>25 minutes</strong> plus parking. Gas costs about $0.60/mile and each Costco round-trip is 12 miles. What does the &quot;convenience discount&quot; of Times need to be, per shopping trip, to break even?</li>
+  <li>Auntie Malia has $80 today. The big Costco rice (25 lb) alone is $34.99. If she buys the biggest of every item — Spam $22.99, rice $34.99, shoyu $9.99 — she spends $67.97 and has $12 left for everything else. Is the &quot;cheapest per ounce&quot; the same as the &quot;cheapest today&quot;? Explain.</li>
+</ol>
+
+<div class="tip">
+  💡 <strong>Big takeaway:</strong> unit price is <em>the</em> way to compare across sizes fairly. But real decisions also weigh <strong>storage, freshness, upfront cash, and travel cost</strong>. A rate is a powerful tool — not the whole story.
+</div>
+</section>
+
+<!-- =========================================== -->
+<!-- Costco Trip Calculator -->
+<section class="card">
+<h2>🧮 Costco Trip Calculator</h2>
+<p>Play with the numbers below. When you change any input, the outputs update instantly — no formulas to write. Use this to answer the questions above.</p>
+
+<style>
+.calc-panel { background:#f8fafc; border:2px solid #cbd5e1; border-radius:12px; padding:16px 18px; margin:14px 0; }
+.calc-panel h3 { color:#0c4a6e; margin-bottom:12px; font-size:1.1rem; font-weight:800; display:flex; align-items:center; gap:8px; }
+.calc-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; }
+.calc-input { display:flex; flex-direction:column; gap:4px; }
+.calc-input label { font-size:.88rem; color:#334155; font-weight:700; }
+.calc-input input { padding:8px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:1rem; background:#fef3c7; color:#78350f; font-weight:800; }
+.calc-input input:focus { outline:2px solid #0284c7; border-color:#0284c7; }
+.calc-out-block { background:#fff; border-radius:8px; padding:12px 14px; margin-top:14px; border-left:5px solid #0284c7; }
+.calc-out-row { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed #e2e8f0; font-size:.94rem; }
+.calc-out-row:last-child { border-bottom:none; }
+.calc-out-row .lbl { color:#475569; }
+.calc-out-row .val { font-family:Consolas,monospace; font-weight:800; color:#0c4a6e; }
+.calc-net { margin-top:10px; padding:10px 14px; border-radius:8px; font-size:1.05rem; font-weight:800; text-align:center; }
+.calc-net.good { background:#d1fae5; color:#065f46; border:2px solid #059669; }
+.calc-net.bad { background:#fee2e2; color:#7f1d1d; border:2px solid #dc2626; }
+.calc-net.neutral { background:#fef3c7; color:#78350f; border:2px solid #b8860b; }
+@media (max-width:640px) { .calc-grid { grid-template-columns:1fr; } }
+</style>
+
+<!-- Panel 1: Trip cost -->
+<div class="calc-panel">
+<h3>Panel 1 · Is the Trip Worth It? <span style="font-weight:400;color:#64748b;font-size:.85rem;">(Questions 2 &amp; 3)</span></h3>
+<div class="calc-grid">
+  <div class="calc-input">
+    <label for="c1_save">Grocery savings this trip ($)</label>
+    <input type="number" id="c1_save" value="15" step="0.5" min="0">
+  </div>
+  <div class="calc-input">
+    <label for="c1_miles">Round-trip miles</label>
+    <input type="number" id="c1_miles" value="12" step="1" min="0">
+  </div>
+  <div class="calc-input">
+    <label for="c1_gpm">Gas cost per mile ($)</label>
+    <input type="number" id="c1_gpm" value="0.60" step="0.05" min="0">
+  </div>
+  <div class="calc-input">
+    <label for="c1_fee">Costco membership per year ($)</label>
+    <input type="number" id="c1_fee" value="65" step="5" min="0">
+  </div>
+  <div class="calc-input">
+    <label for="c1_trips">Costco trips per year</label>
+    <input type="number" id="c1_trips" value="12" step="1" min="1">
+  </div>
+</div>
+
+<div class="calc-out-block">
+  <div class="calc-out-row"><span class="lbl">Gas cost this trip = miles × $/mile</span><span class="val" id="c1_gas">$7.20</span></div>
+  <div class="calc-out-row"><span class="lbl">Membership share this trip = fee ÷ trips</span><span class="val" id="c1_mem">$5.42</span></div>
+  <div class="calc-out-row"><span class="lbl">Total extra cost of shopping at Costco</span><span class="val" id="c1_cost">$12.62</span></div>
+  <div class="calc-out-row"><span class="lbl">Grocery savings</span><span class="val" id="c1_savef">$15.00</span></div>
+</div>
+<div class="calc-net good" id="c1_net">✅ Net savings this trip: +$2.38 — Worth it</div>
+
+<div class="tip" style="margin-top:12px;">
+  💡 <strong>Try this:</strong> drop &quot;Costco trips per year&quot; from 12 down to 4. Watch the verdict flip. That&apos;s the break-even. Then set trips back to 12 and drop grocery savings from $15 to $8. It flips again. Same math — <em>net = savings − gas − membership share</em>.
+</div>
+</div>
+
+<!-- Panel 2: Spoilage -->
+<div class="calc-panel">
+<h3>Panel 2 · Will It Go Bad First? <span style="font-weight:400;color:#64748b;font-size:.85rem;">(Question 1)</span></h3>
+<div class="calc-grid">
+  <div class="calc-input">
+    <label for="c2_pack">Pack size (oz)</label>
+    <input type="number" id="c2_pack" value="96" step="1" min="0">
+  </div>
+  <div class="calc-input">
+    <label for="c2_price">Pack price ($)</label>
+    <input type="number" id="c2_price" value="22.99" step="0.5" min="0">
+  </div>
+  <div class="calc-input">
+    <label for="c2_use">Family use per week (oz)</label>
+    <input type="number" id="c2_use" value="6" step="1" min="0">
+  </div>
+  <div class="calc-input">
+    <label for="c2_life">Shelf life (weeks)</label>
+    <input type="number" id="c2_life" value="8" step="1" min="1">
+  </div>
+</div>
+
+<div class="calc-out-block">
+  <div class="calc-out-row"><span class="lbl">Sticker unit price = price ÷ size</span><span class="val" id="c2_sticker">$0.2395/oz</span></div>
+  <div class="calc-out-row"><span class="lbl">Weeks to finish the pack</span><span class="val" id="c2_weeks">16.0 weeks</span></div>
+  <div class="calc-out-row"><span class="lbl">Ounces you&apos;ll actually use before it expires</span><span class="val" id="c2_used">48 oz</span></div>
+  <div class="calc-out-row"><span class="lbl">Ounces wasted (thrown out)</span><span class="val" id="c2_waste">48 oz</span></div>
+</div>
+<div class="calc-net bad" id="c2_net">🗑️ Real unit price = $0.4790/oz — DOUBLE the sticker price after waste</div>
+
+<div class="tip" style="margin-top:12px;">
+  💡 <strong>Try this:</strong> a family of 6 eating Spam twice a month uses about <strong>6 oz/week</strong> (a can is 12 oz). Change &quot;shelf life&quot; to 52 weeks (unopened Spam lasts years) — waste drops to 0 and the real price matches the sticker. But once opened, Spam only keeps for ~1 week refrigerated. That&apos;s the freshness trap.
+</div>
+</div>
+
+<script>
+function fmtMoney(n){ return '$' + n.toFixed(2); }
+function fmtMoneyPerOz(n){ return '$' + n.toFixed(4) + '/oz'; }
+function updateCalc1(){
+  const save = parseFloat(document.getElementById('c1_save').value)||0;
+  const miles = parseFloat(document.getElementById('c1_miles').value)||0;
+  const gpm = parseFloat(document.getElementById('c1_gpm').value)||0;
+  const fee = parseFloat(document.getElementById('c1_fee').value)||0;
+  const trips = parseFloat(document.getElementById('c1_trips').value)||1;
+  const gas = miles * gpm;
+  const mem = fee / trips;
+  const cost = gas + mem;
+  const net = save - cost;
+  document.getElementById('c1_gas').textContent = fmtMoney(gas);
+  document.getElementById('c1_mem').textContent = fmtMoney(mem);
+  document.getElementById('c1_cost').textContent = fmtMoney(cost);
+  document.getElementById('c1_savef').textContent = fmtMoney(save);
+  const netEl = document.getElementById('c1_net');
+  netEl.classList.remove('good','bad','neutral');
+  if (Math.abs(net) < 0.50) {
+    netEl.classList.add('neutral');
+    netEl.textContent = '⚖️ Net this trip: ' + (net>=0?'+':'') + fmtMoney(net) + ' — Break-even (basically the same)';
+  } else if (net > 0) {
+    netEl.classList.add('good');
+    netEl.textContent = '✅ Net savings this trip: +' + fmtMoney(net) + ' — Worth it';
+  } else {
+    netEl.classList.add('bad');
+    netEl.textContent = '❌ Net LOSS this trip: ' + fmtMoney(net) + ' — Not worth the drive';
+  }
+}
+function updateCalc2(){
+  const pack = parseFloat(document.getElementById('c2_pack').value)||0;
+  const price = parseFloat(document.getElementById('c2_price').value)||0;
+  const use = parseFloat(document.getElementById('c2_use').value)||0;
+  const life = parseFloat(document.getElementById('c2_life').value)||1;
+  const sticker = pack > 0 ? price / pack : 0;
+  const weeksToFinish = use > 0 ? pack / use : Infinity;
+  const usedOz = Math.min(use * life, pack);
+  const wasteOz = Math.max(0, pack - usedOz);
+  const realPrice = usedOz > 0 ? price / usedOz : 0;
+  document.getElementById('c2_sticker').textContent = fmtMoneyPerOz(sticker);
+  document.getElementById('c2_weeks').textContent = (isFinite(weeksToFinish) ? weeksToFinish.toFixed(1) : '∞') + ' weeks';
+  document.getElementById('c2_used').textContent = usedOz.toFixed(0) + ' oz';
+  document.getElementById('c2_waste').textContent = wasteOz.toFixed(0) + ' oz';
+  const netEl = document.getElementById('c2_net');
+  netEl.classList.remove('good','bad','neutral');
+  if (wasteOz === 0) {
+    netEl.classList.add('good');
+    netEl.textContent = '🎯 You&#39;ll finish it in time — real price matches sticker: ' + fmtMoneyPerOz(sticker);
+  } else if (wasteOz / pack < 0.15) {
+    netEl.classList.add('neutral');
+    netEl.textContent = '⚠️ Some waste. Real price per USABLE oz = ' + fmtMoneyPerOz(realPrice);
+  } else {
+    netEl.classList.add('bad');
+    const mult = sticker > 0 ? (realPrice / sticker) : 0;
+    netEl.textContent = '🗑️ Real unit price = ' + fmtMoneyPerOz(realPrice) + ' — ' + mult.toFixed(1) + '× the sticker price after waste';
+  }
+}
+['c1_save','c1_miles','c1_gpm','c1_fee','c1_trips'].forEach(id => document.getElementById(id).addEventListener('input', updateCalc1));
+['c2_pack','c2_price','c2_use','c2_life'].forEach(id => document.getElementById(id).addEventListener('input', updateCalc2));
+updateCalc1(); updateCalc2();
+</script>
+</section>
+
+</main>
+
+<footer>
+  Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Google Sheets Ratios &amp; Rates Assignment
+</footer>
+</div>
+
+</body>
+</html>
