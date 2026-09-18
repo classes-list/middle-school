@@ -86,7 +86,8 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <footer>Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Mid-Quarter Test</footer>
 </div>
 <script>
-const QUESTIONS = [
+function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
+const QUESTIONS_P = [
   {q:'Convert 4.2 km to millimeters.', ans:['4200000','4,200,000'], unit:'mm'},
   {q:'Convert 250 mg to grams.', ans:['0.25','.25'], unit:'g'},
   {q:'Convert 0.85 L to milliliters.', ans:'850', unit:'mL'},
@@ -103,9 +104,11 @@ const QUESTIONS = [
   {q:'Compute: −8 − 6.', ans:'-14'},
   {q:'Compute: 12 · (−3).', ans:'-36'}
 ];
+const QUESTIONS_G = [{"q": "Convert 5.6 km to millimeters.", "ans": ["5600000", "5,600,000"], "unit": "mm"}, {"q": "Convert 320 mg to grams.", "ans": ["0.32", ".32"], "unit": "g"}, {"q": "Convert 1.6 L to milliliters.", "ans": "1600", "unit": "mL"}, {"q": "Convert 4500 cm to kilometers.", "ans": ["0.045", ".045"], "unit": "km"}, {"q": "Convert 3.2 kg to milligrams.", "ans": ["3200000", "3,200,000"], "unit": "mg"}, {"q": "A student measured 76 g; actual mass is 80 g. What is the percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "A student measured a length as 18.9 cm; actual length is 18.0 cm. Percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "A student measured 1.02 g/mL for a solution; actual density is 1.00 g/mL. Percent error?", "ans": ["2", "2%"], "unit": "%"}, {"q": "Compute: −8 + (−14).", "ans": "-22"}, {"q": "Compute: 20 − (−6).", "ans": "26"}, {"q": "Compute: (−7) × (−6).", "ans": "42"}, {"q": "Compute: (−54) ÷ 9.", "ans": "-6"}, {"q": "Simplify (order of ops): 5 − 3 · (−4).", "ans": "17"}, {"q": "Compute: −5 − 11.", "ans": "-16"}, {"q": "Compute: 8 · (−5).", "ans": "-40"}];
+const QUESTIONS = getMode()==='graded' ? QUESTIONS_G : QUESTIONS_P;
 function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
 function renderQuestions(){const c=document.getElementById('questions');c.innerHTML='';QUESTIONS.forEach((q,i)=>{const card=document.createElement('div');card.className='q-card';card.id='q'+i;card.innerHTML=`<div class="q-text"><span class="q-num">${i+1}</span>${q.q}</div><div class="q-input"><input type="text" id="ans${i}" placeholder="Your answer">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div><div class="q-feedback" id="fb${i}"></div>`;c.appendChild(card);});}
-function normalize(s){return String(s||'').trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'x');}
+function normalize(s){s=String(s||'').trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'x').replace(/·/g,'*');s=s.replace(/(\d)(mm|cm|km|kg|mg|ml|mph|mpg|hrs|hr|min|sec|kwh|wh|hz|au|nm|ft|in|yd|mi|lb|oz|gal|qt|pt|g\/ml|m\/s|%|°c|°f|°|g|m|l|s|w|a|v)$/i,'$1');return s;}
 function isCorrect(u,e){const un=normalize(u);if(!un)return false;const ans=Array.isArray(e)?e:[e];return ans.some(a=>normalize(a)===un);}
 function checkAll(){let correct=0;const results=[];QUESTIONS.forEach((q,i)=>{const u=document.getElementById('ans'+i).value;const card=document.getElementById('q'+i);const fb=document.getElementById('fb'+i);card.classList.remove('correct','wrong');fb.classList.remove('correct','wrong');fb.innerHTML='';if(!u.trim()){results.push({q:q.q,userAns:'',correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans,right:false});return;}const r=isCorrect(u,q.ans);if(r){card.classList.add('correct');fb.classList.add('correct');fb.innerHTML='✓ Correct!';correct++;}else{card.classList.add('wrong');fb.classList.add('wrong');const at=Array.isArray(q.ans)?q.ans[0]:q.ans;fb.innerHTML=getMode()==='practice'?`✗ Not quite. Correct: <strong>${at}</strong>`:'✗ Incorrect.';}results.push({q:q.q,userAns:u,correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans,right:r});});showScore(correct);return {correct,results};}
 function showScore(c,r){const pct=Math.round((c/QUESTIONS.length)*100);const b=document.getElementById('scoreBanner');let cls='score-banner',m;if(pct>=85){cls+=' excellent';m='🌟 Excellent work!';}else if(pct>=70)m="👍 Nice — you're on track.";else{cls+=' needs-work';m='📚 Review the topics you missed and try again.';}b.className=cls;b.innerHTML=`📊 <strong>Score: ${c} / ${QUESTIONS.length} (${pct}%)</strong> — ${m}`;}

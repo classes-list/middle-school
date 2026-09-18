@@ -99,7 +99,8 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 </div>
 
 <script>
-const QUESTIONS = [
+function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
+const QUESTIONS_P = [
   {q:'Convert 5.2 km to meters.', ans:'5200', unit:'m'},
   {q:'Convert 250 g to kilograms.', ans:['0.25','.25'], unit:'kg'},
   {q:'Convert 3.5 L to milliliters.', ans:'3500', unit:'mL'},
@@ -116,6 +117,8 @@ const QUESTIONS = [
   {q:'Which is larger: −5 or −8?', ans:['-5','−5']},
   {q:'What is |−15| (absolute value of −15)?', ans:'15'}
 ];
+const QUESTIONS_G = [{"q": "Convert 4.5 km to meters.", "ans": "4500", "unit": "m"}, {"q": "Convert 350 g to kilograms.", "ans": ["0.35", ".35"], "unit": "kg"}, {"q": "Convert 2.4 L to milliliters.", "ans": "2400", "unit": "mL"}, {"q": "Convert 2100 mm to centimeters.", "ans": "210", "unit": "cm"}, {"q": "Convert 0.045 kg to grams.", "ans": "45", "unit": "g"}, {"q": "The actual mass of an object is 40 g. A student measured 42 g. What is the percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "The actual density of a liquid is 2.00 g/mL. A student measured 2.10 g/mL. Percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "A student measured a length as 9.9 cm; actual length is 10.0 cm. Percent error?", "ans": ["1", "1%"], "unit": "%"}, {"q": "Evaluate: −6 + 9.", "ans": "3"}, {"q": "Evaluate: −4 − (−8).", "ans": "4"}, {"q": "Evaluate: (−7) × 3.", "ans": "-21"}, {"q": "Evaluate: (−48) ÷ (−6).", "ans": "8"}, {"q": "Simplify: −(−15).", "ans": "15"}, {"q": "Which is smaller: −4 or −9?", "ans": ["-9", "−9"]}, {"q": "What is |−22| (absolute value of −22)?", "ans": "22"}];
+const QUESTIONS = getMode()==='graded' ? QUESTIONS_G : QUESTIONS_P;
 
 function getMode(){
   const p = new URLSearchParams(window.location.search);
@@ -141,9 +144,7 @@ function renderQuestions(){
   });
 }
 
-function normalize(s){
-  return String(s||'').trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'x');
-}
+function normalize(s){s=String(s||'').trim().toLowerCase().replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/−/g,'-').replace(/×/g,'x').replace(/·/g,'*');s=s.replace(/(\d)(mm|cm|km|kg|mg|ml|mph|mpg|hrs|hr|min|sec|kwh|wh|hz|au|nm|ft|in|yd|mi|lb|oz|gal|qt|pt|g\/ml|m\/s|%|°c|°f|°|g|m|l|s|w|a|v)$/i,'$1');return s;}
 
 function isCorrect(userInput, expectedAns){
   const u = normalize(userInput);
