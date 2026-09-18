@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Richter Scale & Powers of 10 — Visual Explorer</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Tahoma,sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; background:#f8fafc; padding:16px; border:1px solid #cbd5e1; border-radius:8px; margin:14px 0; }
+@media (max-width:640px) { .controls { grid-template-columns:1fr; } }
+.controls label { font-weight:700; color:var(--navy); display:flex; flex-direction:column; gap:4px; font-size:.92rem; }
+.controls input[type=range] { width:100%; }
+.controls .val { font-family:Consolas,monospace; color:#0c4a6e; font-weight:800; font-size:1.15rem; }
+.wave-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:14px 0; }
+@media (max-width:640px) { .wave-row { grid-template-columns:1fr; } }
+.wave-card { background:#f8fafc; border:2px solid #cbd5e1; border-radius:10px; padding:12px; text-align:center; }
+.wave-card.red { border-color:var(--red); background:#fef2f2; }
+.wave-card.blue { border-color:var(--blue); background:#f0f9ff; }
+.wave-card h3 { font-size:1rem; color:var(--navy); margin-bottom:8px; font-weight:800; }
+.wave-card svg { background:#fff; border-radius:6px; width:100%; height:120px; }
+.wave-card .mag { font-size:1.5rem; font-weight:900; margin-top:8px; }
+.wave-card.red .mag { color:var(--red); }
+.wave-card.blue .mag { color:var(--blue); }
+.compare-box { background:linear-gradient(135deg,#f0f9ff,#dbeafe); border:2px solid var(--blue); border-radius:12px; padding:18px 22px; margin:16px 0; text-align:center; }
+.compare-box .label { font-size:.85rem; font-weight:800; color:var(--blue); text-transform:uppercase; letter-spacing:.06em; }
+.compare-box .val { font-size:1.4rem; font-weight:900; color:var(--navy); margin-top:6px; }
+.compare-box .expand { font-size:.9rem; color:#334155; margin-top:6px; font-family:Consolas,monospace; }
+.ladder { display:flex; flex-direction:column; gap:4px; margin:14px 0; }
+.rung { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:6px; font-size:.9rem; background:#f8fafc; border-left:5px solid var(--blue); }
+.rung .m { font-weight:900; color:var(--navy); width:70px; }
+.rung .desc { color:#334155; }
+.rung.big { background:#fee2e2; border-left-color:var(--red); }
+.rung.med { background:#fef3c7; border-left-color:var(--gold); }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Q3 · Earth Science Math · Visual Explorer</div>
+  <h1>📉 Richter Scale &amp; Powers of 10</h1>
+  <p class="tagline">Compare two earthquakes. Watch the shaking multiply by 10, 100, or 1,000×.</p>
+</header>
+
+<div class="big-idea">
+  <strong>Big idea:</strong> Each step up the Richter scale multiplies ground motion by <strong>10</strong>. A magnitude 6 shakes 10× harder than a magnitude 5. A magnitude 7 shakes 100× harder. A magnitude 8 shakes 1,000×. This is a <em>logarithmic</em> scale — small differences in the number mean enormous differences in reality.
+</div>
+
+<div class="card">
+<h2>Pick Two Earthquakes</h2>
+<div class="controls">
+  <label style="color:var(--red);">Earthquake A magnitude: <span class="val" id="aVal" style="color:var(--red);">4.0</span><input type="range" id="magA" min="1" max="9" step="0.1" value="4"></label>
+  <label style="color:var(--blue);">Earthquake B magnitude: <span class="val" id="bVal" style="color:var(--blue);">7.0</span><input type="range" id="magB" min="1" max="9" step="0.1" value="7"></label>
+</div>
+
+<div class="wave-row">
+  <div class="wave-card red">
+    <h3>Earthquake A</h3>
+    <svg id="waveA" viewBox="0 0 300 120" preserveAspectRatio="none"><path id="pathA" fill="none" stroke="#dc2626" stroke-width="1.6"/></svg>
+    <div class="mag" id="magALbl">M 4.0</div>
+    <div style="font-size:.85rem; color:#7f1d1d; margin-top:4px;" id="descA">Felt indoors, no damage</div>
+  </div>
+  <div class="wave-card blue">
+    <h3>Earthquake B</h3>
+    <svg id="waveB" viewBox="0 0 300 120" preserveAspectRatio="none"><path id="pathB" fill="none" stroke="#0369a1" stroke-width="1.6"/></svg>
+    <div class="mag" id="magBLbl">M 7.0</div>
+    <div style="font-size:.85rem; color:#0c4a6e; margin-top:4px;" id="descB">Major, serious damage</div>
+  </div>
+</div>
+
+<div class="compare-box">
+  <div class="label">B shakes how many times harder than A?</div>
+  <div class="val" id="amplitudeRatio">1,000× stronger ground motion</div>
+  <div class="expand" id="expandCalc">10^(7 − 4) = 10^3 = 1,000</div>
+</div>
+
+<div class="compare-box" style="background:linear-gradient(135deg,#fef3c7,#fde68a); border-color:var(--gold);">
+  <div class="label" style="color:#78350f;">B releases how much more ENERGY than A?</div>
+  <div class="val" id="energyRatio" style="color:#78350f;">31,623× more energy</div>
+  <div class="expand" id="energyCalc" style="color:#78350f;">Each magnitude step ≈ 32× more energy → 32^3 ≈ 31,623×</div>
+</div>
+
+<div class="tip">
+  💡 <strong>Two ratios, not one:</strong> ground motion multiplies by 10 per step, but the <em>energy released</em> multiplies by roughly 32 per step. That&apos;s why a M9 is not just &quot;a little worse than a M8&quot; — it releases about 32× more energy.
+</div>
+</div>
+
+<div class="card">
+<h2>🌏 The Richter Ladder</h2>
+<div class="ladder">
+  <div class="rung"><div class="m">M 1–2</div><div class="desc">Micro — barely detectable, only instruments notice</div></div>
+  <div class="rung"><div class="m">M 3</div><div class="desc">Minor — light rattling of dishes</div></div>
+  <div class="rung med"><div class="m">M 4</div><div class="desc">Light — felt indoors, ceiling fans sway</div></div>
+  <div class="rung med"><div class="m">M 5</div><div class="desc">Moderate — cracked plaster, small objects fall (typical for Hawaii tremors)</div></div>
+  <div class="rung big"><div class="m">M 6</div><div class="desc">Strong — significant damage in populated areas</div></div>
+  <div class="rung big"><div class="m">M 7</div><div class="desc">Major — serious damage over large areas (2018 Kīlauea M 6.9)</div></div>
+  <div class="rung big"><div class="m">M 8</div><div class="desc">Great — catastrophic destruction (1946 Aleutian tsunami reached Hawaii)</div></div>
+  <div class="rung big"><div class="m">M 9+</div><div class="desc">Devastating — Sumatra 2004 (M 9.1), Japan 2011 (M 9.1)</div></div>
+</div>
+</div>
+
+<div class="card">
+<h2>🧮 The Math Underneath</h2>
+<p>The Richter scale uses <strong>powers of 10</strong>. If Earthquake A is magnitude <em>m<sub>A</sub></em> and Earthquake B is magnitude <em>m<sub>B</sub></em>, then:</p>
+<p style="text-align:center; margin:14px 0; font-size:1.05rem; font-family:Consolas,monospace; background:#f0fdf4; padding:12px; border-radius:8px; color:#14532d; font-weight:800;">amplitude ratio = 10^(m<sub>B</sub> − m<sub>A</sub>)</p>
+<ul style="margin:8px 0 8px 24px;">
+  <li>1 magnitude apart → 10× more ground motion</li>
+  <li>2 magnitudes apart → 10² = 100× more</li>
+  <li>3 magnitudes apart → 10³ = 1,000× more</li>
+</ul>
+<p>Powers of 10 are exactly the same math as the KHDUdcm staircase in metric conversions — each step means <em>multiply by 10</em>. Once you get the pattern, both feel natural.</p>
+</div>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Richter Scale Visual Explorer</footer>
+</div>
+
+<script>
+const magA = document.getElementById('magA');
+const magB = document.getElementById('magB');
+const pathA = document.getElementById('pathA');
+const pathB = document.getElementById('pathB');
+
+const descriptions = {
+  1:'Micro — imperceptible', 2:'Micro — barely detectable',
+  3:'Minor — light rattling', 4:'Light — felt indoors',
+  5:'Moderate — small damage', 6:'Strong — serious damage',
+  7:'Major — widespread damage', 8:'Great — catastrophic',
+  9:'Devastating — historic'
+};
+
+function buildWave(pathEl, amp){
+  // waveform across viewBox 0..300, centered at y=60
+  // amp is ground-motion amplitude relative to a M1 baseline
+  // display amp is normalized: log-scale to fit in the 0..55 pixel range
+  const displayAmp = Math.min(55, 6 * Math.log10(amp + 1)); // gentle log squish
+  const cycles = 6;
+  let d = 'M 0 60';
+  for (let x = 0; x <= 300; x += 2){
+    const t = x / 300;
+    const decay = 1 - Math.abs(t - 0.5) * 1.4;
+    const y = 60 - displayAmp * Math.max(0, decay) * Math.sin(cycles * Math.PI * 2 * t) * (1 - t*0.1);
+    d += ` L ${x} ${y.toFixed(2)}`;
+  }
+  pathEl.setAttribute('d', d);
+}
+
+function update(){
+  const a = parseFloat(magA.value);
+  const b = parseFloat(magB.value);
+  document.getElementById('aVal').textContent = a.toFixed(1);
+  document.getElementById('bVal').textContent = b.toFixed(1);
+  document.getElementById('magALbl').textContent = 'M ' + a.toFixed(1);
+  document.getElementById('magBLbl').textContent = 'M ' + b.toFixed(1);
+  document.getElementById('descA').textContent = descriptions[Math.floor(a)] || '';
+  document.getElementById('descB').textContent = descriptions[Math.floor(b)] || '';
+
+  // amplitudes in a made-up unit
+  const ampA = Math.pow(10, a);
+  const ampB = Math.pow(10, b);
+  buildWave(pathA, ampA);
+  buildWave(pathB, ampB);
+
+  const diff = b - a;
+  const absDiff = Math.abs(diff);
+  const ampRatio = Math.pow(10, absDiff);
+  const enRatio = Math.pow(32, absDiff);
+
+  const direction = diff >= 0 ? 'B' : 'A';
+  const other = diff >= 0 ? 'A' : 'B';
+  document.getElementById('amplitudeRatio').textContent = ampRatio < 10 ? ampRatio.toFixed(2) + '× stronger' : Math.round(ampRatio).toLocaleString() + '× stronger ground motion';
+  document.getElementById('expandCalc').textContent = '10^(' + Math.max(a,b).toFixed(1) + ' − ' + Math.min(a,b).toFixed(1) + ') = 10^' + absDiff.toFixed(1) + ' ≈ ' + Math.round(ampRatio).toLocaleString();
+
+  document.getElementById('energyRatio').textContent = enRatio < 10 ? enRatio.toFixed(2) + '× more energy' : Math.round(enRatio).toLocaleString() + '× more energy';
+  document.getElementById('energyCalc').textContent = '32^' + absDiff.toFixed(1) + ' ≈ ' + Math.round(enRatio).toLocaleString();
+}
+
+magA.addEventListener('input', update);
+magB.addEventListener('input', update);
+update();
+</script>
+</body>
+</html>

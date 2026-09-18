@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plate Tectonics & Rates — Visual Explorer</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Tahoma,sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px 20px; background:#f8fafc; padding:16px; border:1px solid #cbd5e1; border-radius:8px; margin:14px 0; }
+.controls label { font-weight:700; color:var(--navy); display:flex; flex-direction:column; gap:4px; font-size:.92rem; }
+.controls input[type=range] { width:100%; }
+.controls .val { font-family:Consolas,monospace; color:#0c4a6e; font-weight:800; }
+.stage { display:flex; justify-content:center; margin:14px 0; }
+svg.plates { background:linear-gradient(180deg,#e0f2fe 0%,#bae6fd 100%); border:2px solid var(--navy); border-radius:10px; }
+.readout { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin:16px 0; }
+.rd { background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:10px 14px; text-align:center; }
+.rd .lbl { font-size:.75rem; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+.rd .val { font-size:1.05rem; font-weight:900; color:var(--navy); margin-top:4px; font-family:Consolas,monospace; }
+.rate-box { background:#f0f9ff; border:2px solid var(--blue); border-radius:10px; padding:14px 18px; margin:16px 0; text-align:center; }
+.rate-box .label { font-size:.85rem; font-weight:800; color:var(--blue); text-transform:uppercase; letter-spacing:.05em; }
+.rate-box .value { font-size:1.5rem; font-weight:900; color:var(--navy); margin-top:4px; }
+.preset-row { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset:hover { background:#0c4a6e; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Q3 · Earth Science Math · Visual Explorer</div>
+  <h1>🌋 Plate Tectonics &amp; Rates</h1>
+  <p class="tagline">A few centimeters a year, over millions of years, moves whole continents.</p>
+</header>
+
+<div class="big-idea">
+  <strong>Big idea:</strong> Tectonic plates move at rates in <em>centimeters per year</em>. That&apos;s absurdly slow — your fingernail grows about as fast. But over <strong>millions</strong> of years, the ratio &quot;distance ÷ time&quot; adds up to <em>continents</em>. This is why rates matter: small numbers × huge time = enormous distance.
+</div>
+
+<div class="card">
+<h2>Adjust the Rate. Let Time Run.</h2>
+<div class="controls">
+  <label>Plate motion rate (cm/year): <span class="val" id="rateVal">7</span><input type="range" id="rate" min="1" max="15" step="0.5" value="7"></label>
+  <label>Time elapsed (millions of years): <span class="val" id="timeVal">1.0</span><input type="range" id="time" min="0" max="10" step="0.1" value="1"></label>
+</div>
+
+<div class="preset-row">
+  <button class="preset" onclick="setPreset(7, 1)">🌺 Pacific Plate (Hawaii): 7 cm/yr</button>
+  <button class="preset" onclick="setPreset(2, 1)">🏔 North American Plate: 2 cm/yr</button>
+  <button class="preset" onclick="setPreset(15, 1)">🌊 East Pacific Rise: 15 cm/yr</button>
+  <button class="preset" onclick="setPreset(7, 5)">⏳ 5 million years</button>
+</div>
+
+<div class="stage">
+  <svg class="plates" id="plates" viewBox="0 0 640 360" width="640" height="360">
+    <!-- ocean floor detail -->
+    <path d="M0,260 Q160,240 320,260 T640,260 L640,360 L0,360 Z" fill="#0369a1" opacity="0.35"/>
+    <!-- left plate -->
+    <g id="leftPlate">
+      <polygon points="0,60 260,60 240,260 0,260" fill="#78350f" stroke="#451a03" stroke-width="2"/>
+      <text x="90" y="170" font-size="16" font-weight="900" fill="#fff">Plate A</text>
+    </g>
+    <!-- right plate -->
+    <g id="rightPlate">
+      <polygon points="380,60 640,60 640,260 400,260" fill="#059669" stroke="#064e3b" stroke-width="2"/>
+      <text x="510" y="170" font-size="16" font-weight="900" fill="#fff">Plate B</text>
+    </g>
+    <!-- magma at ridge -->
+    <ellipse id="magma" cx="320" cy="260" rx="30" ry="10" fill="#f97316" opacity="0.8"/>
+    <!-- distance markers -->
+    <line id="distLine" x1="260" y1="310" x2="380" y2="310" stroke="#1a2a4a" stroke-width="2"/>
+    <line x1="260" y1="303" x2="260" y2="317" stroke="#1a2a4a" stroke-width="2" id="tickA"/>
+    <line x1="380" y1="303" x2="380" y2="317" stroke="#1a2a4a" stroke-width="2" id="tickB"/>
+    <text id="distLabel" x="320" y="335" text-anchor="middle" font-size="13" font-weight="800" fill="#1a2a4a">0 km apart</text>
+    <!-- year label -->
+    <text x="320" y="30" text-anchor="middle" font-size="14" font-weight="900" fill="#1a2a4a" id="yearLabel">Present day</text>
+  </svg>
+</div>
+
+<div class="readout">
+  <div class="rd"><div class="lbl">Rate</div><div class="val" id="r1">7 cm/yr</div></div>
+  <div class="rd"><div class="lbl">Time</div><div class="val" id="r2">1,000,000 yr</div></div>
+  <div class="rd"><div class="lbl">Distance = rate × time</div><div class="val" id="r3">70 km</div></div>
+  <div class="rd"><div class="lbl">In miles (÷ 1.6)</div><div class="val" id="r4">44 mi</div></div>
+</div>
+
+<div class="rate-box">
+  <div class="label">Distance = Rate × Time</div>
+  <div class="value" id="bigDist">7 cm/yr × 1,000,000 yr = 7,000,000 cm = 70 km</div>
+</div>
+
+<div class="tip">
+  💡 <strong>Real Hawaii context:</strong> The Pacific Plate has been sliding northwest over a stationary hot spot at about 7 cm/year for millions of years. That&apos;s why the Hawaiian Islands form a chain — each island was made over the hot spot, then dragged away. <strong>Kauai is about 5 million years old, so it&apos;s roughly 350 km NW of Big Island.</strong> (Set rate = 7, time = 5, and check the readout.)
+</div>
+</div>
+
+<div class="card">
+<h2>🧭 What Makes This a Rate Problem</h2>
+<p>Every rate has the form <strong>quantity per one time unit</strong>. Plate motion is <em>centimeters per year</em> — same structure as miles per hour, dollars per pound, or heartbeats per minute. Once you know the rate, distance is just multiplication:</p>
+<p style="text-align:center; margin:14px 0; font-size:1.1rem; font-family:Consolas,monospace; background:#f0fdf4; padding:12px; border-radius:8px; color:#14532d; font-weight:800;">distance = rate × time</p>
+<p>The trick is unit conversion. Rates come in cm/year. Big time spans come in <em>millions</em> of years. Distances come out in kilometers. Watch how many decimal places move as centimeters climb into kilometers — that&apos;s the KHDUdcm staircase in action.</p>
+</div>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Plate Tectonics Visual Explorer</footer>
+</div>
+
+<script>
+const rate = document.getElementById('rate');
+const time = document.getElementById('time');
+const leftPlate = document.getElementById('leftPlate');
+const rightPlate = document.getElementById('rightPlate');
+const magma = document.getElementById('magma');
+const distLine = document.getElementById('distLine');
+const distLabel = document.getElementById('distLabel');
+const yearLabel = document.getElementById('yearLabel');
+const tickA = document.getElementById('tickA');
+const tickB = document.getElementById('tickB');
+
+function fmtNum(n){
+  if (n >= 1e6) return (n/1e6).toFixed(2) + ' million';
+  if (n >= 1000) return n.toLocaleString();
+  return n.toString();
+}
+
+function setPreset(r, t){ rate.value = r; time.value = t; update(); }
+
+function update(){
+  const r = parseFloat(rate.value);  // cm/year
+  const t = parseFloat(time.value);  // millions of years
+  const years = t * 1e6;
+  const cm = r * years;
+  const m = cm / 100;
+  const km = m / 1000;
+  const mi = km / 1.60934;
+
+  document.getElementById('rateVal').textContent = r;
+  document.getElementById('timeVal').textContent = t.toFixed(1);
+  document.getElementById('r1').textContent = r + ' cm/yr';
+  document.getElementById('r2').textContent = fmtNum(Math.round(years)) + ' yr';
+  document.getElementById('r3').textContent = km.toFixed(1) + ' km';
+  document.getElementById('r4').textContent = mi.toFixed(1) + ' mi';
+  document.getElementById('bigDist').textContent = r + ' cm/yr × ' + fmtNum(Math.round(years)) + ' yr = ' + fmtNum(Math.round(cm)) + ' cm = ' + km.toFixed(1) + ' km';
+
+  // animate plates apart (max visual separation at 10 million years @ 15 cm/yr = 1500 km)
+  // map km 0..1500 to px offset 0..120
+  const maxKm = 1500;
+  const offsetPx = Math.min(km / maxKm * 120, 120);
+  leftPlate.setAttribute('transform', `translate(${-offsetPx},0)`);
+  rightPlate.setAttribute('transform', `translate(${offsetPx},0)`);
+  magma.setAttribute('rx', Math.max(30, offsetPx + 30));
+  distLine.setAttribute('x1', 260 - offsetPx);
+  distLine.setAttribute('x2', 380 + offsetPx);
+  tickA.setAttribute('x1', 260 - offsetPx);
+  tickA.setAttribute('x2', 260 - offsetPx);
+  tickB.setAttribute('x1', 380 + offsetPx);
+  tickB.setAttribute('x2', 380 + offsetPx);
+  distLabel.textContent = km.toFixed(0) + ' km apart';
+  distLabel.setAttribute('x', 320);
+  yearLabel.textContent = t === 0 ? 'Present day' : t.toFixed(1) + ' million years ago →';
+}
+
+rate.addEventListener('input', update);
+time.addEventListener('input', update);
+update();
+</script>
+</body>
+</html>

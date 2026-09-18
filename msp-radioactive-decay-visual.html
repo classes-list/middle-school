@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radioactive Decay & Half-Life — Visual Explorer</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --blue:#0369a1; --purple:#7c3aed; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Tahoma,sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; background:#f8fafc; padding:16px; border:1px solid #cbd5e1; border-radius:8px; margin:14px 0; }
+@media (max-width:640px) { .controls { grid-template-columns:1fr; } }
+.controls label { font-weight:700; color:var(--navy); display:flex; flex-direction:column; gap:4px; font-size:.92rem; }
+.controls input[type=range] { width:100%; }
+.controls select { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.controls .val { font-family:Consolas,monospace; color:#0c4a6e; font-weight:800; font-size:1.1rem; }
+.atoms-grid { display:grid; grid-template-columns:repeat(20,1fr); gap:3px; background:#f8fafc; padding:14px; border:1px solid #cbd5e1; border-radius:10px; margin:14px 0; }
+.atom { aspect-ratio:1; border-radius:50%; transition:background .35s, transform .35s; box-shadow:0 1px 2px rgba(0,0,0,0.15); }
+.atom.parent { background:radial-gradient(circle at 35% 30%, #a78bfa, #6d28d9); }
+.atom.daughter { background:radial-gradient(circle at 35% 30%, #cbd5e1, #64748b); transform:scale(0.75); }
+.readout { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:16px 0; }
+.rd { background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:10px 14px; text-align:center; }
+.rd .lbl { font-size:.75rem; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+.rd .val { font-size:1.15rem; font-weight:900; color:var(--navy); margin-top:4px; font-family:Consolas,monospace; }
+.legend { display:flex; justify-content:center; gap:20px; margin:10px 0; font-size:.9rem; }
+.legend-item { display:flex; align-items:center; gap:8px; font-weight:700; }
+.legend-dot { width:16px; height:16px; border-radius:50%; }
+.legend-dot.parent { background:radial-gradient(circle at 35% 30%, #a78bfa, #6d28d9); }
+.legend-dot.daughter { background:radial-gradient(circle at 35% 30%, #cbd5e1, #64748b); }
+.formula-box { background:#f0fdf4; border-left:5px solid var(--green); padding:14px 18px; border-radius:8px; margin:14px 0; text-align:center; font-family:Consolas,monospace; color:#14532d; font-weight:800; font-size:1.05rem; }
+.table-wrap { overflow-x:auto; margin:14px 0; }
+.hl-table { width:100%; border-collapse:collapse; font-size:.92rem; background:#fff; border-radius:8px; overflow:hidden; }
+.hl-table th { background:var(--navy); color:#fff; padding:10px 6px; }
+.hl-table td { padding:8px 6px; border-bottom:1px solid #e2e8f0; text-align:center; font-weight:700; }
+.hl-table tr.highlight { background:#fef08a; }
+.preset-row { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset { padding:8px 14px; background:var(--purple); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset:hover { background:#5b21b6; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Q3 · Earth Science Math · Visual Explorer</div>
+  <h1>⚛️ Radioactive Decay &amp; Half-Life</h1>
+  <p class="tagline">Every half-life, half the atoms decay. Watch the pattern.</p>
+</header>
+
+<div class="big-idea">
+  <strong>Big idea:</strong> A <em>half-life</em> is the time it takes for exactly half of the remaining radioactive atoms to decay. After 1 half-life, half remain. After 2, a quarter. After 3, an eighth. This <strong>halving pattern</strong> is exponential decay — same math geologists use to date rocks billions of years old.
+</div>
+
+<div class="card">
+<h2>Set the Isotope. Move Time Forward.</h2>
+<div class="controls">
+  <label>Isotope:
+    <select id="isotope">
+      <option value="carbon" data-hl="5730" data-unit="years">Carbon-14 (5,730 years)</option>
+      <option value="potassium" data-hl="1250000000" data-unit="years">Potassium-40 (1.25 billion years)</option>
+      <option value="uranium" data-hl="4470000000" data-unit="years">Uranium-238 (4.47 billion years)</option>
+      <option value="iodine" data-hl="8.02" data-unit="days">Iodine-131 (8 days)</option>
+    </select>
+  </label>
+  <label>Number of half-lives elapsed: <span class="val" id="nVal">0</span><input type="range" id="nHalf" min="0" max="8" step="1" value="0"></label>
+</div>
+
+<div class="preset-row">
+  <button class="preset" onclick="setPreset(0)">0 half-lives</button>
+  <button class="preset" onclick="setPreset(1)">1 half-life</button>
+  <button class="preset" onclick="setPreset(2)">2 half-lives</button>
+  <button class="preset" onclick="setPreset(3)">3 half-lives</button>
+  <button class="preset" onclick="setPreset(5)">5 half-lives</button>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><span class="legend-dot parent"></span>Radioactive (parent)</div>
+  <div class="legend-item"><span class="legend-dot daughter"></span>Decayed (daughter)</div>
+</div>
+
+<div class="atoms-grid" id="atoms"></div>
+
+<div class="readout">
+  <div class="rd"><div class="lbl">Parent atoms remaining</div><div class="val" id="parentCount">200</div></div>
+  <div class="rd"><div class="lbl">Fraction remaining</div><div class="val" id="fraction">1</div></div>
+  <div class="rd"><div class="lbl">Time elapsed</div><div class="val" id="timeElapsed">0 years</div></div>
+  <div class="rd"><div class="lbl">Daughter atoms</div><div class="val" id="daughterCount">0</div></div>
+</div>
+
+<div class="formula-box">
+  Fraction remaining = (½)<sup id="expShow">n</sup> = <span id="fractionCalc">1</span>
+</div>
+
+<div class="tip">
+  💡 <strong>Try:</strong> pick Carbon-14 and set to 1 half-life. Time elapsed = 5,730 years. This is how scientists date bones and wood — count the parent atoms, count the daughter atoms, and work backwards to find how many half-lives passed.
+</div>
+</div>
+
+<div class="card">
+<h2>📊 The Halving Pattern</h2>
+<div class="table-wrap">
+<table class="hl-table" id="hlTable">
+  <tr><th>Half-lives (n)</th><th>Fraction remaining (½)ⁿ</th><th>As a percentage</th><th>Atoms left (of 200)</th></tr>
+</table>
+</div>
+<p style="margin-top:10px;"><strong>Notice:</strong> the atoms never quite reach zero — each step just halves what&apos;s still there. In real physics, after enough half-lives it becomes undetectable, but the math itself keeps halving forever.</p>
+</div>
+
+<div class="card">
+<h2>🧭 Why This Is Fractions in Action</h2>
+<p>Radioactive decay is <em>multiplying by ½ over and over</em>:</p>
+<ul style="margin:8px 0 8px 24px;">
+  <li>After 1 half-life: 1 × ½ = ½ (half remaining)</li>
+  <li>After 2 half-lives: ½ × ½ = ¼ (quarter remaining)</li>
+  <li>After 3 half-lives: ¼ × ½ = ⅛ (eighth remaining)</li>
+  <li>After n half-lives: (½)<sup>n</sup> remaining</li>
+</ul>
+<p>Powers of ½ are the same idea as powers of 10 in the Richter scale — just going the other direction. Powers of 10 <em>grow</em>; powers of ½ <em>shrink</em>. Both are exponential patterns, and both are why big numbers or tiny fractions describe things the real world does effortlessly.</p>
+</div>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Radioactive Decay Visual Explorer</footer>
+</div>
+
+<script>
+const TOTAL_ATOMS = 200;
+const atomsGrid = document.getElementById('atoms');
+const nSlider = document.getElementById('nHalf');
+const iso = document.getElementById('isotope');
+const atoms = [];
+
+// build atom cells
+for (let i = 0; i < TOTAL_ATOMS; i++){
+  const a = document.createElement('div');
+  a.className = 'atom parent';
+  atomsGrid.appendChild(a);
+  atoms.push(a);
+}
+// pick a deterministic "decay order" that spreads visually (shuffle indices)
+const decayOrder = [];
+for (let i = 0; i < TOTAL_ATOMS; i++) decayOrder.push(i);
+// pseudorandom shuffle with fixed seed
+let seed = 42;
+function rand(){ seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+for (let i = decayOrder.length - 1; i > 0; i--){
+  const j = Math.floor(rand() * (i + 1));
+  [decayOrder[i], decayOrder[j]] = [decayOrder[j], decayOrder[i]];
+}
+
+function fmtNum(n, unit){
+  if (unit === 'days') return n.toFixed(1) + ' days';
+  if (n >= 1e9) return (n/1e9).toFixed(2) + ' billion years';
+  if (n >= 1e6) return (n/1e6).toFixed(2) + ' million years';
+  if (n >= 10000) return Math.round(n).toLocaleString() + ' years';
+  return n.toFixed(1) + ' years';
+}
+
+function fracString(n){
+  if (n === 0) return '1';
+  const denom = Math.pow(2, n);
+  return '1/' + denom;
+}
+
+function setPreset(n){ nSlider.value = n; update(); }
+
+function update(){
+  const n = parseInt(nSlider.value);
+  document.getElementById('nVal').textContent = n;
+  const fracRemaining = Math.pow(0.5, n);
+  const parentAlive = Math.round(TOTAL_ATOMS * fracRemaining);
+  const decayed = TOTAL_ATOMS - parentAlive;
+
+  // mark first `decayed` atoms in decayOrder as daughter
+  atoms.forEach(a => a.className = 'atom parent');
+  for (let i = 0; i < decayed; i++){
+    atoms[decayOrder[i]].className = 'atom daughter';
+  }
+
+  document.getElementById('parentCount').textContent = parentAlive;
+  document.getElementById('daughterCount').textContent = decayed;
+  document.getElementById('fraction').textContent = fracString(n) + ' (' + (fracRemaining*100).toFixed(2) + '%)';
+  document.getElementById('expShow').textContent = n;
+  document.getElementById('fractionCalc').textContent = fracString(n) + ' = ' + (fracRemaining*100).toFixed(2) + '%';
+
+  const hl = parseFloat(iso.options[iso.selectedIndex].dataset.hl);
+  const unit = iso.options[iso.selectedIndex].dataset.unit;
+  document.getElementById('timeElapsed').textContent = fmtNum(hl * n, unit);
+}
+
+function rebuildTable(){
+  const tbl = document.getElementById('hlTable');
+  // clear existing rows except header
+  while (tbl.rows.length > 1) tbl.deleteRow(1);
+  const nNow = parseInt(nSlider.value);
+  for (let n = 0; n <= 8; n++){
+    const row = tbl.insertRow();
+    if (n === nNow) row.className = 'highlight';
+    const frac = Math.pow(0.5, n);
+    row.insertCell().textContent = n;
+    row.insertCell().textContent = fracString(n);
+    row.insertCell().textContent = (frac*100).toFixed(3) + '%';
+    row.insertCell().textContent = Math.round(TOTAL_ATOMS * frac);
+  }
+}
+
+nSlider.addEventListener('input', () => { update(); rebuildTable(); });
+iso.addEventListener('change', update);
+update();
+rebuildTable();
+</script>
+</body>
+</html>

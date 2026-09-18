@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topographic Maps & Slope — Visual Explorer</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --blue:#0369a1; --brown:#78350f; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Tahoma,sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:16px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; align-items:center; gap:6px; }
+.controls input[type=range] { width:180px; }
+.controls select { padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.map-wrap { display:flex; justify-content:center; margin:14px 0; }
+svg.topo { background:#f7f3ea; border:2px solid #78350f; border-radius:10px; touch-action:none; }
+.rate-box { background:#f0f9ff; border:2px solid var(--blue); border-radius:10px; padding:14px 18px; margin:16px 0; text-align:center; }
+.rate-box .label { font-size:.85rem; font-weight:800; color:var(--blue); text-transform:uppercase; letter-spacing:.05em; }
+.rate-box .value { font-size:1.4rem; font-weight:900; color:var(--navy); margin-top:4px; }
+.readout { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin:16px 0; }
+.rd { background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:10px 14px; text-align:center; }
+.rd .lbl { font-size:.75rem; color:#64748b; font-weight:700; text-transform:uppercase; letter-spacing:.05em; }
+.rd .val { font-size:1.1rem; font-weight:900; color:var(--navy); margin-top:4px; font-family:Consolas,monospace; }
+.slope-verdict { padding:10px 14px; border-radius:8px; margin:12px 0; font-weight:800; text-align:center; }
+.slope-verdict.gentle { background:#d1fae5; color:#065f46; border:2px solid #059669; }
+.slope-verdict.mod { background:#fef3c7; color:#78350f; border:2px solid #b8860b; }
+.slope-verdict.steep { background:#fee2e2; color:#7f1d1d; border:2px solid #dc2626; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+
+<header>
+  <div class="eyebrow">Math 6 · Q3 · Earth Science Math · Visual Explorer</div>
+  <h1>🗺️ Topographic Maps &amp; Slope</h1>
+  <p class="tagline">Drag two hikers between contour lines and watch the slope change.</p>
+</header>
+
+<div class="big-idea">
+  <strong>Big idea:</strong> Contour lines connect points at the same elevation. When they are <em>close together</em>, the ground is <em>steep</em>. When they are <em>far apart</em>, the ground is <em>gentle</em>. <strong>Slope = rise ÷ run</strong> — the ratio of elevation change to horizontal distance.
+</div>
+
+<div class="card">
+<h2>Set the Map, Move the Hikers</h2>
+<div class="controls">
+  <label>Contour interval:
+    <select id="interval">
+      <option value="10">10 m</option>
+      <option value="20" selected>20 m</option>
+      <option value="50">50 m</option>
+    </select>
+  </label>
+  <label>Map scale: <span id="scaleReadout">1 cm = 100 m</span></label>
+</div>
+
+<div class="map-wrap">
+  <svg class="topo" id="topo" viewBox="0 0 520 420" width="520" height="420">
+    <defs>
+      <radialGradient id="hill" cx="60%" cy="55%" r="65%">
+        <stop offset="0%" stop-color="#b45309" stop-opacity="0.25"/>
+        <stop offset="100%" stop-color="#78350f" stop-opacity="0.05"/>
+      </radialGradient>
+    </defs>
+    <rect x="0" y="0" width="520" height="420" fill="url(#hill)"/>
+    <g id="contours"></g>
+    <!-- North arrow -->
+    <g transform="translate(475,35)">
+      <polygon points="0,-18 6,10 0,4 -6,10" fill="#78350f"/>
+      <text x="0" y="26" text-anchor="middle" font-size="11" font-weight="800" fill="#78350f">N</text>
+    </g>
+    <!-- Scale bar -->
+    <g transform="translate(30,395)">
+      <line x1="0" y1="0" x2="80" y2="0" stroke="#78350f" stroke-width="3"/>
+      <line x1="0" y1="-4" x2="0" y2="4" stroke="#78350f" stroke-width="2"/>
+      <line x1="80" y1="-4" x2="80" y2="4" stroke="#78350f" stroke-width="2"/>
+      <text x="40" y="-8" text-anchor="middle" font-size="11" font-weight="700" fill="#78350f">200 m</text>
+    </g>
+    <line id="pathLine" x1="120" y1="300" x2="380" y2="150" stroke="#7c3aed" stroke-width="3" stroke-dasharray="6 4"/>
+    <circle id="pointA" cx="120" cy="300" r="12" fill="#dc2626" stroke="#fff" stroke-width="3" style="cursor:grab;"/>
+    <text id="labelA" x="120" y="285" text-anchor="middle" font-size="13" font-weight="900" fill="#dc2626">A</text>
+    <circle id="pointB" cx="380" cy="150" r="12" fill="#0369a1" stroke="#fff" stroke-width="3" style="cursor:grab;"/>
+    <text id="labelB" x="380" y="135" text-anchor="middle" font-size="13" font-weight="900" fill="#0369a1">B</text>
+  </svg>
+</div>
+
+<div class="readout">
+  <div class="rd"><div class="lbl">Elevation at A</div><div class="val" id="elevA">—</div></div>
+  <div class="rd"><div class="lbl">Elevation at B</div><div class="val" id="elevB">—</div></div>
+  <div class="rd"><div class="lbl">Rise (Δ elevation)</div><div class="val" id="rise">—</div></div>
+  <div class="rd"><div class="lbl">Run (map distance)</div><div class="val" id="run">—</div></div>
+</div>
+
+<div class="rate-box">
+  <div class="label">Slope = Rise ÷ Run</div>
+  <div class="value" id="slopeVal">—</div>
+  <div style="margin-top:6px;font-size:.9rem;color:#334155;" id="slopePct">—</div>
+</div>
+
+<div class="slope-verdict gentle" id="verdict">Gentle — easy hike</div>
+
+<div class="tip">
+  💡 <strong>Read the map:</strong> Contours here mark elevation in <span id="intervalRead">20</span>-meter jumps. The center of the hill is <strong>the peak</strong>. Move A near the center and B far away — the closer to the peak, the higher the elevation.
+</div>
+</div>
+
+<div class="card">
+<h2>🧭 Why This Is a Rate</h2>
+<p>Slope is a <strong>rate</strong>: meters of elevation per meter of horizontal distance. That&apos;s exactly the same kind of quantity as miles per hour or dollars per pound — just <em>rise per run</em>.</p>
+<ul style="margin:8px 0 8px 24px;">
+  <li>Slope 0.05 = 5% grade → easy trail (about a shallow driveway)</li>
+  <li>Slope 0.15 = 15% grade → steep but hikeable</li>
+  <li>Slope 0.30+ = 30%+ grade → very steep, use switchbacks or ropes</li>
+  <li>Slope 1.0 = 45° → cliff-like</li>
+</ul>
+<p><strong>Try:</strong> put both points on the <em>same</em> contour line. Rise = 0, so slope = 0 — flat walk.</p>
+</div>
+
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Topographic Maps Visual Explorer</footer>
+</div>
+
+<script>
+const svg = document.getElementById('topo');
+const pointA = document.getElementById('pointA');
+const pointB = document.getElementById('pointB');
+const labelA = document.getElementById('labelA');
+const labelB = document.getElementById('labelB');
+const pathLine = document.getElementById('pathLine');
+const contoursG = document.getElementById('contours');
+const intervalSel = document.getElementById('interval');
+
+const CENTER = { x: 320, y: 220 };      // peak location on map
+const PEAK_ELEV = 300;                   // meters at the peak
+const RADII = [40, 75, 110, 150, 195, 245]; // px radii for contour ellipses (inner = highest)
+const ASPECT_Y = 0.75;                   // ellipse squish
+const METERS_PER_PX = 200/80;            // scale bar: 200 m over 80 px
+
+function contourElevation(radius, interval){
+  // inner rings = higher elevation
+  // radius 40 → PEAK - 0 (peak elevation zone)
+  // then each outer ring drops by interval
+  const idx = RADII.indexOf(radius);
+  return PEAK_ELEV - idx * interval;
+}
+function elevAtPoint(x, y){
+  const interval = parseFloat(intervalSel.value);
+  const dx = x - CENTER.x;
+  const dy = (y - CENTER.y) / ASPECT_Y;
+  const r = Math.sqrt(dx*dx + dy*dy);
+  // find which contour ring this radius falls in
+  // higher r = lower elevation, drop 1 interval per (RADII[1]-RADII[0]) px of extra radius
+  // interpolate linearly through the ring stack
+  if (r <= RADII[0]) return PEAK_ELEV;
+  for (let i = 0; i < RADII.length-1; i++){
+    if (r >= RADII[i] && r <= RADII[i+1]){
+      const t = (r - RADII[i]) / (RADII[i+1] - RADII[i]);
+      const eLow = PEAK_ELEV - i*interval;
+      const eHigh = PEAK_ELEV - (i+1)*interval;
+      return eLow + t*(eHigh - eLow);
+    }
+  }
+  return PEAK_ELEV - RADII.length*interval;
+}
+function drawContours(){
+  const interval = parseFloat(intervalSel.value);
+  contoursG.innerHTML = '';
+  RADII.forEach((r, i) => {
+    const e = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+    e.setAttribute('cx', CENTER.x);
+    e.setAttribute('cy', CENTER.y);
+    e.setAttribute('rx', r);
+    e.setAttribute('ry', r*ASPECT_Y);
+    e.setAttribute('fill','none');
+    e.setAttribute('stroke','#78350f');
+    e.setAttribute('stroke-width', (i%2===0)?'2':'1.2');
+    e.setAttribute('opacity','0.75');
+    contoursG.appendChild(e);
+    if (i%2 === 0){
+      const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x', CENTER.x + r*0.7);
+      t.setAttribute('y', CENTER.y - r*ASPECT_Y*0.55);
+      t.setAttribute('font-size','10');
+      t.setAttribute('font-weight','700');
+      t.setAttribute('fill','#78350f');
+      t.textContent = contourElevation(r, interval) + ' m';
+      contoursG.appendChild(t);
+    }
+  });
+  document.getElementById('intervalRead').textContent = interval;
+  update();
+}
+
+function update(){
+  const ax = +pointA.getAttribute('cx'), ay = +pointA.getAttribute('cy');
+  const bx = +pointB.getAttribute('cx'), by = +pointB.getAttribute('cy');
+  const eA = elevAtPoint(ax, ay);
+  const eB = elevAtPoint(bx, by);
+  const rise = Math.abs(eA - eB);
+  const runPx = Math.sqrt((bx-ax)*(bx-ax) + (by-ay)*(by-ay));
+  const runM = runPx * METERS_PER_PX;
+  const slope = runM > 0 ? rise / runM : 0;
+  pathLine.setAttribute('x1', ax);
+  pathLine.setAttribute('y1', ay);
+  pathLine.setAttribute('x2', bx);
+  pathLine.setAttribute('y2', by);
+  labelA.setAttribute('x', ax);
+  labelA.setAttribute('y', ay - 15);
+  labelB.setAttribute('x', bx);
+  labelB.setAttribute('y', by - 15);
+  document.getElementById('elevA').textContent = Math.round(eA) + ' m';
+  document.getElementById('elevB').textContent = Math.round(eB) + ' m';
+  document.getElementById('rise').textContent = Math.round(rise) + ' m';
+  document.getElementById('run').textContent = Math.round(runM) + ' m';
+  document.getElementById('slopeVal').textContent = slope.toFixed(3);
+  document.getElementById('slopePct').textContent = (slope*100).toFixed(1) + '% grade  ·  ' + (rise > 0 ? Math.round(rise) + ' m rise / ' + Math.round(runM) + ' m run' : 'flat');
+  const verdict = document.getElementById('verdict');
+  verdict.classList.remove('gentle','mod','steep');
+  if (slope < 0.10) { verdict.classList.add('gentle'); verdict.textContent = '🟢 Gentle slope — easy hike'; }
+  else if (slope < 0.25) { verdict.classList.add('mod'); verdict.textContent = '🟡 Moderate — get your hiking boots'; }
+  else { verdict.classList.add('steep'); verdict.textContent = '🔴 Steep — switchbacks or ropes'; }
+}
+
+/* Dragging */
+let dragging = null;
+function ptFromEvt(e){
+  const pt = svg.createSVGPoint();
+  const src = e.touches ? e.touches[0] : e;
+  pt.x = src.clientX; pt.y = src.clientY;
+  const ctm = svg.getScreenCTM().inverse();
+  const p = pt.matrixTransform(ctm);
+  return { x: Math.max(15, Math.min(505, p.x)), y: Math.max(15, Math.min(405, p.y)) };
+}
+function start(el){ return e => { dragging = el; el.style.cursor='grabbing'; e.preventDefault(); }; }
+pointA.addEventListener('mousedown', start(pointA));
+pointB.addEventListener('mousedown', start(pointB));
+pointA.addEventListener('touchstart', start(pointA), {passive:false});
+pointB.addEventListener('touchstart', start(pointB), {passive:false});
+window.addEventListener('mousemove', e => { if (!dragging) return; const p = ptFromEvt(e); dragging.setAttribute('cx', p.x); dragging.setAttribute('cy', p.y); update(); });
+window.addEventListener('touchmove', e => { if (!dragging) return; const p = ptFromEvt(e); dragging.setAttribute('cx', p.x); dragging.setAttribute('cy', p.y); update(); e.preventDefault(); }, {passive:false});
+window.addEventListener('mouseup', () => { if (dragging) dragging.style.cursor='grab'; dragging = null; });
+window.addEventListener('touchend', () => { if (dragging) dragging.style.cursor='grab'; dragging = null; });
+
+intervalSel.addEventListener('change', drawContours);
+drawContours();
+</script>
+</body>
+</html>
