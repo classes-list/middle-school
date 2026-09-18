@@ -157,9 +157,14 @@ function checkAll(){
     const u = document.getElementById('ans'+i).value;
     const card = document.getElementById('q'+i);
     const fb = document.getElementById('fb'+i);
-    const isRight = isCorrect(u, q.ans);
     card.classList.remove('correct','wrong');
     fb.classList.remove('correct','wrong');
+    fb.innerHTML = '';
+    if (!u.trim()) {
+      results.push({q:q.q, userAns:'', correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans, right:false});
+      return;
+    }
+    const isRight = isCorrect(u, q.ans);
     if (isRight){
       card.classList.add('correct');
       fb.classList.add('correct');
