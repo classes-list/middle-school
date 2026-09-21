@@ -121,7 +121,7 @@ const QUESTIONS_P = [
   {q:'Convert 0.075 kg to grams.', ans:'75', unit:'g'},
   {q:'The actual mass of an object is 50 g. A student measured 48 g. What is the percent error?', ans:['4','4%'], unit:'%'},
   {q:'Actual density of water is 1.00 g/mL. A student measured 0.95 g/mL. Percent error?', ans:['5','5%'], unit:'%'},
-  {q:'A blue whale weighs 180,000 kg (actual). A scientist measured it as 175,000 kg — an error of 5,000 kg. A house cat weighs 8 kg (actual). Another scientist measured it as 7 kg — an error of 1 kg. Which measurement is MORE accurate? (Type &quot;whale&quot; or &quot;cat&quot;)', ans:['whale','w']},
+  {q:'A blue whale weighs 180,000 kg (actual). A scientist measured it as 175,000 kg — an error of 5,000 kg. A house cat weighs 8 kg (actual). Another scientist measured it as 7 kg — an error of 1 kg. Which measurement is MORE accurate? (Type &quot;whale&quot; or &quot;cat&quot;)', ans:['whale','w'], why:true},
   {q:'Evaluate: −8 + 5.', ans:'-3'},
   {q:'Evaluate: −7 − (−3).', ans:'-4'},
   {q:'Evaluate: (−6) × 4.', ans:'-24'},
@@ -130,7 +130,7 @@ const QUESTIONS_P = [
   {q:'Which is larger: −5 or −8?', ans:['-5','−5']},
   {q:'What is |−15| (absolute value of −15)?', ans:'15'}
 ];
-const QUESTIONS_G = [{"q": "Convert 4.5 km to meters.", "ans": "4500", "unit": "m"}, {"q": "Convert 350 g to kilograms.", "ans": ["0.35", ".35"], "unit": "kg"}, {"q": "Convert 2.4 L to milliliters.", "ans": "2400", "unit": "mL"}, {"q": "Convert 2100 mm to centimeters.", "ans": "210", "unit": "cm"}, {"q": "Convert 0.045 kg to grams.", "ans": "45", "unit": "g"}, {"q": "The actual mass of an object is 40 g. A student measured 42 g. What is the percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "The actual density of a liquid is 2.00 g/mL. A student measured 2.10 g/mL. Percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "An African elephant weighs 6,000 kg (actual). A researcher measured it as 5,700 kg — an error of 300 kg. A hamster weighs 100 g (actual). Another researcher measured it as 90 g — an error of 10 g. Which measurement is MORE accurate? (Type &quot;elephant&quot; or &quot;hamster&quot;)", "ans": ["elephant","e"]}, {"q": "Evaluate: −6 + 9.", "ans": "3"}, {"q": "Evaluate: −4 − (−8).", "ans": "4"}, {"q": "Evaluate: (−7) × 3.", "ans": "-21"}, {"q": "Evaluate: (−48) ÷ (−6).", "ans": "8"}, {"q": "Simplify: −(−15).", "ans": "15"}, {"q": "Which is smaller: −4 or −9?", "ans": ["-9", "−9"]}, {"q": "What is |−22| (absolute value of −22)?", "ans": "22"}];
+const QUESTIONS_G = [{"q": "Convert 4.5 km to meters.", "ans": "4500", "unit": "m"}, {"q": "Convert 350 g to kilograms.", "ans": ["0.35", ".35"], "unit": "kg"}, {"q": "Convert 2.4 L to milliliters.", "ans": "2400", "unit": "mL"}, {"q": "Convert 2100 mm to centimeters.", "ans": "210", "unit": "cm"}, {"q": "Convert 0.045 kg to grams.", "ans": "45", "unit": "g"}, {"q": "The actual mass of an object is 40 g. A student measured 42 g. What is the percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "The actual density of a liquid is 2.00 g/mL. A student measured 2.10 g/mL. Percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "An African elephant weighs 6,000 kg (actual). A researcher measured it as 5,700 kg — an error of 300 kg. A hamster weighs 100 g (actual). Another researcher measured it as 90 g — an error of 10 g. Which measurement is MORE accurate? (Type &quot;elephant&quot; or &quot;hamster&quot;)", "ans": ["elephant","e"], "why": true}, {"q": "Evaluate: −6 + 9.", "ans": "3"}, {"q": "Evaluate: −4 − (−8).", "ans": "4"}, {"q": "Evaluate: (−7) × 3.", "ans": "-21"}, {"q": "Evaluate: (−48) ÷ (−6).", "ans": "8"}, {"q": "Simplify: −(−15).", "ans": "15"}, {"q": "Which is smaller: −4 or −9?", "ans": ["-9", "−9"]}, {"q": "What is |−22| (absolute value of −22)?", "ans": "22"}];
 const QUESTIONS = getMode()==='graded' ? QUESTIONS_G : QUESTIONS_P;
 
 function getMode(){
@@ -150,6 +150,7 @@ function renderQuestions(){
       <div class="q-input">
         <input type="text" id="ans${i}" placeholder="Your answer">
         ${q.unit ? `<span class="unit">${q.unit}</span>` : ''}
+        ${q.why ? `<input type="text" id="why${i}" placeholder="Why? (explain in a sentence)" style="flex:1;min-width:260px;">` : ''}
       </div>
       <div class="q-feedback" id="fb${i}"></div>
     `;
@@ -166,6 +167,12 @@ function isCorrect(userInput, expectedAns){
   return answers.some(a => normalize(a) === u);
 }
 
+function checkWhy(text){
+  const t = String(text||'').toLowerCase();
+  const hasComparator = /smaller|less|lower|smallest|lowest/.test(t);
+  const hasPercentOrError = /percent|error|%|per\s*cent/.test(t);
+  return hasComparator && hasPercentOrError;
+}
 function checkAll(){
   let correct = 0;
   const results = [];
@@ -180,7 +187,13 @@ function checkAll(){
       results.push({q:q.q, userAns:'', correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans, right:false});
       return;
     }
-    const isRight = isCorrect(u, q.ans);
+    let whyOk = true;
+    if (q.why){
+      const whyEl = document.getElementById('why'+i);
+      const whyText = whyEl ? whyEl.value : '';
+      whyOk = checkWhy(whyText);
+    }
+    const isRight = isCorrect(u, q.ans) && whyOk;
     if (isRight){
       card.classList.add('correct');
       fb.classList.add('correct');
