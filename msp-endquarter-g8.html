@@ -67,7 +67,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
   <a href="?mode=graded" class="mode-btn" id="modeG">✅ Graded Version</a>
 </div>
 <div class="info-banner" id="infoBanner">
-  <strong>Practice mode:</strong> Answer all 15 questions. Click <strong>Check Answers</strong> to see which you got right. You can try again as many times as you like. No grades submitted.
+  <strong>Practice mode:</strong> Answer all 20 questions. Click <strong>Check Answers</strong> to see which you got right. You can try again as many times as you like. No grades submitted.
 </div>
 <div class="name-row" id="nameRow" style="display:none;">
   <label>First Name: <input type="text" id="fName"></label>
@@ -100,23 +100,28 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <script>
 function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
 const QUESTIONS_P = [
-  {q:'Convert 4.5 km to millimeters.', ans:['4500000','4,500,000'], unit:'mm'},
-  {q:'Convert 82 cm to meters.', ans:['0.82','.82'], unit:'m'},
-  {q:'A student measured 49 g; actual mass is 50 g. Percent error?', ans:['2','2%'], unit:'%'},
-  {q:'A student measured 21.6 mL; actual volume is 20.0 mL. Percent error?', ans:['8','8%'], unit:'%'},
-  {q:'Compute: −18 + 11.', ans:'-7'},
-  {q:'Compute: (−4) × (−7).', ans:'28'},
-  {q:'Compute: (−72) ÷ 9.', ans:'-8'},
-  {q:'Compute: 20 + (−35).', ans:'-15'},
-  {q:'Write 96,300,000 in scientific notation.', ans:['9.63 × 10^7','9.63e7','9.63 x 10^7']},
-  {q:'Write 0.00047 in scientific notation.', ans:['4.7 × 10^-4','4.7e-4','4.7 x 10^-4']},
-  {q:'Compute: (5 × 10^4)(2 × 10^3). Sci notation.', ans:['1 × 10^8','1e8','1 x 10^8','1.0 × 10^8']},
-  {q:'Compute: (8 × 10^9) ÷ (4 × 10^4). Sci notation.', ans:['2 × 10^5','2e5','2 x 10^5']},
-  {q:'Convert 6.4 × 10^-3 to standard form.', ans:'0.0064'},
-  {q:'Simplify: 2^5 · 2^3.', ans:['2^8','256']},
-  {q:'Simplify: (5^6) ÷ (5^2).', ans:['5^4','625']}
+  {q:'Convert 3.2 km to mm.',ans:['3200000','3,200,000'],unit:'mm'},
+  {q:'Convert 45 cm to meters.',ans:['0.45','.45'],unit:'m'},
+  {q:'Measured 24.5 g, actual 25 g. % error?',ans:['2','2%'],unit:'%'},
+  {q:'Write 82,500,000 in scientific notation.',ans:['8.25 × 10^7','8.25e7']},
+  {q:'Write 0.00051 in scientific notation.',ans:['5.1 × 10^-4','5.1e-4']},
+  {q:'(4 × 10^5)(3 × 10^2). SN.',ans:['1.2 × 10^8','1.2e8']},
+  {q:'(9 × 10^8) ÷ (3 × 10^3). SN.',ans:['3 × 10^5','3e5']},
+  {q:'3.2 × 10^-2 to standard form.',ans:'0.032'},
+  {q:'Is √16 rational or irrational?',ans:['rational','R','r']},
+  {q:'Is √3 rational or irrational?',ans:['irrational','I','i']},
+  {q:'Approximate √50 to nearest tenth.',ans:['7.1','7.07']},
+  {q:'Simplify: 3^4 · 3^2.',ans:['3^6','729']},
+  {q:'Simplify: 7^5 ÷ 7^2.',ans:['7^3','343']},
+  {q:'Simplify: (2^3)^4.',ans:['2^12','4096']},
+  {q:'Slope through (0, 3) and (4, 11).',ans:'2'},
+  {q:'Slope through (2, 5) and (6, 13).',ans:'2'},
+  {q:'Slope of horizontal line through (3, 5).',ans:'0'},
+  {q:'Solve v = d/t for d.',ans:['d = vt','d=vt','d = v × t']},
+  {q:'Rearrange F = ma for m.',ans:['m = F/a','m=F/a']},
+  {q:'Rearrange E = mc² for c². (Not c.)',ans:['c^2 = E/m','c² = E/m']}
 ];
-const QUESTIONS_G = [{"q": "Convert 3.8 km to millimeters.", "ans": ["3800000", "3,800,000"], "unit": "mm"}, {"q": "Convert 74 cm to meters.", "ans": ["0.74", ".74"], "unit": "m"}, {"q": "A student measured 42 g; actual mass is 40 g. Percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "A student measured 25.5 mL; actual volume is 25.0 mL. Percent error?", "ans": ["2", "2%"], "unit": "%"}, {"q": "Compute: −24 + 11.", "ans": "-13"}, {"q": "Compute: (−6) × (−8).", "ans": "48"}, {"q": "Compute: (−80) ÷ 10.", "ans": "-8"}, {"q": "Compute: 25 + (−40).", "ans": "-15"}, {"q": "Write 74,200,000 in scientific notation.", "ans": ["7.42 × 10^7", "7.42e7", "7.42 x 10^7"]}, {"q": "Write 0.00063 in scientific notation.", "ans": ["6.3 × 10^-4", "6.3e-4", "6.3 x 10^-4"]}, {"q": "Compute: (3 × 10^4)(2 × 10^3). Sci notation.", "ans": ["6 × 10^7", "6e7", "6 x 10^7"]}, {"q": "Compute: (9 × 10^10) ÷ (3 × 10^4). Sci notation.", "ans": ["3 × 10^6", "3e6", "3 x 10^6"]}, {"q": "Convert 5.6 × 10^-3 to standard form.", "ans": "0.0056"}, {"q": "Simplify: 3^5 · 3^2.", "ans": ["3^7", "2187"]}, {"q": "Simplify: (4^7) ÷ (4^3).", "ans": ["4^4", "256"]}];
+const QUESTIONS_G = [{"q": "Convert 5.6 km to mm.", "ans": ["5600000", "5,600,000"], "unit": "mm"}, {"q": "Convert 68 cm to meters.", "ans": ["0.68", ".68"], "unit": "m"}, {"q": "Measured 96 g, actual 100 g. % error?", "ans": ["4", "4%"], "unit": "%"}, {"q": "47,600,000 in SN.", "ans": ["4.76 × 10^7", "4.76e7"]}, {"q": "0.00082 in SN.", "ans": ["8.2 × 10^-4", "8.2e-4"]}, {"q": "(2 × 10^5)(4 × 10^3). SN.", "ans": ["8 × 10^8", "8e8"]}, {"q": "(6 × 10^9) ÷ (2 × 10^4). SN.", "ans": ["3 × 10^5", "3e5"]}, {"q": "5.4 × 10^-3 to standard.", "ans": "0.0054"}, {"q": "Is √25 rational or irrational?", "ans": ["rational", "R", "r"]}, {"q": "Is √7 rational or irrational?", "ans": ["irrational", "I", "i"]}, {"q": "Approximate √75 to nearest tenth.", "ans": ["8.7", "8.66"]}, {"q": "Simplify: 4^3 · 4^2.", "ans": ["4^5", "1024"]}, {"q": "Simplify: 6^4 ÷ 6^2.", "ans": ["6^2", "36"]}, {"q": "Simplify: (3^2)^3.", "ans": ["3^6", "729"]}, {"q": "Slope through (0, 2) and (5, 12).", "ans": "2"}, {"q": "Slope through (1, 4) and (5, 16).", "ans": "3"}, {"q": "Slope of vertical line x = 4?", "ans": ["undefined", "undef"]}, {"q": "Solve D = m/V for V.", "ans": ["V = m/D", "V=m/D"]}, {"q": "Rearrange V = IR for R.", "ans": ["R = V/I", "R=V/I"]}, {"q": "Rearrange P = IV for I.", "ans": ["I = P/V", "I=P/V"]}];
 const QUESTIONS = getMode()==='graded' ? QUESTIONS_G : QUESTIONS_P;
 function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
 function renderQuestions(){const c=document.getElementById('questions');c.innerHTML='';QUESTIONS.forEach((q,i)=>{const card=document.createElement('div');card.className='q-card';card.id='q'+i;card.innerHTML=`<div class="q-text"><span class="q-num">${i+1}</span>${q.q}</div><div class="q-input"><input type="text" id="ans${i}" placeholder="Your answer">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div><div class="q-feedback" id="fb${i}"></div>`;c.appendChild(card);});}
@@ -125,7 +130,7 @@ function isCorrect(u,e){const un=normalize(u);if(!un)return false;const ans=Arra
 function checkAll(){let correct=0;const results=[];QUESTIONS.forEach((q,i)=>{const u=document.getElementById('ans'+i).value;const card=document.getElementById('q'+i);const fb=document.getElementById('fb'+i);card.classList.remove('correct','wrong');fb.classList.remove('correct','wrong');fb.innerHTML='';if(!u.trim()){results.push({q:q.q,userAns:'',correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans,right:false});return;}const r=isCorrect(u,q.ans);if(r){card.classList.add('correct');fb.classList.add('correct');fb.innerHTML='✓ Correct!';correct++;}else{card.classList.add('wrong');fb.classList.add('wrong');const at=Array.isArray(q.ans)?q.ans[0]:q.ans;fb.innerHTML=getMode()==='practice'?`✗ Not quite. Correct: <strong>${at}</strong>`:'✗ Incorrect.';}results.push({q:q.q,userAns:u,correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans,right:r});});showScore(correct);return {correct,results};}
 function showScore(c){const pct=Math.round((c/QUESTIONS.length)*100);const b=document.getElementById('scoreBanner');let cls='score-banner',m;if(pct>=85){cls+=' excellent';m='🌟 Excellent work!';}else if(pct>=70)m="👍 Nice — you're on track.";else{cls+=' needs-work';m='📚 Review the topics you missed and try again.';}b.className=cls;b.innerHTML=`📊 <strong>Score: ${c} / ${QUESTIONS.length} (${pct}%)</strong> — ${m}`;}
 function resetAll(){QUESTIONS.forEach((q,i)=>{document.getElementById('ans'+i).value='';document.getElementById('q'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).innerHTML='';});document.getElementById('scoreBanner').innerHTML='';}
-function submitToTeacher(){const f=document.getElementById('fName').value.trim();const l=document.getElementById('lName').value.trim();const cl=document.getElementById('cls').value.trim();if(!f||!l){alert('Enter your first and last name.');return;}const {correct,results}=checkAll();const name=f+' '+l;let body=`Math 8 End of Q1 Test — Graded Submission\nName: ${name}\n`;if(cl)body+=`Class: ${cl}\n`;body+=`Score: ${correct}/15 (${Math.round(correct/15*100)}%)\n\nAnswers:\n`;results.forEach((r,i)=>{body+=`${i+1}. ${r.right?'✓':'✗'} Your answer: "${r.userAns}" | Correct: ${r.correctAns}\n`;});const subject=encodeURIComponent(`Math 8 End of Q1 Test — ${name}`);const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+subject+'&body='+encodeURIComponent(body);const w=window.open(gmailUrl,'_blank','noopener,noreferrer');if(!w)window.location.href=gmailUrl;}
+function submitToTeacher(){const f=document.getElementById('fName').value.trim();const l=document.getElementById('lName').value.trim();const cl=document.getElementById('cls').value.trim();if(!f||!l){alert('Enter your first and last name.');return;}const {correct,results}=checkAll();const name=f+' '+l;let body=`Math 8 End of Q1 Test — Graded Submission\nName: ${name}\n`;if(cl)body+=`Class: ${cl}\n`;body+=`Score: ${correct}/20 (${Math.round(correct/20*100)}%)\n\nAnswers:\n`;results.forEach((r,i)=>{body+=`${i+1}. ${r.right?'✓':'✗'} Your answer: "${r.userAns}" | Correct: ${r.correctAns}\n`;});const subject=encodeURIComponent(`Math 8 End of Q1 Test — ${name}`);const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+subject+'&body='+encodeURIComponent(body);const w=window.open(gmailUrl,'_blank','noopener,noreferrer');if(!w)window.location.href=gmailUrl;}
 
 function toggleFeedback(){
   const hidden = document.body.classList.toggle('hide-feedback');

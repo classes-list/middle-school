@@ -68,7 +68,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
   <a href="?mode=graded" class="mode-btn" id="modeG">✅ Graded Version</a>
 </div>
 <div class="info-banner" id="infoBanner">
-  <strong>Practice mode:</strong> Answer all 15 questions. Click <strong>Check Answers</strong> to see which you got right. You can try again as many times as you like. No grades submitted.
+  <strong>Practice mode:</strong> Answer all 20 questions. Click <strong>Check Answers</strong> to see which you got right. You can try again as many times as you like. No grades submitted.
 </div>
 <div class="name-row" id="nameRow" style="display:none;">
   <label>First Name: <input type="text" id="fName"></label>
@@ -101,23 +101,28 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <script>
 function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
 const QUESTIONS_P = [
-  {q:'Convert 6.5 km to meters.', ans:'6500', unit:'m'},
-  {q:'Convert 750 mL to liters.', ans:['0.75','.75'], unit:'L'},
-  {q:'An object has mass 40 g and volume 8 mL. Find the density (D = m/V).', ans:'5', unit:'g/mL'},
-  {q:'A liquid has density 2.5 g/mL and volume 4 mL. What is its mass?', ans:'10', unit:'g'},
-  {q:'A student measured 48 g; actual mass is 50 g. Percent error?', ans:['4','4%'], unit:'%'},
-  {q:'Compute: 3.6 + 2.85.', ans:'6.45'},
-  {q:'Compute: 5.2 × 0.4.', ans:'2.08'},
-  {q:'Compute: 8.4 ÷ 0.2.', ans:'42'},
-  {q:'Write 6,700,000 in scientific notation.', ans:['6.7 × 10^6','6.7e6','6.7 x 10^6']},
-  {q:'Write 0.00082 in scientific notation.', ans:['8.2 × 10^-4','8.2e-4','8.2 x 10^-4']},
-  {q:'Write 3.5 × 10^3 in standard form.', ans:'3500'},
-  {q:'Find GCF(24, 36).', ans:'12'},
-  {q:'Find LCM(6, 8).', ans:'24'},
-  {q:'Write the prime factorization of 60 using exponents.', ans:['2^2 × 3 × 5','2^2 * 3 * 5','2^2*3*5','2·2·3·5','2.2.3.5']},
-  {q:'Compute: 3/4 ÷ 1/2. (Fraction or decimal.)', ans:['3/2','1.5','1 1/2']}
+  {q:'Convert 6.5 km to meters.',ans:'6500',unit:'m'},
+  {q:'Convert 250 mL to liters.',ans:['0.25','.25'],unit:'L'},
+  {q:'Convert 3.2 kg to grams.',ans:'3200',unit:'g'},
+  {q:'Convert 4500 mg to grams.',ans:'4.5',unit:'g'},
+  {q:'Compute: 3.6 + 2.85.',ans:'6.45'},
+  {q:'Compute: 5.2 × 0.4.',ans:'2.08'},
+  {q:'Compute: 8.4 ÷ 0.2.',ans:'42'},
+  {q:'Write 6,700,000 in scientific notation.',ans:['6.7 × 10^6','6.7e6','6.7 x 10^6']},
+  {q:'Write 4.5 × 10^3 in standard form.',ans:'4500'},
+  {q:'Write 0.00082 in scientific notation.',ans:['8.2 × 10^-4','8.2e-4']},
+  {q:'Density: mass 40 g, volume 8 mL. Find D (D = m/V).',ans:'5',unit:'g/mL'},
+  {q:'Liquid density 2.5 g/mL, volume 4 mL. Mass?',ans:'10',unit:'g'},
+  {q:'A rock: mass 60 g, density 3 g/mL. Volume?',ans:'20',unit:'mL'},
+  {q:'Find GCF(24, 36).',ans:'12'},
+  {q:'Find LCM(6, 8).',ans:'24'},
+  {q:'Prime factorization of 60 using exponents.',ans:['2^2 × 3 × 5','2^2*3*5','2·2·3·5']},
+  {q:'Compute: 3/4 ÷ 1/2.',ans:['3/2','1.5','1 1/2']},
+  {q:'Compute: 2/3 ÷ 4.',ans:['1/6','.1667','0.1667']},
+  {q:'Compute: 5/6 ÷ 5/12.',ans:'2'},
+  {q:'Order smallest to largest: 0.4, 0.04, 0.44.',ans:['0.04, 0.4, 0.44','0.04,0.4,0.44']}
 ];
-const QUESTIONS_G = [{"q": "Convert 4.8 km to meters.", "ans": "4800", "unit": "m"}, {"q": "Convert 950 mL to liters.", "ans": ["0.95", ".95"], "unit": "L"}, {"q": "An object has mass 60 g and volume 15 mL. Find the density (D = m/V).", "ans": "4", "unit": "g/mL"}, {"q": "A liquid has density 3 g/mL and volume 5 mL. What is its mass?", "ans": "15", "unit": "g"}, {"q": "A student measured 42 g; actual mass is 40 g. Percent error?", "ans": ["5", "5%"], "unit": "%"}, {"q": "Compute: 4.2 + 5.75.", "ans": "9.95"}, {"q": "Compute: 6.4 × 0.25.", "ans": "1.6"}, {"q": "Compute: 9.6 ÷ 0.4.", "ans": "24"}, {"q": "Write 4,800,000 in scientific notation.", "ans": ["4.8 × 10^6", "4.8e6", "4.8 x 10^6"]}, {"q": "Write 0.00034 in scientific notation.", "ans": ["3.4 × 10^-4", "3.4e-4", "3.4 x 10^-4"]}, {"q": "Write 5.6 × 10^3 in standard form.", "ans": "5600"}, {"q": "Find GCF(18, 30).", "ans": "6"}, {"q": "Find LCM(4, 6).", "ans": "12"}, {"q": "Write the prime factorization of 84 using exponents.", "ans": ["2^2 × 3 × 7", "2^2 * 3 * 7", "2^2*3*7", "2·2·3·7"]}, {"q": "Compute: 2/3 ÷ 1/4. (Fraction or decimal.)", "ans": ["8/3", "2.67", "2 2/3"]}];
+const QUESTIONS_G = [{"q": "Convert 4.8 km to meters.", "ans": "4800", "unit": "m"}, {"q": "Convert 950 mL to liters.", "ans": ["0.95", ".95"], "unit": "L"}, {"q": "Convert 2.5 kg to grams.", "ans": "2500", "unit": "g"}, {"q": "Convert 3600 mg to grams.", "ans": "3.6", "unit": "g"}, {"q": "Compute: 4.2 + 5.75.", "ans": "9.95"}, {"q": "Compute: 6.4 × 0.25.", "ans": "1.6"}, {"q": "Compute: 9.6 ÷ 0.4.", "ans": "24"}, {"q": "Write 4,800,000 in scientific notation.", "ans": ["4.8 × 10^6", "4.8e6"]}, {"q": "Write 5.6 × 10^3 in standard form.", "ans": "5600"}, {"q": "Write 0.00034 in scientific notation.", "ans": ["3.4 × 10^-4", "3.4e-4"]}, {"q": "Density: mass 60 g, volume 15 mL. Find D.", "ans": "4", "unit": "g/mL"}, {"q": "Density 3 g/mL, volume 5 mL. Mass?", "ans": "15", "unit": "g"}, {"q": "Cube: mass 80 g, density 4 g/mL. Volume?", "ans": "20", "unit": "mL"}, {"q": "Find GCF(18, 30).", "ans": "6"}, {"q": "Find LCM(4, 6).", "ans": "12"}, {"q": "Prime factorization of 84 with exponents.", "ans": ["2^2 × 3 × 7", "2^2*3*7", "2·2·3·7"]}, {"q": "Compute: 2/3 ÷ 1/4.", "ans": ["8/3", "2.67", "2 2/3"]}, {"q": "Compute: 5/8 ÷ 5.", "ans": ["1/8", ".125", "0.125"]}, {"q": "Compute: 7/10 ÷ 7/20.", "ans": "2"}, {"q": "Order smallest to largest: 0.6, 0.06, 0.66.", "ans": ["0.06, 0.6, 0.66", "0.06,0.6,0.66"]}];
 const QUESTIONS = getMode()==='graded' ? QUESTIONS_G : QUESTIONS_P;
 function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
 function renderQuestions(){const c=document.getElementById('questions');c.innerHTML='';QUESTIONS.forEach((q,i)=>{const card=document.createElement('div');card.className='q-card';card.id='q'+i;card.innerHTML=`<div class="q-text"><span class="q-num">${i+1}</span>${q.q}</div><div class="q-input"><input type="text" id="ans${i}" placeholder="Your answer">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div><div class="q-feedback" id="fb${i}"></div>`;c.appendChild(card);});}
@@ -126,7 +131,7 @@ function isCorrect(u,e){const un=normalize(u);if(!un)return false;const ans=Arra
 function checkAll(){let correct=0;const results=[];QUESTIONS.forEach((q,i)=>{const u=document.getElementById('ans'+i).value;const card=document.getElementById('q'+i);const fb=document.getElementById('fb'+i);card.classList.remove('correct','wrong');fb.classList.remove('correct','wrong');fb.innerHTML='';if(!u.trim()){results.push({q:q.q,userAns:'',correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans,right:false});return;}const r=isCorrect(u,q.ans);if(r){card.classList.add('correct');fb.classList.add('correct');fb.innerHTML='✓ Correct!';correct++;}else{card.classList.add('wrong');fb.classList.add('wrong');const at=Array.isArray(q.ans)?q.ans[0]:q.ans;fb.innerHTML=getMode()==='practice'?`✗ Not quite. Correct: <strong>${at}</strong>`:'✗ Incorrect.';}results.push({q:q.q,userAns:u,correctAns:Array.isArray(q.ans)?q.ans[0]:q.ans,right:r});});showScore(correct);return {correct,results};}
 function showScore(c){const pct=Math.round((c/QUESTIONS.length)*100);const b=document.getElementById('scoreBanner');let cls='score-banner',m;if(pct>=85){cls+=' excellent';m='🌟 Excellent work!';}else if(pct>=70)m="👍 Nice — you're on track.";else{cls+=' needs-work';m='📚 Review the topics you missed and try again.';}b.className=cls;b.innerHTML=`📊 <strong>Score: ${c} / ${QUESTIONS.length} (${pct}%)</strong> — ${m}`;}
 function resetAll(){QUESTIONS.forEach((q,i)=>{document.getElementById('ans'+i).value='';document.getElementById('q'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).classList.remove('correct','wrong');document.getElementById('fb'+i).innerHTML='';});document.getElementById('scoreBanner').innerHTML='';}
-function submitToTeacher(){const f=document.getElementById('fName').value.trim();const l=document.getElementById('lName').value.trim();const cl=document.getElementById('cls').value.trim();if(!f||!l){alert('Enter your first and last name.');return;}const {correct,results}=checkAll();const name=f+' '+l;let body=`Math 6 End of Q1 Test — Graded Submission\nName: ${name}\n`;if(cl)body+=`Class: ${cl}\n`;body+=`Score: ${correct}/15 (${Math.round(correct/15*100)}%)\n\nAnswers:\n`;results.forEach((r,i)=>{body+=`${i+1}. ${r.right?'✓':'✗'} Your answer: "${r.userAns}" | Correct: ${r.correctAns}\n`;});const subject=encodeURIComponent(`Math 6 End of Q1 Test — ${name}`);const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+subject+'&body='+encodeURIComponent(body);const w=window.open(gmailUrl,'_blank','noopener,noreferrer');if(!w)window.location.href=gmailUrl;}
+function submitToTeacher(){const f=document.getElementById('fName').value.trim();const l=document.getElementById('lName').value.trim();const cl=document.getElementById('cls').value.trim();if(!f||!l){alert('Enter your first and last name.');return;}const {correct,results}=checkAll();const name=f+' '+l;let body=`Math 6 End of Q1 Test — Graded Submission\nName: ${name}\n`;if(cl)body+=`Class: ${cl}\n`;body+=`Score: ${correct}/20 (${Math.round(correct/20*100)}%)\n\nAnswers:\n`;results.forEach((r,i)=>{body+=`${i+1}. ${r.right?'✓':'✗'} Your answer: "${r.userAns}" | Correct: ${r.correctAns}\n`;});const subject=encodeURIComponent(`Math 6 End of Q1 Test — ${name}`);const gmailUrl='https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+subject+'&body='+encodeURIComponent(body);const w=window.open(gmailUrl,'_blank','noopener,noreferrer');if(!w)window.location.href=gmailUrl;}
 
 function toggleFeedback(){
   const hidden = document.body.classList.toggle('hide-feedback');
