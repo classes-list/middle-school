@@ -358,7 +358,7 @@ function normalizeAns(s) {
   s = String(s || '').trim().toLowerCase();
   if (!s) return '';
   // strip spaces, unify minus signs, remove * and unnecessary parens around fractions
-  s = s.replace(/\s+/g, '').replace(/−/g, '-').replace(/\*/g, '');
+  s = s.replace(/\s+/g, '').replace(/%/g, '').replace(/−/g, '-').replace(/\*/g, '');
   // Handle "y=" prefix — students might type "y = 3x+2"
   s = s.replace(/^y=/, '');
   // (1/2)x → 1/2x
