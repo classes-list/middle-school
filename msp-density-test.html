@@ -272,7 +272,7 @@ function setMode(mode) {
 <li>Formula: D = m/V. Solve for m: m =  <input class="ans" data-a="D × V" size="8"></li>
 <li>Solve for V: V =  <input class="ans" data-a="m ÷ D" size="8"></li>
 <li>A block: 200 g, 40 cm³. Density =  <input class="ans" data-a="5 g/cm³" size="10"></li>
-<li>A liquid: 60 g in 50 mL. Density =  <input class="ans" data-a="1.2 g/" size="9"></li>
+<li>A liquid: 60 g in 50 mL. Density =  <input class="ans" data-a="1.2 g/mL" size="9"></li>
 <li>D = 8, V = 10. Mass =  <input class="ans" data-a="80" size="6"></li>
 <li>D = 2.5, m = 25. Volume =  <input class="ans" data-a="10" size="6"></li>
 <li>D = 1.5, V = 20. Mass =  <input class="ans" data-a="30" size="6"></li>
@@ -282,7 +282,7 @@ function setMode(mode) {
 <li>Ice (D=0.92) in water — sink or float? <input class="ans" data-a="Float" size="8"></li>
 <li>Iron (D=7.9) in water — sink or float? <input class="ans" data-a="Sink" size="7"></li>
 <li>Would ice float in a liquid of D = 0.5? <input class="ans" data-a="No — ice denser than 0.5 → sinks" size="22"></li>
-<li>A yellow rock: 100 g, 20 cm³. Real gold (19.3) or pyrite (5.0)? <input class="ans" data-a="5)" size="6"></li>
+<li>A yellow rock: 100 g, 20 cm³. Real gold (19.3) or pyrite (5.0)? <input class="ans" data-a="Pyrite|pyrite" size="6"></li>
 </ol>
   <script id="graded-pool" type="application/json">
   [{"q": "A block has mass 30 g and volume 6 cm³. Density = (g/cm³)", "a": "5"}, {"q": "A liquid weighs 48 g and has volume 24 mL. Density = (g/mL)", "a": "2"}, {"q": "A rock's mass is 210 g and volume 30 cm³. Density = ", "a": "7"}, {"q": "A cube has density 2 g/cm³ and volume 15 cm³. Mass = (g)", "a": "30"}, {"q": "Density = 4 g/mL, volume = 12 mL. Mass = ", "a": "48"}, {"q": "Density = 8 g/cm³, mass = 40 g. Volume = (cm³)", "a": "5"}, {"q": "Density = 3 g/mL, mass = 27 g. Volume = ", "a": "9"}, {"q": "Object has D = 1.5 g/cm³. Does it sink or float in water (D = 1.0 g/cm³)? ", "a": "sink"}, {"q": "Object has D = 0.6 g/cm³. Sink or float in water? ", "a": "float"}, {"q": "Ice: D = 0.92 g/cm³. Water: 1.0 g/cm³. Ice sinks or floats? ", "a": "float"}, {"q": "Mercury has D = 13.6 g/cm³. Would a lead ball (D = 11.3) sink in mercury? ", "a": "no"}, {"q": "A 100 g gold bar has D = 19.3 g/cm³. Volume (cm³) rounded to 2 dp = ", "a": "5.18"}, {"q": "Aluminum has D = 2.7 g/cm³. Mass of a 50 cm³ block = (g)", "a": "135"}, {"q": "A liquid: 60 g in 40 mL. Density (g/mL) = ", "a": "1.5"}, {"q": "A container holds 500 mL of a liquid with D = 0.8 g/mL. Mass (g) = ", "a": "400"}, {"q": "Two objects have equal mass. One has volume 10 cm³, the other 20 cm³. Which is denser? ", "a": "first"}]
@@ -458,7 +458,7 @@ Submitted from ${location.href}`;
 
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v1: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -506,8 +506,12 @@ Submitted from ${location.href}`;
   }
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
   function extra(user, exp){
-    var list = Array.isArray(exp) ? exp : [exp];
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user);
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);
     for (var i=0;i<list.length;i++){

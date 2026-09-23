@@ -270,13 +270,13 @@ function setMode(mode) {
   </div>
   <ol class="qlist" id="qlist">
   <li>Density formula: D =  <input class="ans" data-a="m ÷ V" size="8"></li>
-<li>A rock: mass 45 g, volume 15 mL. Density =  <input class="ans" data-a="3 g/" size="7"></li>
+<li>A rock: mass 45 g, volume 15 mL. Density =  <input class="ans" data-a="3 g/mL" size="7"></li>
 <li>Density = 8 g/cm³, volume = 10 cm³. Mass =  <input class="ans" data-a="80" size="6"></li>
 <li>Density = 2.5 g/mL, mass = 25 g. Volume =  <input class="ans" data-a="10" size="6"></li>
 <li>Object density 0.8 g/cm³ in water. Sink or float? <input class="ans" data-a="Float" size="8"></li>
 <li>Object density 1.5 g/cm³ in water. Sink or float? <input class="ans" data-a="Sink" size="7"></li>
 <li>Aluminum density is 2.7 g/cm³. Iron is 7.9. Which is denser? <input class="ans" data-a="Iron" size="7"></li>
-<li>Water density =  <input class="ans" data-a="1.0 g/" size="9"></li>
+<li>Water density =  <input class="ans" data-a="1.0 g/mL" size="9"></li>
 <li>1 mL = ___ cm³ <input class="ans" data-a="1" size="6"></li>
 <li>Measured 2.9 g/cm³ vs actual 2.7. %Error =  <input class="ans" data-a="7.4" size="6"></li>
 
@@ -456,7 +456,7 @@ Submitted from ${location.href}`;
 
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v1: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -504,8 +504,12 @@ Submitted from ${location.href}`;
   }
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
   function extra(user, exp){
-    var list = Array.isArray(exp) ? exp : [exp];
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user);
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);
     for (var i=0;i<list.length;i++){
