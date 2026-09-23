@@ -229,16 +229,16 @@ function setMode(mode) {
     <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
   </div>
   <ol class="qlist" id="qlist">
-<li>Joint frequency =  <input class="ans" data-a="specific cel" size="15"></li>
-<li>Marginal = row or col ___ <input class="ans" data-a="tota" size="7"></li>
-<li>Relative freq = divide by ___ <input class="ans" data-a="tota" size="7"></li>
+<li>Joint frequency =  <input class="ans" data-a="specific cell" size="15"></li>
+<li>Marginal = row or col ___ <input class="ans" data-a="total" size="7"></li>
+<li>Relative freq = divide by ___ <input class="ans" data-a="total" size="7"></li>
 <li>Table has 100 total, 30 in cell. Joint =  <input class="ans" data-a="30" size="6"></li>
 <li>Conditional given boy 20 boys total, 8 like X. % X given boy? <input class="ans" data-a="40" size="6"></li>
-<li>Sum of all cells =  <input class="ans" data-a="tota" size="7"></li>
+<li>Sum of all cells =  <input class="ans" data-a="total" size="7"></li>
 <li>% of a cell (out of grand total) if cell = 25, total = 100 <input class="ans" data-a="25" size="6"></li>
 <li>Given female pop of 40, 20 like sports. % female who like sports? <input class="ans" data-a="50" size="6"></li>
 <li>If 60 boys, 40 girls total 100 → % boys? <input class="ans" data-a="60" size="6"></li>
-<li>Two-way table shows relationship between two ___ variables <input class="ans" data-a="categorica" size="13"></li>
+<li>Two-way table shows relationship between two ___ variables <input class="ans" data-a="categorical" size="13"></li>
 
 </ol>
   <script id="graded-pool" type="application/json">
@@ -413,7 +413,7 @@ Submitted from ${location.href}`;
 
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v1: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -461,8 +461,12 @@ Submitted from ${location.href}`;
   }
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
   function extra(user, exp){
-    var list = Array.isArray(exp) ? exp : [exp];
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user);
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);
     for (var i=0;i<list.length;i++){
