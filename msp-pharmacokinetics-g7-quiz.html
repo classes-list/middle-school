@@ -229,14 +229,14 @@ function setMode(mode) {
     <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
   </div>
   <ol class="qlist" id="qlist">
-<li>Half-life = time for ___ of drug to be eliminated <input class="ans" data-a="hal" size="6"></li>
-<li>Start 400 mg, HL 4 hr. After 4 hr? <input class="ans" data-a="200 m" size="8"></li>
-<li>After 8 hr? <input class="ans" data-a="100 m" size="8"></li>
-<li>After 12 hr? <input class="ans" data-a="50 m" size="7"></li>
-<li>After 16 hr? <input class="ans" data-a="25 m" size="7"></li>
+<li>Half-life = time for ___ of drug to be eliminated <input class="ans" data-a="half" size="6"></li>
+<li>Start 400 mg, HL 4 hr. After 4 hr? <input class="ans" data-a="200 mg" size="8"></li>
+<li>After 8 hr? <input class="ans" data-a="100 mg" size="8"></li>
+<li>After 12 hr? <input class="ans" data-a="50 mg" size="7"></li>
+<li>After 16 hr? <input class="ans" data-a="25 mg" size="7"></li>
 <li>Fraction after 3 half-lives? <input class="ans" data-a="1/8" size="6"></li>
 <li>% remaining after 4 HL? <input class="ans" data-a="6.25" size="7"></li>
-<li>Start 200 mg, HL 5 hr. After 10 hr? <input class="ans" data-a="50 m" size="7"></li>
+<li>Start 200 mg, HL 5 hr. After 10 hr? <input class="ans" data-a="50 mg" size="7"></li>
 <li>Aspirin HL 3 hr. Fraction remaining at 9 hr? <input class="ans" data-a="1/8" size="6"></li>
 <li>How long until 1/16 of original remains? (in half-lives) <input class="ans" data-a="4" size="6"></li>
 
@@ -413,7 +413,7 @@ Submitted from ${location.href}`;
 
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v1: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -461,8 +461,12 @@ Submitted from ${location.href}`;
   }
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
   function extra(user, exp){
-    var list = Array.isArray(exp) ? exp : [exp];
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user);
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);
     for (var i=0;i<list.length;i++){
