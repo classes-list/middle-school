@@ -121,13 +121,24 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 <h2>2️⃣ Mean and Range</h2>
 <div class="intro"><strong>Mean</strong> = average = sum ÷ count. <strong>Range</strong> = max − min.</div>
 <h3>Practice:</h3>
-<ol class="qlist">
+<div style="display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap"><div style="flex:1 1 360px;min-width:0"><ol class="qlist">
 <li>Data: 4, 6, 8, 10, 12. Mean? <input class="ans" data-a="8" size="6"></li>
 <li>Same. Range? <input class="ans" data-a="8" size="6"></li>
 <li>Data: 20, 25, 30, 35, 40. Mean? <input class="ans" data-a="30" size="6"></li>
 <li>Same. Range? <input class="ans" data-a="20" size="6"></li>
 <li>Data: 5, 5, 10, 15. Mean? <input class="ans" data-a="8.75" size="7"></li>
-</ol>
+</ol></div><div class="mini-calc" id="mc2" aria-label="addition and division calculator">
+<div class="mc-title">&#129518; Calculator (+ and &divide;)</div>
+<div class="mc-expr" id="mc2-expr">&nbsp;</div>
+<input class="mc-disp" id="mc2-disp" type="text" value="0" readonly aria-label="calculator display">
+<div class="mc-grid">
+<button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button><button type="button" data-k="/" class="mc-op">&divide;</button>
+<button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button><button type="button" data-k="+" class="mc-op">+</button>
+<button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button><button type="button" data-k="=" class="mc-eq" style="grid-row:span 2">=</button>
+<button type="button" data-k="0" style="grid-column:span 2">0</button><button type="button" data-k=".">.</button>
+<button type="button" data-k="C" class="mc-clr" style="grid-column:span 2">C</button><button type="button" data-k="B" class="mc-clr" style="grid-column:span 2">&#9003;</button>
+</div>
+</div></div>
 <button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
 <div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) 8 (2) 8 (3) 30 (4) 20 (5) 8.75</div>
 </section>
@@ -470,5 +481,46 @@ document.addEventListener('keydown', function(e){
   });
 })();
 
+</script>
+<style>
+.mini-calc{flex:0 0 210px;background:#f8fafc;border:2px solid #cbd5e1;border-radius:12px;padding:10px;font-family:inherit}
+.mini-calc .mc-title{font-weight:800;font-size:.85rem;color:#334155;margin-bottom:6px}
+.mini-calc .mc-expr{font-size:.78rem;color:#64748b;min-height:1.1em;text-align:right;overflow:hidden;white-space:nowrap}
+.mini-calc .mc-disp{width:100%;box-sizing:border-box;font-size:1.3rem;font-weight:800;text-align:right;padding:6px 8px;border:1.5px solid #94a3b8;border-radius:8px;background:#fff;margin-bottom:8px}
+.mini-calc .mc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.mini-calc button{padding:8px 0;font-size:1rem;font-weight:800;border:1.5px solid #94a3b8;border-radius:8px;background:#fff;cursor:pointer;color:#1e293b}
+.mini-calc button:active{transform:translateY(1px)}
+.mini-calc .mc-op{background:#e0f2fe;border-color:#0284c7}
+.mini-calc .mc-eq{background:#16a34a;border-color:#15803d;color:#fff}
+.mini-calc .mc-clr{background:#f1f5f9;font-size:.9rem}
+@media print{.mini-calc{display:none}}
+</style>
+<script>
+/* Mini + / ÷ calculator (division before addition, like real math). */
+(function(){
+  function setup(){
+    var box=document.getElementById('mc2'); if(!box) return;
+    var disp=document.getElementById('mc2-disp'), ex=document.getElementById('mc2-expr');
+    var expr='', justEq=false;
+    function show(){ disp.value = expr === '' ? '0' : expr.replace(/\//g,'\u00f7'); }
+    function fmt(n){ return String(Math.round(n*10000)/10000); }
+    function evaluate(s){
+      var terms=s.split('+'), total=0;
+      for (var i=0;i<terms.length;i++){ var f=terms[i].split('/'); if(f.some(function(x){return x===''||isNaN(Number(x));})) return null; var v=Number(f[0]); for(var j=1;j<f.length;j++){ if(Number(f[j])===0) return 'div0'; v/=Number(f[j]); } total+=v; }
+      return total;
+    }
+    box.querySelectorAll('button[data-k]').forEach(function(b){ b.addEventListener('click',function(){
+      var k=b.getAttribute('data-k'), last=expr.slice(-1);
+      if(k==='C'){ expr=''; ex.innerHTML='&nbsp;'; justEq=false; show(); return; }
+      if(k==='B'){ expr=expr.slice(0,-1); justEq=false; show(); return; }
+      if(k==='='){ if(!expr) return; var r=evaluate(expr); if(r===null){ disp.value='Error'; return; } if(r==='div0'){ disp.value='Can\'t \u00f7 0'; return; } ex.textContent=expr.replace(/\//g,' \u00f7 ').replace(/\+/g,' + ')+' ='; expr=fmt(r); justEq=true; show(); return; }
+      if(k==='+'||k==='/'){ if(expr===''||last==='+'||last==='/') return; expr+=k; justEq=false; show(); return; }
+      if(justEq){ expr=''; ex.innerHTML='&nbsp;'; justEq=false; }
+      if(k==='.'){ var seg=expr.split(/[+\/]/).pop(); if(seg.indexOf('.')>=0) return; if(seg==='') expr+='0'; }
+      expr+=k; show();
+    }); });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',setup); else setup();
+})();
 </script>
 </body></html>
