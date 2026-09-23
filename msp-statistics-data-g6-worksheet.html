@@ -127,15 +127,15 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 <li>Data: 20, 25, 30, 35, 40. Mean? <input class="ans" data-a="30" size="6"></li>
 <li>Same. Range? <input class="ans" data-a="20" size="6"></li>
 <li>Data: 5, 5, 10, 15. Mean? <input class="ans" data-a="8.75" size="7"></li>
-</ol></div><div class="mini-calc" id="mc2" aria-label="addition and division calculator">
-<div class="mc-title">&#129518; Calculator (+ and &divide;)</div>
+</ol></div><div class="mini-calc" id="mc2" aria-label="addition, subtraction and division calculator">
+<div class="mc-title">&#129518; Calculator (+ &minus; &divide;)</div>
 <div class="mc-expr" id="mc2-expr">&nbsp;</div>
 <input class="mc-disp" id="mc2-disp" type="text" value="0" readonly aria-label="calculator display">
 <div class="mc-grid">
 <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button><button type="button" data-k="/" class="mc-op">&divide;</button>
-<button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button><button type="button" data-k="+" class="mc-op">+</button>
-<button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button><button type="button" data-k="=" class="mc-eq" style="grid-row:span 2">=</button>
-<button type="button" data-k="0" style="grid-column:span 2">0</button><button type="button" data-k=".">.</button>
+<button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button><button type="button" data-k="-" class="mc-op">&minus;</button>
+<button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button><button type="button" data-k="+" class="mc-op">+</button>
+<button type="button" data-k="0">0</button><button type="button" data-k=".">.</button><button type="button" data-k="=" class="mc-eq" style="grid-column:span 2">=</button>
 <button type="button" data-k="C" class="mc-clr" style="grid-column:span 2">C</button><button type="button" data-k="B" class="mc-clr" style="grid-column:span 2">&#9003;</button>
 </div>
 </div></div>
@@ -496,27 +496,28 @@ document.addEventListener('keydown', function(e){
 @media print{.mini-calc{display:none}}
 </style>
 <script>
-/* Mini + / ÷ calculator (division before addition, like real math). */
+/* Mini + / − / ÷ calculator (division before addition/subtraction, like real math). */
 (function(){
   function setup(){
     var box=document.getElementById('mc2'); if(!box) return;
     var disp=document.getElementById('mc2-disp'), ex=document.getElementById('mc2-expr');
     var expr='', justEq=false;
-    function show(){ disp.value = expr === '' ? '0' : expr.replace(/\//g,'\u00f7'); }
+    function show(){ disp.value = expr === '' ? '0' : expr.replace(/\//g,'\u00f7').replace(/(\d|\.)-/g,'$1\u2212'); }
     function fmt(n){ return String(Math.round(n*10000)/10000); }
     function evaluate(s){
-      var terms=s.split('+'), total=0;
-      for (var i=0;i<terms.length;i++){ var f=terms[i].split('/'); if(f.some(function(x){return x===''||isNaN(Number(x));})) return null; var v=Number(f[0]); for(var j=1;j<f.length;j++){ if(Number(f[j])===0) return 'div0'; v/=Number(f[j]); } total+=v; }
+      var parts=s.match(/[+\-]?[^+\-]+/g); if(!parts || parts.join('')!==s) return null;
+      var total=0;
+      for (var i=0;i<parts.length;i++){ var sign=1, p=parts[i]; if(p[0]==='+'){p=p.slice(1);} else if(p[0]==='-'){sign=-1;p=p.slice(1);} var f=p.split('/'); if(f.some(function(x){return x===''||isNaN(Number(x));})) return null; var v=Number(f[0]); for(var j=1;j<f.length;j++){ if(Number(f[j])===0) return 'div0'; v/=Number(f[j]); } total+=sign*v; }
       return total;
     }
     box.querySelectorAll('button[data-k]').forEach(function(b){ b.addEventListener('click',function(){
       var k=b.getAttribute('data-k'), last=expr.slice(-1);
       if(k==='C'){ expr=''; ex.innerHTML='&nbsp;'; justEq=false; show(); return; }
       if(k==='B'){ expr=expr.slice(0,-1); justEq=false; show(); return; }
-      if(k==='='){ if(!expr) return; var r=evaluate(expr); if(r===null){ disp.value='Error'; return; } if(r==='div0'){ disp.value='Can\'t \u00f7 0'; return; } ex.textContent=expr.replace(/\//g,' \u00f7 ').replace(/\+/g,' + ')+' ='; expr=fmt(r); justEq=true; show(); return; }
-      if(k==='+'||k==='/'){ if(expr===''||last==='+'||last==='/') return; expr+=k; justEq=false; show(); return; }
+      if(k==='='){ if(!expr) return; var r=evaluate(expr); if(r===null){ disp.value='Error'; return; } if(r==='div0'){ disp.value='Can\'t \u00f7 0'; return; } ex.textContent=expr.replace(/\//g,' \u00f7 ').replace(/\+/g,' + ').replace(/(\d|\.)-/g,'$1 \u2212 ')+' ='; expr=fmt(r); justEq=true; show(); return; }
+      if(k==='+'||k==='/'||k==='-'){ if(expr===''||last==='+'||last==='/'||last==='-') return; expr+=k; justEq=false; show(); return; }
       if(justEq){ expr=''; ex.innerHTML='&nbsp;'; justEq=false; }
-      if(k==='.'){ var seg=expr.split(/[+\/]/).pop(); if(seg.indexOf('.')>=0) return; if(seg==='') expr+='0'; }
+      if(k==='.'){ var seg=expr.split(/[+\-\/]/).pop(); if(seg.indexOf('.')>=0) return; if(seg==='') expr+='0'; }
       expr+=k; show();
     }); });
   }
