@@ -229,16 +229,16 @@ function setMode(mode) {
     <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
   </div>
   <ol class="qlist" id="qlist">
-<li>Symbol for 'greater than'  <input class="ans" data-a="&amp;gt;" size="7"></li>
+<li>Symbol for 'greater than'  <input class="ans" data-a="&gt;" size="7"></li>
 <li>Symbol for 'at least'  <input class="ans" data-a="≥" size="6"></li>
-<li>x + 2 &gt; 5. Solve. <input class="ans" data-a="x &amp;gt; 3" size="11"></li>
-<li>x − 4 &lt; 3. Solve. <input class="ans" data-a="x &amp;lt; 7" size="11"></li>
+<li>x + 2 &gt; 5. Solve. <input class="ans" data-a="x &gt; 3" size="11"></li>
+<li>x − 4 &lt; 3. Solve. <input class="ans" data-a="x &lt; 7" size="11"></li>
 <li>3x ≥ 12. Solve. <input class="ans" data-a="x ≥ 4" size="8"></li>
-<li>x/2 &lt; 5. Solve. <input class="ans" data-a="x &amp;lt; 10" size="12"></li>
+<li>x/2 &lt; 5. Solve. <input class="ans" data-a="x &lt; 10" size="12"></li>
 <li>Open or closed circle for &lt;? <input class="ans" data-a="open" size="7"></li>
 <li>'At most 20' → inequality? <input class="ans" data-a="x ≤ 20" size="9"></li>
 <li>'At least $5' → inequality? <input class="ans" data-a="x ≥ 5" size="8"></li>
-<li>Graph type for x ≥ 4? <input class="ans" data-a="closed circle at 4, arrow right" size="22"></li>
+<li>Graph x ≥ 4 on the number line. <span style="display:block;font-size:.85rem;color:#475569">Click the line to place the circle, choose open or closed, then choose the arrow direction.</span><input class="ans" type="hidden" data-a="closed 4 right"><div class="nl-widget"></div></li>
 
 </ol>
   <script id="graded-pool" type="application/json">
@@ -413,7 +413,7 @@ Submitted from ${location.href}`;
 
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v3: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -462,10 +462,20 @@ Submitted from ${location.href}`;
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
   function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
   function extra(user, exp){
     var list0 = Array.isArray(exp) ? exp : [exp], list = [];
     for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
-    var uN = tnorm(user);
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
     for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);
@@ -502,4 +512,66 @@ Submitted from ${location.href}`;
 })();
 </script>
 
+<style>
+.nl-widget{margin:8px 0 4px 0;padding:10px 12px;border:2px solid #cbd5e1;border-radius:10px;background:#f8fafc;max-width:560px}
+.nl-widget.nl-correct{border-color:#16a34a;background:#f0fdf4}
+.nl-widget.nl-wrong{border-color:#dc2626;background:#fef2f2}
+.nl-widget svg{width:100%;height:auto;display:block;cursor:crosshair;touch-action:manipulation}
+.nl-ctrls{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;align-items:center}
+.nl-ctrls button{padding:5px 10px;border:1.5px solid #94a3b8;border-radius:6px;background:#fff;font-weight:700;font-size:.85rem;cursor:pointer;color:#1e293b}
+.nl-ctrls button.on{background:#2563eb;border-color:#2563eb;color:#fff}
+.nl-status{font-size:.85rem;color:#475569;margin-left:4px}
+.nl-help{font-size:.85rem;color:#475569;margin:0 0 6px 0}
+@media print{.nl-ctrls button{display:none}}
+</style>
+<script>
+/* MSOS number-line graphing widget: click the line to place the circle, pick open/closed and arrow direction.
+   Answer stored in the hidden input as "open 3 right" so the normal Check / Save / Load / Clear buttons work. */
+(function(){
+  var MIN=-8, MAX=8, W=560, H=78, PAD=26, Y=34, NS='http://www.w3.org/2000/svg';
+  function xOf(v){ return PAD + (v-MIN)*(W-2*PAD)/(MAX-MIN); }
+  function el(tag, attrs, parent){ var e=document.createElementNS(NS,tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function parseVal(v){ var m=String(v||'').trim().match(/^(open|closed)\s+(-?\d+)\s+(left|right)$/i); return m ? {type:m[1].toLowerCase(), pt:Number(m[2]), dir:m[3].toLowerCase()} : {type:null, pt:null, dir:null}; }
+  function build(w){
+    if (w._nlBuilt) return; var inp = w.previousElementSibling; if (!inp || !inp.classList.contains('ans')) return; w._nlBuilt = true;
+    var st = parseVal(inp.value);
+    w.innerHTML = '';
+    var svg = el('svg', {viewBox:'0 0 '+W+' '+H, role:'img', 'aria-label':'number line'}, w);
+    var ctr = document.createElement('div'); ctr.className='nl-ctrls'; w.appendChild(ctr);
+    function btn(label, key, val){ var b=document.createElement('button'); b.type='button'; b.textContent=label; b.onclick=function(){ st[key]=val; commit(); }; b._k=key; b._v=val; ctr.appendChild(b); return b; }
+    var btns=[btn('○ Open circle','type','open'), btn('● Closed circle','type','closed'), btn('← Arrow left','dir','left'), btn('Arrow right →','dir','right')];
+    var clr=document.createElement('button'); clr.type='button'; clr.textContent='↺ Redo'; clr.onclick=function(){ st={type:null,pt:null,dir:null}; commit(); }; ctr.appendChild(clr);
+    var status=document.createElement('span'); status.className='nl-status'; ctr.appendChild(status);
+    function draw(){
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      el('line',{x1:6,y1:Y,x2:W-6,y2:Y,stroke:'#334155','stroke-width':2},svg);
+      el('polygon',{points:'2,'+Y+' 12,'+(Y-5)+' 12,'+(Y+5),fill:'#334155'},svg);
+      el('polygon',{points:(W-2)+','+Y+' '+(W-12)+','+(Y-5)+' '+(W-12)+','+(Y+5),fill:'#334155'},svg);
+      for (var v=MIN; v<=MAX; v++){ var x=xOf(v); el('line',{x1:x,y1:Y-6,x2:x,y2:Y+6,stroke:'#334155','stroke-width':v===0?2.5:1.5},svg); var t=el('text',{x:x,y:Y+24,'text-anchor':'middle','font-size':13,'font-family':'Segoe UI, Arial, sans-serif',fill:'#334155','font-weight':v===0?'700':'400'},svg); t.textContent=v<0?'−'+(-v):String(v); }
+      if (st.pt!==null && st.dir){
+        var x0=xOf(st.pt), x1=st.dir==='right'?W-10:10;
+        el('line',{x1:x0,y1:Y,x2:x1+(st.dir==='right'?-8:8),y2:Y,stroke:'#2563eb','stroke-width':6,'stroke-linecap':'butt'},svg);
+        el('polygon',{points: st.dir==='right' ? (W-4)+','+Y+' '+(W-18)+','+(Y-9)+' '+(W-18)+','+(Y+9) : '4,'+Y+' 18,'+(Y-9)+' 18,'+(Y+9), fill:'#2563eb'},svg);
+      }
+      if (st.pt!==null){
+        el('circle',{cx:xOf(st.pt),cy:Y,r:8,fill: st.type==='closed'?'#2563eb':'#fff',stroke: st.type?'#2563eb':'#94a3b8','stroke-width':3,'stroke-dasharray': st.type?'':'3,2'},svg);
+      }
+      btns.forEach(function(b){ b.classList.toggle('on', st[b._k]===b._v); });
+      var need=[]; if (st.pt===null) need.push('click the line to place the circle'); if (!st.type) need.push('choose open or closed'); if (!st.dir) need.push('choose the arrow direction');
+      status.textContent = need.length ? ('Next: '+need.join(', ')+'.') : ((st.type==='open'?'Open':'Closed')+' circle at '+st.pt+', arrow '+st.dir+'.');
+    }
+    function commit(){ inp.value = (st.type && st.pt!==null && st.dir) ? (st.type+' '+st.pt+' '+st.dir) : ''; w._last = inp.value; inp.classList.remove('correct','wrong'); draw(); }
+    svg.addEventListener('click', function(e){
+      var r=svg.getBoundingClientRect(); var sx=(e.clientX-r.left)*W/r.width;
+      var v=Math.round(MIN+(sx-PAD)*(MAX-MIN)/(W-2*PAD)); st.pt=Math.max(MIN,Math.min(MAX,v)); commit();
+    });
+    w._last = inp.value; draw();
+    var iv = setInterval(function(){ if (!document.body.contains(w)) { clearInterval(iv); return; } if (inp.value !== w._last){ w._last=inp.value; st=parseVal(inp.value); draw(); } }, 400);
+    new MutationObserver(function(){ w.classList.toggle('nl-correct', inp.classList.contains('correct')); w.classList.toggle('nl-wrong', inp.classList.contains('wrong')); }).observe(inp,{attributes:true,attributeFilter:['class']});
+  }
+  function init(){ document.querySelectorAll('.nl-widget').forEach(build); }
+  var pend=null; new MutationObserver(function(){ if (pend) return; pend=setTimeout(function(){ pend=null; init(); }, 50); }).observe(document.documentElement,{childList:true,subtree:true});
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
 </body></html>

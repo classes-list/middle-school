@@ -228,20 +228,20 @@ function setMode(mode) {
     <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
   </div>
   <ol class="qlist" id="qlist">
-<li>'greater than' symbol <input class="ans" data-a="&amp;gt;" size="7"></li>
-<li>'less than' symbol <input class="ans" data-a="&amp;lt;" size="7"></li>
+<li>'greater than' symbol <input class="ans" data-a="&gt;" size="7"></li>
+<li>'less than' symbol <input class="ans" data-a="&lt;" size="7"></li>
 <li>'at least' symbol <input class="ans" data-a="≥" size="6"></li>
 <li>'at most' symbol <input class="ans" data-a="≤" size="6"></li>
-<li>x + 5 &gt; 12 <input class="ans" data-a="x &amp;gt; 7" size="11"></li>
-<li>x − 3 &lt; 4 <input class="ans" data-a="x &amp;lt; 7" size="11"></li>
+<li>x + 5 &gt; 12 <input class="ans" data-a="x &gt; 7" size="11"></li>
+<li>x − 3 &lt; 4 <input class="ans" data-a="x &lt; 7" size="11"></li>
 <li>5x ≥ 20 <input class="ans" data-a="x ≥ 4" size="8"></li>
-<li>x/4 &lt; 3 <input class="ans" data-a="x &amp;lt; 12" size="12"></li>
-<li>2x &gt; 10 <input class="ans" data-a="x &amp;gt; 5" size="11"></li>
+<li>x/4 &lt; 3 <input class="ans" data-a="x &lt; 12" size="12"></li>
+<li>2x &gt; 10 <input class="ans" data-a="x &gt; 5" size="11"></li>
 <li>x + 8 ≤ 15 <input class="ans" data-a="x ≤ 7" size="8"></li>
 <li>x − 6 ≥ 0 <input class="ans" data-a="x ≥ 6" size="8"></li>
 <li>x/3 ≥ 5 <input class="ans" data-a="x ≥ 15" size="9"></li>
-<li>Open circle for &lt; or ≤? <input class="ans" data-a="open" size="7"></li>
-<li>Closed circle for &gt; or ≥? <input class="ans" data-a="closed" size="9"></li>
+<li>Open circle for &lt; or ≤? <input class="ans" data-a="&lt;|less than" size="7"></li>
+<li>Closed circle for &gt; or ≥? <input class="ans" data-a="≥|&gt;=|greater than or equal to|greater than or equal" size="9"></li>
 <li>'At most 100 people' →  <input class="ans" data-a="p ≤ 100" size="10"></li>
 </ol>
   <script id="graded-pool" type="application/json">
@@ -416,7 +416,7 @@ Submitted from ${location.href}`;
 
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v3: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -465,10 +465,20 @@ Submitted from ${location.href}`;
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
   function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
   function extra(user, exp){
     var list0 = Array.isArray(exp) ? exp : [exp], list = [];
     for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
-    var uN = tnorm(user);
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
     for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);

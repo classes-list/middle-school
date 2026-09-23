@@ -108,9 +108,9 @@ const QUESTIONS_P = [
   {q:'Write 82,000,000 in scientific notation.',ans:['8.2 × 10^7','8.2e7']},
   {q:'(3 × 10^4)(2 × 10^3) in scientific notation.',ans:['6 × 10^7','6e7']},
   {q:'Is y = 3x proportional? (Yes/No)',ans:['Yes','yes','y']},
-  {q:'Find k in y = kx if (3, 12) on line.',ans:'4'},
-  {q:'y = 5x. x = 8. y?',ans:'40'},
-  {q:'Table (2, 6), (3, 9), (4, 12). Proportional? k = ?',ans:'3'},
+  {q:'Use k = y/x to find k for the point (3, 12).',ans:'4'},
+  {q:'k = y/x = 5. If x = 8, find y.',ans:'40'},
+  {q:'Table (2, 6), (3, 9), (4, 12). Use k = y/x. k = ?',ans:'3'},
   {q:'Unit rate: 300 mi in 5 hrs = ? mph',ans:'60',unit:'mph'},
   {q:'2/3 mi in 1/4 hr = ? mph',ans:['8/3','2.67','2 2/3']},
   {q:'4 lb costs $10. 1 lb costs?',ans:['2.50','2.5','$2.50']},
@@ -121,7 +121,7 @@ const QUESTIONS_P = [
   {q:'6 ft person drawn 3 in tall. Scale?',ans:['1 in : 2 ft','1:24']},
   {q:'Truck 1:20. Real 6 m long. Model length?',ans:'30',unit:'cm'}
 ];
-const QUESTIONS_G = [{"q": "Convert 5.6 km to mm.", "ans": ["5600000", "5,600,000"], "unit": "mm"}, {"q": "Convert 320 mg to grams.", "ans": ["0.32", ".32"], "unit": "g"}, {"q": "Convert 1.6 L to mL.", "ans": "1600", "unit": "mL"}, {"q": "Convert 4500 cm to km.", "ans": ["0.045", ".045"], "unit": "km"}, {"q": "Write 3.2 × 10^-2 in standard form.", "ans": "0.032"}, {"q": "Write 47,000,000 in scientific notation.", "ans": ["4.7 × 10^7", "4.7e7"]}, {"q": "(4 × 10^5)(2 × 10^2). In scientific notation.", "ans": ["8 × 10^7", "8e7"]}, {"q": "Is y = 2x + 3 proportional? (Yes/No)", "ans": ["No", "no", "n"]}, {"q": "Find k in y = kx if (4, 20).", "ans": "5"}, {"q": "y = 6x. x = 7. y?", "ans": "42"}, {"q": "Table (2, 10), (3, 15), (4, 20). k?", "ans": "5"}, {"q": "240 mi in 4 hrs. mph?", "ans": "60", "unit": "mph"}, {"q": "3/4 mi in 1/2 hr. mph?", "ans": "1.5", "unit": "mph"}, {"q": "5 lb costs $12.50. 1 lb?", "ans": ["2.50", "2.5", "$2.50"]}, {"q": "2 cups per 12 cookies. Cups for 36?", "ans": "6", "unit": "cups"}, {"q": "Scale 1 in = 8 ft. Drawing 5 in. Actual?", "ans": "40", "unit": "ft"}, {"q": "Map 1 cm : 4 km. 15 cm. Actual?", "ans": "60", "unit": "km"}, {"q": "Blueprint 1:50. Room 4 m. Drawing length?", "ans": "8", "unit": "cm"}, {"q": "5 ft person drawn 2 in tall. Scale?", "ans": ["1 in : 2.5 ft", "1:30"]}, {"q": "Boat 1:25. Real 5 m. Model length?", "ans": "20", "unit": "cm"}];
+const QUESTIONS_G = [{"q": "Convert 5.6 km to mm.", "ans": ["5600000", "5,600,000"], "unit": "mm"}, {"q": "Convert 320 mg to grams.", "ans": ["0.32", ".32"], "unit": "g"}, {"q": "Convert 1.6 L to mL.", "ans": "1600", "unit": "mL"}, {"q": "Convert 4500 cm to km.", "ans": ["0.045", ".045"], "unit": "km"}, {"q": "Write 3.2 × 10^-2 in standard form.", "ans": "0.032"}, {"q": "Write 47,000,000 in scientific notation.", "ans": ["4.7 × 10^7", "4.7e7"]}, {"q": "(4 × 10^5)(2 × 10^2). In scientific notation.", "ans": ["8 × 10^7", "8e7"]}, {"q": "Is y = 2x + 3 proportional? (Yes/No)", "ans": ["No", "no", "n"]}, {"q": "Use k = y/x to find k for the point (4, 20).", "ans": "5"}, {"q": "k = y/x = 6. If x = 7, find y.", "ans": "42"}, {"q": "Table (2, 10), (3, 15), (4, 20). Use k = y/x. k = ?", "ans": "5"}, {"q": "240 mi in 4 hrs. mph?", "ans": "60", "unit": "mph"}, {"q": "3/4 mi in 1/2 hr. mph?", "ans": "1.5", "unit": "mph"}, {"q": "5 lb costs $12.50. 1 lb?", "ans": ["2.50", "2.5", "$2.50"]}, {"q": "2 cups per 12 cookies. Cups for 36?", "ans": "6", "unit": "cups"}, {"q": "Scale 1 in = 8 ft. Drawing 5 in. Actual?", "ans": "40", "unit": "ft"}, {"q": "Map 1 cm : 4 km. 15 cm. Actual?", "ans": "60", "unit": "km"}, {"q": "Blueprint 1:50. Room 4 m. Drawing length?", "ans": "8", "unit": "cm"}, {"q": "5 ft person drawn 2 in tall. Scale?", "ans": ["1 in : 2.5 ft", "1:30"]}, {"q": "Boat 1:25. Real 5 m. Model length?", "ans": "20", "unit": "cm"}];
 const QUESTIONS = getMode()==='graded' ? QUESTIONS_G : QUESTIONS_P;
 function getMode(){const p=new URLSearchParams(window.location.search);return p.get('mode')==='graded'?'graded':'practice';}
 function renderQuestions(){const c=document.getElementById('questions');c.innerHTML='';QUESTIONS.forEach((q,i)=>{const card=document.createElement('div');card.className='q-card';card.id='q'+i;card.innerHTML=`<div class="q-text"><span class="q-num">${i+1}</span>${q.q}</div><div class="q-input"><input type="text" id="ans${i}" placeholder="Your answer">${q.unit?`<span class="unit">${q.unit}</span>`:''}</div><div class="q-feedback" id="fb${i}"></div>`;c.appendChild(card);});}
@@ -142,7 +142,7 @@ function applyMode(){const m=getMode();const e=document.getElementById('modeEyeb
 renderQuestions();applyMode();
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v3: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -191,10 +191,20 @@ renderQuestions();applyMode();
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
   function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
   function extra(user, exp){
     var list0 = Array.isArray(exp) ? exp : [exp], list = [];
     for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
-    var uN = tnorm(user);
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
     for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);
