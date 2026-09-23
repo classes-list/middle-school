@@ -127,7 +127,7 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 <li>Age of car (years) vs. resale value ($) — association? <input class="ans" data-a="Negative" size="11"></li>
 <li>Shoe size vs. IQ — expected association? <input class="ans" data-a="None" size="7"></li>
 <li>Height vs. weight — association? <input class="ans" data-a="Positive" size="11"></li>
-<li>Water depth vs. temperature — association? <input class="ans" data-a="colder)" size="10"></li>
+<li>Water depth vs. temperature — association? <input class="ans" data-a="Negative" size="10"></li>
 </ol>
 <table class="rules"><tr><th>Pattern</th><th>What it means</th></tr><tr><td class="pos">Positive</td><td>As x ↑, y ↑ (dots go up left → right)</td></tr><tr><td class="neg">Negative</td><td>As x ↑, y ↓ (dots go down left → right)</td></tr><tr><td>None</td><td>No clear pattern — random cloud of dots</td></tr><tr><td>Linear</td><td>Dots roughly follow a straight line</td></tr><tr><td>Nonlinear</td><td>Dots follow a curve</td></tr></table>
 <button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
@@ -306,7 +306,7 @@ document.addEventListener('keydown', function(e){
 
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v1: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -354,8 +354,12 @@ document.addEventListener('keydown', function(e){
   }
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
   function extra(user, exp){
-    var list = Array.isArray(exp) ? exp : [exp];
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user);
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);
     for (var i=0;i<list.length;i++){

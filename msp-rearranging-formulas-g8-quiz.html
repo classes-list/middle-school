@@ -229,14 +229,14 @@ function setMode(mode) {
     <input type="text" id="student-period" placeholder="e.g. 7A" style="max-width:120px;">
   </div>
   <ol class="qlist" id="qlist">
-<li>A = lw. Solve for w. <input class="ans" data-a="A/" size="6"></li>
+<li>A = lw. Solve for w. <input class="ans" data-a="A/l" size="6"></li>
 <li>d = rt. Solve for r. <input class="ans" data-a="d/t" size="6"></li>
 <li>F = ma. Solve for m. <input class="ans" data-a="F/a" size="6"></li>
 <li>V = IR. Solve for R. <input class="ans" data-a="V/I" size="6"></li>
 <li>P = 2l + 2w. Solve for l. <input class="ans" data-a="(P − 2w)/2" size="13"></li>
 <li>y = mx + b. Solve for b. <input class="ans" data-a="y − mx" size="9"></li>
 <li>F = 9/5 C + 32. Solve for C. <input class="ans" data-a="5/9" size="6"></li>
-<li>A = πr². Solve for r. <input class="ans" data-a="√" size="6"></li>
+<li>A = πr². Solve for r. <input class="ans" data-a="√(A/π)|√A/π" size="6"></li>
 <li>If d = 300, r = 50. t =  <input class="ans" data-a="6" size="6"></li>
 <li>If F = 120, a = 6. m =  <input class="ans" data-a="20" size="6"></li>
 
@@ -413,7 +413,7 @@ Submitted from ${location.href}`;
 
 </script>
 <script>
-/* MSOS-LENIENT-GRADING v1: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+/* MSOS-LENIENT-GRADING v2: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
 (function(){
   if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
   window.__msosLenient = true;
@@ -461,8 +461,12 @@ Submitted from ${location.href}`;
   }
   function isTimes(r){ return /^(\*|times?)$/i.test(r); }
   function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
   function extra(user, exp){
-    var list = Array.isArray(exp) ? exp : [exp];
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user);
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
     var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
     var u = parse(user);
     for (var i=0;i<list.length;i++){
