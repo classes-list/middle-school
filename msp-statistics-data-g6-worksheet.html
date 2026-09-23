@@ -130,8 +130,8 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 </ol></div><div class="mini-calc" id="mc2" aria-label="addition, subtraction and division calculator">
 <div class="mc-title">&#129518; Calculator (+ &minus; &divide;)</div>
 <div class="mc-expr" id="mc2-expr">&nbsp;</div>
-<input class="mc-disp" id="mc2-disp" type="text" value="" placeholder="Type here" inputmode="decimal" autocomplete="off" aria-label="calculator display">
-<div class="mc-hint">Type numbers with + &minus; / then press Enter.</div>
+<input class="mc-disp" id="mc2-disp" value="0" inputmode="decimal" autocomplete="off" aria-label="calculator display">
+<div class="mc-hint">Click the box, type numbers with + &minus; /, then press Enter.</div>
 <div class="mc-grid">
 <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button><button type="button" data-k="/" class="mc-op">&divide;</button>
 <button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button><button type="button" data-k="-" class="mc-op">&minus;</button>
@@ -520,29 +520,34 @@ document.addEventListener('keydown', function(e){
       if(r===null){ ex.textContent='Check your problem'; return; }
       if(r==='div0'){ ex.textContent="Can't divide by 0"; return; }
       ex.textContent=pretty(s).replace(/([+\u00f7\u2212])/g,' $1 ')+' =';
-      disp.value=fmt(r); justEq=true;
+      disp.value=fmt(r); justEq=true; toEnd();
     }
-    function clearAll(){ disp.value=''; ex.innerHTML='&nbsp;'; justEq=false; }
+    function clearAll(){ disp.value='0'; ex.innerHTML='&nbsp;'; justEq=false; }
+    function toEnd(){ try{ var n=disp.value.length; disp.setSelectionRange(n,n); }catch(_){} }
+    disp.addEventListener('focus',function(){ setTimeout(toEnd,0); });
+    disp.addEventListener('mouseup',function(){ if(disp.value==='0') toEnd(); });
     disp.addEventListener('keydown',function(e){
       if(e.key==='Enter'||e.key==='='){ e.preventDefault(); equals(); return; }
       if(e.key==='Escape'){ e.preventDefault(); clearAll(); return; }
-      if(justEq && /^[0-9.]$/.test(e.key)){ disp.value=''; ex.innerHTML='&nbsp;'; }
+      if(/^[0-9]$/.test(e.key) && (disp.value==='0' || justEq)){ disp.value=''; if(justEq) ex.innerHTML='&nbsp;'; }
+      else if(e.key==='.' && justEq){ disp.value='0'; ex.innerHTML='&nbsp;'; toEnd(); }
       justEq=false;
     });
     disp.addEventListener('input',function(){
       var pos=disp.selectionStart, before=disp.value.length;
-      var clean=pretty(toAscii(disp.value));
+      var clean=pretty(toAscii(disp.value)); if(clean===''){ disp.value='0'; toEnd(); return; }
       if(clean!==disp.value){ disp.value=clean; try{ var p=Math.max(0,pos-(before-clean.length)); disp.setSelectionRange(p,p);}catch(_){} }
     });
     box.querySelectorAll('button[data-k]').forEach(function(b){ b.addEventListener('click',function(){
       var k=b.getAttribute('data-k'), s=toAscii(disp.value), last=s.slice(-1);
       if(k==='C'){ clearAll(); disp.focus(); return; }
-      if(k==='B'){ disp.value=pretty(s.slice(0,-1)); justEq=false; disp.focus(); return; }
+      if(k==='B'){ disp.value=pretty(s.slice(0,-1))||'0'; justEq=false; disp.focus(); toEnd(); return; }
       if(k==='='){ equals(); disp.focus(); return; }
-      if(k==='+'||k==='/'||k==='-'){ if(s===''||'+-/'.indexOf(last)>=0) return; disp.value=pretty(s+k); justEq=false; disp.focus(); return; }
+      if(k==='+'||k==='/'||k==='-'){ if(s===''||'+-/'.indexOf(last)>=0) return; disp.value=pretty(s+k); justEq=false; disp.focus(); toEnd(); return; }
       if(justEq){ s=''; ex.innerHTML='&nbsp;'; justEq=false; }
+      if(s==='0' && k!=='.') s='';
       if(k==='.'){ var seg=s.split(/[+\-\/]/).pop(); if(seg.indexOf('.')>=0) return; if(seg==='') s+='0'; }
-      disp.value=pretty(s+k); disp.focus();
+      disp.value=pretty(s+k); disp.focus(); toEnd();
     }); });
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',setup); else setup();
