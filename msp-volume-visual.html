@@ -31,7 +31,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 </head>
 <body>
 <div class="container">
-<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+<a href="msos-math-6.html#unit=volume" class="back-link">← Back to Unit</a>
 
 <header>
   <div class="eyebrow">Math 6 · Volume · Visual Explorer</div>
@@ -115,16 +115,16 @@ function render(){
   const offsetX = PAD + (VIEW_W - 2*PAD - drawW)/2 - minX*scale;
   const offsetY = PAD + (VIEW_H - 2*PAD - drawH)/2 - minY*scale;
 
-  // Draw cubes back-to-front, bottom-to-top for proper occlusion
+  // Painter's algorithm: the viewer looks from the +l, +w, +h corner, so draw the
+  // farthest cubes first (smallest l + w + h) and the nearest cubes last.
+  const order = [];
+  for (let h = 0; h < H; h++) for (let w = 0; w < W; w++) for (let l = 0; l < L; l++) order.push([l, w, h]);
+  order.sort((a, b) => (a[0] + a[1] + a[2]) - (b[0] + b[1] + b[2]) || a[2] - b[2]);
   let cubes = '';
-  for (let h = 0; h < H; h++){
-    for (let w = W - 1; w >= 0; w--){
-      for (let l = 0; l < L; l++){
-        const x = offsetX + (l*isoX0 - w*isoX0)*scale;
-        const y = offsetY + (-h + l*isoY0 + w*isoY0)*scale;
-        cubes += drawCube(x, y, cubeSize);
-      }
-    }
+  for (const [l, w, h] of order){
+    const x = offsetX + (l*isoX0 - w*isoX0)*scale;
+    const y = offsetY + (-h + l*isoY0 + w*isoY0)*scale;
+    cubes += drawCube(x, y, cubeSize);
   }
 
   document.getElementById('boxGraph').innerHTML = cubes;
