@@ -243,6 +243,66 @@ renderQuestions();/*QPICS*/(function(){var QP={"Fair die. P(3)?": "<svg viewBox=
   };
 })();
 </script>
-
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-btn{display:inline-block;margin-left:6px;padding:5px 10px;border-radius:6px;border:1.5px solid #1e40af;background:#2563eb;color:#fff;font-weight:800;font-size:.8rem;cursor:pointer;vertical-align:middle;font-family:inherit}
+.one-check-btn:hover{background:#1e40af}
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-btn,.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true || isCorrect(val,[exp[k]])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  window.msosCheckOne = function(btn){
+    var inp = btn.previousElementSibling;
+    while (inp && inp.tagName!=='INPUT') inp = inp.previousElementSibling;
+    if (!inp) return;
+    var fb = btn.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; btn.insertAdjacentElement('afterend', fb); }
+    var v = inp.value;
+    if (!v.trim()) { fb.className='one-check-fb no'; fb.textContent='Type an answer first'; return; }
+    var ok = test(v, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card = inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className = 'one-check-fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ Correct!' : '✗ Not yet — try again';
+  };
+  function sync(){
+    var g = graded();
+    if (g) { document.querySelectorAll('.one-check-btn,.one-check-fb').forEach(function(n){ n.remove(); }); return; }
+    document.querySelectorAll('input.ans, .q-input input[id^="ans"]').forEach(function(inp){
+      if (inp.closest('.one-check-skip')) return;
+      if (!expected(inp)) return;
+      var place = inp; var u = inp.nextElementSibling;
+      if (u && u.classList.contains('unit')) place = u;
+      var nx = place.nextElementSibling;
+      if (nx && nx.classList.contains('one-check-btn')) return;
+      var b = document.createElement('button'); b.type='button'; b.className='one-check-btn'; b.textContent='Check Answer';
+      b.setAttribute('onclick','msosCheckOne(this)');
+      place.insertAdjacentElement('afterend', b);
+      if (!inp.dataset.oneCheckKey) { inp.dataset.oneCheckKey='1'; inp.addEventListener('keydown', function(e){ if(e.key==='Enter' && !graded()){ e.preventDefault(); var bb=inp.nextElementSibling; if(bb&&bb.classList.contains('unit')) bb=bb.nextElementSibling; if(bb&&bb.classList.contains('one-check-btn')) msosCheckOne(bb); } }); }
+    });
+  }
+  var t=null; function later(){ if(t) return; t=setTimeout(function(){ t=null; sync(); },30); }
+  function start(){ sync(); new MutationObserver(later).observe(document.body,{childList:true,subtree:true}); window.addEventListener('popstate', later); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', start); else start();
+  var ps = history.pushState, rs = history.replaceState;
+  history.pushState = function(){ var r=ps.apply(this, arguments); later(); return r; };
+  history.replaceState = function(){ var r=rs.apply(this, arguments); later(); return r; };
+})();
+</script>
+<!--/CHECK-ONE-->
 </body>
 </html>
