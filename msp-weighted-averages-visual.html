@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weighted Averages Visual — Math 8</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:20px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; flex-direction:column; align-items:center; gap:6px; }
+.controls input[type=range] { width:180px; }
+.controls .val { font-weight:900; color:var(--navy); font-size:1.1rem; background:#fff; padding:2px 10px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:12px; margin:16px 0; text-align:center; }
+.graph-svg { max-width:100%; height:auto; }
+.equation-display { text-align:center; margin:16px 0; font-family:'Courier New', monospace; font-size:1.3rem; font-weight:900; color:var(--navy); background:#fef08a; padding:14px 18px; border-radius:10px; border:2px solid var(--gold); }
+.equation-display .a2 { color:var(--red); }
+.equation-display .b2 { color:var(--blue); }
+.equation-display .c2 { color:var(--green); }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset-btn:hover { background:#0f172a; }
+.triple-tag { display:inline-block; background:#22c55e; color:#fff; font-weight:800; padding:4px 10px; border-radius:6px; font-size:.85rem; margin-left:8px; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+.rows { display:grid; gap:10px; margin:12px 0; }
+.row { display:grid; grid-template-columns: 26px 1.3fr 1fr 1.6fr; gap:10px; align-items:center; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:8px 12px; }
+.row .dot { width:18px; height:18px; border-radius:50%; }
+.row input[type=text] { width:100%; padding:6px 8px; border:1.5px solid #cbd5e1; border-radius:6px; font-weight:700; color:var(--navy); }
+.row input[type=number] { width:100%; padding:6px 8px; border:1.5px solid #cbd5e1; border-radius:6px; font-weight:900; font-size:1rem; color:var(--navy); }
+.row .wt { display:flex; align-items:center; gap:8px; } .row .wt input { flex:1; } .row .wt span { font-weight:900; color:var(--navy); min-width:52px; text-align:right; }
+.row-head { display:grid; grid-template-columns: 26px 1.3fr 1fr 1.6fr; gap:10px; font-size:.75rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:.06em; padding:0 12px; }
+.compare { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; margin:12px 0; }
+.compare div { background:#fff; border:2px solid #cbd5e1; border-radius:10px; padding:10px 16px; text-align:center; min-width:190px; }
+.compare b { display:block; font-size:1.5rem; }
+.goal { background:#f5f3ff; border:2px solid var(--purple); border-radius:10px; padding:14px 18px; margin:12px 0; }
+.goal input { width:80px; padding:4px 6px; border:1.5px solid #c4b5fd; border-radius:6px; font-weight:900; }
+@media (max-width:640px){ .row, .row-head { grid-template-columns: 20px 1fr 1fr; } .row .wt { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-8.html#unit=weighted-averages" class="back-link" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+<header>
+  <div class="eyebrow">Math 8 · Percent &amp; Weighted Averages · Visual Explorer</div>
+  <h1>⚖️ The Balance Point — See a Weighted Average</h1>
+  <p class="tagline">Heavier weights pull the average toward them.</p>
+</header>
+<div class="big-idea">
+  <strong>The visual truth:</strong> Put each value on a number line and stack blocks on it — more blocks for more weight. The <strong>weighted average is the balance point</strong> of the beam. A plain average treats every value the same; a weighted average lets the important values pull harder.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Set Values and Weights, Watch the Beam Balance</h2>
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="preset('grade')">📝 Class Grade</button>
+    <button class="preset-btn" onclick="preset('chlorine')">🧪 Chlorine Isotopes</button>
+    <button class="preset-btn" onclick="preset('carbon')">🧪 Carbon Isotopes</button>
+    <button class="preset-btn" onclick="preset('gpa')">🎓 GPA by Credits</button>
+    <button class="preset-btn" onclick="preset('classes')">👥 Two Classes</button>
+    <button class="preset-btn" onclick="preset('equal')">⚖️ Equal Weights</button>
+  </div>
+  <div class="row-head"><span></span><span>Item</span><span>Value</span><span>Weight</span></div>
+  <div class="rows" id="rows"></div>
+  <div class="graph-wrap"><svg class="graph-svg" id="beam" viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div class="compare">
+    <div style="border-color:var(--green);">Weighted average<b id="wAvg" style="color:var(--green);">—</b></div>
+    <div>Plain average (ignores weights)<b id="pAvg" style="color:#64748b;">—</b></div>
+  </div>
+  <div class="equation-display" id="eq" style="font-size:1.02rem;"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--purple);">
+  <h2>🎯 What Do I Need? (Class Grade)</h2>
+  <p style="margin-bottom:8px;">Homework counts 20%, quizzes 30%, and the final test 50%. Enter your homework and quiz averages and the grade you want. The visual finds the test score you need.</p>
+  <div class="goal">
+    Homework <input type="number" id="gHw" value="92"> &nbsp; Quizzes <input type="number" id="gQz" value="80"> &nbsp; Goal <input type="number" id="gGoal" value="85">
+    <div id="goalOut" style="margin-top:10px; font-weight:800; color:#4c1d95;"></div>
+  </div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>The formula:</strong> Weighted average = (value₁ × weight₁ + value₂ × weight₂ + …) ÷ (weight₁ + weight₂ + …). If the weights are percents that add to 100%, just multiply by the decimals and add.</div>
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;"><strong>Always between:</strong> A weighted average always lands between the smallest and largest values — closer to the value with the most weight.</div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;"><strong>Chemistry connection:</strong> Atomic masses on the periodic table (like 35.45 for chlorine) are weighted averages of the isotopes, using how common each isotope is as the weight. That is why they are not whole numbers.</div>
+  <div class="tip" style="border-left-color:var(--red); background:#fef2f2;"><strong>Common mistake:</strong> Averaging the values and ignoring the weights. Press <em>Equal Weights</em> to see when the two averages match — and change one weight to see them split apart.</div>
+</section>
+<footer>Mary, Star of the Sea School · 8th Grade Math · Dr. Park · Weighted Averages Visual Explorer</footer>
+</div>
+<script>
+const COLORS=['#dc2626','#0369a1','#059669','#7c3aed'];
+const PRESETS={
+  grade:{unit:'%',items:[['Homework',95,20],['Quizzes',82,30],['Tests',74,50]]},
+  chlorine:{unit:' amu',items:[['Cl-35',34.969,75.8],['Cl-37',36.966,24.2]]},
+  carbon:{unit:' amu',items:[['C-12',12.000,98.93],['C-13',13.003,1.07]]},
+  gpa:{unit:'',items:[['A (4 credits)',4.0,4],['B (3 credits)',3.0,3],['C (2 credits)',2.0,2]]},
+  classes:{unit:'%',items:[['Class 1 (10 students)',70,10],['Class 2 (20 students)',80,20]]},
+  equal:{unit:'%',items:[['Test 1',70,1],['Test 2',85,1],['Test 3',94,1]]}
+};
+let unit='%';
+function rowHTML(i,name,val,wt){
+  const mx=Math.max(100,Math.ceil(wt));
+  return `<div class="row"><span class="dot" style="background:${COLORS[i]}"></span><input type="text" id="n${i}" value="${name}"><input type="number" step="any" id="v${i}" value="${val}"><div class="wt"><input type="range" id="w${i}" min="0" max="${mx}" step="${wt%1?0.01:1}" value="${wt}"><span id="ws${i}">${wt}</span></div></div>`;
+}
+function preset(k){
+  const p=PRESETS[k]; unit=p.unit;
+  document.getElementById('rows').innerHTML=p.items.map((it,i)=>rowHTML(i,it[0],it[1],it[2])).join('');
+  render();
+}
+function read(){
+  const out=[];
+  for(let i=0;i<4;i++){ const v=document.getElementById('v'+i); if(!v) break;
+    out.push({name:document.getElementById('n'+i).value, v:parseFloat(v.value)||0, w:parseFloat(document.getElementById('w'+i).value)||0, c:COLORS[i]}); }
+  return out;
+}
+function f(x,d){ d=d===undefined?3:d; return String(+x.toFixed(d)).replace('-','−'); }
+function render(){
+  const it=read(); it.forEach((o,i)=>document.getElementById('ws'+i).textContent=o.w);
+  const W=it.reduce((s,o)=>s+o.w,0), S=it.reduce((s,o)=>s+o.v*o.w,0);
+  const wAvg=W>0?S/W:NaN, pAvg=it.reduce((s,o)=>s+o.v,0)/it.length;
+  let lo=Math.min(...it.map(o=>o.v)), hi=Math.max(...it.map(o=>o.v));
+  let pad=(hi-lo)*0.15||1; lo-=pad; hi+=pad;
+  const X=v=>60+(v-lo)*580/(hi-lo), beamY=200;
+  let s='';
+  const tilt=0; 
+  s+=`<rect x="50" y="${beamY}" width="600" height="10" rx="4" fill="#78350f"/>`;
+  // ticks
+  const step=niceStep(hi-lo);
+  for(let t=Math.ceil(lo/step)*step;t<=hi+1e-9;t+=step){ s+=`<line x1="${X(t)}" y1="${beamY+10}" x2="${X(t)}" y2="${beamY+16}" stroke="#475569"/><text x="${X(t)}" y="${beamY+70}" font-size="12" text-anchor="middle" fill="#475569">${f(t,2)}</text>`; }
+  // stacks: height proportional to share of weight
+  const maxShare=Math.max(...it.map(o=>W?o.w/W:0))||1;
+  it.forEach(o=>{ const share=W?o.w/W:0; const h=Math.max(2,125*share/maxShare);
+    s+=`<rect x="${X(o.v)-22}" y="${beamY-h}" width="44" height="${h}" rx="4" fill="${o.c}" fill-opacity=".85"/>`;
+    s+=`<text x="${X(o.v)}" y="${beamY-h-8}" font-size="12" font-weight="800" text-anchor="middle" fill="${o.c}">${f(share*100,1)}%</text>`;
+    s+=`<text x="${X(o.v)}" y="${beamY-h-24}" font-size="11" font-weight="800" text-anchor="middle" fill="${o.c}">${o.name}</text>`; });
+  if(isFinite(wAvg)){ const x=X(wAvg);
+    s+=`<polygon points="${x},${beamY+10} ${x-20},${beamY+50} ${x+20},${beamY+50}" fill="#b8860b"/>`;
+    s+=`<text x="${Math.min(480,Math.max(220,x))}" y="${beamY+98}" font-size="15" font-weight="900" text-anchor="middle" fill="#059669">▲ balance point = weighted average: ${f(wAvg)}${unit}</text>`; }
+  const xp=X(pAvg); s+=`<line x1="${xp}" y1="22" x2="${xp}" y2="${beamY}" stroke="#64748b" stroke-width="2" stroke-dasharray="6,5"/><text x="${Math.min(620,Math.max(80,xp))}" y="16" font-size="12" font-weight="800" text-anchor="middle" fill="#64748b">plain avg ${f(pAvg)}</text>`;
+  document.getElementById('beam').innerHTML=s;
+  document.getElementById('wAvg').textContent=isFinite(wAvg)?f(wAvg)+unit:'—';
+  document.getElementById('pAvg').textContent=f(pAvg)+unit;
+  const top=it.map(o=>`<span style="color:${o.c}">${f(o.v)} × ${f(o.w)}</span>`).join(' + ');
+  document.getElementById('eq').innerHTML=W>0?`( ${top} ) ÷ ${f(W)} = ${f(S)} ÷ ${f(W)} = <span style="color:#059669">${f(wAvg)}${unit}</span>`:'Give at least one item some weight.';
+}
+function niceStep(span){ for(const v of [0.1,0.2,0.25,0.5,1,2,5,10,20,50,100]) if(span/v<=10) return v; return 200; }
+function goal(){
+  const hw=+document.getElementById('gHw').value, qz=+document.getElementById('gQz').value, g=+document.getElementById('gGoal').value;
+  const need=(g-0.2*hw-0.3*qz)/0.5;
+  let msg=`Test score needed = (${g} − 0.2×${hw} − 0.3×${qz}) ÷ 0.5 = <b>${f(need,1)}</b>`;
+  if(need>100) msg+=' — more than 100, so this goal is out of reach. Try a lower goal.';
+  else if(need<0) msg+=' — you have already reached this goal!';
+  document.getElementById('goalOut').innerHTML=msg;
+}
+document.addEventListener('input',e=>{ if(e.target.closest('#rows')) render(); if(e.target.closest('.goal')) goal(); });
+preset('grade'); goal();
+</script>
+</body>
+</html>
