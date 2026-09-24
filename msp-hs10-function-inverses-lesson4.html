@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composition &amp; Inverse Functions — Lesson 4: Restricted Domains &amp; Other Inverses (Math 10)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--gold:#FFD100;--gold-deep:#b8860b;--ink:#1f2937;--dim:#64748b;--accent:#dc2626;--accent-deep:#991b1b;--accent-soft:#fee2e2;--pos:#059669;--neg:#dc2626}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%);color:var(--ink);min-height:100vh;padding:24px 16px;line-height:1.6}
+.container{max-width:1000px;margin:0 auto}
+header{text-align:center;margin-bottom:20px}
+.eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:6px}
+.tagline{color:var(--dim);font-size:.98rem;font-style:italic}
+.back-to-unit{display:inline-block;background:var(--gold);color:var(--navy);border:1.5px solid var(--gold-deep);padding:9px 18px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;margin-bottom:16px;box-shadow:0 2px 6px rgba(184,134,11,0.25);cursor:pointer}
+.back-to-unit:hover{background:var(--gold-deep);color:#fff;transform:translateX(-2px)}
+main{display:flex;flex-direction:column;gap:20px}
+section.card{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 4px 14px rgba(0,0,0,0.07);border-top:5px solid var(--accent)}
+section.card h2{color:var(--accent-deep);font-size:1.2rem;font-weight:800;margin-bottom:10px}
+section.card h3{color:var(--navy);font-size:1rem;font-weight:800;margin:12px 0 8px}
+.intro{background:var(--accent-soft);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0 12px;font-size:.95rem}
+.rule{background:#fef3c7;border-left:5px solid #b8860b;border-radius:6px;padding:8px 12px;margin:10px 0;font-size:.94rem}
+.rule strong{color:#78350f}
+table.rules{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.98rem}
+table.rules th,table.rules td{border:1.5px solid #94a3b8;padding:8px 12px;text-align:center}
+table.rules th{background:var(--navy);color:#fff;font-weight:800}
+table.rules tr:nth-child(even) td{background:#f8fafc}
+.pos{color:var(--pos);font-weight:800}
+.neg{color:var(--neg);font-weight:800}
+ol.qlist{list-style:none;counter-reset:q;padding:0;margin-top:8px}
+ol.qlist>li{counter-increment:q;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed #d1d5db}
+ol.qlist>li:last-child{border-bottom:none}
+ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.answer-line{display:inline-block;min-width:120px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.answer-line-lg{display:inline-block;min-width:200px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.reveal-btn{display:inline-block;background:var(--gold);color:var(--navy);border:1px solid var(--gold-deep);padding:8px 14px;border-radius:6px;font-weight:800;font-size:.9rem;cursor:pointer;margin:6px 0}
+.reveal-btn:hover{background:var(--gold-deep);color:#fff}
+.ak{display:none;background:#ecfccb;border-left:5px solid #65a30d;padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.ak.open{display:block}
+.ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
+footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
+@media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check, .save-toolbar { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style></head><body>
+<div class="container">
+<header>
+  <div class="eyebrow">Math 10 · Unit 8 · Lesson 4 of 5</div>
+  <h1>🔄 Lesson 4: Restricted Domains &amp; Other Inverses</h1>
+  <p class="tagline">Undo what the function did.</p>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then press <strong>Return</strong> to check each one (or click <strong>Check Answers</strong>).</p><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0 4px;"><a href="msos-math-10.html#unit=function-inverses" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">1 · Overview</a><a href="msp-hs10-function-inverses-lesson2.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">2 · Composition</a><a href="msp-hs10-function-inverses-lesson3.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">3 · Inverses of Linear Functions</a><a href="msp-hs10-function-inverses-lesson4.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#253a77;color:#fff;">4 · Restricted Domains &amp; Other Inverses</a><a href="msp-hs10-function-inverses-lesson5.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">5 · Verifying Inverses</a></div></header>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<main>
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
+<section class="card" id="howcard"><h2>📘 How It Works</h2><div class="intro"><strong>Key idea:</strong> Undo the operations in reverse order.</div><div style="line-height:1.65;font-size:1rem;"><p>Some functions (like x²) need a restricted domain (x ≥ 0) to have an inverse. To find f⁻¹(k), solve f(x) = k and keep only the answer in the allowed domain. Undo in reverse: subtract the constant, then take the root.</p></div><h3>👀 Watch Two Examples</h3><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 1</div><div>f(x) = √x + 5 (x ≥ 0). Find f⁻¹(8).</div><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: 9</span></div></div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 2</div><div>f(x) = x² + 1 with domain x ≥ 0. Find f⁻¹(5).</div><svg viewBox="0 0 240 210" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="54.5" y1="12.0" x2="54.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="54.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="79.0" y1="12.0" x2="79.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="79.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="103.5" y1="12.0" x2="103.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><line x1="128.0" y1="12.0" x2="128.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="152.5" y1="12.0" x2="152.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="152.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="177.0" y1="12.0" x2="177.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="177.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="201.5" y1="12.0" x2="201.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="201.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="226.0" y1="12.0" x2="226.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="186.0" x2="226.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="30.0" y1="164.2" x2="226.0" y2="164.2" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="167.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="30.0" y1="142.5" x2="226.0" y2="142.5" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="145.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="30.0" y1="120.8" x2="226.0" y2="120.8" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="99.0" x2="226.0" y2="99.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="102.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="30.0" y1="77.2" x2="226.0" y2="77.2" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="80.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="30.0" y1="55.5" x2="226.0" y2="55.5" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="58.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="33.8" x2="226.0" y2="33.8" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="36.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="120.8" x2="234.0" y2="120.8" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,120.8 225.9,124.7 225.9,116.8" fill="#334155"/><line x1="103.5" y1="186.0" x2="103.5" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="103.5,6.0 107.4,14.1 99.6,14.1" fill="#334155"/><polyline points="103.5,109.9 104.0,109.9 104.5,109.8 105.0,109.7 105.5,109.6 106.0,109.4 106.4,109.2 106.9,109.0 107.4,108.8 107.9,108.5 108.4,108.1 108.9,107.8 109.4,107.4 109.9,106.9 110.4,106.5 110.8,106.0 111.3,105.4 111.8,104.8 112.3,104.2 112.8,103.6 113.3,102.9 113.8,102.2 114.3,101.5 114.8,100.7 115.3,99.9 115.8,99.0 116.2,98.1 116.7,97.2 117.2,96.2 117.7,95.2 118.2,94.2 118.7,93.2 119.2,92.1 119.7,90.9 120.2,89.8 120.7,88.6 121.1,87.3 121.6,86.1 122.1,84.7 122.6,83.4 123.1,82.0 123.6,80.6 124.1,79.2 124.6,77.7 125.1,76.2 125.5,74.6 126.0,73.1 126.5,71.4 127.0,69.8 127.5,68.1 128.0,66.4 128.5,64.6 129.0,62.8 129.5,61.0 130.0,59.1 130.4,57.2 130.9,55.3 131.4,53.3 131.9,51.3 132.4,49.3 132.9,47.2 133.4,45.1 133.9,43.0 134.4,40.8 134.9,38.6 135.3,36.4 135.8,34.1 136.3,31.8 136.8,29.4 137.3,27.0 137.8,24.6 138.3,22.2 138.8,19.7 139.3,17.2 139.8,14.6 140.2,12.0 140.2,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><polyline points="115.8,120.8 116.2,118.6 116.7,117.7 117.2,117.0 117.7,116.4 118.2,115.9 118.7,115.4 119.2,115.0 119.7,114.6 120.2,114.2 120.7,113.9 121.1,113.5 121.6,113.2 122.1,112.9 122.6,112.6 123.1,112.3 123.6,112.0 124.1,111.8 124.6,111.5 125.1,111.3 125.5,111.0 126.0,110.8 126.5,110.5 127.0,110.3 127.5,110.1 128.0,109.9 128.5,109.7 129.0,109.4 129.5,109.2 130.0,109.0 130.4,108.8 130.9,108.6 131.4,108.4 131.9,108.3 132.4,108.1 132.9,107.9 133.4,107.7 133.9,107.5 134.4,107.3 134.9,107.2 135.3,107.0 135.8,106.8 136.3,106.7 136.8,106.5 137.3,106.3 137.8,106.2 138.3,106.0 138.8,105.8 139.3,105.7 139.8,105.5 140.2,105.4 140.7,105.2 141.2,105.1 141.7,104.9 142.2,104.8 142.7,104.6 143.2,104.5 143.7,104.3 144.2,104.2 144.7,104.0 145.2,103.9 145.6,103.8 146.1,103.6 146.6,103.5 147.1,103.4 147.6,103.2 148.1,103.1 148.6,102.9 149.1,102.8 149.6,102.7 150.1,102.6 150.5,102.4 151.0,102.3 151.5,102.2 152.0,102.0 152.5,101.9 153.0,101.8 153.5,101.7 154.0,101.5 154.5,101.4 154.9,101.3 155.4,101.2 155.9,101.1 156.4,100.9 156.9,100.8 157.4,100.7 157.9,100.6 158.4,100.5 158.9,100.3 159.4,100.2 159.8,100.1 160.3,100.0 160.8,99.9 161.3,99.8 161.8,99.7 162.3,99.6 162.8,99.4 163.3,99.3 163.8,99.2 164.3,99.1 164.8,99.0 165.2,98.9 165.7,98.8 166.2,98.7 166.7,98.6 167.2,98.5 167.7,98.4 168.2,98.3 168.7,98.1 169.2,98.0 169.7,97.9 170.1,97.8 170.6,97.7 171.1,97.6 171.6,97.5 172.1,97.4 172.6,97.3 173.1,97.2 173.6,97.1 174.1,97.0 174.6,96.9 175.0,96.8 175.5,96.7 176.0,96.6 176.5,96.5 177.0,96.4 177.5,96.3 178.0,96.2 178.5,96.1 179.0,96.0 179.4,96.0 179.9,95.9 180.4,95.8 180.9,95.7 181.4,95.6 181.9,95.5 182.4,95.4 182.9,95.3 183.4,95.2 183.9,95.1 184.3,95.0 184.8,94.9 185.3,94.8 185.8,94.7 186.3,94.6 186.8,94.6 187.3,94.5 187.8,94.4 188.3,94.3 188.8,94.2 189.2,94.1 189.7,94.0 190.2,93.9 190.7,93.8 191.2,93.8 191.7,93.7 192.2,93.6 192.7,93.5 193.2,93.4 193.7,93.3 194.2,93.2 194.6,93.2 195.1,93.1 195.6,93.0 196.1,92.9 196.6,92.8 197.1,92.7 197.6,92.6 198.1,92.6 198.6,92.5 199.1,92.4 199.5,92.3 200.0,92.2 200.5,92.1 201.0,92.1 201.5,92.0 202.0,91.9 202.5,91.8 203.0,91.7 203.5,91.7 203.9,91.6 204.4,91.5 204.9,91.4 205.4,91.3 205.9,91.2 206.4,91.2 206.9,91.1 207.4,91.0 207.9,90.9 208.4,90.8 208.8,90.8 209.3,90.7 209.8,90.6 210.3,90.5 210.8,90.5 211.3,90.4 211.8,90.3 212.3,90.2 212.8,90.1 213.3,90.1 213.8,90.0 214.2,89.9 214.7,89.8 215.2,89.8 215.7,89.7 216.2,89.6 216.7,89.5 217.2,89.5 217.7,89.4 218.2,89.3 218.7,89.2 219.1,89.2 219.6,89.1 220.1,89.0 220.6,88.9 221.1,88.9 221.6,88.8 222.1,88.7 222.6,88.6 223.1,88.6 223.6,88.5 224.0,88.4 224.5,88.3 225.0,88.3 225.5,88.2 226.0,88.1" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round"/><polyline points="30.0,186.0 30.5,185.6 31.0,185.1 31.5,184.7 32.0,184.3 32.5,183.8 32.9,183.4 33.4,183.0 33.9,182.5 34.4,182.1 34.9,181.7 35.4,181.2 35.9,180.8 36.4,180.3 36.9,179.9 37.3,179.5 37.8,179.0 38.3,178.6 38.8,178.2 39.3,177.7 39.8,177.3 40.3,176.9 40.8,176.4 41.3,176.0 41.8,175.6 42.2,175.1 42.7,174.7 43.2,174.3 43.7,173.8 44.2,173.4 44.7,173.0 45.2,172.5 45.7,172.1 46.2,171.6 46.7,171.2 47.2,170.8 47.6,170.3 48.1,169.9 48.6,169.5 49.1,169.0 49.6,168.6 50.1,168.2 50.6,167.7 51.1,167.3 51.6,166.9 52.0,166.4 52.5,166.0 53.0,165.6 53.5,165.1 54.0,164.7 54.5,164.2 55.0,163.8 55.5,163.4 56.0,162.9 56.5,162.5 57.0,162.1 57.4,161.6 57.9,161.2 58.4,160.8 58.9,160.3 59.4,159.9 59.9,159.5 60.4,159.0 60.9,158.6 61.4,158.2 61.9,157.7 62.3,157.3 62.8,156.9 63.3,156.4 63.8,156.0 64.3,155.5 64.8,155.1 65.3,154.7 65.8,154.2 66.3,153.8 66.8,153.4 67.2,152.9 67.7,152.5 68.2,152.1 68.7,151.6 69.2,151.2 69.7,150.8 70.2,150.3 70.7,149.9 71.2,149.5 71.7,149.0 72.1,148.6 72.6,148.2 73.1,147.7 73.6,147.3 74.1,146.8 74.6,146.4 75.1,146.0 75.6,145.5 76.1,145.1 76.5,144.7 77.0,144.2 77.5,143.8 78.0,143.4 78.5,142.9 79.0,142.5 79.5,142.1 80.0,141.6 80.5,141.2 81.0,140.8 81.5,140.3 81.9,139.9 82.4,139.5 82.9,139.0 83.4,138.6 83.9,138.1 84.4,137.7 84.9,137.3 85.4,136.8 85.9,136.4 86.3,136.0 86.8,135.5 87.3,135.1 87.8,134.7 88.3,134.2 88.8,133.8 89.3,133.4 89.8,132.9 90.3,132.5 90.8,132.1 91.2,131.6 91.7,131.2 92.2,130.8 92.7,130.3 93.2,129.9 93.7,129.4 94.2,129.0 94.7,128.6 95.2,128.1 95.7,127.7 96.2,127.3 96.6,126.8 97.1,126.4 97.6,126.0 98.1,125.5 98.6,125.1 99.1,124.7 99.6,124.2 100.1,123.8 100.6,123.4 101.0,122.9 101.5,122.5 102.0,122.1 102.5,121.6 103.0,121.2 103.5,120.8 104.0,120.3 104.5,119.9 105.0,119.4 105.5,119.0 106.0,118.6 106.4,118.1 106.9,117.7 107.4,117.3 107.9,116.8 108.4,116.4 108.9,116.0 109.4,115.5 109.9,115.1 110.4,114.7 110.8,114.2 111.3,113.8 111.8,113.4 112.3,112.9 112.8,112.5 113.3,112.0 113.8,111.6 114.3,111.2 114.8,110.7 115.3,110.3 115.8,109.9 116.2,109.4 116.7,109.0 117.2,108.6 117.7,108.1 118.2,107.7 118.7,107.3 119.2,106.8 119.7,106.4 120.2,106.0 120.7,105.5 121.1,105.1 121.6,104.7 122.1,104.2 122.6,103.8 123.1,103.4 123.6,102.9 124.1,102.5 124.6,102.0 125.1,101.6 125.5,101.2 126.0,100.7 126.5,100.3 127.0,99.9 127.5,99.4 128.0,99.0 128.5,98.6 129.0,98.1 129.5,97.7 130.0,97.3 130.4,96.8 130.9,96.4 131.4,96.0 131.9,95.5 132.4,95.1 132.9,94.6 133.4,94.2 133.9,93.8 134.4,93.3 134.9,92.9 135.3,92.5 135.8,92.0 136.3,91.6 136.8,91.2 137.3,90.7 137.8,90.3 138.3,89.9 138.8,89.4 139.3,89.0 139.8,88.6 140.2,88.1 140.7,87.7 141.2,87.3 141.7,86.8 142.2,86.4 142.7,86.0 143.2,85.5 143.7,85.1 144.2,84.6 144.7,84.2 145.2,83.8 145.6,83.3 146.1,82.9 146.6,82.5 147.1,82.0 147.6,81.6 148.1,81.2 148.6,80.7 149.1,80.3 149.6,79.9 150.1,79.4 150.5,79.0 151.0,78.6 151.5,78.1 152.0,77.7 152.5,77.2 153.0,76.8 153.5,76.4 154.0,75.9 154.5,75.5 154.9,75.1 155.4,74.6 155.9,74.2 156.4,73.8 156.9,73.3 157.4,72.9 157.9,72.5 158.4,72.0 158.9,71.6 159.4,71.2 159.8,70.7 160.3,70.3 160.8,69.9 161.3,69.4 161.8,69.0 162.3,68.5 162.8,68.1 163.3,67.7 163.8,67.2 164.3,66.8 164.8,66.4 165.2,65.9 165.7,65.5 166.2,65.1 166.7,64.6 167.2,64.2 167.7,63.8 168.2,63.3 168.7,62.9 169.2,62.5 169.7,62.0 170.1,61.6 170.6,61.2 171.1,60.7 171.6,60.3 172.1,59.9 172.6,59.4 173.1,59.0 173.6,58.5 174.1,58.1 174.6,57.7 175.0,57.2 175.5,56.8 176.0,56.4 176.5,55.9 177.0,55.5 177.5,55.1 178.0,54.6 178.5,54.2 179.0,53.8 179.4,53.3 179.9,52.9 180.4,52.5 180.9,52.0 181.4,51.6 181.9,51.1 182.4,50.7 182.9,50.3 183.4,49.8 183.9,49.4 184.3,49.0 184.8,48.5 185.3,48.1 185.8,47.7 186.3,47.2 186.8,46.8 187.3,46.4 187.8,45.9 188.3,45.5 188.8,45.1 189.2,44.6 189.7,44.2 190.2,43.8 190.7,43.3 191.2,42.9 191.7,42.5 192.2,42.0 192.7,41.6 193.2,41.1 193.7,40.7 194.2,40.3 194.6,39.8 195.1,39.4 195.6,39.0 196.1,38.5 196.6,38.1 197.1,37.7 197.6,37.2 198.1,36.8 198.6,36.4 199.1,35.9 199.5,35.5 200.0,35.1 200.5,34.6 201.0,34.2 201.5,33.8 202.0,33.3 202.5,32.9 203.0,32.4 203.5,32.0 203.9,31.6 204.4,31.1 204.9,30.7 205.4,30.3 205.9,29.8 206.4,29.4 206.9,29.0 207.4,28.5 207.9,28.1 208.4,27.7 208.8,27.2 209.3,26.8 209.8,26.4 210.3,25.9 210.8,25.5 211.3,25.0 211.8,24.6 212.3,24.2 212.8,23.7 213.3,23.3 213.8,22.9 214.2,22.4 214.7,22.0 215.2,21.6 215.7,21.1 216.2,20.7 216.7,20.3 217.2,19.8 217.7,19.4 218.2,19.0 218.7,18.5 219.1,18.1 219.6,17.7 220.1,17.2 220.6,16.8 221.1,16.4 221.6,15.9 222.1,15.5 222.6,15.0 223.1,14.6 223.6,14.2 224.0,13.7 224.5,13.3 225.0,12.9 225.5,12.4 226.0,12.0" fill="none" stroke="#cbd5e1" stroke-width="2.5" stroke-linejoin="round"/></svg><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: 2</span></div></div><p style="font-size:.9rem;color:#475569;">Now try the practice below. Type an answer and press <strong>Return</strong> — you will see ✓ Correct! or ✗ Try again right away.</p></section>
+<section class="card" id="wsec1">
+<h2>1️⃣ Practice: Restricted Domains &amp; Other Inverses</h2>
+<div class="intro">Undo the operations in reverse order.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>f(x) = √x + 3 (x ≥ 0). Find f⁻¹(5). <input class="ans" data-a="4" size="6"></li>
+<li>f(x) = x² + 4 with domain x ≥ 0. Find f⁻¹(5). <input class="ans" data-a="1" size="6"><svg viewBox="0 0 240 210" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="54.5" y1="12.0" x2="54.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="54.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="79.0" y1="12.0" x2="79.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="79.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="103.5" y1="12.0" x2="103.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><line x1="128.0" y1="12.0" x2="128.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="152.5" y1="12.0" x2="152.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="152.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="177.0" y1="12.0" x2="177.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="177.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="201.5" y1="12.0" x2="201.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="201.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="226.0" y1="12.0" x2="226.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="186.0" x2="226.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="30.0" y1="164.2" x2="226.0" y2="164.2" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="167.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="30.0" y1="142.5" x2="226.0" y2="142.5" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="145.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="30.0" y1="120.8" x2="226.0" y2="120.8" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="99.0" x2="226.0" y2="99.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="102.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="30.0" y1="77.2" x2="226.0" y2="77.2" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="80.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="30.0" y1="55.5" x2="226.0" y2="55.5" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="58.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="33.8" x2="226.0" y2="33.8" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="36.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="120.8" x2="234.0" y2="120.8" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,120.8 225.9,124.7 225.9,116.8" fill="#334155"/><line x1="103.5" y1="186.0" x2="103.5" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="103.5,6.0 107.4,14.1 99.6,14.1" fill="#334155"/><polyline points="103.5,77.2 104.0,77.2 104.5,77.2 105.0,77.1 105.5,77.0 106.0,76.8 106.4,76.6 106.9,76.4 107.4,76.1 107.9,75.8 108.4,75.5 108.9,75.1 109.4,74.7 109.9,74.3 110.4,73.8 110.8,73.3 111.3,72.8 111.8,72.2 112.3,71.6 112.8,71.0 113.3,70.3 113.8,69.6 114.3,68.8 114.8,68.0 115.3,67.2 115.8,66.4 116.2,65.5 116.7,64.6 117.2,63.6 117.7,62.6 118.2,61.6 118.7,60.5 119.2,59.4 119.7,58.3 120.2,57.1 120.7,55.9 121.1,54.7 121.6,53.4 122.1,52.1 122.6,50.8 123.1,49.4 123.6,48.0 124.1,46.6 124.6,45.1 125.1,43.6 125.5,42.0 126.0,40.4 126.5,38.8 127.0,37.2 127.5,35.5 128.0,33.8 128.5,32.0 129.0,30.2 129.5,28.4 130.0,26.5 130.4,24.6 130.9,22.7 131.4,20.7 131.9,18.7 132.4,16.7 132.9,14.6 133.4,12.5 133.5,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><polyline points="152.5,120.8 153.0,118.6 153.5,117.7 154.0,117.0 154.5,116.4 154.9,115.9 155.4,115.4 155.9,115.0 156.4,114.6 156.9,114.2 157.4,113.9 157.9,113.5 158.4,113.2 158.9,112.9 159.4,112.6 159.8,112.3 160.3,112.0 160.8,111.8 161.3,111.5 161.8,111.3 162.3,111.0 162.8,110.8 163.3,110.5 163.8,110.3 164.3,110.1 164.8,109.9 165.2,109.7 165.7,109.4 166.2,109.2 166.7,109.0 167.2,108.8 167.7,108.6 168.2,108.4 168.7,108.3 169.2,108.1 169.7,107.9 170.1,107.7 170.6,107.5 171.1,107.3 171.6,107.2 172.1,107.0 172.6,106.8 173.1,106.7 173.6,106.5 174.1,106.3 174.6,106.2 175.0,106.0 175.5,105.8 176.0,105.7 176.5,105.5 177.0,105.4 177.5,105.2 178.0,105.1 178.5,104.9 179.0,104.8 179.4,104.6 179.9,104.5 180.4,104.3 180.9,104.2 181.4,104.0 181.9,103.9 182.4,103.8 182.9,103.6 183.4,103.5 183.9,103.4 184.3,103.2 184.8,103.1 185.3,102.9 185.8,102.8 186.3,102.7 186.8,102.6 187.3,102.4 187.8,102.3 188.3,102.2 188.8,102.0 189.2,101.9 189.7,101.8 190.2,101.7 190.7,101.5 191.2,101.4 191.7,101.3 192.2,101.2 192.7,101.1 193.2,100.9 193.7,100.8 194.2,100.7 194.6,100.6 195.1,100.5 195.6,100.3 196.1,100.2 196.6,100.1 197.1,100.0 197.6,99.9 198.1,99.8 198.6,99.7 199.1,99.6 199.5,99.4 200.0,99.3 200.5,99.2 201.0,99.1 201.5,99.0 202.0,98.9 202.5,98.8 203.0,98.7 203.5,98.6 203.9,98.5 204.4,98.4 204.9,98.3 205.4,98.1 205.9,98.0 206.4,97.9 206.9,97.8 207.4,97.7 207.9,97.6 208.4,97.5 208.8,97.4 209.3,97.3 209.8,97.2 210.3,97.1 210.8,97.0 211.3,96.9 211.8,96.8 212.3,96.7 212.8,96.6 213.3,96.5 213.8,96.4 214.2,96.3 214.7,96.2 215.2,96.1 215.7,96.0 216.2,96.0 216.7,95.9 217.2,95.8 217.7,95.7 218.2,95.6 218.7,95.5 219.1,95.4 219.6,95.3 220.1,95.2 220.6,95.1 221.1,95.0 221.6,94.9 222.1,94.8 222.6,94.7 223.1,94.6 223.6,94.6 224.0,94.5 224.5,94.4 225.0,94.3 225.5,94.2 226.0,94.1" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round"/><polyline points="30.0,186.0 30.5,185.6 31.0,185.1 31.5,184.7 32.0,184.3 32.5,183.8 32.9,183.4 33.4,183.0 33.9,182.5 34.4,182.1 34.9,181.7 35.4,181.2 35.9,180.8 36.4,180.3 36.9,179.9 37.3,179.5 37.8,179.0 38.3,178.6 38.8,178.2 39.3,177.7 39.8,177.3 40.3,176.9 40.8,176.4 41.3,176.0 41.8,175.6 42.2,175.1 42.7,174.7 43.2,174.3 43.7,173.8 44.2,173.4 44.7,173.0 45.2,172.5 45.7,172.1 46.2,171.6 46.7,171.2 47.2,170.8 47.6,170.3 48.1,169.9 48.6,169.5 49.1,169.0 49.6,168.6 50.1,168.2 50.6,167.7 51.1,167.3 51.6,166.9 52.0,166.4 52.5,166.0 53.0,165.6 53.5,165.1 54.0,164.7 54.5,164.2 55.0,163.8 55.5,163.4 56.0,162.9 56.5,162.5 57.0,162.1 57.4,161.6 57.9,161.2 58.4,160.8 58.9,160.3 59.4,159.9 59.9,159.5 60.4,159.0 60.9,158.6 61.4,158.2 61.9,157.7 62.3,157.3 62.8,156.9 63.3,156.4 63.8,156.0 64.3,155.5 64.8,155.1 65.3,154.7 65.8,154.2 66.3,153.8 66.8,153.4 67.2,152.9 67.7,152.5 68.2,152.1 68.7,151.6 69.2,151.2 69.7,150.8 70.2,150.3 70.7,149.9 71.2,149.5 71.7,149.0 72.1,148.6 72.6,148.2 73.1,147.7 73.6,147.3 74.1,146.8 74.6,146.4 75.1,146.0 75.6,145.5 76.1,145.1 76.5,144.7 77.0,144.2 77.5,143.8 78.0,143.4 78.5,142.9 79.0,142.5 79.5,142.1 80.0,141.6 80.5,141.2 81.0,140.8 81.5,140.3 81.9,139.9 82.4,139.5 82.9,139.0 83.4,138.6 83.9,138.1 84.4,137.7 84.9,137.3 85.4,136.8 85.9,136.4 86.3,136.0 86.8,135.5 87.3,135.1 87.8,134.7 88.3,134.2 88.8,133.8 89.3,133.4 89.8,132.9 90.3,132.5 90.8,132.1 91.2,131.6 91.7,131.2 92.2,130.8 92.7,130.3 93.2,129.9 93.7,129.4 94.2,129.0 94.7,128.6 95.2,128.1 95.7,127.7 96.2,127.3 96.6,126.8 97.1,126.4 97.6,126.0 98.1,125.5 98.6,125.1 99.1,124.7 99.6,124.2 100.1,123.8 100.6,123.4 101.0,122.9 101.5,122.5 102.0,122.1 102.5,121.6 103.0,121.2 103.5,120.8 104.0,120.3 104.5,119.9 105.0,119.4 105.5,119.0 106.0,118.6 106.4,118.1 106.9,117.7 107.4,117.3 107.9,116.8 108.4,116.4 108.9,116.0 109.4,115.5 109.9,115.1 110.4,114.7 110.8,114.2 111.3,113.8 111.8,113.4 112.3,112.9 112.8,112.5 113.3,112.0 113.8,111.6 114.3,111.2 114.8,110.7 115.3,110.3 115.8,109.9 116.2,109.4 116.7,109.0 117.2,108.6 117.7,108.1 118.2,107.7 118.7,107.3 119.2,106.8 119.7,106.4 120.2,106.0 120.7,105.5 121.1,105.1 121.6,104.7 122.1,104.2 122.6,103.8 123.1,103.4 123.6,102.9 124.1,102.5 124.6,102.0 125.1,101.6 125.5,101.2 126.0,100.7 126.5,100.3 127.0,99.9 127.5,99.4 128.0,99.0 128.5,98.6 129.0,98.1 129.5,97.7 130.0,97.3 130.4,96.8 130.9,96.4 131.4,96.0 131.9,95.5 132.4,95.1 132.9,94.6 133.4,94.2 133.9,93.8 134.4,93.3 134.9,92.9 135.3,92.5 135.8,92.0 136.3,91.6 136.8,91.2 137.3,90.7 137.8,90.3 138.3,89.9 138.8,89.4 139.3,89.0 139.8,88.6 140.2,88.1 140.7,87.7 141.2,87.3 141.7,86.8 142.2,86.4 142.7,86.0 143.2,85.5 143.7,85.1 144.2,84.6 144.7,84.2 145.2,83.8 145.6,83.3 146.1,82.9 146.6,82.5 147.1,82.0 147.6,81.6 148.1,81.2 148.6,80.7 149.1,80.3 149.6,79.9 150.1,79.4 150.5,79.0 151.0,78.6 151.5,78.1 152.0,77.7 152.5,77.2 153.0,76.8 153.5,76.4 154.0,75.9 154.5,75.5 154.9,75.1 155.4,74.6 155.9,74.2 156.4,73.8 156.9,73.3 157.4,72.9 157.9,72.5 158.4,72.0 158.9,71.6 159.4,71.2 159.8,70.7 160.3,70.3 160.8,69.9 161.3,69.4 161.8,69.0 162.3,68.5 162.8,68.1 163.3,67.7 163.8,67.2 164.3,66.8 164.8,66.4 165.2,65.9 165.7,65.5 166.2,65.1 166.7,64.6 167.2,64.2 167.7,63.8 168.2,63.3 168.7,62.9 169.2,62.5 169.7,62.0 170.1,61.6 170.6,61.2 171.1,60.7 171.6,60.3 172.1,59.9 172.6,59.4 173.1,59.0 173.6,58.5 174.1,58.1 174.6,57.7 175.0,57.2 175.5,56.8 176.0,56.4 176.5,55.9 177.0,55.5 177.5,55.1 178.0,54.6 178.5,54.2 179.0,53.8 179.4,53.3 179.9,52.9 180.4,52.5 180.9,52.0 181.4,51.6 181.9,51.1 182.4,50.7 182.9,50.3 183.4,49.8 183.9,49.4 184.3,49.0 184.8,48.5 185.3,48.1 185.8,47.7 186.3,47.2 186.8,46.8 187.3,46.4 187.8,45.9 188.3,45.5 188.8,45.1 189.2,44.6 189.7,44.2 190.2,43.8 190.7,43.3 191.2,42.9 191.7,42.5 192.2,42.0 192.7,41.6 193.2,41.1 193.7,40.7 194.2,40.3 194.6,39.8 195.1,39.4 195.6,39.0 196.1,38.5 196.6,38.1 197.1,37.7 197.6,37.2 198.1,36.8 198.6,36.4 199.1,35.9 199.5,35.5 200.0,35.1 200.5,34.6 201.0,34.2 201.5,33.8 202.0,33.3 202.5,32.9 203.0,32.4 203.5,32.0 203.9,31.6 204.4,31.1 204.9,30.7 205.4,30.3 205.9,29.8 206.4,29.4 206.9,29.0 207.4,28.5 207.9,28.1 208.4,27.7 208.8,27.2 209.3,26.8 209.8,26.4 210.3,25.9 210.8,25.5 211.3,25.0 211.8,24.6 212.3,24.2 212.8,23.7 213.3,23.3 213.8,22.9 214.2,22.4 214.7,22.0 215.2,21.6 215.7,21.1 216.2,20.7 216.7,20.3 217.2,19.8 217.7,19.4 218.2,19.0 218.7,18.5 219.1,18.1 219.6,17.7 220.1,17.2 220.6,16.8 221.1,16.4 221.6,15.9 222.1,15.5 222.6,15.0 223.1,14.6 223.6,14.2 224.0,13.7 224.5,13.3 225.0,12.9 225.5,12.4 226.0,12.0" fill="none" stroke="#cbd5e1" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>f(x) = x² − 2 with domain x ≥ 0. Find f⁻¹(7). <input class="ans" data-a="3" size="6"><svg viewBox="0 0 240 210" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="54.5" y1="12.0" x2="54.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="54.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="79.0" y1="12.0" x2="79.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="79.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="103.5" y1="12.0" x2="103.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><line x1="128.0" y1="12.0" x2="128.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="152.5" y1="12.0" x2="152.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="152.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="177.0" y1="12.0" x2="177.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="177.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="201.5" y1="12.0" x2="201.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="201.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="226.0" y1="12.0" x2="226.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="186.0" x2="226.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="30.0" y1="164.2" x2="226.0" y2="164.2" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="167.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="30.0" y1="142.5" x2="226.0" y2="142.5" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="145.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="30.0" y1="120.8" x2="226.0" y2="120.8" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="99.0" x2="226.0" y2="99.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="102.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="30.0" y1="77.2" x2="226.0" y2="77.2" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="80.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="30.0" y1="55.5" x2="226.0" y2="55.5" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="58.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="33.8" x2="226.0" y2="33.8" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="36.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="120.8" x2="234.0" y2="120.8" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,120.8 225.9,124.7 225.9,116.8" fill="#334155"/><line x1="103.5" y1="186.0" x2="103.5" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="103.5,6.0 107.4,14.1 99.6,14.1" fill="#334155"/><polyline points="103.5,142.5 104.0,142.5 104.5,142.4 105.0,142.3 105.5,142.2 106.0,142.1 106.4,141.9 106.9,141.6 107.4,141.4 107.9,141.1 108.4,140.8 108.9,140.4 109.4,140.0 109.9,139.6 110.4,139.1 110.8,138.6 111.3,138.0 111.8,137.5 112.3,136.9 112.8,136.2 113.3,135.5 113.8,134.8 114.3,134.1 114.8,133.3 115.3,132.5 115.8,131.6 116.2,130.7 116.7,129.8 117.2,128.9 117.7,127.9 118.2,126.8 118.7,125.8 119.2,124.7 119.7,123.6 120.2,122.4 120.7,121.2 121.1,119.9 121.6,118.7 122.1,117.4 122.6,116.0 123.1,114.7 123.6,113.3 124.1,111.8 124.6,110.3 125.1,108.8 125.5,107.3 126.0,105.7 126.5,104.1 127.0,102.4 127.5,100.7 128.0,99.0 128.5,97.2 129.0,95.5 129.5,93.6 130.0,91.8 130.4,89.9 130.9,87.9 131.4,86.0 131.9,84.0 132.4,81.9 132.9,79.9 133.4,77.8 133.9,75.6 134.4,73.4 134.9,71.2 135.3,69.0 135.8,66.7 136.3,64.4 136.8,62.0 137.3,59.7 137.8,57.2 138.3,54.8 138.8,52.3 139.3,49.8 139.8,47.2 140.2,44.6 140.7,42.0 141.2,39.3 141.7,36.6 142.2,33.9 142.7,31.1 143.2,28.3 143.7,25.5 144.2,22.6 144.7,19.7 145.2,16.8 145.6,13.8 145.9,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><polyline points="79.0,120.8 79.5,118.6 80.0,117.7 80.5,117.0 81.0,116.4 81.5,115.9 81.9,115.4 82.4,115.0 82.9,114.6 83.4,114.2 83.9,113.9 84.4,113.5 84.9,113.2 85.4,112.9 85.9,112.6 86.3,112.3 86.8,112.0 87.3,111.8 87.8,111.5 88.3,111.3 88.8,111.0 89.3,110.8 89.8,110.5 90.3,110.3 90.8,110.1 91.2,109.9 91.7,109.7 92.2,109.4 92.7,109.2 93.2,109.0 93.7,108.8 94.2,108.6 94.7,108.4 95.2,108.3 95.7,108.1 96.2,107.9 96.6,107.7 97.1,107.5 97.6,107.3 98.1,107.2 98.6,107.0 99.1,106.8 99.6,106.7 100.1,106.5 100.6,106.3 101.0,106.2 101.5,106.0 102.0,105.8 102.5,105.7 103.0,105.5 103.5,105.4 104.0,105.2 104.5,105.1 105.0,104.9 105.5,104.8 106.0,104.6 106.4,104.5 106.9,104.3 107.4,104.2 107.9,104.0 108.4,103.9 108.9,103.8 109.4,103.6 109.9,103.5 110.4,103.4 110.8,103.2 111.3,103.1 111.8,102.9 112.3,102.8 112.8,102.7 113.3,102.6 113.8,102.4 114.3,102.3 114.8,102.2 115.3,102.0 115.8,101.9 116.2,101.8 116.7,101.7 117.2,101.5 117.7,101.4 118.2,101.3 118.7,101.2 119.2,101.1 119.7,100.9 120.2,100.8 120.7,100.7 121.1,100.6 121.6,100.5 122.1,100.3 122.6,100.2 123.1,100.1 123.6,100.0 124.1,99.9 124.6,99.8 125.1,99.7 125.5,99.6 126.0,99.4 126.5,99.3 127.0,99.2 127.5,99.1 128.0,99.0 128.5,98.9 129.0,98.8 129.5,98.7 130.0,98.6 130.4,98.5 130.9,98.4 131.4,98.3 131.9,98.1 132.4,98.0 132.9,97.9 133.4,97.8 133.9,97.7 134.4,97.6 134.9,97.5 135.3,97.4 135.8,97.3 136.3,97.2 136.8,97.1 137.3,97.0 137.8,96.9 138.3,96.8 138.8,96.7 139.3,96.6 139.8,96.5 140.2,96.4 140.7,96.3 141.2,96.2 141.7,96.1 142.2,96.0 142.7,96.0 143.2,95.9 143.7,95.8 144.2,95.7 144.7,95.6 145.2,95.5 145.6,95.4 146.1,95.3 146.6,95.2 147.1,95.1 147.6,95.0 148.1,94.9 148.6,94.8 149.1,94.7 149.6,94.6 150.1,94.6 150.5,94.5 151.0,94.4 151.5,94.3 152.0,94.2 152.5,94.1 153.0,94.0 153.5,93.9 154.0,93.8 154.5,93.8 154.9,93.7 155.4,93.6 155.9,93.5 156.4,93.4 156.9,93.3 157.4,93.2 157.9,93.2 158.4,93.1 158.9,93.0 159.4,92.9 159.8,92.8 160.3,92.7 160.8,92.6 161.3,92.6 161.8,92.5 162.3,92.4 162.8,92.3 163.3,92.2 163.8,92.1 164.3,92.1 164.8,92.0 165.2,91.9 165.7,91.8 166.2,91.7 166.7,91.7 167.2,91.6 167.7,91.5 168.2,91.4 168.7,91.3 169.2,91.2 169.7,91.2 170.1,91.1 170.6,91.0 171.1,90.9 171.6,90.8 172.1,90.8 172.6,90.7 173.1,90.6 173.6,90.5 174.1,90.5 174.6,90.4 175.0,90.3 175.5,90.2 176.0,90.1 176.5,90.1 177.0,90.0 177.5,89.9 178.0,89.8 178.5,89.8 179.0,89.7 179.4,89.6 179.9,89.5 180.4,89.5 180.9,89.4 181.4,89.3 181.9,89.2 182.4,89.2 182.9,89.1 183.4,89.0 183.9,88.9 184.3,88.9 184.8,88.8 185.3,88.7 185.8,88.6 186.3,88.6 186.8,88.5 187.3,88.4 187.8,88.3 188.3,88.3 188.8,88.2 189.2,88.1 189.7,88.1 190.2,88.0 190.7,87.9 191.2,87.8 191.7,87.8 192.2,87.7 192.7,87.6 193.2,87.6 193.7,87.5 194.2,87.4 194.6,87.3 195.1,87.3 195.6,87.2 196.1,87.1 196.6,87.1 197.1,87.0 197.6,86.9 198.1,86.8 198.6,86.8 199.1,86.7 199.5,86.6 200.0,86.6 200.5,86.5 201.0,86.4 201.5,86.4 202.0,86.3 202.5,86.2 203.0,86.2 203.5,86.1 203.9,86.0 204.4,86.0 204.9,85.9 205.4,85.8 205.9,85.7 206.4,85.7 206.9,85.6 207.4,85.5 207.9,85.5 208.4,85.4 208.8,85.3 209.3,85.3 209.8,85.2 210.3,85.1 210.8,85.1 211.3,85.0 211.8,84.9 212.3,84.9 212.8,84.8 213.3,84.7 213.8,84.7 214.2,84.6 214.7,84.6 215.2,84.5 215.7,84.4 216.2,84.4 216.7,84.3 217.2,84.2 217.7,84.2 218.2,84.1 218.7,84.0 219.1,84.0 219.6,83.9 220.1,83.8 220.6,83.8 221.1,83.7 221.6,83.6 222.1,83.6 222.6,83.5 223.1,83.5 223.6,83.4 224.0,83.3 224.5,83.3 225.0,83.2 225.5,83.1 226.0,83.1" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round"/><polyline points="30.0,186.0 30.5,185.6 31.0,185.1 31.5,184.7 32.0,184.3 32.5,183.8 32.9,183.4 33.4,183.0 33.9,182.5 34.4,182.1 34.9,181.7 35.4,181.2 35.9,180.8 36.4,180.3 36.9,179.9 37.3,179.5 37.8,179.0 38.3,178.6 38.8,178.2 39.3,177.7 39.8,177.3 40.3,176.9 40.8,176.4 41.3,176.0 41.8,175.6 42.2,175.1 42.7,174.7 43.2,174.3 43.7,173.8 44.2,173.4 44.7,173.0 45.2,172.5 45.7,172.1 46.2,171.6 46.7,171.2 47.2,170.8 47.6,170.3 48.1,169.9 48.6,169.5 49.1,169.0 49.6,168.6 50.1,168.2 50.6,167.7 51.1,167.3 51.6,166.9 52.0,166.4 52.5,166.0 53.0,165.6 53.5,165.1 54.0,164.7 54.5,164.2 55.0,163.8 55.5,163.4 56.0,162.9 56.5,162.5 57.0,162.1 57.4,161.6 57.9,161.2 58.4,160.8 58.9,160.3 59.4,159.9 59.9,159.5 60.4,159.0 60.9,158.6 61.4,158.2 61.9,157.7 62.3,157.3 62.8,156.9 63.3,156.4 63.8,156.0 64.3,155.5 64.8,155.1 65.3,154.7 65.8,154.2 66.3,153.8 66.8,153.4 67.2,152.9 67.7,152.5 68.2,152.1 68.7,151.6 69.2,151.2 69.7,150.8 70.2,150.3 70.7,149.9 71.2,149.5 71.7,149.0 72.1,148.6 72.6,148.2 73.1,147.7 73.6,147.3 74.1,146.8 74.6,146.4 75.1,146.0 75.6,145.5 76.1,145.1 76.5,144.7 77.0,144.2 77.5,143.8 78.0,143.4 78.5,142.9 79.0,142.5 79.5,142.1 80.0,141.6 80.5,141.2 81.0,140.8 81.5,140.3 81.9,139.9 82.4,139.5 82.9,139.0 83.4,138.6 83.9,138.1 84.4,137.7 84.9,137.3 85.4,136.8 85.9,136.4 86.3,136.0 86.8,135.5 87.3,135.1 87.8,134.7 88.3,134.2 88.8,133.8 89.3,133.4 89.8,132.9 90.3,132.5 90.8,132.1 91.2,131.6 91.7,131.2 92.2,130.8 92.7,130.3 93.2,129.9 93.7,129.4 94.2,129.0 94.7,128.6 95.2,128.1 95.7,127.7 96.2,127.3 96.6,126.8 97.1,126.4 97.6,126.0 98.1,125.5 98.6,125.1 99.1,124.7 99.6,124.2 100.1,123.8 100.6,123.4 101.0,122.9 101.5,122.5 102.0,122.1 102.5,121.6 103.0,121.2 103.5,120.8 104.0,120.3 104.5,119.9 105.0,119.4 105.5,119.0 106.0,118.6 106.4,118.1 106.9,117.7 107.4,117.3 107.9,116.8 108.4,116.4 108.9,116.0 109.4,115.5 109.9,115.1 110.4,114.7 110.8,114.2 111.3,113.8 111.8,113.4 112.3,112.9 112.8,112.5 113.3,112.0 113.8,111.6 114.3,111.2 114.8,110.7 115.3,110.3 115.8,109.9 116.2,109.4 116.7,109.0 117.2,108.6 117.7,108.1 118.2,107.7 118.7,107.3 119.2,106.8 119.7,106.4 120.2,106.0 120.7,105.5 121.1,105.1 121.6,104.7 122.1,104.2 122.6,103.8 123.1,103.4 123.6,102.9 124.1,102.5 124.6,102.0 125.1,101.6 125.5,101.2 126.0,100.7 126.5,100.3 127.0,99.9 127.5,99.4 128.0,99.0 128.5,98.6 129.0,98.1 129.5,97.7 130.0,97.3 130.4,96.8 130.9,96.4 131.4,96.0 131.9,95.5 132.4,95.1 132.9,94.6 133.4,94.2 133.9,93.8 134.4,93.3 134.9,92.9 135.3,92.5 135.8,92.0 136.3,91.6 136.8,91.2 137.3,90.7 137.8,90.3 138.3,89.9 138.8,89.4 139.3,89.0 139.8,88.6 140.2,88.1 140.7,87.7 141.2,87.3 141.7,86.8 142.2,86.4 142.7,86.0 143.2,85.5 143.7,85.1 144.2,84.6 144.7,84.2 145.2,83.8 145.6,83.3 146.1,82.9 146.6,82.5 147.1,82.0 147.6,81.6 148.1,81.2 148.6,80.7 149.1,80.3 149.6,79.9 150.1,79.4 150.5,79.0 151.0,78.6 151.5,78.1 152.0,77.7 152.5,77.2 153.0,76.8 153.5,76.4 154.0,75.9 154.5,75.5 154.9,75.1 155.4,74.6 155.9,74.2 156.4,73.8 156.9,73.3 157.4,72.9 157.9,72.5 158.4,72.0 158.9,71.6 159.4,71.2 159.8,70.7 160.3,70.3 160.8,69.9 161.3,69.4 161.8,69.0 162.3,68.5 162.8,68.1 163.3,67.7 163.8,67.2 164.3,66.8 164.8,66.4 165.2,65.9 165.7,65.5 166.2,65.1 166.7,64.6 167.2,64.2 167.7,63.8 168.2,63.3 168.7,62.9 169.2,62.5 169.7,62.0 170.1,61.6 170.6,61.2 171.1,60.7 171.6,60.3 172.1,59.9 172.6,59.4 173.1,59.0 173.6,58.5 174.1,58.1 174.6,57.7 175.0,57.2 175.5,56.8 176.0,56.4 176.5,55.9 177.0,55.5 177.5,55.1 178.0,54.6 178.5,54.2 179.0,53.8 179.4,53.3 179.9,52.9 180.4,52.5 180.9,52.0 181.4,51.6 181.9,51.1 182.4,50.7 182.9,50.3 183.4,49.8 183.9,49.4 184.3,49.0 184.8,48.5 185.3,48.1 185.8,47.7 186.3,47.2 186.8,46.8 187.3,46.4 187.8,45.9 188.3,45.5 188.8,45.1 189.2,44.6 189.7,44.2 190.2,43.8 190.7,43.3 191.2,42.9 191.7,42.5 192.2,42.0 192.7,41.6 193.2,41.1 193.7,40.7 194.2,40.3 194.6,39.8 195.1,39.4 195.6,39.0 196.1,38.5 196.6,38.1 197.1,37.7 197.6,37.2 198.1,36.8 198.6,36.4 199.1,35.9 199.5,35.5 200.0,35.1 200.5,34.6 201.0,34.2 201.5,33.8 202.0,33.3 202.5,32.9 203.0,32.4 203.5,32.0 203.9,31.6 204.4,31.1 204.9,30.7 205.4,30.3 205.9,29.8 206.4,29.4 206.9,29.0 207.4,28.5 207.9,28.1 208.4,27.7 208.8,27.2 209.3,26.8 209.8,26.4 210.3,25.9 210.8,25.5 211.3,25.0 211.8,24.6 212.3,24.2 212.8,23.7 213.3,23.3 213.8,22.9 214.2,22.4 214.7,22.0 215.2,21.6 215.7,21.1 216.2,20.7 216.7,20.3 217.2,19.8 217.7,19.4 218.2,19.0 218.7,18.5 219.1,18.1 219.6,17.7 220.1,17.2 220.6,16.8 221.1,16.4 221.6,15.9 222.1,15.5 222.6,15.0 223.1,14.6 223.6,14.2 224.0,13.7 224.5,13.3 225.0,12.9 225.5,12.4 226.0,12.0" fill="none" stroke="#cbd5e1" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>f(x) = x³ − 4. Find f⁻¹(-3). <input class="ans" data-a="1" size="6"></li>
+<li>f(x) = x³ − 2. Find f⁻¹(25). <input class="ans" data-a="3" size="6"></li>
+<li>f(x) = x² + 0 with domain x ≥ 0. Find f⁻¹(9). <input class="ans" data-a="3" size="6"><svg viewBox="0 0 240 210" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="54.5" y1="12.0" x2="54.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="54.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="79.0" y1="12.0" x2="79.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="79.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="103.5" y1="12.0" x2="103.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><line x1="128.0" y1="12.0" x2="128.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="152.5" y1="12.0" x2="152.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="152.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="177.0" y1="12.0" x2="177.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="177.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="201.5" y1="12.0" x2="201.5" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="201.5" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="226.0" y1="12.0" x2="226.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="133.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="186.0" x2="226.0" y2="186.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="30.0" y1="164.2" x2="226.0" y2="164.2" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="167.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="30.0" y1="142.5" x2="226.0" y2="142.5" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="145.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="30.0" y1="120.8" x2="226.0" y2="120.8" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="99.0" x2="226.0" y2="99.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="102.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="30.0" y1="77.2" x2="226.0" y2="77.2" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="80.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="30.0" y1="55.5" x2="226.0" y2="55.5" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="58.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="33.8" x2="226.0" y2="33.8" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="36.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="99.5" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="120.8" x2="234.0" y2="120.8" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,120.8 225.9,124.7 225.9,116.8" fill="#334155"/><line x1="103.5" y1="186.0" x2="103.5" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="103.5,6.0 107.4,14.1 99.6,14.1" fill="#334155"/><polyline points="103.5,120.8 104.0,120.7 104.5,120.7 105.0,120.6 105.5,120.5 106.0,120.3 106.4,120.1 106.9,119.9 107.4,119.6 107.9,119.3 108.4,119.0 108.9,118.6 109.4,118.2 109.9,117.8 110.4,117.3 110.8,116.8 111.3,116.3 111.8,115.7 112.3,115.1 112.8,114.5 113.3,113.8 113.8,113.1 114.3,112.3 114.8,111.5 115.3,110.7 115.8,109.9 116.2,109.0 116.7,108.1 117.2,107.1 117.7,106.1 118.2,105.1 118.7,104.0 119.2,102.9 119.7,101.8 120.2,100.6 120.7,99.4 121.1,98.2 121.6,96.9 122.1,95.6 122.6,94.3 123.1,92.9 123.6,91.5 124.1,90.1 124.6,88.6 125.1,87.1 125.5,85.5 126.0,83.9 126.5,82.3 127.0,80.7 127.5,79.0 128.0,77.2 128.5,75.5 129.0,73.7 129.5,71.9 130.0,70.0 130.4,68.1 130.9,66.2 131.4,64.2 131.9,62.2 132.4,60.2 132.9,58.1 133.4,56.0 133.9,53.9 134.4,51.7 134.9,49.5 135.3,47.2 135.8,45.0 136.3,42.6 136.8,40.3 137.3,37.9 137.8,35.5 138.3,33.0 138.8,30.5 139.3,28.0 139.8,25.5 140.2,22.9 140.7,20.2 141.2,17.6 141.7,14.9 142.2,12.2 142.2,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><polyline points="103.5,120.8 104.0,118.6 104.5,117.7 105.0,117.0 105.5,116.4 106.0,115.9 106.4,115.4 106.9,115.0 107.4,114.6 107.9,114.2 108.4,113.9 108.9,113.5 109.4,113.2 109.9,112.9 110.4,112.6 110.8,112.3 111.3,112.0 111.8,111.8 112.3,111.5 112.8,111.3 113.3,111.0 113.8,110.8 114.3,110.5 114.8,110.3 115.3,110.1 115.8,109.9 116.2,109.7 116.7,109.4 117.2,109.2 117.7,109.0 118.2,108.8 118.7,108.6 119.2,108.4 119.7,108.3 120.2,108.1 120.7,107.9 121.1,107.7 121.6,107.5 122.1,107.3 122.6,107.2 123.1,107.0 123.6,106.8 124.1,106.7 124.6,106.5 125.1,106.3 125.5,106.2 126.0,106.0 126.5,105.8 127.0,105.7 127.5,105.5 128.0,105.4 128.5,105.2 129.0,105.1 129.5,104.9 130.0,104.8 130.4,104.6 130.9,104.5 131.4,104.3 131.9,104.2 132.4,104.0 132.9,103.9 133.4,103.8 133.9,103.6 134.4,103.5 134.9,103.4 135.3,103.2 135.8,103.1 136.3,102.9 136.8,102.8 137.3,102.7 137.8,102.6 138.3,102.4 138.8,102.3 139.3,102.2 139.8,102.0 140.2,101.9 140.7,101.8 141.2,101.7 141.7,101.5 142.2,101.4 142.7,101.3 143.2,101.2 143.7,101.1 144.2,100.9 144.7,100.8 145.2,100.7 145.6,100.6 146.1,100.5 146.6,100.3 147.1,100.2 147.6,100.1 148.1,100.0 148.6,99.9 149.1,99.8 149.6,99.7 150.1,99.6 150.5,99.4 151.0,99.3 151.5,99.2 152.0,99.1 152.5,99.0 153.0,98.9 153.5,98.8 154.0,98.7 154.5,98.6 154.9,98.5 155.4,98.4 155.9,98.3 156.4,98.1 156.9,98.0 157.4,97.9 157.9,97.8 158.4,97.7 158.9,97.6 159.4,97.5 159.8,97.4 160.3,97.3 160.8,97.2 161.3,97.1 161.8,97.0 162.3,96.9 162.8,96.8 163.3,96.7 163.8,96.6 164.3,96.5 164.8,96.4 165.2,96.3 165.7,96.2 166.2,96.1 166.7,96.0 167.2,96.0 167.7,95.9 168.2,95.8 168.7,95.7 169.2,95.6 169.7,95.5 170.1,95.4 170.6,95.3 171.1,95.2 171.6,95.1 172.1,95.0 172.6,94.9 173.1,94.8 173.6,94.7 174.1,94.6 174.6,94.6 175.0,94.5 175.5,94.4 176.0,94.3 176.5,94.2 177.0,94.1 177.5,94.0 178.0,93.9 178.5,93.8 179.0,93.8 179.4,93.7 179.9,93.6 180.4,93.5 180.9,93.4 181.4,93.3 181.9,93.2 182.4,93.2 182.9,93.1 183.4,93.0 183.9,92.9 184.3,92.8 184.8,92.7 185.3,92.6 185.8,92.6 186.3,92.5 186.8,92.4 187.3,92.3 187.8,92.2 188.3,92.1 188.8,92.1 189.2,92.0 189.7,91.9 190.2,91.8 190.7,91.7 191.2,91.7 191.7,91.6 192.2,91.5 192.7,91.4 193.2,91.3 193.7,91.2 194.2,91.2 194.6,91.1 195.1,91.0 195.6,90.9 196.1,90.8 196.6,90.8 197.1,90.7 197.6,90.6 198.1,90.5 198.6,90.5 199.1,90.4 199.5,90.3 200.0,90.2 200.5,90.1 201.0,90.1 201.5,90.0 202.0,89.9 202.5,89.8 203.0,89.8 203.5,89.7 203.9,89.6 204.4,89.5 204.9,89.5 205.4,89.4 205.9,89.3 206.4,89.2 206.9,89.2 207.4,89.1 207.9,89.0 208.4,88.9 208.8,88.9 209.3,88.8 209.8,88.7 210.3,88.6 210.8,88.6 211.3,88.5 211.8,88.4 212.3,88.3 212.8,88.3 213.3,88.2 213.8,88.1 214.2,88.1 214.7,88.0 215.2,87.9 215.7,87.8 216.2,87.8 216.7,87.7 217.2,87.6 217.7,87.6 218.2,87.5 218.7,87.4 219.1,87.3 219.6,87.3 220.1,87.2 220.6,87.1 221.1,87.1 221.6,87.0 222.1,86.9 222.6,86.8 223.1,86.8 223.6,86.7 224.0,86.6 224.5,86.6 225.0,86.5 225.5,86.4 226.0,86.4" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linejoin="round"/><polyline points="30.0,186.0 30.5,185.6 31.0,185.1 31.5,184.7 32.0,184.3 32.5,183.8 32.9,183.4 33.4,183.0 33.9,182.5 34.4,182.1 34.9,181.7 35.4,181.2 35.9,180.8 36.4,180.3 36.9,179.9 37.3,179.5 37.8,179.0 38.3,178.6 38.8,178.2 39.3,177.7 39.8,177.3 40.3,176.9 40.8,176.4 41.3,176.0 41.8,175.6 42.2,175.1 42.7,174.7 43.2,174.3 43.7,173.8 44.2,173.4 44.7,173.0 45.2,172.5 45.7,172.1 46.2,171.6 46.7,171.2 47.2,170.8 47.6,170.3 48.1,169.9 48.6,169.5 49.1,169.0 49.6,168.6 50.1,168.2 50.6,167.7 51.1,167.3 51.6,166.9 52.0,166.4 52.5,166.0 53.0,165.6 53.5,165.1 54.0,164.7 54.5,164.2 55.0,163.8 55.5,163.4 56.0,162.9 56.5,162.5 57.0,162.1 57.4,161.6 57.9,161.2 58.4,160.8 58.9,160.3 59.4,159.9 59.9,159.5 60.4,159.0 60.9,158.6 61.4,158.2 61.9,157.7 62.3,157.3 62.8,156.9 63.3,156.4 63.8,156.0 64.3,155.5 64.8,155.1 65.3,154.7 65.8,154.2 66.3,153.8 66.8,153.4 67.2,152.9 67.7,152.5 68.2,152.1 68.7,151.6 69.2,151.2 69.7,150.8 70.2,150.3 70.7,149.9 71.2,149.5 71.7,149.0 72.1,148.6 72.6,148.2 73.1,147.7 73.6,147.3 74.1,146.8 74.6,146.4 75.1,146.0 75.6,145.5 76.1,145.1 76.5,144.7 77.0,144.2 77.5,143.8 78.0,143.4 78.5,142.9 79.0,142.5 79.5,142.1 80.0,141.6 80.5,141.2 81.0,140.8 81.5,140.3 81.9,139.9 82.4,139.5 82.9,139.0 83.4,138.6 83.9,138.1 84.4,137.7 84.9,137.3 85.4,136.8 85.9,136.4 86.3,136.0 86.8,135.5 87.3,135.1 87.8,134.7 88.3,134.2 88.8,133.8 89.3,133.4 89.8,132.9 90.3,132.5 90.8,132.1 91.2,131.6 91.7,131.2 92.2,130.8 92.7,130.3 93.2,129.9 93.7,129.4 94.2,129.0 94.7,128.6 95.2,128.1 95.7,127.7 96.2,127.3 96.6,126.8 97.1,126.4 97.6,126.0 98.1,125.5 98.6,125.1 99.1,124.7 99.6,124.2 100.1,123.8 100.6,123.4 101.0,122.9 101.5,122.5 102.0,122.1 102.5,121.6 103.0,121.2 103.5,120.8 104.0,120.3 104.5,119.9 105.0,119.4 105.5,119.0 106.0,118.6 106.4,118.1 106.9,117.7 107.4,117.3 107.9,116.8 108.4,116.4 108.9,116.0 109.4,115.5 109.9,115.1 110.4,114.7 110.8,114.2 111.3,113.8 111.8,113.4 112.3,112.9 112.8,112.5 113.3,112.0 113.8,111.6 114.3,111.2 114.8,110.7 115.3,110.3 115.8,109.9 116.2,109.4 116.7,109.0 117.2,108.6 117.7,108.1 118.2,107.7 118.7,107.3 119.2,106.8 119.7,106.4 120.2,106.0 120.7,105.5 121.1,105.1 121.6,104.7 122.1,104.2 122.6,103.8 123.1,103.4 123.6,102.9 124.1,102.5 124.6,102.0 125.1,101.6 125.5,101.2 126.0,100.7 126.5,100.3 127.0,99.9 127.5,99.4 128.0,99.0 128.5,98.6 129.0,98.1 129.5,97.7 130.0,97.3 130.4,96.8 130.9,96.4 131.4,96.0 131.9,95.5 132.4,95.1 132.9,94.6 133.4,94.2 133.9,93.8 134.4,93.3 134.9,92.9 135.3,92.5 135.8,92.0 136.3,91.6 136.8,91.2 137.3,90.7 137.8,90.3 138.3,89.9 138.8,89.4 139.3,89.0 139.8,88.6 140.2,88.1 140.7,87.7 141.2,87.3 141.7,86.8 142.2,86.4 142.7,86.0 143.2,85.5 143.7,85.1 144.2,84.6 144.7,84.2 145.2,83.8 145.6,83.3 146.1,82.9 146.6,82.5 147.1,82.0 147.6,81.6 148.1,81.2 148.6,80.7 149.1,80.3 149.6,79.9 150.1,79.4 150.5,79.0 151.0,78.6 151.5,78.1 152.0,77.7 152.5,77.2 153.0,76.8 153.5,76.4 154.0,75.9 154.5,75.5 154.9,75.1 155.4,74.6 155.9,74.2 156.4,73.8 156.9,73.3 157.4,72.9 157.9,72.5 158.4,72.0 158.9,71.6 159.4,71.2 159.8,70.7 160.3,70.3 160.8,69.9 161.3,69.4 161.8,69.0 162.3,68.5 162.8,68.1 163.3,67.7 163.8,67.2 164.3,66.8 164.8,66.4 165.2,65.9 165.7,65.5 166.2,65.1 166.7,64.6 167.2,64.2 167.7,63.8 168.2,63.3 168.7,62.9 169.2,62.5 169.7,62.0 170.1,61.6 170.6,61.2 171.1,60.7 171.6,60.3 172.1,59.9 172.6,59.4 173.1,59.0 173.6,58.5 174.1,58.1 174.6,57.7 175.0,57.2 175.5,56.8 176.0,56.4 176.5,55.9 177.0,55.5 177.5,55.1 178.0,54.6 178.5,54.2 179.0,53.8 179.4,53.3 179.9,52.9 180.4,52.5 180.9,52.0 181.4,51.6 181.9,51.1 182.4,50.7 182.9,50.3 183.4,49.8 183.9,49.4 184.3,49.0 184.8,48.5 185.3,48.1 185.8,47.7 186.3,47.2 186.8,46.8 187.3,46.4 187.8,45.9 188.3,45.5 188.8,45.1 189.2,44.6 189.7,44.2 190.2,43.8 190.7,43.3 191.2,42.9 191.7,42.5 192.2,42.0 192.7,41.6 193.2,41.1 193.7,40.7 194.2,40.3 194.6,39.8 195.1,39.4 195.6,39.0 196.1,38.5 196.6,38.1 197.1,37.7 197.6,37.2 198.1,36.8 198.6,36.4 199.1,35.9 199.5,35.5 200.0,35.1 200.5,34.6 201.0,34.2 201.5,33.8 202.0,33.3 202.5,32.9 203.0,32.4 203.5,32.0 203.9,31.6 204.4,31.1 204.9,30.7 205.4,30.3 205.9,29.8 206.4,29.4 206.9,29.0 207.4,28.5 207.9,28.1 208.4,27.7 208.8,27.2 209.3,26.8 209.8,26.4 210.3,25.9 210.8,25.5 211.3,25.0 211.8,24.6 212.3,24.2 212.8,23.7 213.3,23.3 213.8,22.9 214.2,22.4 214.7,22.0 215.2,21.6 215.7,21.1 216.2,20.7 216.7,20.3 217.2,19.8 217.7,19.4 218.2,19.0 218.7,18.5 219.1,18.1 219.6,17.7 220.1,17.2 220.6,16.8 221.1,16.4 221.6,15.9 222.1,15.5 222.6,15.0 223.1,14.6 223.6,14.2 224.0,13.7 224.5,13.3 225.0,12.9 225.5,12.4 226.0,12.0" fill="none" stroke="#cbd5e1" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) 4 (2) 1 (3) 3 (4) 1 (5) 3 (6) 3</div>
+</section>
+<div style="text-align:center;margin:18px 0;"><a href="msp-hs10-function-inverses-lesson5.html" style="text-decoration:none;background:#253a77;color:#fff;padding:9px 16px;border-radius:8px;font-weight:800;">Next: Lesson 5 →</a></div>
+
+</main>
+<footer>Mary, Star of the Sea School · Math 10 · Composition &amp; Inverse Functions · Dr. Park</footer>
+</div>
+<script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
+  }
+});
+
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+
+<script>
+
+// ==== Auto-save + Save/Load Answers ====
+(function(){
+  function storageKey() {
+    return 'msp-ws-' + (location.pathname.split('/').pop() || 'unknown');
+  }
+  function topicFileName() {
+    var base = (location.pathname.split('/').pop() || 'worksheet.html');
+    base = base.replace(/^msp-/, '').replace(/\.html$/, '');
+    return base + '.json';
+  }
+  function allAnswerNodes() {
+    return Array.from(document.querySelectorAll('input.ans, input.free, textarea.free, main input[type="text"]'));
+  }
+  function snapshot() {
+    var out = {};
+    allAnswerNodes().forEach(function(n, i){
+      var key = n.id || ('idx_' + i);
+      out[key] = n.value || '';
+    });
+    return out;
+  }
+  function restore(data) {
+    if (!data) return 0;
+    var nodes = allAnswerNodes();
+    var count = 0;
+    nodes.forEach(function(n){ if (n.id && data[n.id] != null) { n.value = data[n.id]; count++; } });
+    nodes.forEach(function(n, i){ var k = 'idx_' + i; if (!n.id && data[k] != null) { n.value = data[k]; count++; } });
+    return count;
+  }
+  function autoSave() {
+    try {
+      localStorage.setItem(storageKey(), JSON.stringify(snapshot()));
+      showStatus('Auto-saved ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}));
+    } catch(e){}
+  }
+  function showStatus(msg) {
+    var el = document.getElementById('save-status');
+    if (el) el.textContent = msg;
+  }
+  window.saveAnswersToFile = function() {
+    var data = snapshot();
+    data.__savedAt = new Date().toISOString();
+    data.__pageTitle = document.title;
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = topicFileName();
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+    showStatus('Downloaded ' + topicFileName());
+  };
+  window.loadAnswersFromFile = function(evt) {
+    var f = evt.target.files && evt.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        var n = restore(data);
+        autoSave();
+        showStatus('Loaded ' + n + ' answers from ' + f.name);
+      } catch(err) {
+        showStatus('Could not load file: ' + err.message);
+      }
+    };
+    reader.readAsText(f);
+    evt.target.value = '';
+  };
+  window.clearAllAnswers = function() {
+    if (!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+    allAnswerNodes().forEach(function(n){ n.value = ''; n.classList.remove('correct','wrong'); });
+    try { localStorage.removeItem(storageKey()); } catch(e){}
+    document.querySelectorAll('.correction-label').forEach(function(n){ n.remove(); });
+    document.querySelectorAll('.score').forEach(function(s){ s.textContent = '—'; s.classList.remove('good','mid','low'); });
+    showStatus('All answers cleared');
+  };
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      var raw = localStorage.getItem(storageKey());
+      if (raw) {
+        var n = restore(JSON.parse(raw));
+        if (n) showStatus('Restored ' + n + ' saved answers');
+      }
+    } catch(e){}
+    var t;
+    document.addEventListener('input', function(e) {
+      if (e.target && (e.target.classList.contains('ans') || e.target.classList.contains('free') || e.target.tagName === 'TEXTAREA' || e.target.type === 'text')) {
+        clearTimeout(t);
+        t = setTimeout(autoSave, 400);
+      }
+    });
+  });
+})();
+
+</script>
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  function check(inp){
+    var place=inp, u=inp.nextElementSibling;
+    if (u && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; place.insertAdjacentElement('afterend', fb); }
+    if (!inp.value.trim()) { fb.textContent=''; return; }
+    var ok=test(inp.value, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card=inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className='one-check-fb '+(ok?'ok':'no');
+    fb.textContent= ok ? '✓ Correct!' : '✗ Try again';
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key!=='Enter' || graded()) return;
+    var t=e.target;
+    if (!t || t.tagName!=='INPUT') return;
+    if (!(t.classList.contains('ans') || /^ans\d+$/.test(t.id||''))) return;
+    if (!expected(t)) return;
+    e.preventDefault(); check(t);
+  }, true);
+  document.addEventListener('input', function(e){
+    var t=e.target; if (!t || t.tagName!=='INPUT') return;
+    var place=t, u=t.nextElementSibling; if (u && u.classList && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling; if (fb && fb.classList.contains('one-check-fb')) fb.textContent='';
+  }, true);
+  function clean(){ document.querySelectorAll('.one-check-btn').forEach(function(n){n.remove();}); if (graded()) document.querySelectorAll('.one-check-fb').forEach(function(n){n.remove();}); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', clean); else clean();
+})();
+</script>
+<!--/CHECK-ONE-->
+</body></html>
