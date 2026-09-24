@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Area of Polygons Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--purple); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+
+.shape-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:8px 0 12px; }
+.shape-btn { padding:9px 16px; border:2px solid var(--navy); background:#fff; color:var(--navy); border-radius:8px; font-weight:800; cursor:pointer; font-size:.95rem; }
+.shape-btn.on { background:var(--navy); color:#fff; }
+.layout { display:grid; grid-template-columns: 1fr 300px; gap:18px; align-items:start; }
+@media (max-width:820px){ .layout { grid-template-columns:1fr; } }
+.grid-wrap { background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:8px; }
+.sliders { background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:12px 14px; }
+.sl { margin:8px 0 12px; }
+.sl label { display:flex; justify-content:space-between; font-weight:800; color:var(--navy); font-size:.95rem; }
+.sl input[type=range] { width:100%; accent-color: var(--purple); }
+.formula { background:#f5f3ff; border:2px solid var(--purple); border-radius:10px; padding:12px 14px; margin-top:12px; font-size:1.05rem; line-height:1.7; }
+.formula .big { font-size:1.5rem; font-weight:900; color:var(--navy); }
+.why-toggle { margin-top:10px; display:flex; align-items:center; gap:8px; font-weight:800; color:var(--navy); cursor:pointer; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.95rem; }
+.practice { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.practice input { padding:8px 12px; border:1.5px solid #94a3b8; border-radius:6px; font-size:1rem; width:120px; }
+.btn { padding:9px 16px; background:var(--navy); color:#fff; border:none; border-radius:8px; font-weight:800; cursor:pointer; }
+.btn.alt { background:var(--purple); }
+.fb { font-weight:800; margin-top:8px; }
+.fb.ok { color:var(--green); } .fb.no { color:var(--red); }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+<header>
+  <div class="eyebrow">Math 6 · Area of Polygons · Visual Explorer</div>
+  <h1>🔷 Polygons Visual: See Why the Area Formulas Work</h1>
+  <p class="tagline">Pick a shape. Drag the sliders. Count the unit squares and watch the formula update.</p>
+</header>
+
+<div class="big-idea"><strong>Big idea:</strong> Area = the number of <strong>unit squares</strong> that fit inside a shape. Every formula here comes from the rectangle: <strong>base × height</strong>. Triangles are <em>half</em> a rectangle, parallelograms <em>rearrange</em> into a rectangle, and trapezoids use the <em>average</em> of the two bases.</div>
+
+<section class="card">
+  <h2>🎯 Explore a Shape</h2>
+  <div class="shape-btns" id="shapeBtns">
+    <button class="shape-btn on" data-s="rect">▭ Rectangle</button>
+    <button class="shape-btn" data-s="para">▱ Parallelogram</button>
+    <button class="shape-btn" data-s="tri">△ Triangle</button>
+    <button class="shape-btn" data-s="trap">⏢ Trapezoid</button>
+  </div>
+  <div class="layout">
+    <div class="grid-wrap"><svg id="grid" viewBox="0 0 560 380" style="width:100%;height:auto;display:block"></svg></div>
+    <div>
+      <div class="sliders">
+        <div class="sl"><label><span id="bLab">base (b)</span><span id="bVal"></span></label><input type="range" id="b" min="1" max="12" value="8"></div>
+        <div class="sl" id="b2Row" style="display:none"><label><span>top base (b₁)</span><span id="b2Val"></span></label><input type="range" id="b2" min="1" max="12" value="4"></div>
+        <div class="sl"><label><span>height (h)</span><span id="hVal"></span></label><input type="range" id="h" min="1" max="9" value="5"></div>
+        <div class="sl" id="sRow" style="display:none"><label><span id="sLab">slant</span><span id="sVal"></span></label><input type="range" id="s" min="0" max="4" value="2"></div>
+        <label class="why-toggle"><input type="checkbox" id="why" checked> Show why it works</label>
+      </div>
+      <div class="formula" id="formula"></div>
+    </div>
+  </div>
+  <div class="tip" id="whyText"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>✏️ Quick Practice</h2>
+  <p id="pq" style="font-size:1.05rem;font-weight:700;color:var(--navy)"></p>
+  <svg id="psvg" viewBox="0 0 320 200" style="width:320px;max-width:100%;height:auto;display:block;margin:6px 0"></svg>
+  <div class="practice"><span style="font-weight:800">Area =</span><input id="pa" inputmode="decimal" placeholder="?"><span>square units</span><button class="btn" id="pcheck">Check</button><button class="btn alt" id="pnew">New problem</button></div>
+  <div class="fb" id="pfb"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--gold);">
+  <h2>🧠 Formula Summary</h2>
+  <div class="tip"><strong>Rectangle:</strong> A = b × h (rows of unit squares)</div>
+  <div class="tip"><strong>Parallelogram:</strong> A = b × h (cut off the slanted triangle, slide it over → rectangle)</div>
+  <div class="tip"><strong>Triangle:</strong> A = (b × h) ÷ 2 (exactly half of the rectangle around it)</div>
+  <div class="tip"><strong>Trapezoid:</strong> A = ((b₁ + b₂) ÷ 2) × h (a rectangle as wide as the average base)</div>
+  <div class="tip" style="border-left-color:var(--red);background:#fef2f2;"><strong>Watch out:</strong> the height is always measured <strong>straight up</strong> (perpendicular to the base) — not along a slanted side.</div>
+</section>
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Polygons Visual</footer>
+</div>
+
+<script>
+(function(){
+  const S = { shape:'rect' };
+  const U = 32, OX = 40, OY = 340, COLS = 15, ROWS = 10;       // grid: 32px unit squares
+  const X = v => OX + v*U, Y = v => OY - v*U;
+  const COL = { rect:'#0f766e', para:'#b45309', tri:'#dc2626', trap:'#7c3aed' };
+  const FILL= { rect:'#99f6e4', para:'#fde68a', tri:'#fecaca', trap:'#ddd6fe' };
+  const $ = id => document.getElementById(id);
+  const fmt = n => (Math.round(n*100)/100).toString();
+  function pts(a){ return a.map(p => X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' '); }
+
+  function shapePts(sh,b,h,b2,s){
+    if (sh==='rect') return [[0,0],[b,0],[b,h],[0,h]];
+    if (sh==='para') return [[0,0],[b,0],[b+s,h],[s,h]];
+    if (sh==='tri')  return [[0,0],[b,0],[Math.min(s,b),h]];
+    const x0=(b-b2)/2; return [[0,0],[b,0],[x0+b2,h],[x0,h]];
+  }
+  function draw(){
+    const sh=S.shape, b=+$('b').value, h=+$('h').value, b2=Math.min(+$('b2').value, b), s=+$('s').value, why=$('why').checked;
+    $('bVal').textContent=b; $('hVal').textContent=h; $('b2Val').textContent=b2; $('sVal').textContent=s;
+    $('b2Row').style.display = sh==='trap' ? '' : 'none';
+    $('sRow').style.display = (sh==='para'||sh==='tri') ? '' : 'none';
+    $('sLab').textContent = sh==='tri' ? 'top point position' : 'slant';
+    $('s').max = sh==='tri' ? b : 4;
+    $('bLab').textContent = sh==='trap' ? 'bottom base (b₂)' : 'base (b)';
+    let g='';
+    for (let i=0;i<=COLS;i++) g+=`<line x1="${X(i)}" y1="${Y(0)}" x2="${X(i)}" y2="${Y(ROWS)}" stroke="#e2e8f0"/>`;
+    for (let j=0;j<=ROWS;j++) g+=`<line x1="${X(0)}" y1="${Y(j)}" x2="${X(COLS)}" y2="${Y(j)}" stroke="#e2e8f0"/>`;
+    const P=shapePts(sh,b,h,b2,s), c=COL[sh], f=FILL[sh];
+    // "why" overlays underneath the shape
+    let whyTxt='';
+    if (why){
+      if (sh==='tri'){ g+=`<rect x="${X(0)}" y="${Y(h)}" width="${b*U}" height="${h*U}" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="7,5"/>`;
+        whyTxt='The dashed rectangle is b × h = '+b+' × '+h+' = '+(b*h)+' squares. The triangle covers exactly <strong>half</strong> of it, so the area is '+(b*h)+' ÷ 2 = <strong>'+fmt(b*h/2)+'</strong>.'; }
+      else if (sh==='para'){ if (s>0){ g+=`<polygon points="${pts([[b,0],[b+s,0],[b+s,h]])}" fill="${f}" fill-opacity="0.55" stroke="${c}" stroke-width="2" stroke-dasharray="6,4"/>`;
+          g+=`<polygon points="${pts([[0,0],[s,0],[s,h]])}" fill="#fff" fill-opacity="0.7" stroke="${c}" stroke-width="1.5" stroke-dasharray="3,3"/>`; }
+        g+=`<rect x="${X(s)}" y="${Y(h)}" width="${b*U}" height="${h*U}" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="7,5"/>`;
+        whyTxt='Cut off the left triangle and slide it to the right (dashed). The parallelogram becomes a <strong>'+b+' × '+h+' rectangle</strong>, so the area is b × h = <strong>'+(b*h)+'</strong>.'; }
+      else if (sh==='trap'){ const avg=(b+b2)/2, x0=(b-avg)/2;
+        g+=`<rect x="${X(x0)}" y="${Y(h)}" width="${avg*U}" height="${h*U}" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="7,5"/>`;
+        whyTxt='The dashed rectangle is as wide as the <strong>average base</strong>: ('+b2+' + '+b+') ÷ 2 = '+fmt(avg)+'. The pieces that stick out fill the gaps, so the area is '+fmt(avg)+' × '+h+' = <strong>'+fmt(avg*h)+'</strong>.'; }
+      else { whyTxt='Count the squares: '+h+' rows of '+b+' unit squares = '+b+' × '+h+' = <strong>'+(b*h)+'</strong>.'; }
+    }
+    g+=`<polygon points="${pts(P)}" fill="${f}" fill-opacity="${why && sh!=='rect' ? 0.75 : 0.85}" stroke="${c}" stroke-width="3" stroke-linejoin="round"/>`;
+    // height line + right angle
+    const hx = sh==='rect' ? 0 : sh==='trap' ? (b-b2)/2 : sh==='tri' ? Math.min(s,b) : s;
+    g+=`<line x1="${X(hx)}" y1="${Y(h)}" x2="${X(hx)}" y2="${Y(0)}" stroke="${c}" stroke-width="2.5" stroke-dasharray="7,5"/>`;
+    g+=`<path d="M${X(hx)},${Y(0)-12} h12 v12" fill="none" stroke="${c}" stroke-width="2"/>`;
+    g+=`<text x="${X(hx)+8}" y="${(Y(h)+Y(0))/2+5}" font-size="18" font-weight="800" fill="${c}">h = ${h}</text>`;
+    g+=`<text x="${(X(0)+X(b))/2}" y="${Y(0)+26}" text-anchor="middle" font-size="18" font-weight="800" fill="${c}">${sh==='trap'?'b₂':'b'} = ${b}</text>`;
+    if (sh==='trap') g+=`<text x="${(X((b-b2)/2)+X((b+b2)/2))/2}" y="${Y(h)-8}" text-anchor="middle" font-size="18" font-weight="800" fill="${c}">b₁ = ${b2}</text>`;
+    $('grid').innerHTML=g;
+    let F='';
+    if (sh==='rect') F=`<strong>Rectangle</strong><br>A = b × h<br>A = ${b} × ${h}<br><span class="big">A = ${b*h}</span> square units`;
+    if (sh==='para') F=`<strong>Parallelogram</strong><br>A = b × h<br>A = ${b} × ${h}<br><span class="big">A = ${b*h}</span> square units`;
+    if (sh==='tri')  F=`<strong>Triangle</strong><br>A = (b × h) ÷ 2<br>A = (${b} × ${h}) ÷ 2 = ${b*h} ÷ 2<br><span class="big">A = ${fmt(b*h/2)}</span> square units`;
+    if (sh==='trap') F=`<strong>Trapezoid</strong><br>A = ((b₁ + b₂) ÷ 2) × h<br>A = ((${b2} + ${b}) ÷ 2) × ${h} = ${fmt((b+b2)/2)} × ${h}<br><span class="big">A = ${fmt((b+b2)/2*h)}</span> square units`;
+    $('formula').innerHTML=F;
+    $('whyText').innerHTML = why ? '<strong>Why it works:</strong> '+whyTxt : 'Turn on <em>Show why it works</em> to see where the formula comes from.';
+  }
+  document.querySelectorAll('.shape-btn').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('.shape-btn').forEach(x=>x.classList.remove('on')); btn.classList.add('on'); S.shape=btn.dataset.s;
+    if (S.shape==='tri') $('s').value=Math.round(+$('b').value/2);
+    draw();
+  }));
+  ['b','h','b2','s','why'].forEach(id=>$(id).addEventListener('input',draw));
+  draw();
+
+  // ---------- Quick practice ----------
+  let P={};
+  function rnd(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
+  function newProblem(){
+    const kinds=['rect','para','tri','trap']; const k=kinds[rnd(0,3)];
+    let b=rnd(3,12), h=rnd(2,9), b2=rnd(2,Math.max(2,b-1));
+    if (k==='tri' && (b*h)%2) b+=1;
+    if (k==='trap' && ((b+b2)*h)%2) h+= (h<9?1:-1);
+    const ans = k==='rect'||k==='para' ? b*h : k==='tri' ? b*h/2 : (b+b2)/2*h;
+    P={k,b,h,b2,ans};
+    const name={rect:'rectangle',para:'parallelogram',tri:'triangle',trap:'trapezoid'}[k];
+    $('pq').textContent = k==='trap' ? `Find the Area of the trapezoid: bases ${b2} and ${b}, height ${h}.` : `Find the Area of the ${name}: base ${b}, height ${h}.`;
+    // small picture (not to scale)
+    const c=COL[k], f=FILL[k]; let s='';
+    const x=40,y=160,w=200,hh=110;
+    if (k==='rect') s=`<rect x="${x}" y="${y-hh}" width="${w}" height="${hh}" fill="${f}" stroke="${c}" stroke-width="3"/>`;
+    if (k==='para') s=`<polygon points="${x},${y} ${x+w-50},${y} ${x+w+10},${y-hh} ${x+60},${y-hh}" fill="${f}" stroke="${c}" stroke-width="3"/>`;
+    if (k==='tri')  s=`<polygon points="${x},${y} ${x+w},${y} ${x+80},${y-hh}" fill="${f}" stroke="${c}" stroke-width="3"/>`;
+    if (k==='trap') s=`<polygon points="${x},${y} ${x+w},${y} ${x+150},${y-hh} ${x+50},${y-hh}" fill="${f}" stroke="${c}" stroke-width="3"/>`;
+    const hx = k==='rect'? x : k==='para'? x+60 : k==='tri'? x+80 : x+50;
+    s+=`<line x1="${hx}" y1="${y-hh}" x2="${hx}" y2="${y}" stroke="${c}" stroke-width="2" stroke-dasharray="6,4"/><path d="M${hx},${y-10} h10 v10" fill="none" stroke="${c}" stroke-width="1.5"/>`;
+    s+=`<text x="${hx+8}" y="${y-hh/2+5}" font-size="16" font-weight="800" fill="${c}">${h}</text>`;
+    s+=`<text x="${k==='para'? x+(w-50)/2 : x+w/2}" y="${y+22}" text-anchor="middle" font-size="16" font-weight="800" fill="${c}">${b}</text>`;
+    if (k==='trap') s+=`<text x="${x+100}" y="${y-hh-8}" text-anchor="middle" font-size="16" font-weight="800" fill="${c}">${b2}</text>`;
+    s+=`<text x="300" y="195" text-anchor="end" font-size="11" fill="#94a3b8">not to scale</text>`;
+    $('psvg').innerHTML=s; $('pa').value=''; $('pfb').textContent=''; $('pfb').className='fb';
+  }
+  function check(){
+    const v=parseFloat(String($('pa').value).replace(/[^0-9.\-]/g,''));
+    if (isNaN(v)){ $('pfb').textContent='Type a number first.'; $('pfb').className='fb no'; return; }
+    if (Math.abs(v-P.ans)<1e-9){ $('pfb').textContent='✓ Correct! Area = '+fmt(P.ans)+' square units.'; $('pfb').className='fb ok'; }
+    else {
+      const how = P.k==='rect'||P.k==='para' ? `A = b × h = ${P.b} × ${P.h}` : P.k==='tri' ? `A = (b × h) ÷ 2 = (${P.b} × ${P.h}) ÷ 2` : `A = ((b₁ + b₂) ÷ 2) × h = ((${P.b2} + ${P.b}) ÷ 2) × ${P.h}`;
+      $('pfb').innerHTML='✗ Not quite. Try again — hint: '+how+'.'; $('pfb').className='fb no';
+    }
+  }
+  $('pcheck').addEventListener('click',check);
+  $('pa').addEventListener('keydown',e=>{ if(e.key==='Enter') check(); });
+  $('pnew').addEventListener('click',newProblem);
+  newProblem();
+})();
+</script>
+</body>
+</html>
