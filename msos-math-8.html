@@ -3764,6 +3764,10 @@ function showRealWorld() {
     if (window.location.hash === '#syllabus' && typeof showSyllabus === 'function') {
       showSyllabus();
     }
+    var m = window.location.hash.match(/^#unit=([\w-]+)/);
+    if (m && typeof showLesson === 'function' && typeof UNITS !== 'undefined' && UNITS.some(function(u){ return u.id === m[1]; })) {
+      setTimeout(function(){ showLesson(m[1]); }, 0);
+    }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', checkHash);
