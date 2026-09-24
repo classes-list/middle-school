@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curve Sketching &amp; Optimization — Math 12 Worksheet</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--gold:#FFD100;--gold-deep:#b8860b;--ink:#1f2937;--dim:#64748b;--accent:#dc2626;--accent-deep:#991b1b;--accent-soft:#fee2e2;--pos:#059669;--neg:#dc2626}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%);color:var(--ink);min-height:100vh;padding:24px 16px;line-height:1.6}
+.container{max-width:1000px;margin:0 auto}
+header{text-align:center;margin-bottom:20px}
+.eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:6px}
+.tagline{color:var(--dim);font-size:.98rem;font-style:italic}
+.back-to-unit{display:inline-block;background:var(--gold);color:var(--navy);border:1.5px solid var(--gold-deep);padding:9px 18px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;margin-bottom:16px;box-shadow:0 2px 6px rgba(184,134,11,0.25);cursor:pointer}
+.back-to-unit:hover{background:var(--gold-deep);color:#fff;transform:translateX(-2px)}
+main{display:flex;flex-direction:column;gap:20px}
+section.card{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 4px 14px rgba(0,0,0,0.07);border-top:5px solid var(--accent)}
+section.card h2{color:var(--accent-deep);font-size:1.2rem;font-weight:800;margin-bottom:10px}
+section.card h3{color:var(--navy);font-size:1rem;font-weight:800;margin:12px 0 8px}
+.intro{background:var(--accent-soft);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0 12px;font-size:.95rem}
+.rule{background:#fef3c7;border-left:5px solid #b8860b;border-radius:6px;padding:8px 12px;margin:10px 0;font-size:.94rem}
+.rule strong{color:#78350f}
+table.rules{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.98rem}
+table.rules th,table.rules td{border:1.5px solid #94a3b8;padding:8px 12px;text-align:center}
+table.rules th{background:var(--navy);color:#fff;font-weight:800}
+table.rules tr:nth-child(even) td{background:#f8fafc}
+.pos{color:var(--pos);font-weight:800}
+.neg{color:var(--neg);font-weight:800}
+ol.qlist{list-style:none;counter-reset:q;padding:0;margin-top:8px}
+ol.qlist>li{counter-increment:q;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed #d1d5db}
+ol.qlist>li:last-child{border-bottom:none}
+ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.answer-line{display:inline-block;min-width:120px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.answer-line-lg{display:inline-block;min-width:200px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.reveal-btn{display:inline-block;background:var(--gold);color:var(--navy);border:1px solid var(--gold-deep);padding:8px 14px;border-radius:6px;font-weight:800;font-size:.9rem;cursor:pointer;margin:6px 0}
+.reveal-btn:hover{background:var(--gold-deep);color:#fff}
+.ak{display:none;background:#ecfccb;border-left:5px solid #65a30d;padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.ak.open{display:block}
+.ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
+footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
+@media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check, .save-toolbar { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style></head><body>
+<div class="container">
+<header>
+  <div class="eyebrow">Math 12 · Unit Worksheet</div>
+  <h1>⛰️ Curve Sketching &amp; Optimization Worksheet</h1>
+  <p class="tagline">Derivatives find the peaks and valleys.</p>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section.</p></header>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<main>
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
+<section class="card" id="wsec1">
+<h2>1️⃣ Critical Points</h2>
+<div class="intro">Solve f′(x) = 0.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>f(x) = x³ + 7.5x² + 18x. Find the larger critical point (x-value). <input class="ans" data-a="-2" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−40</text><line x1="30.0" y1="181.8" x2="246.0" y2="181.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="184.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="157.5" x2="246.0" y2="157.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="160.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="133.2" x2="246.0" y2="133.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="136.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="84.8" x2="246.0" y2="84.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="87.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="60.5" x2="246.0" y2="60.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="63.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="36.2" x2="246.0" y2="36.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="39.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">40</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="30.0,215.7 30.5,215.7 31.1,215.7 31.6,215.7 32.2,215.7 32.7,215.7 33.2,215.7 33.8,215.7 34.3,215.7 34.9,215.7 35.4,215.7 35.9,213.8 36.5,211.7 37.0,209.6 37.6,207.6 38.1,205.6 38.6,203.6 39.2,201.7 39.7,199.9 40.3,198.0 40.8,196.2 41.3,194.5 41.9,192.7 42.4,191.0 43.0,189.4 43.5,187.8 44.0,186.2 44.6,184.7 45.1,183.1 45.7,181.7 46.2,180.2 46.7,178.8 47.3,177.5 47.8,176.1 48.4,174.8 48.9,173.6 49.4,172.3 50.0,171.1 50.5,169.9 51.1,168.8 51.6,167.7 52.1,166.6 52.7,165.5 53.2,164.5 53.8,163.5 54.3,162.5 54.8,161.6 55.4,160.7 55.9,159.8 56.5,158.9 57.0,158.1 57.5,157.3 58.1,156.5 58.6,155.8 59.2,155.0 59.7,154.3 60.2,153.7 60.8,153.0 61.3,152.4 61.9,151.8 62.4,151.2 62.9,150.6 63.5,150.1 64.0,149.5 64.6,149.0 65.1,148.6 65.6,148.1 66.2,147.7 66.7,147.2 67.3,146.8 67.8,146.5 68.3,146.1 68.9,145.7 69.4,145.4 70.0,145.1 70.5,144.8 71.0,144.5 71.6,144.3 72.1,144.0 72.7,143.8 73.2,143.6 73.7,143.4 74.3,143.2 74.8,143.0 75.4,142.8 75.9,142.7 76.4,142.6 77.0,142.4 77.5,142.3 78.1,142.2 78.6,142.1 79.1,142.1 79.7,142.0 80.2,141.9 80.8,141.9 81.3,141.8 81.8,141.8 82.4,141.8 82.9,141.8 83.5,141.7 84.0,141.7 84.5,141.7 85.1,141.8 85.6,141.8 86.2,141.8 86.7,141.8 87.2,141.8 87.8,141.9 88.3,141.9 88.9,142.0 89.4,142.0 89.9,142.0 90.5,142.1 91.0,142.1 91.6,142.2 92.1,142.3 92.6,142.3 93.2,142.4 93.7,142.4 94.3,142.5 94.8,142.5 95.3,142.6 95.9,142.6 96.4,142.7 97.0,142.7 97.5,142.8 98.0,142.8 98.6,142.8 99.1,142.9 99.7,142.9 100.2,142.9 100.7,142.9 101.3,142.9 101.8,142.9 102.4,142.9 102.9,142.9 103.4,142.9 104.0,142.9 104.5,142.9 105.1,142.8 105.6,142.8 106.1,142.7 106.7,142.7 107.2,142.6 107.8,142.5 108.3,142.4 108.8,142.3 109.4,142.2 109.9,142.0 110.5,141.9 111.0,141.7 111.5,141.6 112.1,141.4 112.6,141.2 113.2,141.0 113.7,140.7 114.2,140.5 114.8,140.2 115.3,140.0 115.9,139.7 116.4,139.4 116.9,139.1 117.5,138.7 118.0,138.4 118.6,138.0 119.1,137.6 119.6,137.2 120.2,136.7 120.7,136.3 121.3,135.8 121.8,135.3 122.3,134.8 122.9,134.3 123.4,133.7 124.0,133.1 124.5,132.5 125.0,131.9 125.6,131.3 126.1,130.6 126.7,129.9 127.2,129.2 127.7,128.4 128.3,127.6 128.8,126.9 129.4,126.0 129.9,125.2 130.4,124.3 131.0,123.4 131.5,122.5 132.1,121.5 132.6,120.5 133.1,119.5 133.7,118.5 134.2,117.4 134.8,116.3 135.3,115.1 135.8,114.0 136.4,112.8 136.9,111.6 137.5,110.3 138.0,109.0 138.5,107.7 139.1,106.3 139.6,104.9 140.2,103.5 140.7,102.0 141.2,100.5 141.8,99.0 142.3,97.4 142.9,95.8 143.4,94.2 143.9,92.5 144.5,90.8 145.0,89.1 145.6,87.3 146.1,85.5 146.6,83.6 147.2,81.7 147.7,79.7 148.3,77.8 148.8,75.7 149.3,73.7 149.9,71.6 150.4,69.4 151.0,67.2 151.5,65.0 152.0,62.7 152.6,60.4 153.1,58.1 153.7,55.7 154.2,53.2 154.7,50.7 155.3,48.2 155.8,45.6 156.4,43.0 156.9,40.3 157.4,37.6 158.0,34.8 158.5,32.0 159.1,29.1 159.6,26.2 160.1,23.3 160.7,20.3 161.2,17.2 161.8,14.1 162.3,11.0 162.8,7.8 163.4,4.5 163.9,2.3 164.5,2.3 165.0,2.3 165.5,2.3 166.1,2.3 166.6,2.3 167.2,2.3 167.7,2.3 168.2,2.3 168.8,2.3 169.3,2.3 169.9,2.3 170.4,2.3 170.9,2.3 171.5,2.3 172.0,2.3 172.6,2.3 173.1,2.3 173.6,2.3 174.2,2.3 174.7,2.3 175.3,2.3 175.8,2.3 176.3,2.3 176.9,2.3 177.4,2.3 178.0,2.3 178.5,2.3 179.0,2.3 179.6,2.3 180.1,2.3 180.7,2.3 181.2,2.3 181.7,2.3 182.3,2.3 182.8,2.3 183.4,2.3 183.9,2.3 184.4,2.3 185.0,2.3 185.5,2.3" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>f(x) = x³ + 7.5x² + 12x. Find the larger critical point (x-value). <input class="ans" data-a="-1" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−40</text><line x1="30.0" y1="181.8" x2="246.0" y2="181.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="184.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="157.5" x2="246.0" y2="157.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="160.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="133.2" x2="246.0" y2="133.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="136.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="84.8" x2="246.0" y2="84.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="87.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="60.5" x2="246.0" y2="60.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="63.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="36.2" x2="246.0" y2="36.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="39.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">40</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="30.0,152.7 30.5,150.5 31.1,148.4 31.6,146.3 32.2,144.3 32.7,142.3 33.2,140.4 33.8,138.5 34.3,136.6 34.9,134.8 35.4,133.1 35.9,131.3 36.5,129.6 37.0,128.0 37.6,126.4 38.1,124.8 38.6,123.3 39.2,121.8 39.7,120.4 40.3,119.0 40.8,117.6 41.3,116.3 41.9,115.0 42.4,113.8 43.0,112.6 43.5,111.4 44.0,110.2 44.6,109.1 45.1,108.1 45.7,107.0 46.2,106.0 46.7,105.1 47.3,104.1 47.8,103.2 48.4,102.4 48.9,101.5 49.4,100.7 50.0,100.0 50.5,99.2 51.1,98.5 51.6,97.8 52.1,97.2 52.7,96.6 53.2,96.0 53.8,95.4 54.3,94.9 54.8,94.4 55.4,93.9 55.9,93.4 56.5,93.0 57.0,92.6 57.5,92.3 58.1,91.9 58.6,91.6 59.2,91.3 59.7,91.0 60.2,90.8 60.8,90.6 61.3,90.4 61.9,90.2 62.4,90.1 62.9,89.9 63.5,89.8 64.0,89.7 64.6,89.7 65.1,89.6 65.6,89.6 66.2,89.6 66.7,89.6 67.3,89.7 67.8,89.7 68.3,89.8 68.9,89.9 69.4,90.0 70.0,90.1 70.5,90.2 71.0,90.4 71.6,90.6 72.1,90.8 72.7,91.0 73.2,91.2 73.7,91.4 74.3,91.7 74.8,91.9 75.4,92.2 75.9,92.5 76.4,92.8 77.0,93.1 77.5,93.4 78.1,93.8 78.6,94.1 79.1,94.5 79.7,94.8 80.2,95.2 80.8,95.6 81.3,96.0 81.8,96.4 82.4,96.8 82.9,97.2 83.5,97.7 84.0,98.1 84.5,98.5 85.1,99.0 85.6,99.4 86.2,99.9 86.7,100.3 87.2,100.8 87.8,101.3 88.3,101.8 88.9,102.2 89.4,102.7 89.9,103.2 90.5,103.7 91.0,104.2 91.6,104.7 92.1,105.2 92.6,105.6 93.2,106.1 93.7,106.6 94.3,107.1 94.8,107.6 95.3,108.1 95.9,108.6 96.4,109.1 97.0,109.5 97.5,110.0 98.0,110.5 98.6,111.0 99.1,111.4 99.7,111.9 100.2,112.4 100.7,112.8 101.3,113.3 101.8,113.7 102.4,114.1 102.9,114.6 103.4,115.0 104.0,115.4 104.5,115.8 105.1,116.2 105.6,116.6 106.1,117.0 106.7,117.3 107.2,117.7 107.8,118.1 108.3,118.4 108.8,118.7 109.4,119.0 109.9,119.3 110.5,119.6 111.0,119.9 111.5,120.2 112.1,120.4 112.6,120.7 113.2,120.9 113.7,121.1 114.2,121.3 114.8,121.5 115.3,121.6 115.9,121.8 116.4,121.9 116.9,122.0 117.5,122.1 118.0,122.2 118.6,122.3 119.1,122.3 119.6,122.3 120.2,122.3 120.7,122.3 121.3,122.3 121.8,122.2 122.3,122.1 122.9,122.0 123.4,121.9 124.0,121.8 124.5,121.6 125.0,121.4 125.6,121.2 126.1,121.0 126.7,120.7 127.2,120.4 127.7,120.1 128.3,119.8 128.8,119.4 129.4,119.0 129.9,118.6 130.4,118.2 131.0,117.7 131.5,117.2 132.1,116.7 132.6,116.2 133.1,115.6 133.7,115.0 134.2,114.3 134.8,113.7 135.3,113.0 135.8,112.2 136.4,111.5 136.9,110.7 137.5,109.9 138.0,109.0 138.5,108.1 139.1,107.2 139.6,106.2 140.2,105.2 140.7,104.2 141.2,103.2 141.8,102.1 142.3,100.9 142.9,99.8 143.4,98.6 143.9,97.3 144.5,96.1 145.0,94.7 145.6,93.4 146.1,92.0 146.6,90.6 147.2,89.1 147.7,87.6 148.3,86.1 148.8,84.5 149.3,82.8 149.9,81.2 150.4,79.5 151.0,77.7 151.5,75.9 152.0,74.1 152.6,72.2 153.1,70.3 153.7,68.3 154.2,66.3 154.7,64.3 155.3,62.2 155.8,60.0 156.4,57.8 156.9,55.6 157.4,53.3 158.0,51.0 158.5,48.6 159.1,46.2 159.6,43.7 160.1,41.2 160.7,38.6 161.2,36.0 161.8,33.3 162.3,30.6 162.8,27.8 163.4,25.0 163.9,22.1 164.5,19.2 165.0,16.2 165.5,13.2 166.1,10.1 166.6,7.0 167.2,3.8 167.7,2.3 168.2,2.3 168.8,2.3 169.3,2.3 169.9,2.3 170.4,2.3 170.9,2.3 171.5,2.3 172.0,2.3 172.6,2.3 173.1,2.3 173.6,2.3 174.2,2.3 174.7,2.3 175.3,2.3 175.8,2.3 176.3,2.3 176.9,2.3 177.4,2.3 178.0,2.3 178.5,2.3 179.0,2.3 179.6,2.3 180.1,2.3 180.7,2.3 181.2,2.3 181.7,2.3 182.3,2.3 182.8,2.3 183.4,2.3 183.9,2.3 184.4,2.3 185.0,2.3 185.5,2.3 186.1,2.3 186.6,2.3 187.1,2.3 187.7,2.3 188.2,2.3 188.8,2.3 189.3,2.3" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>f(x) = x³ + 10.5x² + 36x. Find the larger critical point (x-value). <input class="ans" data-a="-3" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−40</text><line x1="30.0" y1="181.8" x2="246.0" y2="181.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="184.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="157.5" x2="246.0" y2="157.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="160.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="133.2" x2="246.0" y2="133.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="136.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="84.8" x2="246.0" y2="84.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="87.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="60.5" x2="246.0" y2="60.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="63.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="36.2" x2="246.0" y2="36.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="39.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">40</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="30.0,215.7 30.5,215.7 31.1,215.7 31.6,215.7 32.2,215.7 32.7,215.7 33.2,215.7 33.8,215.7 34.3,215.7 34.9,215.7 35.4,215.7 35.9,215.7 36.5,215.7 37.0,215.7 37.6,215.7 38.1,215.7 38.6,215.7 39.2,215.7 39.7,215.7 40.3,215.7 40.8,215.7 41.3,215.7 41.9,215.7 42.4,215.7 43.0,215.7 43.5,215.7 44.0,215.7 44.6,215.2 45.1,214.7 45.7,214.1 46.2,213.6 46.7,213.1 47.3,212.7 47.8,212.2 48.4,211.8 48.9,211.4 49.4,211.0 50.0,210.6 50.5,210.2 51.1,209.9 51.6,209.6 52.1,209.3 52.7,209.0 53.2,208.7 53.8,208.4 54.3,208.2 54.8,208.0 55.4,207.8 55.9,207.6 56.5,207.4 57.0,207.2 57.5,207.1 58.1,206.9 58.6,206.8 59.2,206.7 59.7,206.5 60.2,206.5 60.8,206.4 61.3,206.3 61.9,206.2 62.4,206.2 62.9,206.1 63.5,206.1 64.0,206.0 64.6,206.0 65.1,206.0 65.6,206.0 66.2,206.0 66.7,206.0 67.3,206.0 67.8,206.0 68.3,206.1 68.9,206.1 69.4,206.1 70.0,206.2 70.5,206.2 71.0,206.2 71.6,206.3 72.1,206.3 72.7,206.4 73.2,206.4 73.7,206.5 74.3,206.5 74.8,206.6 75.4,206.6 75.9,206.7 76.4,206.8 77.0,206.8 77.5,206.9 78.1,206.9 78.6,207.0 79.1,207.0 79.7,207.0 80.2,207.1 80.8,207.1 81.3,207.1 81.8,207.2 82.4,207.2 82.9,207.2 83.5,207.2 84.0,207.2 84.5,207.2 85.1,207.2 85.6,207.2 86.2,207.2 86.7,207.1 87.2,207.1 87.8,207.0 88.3,207.0 88.9,206.9 89.4,206.8 89.9,206.7 90.5,206.6 91.0,206.5 91.6,206.4 92.1,206.3 92.6,206.1 93.2,205.9 93.7,205.8 94.3,205.6 94.8,205.4 95.3,205.2 95.9,204.9 96.4,204.7 97.0,204.4 97.5,204.1 98.0,203.8 98.6,203.5 99.1,203.2 99.7,202.9 100.2,202.5 100.7,202.1 101.3,201.7 101.8,201.3 102.4,200.9 102.9,200.4 103.4,199.9 104.0,199.4 104.5,198.9 105.1,198.3 105.6,197.8 106.1,197.2 106.7,196.6 107.2,196.0 107.8,195.3 108.3,194.6 108.8,193.9 109.4,193.2 109.9,192.4 110.5,191.6 111.0,190.8 111.5,190.0 112.1,189.2 112.6,188.3 113.2,187.4 113.7,186.4 114.2,185.4 114.8,184.5 115.3,183.4 115.9,182.4 116.4,181.3 116.9,180.2 117.5,179.0 118.0,177.8 118.6,176.6 119.1,175.4 119.6,174.1 120.2,172.8 120.7,171.5 121.3,170.1 121.8,168.7 122.3,167.3 122.9,165.8 123.4,164.3 124.0,162.8 124.5,161.2 125.0,159.6 125.6,157.9 126.1,156.2 126.7,154.5 127.2,152.7 127.7,150.9 128.3,149.1 128.8,147.2 129.4,145.3 129.9,143.3 130.4,141.4 131.0,139.3 131.5,137.2 132.1,135.1 132.6,133.0 133.1,130.8 133.7,128.5 134.2,126.2 134.8,123.9 135.3,121.5 135.8,119.1 136.4,116.7 136.9,114.1 137.5,111.6 138.0,109.0 138.5,106.4 139.1,103.7 139.6,100.9 140.2,98.2 140.7,95.3 141.2,92.4 141.8,89.5 142.3,86.5 142.9,83.5 143.4,80.5 143.9,77.3 144.5,74.2 145.0,70.9 145.6,67.7 146.1,64.3 146.6,61.0 147.2,57.5 147.7,54.1 148.3,50.5 148.8,46.9 149.3,43.3 149.9,39.6 150.4,35.8 151.0,32.0 151.5,28.2 152.0,24.3 152.6,20.3 153.1,16.3 153.7,12.2 154.2,8.0 154.7,3.8 155.3,2.3 155.8,2.3 156.4,2.3 156.9,2.3 157.4,2.3 158.0,2.3 158.5,2.3 159.1,2.3 159.6,2.3 160.1,2.3 160.7,2.3 161.2,2.3 161.8,2.3 162.3,2.3 162.8,2.3 163.4,2.3 163.9,2.3 164.5,2.3 165.0,2.3 165.5,2.3 166.1,2.3 166.6,2.3 167.2,2.3 167.7,2.3 168.2,2.3 168.8,2.3 169.3,2.3 169.9,2.3 170.4,2.3 170.9,2.3 171.5,2.3 172.0,2.3 172.6,2.3 173.1,2.3" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>f(x) = x³ + 4.5x² + 6x. Find the larger critical point (x-value). <input class="ans" data-a="-1" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−40</text><line x1="30.0" y1="181.8" x2="246.0" y2="181.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="184.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="157.5" x2="246.0" y2="157.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="160.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="133.2" x2="246.0" y2="133.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="136.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="84.8" x2="246.0" y2="84.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="87.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="60.5" x2="246.0" y2="60.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="63.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="36.2" x2="246.0" y2="36.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="39.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">40</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="30.0,215.7 30.5,215.7 31.1,215.7 31.6,215.7 32.2,215.7 32.7,215.7 33.2,215.7 33.8,215.7 34.3,215.7 34.9,215.7 35.4,215.7 35.9,215.7 36.5,215.7 37.0,215.7 37.6,215.7 38.1,215.7 38.6,215.7 39.2,215.7 39.7,215.7 40.3,215.7 40.8,215.7 41.3,215.7 41.9,215.7 42.4,215.7 43.0,215.7 43.5,215.7 44.0,215.7 44.6,215.7 45.1,215.7 45.7,215.7 46.2,215.7 46.7,215.7 47.3,215.6 47.8,212.9 48.4,210.3 48.9,207.8 49.4,205.2 50.0,202.8 50.5,200.3 51.1,197.9 51.6,195.6 52.1,193.3 52.7,191.0 53.2,188.8 53.8,186.7 54.3,184.5 54.8,182.4 55.4,180.4 55.9,178.4 56.5,176.4 57.0,174.5 57.5,172.6 58.1,170.7 58.6,168.9 59.2,167.1 59.7,165.4 60.2,163.7 60.8,162.0 61.3,160.4 61.9,158.8 62.4,157.3 62.9,155.8 63.5,154.3 64.0,152.8 64.6,151.4 65.1,150.0 65.6,148.7 66.2,147.4 66.7,146.1 67.3,144.8 67.8,143.6 68.3,142.4 68.9,141.3 69.4,140.1 70.0,139.1 70.5,138.0 71.0,137.0 71.6,135.9 72.1,135.0 72.7,134.0 73.2,133.1 73.7,132.2 74.3,131.3 74.8,130.5 75.4,129.7 75.9,128.9 76.4,128.1 77.0,127.4 77.5,126.7 78.1,126.0 78.6,125.3 79.1,124.7 79.7,124.1 80.2,123.5 80.8,122.9 81.3,122.3 81.8,121.8 82.4,121.3 82.9,120.8 83.5,120.4 84.0,119.9 84.5,119.5 85.1,119.1 85.6,118.7 86.2,118.3 86.7,118.0 87.2,117.6 87.8,117.3 88.3,117.0 88.9,116.7 89.4,116.5 89.9,116.2 90.5,116.0 91.0,115.8 91.6,115.5 92.1,115.4 92.6,115.2 93.2,115.0 93.7,114.9 94.3,114.7 94.8,114.6 95.3,114.5 95.9,114.4 96.4,114.3 97.0,114.2 97.5,114.1 98.0,114.1 98.6,114.0 99.1,114.0 99.7,113.9 100.2,113.9 100.7,113.9 101.3,113.9 101.8,113.9 102.4,113.9 102.9,113.9 103.4,113.9 104.0,113.9 104.5,113.9 105.1,113.9 105.6,114.0 106.1,114.0 106.7,114.1 107.2,114.1 107.8,114.1 108.3,114.2 108.8,114.2 109.4,114.3 109.9,114.3 110.5,114.4 111.0,114.5 111.5,114.5 112.1,114.6 112.6,114.6 113.2,114.7 113.7,114.7 114.2,114.8 114.8,114.8 115.3,114.9 115.9,114.9 116.4,114.9 116.9,115.0 117.5,115.0 118.0,115.0 118.6,115.0 119.1,115.1 119.6,115.1 120.2,115.1 120.7,115.1 121.3,115.0 121.8,115.0 122.3,115.0 122.9,115.0 123.4,114.9 124.0,114.9 124.5,114.8 125.0,114.7 125.6,114.6 126.1,114.5 126.7,114.4 127.2,114.3 127.7,114.2 128.3,114.1 128.8,113.9 129.4,113.7 129.9,113.6 130.4,113.4 131.0,113.2 131.5,112.9 132.1,112.7 132.6,112.4 133.1,112.2 133.7,111.9 134.2,111.6 134.8,111.3 135.3,110.9 135.8,110.6 136.4,110.2 136.9,109.8 137.5,109.4 138.0,109.0 138.5,108.6 139.1,108.1 139.6,107.6 140.2,107.1 140.7,106.6 141.2,106.0 141.8,105.4 142.3,104.8 142.9,104.2 143.4,103.6 143.9,102.9 144.5,102.2 145.0,101.5 145.6,100.8 146.1,100.0 146.6,99.2 147.2,98.4 147.7,97.6 148.3,96.7 148.8,95.8 149.3,94.9 149.9,93.9 150.4,93.0 151.0,92.0 151.5,90.9 152.0,89.9 152.6,88.8 153.1,87.6 153.7,86.5 154.2,85.3 154.7,84.1 155.3,82.8 155.8,81.5 156.4,80.2 156.9,78.9 157.4,77.5 158.0,76.1 158.5,74.6 159.1,73.2 159.6,71.6 160.1,70.1 160.7,68.5 161.2,66.9 161.8,65.2 162.3,63.5 162.8,61.8 163.4,60.0 163.9,58.2 164.5,56.3 165.0,54.4 165.5,52.5 166.1,50.5 166.6,48.5 167.2,46.5 167.7,44.4 168.2,42.3 168.8,40.1 169.3,37.9 169.9,35.6 170.4,33.3 170.9,31.0 171.5,28.6 172.0,26.1 172.6,23.7 173.1,21.2 173.6,18.6 174.2,16.0 174.7,13.3 175.3,10.6 175.8,7.9 176.3,5.1 176.9,2.3 177.4,2.3 178.0,2.3 178.5,2.3 179.0,2.3 179.6,2.3 180.1,2.3 180.7,2.3 181.2,2.3 181.7,2.3 182.3,2.3 182.8,2.3 183.4,2.3 183.9,2.3 184.4,2.3 185.0,2.3 185.5,2.3 186.1,2.3 186.6,2.3 187.1,2.3 187.7,2.3 188.2,2.3 188.8,2.3 189.3,2.3 189.8,2.3 190.4,2.3 190.9,2.3 191.5,2.3 192.0,2.3 192.5,2.3 193.1,2.3 193.6,2.3 194.2,2.3 194.7,2.3 195.2,2.3 195.8,2.3 196.3,2.3 196.9,2.3 197.4,2.3 197.9,2.3 198.5,2.3 199.0,2.3 199.6,2.3 200.1,2.3 200.6,2.3 201.2,2.3" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) -2 (2) -1 (3) -3 (4) -1</div>
+</section>
+<section class="card" id="wsec2">
+<h2>2️⃣ Increasing &amp; Min/Max</h2>
+<div class="intro">Sign of f′; value at the vertex.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>f(x) = 3x² − 30x + 1. For x greater than what value is f increasing? <input class="ans" data-a="5" size="6"></li>
+<li>Find the minimum value of f(x) = 3x² − 6x + 12. <input class="ans" data-a="9" size="6"></li>
+<li>f(x) = 2x² + 8x + 1. For x greater than what value is f increasing? <input class="ans" data-a="-2" size="6"></li>
+<li>Find the minimum value of f(x) = x² − 10x + 30. <input class="ans" data-a="5" size="6"></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec2')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec2')">↺ Clear</button><span class="score" id="score-wsec2">—</span> <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+<div id="ak2" class="ak"><h4>Answer Key — Section 2</h4>(1) 5 (2) 9 (3) -2 (4) 5</div>
+</section>
+<section class="card" id="wsec3">
+<h2>3️⃣ Concavity &amp; Inflection</h2>
+<div class="intro">Solve f″(x) = 0.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Find the x-coordinate of the inflection point of f(x) = 2x³ − 6x² + x + 5. <input class="ans" data-a="1" size="6"></li>
+<li>Find the x-coordinate of the inflection point of f(x) = 2x³ − 24x² + 4x − 1. <input class="ans" data-a="4" size="6"></li>
+<li>Find the x-coordinate of the inflection point of f(x) = 2x³ + 6x² + x − 1. <input class="ans" data-a="-1" size="6"></li>
+<li>Find the x-coordinate of the inflection point of f(x) = x³ + 9x² + 2x + 3. <input class="ans" data-a="-3" size="6"></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec3')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec3')">↺ Clear</button><span class="score" id="score-wsec3">—</span> <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+<div id="ak3" class="ak"><h4>Answer Key — Section 3</h4>(1) 1 (2) 4 (3) -1 (4) -3</div>
+</section>
+<section class="card" id="wsec4">
+<h2>4️⃣ Optimization</h2>
+<div class="intro">One variable, derivative = 0.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>Two positive numbers add to 26. What is the largest possible product? <input class="ans" data-a="169" size="6"></li>
+<li>Two positive numbers add to 52. What is the largest possible product? <input class="ans" data-a="676" size="6"></li>
+<li>A farmer has 76 m of fence to enclose a rectangle against a barn wall (no fence on the wall side). What is the maximum area (m²)? <input class="ans" data-a="722" size="6"></li>
+<li>Two positive numbers add to 78. What is the largest possible product? <input class="ans" data-a="1521" size="7"></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec4')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec4')">↺ Clear</button><span class="score" id="score-wsec4">—</span> <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+<div id="ak4" class="ak"><h4>Answer Key — Section 4</h4>(1) 169 (2) 676 (3) 722 (4) 1521</div>
+</section>
+
+</main>
+<footer>Mary, Star of the Sea School · Math 12 · Curve Sketching &amp; Optimization · Dr. Park</footer>
+</div>
+<script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
+  }
+});
+
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+
+<script>
+
+// ==== Auto-save + Save/Load Answers ====
+(function(){
+  function storageKey() {
+    return 'msp-ws-' + (location.pathname.split('/').pop() || 'unknown');
+  }
+  function topicFileName() {
+    var base = (location.pathname.split('/').pop() || 'worksheet.html');
+    base = base.replace(/^msp-/, '').replace(/\.html$/, '');
+    return base + '.json';
+  }
+  function allAnswerNodes() {
+    return Array.from(document.querySelectorAll('input.ans, input.free, textarea.free, main input[type="text"]'));
+  }
+  function snapshot() {
+    var out = {};
+    allAnswerNodes().forEach(function(n, i){
+      var key = n.id || ('idx_' + i);
+      out[key] = n.value || '';
+    });
+    return out;
+  }
+  function restore(data) {
+    if (!data) return 0;
+    var nodes = allAnswerNodes();
+    var count = 0;
+    nodes.forEach(function(n){ if (n.id && data[n.id] != null) { n.value = data[n.id]; count++; } });
+    nodes.forEach(function(n, i){ var k = 'idx_' + i; if (!n.id && data[k] != null) { n.value = data[k]; count++; } });
+    return count;
+  }
+  function autoSave() {
+    try {
+      localStorage.setItem(storageKey(), JSON.stringify(snapshot()));
+      showStatus('Auto-saved ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}));
+    } catch(e){}
+  }
+  function showStatus(msg) {
+    var el = document.getElementById('save-status');
+    if (el) el.textContent = msg;
+  }
+  window.saveAnswersToFile = function() {
+    var data = snapshot();
+    data.__savedAt = new Date().toISOString();
+    data.__pageTitle = document.title;
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = topicFileName();
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+    showStatus('Downloaded ' + topicFileName());
+  };
+  window.loadAnswersFromFile = function(evt) {
+    var f = evt.target.files && evt.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        var n = restore(data);
+        autoSave();
+        showStatus('Loaded ' + n + ' answers from ' + f.name);
+      } catch(err) {
+        showStatus('Could not load file: ' + err.message);
+      }
+    };
+    reader.readAsText(f);
+    evt.target.value = '';
+  };
+  window.clearAllAnswers = function() {
+    if (!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+    allAnswerNodes().forEach(function(n){ n.value = ''; n.classList.remove('correct','wrong'); });
+    try { localStorage.removeItem(storageKey()); } catch(e){}
+    document.querySelectorAll('.correction-label').forEach(function(n){ n.remove(); });
+    document.querySelectorAll('.score').forEach(function(s){ s.textContent = '—'; s.classList.remove('good','mid','low'); });
+    showStatus('All answers cleared');
+  };
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      var raw = localStorage.getItem(storageKey());
+      if (raw) {
+        var n = restore(JSON.parse(raw));
+        if (n) showStatus('Restored ' + n + ' saved answers');
+      }
+    } catch(e){}
+    var t;
+    document.addEventListener('input', function(e) {
+      if (e.target && (e.target.classList.contains('ans') || e.target.classList.contains('free') || e.target.tagName === 'TEXTAREA' || e.target.type === 'text')) {
+        clearTimeout(t);
+        t = setTimeout(autoSave, 400);
+      }
+    });
+  });
+})();
+
+</script>
+</body></html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curve Sketching &amp; Optimization — Math 12 Quiz</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--gold:#FFD100;--gold-deep:#b8860b;--ink:#1f2937;--dim:#64748b;--accent:#dc2626;--accent-deep:#991b1b;--accent-soft:#fee2e2}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%);color:var(--ink);min-height:100vh;padding:24px 16px;line-height:1.6}
+.container{max-width:900px;margin:0 auto}
+header{text-align:center;margin-bottom:20px}
+.eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:6px}
+.tagline{color:var(--dim);font-size:.98rem;font-style:italic}
+.back-to-unit{display:inline-block;background:var(--gold);color:var(--navy);border:1.5px solid var(--gold-deep);padding:9px 18px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;margin-bottom:16px;box-shadow:0 2px 6px rgba(184,134,11,0.25);cursor:pointer}
+.back-to-unit:hover{background:var(--gold-deep);color:#fff;transform:translateX(-2px)}
+main{background:#fff;border-radius:14px;padding:22px 26px;box-shadow:0 4px 14px rgba(0,0,0,0.07);border-top:5px solid var(--accent)}
+main h2{color:var(--accent-deep);font-size:1.3rem;font-weight:800;margin-bottom:10px}
+.instructions{background:var(--accent-soft);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0 20px;font-size:.95rem}
+ol.qlist{list-style:none;counter-reset:q;padding:0}
+ol.qlist>li{counter-increment:q;position:relative;padding:12px 0 12px 42px;border-bottom:1px dashed #d1d5db}
+ol.qlist>li:last-child{border-bottom:none}
+ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:12px;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.answer-line{display:inline-block;min-width:150px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.reveal-btn{display:inline-block;background:var(--gold);color:var(--navy);border:1px solid var(--gold-deep);padding:10px 18px;border-radius:6px;font-weight:800;font-size:.95rem;cursor:pointer;margin:16px 0 6px}
+.reveal-btn:hover{background:var(--gold-deep);color:#fff}
+.ak{display:none;background:#ecfccb;border-left:5px solid #65a30d;padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.ak.open{display:block}
+.ak h4{color:#3f6212;margin-bottom:8px;font-size:1rem}
+footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
+@media print{body{background:#fff;padding:0} main{box-shadow:none;border:1px solid #cbd5e1} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans { display:inline-block; min-width:120px; max-width:280px; padding:5px 10px; margin-left:6px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.98rem; font-weight:700; background:#fff; color:#1f2937; transition:all .15s ease; }
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn { display:inline-block; background:#2563eb; color:#fff; border:1px solid #1e40af; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; }
+.check-btn:hover { background:#1e40af; }
+.reset-btn { display:inline-block; background:#f1f5f9; color:#1a2a4a; border:1px solid #cbd5e1; padding:10px 14px; border-radius:6px; font-weight:700; font-size:.9rem; cursor:pointer; margin:16px 4px 6px 0; }
+.reset-btn:hover { background:#e2e8f0; }
+.score { display:inline-block; padding:8px 16px; margin-left:6px; font-weight:800; font-size:1rem; border-radius:6px; background:#f1f5f9; color:#1a2a4a; min-width:140px; text-align:center; vertical-align:middle; }
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+@media print {
+  body { background:#fff !important; padding:0 !important; }
+  main { box-shadow:none !important; border:none !important; }
+  .container { max-width:100% !important; }
+  .check-btn, .reset-btn, .score, .submit-btn, .name-bar, .print-btn, .reveal-btn,
+  #mode-practice, #mode-graded, #mode-badge, .digitally-fillable-note,
+  .back-to-unit, #submit-block, #locked-msg, #prior-attempt-banner,
+  .correction-label, .instructions, footer, .ak, .submit-note, .mode-toolbar, .save-toolbar { display:none !important; }
+  input.ans { border:none !important; border-bottom:1.5px solid #000 !important; background:transparent !important; border-radius:0 !important; color:#000 !important; min-width:100px !important; }
+  h1 { font-size:1.4rem !important; }
+  .tagline { display:none; }
+  header { text-align:left !important; margin-bottom:14px !important; }
+  ol.qlist > li { page-break-inside:avoid; }
+}
+
+.name-bar { background:#f0f9ff; border:1.5px solid #93c5fd; border-radius:8px; padding:10px 14px; margin:10px 0 16px; display:none; gap:12px; flex-wrap:wrap; align-items:center; font-size:.95rem; }
+.name-bar label { font-weight:800; color:#1e40af; }
+.name-bar input { flex:1; min-width:180px; padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.submit-btn { display:inline-block; background:#059669; color:#fff; border:1px solid #047857; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; text-decoration:none; }
+.submit-btn:hover { background:#047857; color:#fff; }
+.submit-note { display:block; font-size:.85rem; color:#64748b; margin:6px 0 0; }
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style></head><body>
+<div class="container">
+<header>
+  <div class="eyebrow">Math 12 · Quiz</div>
+  <h1>⛰️ Curve Sketching &amp; Optimization Quiz</h1>
+  <p class="tagline">Derivatives find the peaks and valleys.</p>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p><div class="mode-toolbar" style="margin-top:10px; display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap;">
+  <span style="font-size:.85rem; color:#64748b; font-weight:700;">Mode:</span>
+  <button id="mode-practice" type="button" onclick="setMode('practice')" style="padding:6px 14px; border-radius:6px; border:1.5px solid #16a34a; background:#dcfce7; color:#14532d; font-weight:800; font-size:.85rem; cursor:pointer;">📖 Practice</button>
+  <button id="mode-graded" type="button" onclick="setMode('graded')" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.85rem; cursor:pointer;">📝 Graded</button>
+  <div id="mode-badge" style="display:inline-block; margin-left:6px; padding:4px 12px; border-radius:999px; font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;"></div>
+  <button type="button" onclick="window.print()" class="print-btn" style="margin-left:12px; padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#e0f2fe; color:#0c4a6e; font-weight:800; font-size:.85rem; cursor:pointer;">🖨 Print Quiz</button>
+</div>
+</header>
+<script>
+
+// --- Randomized graded question pool support ---
+let __practiceQlistHTML = null;
+function savePracticeIfNeeded(){
+  if (__practiceQlistHTML === null) {
+    const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+    if (ol) __practiceQlistHTML = ol.innerHTML;
+  }
+}
+function loadGradedPool(){
+  const el = document.getElementById('graded-pool');
+  if (!el) return null;
+  try { return JSON.parse(el.textContent); } catch(e){ return null; }
+}
+function pickGradedSelection(poolSize, n){
+  const key = 'msp-graded-'+location.pathname.split('/').pop()+'-selection';
+  try { const s = localStorage.getItem(key); if (s) { const arr = JSON.parse(s); if (Array.isArray(arr) && arr.length && arr.every(x=>Number.isInteger(x)&&x<poolSize)) return arr; } } catch(e){}
+  const idx = Array.from({length: poolSize}, (_,i)=>i);
+  for (let i = idx.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  const sel = idx.slice(0, Math.min(n, poolSize));
+  try { localStorage.setItem(key, JSON.stringify(sel)); } catch(e){}
+  return sel;
+}
+function escAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function renderGradedQuestions(){
+  const pool = loadGradedPool();
+  if (!pool || !pool.length) return false;
+  const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+  if (!ol) return false;
+  const practiceCount = (__practiceQlistHTML || ol.innerHTML).match(/<li\b/gi);
+  const N = practiceCount ? practiceCount.length : 10;
+  const sel = pickGradedSelection(pool.length, N);
+  ol.innerHTML = sel.map(i => {
+    const item = pool[i];
+    const size = Math.max(6, Math.min(20, (String(item.a).length || 8) + 3));
+    return `<li>${item.q} <input class="ans" data-a="${escAttr(item.a)}" size="${size}"></li>`;
+  }).join('\n');
+  return true;
+}
+function restorePracticeQuestions(){
+  if (__practiceQlistHTML === null) return;
+  const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+  if (ol) ol.innerHTML = __practiceQlistHTML;
+}
+
+function applyMode(mode) {
+  savePracticeIfNeeded();
+  document.querySelectorAll('.correction-label').forEach(n=>n.remove());
+  document.querySelectorAll('input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
+  const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
+  const chkBtn=document.querySelector('.check-btn'); if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='✓ Check Answers';}
+  const resetBtnEl=document.querySelector('.reset-btn'); if(resetBtnEl){resetBtnEl.style.display='';}
+  const priorB = document.getElementById('prior-attempt-banner'); if(priorB) priorB.remove();
+  if (mode === 'graded') { renderGradedQuestions(); } else { restorePracticeQuestions(); }
+  const badge = document.getElementById('mode-badge');
+  const revealBtn = document.getElementById('reveal-ak');
+  const submitBlock = document.getElementById('submit-block');
+  const nameBar = document.querySelector('.name-bar');
+  const btnP = document.getElementById('mode-practice');
+  const btnG = document.getElementById('mode-graded');
+  const active = 'padding:6px 14px; border-radius:6px; font-weight:800; font-size:.85rem; cursor:pointer;';
+  const inactive = 'padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.85rem; cursor:pointer;';
+  if (mode === 'graded') {
+    if (badge) { badge.textContent = '📝 Graded Mode'; badge.style.background='#fee2e2'; badge.style.color='#7f1d1d'; }
+    if (revealBtn) revealBtn.style.display = 'none';
+    const akDiv = document.getElementById('ak'); if (akDiv) akDiv.classList.remove('open');
+    if (submitBlock) submitBlock.style.display = 'block';
+    if (nameBar) nameBar.style.display = 'flex';
+    if (resetBtnEl) resetBtnEl.style.display = 'none';
+    var chkBtnG = document.querySelector('.check-btn');
+    if (chkBtnG) { chkBtnG.textContent = '📧 Submit to Dr. Park'; chkBtnG.style.background = '#059669'; chkBtnG.style.borderColor = '#047857'; chkBtnG.setAttribute('onclick', 'submitToTeacher()'); }
+    if (submitBlock) submitBlock.style.display = 'none';
+    if (btnP) btnP.setAttribute('style', inactive);
+    if (btnG) btnG.setAttribute('style', active + ' border:1.5px solid #dc2626; background:#fee2e2; color:#7f1d1d;');
+  } else {
+    if (badge) { badge.textContent = '📖 Practice Mode'; badge.style.background='#dcfce7'; badge.style.color='#14532d'; }
+    if (revealBtn) revealBtn.style.display = 'inline-block';
+    if (submitBlock) submitBlock.style.display = 'none';
+    if (nameBar) nameBar.style.display = 'none';
+    if (resetBtnEl) resetBtnEl.style.display = 'inline-block';
+    var chkBtnP = document.querySelector('.check-btn');
+    if (chkBtnP) { chkBtnP.textContent = '✓ Check Answers'; chkBtnP.style.background = ''; chkBtnP.style.borderColor = ''; chkBtnP.setAttribute('onclick', 'checkAllQuiz()'); }
+    if (btnP) btnP.setAttribute('style', active + ' border:1.5px solid #16a34a; background:#dcfce7; color:#14532d;');
+    if (btnG) btnG.setAttribute('style', inactive);
+  }
+}
+function setMode(mode) {
+  const url = new URL(location.href);
+  if (mode === 'graded') url.searchParams.set('mode','graded'); else url.searchParams.delete('mode');
+  history.replaceState(null, '', url.toString());
+  applyMode(mode);
+}
+(function(){
+  const params = new URLSearchParams(location.search);
+  const g = params.get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    const eb = document.getElementById('grade-eyebrow');
+    if (eb) eb.textContent = `Grade ${g} · Quiz`;
+  }
+  const mode = (params.get('mode')||'practice').toLowerCase();
+  applyMode(mode === 'graded' ? 'graded' : 'practice');
+  if (mode === 'graded') {
+    bumpAttemptCount();
+    const state = loadGradedState();
+    if (state && state.checkedAt) {
+      const inputs = document.querySelectorAll('input.ans');
+      inputs.forEach((i,idx)=>{ if(state.answers && state.answers[idx]!=null) i.value = state.answers[idx]; });
+      const nEl = document.getElementById('student-name'); if(nEl && state.name) nEl.value = state.name;
+      const pEl = document.getElementById('student-period'); if(pEl && state.period) pEl.value = state.period;
+      const main = document.querySelector('main');
+      if(main && !document.getElementById('prior-attempt-banner')){
+        const banner = document.createElement('div');
+        banner.id = 'prior-attempt-banner';
+        banner.style.cssText = 'margin:0 0 14px; padding:12px 16px; background:#fee2e2; border-left:5px solid #dc2626; border-radius:6px; font-size:.95rem; color:#7f1d1d; font-weight:700;';
+        const submittedNote = state.submittedAt ? ` and submitted at <strong>${fmtTime(state.submittedAt)}</strong>` : '';
+        banner.innerHTML = `⚠️ This quiz was already checked on <strong>${fmtTime(state.checkedAt)}</strong>${submittedNote}. Your original answers and score are shown below. You cannot retake in graded mode. (Attempts: ${getAttemptCount()})`;
+        main.insertBefore(banner, main.firstChild);
+      }
+      setTimeout(checkAllQuiz, 0);
+    } else {
+      const prevStart = parseInt(localStorage.getItem(storageKey()+'-start')||'0',10);
+      if (prevStart) { __quizStartTime = prevStart; }
+      else { __quizStartTime = Date.now(); try { localStorage.setItem(storageKey()+'-start', String(__quizStartTime)); } catch(e){} }
+      document.querySelectorAll('input.ans').forEach(i=>{
+        i.addEventListener('input', markStart, {once:false});
+      });
+    }
+  }
+})();
+</script>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<main>
+<h2>Quiz — 10 Problems</h2>
+<div class="instructions">Answer all the problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. Math 12" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
+<li>f(x) = x³ − 10.5x² + 36x. Find the larger critical point (x-value). <input class="ans" data-a="4" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−40</text><line x1="30.0" y1="181.8" x2="246.0" y2="181.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="184.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="157.5" x2="246.0" y2="157.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="160.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="133.2" x2="246.0" y2="133.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="136.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="84.8" x2="246.0" y2="84.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="87.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="60.5" x2="246.0" y2="60.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="63.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="36.2" x2="246.0" y2="36.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="39.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">40</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="102.9,215.7 103.4,215.7 104.0,215.7 104.5,215.7 105.1,215.7 105.6,215.7 106.1,215.7 106.7,215.7 107.2,215.7 107.8,215.7 108.3,215.7 108.8,215.7 109.4,215.7 109.9,215.7 110.5,215.7 111.0,215.7 111.5,215.7 112.1,215.7 112.6,215.7 113.2,215.7 113.7,215.7 114.2,215.7 114.8,215.7 115.3,215.7 115.9,215.7 116.4,215.7 116.9,215.7 117.5,215.7 118.0,215.7 118.6,215.7 119.1,215.7 119.6,215.7 120.2,215.7 120.7,215.7 121.3,214.2 121.8,210.0 122.3,205.8 122.9,201.7 123.4,197.7 124.0,193.7 124.5,189.8 125.0,186.0 125.6,182.2 126.1,178.4 126.7,174.7 127.2,171.1 127.7,167.5 128.3,163.9 128.8,160.5 129.4,157.0 129.9,153.7 130.4,150.3 131.0,147.1 131.5,143.8 132.1,140.7 132.6,137.5 133.1,134.5 133.7,131.5 134.2,128.5 134.8,125.6 135.3,122.7 135.8,119.8 136.4,117.1 136.9,114.3 137.5,111.6 138.0,109.0 138.5,106.4 139.1,103.9 139.6,101.3 140.2,98.9 140.7,96.5 141.2,94.1 141.8,91.8 142.3,89.5 142.9,87.2 143.4,85.0 143.9,82.9 144.5,80.8 145.0,78.7 145.6,76.6 146.1,74.7 146.6,72.7 147.2,70.8 147.7,68.9 148.3,67.1 148.8,65.3 149.3,63.5 149.9,61.8 150.4,60.1 151.0,58.4 151.5,56.8 152.0,55.2 152.6,53.7 153.1,52.2 153.7,50.7 154.2,49.3 154.7,47.9 155.3,46.5 155.8,45.2 156.4,43.9 156.9,42.6 157.4,41.4 158.0,40.2 158.5,39.0 159.1,37.8 159.6,36.7 160.1,35.6 160.7,34.6 161.2,33.5 161.8,32.6 162.3,31.6 162.8,30.6 163.4,29.7 163.9,28.8 164.5,28.0 165.0,27.2 165.5,26.4 166.1,25.6 166.6,24.8 167.2,24.1 167.7,23.4 168.2,22.7 168.8,22.0 169.3,21.4 169.9,20.8 170.4,20.2 170.9,19.7 171.5,19.1 172.0,18.6 172.6,18.1 173.1,17.6 173.6,17.1 174.2,16.7 174.7,16.3 175.3,15.9 175.8,15.5 176.3,15.1 176.9,14.8 177.4,14.5 178.0,14.2 178.5,13.9 179.0,13.6 179.6,13.3 180.1,13.1 180.7,12.8 181.2,12.6 181.7,12.4 182.3,12.2 182.8,12.1 183.4,11.9 183.9,11.7 184.4,11.6 185.0,11.5 185.5,11.4 186.1,11.3 186.6,11.2 187.1,11.1 187.7,11.0 188.2,11.0 188.8,10.9 189.3,10.9 189.8,10.8 190.4,10.8 190.9,10.8 191.5,10.8 192.0,10.8 192.5,10.8 193.1,10.8 193.6,10.8 194.2,10.8 194.7,10.9 195.2,10.9 195.8,10.9 196.3,11.0 196.9,11.0 197.4,11.0 197.9,11.1 198.5,11.1 199.0,11.2 199.6,11.2 200.1,11.3 200.6,11.4 201.2,11.4 201.7,11.5 202.3,11.5 202.8,11.6 203.3,11.6 203.9,11.7 204.4,11.7 205.0,11.8 205.5,11.8 206.0,11.8 206.6,11.9 207.1,11.9 207.7,11.9 208.2,12.0 208.7,12.0 209.3,12.0 209.8,12.0 210.4,12.0 210.9,12.0 211.4,12.0 212.0,12.0 212.5,11.9 213.1,11.9 213.6,11.8 214.1,11.8 214.7,11.7 215.2,11.6 215.8,11.5 216.3,11.5 216.8,11.3 217.4,11.2 217.9,11.1 218.5,10.9 219.0,10.8 219.5,10.6 220.1,10.4 220.6,10.2 221.2,10.0 221.7,9.8 222.2,9.6 222.8,9.3 223.3,9.0 223.9,8.7 224.4,8.4 224.9,8.1 225.5,7.8 226.0,7.4 226.6,7.0 227.1,6.6 227.6,6.2 228.2,5.8 228.7,5.3 229.3,4.9 229.8,4.4 230.3,3.9 230.9,3.3 231.4,2.8 232.0,2.3 232.5,2.3 233.0,2.3 233.6,2.3 234.1,2.3 234.7,2.3 235.2,2.3 235.7,2.3 236.3,2.3 236.8,2.3 237.4,2.3 237.9,2.3 238.4,2.3 239.0,2.3 239.5,2.3 240.1,2.3 240.6,2.3 241.1,2.3 241.7,2.3 242.2,2.3 242.8,2.3 243.3,2.3 243.8,2.3 244.4,2.3 244.9,2.3 245.5,2.3 246.0,2.3" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>f(x) = x² − 10x + 1. For x greater than what value is f increasing? <input class="ans" data-a="5" size="6"></li>
+<li>Find the minimum value of f(x) = 3x² − 30x + 77. <input class="ans" data-a="2" size="6"></li>
+<li>Find the x-coordinate of the inflection point of f(x) = x³ − 12x² − 2x − 1. <input class="ans" data-a="4" size="6"></li>
+<li>Two positive numbers add to 72. What is the largest possible product? <input class="ans" data-a="1296" size="7"></li>
+<li>f(x) = x³ − 6x². Find the smaller critical point (x-value). <input class="ans" data-a="0" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−40</text><line x1="30.0" y1="181.8" x2="246.0" y2="181.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="184.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="157.5" x2="246.0" y2="157.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="160.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="133.2" x2="246.0" y2="133.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="136.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="84.8" x2="246.0" y2="84.8" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="87.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="60.5" x2="246.0" y2="60.5" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="63.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="36.2" x2="246.0" y2="36.2" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="39.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">40</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="74.3,215.7 74.8,215.7 75.4,215.7 75.9,215.7 76.4,215.7 77.0,215.7 77.5,215.7 78.1,215.7 78.6,215.7 79.1,215.7 79.7,215.7 80.2,215.7 80.8,215.7 81.3,215.7 81.8,215.7 82.4,215.7 82.9,215.7 83.5,215.7 84.0,215.7 84.5,215.7 85.1,215.7 85.6,215.7 86.2,215.7 86.7,215.7 87.2,215.7 87.8,215.7 88.3,215.7 88.9,215.7 89.4,215.7 89.9,215.7 90.5,215.7 91.0,215.7 91.6,215.7 92.1,215.7 92.6,215.7 93.2,215.7 93.7,215.7 94.3,215.7 94.8,215.7 95.3,215.7 95.9,215.7 96.4,215.7 97.0,213.4 97.5,210.3 98.0,207.2 98.6,204.3 99.1,201.3 99.7,198.4 100.2,195.6 100.7,192.9 101.3,190.1 101.8,187.5 102.4,184.9 102.9,182.3 103.4,179.8 104.0,177.3 104.5,174.9 105.1,172.6 105.6,170.3 106.1,168.0 106.7,165.8 107.2,163.7 107.8,161.6 108.3,159.5 108.8,157.5 109.4,155.5 109.9,153.6 110.5,151.7 111.0,149.9 111.5,148.1 112.1,146.4 112.6,144.7 113.2,143.1 113.7,141.5 114.2,139.9 114.8,138.4 115.3,137.0 115.9,135.5 116.4,134.1 116.9,132.8 117.5,131.5 118.0,130.2 118.6,129.0 119.1,127.8 119.6,126.7 120.2,125.6 120.7,124.6 121.3,123.5 121.8,122.6 122.3,121.6 122.9,120.7 123.4,119.8 124.0,119.0 124.5,118.2 125.0,117.4 125.6,116.7 126.1,116.0 126.7,115.4 127.2,114.8 127.7,114.2 128.3,113.6 128.8,113.1 129.4,112.6 129.9,112.2 130.4,111.7 131.0,111.4 131.5,111.0 132.1,110.7 132.6,110.4 133.1,110.1 133.7,109.9 134.2,109.7 134.8,109.5 135.3,109.3 135.8,109.2 136.4,109.1 136.9,109.1 137.5,109.0 138.0,109.0 138.5,109.0 139.1,109.1 139.6,109.1 140.2,109.2 140.7,109.3 141.2,109.5 141.8,109.6 142.3,109.8 142.9,110.0 143.4,110.2 143.9,110.5 144.5,110.8 145.0,111.1 145.6,111.4 146.1,111.7 146.6,112.1 147.2,112.5 147.7,112.9 148.3,113.3 148.8,113.7 149.3,114.2 149.9,114.6 150.4,115.1 151.0,115.6 151.5,116.2 152.0,116.7 152.6,117.3 153.1,117.8 153.7,118.4 154.2,119.0 154.7,119.6 155.3,120.3 155.8,120.9 156.4,121.6 156.9,122.2 157.4,122.9 158.0,123.6 158.5,124.3 159.1,125.0 159.6,125.8 160.1,126.5 160.7,127.2 161.2,128.0 161.8,128.8 162.3,129.6 162.8,130.3 163.4,131.1 163.9,131.9 164.5,132.7 165.0,133.6 165.5,134.4 166.1,135.2 166.6,136.0 167.2,136.9 167.7,137.7 168.2,138.6 168.8,139.4 169.3,140.3 169.9,141.1 170.4,142.0 170.9,142.9 171.5,143.7 172.0,144.6 172.6,145.5 173.1,146.3 173.6,147.2 174.2,148.1 174.7,149.0 175.3,149.8 175.8,150.7 176.3,151.6 176.9,152.4 177.4,153.3 178.0,154.2 178.5,155.0 179.0,155.9 179.6,156.7 180.1,157.6 180.7,158.4 181.2,159.3 181.7,160.1 182.3,160.9 182.8,161.8 183.4,162.6 183.9,163.4 184.4,164.2 185.0,165.0 185.5,165.8 186.1,166.6 186.6,167.3 187.1,168.1 187.7,168.9 188.2,169.6 188.8,170.3 189.3,171.0 189.8,171.8 190.4,172.5 190.9,173.1 191.5,173.8 192.0,174.5 192.5,175.1 193.1,175.8 193.6,176.4 194.2,177.0 194.7,177.6 195.2,178.2 195.8,178.7 196.3,179.3 196.9,179.8 197.4,180.3 197.9,180.8 198.5,181.3 199.0,181.7 199.6,182.2 200.1,182.6 200.6,183.0 201.2,183.4 201.7,183.8 202.3,184.1 202.8,184.4 203.3,184.7 203.9,185.0 204.4,185.3 205.0,185.5 205.5,185.7 206.0,185.9 206.6,186.1 207.1,186.2 207.7,186.4 208.2,186.5 208.7,186.5 209.3,186.6 209.8,186.6 210.4,186.6 210.9,186.6 211.4,186.5 212.0,186.4 212.5,186.3 213.1,186.2 213.6,186.0 214.1,185.8 214.7,185.6 215.2,185.3 215.8,185.0 216.3,184.7 216.8,184.4 217.4,184.0 217.9,183.6 218.5,183.1 219.0,182.7 219.5,182.2 220.1,181.6 220.6,181.0 221.2,180.4 221.7,179.8 222.2,179.1 222.8,178.4 223.3,177.6 223.9,176.9 224.4,176.0 224.9,175.2 225.5,174.3 226.0,173.4 226.6,172.4 227.1,171.4 227.6,170.3 228.2,169.3 228.7,168.1 229.3,167.0 229.8,165.8 230.3,164.5 230.9,163.2 231.4,161.9 232.0,160.5 232.5,159.1 233.0,157.7 233.6,156.2 234.1,154.6 234.7,153.1 235.2,151.4 235.7,149.8 236.3,148.0 236.8,146.3 237.4,144.5 237.9,142.6 238.4,140.7 239.0,138.8 239.5,136.8 240.1,134.7 240.6,132.6 241.1,130.5 241.7,128.3 242.2,126.1 242.8,123.8 243.3,121.4 243.8,119.1 244.4,116.6 244.9,114.1 245.5,111.6 246.0,109.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>f(x) = 3x² + 36x + 1. For x greater than what value is f increasing? <input class="ans" data-a="-6" size="6"></li>
+<li>Find the minimum value of f(x) = 3x² − 1. <input class="ans" data-a="-1" size="6"></li>
+<li>Find the x-coordinate of the inflection point of f(x) = x³ + 12x² + 5x − 4. <input class="ans" data-a="-4" size="6"></li>
+<li>Two positive numbers add to 62. What is the largest possible product? <input class="ans" data-a="961" size="6"></li>
+</ol>
+  <script id="graded-pool" type="application/json">[{"q": "f(x) = x³ − 7.5x² + 18x. Find the smaller critical point (x-value).<svg viewBox=\"0 0 260 230\" width=\"260\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"graph\"><line x1=\"30.0\" y1=\"12.0\" x2=\"30.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"30.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"66.0\" y1=\"12.0\" x2=\"66.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"66.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"102.0\" y1=\"12.0\" x2=\"102.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"102.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"138.0\" y1=\"12.0\" x2=\"138.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"174.0\" y1=\"12.0\" x2=\"174.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"174.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"210.0\" y1=\"12.0\" x2=\"210.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"210.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"246.0\" y1=\"12.0\" x2=\"246.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"246.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"30.0\" y1=\"206.0\" x2=\"246.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"209.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−40<\/text><line x1=\"30.0\" y1=\"181.8\" x2=\"246.0\" y2=\"181.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"184.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−30<\/text><line x1=\"30.0\" y1=\"157.5\" x2=\"246.0\" y2=\"157.5\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"160.5\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−20<\/text><line x1=\"30.0\" y1=\"133.2\" x2=\"246.0\" y2=\"133.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"136.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"30.0\" y1=\"109.0\" x2=\"246.0\" y2=\"109.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"30.0\" y1=\"84.8\" x2=\"246.0\" y2=\"84.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"87.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"60.5\" x2=\"246.0\" y2=\"60.5\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"63.5\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">20<\/text><line x1=\"30.0\" y1=\"36.2\" x2=\"246.0\" y2=\"36.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"39.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">30<\/text><line x1=\"30.0\" y1=\"12.0\" x2=\"246.0\" y2=\"12.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"15.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">40<\/text><line x1=\"30.0\" y1=\"109.0\" x2=\"254.0\" y2=\"109.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"254.0,109.0 245.9,112.9 245.9,105.1\" fill=\"#334155\"/><line x1=\"138.0\" y1=\"206.0\" x2=\"138.0\" y2=\"6.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"138.0,6.0 141.9,14.1 134.1,14.1\" fill=\"#334155\"/><polyline points=\"90.5,215.7 91.0,215.7 91.6,215.7 92.1,215.7 92.6,215.7 93.2,215.7 93.7,215.7 94.3,215.7 94.8,215.7 95.3,215.7 95.9,215.7 96.4,215.7 97.0,215.7 97.5,215.7 98.0,215.7 98.6,215.7 99.1,215.7 99.7,215.7 100.2,215.7 100.7,215.7 101.3,215.7 101.8,215.7 102.4,215.7 102.9,215.7 103.4,215.7 104.0,215.7 104.5,215.7 105.1,215.7 105.6,215.7 106.1,215.7 106.7,215.7 107.2,215.7 107.8,215.7 108.3,215.7 108.8,215.7 109.4,215.7 109.9,215.7 110.5,215.7 111.0,215.7 111.5,215.7 112.1,215.7 112.6,213.5 113.2,210.2 113.7,207.0 114.2,203.9 114.8,200.8 115.3,197.7 115.9,194.7 116.4,191.8 116.9,188.9 117.5,186.0 118.0,183.2 118.6,180.4 119.1,177.7 119.6,175.0 120.2,172.4 120.7,169.8 121.3,167.3 121.8,164.8 122.3,162.3 122.9,159.9 123.4,157.6 124.0,155.3 124.5,153.0 125.0,150.8 125.6,148.6 126.1,146.4 126.7,144.3 127.2,142.3 127.7,140.2 128.3,138.3 128.8,136.3 129.4,134.4 129.9,132.5 130.4,130.7 131.0,128.9 131.5,127.2 132.1,125.5 132.6,123.8 133.1,122.2 133.7,120.6 134.2,119.0 134.8,117.5 135.3,116.0 135.8,114.5 136.4,113.1 136.9,111.7 137.5,110.3 138.0,109.0 138.5,107.7 139.1,106.4 139.6,105.2 140.2,104.0 140.7,102.9 141.2,101.7 141.8,100.6 142.3,99.5 142.9,98.5 143.4,97.5 143.9,96.5 144.5,95.5 145.0,94.6 145.6,93.7 146.1,92.8 146.6,92.0 147.2,91.1 147.7,90.4 148.3,89.6 148.8,88.8 149.3,88.1 149.9,87.4 150.4,86.7 151.0,86.1 151.5,85.5 152.0,84.9 152.6,84.3 153.1,83.7 153.7,83.2 154.2,82.7 154.7,82.2 155.3,81.7 155.8,81.3 156.4,80.8 156.9,80.4 157.4,80.0 158.0,79.6 158.5,79.3 159.1,78.9 159.6,78.6 160.1,78.3 160.7,78.0 161.2,77.8 161.8,77.5 162.3,77.3 162.8,77.0 163.4,76.8 163.9,76.6 164.5,76.4 165.0,76.3 165.5,76.1 166.1,76.0 166.6,75.8 167.2,75.7 167.7,75.6 168.2,75.5 168.8,75.4 169.3,75.3 169.9,75.3 170.4,75.2 170.9,75.2 171.5,75.1 172.0,75.1 172.6,75.1 173.1,75.1 173.6,75.1 174.2,75.1 174.7,75.1 175.3,75.1 175.8,75.1 176.3,75.1 176.9,75.1 177.4,75.2 178.0,75.2 178.5,75.2 179.0,75.3 179.6,75.3 180.1,75.4 180.7,75.4 181.2,75.5 181.7,75.5 182.3,75.6 182.8,75.6 183.4,75.7 183.9,75.7 184.4,75.8 185.0,75.9 185.5,75.9 186.1,76.0 186.6,76.0 187.1,76.0 187.7,76.1 188.2,76.1 188.8,76.2 189.3,76.2 189.8,76.2 190.4,76.2 190.9,76.2 191.5,76.3 192.0,76.3 192.5,76.3 193.1,76.2 193.6,76.2 194.2,76.2 194.7,76.2 195.2,76.1 195.8,76.1 196.3,76.0 196.9,75.9 197.4,75.9 197.9,75.8 198.5,75.7 199.0,75.6 199.6,75.4 200.1,75.3 200.6,75.2 201.2,75.0 201.7,74.8 202.3,74.6 202.8,74.4 203.3,74.2 203.9,74.0 204.4,73.7 205.0,73.5 205.5,73.2 206.0,72.9 206.6,72.6 207.1,72.3 207.7,71.9 208.2,71.5 208.7,71.2 209.3,70.8 209.8,70.3 210.4,69.9 210.9,69.4 211.4,69.0 212.0,68.5 212.5,67.9 213.1,67.4 213.6,66.8 214.1,66.2 214.7,65.6 215.2,65.0 215.8,64.3 216.3,63.7 216.8,63.0 217.4,62.2 217.9,61.5 218.5,60.7 219.0,59.9 219.5,59.1 220.1,58.2 220.6,57.3 221.2,56.4 221.7,55.5 222.2,54.5 222.8,53.5 223.3,52.5 223.9,51.4 224.4,50.3 224.9,49.2 225.5,48.1 226.0,46.9 226.6,45.7 227.1,44.4 227.6,43.2 228.2,41.9 228.7,40.5 229.3,39.2 229.8,37.8 230.3,36.3 230.9,34.9 231.4,33.3 232.0,31.8 232.5,30.2 233.0,28.6 233.6,27.0 234.1,25.3 234.7,23.5 235.2,21.8 235.7,20.0 236.3,18.1 236.8,16.3 237.4,14.4 237.9,12.4 238.4,10.4 239.0,8.4 239.5,6.3 240.1,4.2 240.6,2.3 241.1,2.3 241.7,2.3 242.2,2.3 242.8,2.3 243.3,2.3 243.8,2.3 244.4,2.3 244.9,2.3 245.5,2.3 246.0,2.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><\/svg>", "a": "2"}, {"q": "f(x) = 3x² − 6x + 1. For x greater than what value is f increasing?", "a": "1"}, {"q": "Find the minimum value of f(x) = x² − 2x.", "a": "-1"}, {"q": "Find the x-coordinate of the inflection point of f(x) = x³ + 9x² + 2x + 3.", "a": "-3"}, {"q": "Two positive numbers add to 80. What is the largest possible product?", "a": "1600"}, {"q": "f(x) = x³ + 1.5x². Find the smaller critical point (x-value).<svg viewBox=\"0 0 260 230\" width=\"260\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"graph\"><line x1=\"30.0\" y1=\"12.0\" x2=\"30.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"30.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"66.0\" y1=\"12.0\" x2=\"66.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"66.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"102.0\" y1=\"12.0\" x2=\"102.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"102.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"138.0\" y1=\"12.0\" x2=\"138.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"174.0\" y1=\"12.0\" x2=\"174.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"174.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"210.0\" y1=\"12.0\" x2=\"210.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"210.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"246.0\" y1=\"12.0\" x2=\"246.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"246.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"30.0\" y1=\"206.0\" x2=\"246.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"209.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−40<\/text><line x1=\"30.0\" y1=\"181.8\" x2=\"246.0\" y2=\"181.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"184.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−30<\/text><line x1=\"30.0\" y1=\"157.5\" x2=\"246.0\" y2=\"157.5\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"160.5\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−20<\/text><line x1=\"30.0\" y1=\"133.2\" x2=\"246.0\" y2=\"133.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"136.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"30.0\" y1=\"109.0\" x2=\"246.0\" y2=\"109.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"30.0\" y1=\"84.8\" x2=\"246.0\" y2=\"84.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"87.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"60.5\" x2=\"246.0\" y2=\"60.5\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"63.5\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">20<\/text><line x1=\"30.0\" y1=\"36.2\" x2=\"246.0\" y2=\"36.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"39.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">30<\/text><line x1=\"30.0\" y1=\"12.0\" x2=\"246.0\" y2=\"12.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"15.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">40<\/text><line x1=\"30.0\" y1=\"109.0\" x2=\"254.0\" y2=\"109.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"254.0,109.0 245.9,112.9 245.9,105.1\" fill=\"#334155\"/><line x1=\"138.0\" y1=\"206.0\" x2=\"138.0\" y2=\"6.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"138.0,6.0 141.9,14.1 134.1,14.1\" fill=\"#334155\"/><polyline points=\"39.7,215.7 40.3,215.7 40.8,215.7 41.3,215.7 41.9,215.7 42.4,215.7 43.0,215.7 43.5,215.7 44.0,215.7 44.6,215.7 45.1,215.7 45.7,215.7 46.2,215.7 46.7,215.7 47.3,215.7 47.8,215.7 48.4,215.7 48.9,215.7 49.4,215.7 50.0,215.7 50.5,215.7 51.1,215.7 51.6,215.7 52.1,215.7 52.7,215.7 53.2,215.7 53.8,215.7 54.3,215.7 54.8,215.7 55.4,215.7 55.9,215.7 56.5,215.7 57.0,215.7 57.5,215.7 58.1,215.7 58.6,215.7 59.2,215.7 59.7,215.7 60.2,215.7 60.8,215.7 61.3,215.7 61.9,215.7 62.4,215.7 62.9,215.7 63.5,215.7 64.0,215.7 64.6,213.1 65.1,210.4 65.6,207.8 66.2,205.1 66.7,202.5 67.3,200.0 67.8,197.5 68.3,195.1 68.9,192.7 69.4,190.3 70.0,188.0 70.5,185.7 71.0,183.5 71.6,181.3 72.1,179.2 72.7,177.1 73.2,175.0 73.7,173.0 74.3,171.0 74.8,169.1 75.4,167.1 75.9,165.3 76.4,163.5 77.0,161.7 77.5,159.9 78.1,158.2 78.6,156.5 79.1,154.9 79.7,153.3 80.2,151.7 80.8,150.2 81.3,148.7 81.8,147.2 82.4,145.8 82.9,144.4 83.5,143.1 84.0,141.7 84.5,140.4 85.1,139.2 85.6,138.0 86.2,136.8 86.7,135.6 87.2,134.5 87.8,133.4 88.3,132.3 88.9,131.2 89.4,130.2 89.9,129.2 90.5,128.3 91.0,127.3 91.6,126.4 92.1,125.6 92.6,124.7 93.2,123.9 93.7,123.1 94.3,122.3 94.8,121.6 95.3,120.9 95.9,120.2 96.4,119.5 97.0,118.8 97.5,118.2 98.0,117.6 98.6,117.0 99.1,116.5 99.7,115.9 100.2,115.4 100.7,114.9 101.3,114.4 101.8,114.0 102.4,113.6 102.9,113.1 103.4,112.8 104.0,112.4 104.5,112.0 105.1,111.7 105.6,111.4 106.1,111.1 106.7,110.8 107.2,110.5 107.8,110.2 108.3,110.0 108.8,109.8 109.4,109.6 109.9,109.4 110.5,109.2 111.0,109.0 111.5,108.8 112.1,108.7 112.6,108.6 113.2,108.4 113.7,108.3 114.2,108.2 114.8,108.2 115.3,108.1 115.9,108.0 116.4,108.0 116.9,107.9 117.5,107.9 118.0,107.8 118.6,107.8 119.1,107.8 119.6,107.8 120.2,107.8 120.7,107.8 121.3,107.8 121.8,107.8 122.3,107.8 122.9,107.9 123.4,107.9 124.0,107.9 124.5,108.0 125.0,108.0 125.6,108.1 126.1,108.1 126.7,108.2 127.2,108.2 127.7,108.3 128.3,108.3 128.8,108.4 129.4,108.4 129.9,108.5 130.4,108.5 131.0,108.6 131.5,108.6 132.1,108.7 132.6,108.7 133.1,108.8 133.7,108.8 134.2,108.9 134.8,108.9 135.3,108.9 135.8,109.0 136.4,109.0 136.9,109.0 137.5,109.0 138.0,109.0 138.5,109.0 139.1,109.0 139.6,109.0 140.2,108.9 140.7,108.9 141.2,108.9 141.8,108.8 142.3,108.8 142.9,108.7 143.4,108.6 143.9,108.5 144.5,108.4 145.0,108.3 145.6,108.2 146.1,108.0 146.6,107.9 147.2,107.7 147.7,107.6 148.3,107.4 148.8,107.2 149.3,106.9 149.9,106.7 150.4,106.5 151.0,106.2 151.5,105.9 152.0,105.6 152.6,105.3 153.1,105.0 153.7,104.6 154.2,104.3 154.7,103.9 155.3,103.5 155.8,103.1 156.4,102.6 156.9,102.2 157.4,101.7 158.0,101.2 158.5,100.7 159.1,100.1 159.6,99.6 160.1,99.0 160.7,98.4 161.2,97.7 161.8,97.1 162.3,96.4 162.8,95.7 163.4,95.0 163.9,94.2 164.5,93.4 165.0,92.6 165.5,91.8 166.1,90.9 166.6,90.1 167.2,89.1 167.7,88.2 168.2,87.2 168.8,86.2 169.3,85.2 169.9,84.2 170.4,83.1 170.9,82.0 171.5,80.8 172.0,79.6 172.6,78.4 173.1,77.2 173.6,75.9 174.2,74.6 174.7,73.3 175.3,71.9 175.8,70.5 176.3,69.1 176.9,67.6 177.4,66.1 178.0,64.5 178.5,63.0 179.0,61.3 179.6,59.7 180.1,58.0 180.7,56.3 181.2,54.5 181.7,52.7 182.3,50.9 182.8,49.0 183.4,47.1 183.9,45.1 184.4,43.1 185.0,41.1 185.5,39.0 186.1,36.9 186.6,34.8 187.1,32.6 187.7,30.3 188.2,28.0 188.8,25.7 189.3,23.3 189.8,20.9 190.4,18.4 190.9,15.9 191.5,13.4 192.0,10.8 192.5,8.1 193.1,5.5 193.6,2.7 194.2,2.3 194.7,2.3 195.2,2.3 195.8,2.3 196.3,2.3 196.9,2.3 197.4,2.3 197.9,2.3 198.5,2.3 199.0,2.3 199.6,2.3 200.1,2.3 200.6,2.3 201.2,2.3 201.7,2.3 202.3,2.3 202.8,2.3 203.3,2.3 203.9,2.3 204.4,2.3 205.0,2.3 205.5,2.3 206.0,2.3 206.6,2.3 207.1,2.3 207.7,2.3 208.2,2.3 208.7,2.3 209.3,2.3 209.8,2.3 210.4,2.3 210.9,2.3 211.4,2.3 212.0,2.3 212.5,2.3 213.1,2.3 213.6,2.3 214.1,2.3 214.7,2.3 215.2,2.3 215.8,2.3 216.3,2.3 216.8,2.3 217.4,2.3 217.9,2.3 218.5,2.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><\/svg>", "a": "-1"}, {"q": "f(x) = x² − 12x + 1. For x greater than what value is f increasing?", "a": "6"}, {"q": "Find the minimum value of f(x) = 3x² − 30x + 84.", "a": "9"}, {"q": "Find the x-coordinate of the inflection point of f(x) = 2x³ − 24x² + 3x + 4.", "a": "4"}, {"q": "Two positive numbers add to 14. What is the largest possible product?", "a": "49"}, {"q": "f(x) = 3x² + 30x + 1. For x greater than what value is f increasing?", "a": "-5"}, {"q": "Find the minimum value of f(x) = 3x² + 12x + 20.", "a": "8"}, {"q": "Find the x-coordinate of the inflection point of f(x) = −x³ − 3x² − 4x + 2.", "a": "-1"}, {"q": "Two positive numbers add to 52. What is the largest possible product?", "a": "676"}, {"q": "f(x) = x³ − 27x. Find the larger critical point (x-value).<svg viewBox=\"0 0 260 230\" width=\"260\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"graph\"><line x1=\"30.0\" y1=\"12.0\" x2=\"30.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"30.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"66.0\" y1=\"12.0\" x2=\"66.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"66.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"102.0\" y1=\"12.0\" x2=\"102.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"102.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"138.0\" y1=\"12.0\" x2=\"138.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"174.0\" y1=\"12.0\" x2=\"174.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"174.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"210.0\" y1=\"12.0\" x2=\"210.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"210.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"246.0\" y1=\"12.0\" x2=\"246.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"246.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"30.0\" y1=\"206.0\" x2=\"246.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"209.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−40<\/text><line x1=\"30.0\" y1=\"181.8\" x2=\"246.0\" y2=\"181.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"184.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−30<\/text><line x1=\"30.0\" y1=\"157.5\" x2=\"246.0\" y2=\"157.5\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"160.5\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−20<\/text><line x1=\"30.0\" y1=\"133.2\" x2=\"246.0\" y2=\"133.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"136.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"30.0\" y1=\"109.0\" x2=\"246.0\" y2=\"109.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"30.0\" y1=\"84.8\" x2=\"246.0\" y2=\"84.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"87.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"60.5\" x2=\"246.0\" y2=\"60.5\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"63.5\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">20<\/text><line x1=\"30.0\" y1=\"36.2\" x2=\"246.0\" y2=\"36.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"39.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">30<\/text><line x1=\"30.0\" y1=\"12.0\" x2=\"246.0\" y2=\"12.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"15.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">40<\/text><line x1=\"30.0\" y1=\"109.0\" x2=\"254.0\" y2=\"109.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"254.0,109.0 245.9,112.9 245.9,105.1\" fill=\"#334155\"/><line x1=\"138.0\" y1=\"206.0\" x2=\"138.0\" y2=\"6.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"138.0,6.0 141.9,14.1 134.1,14.1\" fill=\"#334155\"/><polyline points=\"30.0,215.7 30.5,215.7 31.1,215.7 31.6,215.7 32.2,215.7 32.7,211.5 33.2,206.0 33.8,200.6 34.3,195.3 34.9,190.0 35.4,184.9 35.9,179.8 36.5,174.8 37.0,169.8 37.6,165.0 38.1,160.2 38.6,155.5 39.2,150.8 39.7,146.2 40.3,141.7 40.8,137.3 41.3,132.9 41.9,128.6 42.4,124.4 43.0,120.2 43.5,116.2 44.0,112.1 44.6,108.2 45.1,104.3 45.7,100.5 46.2,96.8 46.7,93.1 47.3,89.5 47.8,85.9 48.4,82.4 48.9,79.0 49.4,75.7 50.0,72.4 50.5,69.2 51.1,66.0 51.6,62.9 52.1,59.9 52.7,56.9 53.2,54.0 53.8,51.1 54.3,48.4 54.8,45.6 55.4,43.0 55.9,40.4 56.5,37.8 57.0,35.3 57.5,32.9 58.1,30.5 58.6,28.2 59.2,26.0 59.7,23.8 60.2,21.7 60.8,19.6 61.3,17.6 61.9,15.6 62.4,13.7 62.9,11.8 63.5,10.0 64.0,8.3 64.6,6.6 65.1,4.9 65.6,3.3 66.2,2.3 66.7,2.3 67.3,2.3 67.8,2.3 68.3,2.3 68.9,2.3 69.4,2.3 70.0,2.3 70.5,2.3 71.0,2.3 71.6,2.3 72.1,2.3 72.7,2.3 73.2,2.3 73.7,2.3 74.3,2.3 74.8,2.3 75.4,2.3 75.9,2.3 76.4,2.3 77.0,2.3 77.5,2.3 78.1,2.3 78.6,2.3 79.1,2.3 79.7,2.3 80.2,2.3 80.8,2.3 81.3,2.3 81.8,2.3 82.4,2.3 82.9,2.3 83.5,2.3 84.0,2.3 84.5,2.3 85.1,2.3 85.6,2.3 86.2,2.3 86.7,2.3 87.2,2.3 87.8,2.3 88.3,2.3 88.9,2.3 89.4,2.3 89.9,2.3 90.5,2.3 91.0,2.3 91.6,2.3 92.1,2.3 92.6,2.3 93.2,2.3 93.7,2.3 94.3,2.3 94.8,2.3 95.3,2.3 95.9,2.3 96.4,2.3 97.0,2.3 97.5,2.3 98.0,2.3 98.6,2.3 99.1,2.3 99.7,2.3 100.2,2.3 100.7,2.3 101.3,2.3 101.8,2.3 102.4,2.3 102.9,2.3 103.4,2.3 104.0,2.3 104.5,2.8 105.1,4.0 105.6,5.3 106.1,6.6 106.7,7.8 107.2,9.2 107.8,10.5 108.3,11.9 108.8,13.2 109.4,14.6 109.9,16.1 110.5,17.5 111.0,19.0 111.5,20.5 112.1,22.0 112.6,23.5 113.2,25.0 113.7,26.6 114.2,28.2 114.8,29.7 115.3,31.4 115.9,33.0 116.4,34.6 116.9,36.3 117.5,38.0 118.0,39.6 118.6,41.3 119.1,43.1 119.6,44.8 120.2,46.5 120.7,48.3 121.3,50.1 121.8,51.8 122.3,53.6 122.9,55.4 123.4,57.3 124.0,59.1 124.5,60.9 125.0,62.8 125.6,64.6 126.1,66.5 126.7,68.4 127.2,70.2 127.7,72.1 128.3,74.0 128.8,75.9 129.4,77.8 129.9,79.8 130.4,81.7 131.0,83.6 131.5,85.5 132.1,87.5 132.6,89.4 133.1,91.4 133.7,93.3 134.2,95.3 134.8,97.2 135.3,99.2 135.8,101.1 136.4,103.1 136.9,105.1 137.5,107.0 138.0,109.0 138.5,111.0 139.1,112.9 139.6,114.9 140.2,116.9 140.7,118.8 141.2,120.8 141.8,122.7 142.3,124.7 142.9,126.6 143.4,128.6 143.9,130.5 144.5,132.5 145.0,134.4 145.6,136.3 146.1,138.2 146.6,140.2 147.2,142.1 147.7,144.0 148.3,145.9 148.8,147.8 149.3,149.6 149.9,151.5 150.4,153.4 151.0,155.2 151.5,157.1 152.0,158.9 152.6,160.7 153.1,162.6 153.7,164.4 154.2,166.2 154.7,167.9 155.3,169.7 155.8,171.5 156.4,173.2 156.9,174.9 157.4,176.7 158.0,178.4 158.5,180.0 159.1,181.7 159.6,183.4 160.1,185.0 160.7,186.6 161.2,188.3 161.8,189.8 162.3,191.4 162.8,193.0 163.4,194.5 163.9,196.0 164.5,197.5 165.0,199.0 165.5,200.5 166.1,201.9 166.6,203.4 167.2,204.8 167.7,206.1 168.2,207.5 168.8,208.8 169.3,210.2 169.9,211.4 170.4,212.7 170.9,214.0 171.5,215.2 172.0,215.7 172.6,215.7 173.1,215.7 173.6,215.7 174.2,215.7 174.7,215.7 175.3,215.7 175.8,215.7 176.3,215.7 176.9,215.7 177.4,215.7 178.0,215.7 178.5,215.7 179.0,215.7 179.6,215.7 180.1,215.7 180.7,215.7 181.2,215.7 181.7,215.7 182.3,215.7 182.8,215.7 183.4,215.7 183.9,215.7 184.4,215.7 185.0,215.7 185.5,215.7 186.1,215.7 186.6,215.7 187.1,215.7 187.7,215.7 188.2,215.7 188.8,215.7 189.3,215.7 189.8,215.7 190.4,215.7 190.9,215.7 191.5,215.7 192.0,215.7 192.5,215.7 193.1,215.7 193.6,215.7 194.2,215.7 194.7,215.7 195.2,215.7 195.8,215.7 196.3,215.7 196.9,215.7 197.4,215.7 197.9,215.7 198.5,215.7 199.0,215.7 199.6,215.7 200.1,215.7 200.6,215.7 201.2,215.7 201.7,215.7 202.3,215.7 202.8,215.7 203.3,215.7 203.9,215.7 204.4,215.7 205.0,215.7 205.5,215.7 206.0,215.7 206.6,215.7 207.1,215.7 207.7,215.7 208.2,215.7 208.7,215.7 209.3,215.7 209.8,215.7 210.4,214.7 210.9,213.1 211.4,211.4 212.0,209.7 212.5,208.0 213.1,206.2 213.6,204.3 214.1,202.4 214.7,200.4 215.2,198.4 215.8,196.3 216.3,194.2 216.8,192.0 217.4,189.8 217.9,187.5 218.5,185.1 219.0,182.7 219.5,180.2 220.1,177.6 220.6,175.0 221.2,172.4 221.7,169.6 222.2,166.9 222.8,164.0 223.3,161.1 223.9,158.1 224.4,155.1 224.9,152.0 225.5,148.8 226.0,145.6 226.6,142.3 227.1,139.0 227.6,135.6 228.2,132.1 228.7,128.5 229.3,124.9 229.8,121.2 230.3,117.5 230.9,113.7 231.4,109.8 232.0,105.9 232.5,101.8 233.0,97.8 233.6,93.6 234.1,89.4 234.7,85.1 235.2,80.7 235.7,76.3 236.3,71.8 236.8,67.2 237.4,62.5 237.9,57.8 238.4,53.0 239.0,48.2 239.5,43.2 240.1,38.2 240.6,33.1 241.1,28.0 241.7,22.7 242.2,17.4 242.8,12.0 243.3,6.5 243.8,2.3 244.4,2.3 244.9,2.3 245.5,2.3 246.0,2.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><\/svg>", "a": "3"}, {"q": "f(x) = 3x² − 18x + 1. For x greater than what value is f increasing?", "a": "3"}, {"q": "Find the minimum value of f(x) = x² − 4x + 11.", "a": "7"}, {"q": "Find the x-coordinate of the inflection point of f(x) = −x³ − 9x² − 5x.", "a": "-3"}, {"q": "A farmer has 20 m of fence to enclose a rectangle against a barn wall (no fence on the wall side). What is the maximum area (m²)?", "a": "50"}, {"q": "f(x) = x³ + 3x². Find the larger critical point (x-value).<svg viewBox=\"0 0 260 230\" width=\"260\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"graph\"><line x1=\"30.0\" y1=\"12.0\" x2=\"30.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"30.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"66.0\" y1=\"12.0\" x2=\"66.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"66.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"102.0\" y1=\"12.0\" x2=\"102.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"102.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"138.0\" y1=\"12.0\" x2=\"138.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"174.0\" y1=\"12.0\" x2=\"174.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"174.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"210.0\" y1=\"12.0\" x2=\"210.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"210.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"246.0\" y1=\"12.0\" x2=\"246.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"246.0\" y=\"122.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"30.0\" y1=\"206.0\" x2=\"246.0\" y2=\"206.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"209.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−40<\/text><line x1=\"30.0\" y1=\"181.8\" x2=\"246.0\" y2=\"181.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"184.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−30<\/text><line x1=\"30.0\" y1=\"157.5\" x2=\"246.0\" y2=\"157.5\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"160.5\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−20<\/text><line x1=\"30.0\" y1=\"133.2\" x2=\"246.0\" y2=\"133.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"136.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"30.0\" y1=\"109.0\" x2=\"246.0\" y2=\"109.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"30.0\" y1=\"84.8\" x2=\"246.0\" y2=\"84.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"87.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"60.5\" x2=\"246.0\" y2=\"60.5\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"63.5\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">20<\/text><line x1=\"30.0\" y1=\"36.2\" x2=\"246.0\" y2=\"36.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"39.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">30<\/text><line x1=\"30.0\" y1=\"12.0\" x2=\"246.0\" y2=\"12.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"134.0\" y=\"15.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">40<\/text><line x1=\"30.0\" y1=\"109.0\" x2=\"254.0\" y2=\"109.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"254.0,109.0 245.9,112.9 245.9,105.1\" fill=\"#334155\"/><line x1=\"138.0\" y1=\"206.0\" x2=\"138.0\" y2=\"6.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"138.0,6.0 141.9,14.1 134.1,14.1\" fill=\"#334155\"/><polyline points=\"30.0,215.7 30.5,215.7 31.1,215.7 31.6,215.7 32.2,215.7 32.7,215.7 33.2,215.7 33.8,215.7 34.3,215.7 34.9,215.7 35.4,215.7 35.9,215.7 36.5,215.7 37.0,215.7 37.6,215.7 38.1,215.7 38.6,215.7 39.2,215.7 39.7,215.7 40.3,215.7 40.8,215.7 41.3,215.7 41.9,215.7 42.4,215.7 43.0,215.7 43.5,215.7 44.0,215.7 44.6,215.7 45.1,215.7 45.7,215.7 46.2,215.7 46.7,215.7 47.3,215.7 47.8,215.7 48.4,215.7 48.9,215.7 49.4,215.7 50.0,215.7 50.5,215.5 51.1,212.5 51.6,209.6 52.1,206.7 52.7,203.8 53.2,201.0 53.8,198.2 54.3,195.5 54.8,192.9 55.4,190.2 55.9,187.7 56.5,185.1 57.0,182.7 57.5,180.2 58.1,177.8 58.6,175.5 59.2,173.2 59.7,170.9 60.2,168.7 60.8,166.6 61.3,164.4 61.9,162.4 62.4,160.3 62.9,158.3 63.5,156.4 64.0,154.5 64.6,152.6 65.1,150.8 65.6,149.0 66.2,147.2 66.7,145.5 67.3,143.8 67.8,142.2 68.3,140.6 68.9,139.0 69.4,137.5 70.0,136.0 70.5,134.6 71.0,133.2 71.6,131.8 72.1,130.4 72.7,129.1 73.2,127.9 73.7,126.6 74.3,125.4 74.8,124.2 75.4,123.1 75.9,122.0 76.4,120.9 77.0,119.9 77.5,118.9 78.1,117.9 78.6,116.9 79.1,116.0 79.7,115.1 80.2,114.2 80.8,113.4 81.3,112.6 81.8,111.8 82.4,111.1 82.9,110.4 83.5,109.7 84.0,109.0 84.5,108.4 85.1,107.7 85.6,107.2 86.2,106.6 86.7,106.0 87.2,105.5 87.8,105.0 88.3,104.6 88.9,104.1 89.4,103.7 89.9,103.3 90.5,102.9 91.0,102.6 91.6,102.2 92.1,101.9 92.6,101.6 93.2,101.3 93.7,101.1 94.3,100.8 94.8,100.6 95.3,100.4 95.9,100.2 96.4,100.1 97.0,99.9 97.5,99.8 98.0,99.7 98.6,99.6 99.1,99.5 99.7,99.4 100.2,99.4 100.7,99.3 101.3,99.3 101.8,99.3 102.4,99.3 102.9,99.3 103.4,99.3 104.0,99.4 104.5,99.4 105.1,99.5 105.6,99.6 106.1,99.7 106.7,99.7 107.2,99.9 107.8,100.0 108.3,100.1 108.8,100.2 109.4,100.4 109.9,100.5 110.5,100.7 111.0,100.8 111.5,101.0 112.1,101.2 112.6,101.3 113.2,101.5 113.7,101.7 114.2,101.9 114.8,102.1 115.3,102.3 115.9,102.5 116.4,102.7 116.9,102.9 117.5,103.1 118.0,103.4 118.6,103.6 119.1,103.8 119.6,104.0 120.2,104.2 120.7,104.4 121.3,104.7 121.8,104.9 122.3,105.1 122.9,105.3 123.4,105.5 124.0,105.7 124.5,105.9 125.0,106.1 125.6,106.3 126.1,106.5 126.7,106.7 127.2,106.9 127.7,107.1 128.3,107.3 128.8,107.4 129.4,107.6 129.9,107.7 130.4,107.9 131.0,108.0 131.5,108.2 132.1,108.3 132.6,108.4 133.1,108.5 133.7,108.6 134.2,108.7 134.8,108.8 135.3,108.8 135.8,108.9 136.4,108.9 136.9,109.0 137.5,109.0 138.0,109.0 138.5,109.0 139.1,109.0 139.6,108.9 140.2,108.9 140.7,108.8 141.2,108.8 141.8,108.7 142.3,108.5 142.9,108.4 143.4,108.3 143.9,108.1 144.5,107.9 145.0,107.7 145.6,107.5 146.1,107.3 146.6,107.1 147.2,106.8 147.7,106.5 148.3,106.2 148.8,105.9 149.3,105.5 149.9,105.1 150.4,104.7 151.0,104.3 151.5,103.9 152.0,103.4 152.6,102.9 153.1,102.4 153.7,101.9 154.2,101.3 154.7,100.8 155.3,100.1 155.8,99.5 156.4,98.9 156.9,98.2 157.4,97.5 158.0,96.7 158.5,96.0 159.1,95.2 159.6,94.3 160.1,93.5 160.7,92.6 161.2,91.7 161.8,90.7 162.3,89.8 162.8,88.8 163.4,87.7 163.9,86.7 164.5,85.6 165.0,84.4 165.5,83.3 166.1,82.1 166.6,80.9 167.2,79.6 167.7,78.3 168.2,77.0 168.8,75.6 169.3,74.2 169.9,72.8 170.4,71.3 170.9,69.8 171.5,68.2 172.0,66.6 172.6,65.0 173.1,63.4 173.6,61.7 174.2,59.9 174.7,58.1 175.3,56.3 175.8,54.5 176.3,52.6 176.9,50.6 177.4,48.6 178.0,46.6 178.5,44.5 179.0,42.4 179.6,40.3 180.1,38.1 180.7,35.9 181.2,33.6 181.7,31.2 182.3,28.9 182.8,26.5 183.4,24.0 183.9,21.5 184.4,18.9 185.0,16.3 185.5,13.7 186.1,11.0 186.6,8.2 187.1,5.4 187.7,2.6 188.2,2.3 188.8,2.3 189.3,2.3 189.8,2.3 190.4,2.3 190.9,2.3 191.5,2.3 192.0,2.3 192.5,2.3 193.1,2.3 193.6,2.3 194.2,2.3 194.7,2.3 195.2,2.3 195.8,2.3 196.3,2.3 196.9,2.3 197.4,2.3 197.9,2.3 198.5,2.3 199.0,2.3 199.6,2.3 200.1,2.3 200.6,2.3 201.2,2.3 201.7,2.3 202.3,2.3 202.8,2.3 203.3,2.3 203.9,2.3 204.4,2.3 205.0,2.3 205.5,2.3 206.0,2.3 206.6,2.3 207.1,2.3 207.7,2.3 208.2,2.3 208.7,2.3 209.3,2.3 209.8,2.3 210.4,2.3 210.9,2.3 211.4,2.3\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><\/svg>", "a": "0"}]</script>
+<!-- Save/Load Answers toolbar (hidden in graded mode) -->
+<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
+  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
+  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
+  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
+  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
+</div>
+
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div id="ak" class="ak"><h4>Answer Key</h4>(1) 4 | (2) 5 | (3) 2 | (4) 4 | (5) 1296 | (6) 0 | (7) -6 | (8) -1 | (9) -4 | (10) 961</div>
+</main>
+<footer>Mary, Star of the Sea School · Math 12 · Calculus · Curve Sketching &amp; Optimization · Dr. Park</footer>
+</div>
+<script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(s,e){if(!e)return null;const ns=toNumber(s),ne=toNumber(e);if(ns!==null&&ne!==null){if(Math.abs(ne)<1e-12)return Math.abs(ns)<1e-9;return Math.abs(ns-ne)/Math.abs(ne)<5e-3;}const nas=normalizeAns(s),nae=normalizeAns(e);if(nas===nae)return true;if(/^[a-z]+$/.test(nae)&&nae.length>=3&&nas.includes(nae))return true;return false;}
+function isGradedMode(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+function clearCorrectionLabels(){ document.querySelectorAll('.correction-label').forEach(n=>n.remove()); }
+function storageKey(){ return 'msp-graded-'+location.pathname.split('/').pop(); }
+function loadGradedState(){ try { return JSON.parse(localStorage.getItem(storageKey())||'null'); } catch(e){ return null; } }
+function saveGradedState(s){ try { localStorage.setItem(storageKey(), JSON.stringify(s)); } catch(e){} }
+function bumpAttemptCount(){ const k = storageKey()+'-attempts'; const n = (parseInt(localStorage.getItem(k)||'0',10)||0) + 1; try { localStorage.setItem(k, String(n)); } catch(e){} return n; }
+function getAttemptCount(){ return parseInt(localStorage.getItem(storageKey()+'-attempts')||'0',10) || 0; }
+function fmtTime(ts){ try { return new Date(ts).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); } catch(e){ return String(ts); } }
+let __quizStartTime = null;
+function markStart(){ if(!__quizStartTime && isGradedMode()){ __quizStartTime = Date.now(); try { localStorage.setItem(storageKey()+'-start', String(__quizStartTime)); } catch(e){} } }
+function checkAllQuiz(){
+  const r=document.querySelector('main');if(!r)return;
+  const graded = isGradedMode();
+  clearCorrectionLabels();
+  let c=0,ck=0;
+  r.querySelectorAll('input.ans').forEach(i=>{
+    const e=i.dataset.a||'';
+    if(!e){i.classList.add('nocheck');return;}
+    ck++;
+    const s=i.value;
+    if(!s.trim()){i.classList.remove('correct','wrong');return;}
+    const ok=isCorrect(s,e);
+    i.classList.toggle('correct',ok===true);
+    i.classList.toggle('wrong',ok===false);
+    if(ok===true) c++;
+    if(graded && ok===false){
+      const lbl=document.createElement('span');
+      lbl.className='correction-label';
+      lbl.style.cssText='display:inline-block; margin-left:8px; padding:3px 8px; background:#fef3c7; border:1px solid #b8860b; border-radius:6px; font-size:.85rem; font-weight:800; color:#78350f;';
+      lbl.textContent='\u2192 correct: '+String(e).split('|')[0];
+      i.insertAdjacentElement('afterend', lbl);
+    }
+  });
+  const se=document.getElementById('score-quiz');
+  if(se){const p=ck?Math.round(100*c/ck):0;se.textContent=`${c} / ${ck}  (${p}%)`;se.classList.remove('good','mid','low');if(p>=90)se.classList.add('good');else if(p>=70)se.classList.add('mid');else se.classList.add('low');}
+  if(graded){
+    r.querySelectorAll('input.ans').forEach(i=>{i.readOnly=true; i.style.opacity='0.9'; i.style.cursor='not-allowed';});
+    const chkBtn=document.querySelector('.check-btn');
+    if(chkBtn){chkBtn.disabled=true; chkBtn.style.opacity='0.5'; chkBtn.style.cursor='not-allowed'; chkBtn.textContent='\u2713 Checked (locked)';}
+    const resetBtn=document.querySelector('.reset-btn');
+    if(resetBtn){resetBtn.style.display='none';}
+    let lock=document.getElementById('locked-msg');
+    if(!lock){
+      lock=document.createElement('div');
+      lock.id='locked-msg';
+      lock.style.cssText='margin:10px 0; padding:10px 14px; background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; font-size:.92rem; color:#78350f; font-weight:700;';
+      lock.innerHTML='\U0001F512 Your answers are locked. Review the corrections above, then click <strong>Submit to Dr. Park</strong> below.';
+      const sb=document.getElementById('submit-block');
+      if(sb) sb.parentNode.insertBefore(lock, sb);
+    if(sb) sb.style.display='block';
+    }
+    const answers = {};
+    r.querySelectorAll('input.ans').forEach((i,idx)=>{ answers[idx]=i.value; });
+    const state = loadGradedState() || {};
+    if(!state.checkedAt){
+      state.checkedAt = Date.now();
+      state.startAt = __quizStartTime || parseInt(localStorage.getItem(storageKey()+'-start')||Date.now(),10);
+      state.answers = answers;
+      state.score = (se && se.textContent) || '';
+      state.attempts = getAttemptCount();
+      state.name = (document.getElementById('student-name')||{}).value || '';
+      state.period = (document.getElementById('student-period')||{}).value || '';
+      saveGradedState(state);
+    }
+  }
+}
+function resetQuiz(){
+  document.querySelectorAll('input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');i.readOnly=false;i.style.opacity='';i.style.cursor='';});
+  clearCorrectionLabels();
+  const se=document.getElementById('score-quiz');
+  if(se){se.textContent='—';se.classList.remove('good','mid','low');}
+  const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
+  const chkBtn=document.querySelector('.check-btn');
+  if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='\u2713 Check Answers';}
+  const resetBtn=document.querySelector('.reset-btn'); if(resetBtn){resetBtn.style.display='';}
+}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();var inputs=Array.from(document.querySelectorAll('input.ans'));var i=inputs.indexOf(e.target);if(i>=0&&i<inputs.length-1){inputs[i+1].focus();}else{e.target.blur();}}});
+
+function submitToTeacher(){
+  const nameEl = document.getElementById('student-name');
+  const periodEl = document.getElementById('student-period');
+  const name = (nameEl && nameEl.value || '').trim();
+  const period = (periodEl && periodEl.value || '').trim();
+  if(!name){ alert('Please enter your name first, then click Submit again.'); nameEl && nameEl.focus(); return; }
+  if(!period){ alert('Please enter your Grade / Class (e.g. 7A) first, then click Submit again.'); periodEl && periodEl.focus(); return; }
+  checkAllQuiz();
+  const title = (document.querySelector('h1')||{}).textContent || document.title || 'Math Quiz';
+  const scoreText = (document.getElementById('score-quiz')||{}).textContent || '(not scored)';
+  const lines = [];
+  document.querySelectorAll('ol.qlist > li').forEach((li,idx)=>{
+    const inp = li.querySelector('input.ans');
+    if(!inp) return;
+    const clone = li.cloneNode(true);
+    clone.querySelectorAll('input, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
+    const qText = clone.textContent.trim().replace(/\s+/g,' ').slice(0,120);
+    const student = (inp.value||'').trim() || '(blank)';
+    let mark = '';
+    if(inp.classList.contains('correct')) mark = ' \u2713';
+    else if(inp.classList.contains('wrong')) mark = ` \u2717 (correct: ${inp.dataset.a||''})`;
+    lines.push(`${idx+1}. ${qText}\n    Answer: ${student}${mark}`);
+  });
+  const subject = `${title.replace(/^[^A-Za-z0-9]+/,'').trim()} \u2014 ${name}`;
+  const state = loadGradedState() || {};
+  const startTs = state.startAt ? new Date(state.startAt) : null;
+  const checkedTs = state.checkedAt ? new Date(state.checkedAt) : null;
+  const submitTs = new Date();
+  const durationSec = startTs ? Math.round((submitTs - startTs)/1000) : null;
+  const durStr = durationSec != null ? (durationSec >= 60 ? `${Math.floor(durationSec/60)} min ${durationSec%60} sec` : `${durationSec} sec`) : 'unknown';
+  const attempts = getAttemptCount();
+  state.submittedAt = submitTs.getTime();
+  saveGradedState(state);
+  const body =
+`Student: ${name}
+${period ? 'Grade/Class: '+period+'\n' : ''}Score: ${scoreText}
+
+\u23F1 Timing:
+  Started:   ${startTs ? startTs.toLocaleString('en-US') : '(not recorded)'}
+  Checked:   ${checkedTs ? checkedTs.toLocaleString('en-US') : '(not recorded)'}
+  Submitted: ${submitTs.toLocaleString('en-US')}
+  Duration:  ${durStr}
+  Page load attempts: ${attempts}${attempts>1?'  \u26A0\uFE0F (multiple loads \u2014 possible retake)':''}
+
+${lines.join('\n\n')}
+
+\u2014
+Submitted from ${location.href}`;
+  const gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  window.open(gmail, '_blank');
+}
+
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-btn{display:inline-block;margin-left:6px;padding:5px 10px;border-radius:6px;border:1.5px solid #1e40af;background:#2563eb;color:#fff;font-weight:800;font-size:.8rem;cursor:pointer;vertical-align:middle;font-family:inherit}
+.one-check-btn:hover{background:#1e40af}
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-btn,.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true || isCorrect(val,[exp[k]])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  window.msosCheckOne = function(btn){
+    var inp = btn.previousElementSibling;
+    while (inp && inp.tagName!=='INPUT') inp = inp.previousElementSibling;
+    if (!inp) return;
+    var fb = btn.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; btn.insertAdjacentElement('afterend', fb); }
+    var v = inp.value;
+    if (!v.trim()) { fb.className='one-check-fb no'; fb.textContent='Type an answer first'; return; }
+    var ok = test(v, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card = inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className = 'one-check-fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ Correct!' : '✗ Not yet — try again';
+  };
+  function sync(){
+    var g = graded();
+    if (g) { document.querySelectorAll('.one-check-btn,.one-check-fb').forEach(function(n){ n.remove(); }); return; }
+    document.querySelectorAll('input.ans, .q-input input[id^="ans"]').forEach(function(inp){
+      if (inp.closest('.one-check-skip')) return;
+      if (!expected(inp)) return;
+      var place = inp; var u = inp.nextElementSibling;
+      if (u && u.classList.contains('unit')) place = u;
+      var nx = place.nextElementSibling;
+      if (nx && nx.classList.contains('one-check-btn')) return;
+      var b = document.createElement('button'); b.type='button'; b.className='one-check-btn'; b.textContent='Check Answer';
+      b.setAttribute('onclick','msosCheckOne(this)');
+      place.insertAdjacentElement('afterend', b);
+      if (!inp.dataset.oneCheckKey) { inp.dataset.oneCheckKey='1'; inp.addEventListener('keydown', function(e){ if(e.key==='Enter' && !graded()){ e.preventDefault(); var bb=inp.nextElementSibling; if(bb&&bb.classList.contains('unit')) bb=bb.nextElementSibling; if(bb&&bb.classList.contains('one-check-btn')) msosCheckOne(bb); } }); }
+    });
+  }
+  var t=null; function later(){ if(t) return; t=setTimeout(function(){ t=null; sync(); },30); }
+  function start(){ sync(); new MutationObserver(later).observe(document.body,{childList:true,subtree:true}); window.addEventListener('popstate', later); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', start); else start();
+  var ps = history.pushState, rs = history.replaceState;
+  history.pushState = function(){ var r=ps.apply(this, arguments); later(); return r; };
+  history.replaceState = function(){ var r=rs.apply(this, arguments); later(); return r; };
+})();
+</script>
+<!--/CHECK-ONE-->
+</body></html>
