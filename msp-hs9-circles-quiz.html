@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circles — Math 9 Quiz</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--gold:#FFD100;--gold-deep:#b8860b;--ink:#1f2937;--dim:#64748b;--accent:#dc2626;--accent-deep:#991b1b;--accent-soft:#fee2e2}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%);color:var(--ink);min-height:100vh;padding:24px 16px;line-height:1.6}
+.container{max-width:900px;margin:0 auto}
+header{text-align:center;margin-bottom:20px}
+.eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:6px}
+.tagline{color:var(--dim);font-size:.98rem;font-style:italic}
+.back-to-unit{display:inline-block;background:var(--gold);color:var(--navy);border:1.5px solid var(--gold-deep);padding:9px 18px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;margin-bottom:16px;box-shadow:0 2px 6px rgba(184,134,11,0.25);cursor:pointer}
+.back-to-unit:hover{background:var(--gold-deep);color:#fff;transform:translateX(-2px)}
+main{background:#fff;border-radius:14px;padding:22px 26px;box-shadow:0 4px 14px rgba(0,0,0,0.07);border-top:5px solid var(--accent)}
+main h2{color:var(--accent-deep);font-size:1.3rem;font-weight:800;margin-bottom:10px}
+.instructions{background:var(--accent-soft);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0 20px;font-size:.95rem}
+ol.qlist{list-style:none;counter-reset:q;padding:0}
+ol.qlist>li{counter-increment:q;position:relative;padding:12px 0 12px 42px;border-bottom:1px dashed #d1d5db}
+ol.qlist>li:last-child{border-bottom:none}
+ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:12px;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.answer-line{display:inline-block;min-width:150px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.reveal-btn{display:inline-block;background:var(--gold);color:var(--navy);border:1px solid var(--gold-deep);padding:10px 18px;border-radius:6px;font-weight:800;font-size:.95rem;cursor:pointer;margin:16px 0 6px}
+.reveal-btn:hover{background:var(--gold-deep);color:#fff}
+.ak{display:none;background:#ecfccb;border-left:5px solid #65a30d;padding:12px 16px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.ak.open{display:block}
+.ak h4{color:#3f6212;margin-bottom:8px;font-size:1rem}
+footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
+@media print{body{background:#fff;padding:0} main{box-shadow:none;border:1px solid #cbd5e1} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans { display:inline-block; min-width:120px; max-width:280px; padding:5px 10px; margin-left:6px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.98rem; font-weight:700; background:#fff; color:#1f2937; transition:all .15s ease; }
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn { display:inline-block; background:#2563eb; color:#fff; border:1px solid #1e40af; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; }
+.check-btn:hover { background:#1e40af; }
+.reset-btn { display:inline-block; background:#f1f5f9; color:#1a2a4a; border:1px solid #cbd5e1; padding:10px 14px; border-radius:6px; font-weight:700; font-size:.9rem; cursor:pointer; margin:16px 4px 6px 0; }
+.reset-btn:hover { background:#e2e8f0; }
+.score { display:inline-block; padding:8px 16px; margin-left:6px; font-weight:800; font-size:1rem; border-radius:6px; background:#f1f5f9; color:#1a2a4a; min-width:140px; text-align:center; vertical-align:middle; }
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+@media print {
+  body { background:#fff !important; padding:0 !important; }
+  main { box-shadow:none !important; border:none !important; }
+  .container { max-width:100% !important; }
+  .check-btn, .reset-btn, .score, .submit-btn, .name-bar, .print-btn, .reveal-btn,
+  #mode-practice, #mode-graded, #mode-badge, .digitally-fillable-note,
+  .back-to-unit, #submit-block, #locked-msg, #prior-attempt-banner,
+  .correction-label, .instructions, footer, .ak, .submit-note, .mode-toolbar, .save-toolbar { display:none !important; }
+  input.ans { border:none !important; border-bottom:1.5px solid #000 !important; background:transparent !important; border-radius:0 !important; color:#000 !important; min-width:100px !important; }
+  h1 { font-size:1.4rem !important; }
+  .tagline { display:none; }
+  header { text-align:left !important; margin-bottom:14px !important; }
+  ol.qlist > li { page-break-inside:avoid; }
+}
+
+.name-bar { background:#f0f9ff; border:1.5px solid #93c5fd; border-radius:8px; padding:10px 14px; margin:10px 0 16px; display:none; gap:12px; flex-wrap:wrap; align-items:center; font-size:.95rem; }
+.name-bar label { font-weight:800; color:#1e40af; }
+.name-bar input { flex:1; min-width:180px; padding:6px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:.95rem; }
+.submit-btn { display:inline-block; background:#059669; color:#fff; border:1px solid #047857; padding:10px 18px; border-radius:6px; font-weight:800; font-size:.95rem; cursor:pointer; margin:16px 8px 6px 0; text-decoration:none; }
+.submit-btn:hover { background:#047857; color:#fff; }
+.submit-note { display:block; font-size:.85rem; color:#64748b; margin:6px 0 0; }
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style></head><body>
+<div class="container">
+<header>
+  <div class="eyebrow">Math 9 · Quiz</div>
+  <h1>⭕ Circles Quiz</h1>
+  <p class="tagline">Every circle fact is a fraction of 360°.</p>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then click <strong>Check Answers</strong>.</p><div class="mode-toolbar" style="margin-top:10px; display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap;">
+  <span style="font-size:.85rem; color:#64748b; font-weight:700;">Mode:</span>
+  <button id="mode-practice" type="button" onclick="setMode('practice')" style="padding:6px 14px; border-radius:6px; border:1.5px solid #16a34a; background:#dcfce7; color:#14532d; font-weight:800; font-size:.85rem; cursor:pointer;">📖 Practice</button>
+  <button id="mode-graded" type="button" onclick="setMode('graded')" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.85rem; cursor:pointer;">📝 Graded</button>
+  <div id="mode-badge" style="display:inline-block; margin-left:6px; padding:4px 12px; border-radius:999px; font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase;"></div>
+  <button type="button" onclick="window.print()" class="print-btn" style="margin-left:12px; padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#e0f2fe; color:#0c4a6e; font-weight:800; font-size:.85rem; cursor:pointer;">🖨 Print Quiz</button>
+</div>
+</header>
+<script>
+
+// --- Randomized graded question pool support ---
+let __practiceQlistHTML = null;
+function savePracticeIfNeeded(){
+  if (__practiceQlistHTML === null) {
+    const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+    if (ol) __practiceQlistHTML = ol.innerHTML;
+  }
+}
+function loadGradedPool(){
+  const el = document.getElementById('graded-pool');
+  if (!el) return null;
+  try { return JSON.parse(el.textContent); } catch(e){ return null; }
+}
+function pickGradedSelection(poolSize, n){
+  const key = 'msp-graded-'+location.pathname.split('/').pop()+'-selection';
+  try { const s = localStorage.getItem(key); if (s) { const arr = JSON.parse(s); if (Array.isArray(arr) && arr.length && arr.every(x=>Number.isInteger(x)&&x<poolSize)) return arr; } } catch(e){}
+  const idx = Array.from({length: poolSize}, (_,i)=>i);
+  for (let i = idx.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [idx[i], idx[j]] = [idx[j], idx[i]]; }
+  const sel = idx.slice(0, Math.min(n, poolSize));
+  try { localStorage.setItem(key, JSON.stringify(sel)); } catch(e){}
+  return sel;
+}
+function escAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function renderGradedQuestions(){
+  const pool = loadGradedPool();
+  if (!pool || !pool.length) return false;
+  const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+  if (!ol) return false;
+  const practiceCount = (__practiceQlistHTML || ol.innerHTML).match(/<li\b/gi);
+  const N = practiceCount ? practiceCount.length : 10;
+  const sel = pickGradedSelection(pool.length, N);
+  ol.innerHTML = sel.map(i => {
+    const item = pool[i];
+    const size = Math.max(6, Math.min(20, (String(item.a).length || 8) + 3));
+    return `<li>${item.q} <input class="ans" data-a="${escAttr(item.a)}" size="${size}"></li>`;
+  }).join('\n');
+  return true;
+}
+function restorePracticeQuestions(){
+  if (__practiceQlistHTML === null) return;
+  const ol = document.getElementById('qlist') || document.querySelector('ol.qlist');
+  if (ol) ol.innerHTML = __practiceQlistHTML;
+}
+
+function applyMode(mode) {
+  savePracticeIfNeeded();
+  document.querySelectorAll('.correction-label').forEach(n=>n.remove());
+  document.querySelectorAll('input.ans').forEach(i=>{i.readOnly=false; i.style.opacity=''; i.style.cursor='';});
+  const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
+  const chkBtn=document.querySelector('.check-btn'); if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='✓ Check Answers';}
+  const resetBtnEl=document.querySelector('.reset-btn'); if(resetBtnEl){resetBtnEl.style.display='';}
+  const priorB = document.getElementById('prior-attempt-banner'); if(priorB) priorB.remove();
+  if (mode === 'graded') { renderGradedQuestions(); } else { restorePracticeQuestions(); }
+  const badge = document.getElementById('mode-badge');
+  const revealBtn = document.getElementById('reveal-ak');
+  const submitBlock = document.getElementById('submit-block');
+  const nameBar = document.querySelector('.name-bar');
+  const btnP = document.getElementById('mode-practice');
+  const btnG = document.getElementById('mode-graded');
+  const active = 'padding:6px 14px; border-radius:6px; font-weight:800; font-size:.85rem; cursor:pointer;';
+  const inactive = 'padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.85rem; cursor:pointer;';
+  if (mode === 'graded') {
+    if (badge) { badge.textContent = '📝 Graded Mode'; badge.style.background='#fee2e2'; badge.style.color='#7f1d1d'; }
+    if (revealBtn) revealBtn.style.display = 'none';
+    const akDiv = document.getElementById('ak'); if (akDiv) akDiv.classList.remove('open');
+    if (submitBlock) submitBlock.style.display = 'block';
+    if (nameBar) nameBar.style.display = 'flex';
+    if (resetBtnEl) resetBtnEl.style.display = 'none';
+    var chkBtnG = document.querySelector('.check-btn');
+    if (chkBtnG) { chkBtnG.textContent = '📧 Submit to Dr. Park'; chkBtnG.style.background = '#059669'; chkBtnG.style.borderColor = '#047857'; chkBtnG.setAttribute('onclick', 'submitToTeacher()'); }
+    if (submitBlock) submitBlock.style.display = 'none';
+    if (btnP) btnP.setAttribute('style', inactive);
+    if (btnG) btnG.setAttribute('style', active + ' border:1.5px solid #dc2626; background:#fee2e2; color:#7f1d1d;');
+  } else {
+    if (badge) { badge.textContent = '📖 Practice Mode'; badge.style.background='#dcfce7'; badge.style.color='#14532d'; }
+    if (revealBtn) revealBtn.style.display = 'inline-block';
+    if (submitBlock) submitBlock.style.display = 'none';
+    if (nameBar) nameBar.style.display = 'none';
+    if (resetBtnEl) resetBtnEl.style.display = 'inline-block';
+    var chkBtnP = document.querySelector('.check-btn');
+    if (chkBtnP) { chkBtnP.textContent = '✓ Check Answers'; chkBtnP.style.background = ''; chkBtnP.style.borderColor = ''; chkBtnP.setAttribute('onclick', 'checkAllQuiz()'); }
+    if (btnP) btnP.setAttribute('style', active + ' border:1.5px solid #16a34a; background:#dcfce7; color:#14532d;');
+    if (btnG) btnG.setAttribute('style', inactive);
+  }
+}
+function setMode(mode) {
+  const url = new URL(location.href);
+  if (mode === 'graded') url.searchParams.set('mode','graded'); else url.searchParams.delete('mode');
+  history.replaceState(null, '', url.toString());
+  applyMode(mode);
+}
+(function(){
+  const params = new URLSearchParams(location.search);
+  const g = params.get('grade');
+  if (g && ['6','7','8'].includes(g)) {
+    const eb = document.getElementById('grade-eyebrow');
+    if (eb) eb.textContent = `Grade ${g} · Quiz`;
+  }
+  const mode = (params.get('mode')||'practice').toLowerCase();
+  applyMode(mode === 'graded' ? 'graded' : 'practice');
+  if (mode === 'graded') {
+    bumpAttemptCount();
+    const state = loadGradedState();
+    if (state && state.checkedAt) {
+      const inputs = document.querySelectorAll('input.ans');
+      inputs.forEach((i,idx)=>{ if(state.answers && state.answers[idx]!=null) i.value = state.answers[idx]; });
+      const nEl = document.getElementById('student-name'); if(nEl && state.name) nEl.value = state.name;
+      const pEl = document.getElementById('student-period'); if(pEl && state.period) pEl.value = state.period;
+      const main = document.querySelector('main');
+      if(main && !document.getElementById('prior-attempt-banner')){
+        const banner = document.createElement('div');
+        banner.id = 'prior-attempt-banner';
+        banner.style.cssText = 'margin:0 0 14px; padding:12px 16px; background:#fee2e2; border-left:5px solid #dc2626; border-radius:6px; font-size:.95rem; color:#7f1d1d; font-weight:700;';
+        const submittedNote = state.submittedAt ? ` and submitted at <strong>${fmtTime(state.submittedAt)}</strong>` : '';
+        banner.innerHTML = `⚠️ This quiz was already checked on <strong>${fmtTime(state.checkedAt)}</strong>${submittedNote}. Your original answers and score are shown below. You cannot retake in graded mode. (Attempts: ${getAttemptCount()})`;
+        main.insertBefore(banner, main.firstChild);
+      }
+      setTimeout(checkAllQuiz, 0);
+    } else {
+      const prevStart = parseInt(localStorage.getItem(storageKey()+'-start')||'0',10);
+      if (prevStart) { __quizStartTime = prevStart; }
+      else { __quizStartTime = Date.now(); try { localStorage.setItem(storageKey()+'-start', String(__quizStartTime)); } catch(e){} }
+      document.querySelectorAll('input.ans').forEach(i=>{
+        i.addEventListener('input', markStart, {once:false});
+      });
+    }
+  }
+})();
+</script>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<main>
+<h2>Quiz — 10 Problems</h2>
+<div class="instructions">Answer all the problems. Show work in your notebook. Click <strong>Show Answer Key</strong> to check.</div>
+<div class="name-bar">
+    <label for="student-name">Your name:</label>
+    <input type="text" id="student-name" placeholder="First Last">
+    <label for="student-period" style="margin-left:6px;">Grade / Class:</label>
+    <input type="text" id="student-period" placeholder="e.g. Math 9" style="max-width:120px;">
+  </div>
+  <ol class="qlist" id="qlist">
+<li>Find the length of a 72° arc in a circle of radius 10 (nearest tenth). <input class="ans" data-a="12.6" size="7"><svg viewBox="0 0 300 220" width="300" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle"><circle cx="150.0" cy="110.0" r="80.0" fill="#f8fafc" stroke="#0369a1" stroke-width="2.5"/><circle cx="150.0" cy="110.0" r="3.0" fill="#0369a1" stroke="#0369a1" stroke-width="0"/><line x1="150.0" y1="110.0" x2="214.7" y2="157.0" stroke="#1d4ed8" stroke-width="2"/><line x1="150.0" y1="110.0" x2="214.7" y2="63.0" stroke="#1d4ed8" stroke-width="2"/><path d="M214.7,157.0 A80,80 0 0 0 214.7,63.0" fill="none" stroke="#dc2626" stroke-width="4"/><text x="180.0" y="114.0" font-size="12" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">72°</text><text x="186.4" y="147.5" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">r = 10</text></svg></li>
+<li>Find the area of a 150° sector in a circle of radius 2 (nearest tenth). <input class="ans" data-a="5.2" size="6"><svg viewBox="0 0 300 220" width="300" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle"><circle cx="150.0" cy="110.0" r="80.0" fill="#f8fafc" stroke="#0369a1" stroke-width="2.5"/><circle cx="150.0" cy="110.0" r="3.0" fill="#0369a1" stroke="#0369a1" stroke-width="0"/><path d="M150,110 L170.7,187.3 A80,80 0 0 0 170.7,32.7 Z" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2"/><path d="M170.7,187.3 A80,80 0 0 0 170.7,32.7" fill="none" stroke="#dc2626" stroke-width="4"/><text x="180.0" y="114.0" font-size="12" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">150°</text><text x="164.4" y="162.6" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">r = 2</text></svg></li>
+<li>An inscribed angle intercepts an arc of 54°. Find the inscribed angle. <input class="ans" data-a="27" size="6"><svg viewBox="0 0 300 220" width="300" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle"><circle cx="150.0" cy="110.0" r="80.0" fill="#f8fafc" stroke="#0369a1" stroke-width="2.5"/><circle cx="150.0" cy="110.0" r="3.0" fill="#0369a1" stroke="#0369a1" stroke-width="0"/><line x1="70.0" y1="110.0" x2="204.6" y2="51.5" stroke="#7c3aed" stroke-width="2.2"/><line x1="70.0" y1="110.0" x2="204.6" y2="168.5" stroke="#7c3aed" stroke-width="2.2"/><path d="M204.6,51.5 A80,80 0 0 1 204.6,168.5" fill="none" stroke="#dc2626" stroke-width="4"/><text x="100.0" y="114.0" font-size="12" font-weight="800" fill="#4c1d95" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">?</text><text x="246.0" y="114.0" font-size="12" font-weight="800" fill="#b91c1c" text-anchor="start" font-family="Segoe UI, Arial, sans-serif">54°</text></svg></li>
+<li>A tangent segment from point P touches a circle of radius 12 at T. The distance from P to the center is 20. Find PT. <input class="ans" data-a="16" size="6"><svg viewBox="0 0 300 220" width="300" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle"><circle cx="150.0" cy="110.0" r="80.0" fill="#f8fafc" stroke="#0369a1" stroke-width="2.5"/><circle cx="150.0" cy="110.0" r="3.0" fill="#0369a1" stroke="#0369a1" stroke-width="0"/><line x1="30.0" y1="190.0" x2="270.0" y2="190.0" stroke="#dc2626" stroke-width="2.2"/><line x1="150.0" y1="110.0" x2="150.0" y2="190.0" stroke="#1d4ed8" stroke-width="2"/><path d="M140,190 v-10 h10" fill="none" stroke="#334155" stroke-width="1.3"/><text x="190.0" y="210.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">PT = ?</text><text x="140.0" y="160.0" font-size="11" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">r = 12</text></svg></li>
+<li>For the circle (x − 6)² + (y − 6)² = 49, find the k (y-coordinate of the center). <input class="ans" data-a="6" size="6"><svg viewBox="0 0 280 280" width="280" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle on grid"><line x1="30.0" y1="12.0" x2="30.0" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="167.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="79.2" y1="12.0" x2="79.2" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="79.2" y="167.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="128.3" y1="12.0" x2="128.3" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><line x1="177.5" y1="12.0" x2="177.5" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="177.5" y="167.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="226.7" y1="12.0" x2="226.7" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.7" y="167.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="256.0" x2="266.0" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="124.3" y="259.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="205.2" x2="266.0" y2="205.2" stroke="#e2e8f0" stroke-width="1"/><text x="124.3" y="208.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="154.3" x2="266.0" y2="154.3" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="103.5" x2="266.0" y2="103.5" stroke="#e2e8f0" stroke-width="1"/><text x="124.3" y="106.5" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="52.7" x2="266.0" y2="52.7" stroke="#e2e8f0" stroke-width="1"/><text x="124.3" y="55.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="154.3" x2="274.0" y2="154.3" stroke="#334155" stroke-width="1.5"/><polygon points="274.0,154.3 265.9,158.2 265.9,150.4" fill="#334155"/><line x1="128.3" y1="256.0" x2="128.3" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="128.3,6.0 132.2,14.1 124.4,14.1" fill="#334155"/><polyline points="256.2,93.3 255.8,85.9 254.7,78.5 252.8,71.3 250.2,64.4 246.9,57.8 243.0,51.5 238.5,45.7 233.4,40.4 227.8,35.8 221.8,31.7 215.3,28.3 208.6,25.6 201.6,23.7 194.5,22.6 187.3,22.2 180.1,22.6 173.0,23.7 166.1,25.6 159.3,28.3 152.9,31.7 146.9,35.8 141.3,40.4 136.2,45.7 131.6,51.5 127.7,57.8 124.5,64.4 121.9,71.3 120.0,78.5 118.9,85.9 118.5,93.3 118.9,100.8 120.0,108.1 121.9,115.3 124.5,122.3 127.7,128.9 131.6,135.2 136.2,141.0 141.3,146.2 146.9,150.9 152.9,155.0 159.3,158.3 166.1,161.0 173.0,162.9 180.1,164.1 187.3,164.5 194.5,164.1 201.6,162.9 208.6,161.0 215.3,158.3 221.8,155.0 227.8,150.9 233.4,146.2 238.5,141.0 243.0,135.2 246.9,128.9 250.2,122.3 252.8,115.3 254.7,108.1 255.8,100.8 256.2,93.3" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><circle cx="187.3" cy="93.3" r="4.5" fill="#dc2626" stroke="#dc2626" stroke-width="2"/><text x="194.3" y="86.3" font-size="10" font-weight="800" fill="#dc2626" text-anchor="start" font-family="Segoe UI, Arial, sans-serif">center</text></svg></li>
+<li>Find the length of a 210° arc in a circle of radius 9 (nearest tenth). <input class="ans" data-a="33" size="6"><svg viewBox="0 0 300 220" width="300" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle"><circle cx="150.0" cy="110.0" r="80.0" fill="#f8fafc" stroke="#0369a1" stroke-width="2.5"/><circle cx="150.0" cy="110.0" r="3.0" fill="#0369a1" stroke="#0369a1" stroke-width="0"/><line x1="150.0" y1="110.0" x2="129.3" y2="187.3" stroke="#1d4ed8" stroke-width="2"/><line x1="150.0" y1="110.0" x2="129.3" y2="32.7" stroke="#1d4ed8" stroke-width="2"/><path d="M129.3,187.3 A80,80 0 1 0 129.3,32.7" fill="none" stroke="#dc2626" stroke-width="4"/><text x="180.0" y="114.0" font-size="12" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">210°</text><text x="143.6" y="162.6" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">r = 9</text></svg></li>
+<li>Find the area of a 180° sector in a circle of radius 7 (nearest tenth). <input class="ans" data-a="77" size="6"><svg viewBox="0 0 300 220" width="300" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle"><circle cx="150.0" cy="110.0" r="80.0" fill="#f8fafc" stroke="#0369a1" stroke-width="2.5"/><circle cx="150.0" cy="110.0" r="3.0" fill="#0369a1" stroke="#0369a1" stroke-width="0"/><path d="M150,110 L150.0,190.0 A80,80 0 0 0 150.0,30.0 Z" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2"/><path d="M150.0,190.0 A80,80 0 0 0 150.0,30.0" fill="none" stroke="#dc2626" stroke-width="4"/><text x="180.0" y="114.0" font-size="12" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">180°</text><text x="154.0" y="164.0" font-size="12" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">r = 7</text></svg></li>
+<li>An inscribed angle intercepts an arc of 154°. Find the inscribed angle. <input class="ans" data-a="77" size="6"><svg viewBox="0 0 300 220" width="300" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle"><circle cx="150.0" cy="110.0" r="80.0" fill="#f8fafc" stroke="#0369a1" stroke-width="2.5"/><circle cx="150.0" cy="110.0" r="3.0" fill="#0369a1" stroke="#0369a1" stroke-width="0"/><line x1="70.0" y1="110.0" x2="140.3" y2="30.6" stroke="#7c3aed" stroke-width="2.2"/><line x1="70.0" y1="110.0" x2="140.3" y2="189.4" stroke="#7c3aed" stroke-width="2.2"/><path d="M140.3,30.6 A80,80 0 0 1 140.3,189.4" fill="none" stroke="#dc2626" stroke-width="4"/><text x="100.0" y="114.0" font-size="12" font-weight="800" fill="#4c1d95" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">?</text><text x="246.0" y="114.0" font-size="12" font-weight="800" fill="#b91c1c" text-anchor="start" font-family="Segoe UI, Arial, sans-serif">154°</text></svg></li>
+<li>A tangent segment from point P touches a circle of radius 3 at T. The distance from P to the center is 5. Find PT. <input class="ans" data-a="4" size="6"><svg viewBox="0 0 300 220" width="300" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle"><circle cx="150.0" cy="110.0" r="80.0" fill="#f8fafc" stroke="#0369a1" stroke-width="2.5"/><circle cx="150.0" cy="110.0" r="3.0" fill="#0369a1" stroke="#0369a1" stroke-width="0"/><line x1="30.0" y1="190.0" x2="270.0" y2="190.0" stroke="#dc2626" stroke-width="2.2"/><line x1="150.0" y1="110.0" x2="150.0" y2="190.0" stroke="#1d4ed8" stroke-width="2"/><path d="M140,190 v-10 h10" fill="none" stroke="#334155" stroke-width="1.3"/><text x="190.0" y="210.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">PT = ?</text><text x="140.0" y="160.0" font-size="11" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">r = 3</text></svg></li>
+<li>For the circle (x + 3)² + (y − 3)² = 9, find the radius. <input class="ans" data-a="3" size="6"><svg viewBox="0 0 280 280" width="280" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="circle on grid"><line x1="30.0" y1="12.0" x2="30.0" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="53.6" y1="12.0" x2="53.6" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="53.6" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="77.2" y1="12.0" x2="77.2" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="77.2" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="100.8" y1="12.0" x2="100.8" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="100.8" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="124.4" y1="12.0" x2="124.4" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="124.4" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="148.0" y1="12.0" x2="148.0" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><line x1="171.6" y1="12.0" x2="171.6" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="171.6" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="195.2" y1="12.0" x2="195.2" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="195.2" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="218.8" y1="12.0" x2="218.8" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="218.8" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="242.4" y1="12.0" x2="242.4" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="242.4" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="266.0" y1="12.0" x2="266.0" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="266.0" y="147.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="256.0" x2="266.0" y2="256.0" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="259.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="231.6" x2="266.0" y2="231.6" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="234.6" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="30.0" y1="207.2" x2="266.0" y2="207.2" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="210.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="30.0" y1="182.8" x2="266.0" y2="182.8" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="185.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="30.0" y1="158.4" x2="266.0" y2="158.4" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="161.4" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="30.0" y1="134.0" x2="266.0" y2="134.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="109.6" x2="266.0" y2="109.6" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="112.6" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="30.0" y1="85.2" x2="266.0" y2="85.2" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="88.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="30.0" y1="60.8" x2="266.0" y2="60.8" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="63.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="36.4" x2="266.0" y2="36.4" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="39.4" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="12.0" x2="266.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="144.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="134.0" x2="274.0" y2="134.0" stroke="#334155" stroke-width="1.5"/><polygon points="274.0,134.0 265.9,137.9 265.9,130.1" fill="#334155"/><line x1="148.0" y1="256.0" x2="148.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="148.0,6.0 151.9,14.1 144.1,14.1" fill="#334155"/><polyline points="148.0,97.4 147.8,93.6 147.2,89.8 146.3,86.1 144.9,82.5 143.3,79.1 141.2,75.9 138.9,72.9 136.3,70.2 133.4,67.8 130.3,65.7 127.0,64.0 123.5,62.6 120.0,61.6 116.3,61.0 112.6,60.8 108.9,61.0 105.2,61.6 101.7,62.6 98.2,64.0 94.9,65.7 91.8,67.8 88.9,70.2 86.3,72.9 84.0,75.9 81.9,79.1 80.3,82.5 78.9,86.1 78.0,89.8 77.4,93.6 77.2,97.4 77.4,101.2 78.0,105.0 78.9,108.7 80.3,112.3 81.9,115.7 84.0,118.9 86.3,121.9 88.9,124.6 91.8,127.0 94.9,129.1 98.2,130.8 101.7,132.2 105.2,133.2 108.9,133.8 112.6,134.0 116.3,133.8 120.0,133.2 123.5,132.2 127.0,130.8 130.3,129.1 133.4,127.0 136.3,124.6 138.9,121.9 141.2,118.9 143.3,115.7 144.9,112.3 146.3,108.7 147.2,105.0 147.8,101.2 148.0,97.4" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><circle cx="112.6" cy="97.4" r="4.5" fill="#dc2626" stroke="#dc2626" stroke-width="2"/><text x="119.6" y="90.4" font-size="10" font-weight="800" fill="#dc2626" text-anchor="start" font-family="Segoe UI, Arial, sans-serif">center</text></svg></li>
+</ol>
+  <script id="graded-pool" type="application/json">[{"q": "Find the length of a 210° arc in a circle of radius 6 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"129.3\" y2=\"187.3\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"129.3\" y2=\"32.7\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M129.3,187.3 A80,80 0 1 0 129.3,32.7\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">210°<\/text><text x=\"143.6\" y=\"162.6\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 6<\/text><\/svg>", "a": "22"}, {"q": "Find the area of a 45° sector in a circle of radius 10 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><path d=\"M150,110 L223.9,140.6 A80,80 0 0 0 223.9,79.4 Z\" fill=\"#bfdbfe\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M223.9,140.6 A80,80 0 0 0 223.9,79.4\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">45°<\/text><text x=\"191.0\" y=\"139.3\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 10<\/text><\/svg>", "a": "39.3"}, {"q": "An inscribed angle measures 66°. Find its intercepted arc.<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"182.5\" y2=\"36.9\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"182.5\" y2=\"183.1\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><path d=\"M182.5,36.9 A80,80 0 0 1 182.5,183.1\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"100.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#4c1d95\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">66°<\/text><text x=\"246.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#b91c1c\" text-anchor=\"start\" font-family=\"Segoe UI, Arial, sans-serif\">?<\/text><\/svg>", "a": "132"}, {"q": "A tangent segment from point P touches a circle of radius 8 at T. The distance from P to the center is 17. Find PT.<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"30.0\" y1=\"190.0\" x2=\"270.0\" y2=\"190.0\" stroke=\"#dc2626\" stroke-width=\"2.2\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"150.0\" y2=\"190.0\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M140,190 v-10 h10\" fill=\"none\" stroke=\"#334155\" stroke-width=\"1.3\"/><text x=\"190.0\" y=\"210.0\" font-size=\"11\" font-weight=\"800\" fill=\"#dc2626\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">PT = ?<\/text><text x=\"140.0\" y=\"160.0\" font-size=\"11\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 8<\/text><\/svg>", "a": "15"}, {"q": "For the circle (x + 2)² + (y − 4)² = 49, find the h (x-coordinate of the center).<svg viewBox=\"0 0 280 280\" width=\"280\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle on grid\"><line x1=\"30.0\" y1=\"12.0\" x2=\"30.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"30.0\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"53.6\" y1=\"12.0\" x2=\"53.6\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"53.6\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−8<\/text><line x1=\"77.2\" y1=\"12.0\" x2=\"77.2\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"77.2\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"100.8\" y1=\"12.0\" x2=\"100.8\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"100.8\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"124.4\" y1=\"12.0\" x2=\"124.4\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"124.4\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"148.0\" y1=\"12.0\" x2=\"148.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"171.6\" y1=\"12.0\" x2=\"171.6\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"171.6\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"195.2\" y1=\"12.0\" x2=\"195.2\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"195.2\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"218.8\" y1=\"12.0\" x2=\"218.8\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"218.8\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"242.4\" y1=\"12.0\" x2=\"242.4\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"242.4\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">8<\/text><line x1=\"266.0\" y1=\"12.0\" x2=\"266.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"266.0\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"256.0\" x2=\"266.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"259.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"30.0\" y1=\"231.6\" x2=\"266.0\" y2=\"231.6\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"234.6\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−8<\/text><line x1=\"30.0\" y1=\"207.2\" x2=\"266.0\" y2=\"207.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"210.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"30.0\" y1=\"182.8\" x2=\"266.0\" y2=\"182.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"185.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"30.0\" y1=\"158.4\" x2=\"266.0\" y2=\"158.4\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"161.4\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"30.0\" y1=\"134.0\" x2=\"266.0\" y2=\"134.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"30.0\" y1=\"109.6\" x2=\"266.0\" y2=\"109.6\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"112.6\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"30.0\" y1=\"85.2\" x2=\"266.0\" y2=\"85.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"88.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"30.0\" y1=\"60.8\" x2=\"266.0\" y2=\"60.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"63.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"30.0\" y1=\"36.4\" x2=\"266.0\" y2=\"36.4\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"39.4\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">8<\/text><line x1=\"30.0\" y1=\"12.0\" x2=\"266.0\" y2=\"12.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"15.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"134.0\" x2=\"274.0\" y2=\"134.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"274.0,134.0 265.9,137.9 265.9,130.1\" fill=\"#334155\"/><line x1=\"148.0\" y1=\"256.0\" x2=\"148.0\" y2=\"6.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"148.0,6.0 151.9,14.1 144.1,14.1\" fill=\"#334155\"/><polyline points=\"207.0,85.2 206.5,76.3 205.2,67.4 203.0,58.8 199.9,50.5 195.9,42.5 191.2,35.0 185.8,28.1 179.7,21.7 173.0,16.1 165.7,11.2 158.0,7.2 149.9,4.0 141.6,1.7 133.0,0.3 124.4,-0.2 115.8,0.3 107.2,1.7 98.9,4.0 90.8,7.2 83.1,11.2 75.8,16.1 69.1,21.7 63.0,28.1 57.6,35.0 52.9,42.5 48.9,50.5 45.8,58.8 43.6,67.4 42.3,76.3 41.8,85.2 42.3,94.1 43.6,103.0 45.8,111.6 48.9,119.9 52.9,127.9 57.6,135.4 63.0,142.3 69.1,148.7 75.8,154.3 83.1,159.2 90.8,163.2 98.9,166.4 107.2,168.7 115.8,170.1 124.4,170.6 133.0,170.1 141.6,168.7 149.9,166.4 158.0,163.2 165.7,159.2 173.0,154.3 179.7,148.7 185.8,142.3 191.2,135.4 195.9,127.9 199.9,119.9 203.0,111.6 205.2,103.0 206.5,94.1 207.0,85.2\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><circle cx=\"124.4\" cy=\"85.2\" r=\"4.5\" fill=\"#dc2626\" stroke=\"#dc2626\" stroke-width=\"2\"/><text x=\"131.4\" y=\"78.2\" font-size=\"10\" font-weight=\"800\" fill=\"#dc2626\" text-anchor=\"start\" font-family=\"Segoe UI, Arial, sans-serif\">center<\/text><\/svg>", "a": "-2"}, {"q": "Find the length of a 40° arc in a circle of radius 15 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"225.2\" y2=\"137.4\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"225.2\" y2=\"82.6\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M225.2,137.4 A80,80 0 0 0 225.2,82.6\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">40°<\/text><text x=\"191.6\" y=\"137.7\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 15<\/text><\/svg>", "a": "10.5"}, {"q": "Find the area of a 150° sector in a circle of radius 3 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><path d=\"M150,110 L170.7,187.3 A80,80 0 0 0 170.7,32.7 Z\" fill=\"#bfdbfe\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M170.7,187.3 A80,80 0 0 0 170.7,32.7\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">150°<\/text><text x=\"164.4\" y=\"162.6\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 3<\/text><\/svg>", "a": "11.8"}, {"q": "An inscribed angle measures 76°. Find its intercepted arc.<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"169.4\" y2=\"32.4\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"169.4\" y2=\"187.6\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><path d=\"M169.4,32.4 A80,80 0 0 1 169.4,187.6\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"100.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#4c1d95\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">76°<\/text><text x=\"246.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#b91c1c\" text-anchor=\"start\" font-family=\"Segoe UI, Arial, sans-serif\">?<\/text><\/svg>", "a": "152"}, {"q": "A tangent segment from point P touches a circle of radius 6 at T. The distance from P to the center is 10. Find PT.<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"30.0\" y1=\"190.0\" x2=\"270.0\" y2=\"190.0\" stroke=\"#dc2626\" stroke-width=\"2.2\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"150.0\" y2=\"190.0\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M140,190 v-10 h10\" fill=\"none\" stroke=\"#334155\" stroke-width=\"1.3\"/><text x=\"190.0\" y=\"210.0\" font-size=\"11\" font-weight=\"800\" fill=\"#dc2626\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">PT = ?<\/text><text x=\"140.0\" y=\"160.0\" font-size=\"11\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 6<\/text><\/svg>", "a": "8"}, {"q": "For the circle (x + 4)² + (y − 0)² = 1, find the k (y-coordinate of the center).<svg viewBox=\"0 0 280 280\" width=\"280\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle on grid\"><line x1=\"30.0\" y1=\"12.0\" x2=\"30.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"30.0\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"53.6\" y1=\"12.0\" x2=\"53.6\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"53.6\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−8<\/text><line x1=\"77.2\" y1=\"12.0\" x2=\"77.2\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"77.2\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"100.8\" y1=\"12.0\" x2=\"100.8\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"100.8\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"124.4\" y1=\"12.0\" x2=\"124.4\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"124.4\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"148.0\" y1=\"12.0\" x2=\"148.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"171.6\" y1=\"12.0\" x2=\"171.6\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"171.6\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"195.2\" y1=\"12.0\" x2=\"195.2\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"195.2\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"218.8\" y1=\"12.0\" x2=\"218.8\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"218.8\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"242.4\" y1=\"12.0\" x2=\"242.4\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"242.4\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">8<\/text><line x1=\"266.0\" y1=\"12.0\" x2=\"266.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"266.0\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"256.0\" x2=\"266.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"259.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"30.0\" y1=\"231.6\" x2=\"266.0\" y2=\"231.6\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"234.6\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−8<\/text><line x1=\"30.0\" y1=\"207.2\" x2=\"266.0\" y2=\"207.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"210.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"30.0\" y1=\"182.8\" x2=\"266.0\" y2=\"182.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"185.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"30.0\" y1=\"158.4\" x2=\"266.0\" y2=\"158.4\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"161.4\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"30.0\" y1=\"134.0\" x2=\"266.0\" y2=\"134.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"30.0\" y1=\"109.6\" x2=\"266.0\" y2=\"109.6\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"112.6\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"30.0\" y1=\"85.2\" x2=\"266.0\" y2=\"85.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"88.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"30.0\" y1=\"60.8\" x2=\"266.0\" y2=\"60.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"63.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"30.0\" y1=\"36.4\" x2=\"266.0\" y2=\"36.4\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"39.4\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">8<\/text><line x1=\"30.0\" y1=\"12.0\" x2=\"266.0\" y2=\"12.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"15.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"134.0\" x2=\"274.0\" y2=\"134.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"274.0,134.0 265.9,137.9 265.9,130.1\" fill=\"#334155\"/><line x1=\"148.0\" y1=\"256.0\" x2=\"148.0\" y2=\"6.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"148.0,6.0 151.9,14.1 144.1,14.1\" fill=\"#334155\"/><polyline points=\"112.6,134.0 112.5,132.7 112.3,131.5 112.0,130.2 111.6,129.0 111.0,127.9 110.3,126.8 109.6,125.8 108.7,124.9 107.7,124.1 106.7,123.4 105.6,122.9 104.4,122.4 103.3,122.1 102.0,121.9 100.8,121.8 99.6,121.9 98.3,122.1 97.2,122.4 96.0,122.9 94.9,123.4 93.9,124.1 92.9,124.9 92.0,125.8 91.3,126.8 90.6,127.9 90.0,129.0 89.6,130.2 89.3,131.5 89.1,132.7 89.0,134.0 89.1,135.3 89.3,136.5 89.6,137.8 90.0,139.0 90.6,140.1 91.3,141.2 92.0,142.2 92.9,143.1 93.9,143.9 94.9,144.6 96.0,145.1 97.2,145.6 98.3,145.9 99.6,146.1 100.8,146.2 102.0,146.1 103.3,145.9 104.4,145.6 105.6,145.1 106.7,144.6 107.7,143.9 108.7,143.1 109.6,142.2 110.3,141.2 111.0,140.1 111.6,139.0 112.0,137.8 112.3,136.5 112.5,135.3 112.6,134.0\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><circle cx=\"100.8\" cy=\"134.0\" r=\"4.5\" fill=\"#dc2626\" stroke=\"#dc2626\" stroke-width=\"2\"/><text x=\"107.8\" y=\"127.0\" font-size=\"10\" font-weight=\"800\" fill=\"#dc2626\" text-anchor=\"start\" font-family=\"Segoe UI, Arial, sans-serif\">center<\/text><\/svg>", "a": "0"}, {"q": "Find the length of a 210° arc in a circle of radius 15 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"129.3\" y2=\"187.3\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"129.3\" y2=\"32.7\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M129.3,187.3 A80,80 0 1 0 129.3,32.7\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">210°<\/text><text x=\"143.6\" y=\"162.6\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 15<\/text><\/svg>", "a": "55"}, {"q": "Find the area of a 90° sector in a circle of radius 12 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><path d=\"M150,110 L206.6,166.6 A80,80 0 0 0 206.6,53.4 Z\" fill=\"#bfdbfe\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M206.6,166.6 A80,80 0 0 0 206.6,53.4\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">90°<\/text><text x=\"182.3\" y=\"152.3\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 12<\/text><\/svg>", "a": "113.1"}, {"q": "An inscribed angle measures 65°. Find its intercepted arc.<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"183.8\" y2=\"37.5\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"183.8\" y2=\"182.5\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><path d=\"M183.8,37.5 A80,80 0 0 1 183.8,182.5\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"100.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#4c1d95\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">65°<\/text><text x=\"246.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#b91c1c\" text-anchor=\"start\" font-family=\"Segoe UI, Arial, sans-serif\">?<\/text><\/svg>", "a": "130"}, {"q": "For the circle (x − 4)² + (y + 3)² = 9, find the radius.<svg viewBox=\"0 0 280 280\" width=\"280\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle on grid\"><line x1=\"30.0\" y1=\"12.0\" x2=\"30.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"30.0\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"53.6\" y1=\"12.0\" x2=\"53.6\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"53.6\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−8<\/text><line x1=\"77.2\" y1=\"12.0\" x2=\"77.2\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"77.2\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"100.8\" y1=\"12.0\" x2=\"100.8\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"100.8\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"124.4\" y1=\"12.0\" x2=\"124.4\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"124.4\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"148.0\" y1=\"12.0\" x2=\"148.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"171.6\" y1=\"12.0\" x2=\"171.6\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"171.6\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"195.2\" y1=\"12.0\" x2=\"195.2\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"195.2\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"218.8\" y1=\"12.0\" x2=\"218.8\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"218.8\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"242.4\" y1=\"12.0\" x2=\"242.4\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"242.4\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">8<\/text><line x1=\"266.0\" y1=\"12.0\" x2=\"266.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"266.0\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"256.0\" x2=\"266.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"259.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"30.0\" y1=\"231.6\" x2=\"266.0\" y2=\"231.6\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"234.6\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−8<\/text><line x1=\"30.0\" y1=\"207.2\" x2=\"266.0\" y2=\"207.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"210.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"30.0\" y1=\"182.8\" x2=\"266.0\" y2=\"182.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"185.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"30.0\" y1=\"158.4\" x2=\"266.0\" y2=\"158.4\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"161.4\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"30.0\" y1=\"134.0\" x2=\"266.0\" y2=\"134.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"30.0\" y1=\"109.6\" x2=\"266.0\" y2=\"109.6\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"112.6\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"30.0\" y1=\"85.2\" x2=\"266.0\" y2=\"85.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"88.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"30.0\" y1=\"60.8\" x2=\"266.0\" y2=\"60.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"63.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"30.0\" y1=\"36.4\" x2=\"266.0\" y2=\"36.4\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"39.4\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">8<\/text><line x1=\"30.0\" y1=\"12.0\" x2=\"266.0\" y2=\"12.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"15.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"134.0\" x2=\"274.0\" y2=\"134.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"274.0,134.0 265.9,137.9 265.9,130.1\" fill=\"#334155\"/><line x1=\"148.0\" y1=\"256.0\" x2=\"148.0\" y2=\"6.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"148.0,6.0 151.9,14.1 144.1,14.1\" fill=\"#334155\"/><polyline points=\"230.6,170.6 230.4,166.8 229.8,163.0 228.9,159.3 227.5,155.7 225.9,152.3 223.8,149.1 221.5,146.1 218.9,143.4 216.0,141.0 212.9,138.9 209.6,137.2 206.1,135.8 202.6,134.8 198.9,134.2 195.2,134.0 191.5,134.2 187.8,134.8 184.3,135.8 180.8,137.2 177.5,138.9 174.4,141.0 171.5,143.4 168.9,146.1 166.6,149.1 164.5,152.3 162.9,155.7 161.5,159.3 160.6,163.0 160.0,166.8 159.8,170.6 160.0,174.4 160.6,178.2 161.5,181.9 162.9,185.5 164.5,188.9 166.6,192.1 168.9,195.1 171.5,197.8 174.4,200.2 177.5,202.3 180.8,204.0 184.3,205.4 187.8,206.4 191.5,207.0 195.2,207.2 198.9,207.0 202.6,206.4 206.1,205.4 209.6,204.0 212.9,202.3 216.0,200.2 218.9,197.8 221.5,195.1 223.8,192.1 225.9,188.9 227.5,185.5 228.9,181.9 229.8,178.2 230.4,174.4 230.6,170.6\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><circle cx=\"195.2\" cy=\"170.6\" r=\"4.5\" fill=\"#dc2626\" stroke=\"#dc2626\" stroke-width=\"2\"/><text x=\"202.2\" y=\"163.6\" font-size=\"10\" font-weight=\"800\" fill=\"#dc2626\" text-anchor=\"start\" font-family=\"Segoe UI, Arial, sans-serif\">center<\/text><\/svg>", "a": "3"}, {"q": "Find the length of a 135° arc in a circle of radius 14 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"180.6\" y2=\"183.9\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"180.6\" y2=\"36.1\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M180.6,183.9 A80,80 0 0 0 180.6,36.1\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">135°<\/text><text x=\"169.3\" y=\"161.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 14<\/text><\/svg>", "a": "33"}, {"q": "Find the area of a 180° sector in a circle of radius 9 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><path d=\"M150,110 L150.0,190.0 A80,80 0 0 0 150.0,30.0 Z\" fill=\"#bfdbfe\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M150.0,190.0 A80,80 0 0 0 150.0,30.0\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">180°<\/text><text x=\"154.0\" y=\"164.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 9<\/text><\/svg>", "a": "127.2"}, {"q": "An inscribed angle measures 15°. Find its intercepted arc.<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"227.3\" y2=\"89.3\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><line x1=\"70.0\" y1=\"110.0\" x2=\"227.3\" y2=\"130.7\" stroke=\"#7c3aed\" stroke-width=\"2.2\"/><path d=\"M227.3,89.3 A80,80 0 0 1 227.3,130.7\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"100.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#4c1d95\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">15°<\/text><text x=\"246.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#b91c1c\" text-anchor=\"start\" font-family=\"Segoe UI, Arial, sans-serif\">?<\/text><\/svg>", "a": "30"}, {"q": "A tangent segment from point P touches a circle of radius 5 at T. The distance from P to the center is 13. Find PT.<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"30.0\" y1=\"190.0\" x2=\"270.0\" y2=\"190.0\" stroke=\"#dc2626\" stroke-width=\"2.2\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"150.0\" y2=\"190.0\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M140,190 v-10 h10\" fill=\"none\" stroke=\"#334155\" stroke-width=\"1.3\"/><text x=\"190.0\" y=\"210.0\" font-size=\"11\" font-weight=\"800\" fill=\"#dc2626\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">PT = ?<\/text><text x=\"140.0\" y=\"160.0\" font-size=\"11\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 5<\/text><\/svg>", "a": "12"}, {"q": "For the circle (x − 2)² + (y − 6)² = 1, find the h (x-coordinate of the center).<svg viewBox=\"0 0 280 280\" width=\"280\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle on grid\"><line x1=\"30.0\" y1=\"12.0\" x2=\"30.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"30.0\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"53.6\" y1=\"12.0\" x2=\"53.6\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"53.6\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−8<\/text><line x1=\"77.2\" y1=\"12.0\" x2=\"77.2\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"77.2\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"100.8\" y1=\"12.0\" x2=\"100.8\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"100.8\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"124.4\" y1=\"12.0\" x2=\"124.4\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"124.4\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"148.0\" y1=\"12.0\" x2=\"148.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"171.6\" y1=\"12.0\" x2=\"171.6\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"171.6\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"195.2\" y1=\"12.0\" x2=\"195.2\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"195.2\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"218.8\" y1=\"12.0\" x2=\"218.8\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"218.8\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"242.4\" y1=\"12.0\" x2=\"242.4\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"242.4\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">8<\/text><line x1=\"266.0\" y1=\"12.0\" x2=\"266.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"266.0\" y=\"147.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"256.0\" x2=\"266.0\" y2=\"256.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"259.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−10<\/text><line x1=\"30.0\" y1=\"231.6\" x2=\"266.0\" y2=\"231.6\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"234.6\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−8<\/text><line x1=\"30.0\" y1=\"207.2\" x2=\"266.0\" y2=\"207.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"210.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−6<\/text><line x1=\"30.0\" y1=\"182.8\" x2=\"266.0\" y2=\"182.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"185.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−4<\/text><line x1=\"30.0\" y1=\"158.4\" x2=\"266.0\" y2=\"158.4\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"161.4\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">−2<\/text><line x1=\"30.0\" y1=\"134.0\" x2=\"266.0\" y2=\"134.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><line x1=\"30.0\" y1=\"109.6\" x2=\"266.0\" y2=\"109.6\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"112.6\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">2<\/text><line x1=\"30.0\" y1=\"85.2\" x2=\"266.0\" y2=\"85.2\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"88.2\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">4<\/text><line x1=\"30.0\" y1=\"60.8\" x2=\"266.0\" y2=\"60.8\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"63.8\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">6<\/text><line x1=\"30.0\" y1=\"36.4\" x2=\"266.0\" y2=\"36.4\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"39.4\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">8<\/text><line x1=\"30.0\" y1=\"12.0\" x2=\"266.0\" y2=\"12.0\" stroke=\"#e2e8f0\" stroke-width=\"1\"/><text x=\"144.0\" y=\"15.0\" font-size=\"9\" font-weight=\"500\" fill=\"#64748b\" text-anchor=\"end\" font-family=\"Segoe UI, Arial, sans-serif\">10<\/text><line x1=\"30.0\" y1=\"134.0\" x2=\"274.0\" y2=\"134.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"274.0,134.0 265.9,137.9 265.9,130.1\" fill=\"#334155\"/><line x1=\"148.0\" y1=\"256.0\" x2=\"148.0\" y2=\"6.0\" stroke=\"#334155\" stroke-width=\"1.5\"/><polygon points=\"148.0,6.0 151.9,14.1 144.1,14.1\" fill=\"#334155\"/><polyline points=\"183.4,60.8 183.3,59.5 183.1,58.3 182.8,57.0 182.4,55.8 181.8,54.7 181.1,53.6 180.4,52.6 179.5,51.7 178.5,50.9 177.5,50.2 176.4,49.7 175.2,49.2 174.1,48.9 172.8,48.7 171.6,48.6 170.4,48.7 169.1,48.9 168.0,49.2 166.8,49.7 165.7,50.2 164.7,50.9 163.7,51.7 162.8,52.6 162.1,53.6 161.4,54.7 160.8,55.8 160.4,57.0 160.1,58.3 159.9,59.5 159.8,60.8 159.9,62.1 160.1,63.3 160.4,64.6 160.8,65.8 161.4,66.9 162.1,68.0 162.8,69.0 163.7,69.9 164.7,70.7 165.7,71.4 166.8,71.9 168.0,72.4 169.1,72.7 170.4,72.9 171.6,73.0 172.8,72.9 174.1,72.7 175.2,72.4 176.4,71.9 177.5,71.4 178.5,70.7 179.5,69.9 180.4,69.0 181.1,68.0 181.8,66.9 182.4,65.8 182.8,64.6 183.1,63.3 183.3,62.1 183.4,60.8\" fill=\"none\" stroke=\"#2563eb\" stroke-width=\"2.5\" stroke-linejoin=\"round\"/><circle cx=\"171.6\" cy=\"60.8\" r=\"4.5\" fill=\"#dc2626\" stroke=\"#dc2626\" stroke-width=\"2\"/><text x=\"178.6\" y=\"53.8\" font-size=\"10\" font-weight=\"800\" fill=\"#dc2626\" text-anchor=\"start\" font-family=\"Segoe UI, Arial, sans-serif\">center<\/text><\/svg>", "a": "2"}, {"q": "Find the length of a 40° arc in a circle of radius 8 (nearest tenth).<svg viewBox=\"0 0 300 220\" width=\"300\" style=\"max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px\" role=\"img\" aria-label=\"circle\"><circle cx=\"150.0\" cy=\"110.0\" r=\"80.0\" fill=\"#f8fafc\" stroke=\"#0369a1\" stroke-width=\"2.5\"/><circle cx=\"150.0\" cy=\"110.0\" r=\"3.0\" fill=\"#0369a1\" stroke=\"#0369a1\" stroke-width=\"0\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"225.2\" y2=\"137.4\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><line x1=\"150.0\" y1=\"110.0\" x2=\"225.2\" y2=\"82.6\" stroke=\"#1d4ed8\" stroke-width=\"2\"/><path d=\"M225.2,137.4 A80,80 0 0 0 225.2,82.6\" fill=\"none\" stroke=\"#dc2626\" stroke-width=\"4\"/><text x=\"180.0\" y=\"114.0\" font-size=\"12\" font-weight=\"800\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">40°<\/text><text x=\"191.6\" y=\"137.7\" font-size=\"12\" font-weight=\"800\" fill=\"#1d4ed8\" text-anchor=\"middle\" font-family=\"Segoe UI, Arial, sans-serif\">r = 8<\/text><\/svg>", "a": "5.6"}]</script>
+<!-- Save/Load Answers toolbar (hidden in graded mode) -->
+<div class="save-toolbar" id="save-toolbar" style="display:flex; gap:8px; justify-content:center; align-items:center; flex-wrap:wrap; margin:14px auto; padding:10px 14px; background:#ecfeff; border:1.5px solid #0891b2; border-radius:10px; max-width:720px;">
+  <span style="font-size:.85rem; color:#0c4a6e; font-weight:800;">📝 Auto-saved in this browser.</span>
+  <button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">💾 Save Answers</button>
+  <label class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer;">📁 Load Answers<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button type="button" onclick="clearAllAnswers()" class="save-btn" style="padding:6px 14px; border-radius:6px; border:1.5px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.82rem; cursor:pointer;">↻ Clear All</button>
+  <span id="save-status" style="font-size:.8rem; color:#0c4a6e; font-style:italic;"></span>
+</div>
+
+<div style="margin:14px 0 4px;"><button class="check-btn" onclick="checkAllQuiz()">✓ Check Answers</button><button class="reset-btn" onclick="resetQuiz()">↺ Clear</button><span class="score" id="score-quiz">—</span></div>
+  <div id="submit-block" style="margin:8px 0 4px; display:none;">
+    <button class="submit-btn" onclick="submitToTeacher()">📧 Submit to Dr. Park</button>
+    <span class="submit-note">Opens Gmail with your name, score, and answers ready to send to <strong>ppark@starofthesea.org</strong>.</span>
+  </div>
+  <button id="reveal-ak" class="reveal-btn" onclick="toggle('ak')">Show / Hide Answer Key</button>
+<div id="ak" class="ak"><h4>Answer Key</h4>(1) 12.6 | (2) 5.2 | (3) 27 | (4) 16 | (5) 6 | (6) 33 | (7) 77 | (8) 77 | (9) 4 | (10) 3</div>
+</main>
+<footer>Mary, Star of the Sea School · Math 9 · Geometry · Circles · Dr. Park</footer>
+</div>
+<script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(s,e){if(!e)return null;const ns=toNumber(s),ne=toNumber(e);if(ns!==null&&ne!==null){if(Math.abs(ne)<1e-12)return Math.abs(ns)<1e-9;return Math.abs(ns-ne)/Math.abs(ne)<5e-3;}const nas=normalizeAns(s),nae=normalizeAns(e);if(nas===nae)return true;if(/^[a-z]+$/.test(nae)&&nae.length>=3&&nas.includes(nae))return true;return false;}
+function isGradedMode(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+function clearCorrectionLabels(){ document.querySelectorAll('.correction-label').forEach(n=>n.remove()); }
+function storageKey(){ return 'msp-graded-'+location.pathname.split('/').pop(); }
+function loadGradedState(){ try { return JSON.parse(localStorage.getItem(storageKey())||'null'); } catch(e){ return null; } }
+function saveGradedState(s){ try { localStorage.setItem(storageKey(), JSON.stringify(s)); } catch(e){} }
+function bumpAttemptCount(){ const k = storageKey()+'-attempts'; const n = (parseInt(localStorage.getItem(k)||'0',10)||0) + 1; try { localStorage.setItem(k, String(n)); } catch(e){} return n; }
+function getAttemptCount(){ return parseInt(localStorage.getItem(storageKey()+'-attempts')||'0',10) || 0; }
+function fmtTime(ts){ try { return new Date(ts).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); } catch(e){ return String(ts); } }
+let __quizStartTime = null;
+function markStart(){ if(!__quizStartTime && isGradedMode()){ __quizStartTime = Date.now(); try { localStorage.setItem(storageKey()+'-start', String(__quizStartTime)); } catch(e){} } }
+function checkAllQuiz(){
+  const r=document.querySelector('main');if(!r)return;
+  const graded = isGradedMode();
+  clearCorrectionLabels();
+  let c=0,ck=0;
+  r.querySelectorAll('input.ans').forEach(i=>{
+    const e=i.dataset.a||'';
+    if(!e){i.classList.add('nocheck');return;}
+    ck++;
+    const s=i.value;
+    if(!s.trim()){i.classList.remove('correct','wrong');return;}
+    const ok=isCorrect(s,e);
+    i.classList.toggle('correct',ok===true);
+    i.classList.toggle('wrong',ok===false);
+    if(ok===true) c++;
+    if(graded && ok===false){
+      const lbl=document.createElement('span');
+      lbl.className='correction-label';
+      lbl.style.cssText='display:inline-block; margin-left:8px; padding:3px 8px; background:#fef3c7; border:1px solid #b8860b; border-radius:6px; font-size:.85rem; font-weight:800; color:#78350f;';
+      lbl.textContent='\u2192 correct: '+String(e).split('|')[0];
+      i.insertAdjacentElement('afterend', lbl);
+    }
+  });
+  const se=document.getElementById('score-quiz');
+  if(se){const p=ck?Math.round(100*c/ck):0;se.textContent=`${c} / ${ck}  (${p}%)`;se.classList.remove('good','mid','low');if(p>=90)se.classList.add('good');else if(p>=70)se.classList.add('mid');else se.classList.add('low');}
+  if(graded){
+    r.querySelectorAll('input.ans').forEach(i=>{i.readOnly=true; i.style.opacity='0.9'; i.style.cursor='not-allowed';});
+    const chkBtn=document.querySelector('.check-btn');
+    if(chkBtn){chkBtn.disabled=true; chkBtn.style.opacity='0.5'; chkBtn.style.cursor='not-allowed'; chkBtn.textContent='\u2713 Checked (locked)';}
+    const resetBtn=document.querySelector('.reset-btn');
+    if(resetBtn){resetBtn.style.display='none';}
+    let lock=document.getElementById('locked-msg');
+    if(!lock){
+      lock=document.createElement('div');
+      lock.id='locked-msg';
+      lock.style.cssText='margin:10px 0; padding:10px 14px; background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; font-size:.92rem; color:#78350f; font-weight:700;';
+      lock.innerHTML='\U0001F512 Your answers are locked. Review the corrections above, then click <strong>Submit to Dr. Park</strong> below.';
+      const sb=document.getElementById('submit-block');
+      if(sb) sb.parentNode.insertBefore(lock, sb);
+    if(sb) sb.style.display='block';
+    }
+    const answers = {};
+    r.querySelectorAll('input.ans').forEach((i,idx)=>{ answers[idx]=i.value; });
+    const state = loadGradedState() || {};
+    if(!state.checkedAt){
+      state.checkedAt = Date.now();
+      state.startAt = __quizStartTime || parseInt(localStorage.getItem(storageKey()+'-start')||Date.now(),10);
+      state.answers = answers;
+      state.score = (se && se.textContent) || '';
+      state.attempts = getAttemptCount();
+      state.name = (document.getElementById('student-name')||{}).value || '';
+      state.period = (document.getElementById('student-period')||{}).value || '';
+      saveGradedState(state);
+    }
+  }
+}
+function resetQuiz(){
+  document.querySelectorAll('input.ans').forEach(i=>{i.value='';i.classList.remove('correct','wrong');i.readOnly=false;i.style.opacity='';i.style.cursor='';});
+  clearCorrectionLabels();
+  const se=document.getElementById('score-quiz');
+  if(se){se.textContent='—';se.classList.remove('good','mid','low');}
+  const lock=document.getElementById('locked-msg'); if(lock) lock.remove();
+  const chkBtn=document.querySelector('.check-btn');
+  if(chkBtn){chkBtn.disabled=false; chkBtn.style.opacity=''; chkBtn.style.cursor=''; chkBtn.textContent='\u2713 Check Answers';}
+  const resetBtn=document.querySelector('.reset-btn'); if(resetBtn){resetBtn.style.display='';}
+}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('ans')){e.preventDefault();var inputs=Array.from(document.querySelectorAll('input.ans'));var i=inputs.indexOf(e.target);if(i>=0&&i<inputs.length-1){inputs[i+1].focus();}else{e.target.blur();}}});
+
+function submitToTeacher(){
+  const nameEl = document.getElementById('student-name');
+  const periodEl = document.getElementById('student-period');
+  const name = (nameEl && nameEl.value || '').trim();
+  const period = (periodEl && periodEl.value || '').trim();
+  if(!name){ alert('Please enter your name first, then click Submit again.'); nameEl && nameEl.focus(); return; }
+  if(!period){ alert('Please enter your Grade / Class (e.g. 7A) first, then click Submit again.'); periodEl && periodEl.focus(); return; }
+  checkAllQuiz();
+  const title = (document.querySelector('h1')||{}).textContent || document.title || 'Math Quiz';
+  const scoreText = (document.getElementById('score-quiz')||{}).textContent || '(not scored)';
+  const lines = [];
+  document.querySelectorAll('ol.qlist > li').forEach((li,idx)=>{
+    const inp = li.querySelector('input.ans');
+    if(!inp) return;
+    const clone = li.cloneNode(true);
+    clone.querySelectorAll('input, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
+    const qText = clone.textContent.trim().replace(/\s+/g,' ').slice(0,120);
+    const student = (inp.value||'').trim() || '(blank)';
+    let mark = '';
+    if(inp.classList.contains('correct')) mark = ' \u2713';
+    else if(inp.classList.contains('wrong')) mark = ` \u2717 (correct: ${inp.dataset.a||''})`;
+    lines.push(`${idx+1}. ${qText}\n    Answer: ${student}${mark}`);
+  });
+  const subject = `${title.replace(/^[^A-Za-z0-9]+/,'').trim()} \u2014 ${name}`;
+  const state = loadGradedState() || {};
+  const startTs = state.startAt ? new Date(state.startAt) : null;
+  const checkedTs = state.checkedAt ? new Date(state.checkedAt) : null;
+  const submitTs = new Date();
+  const durationSec = startTs ? Math.round((submitTs - startTs)/1000) : null;
+  const durStr = durationSec != null ? (durationSec >= 60 ? `${Math.floor(durationSec/60)} min ${durationSec%60} sec` : `${durationSec} sec`) : 'unknown';
+  const attempts = getAttemptCount();
+  state.submittedAt = submitTs.getTime();
+  saveGradedState(state);
+  const body =
+`Student: ${name}
+${period ? 'Grade/Class: '+period+'\n' : ''}Score: ${scoreText}
+
+\u23F1 Timing:
+  Started:   ${startTs ? startTs.toLocaleString('en-US') : '(not recorded)'}
+  Checked:   ${checkedTs ? checkedTs.toLocaleString('en-US') : '(not recorded)'}
+  Submitted: ${submitTs.toLocaleString('en-US')}
+  Duration:  ${durStr}
+  Page load attempts: ${attempts}${attempts>1?'  \u26A0\uFE0F (multiple loads \u2014 possible retake)':''}
+
+${lines.join('\n\n')}
+
+\u2014
+Submitted from ${location.href}`;
+  const gmail = 'https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  window.open(gmail, '_blank');
+}
+
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-btn{display:inline-block;margin-left:6px;padding:5px 10px;border-radius:6px;border:1.5px solid #1e40af;background:#2563eb;color:#fff;font-weight:800;font-size:.8rem;cursor:pointer;vertical-align:middle;font-family:inherit}
+.one-check-btn:hover{background:#1e40af}
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-btn,.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true || isCorrect(val,[exp[k]])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  window.msosCheckOne = function(btn){
+    var inp = btn.previousElementSibling;
+    while (inp && inp.tagName!=='INPUT') inp = inp.previousElementSibling;
+    if (!inp) return;
+    var fb = btn.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; btn.insertAdjacentElement('afterend', fb); }
+    var v = inp.value;
+    if (!v.trim()) { fb.className='one-check-fb no'; fb.textContent='Type an answer first'; return; }
+    var ok = test(v, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card = inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className = 'one-check-fb ' + (ok ? 'ok' : 'no');
+    fb.textContent = ok ? '✓ Correct!' : '✗ Not yet — try again';
+  };
+  function sync(){
+    var g = graded();
+    if (g) { document.querySelectorAll('.one-check-btn,.one-check-fb').forEach(function(n){ n.remove(); }); return; }
+    document.querySelectorAll('input.ans, .q-input input[id^="ans"]').forEach(function(inp){
+      if (inp.closest('.one-check-skip')) return;
+      if (!expected(inp)) return;
+      var place = inp; var u = inp.nextElementSibling;
+      if (u && u.classList.contains('unit')) place = u;
+      var nx = place.nextElementSibling;
+      if (nx && nx.classList.contains('one-check-btn')) return;
+      var b = document.createElement('button'); b.type='button'; b.className='one-check-btn'; b.textContent='Check Answer';
+      b.setAttribute('onclick','msosCheckOne(this)');
+      place.insertAdjacentElement('afterend', b);
+      if (!inp.dataset.oneCheckKey) { inp.dataset.oneCheckKey='1'; inp.addEventListener('keydown', function(e){ if(e.key==='Enter' && !graded()){ e.preventDefault(); var bb=inp.nextElementSibling; if(bb&&bb.classList.contains('unit')) bb=bb.nextElementSibling; if(bb&&bb.classList.contains('one-check-btn')) msosCheckOne(bb); } }); }
+    });
+  }
+  var t=null; function later(){ if(t) return; t=setTimeout(function(){ t=null; sync(); },30); }
+  function start(){ sync(); new MutationObserver(later).observe(document.body,{childList:true,subtree:true}); window.addEventListener('popstate', later); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', start); else start();
+  var ps = history.pushState, rs = history.replaceState;
+  history.pushState = function(){ var r=ps.apply(this, arguments); later(); return r; };
+  history.replaceState = function(){ var r=rs.apply(this, arguments); later(); return r; };
+})();
+</script>
+<!--/CHECK-ONE-->
+</body></html>

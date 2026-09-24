@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coordinate Geometry Visual — Math 9</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:20px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; flex-direction:column; align-items:center; gap:6px; }
+.controls input[type=range] { width:180px; }
+.controls .val { font-weight:900; color:var(--navy); font-size:1.1rem; background:#fff; padding:2px 10px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:12px; margin:16px 0; text-align:center; }
+.graph-svg { max-width:100%; height:auto; }
+.equation-display { text-align:center; margin:16px 0; font-family:'Courier New', monospace; font-size:1.3rem; font-weight:900; color:var(--navy); background:#fef08a; padding:14px 18px; border-radius:10px; border:2px solid var(--gold); }
+.equation-display .a2 { color:var(--red); }
+.equation-display .b2 { color:var(--blue); }
+.equation-display .c2 { color:var(--green); }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset-btn:hover { background:#0f172a; }
+.triple-tag { display:inline-block; background:#22c55e; color:#fff; font-weight:800; padding:4px 10px; border-radius:6px; font-size:.85rem; margin-left:8px; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+<style>.info-box{background:#fef9c3;border:2px solid #b8860b;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:1.02rem;line-height:1.7;color:#1e293b;text-align:center} .info-box b{color:#1a2a4a}</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-9.html#unit=coordinate-geometry" class="back-link" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+<header>
+  <div class="eyebrow">Math 9 · Coordinate Geometry · Visual Explorer</div>
+  <h1>🗺️ Lines, Slopes &amp; Perpendiculars</h1>
+  <p class="tagline">Algebra + geometry: prove shapes with coordinates.</p>
+</header>
+<div class="big-idea"><strong>Big idea:</strong> Move two points to set a line. The perpendicular line through the first point always has the opposite-reciprocal slope.</div>
+<section class="card">
+  <h2>🎯 Try It: Move the Sliders</h2>
+  <div class="controls"><label>P: x <input type="range" id="x1" min="-6" max="6" step="1" value="-3"><span class="val" id="x1Val">-3</span></label><label>P: y <input type="range" id="y1" min="-6" max="6" step="1" value="-2"><span class="val" id="y1Val">-2</span></label><label>Q: x <input type="range" id="x2" min="-6" max="6" step="1" value="3"><span class="val" id="x2Val">3</span></label><label>Q: y <input type="range" id="y2" min="-6" max="6" step="1" value="2"><span class="val" id="y2Val">2</span></label></div>
+  <div class="preset-btns"></div>
+  <div class="graph-wrap"><svg class="graph-svg" id="vis" viewBox="0 0 520 380" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div class="info-box" id="info"></div>
+</section>
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 What To Notice</h2>
+  <div class="tip">Slope × perpendicular slope = −1 (unless a line is vertical or horizontal).</div><div class="tip">Make the line horizontal: the perpendicular becomes vertical (undefined slope).</div>
+</section>
+<footer>Mary, Star of the Sea School · Math 9 · Geometry · Dr. Park · Coordinate Geometry Visual</footer>
+</div>
+<script>
+const G={W:520,H:380,x0:-6,x1:6,y0:-6,y1:6,
+ set(x0,x1,y0,y1){this.x0=x0;this.x1=x1;this.y0=y0;this.y1=y1;},
+ X(x){return 40+(x-this.x0)*(this.W-60)/(this.x1-this.x0);}, Y(y){return 20+(this.y1-y)*(this.H-50)/(this.y1-this.y0);},
+ step(s){const c=[0.25,0.5,1,2,5,10,20,50,100];for(const v of c){if(s/v<=12)return v;}return 200;},
+ grid(opt){opt=opt||{};let s='';const xs=opt.xs||this.step(this.x1-this.x0),ys=opt.ys||this.step(this.y1-this.y0);
+  for(let v=Math.ceil(this.x0/xs)*xs;v<=this.x1+1e-9;v+=xs){s+=`<line x1="${this.X(v)}" y1="${this.Y(this.y0)}" x2="${this.X(v)}" y2="${this.Y(this.y1)}" stroke="#e2e8f0"/>`;if(Math.abs(v)>1e-9)s+=`<text x="${this.X(v)}" y="${Math.min(Math.max(this.Y(0),this.Y(this.y1)),this.Y(this.y0))+14}" font-size="11" text-anchor="middle" fill="#64748b">${opt.pi?G.pil(v):+v.toFixed(2)}</text>`;}
+  for(let v=Math.ceil(this.y0/ys)*ys;v<=this.y1+1e-9;v+=ys){s+=`<line x1="${this.X(this.x0)}" y1="${this.Y(v)}" x2="${this.X(this.x1)}" y2="${this.Y(v)}" stroke="#e2e8f0"/>`;if(Math.abs(v)>1e-9)s+=`<text x="${Math.min(Math.max(this.X(0),this.X(this.x0)),this.X(this.x1))-5}" y="${this.Y(v)+4}" font-size="11" text-anchor="end" fill="#64748b">${+v.toFixed(2)}</text>`;}
+  if(this.y0<=0&&0<=this.y1)s+=`<line x1="${this.X(this.x0)}" y1="${this.Y(0)}" x2="${this.X(this.x1)}" y2="${this.Y(0)}" stroke="#334155" stroke-width="2"/>`;
+  if(this.x0<=0&&0<=this.x1)s+=`<line x1="${this.X(0)}" y1="${this.Y(this.y0)}" x2="${this.X(0)}" y2="${this.Y(this.y1)}" stroke="#334155" stroke-width="2"/>`;return s;},
+ pil(v){const k=Math.round(v/(Math.PI/2));if(Math.abs(v-k*Math.PI/2)>1e-6)return +v.toFixed(2);return {0:'0',1:'π/2',2:'π',3:'3π/2',4:'2π','-1':'−π/2','-2':'−π','-3':'−3π/2','-4':'−2π'}[k]||(k+'π/2');},
+ curve(f,col,w,dash,a,b){a=(a===undefined)?this.x0:a;b=(b===undefined)?this.x1:b;let s='',d='',pen=false,prev=null;const N=500;
+  for(let i=0;i<=N;i++){const x=a+(b-a)*i/N;let y;try{y=f(x);}catch(e){y=NaN;}
+   if(!isFinite(y)||y<this.y0-(this.y1-this.y0)||y>this.y1+(this.y1-this.y0)||(prev!==null&&Math.abs(y-prev)>(this.y1-this.y0)*0.8)){pen=false;prev=isFinite(y)?y:null;continue;}
+   const yy=Math.max(this.y0-(this.y1-this.y0)*0.05,Math.min(this.y1+(this.y1-this.y0)*0.05,y));
+   d+=(pen?'L':'M')+this.X(x).toFixed(1)+','+this.Y(yy).toFixed(1)+' ';pen=true;prev=y;}
+  return `<path d="${d}" fill="none" stroke="${col||'#2563eb'}" stroke-width="${w||3}" ${dash?'stroke-dasharray="'+dash+'"':''} clip-path="url(#clip)"/>`;},
+ area(f,a,b,col,g){let pts=[];const N=120;for(let i=0;i<=N;i++){const x=a+(b-a)*i/N;pts.push(this.X(x)+','+this.Y(f(x)));}
+  if(g){for(let i=N;i>=0;i--){const x=a+(b-a)*i/N;pts.push(this.X(x)+','+this.Y(g(x)));}}else{pts.push(this.X(b)+','+this.Y(0));pts.push(this.X(a)+','+this.Y(0));}
+  return `<polygon points="${pts.join(' ')}" fill="${col||'#93c5fd'}" fill-opacity="0.55" clip-path="url(#clip)"/>`;},
+ line(x1,y1,x2,y2,col,w,dash){return `<line x1="${this.X(x1)}" y1="${this.Y(y1)}" x2="${this.X(x2)}" y2="${this.Y(y2)}" stroke="${col||'#334155'}" stroke-width="${w||2}" ${dash?'stroke-dasharray="'+dash+'"':''} clip-path="url(#clip)"/>`;},
+ pt(x,y,col,lab,hollow){return `<circle cx="${this.X(x)}" cy="${this.Y(y)}" r="6" fill="${hollow?'#fff':(col||'#dc2626')}" stroke="${col||'#dc2626'}" stroke-width="2.5"/>`+(lab?`<text x="${this.X(x)+9}" y="${this.Y(y)-9}" font-size="13" font-weight="800" fill="${col||'#dc2626'}">${lab}</text>`:'');},
+ text(x,y,t,col,sz){return `<text x="${this.X(x)}" y="${this.Y(y)}" font-size="${sz||13}" font-weight="800" fill="${col||'#1e293b'}" text-anchor="middle">${t}</text>`;},
+ poly(pts,fill,col){return `<polygon points="${pts.map(p=>this.X(p[0])+','+this.Y(p[1])).join(' ')}" fill="${fill||'#bfdbfe'}" fill-opacity="0.6" stroke="${col||'#1d4ed8'}" stroke-width="2.5"/>`;},
+ circle(x,y,r,col,fill){return `<ellipse cx="${this.X(x)}" cy="${this.Y(y)}" rx="${Math.abs(this.X(x+r)-this.X(x))}" ry="${Math.abs(this.Y(y+r)-this.Y(y))}" fill="${fill||'none'}" stroke="${col||'#2563eb'}" stroke-width="2.5"/>`;},
+ arrow(x1,y1,x2,y2,col){const a=Math.atan2(this.Y(y2)-this.Y(y1),this.X(x2)-this.X(x1)),X2=this.X(x2),Y2=this.Y(y2);return `<line x1="${this.X(x1)}" y1="${this.Y(y1)}" x2="${X2}" y2="${Y2}" stroke="${col}" stroke-width="3"/><polygon points="${X2},${Y2} ${X2-12*Math.cos(a-0.4)},${Y2-12*Math.sin(a-0.4)} ${X2-12*Math.cos(a+0.4)},${Y2-12*Math.sin(a+0.4)}" fill="${col}"/>`;},
+ arc(cx,cy,r,a0,a1,col){const p0=[cx+r*Math.cos(a0),cy+r*Math.sin(a0)],p1=[cx+r*Math.cos(a1),cy+r*Math.sin(a1)];const R=Math.abs(this.X(cx+r)-this.X(cx));return `<path d="M${this.X(p0[0])},${this.Y(p0[1])} A${R},${R} 0 ${(a1-a0)%(2*Math.PI)>Math.PI?1:0} 0 ${this.X(p1[0])},${this.Y(p1[1])}" fill="none" stroke="${col||'#dc2626'}" stroke-width="4"/>`;},
+ f(v,d){d=(d===undefined)?2:d;const r=+v.toFixed(d);return String(r).replace('-','−');}
+};
+const P={};
+function readSliders(){document.querySelectorAll('.controls input[type=range]').forEach(el=>{P[el.id]=parseFloat(el.value);const o=document.getElementById(el.id+'Val');if(o)o.textContent=el.value;});}
+function render(){readSliders();const r=draw(P);document.getElementById('vis').innerHTML='<defs><clipPath id="clip"><rect x="40" y="20" width="'+(G.W-60)+'" height="'+(G.H-50)+'"/></clipPath></defs>'+r.svg;document.getElementById('info').innerHTML=r.info||'';}
+function preset(o){for(const k in o){const el=document.getElementById(k);if(el)el.value=o[k];}render();}
+document.addEventListener('input',e=>{if(e.target.type==='range')render();});
+window.addEventListener('load',render);
+
+function draw(p){G.set(-8,8,-8,8);let s=G.grid();if(p.x2===p.x1){return {svg:s+G.pt(p.x1,p.y1,'#2563eb','P')+G.pt(p.x2,p.y2,'#dc2626','Q'),info:'Vertical line: slope is undefined.'};}
+const m=(p.y2-p.y1)/(p.x2-p.x1),b=p.y1-m*p.x1;s+=G.curve(x=>m*x+b,'#2563eb',3);
+let info=`slope m = ${G.f(p.y2-p.y1)}/${G.f(p.x2-p.x1)} = <b>${G.f(m,3)}</b> · line: <b>y = ${G.f(m,3)}x ${b>=0?'+':'−'} ${G.f(Math.abs(b),3)}</b>`;
+if(m!==0){const pm=-1/m,pb=p.y1-pm*p.x1;s+=G.curve(x=>pm*x+pb,'#16a34a',3,'8,5');info+=`<br>perpendicular slope = <b>${G.f(pm,3)}</b> (product = −1)`;}else{s+=G.line(p.x1,-8,p.x1,8,'#16a34a',3,'8,5');}
+return {svg:s+G.pt(p.x1,p.y1,'#2563eb','P')+G.pt(p.x2,p.y2,'#dc2626','Q'),info:info};}
+</script>
+</body>
+</html>
