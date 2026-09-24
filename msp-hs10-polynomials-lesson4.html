@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polynomial Functions — Lesson 4: Zeros (Math 10)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--gold:#FFD100;--gold-deep:#b8860b;--ink:#1f2937;--dim:#64748b;--accent:#dc2626;--accent-deep:#991b1b;--accent-soft:#fee2e2;--pos:#059669;--neg:#dc2626}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%);color:var(--ink);min-height:100vh;padding:24px 16px;line-height:1.6}
+.container{max-width:1000px;margin:0 auto}
+header{text-align:center;margin-bottom:20px}
+.eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:6px}
+.tagline{color:var(--dim);font-size:.98rem;font-style:italic}
+.back-to-unit{display:inline-block;background:var(--gold);color:var(--navy);border:1.5px solid var(--gold-deep);padding:9px 18px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;margin-bottom:16px;box-shadow:0 2px 6px rgba(184,134,11,0.25);cursor:pointer}
+.back-to-unit:hover{background:var(--gold-deep);color:#fff;transform:translateX(-2px)}
+main{display:flex;flex-direction:column;gap:20px}
+section.card{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 4px 14px rgba(0,0,0,0.07);border-top:5px solid var(--accent)}
+section.card h2{color:var(--accent-deep);font-size:1.2rem;font-weight:800;margin-bottom:10px}
+section.card h3{color:var(--navy);font-size:1rem;font-weight:800;margin:12px 0 8px}
+.intro{background:var(--accent-soft);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0 12px;font-size:.95rem}
+.rule{background:#fef3c7;border-left:5px solid #b8860b;border-radius:6px;padding:8px 12px;margin:10px 0;font-size:.94rem}
+.rule strong{color:#78350f}
+table.rules{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.98rem}
+table.rules th,table.rules td{border:1.5px solid #94a3b8;padding:8px 12px;text-align:center}
+table.rules th{background:var(--navy);color:#fff;font-weight:800}
+table.rules tr:nth-child(even) td{background:#f8fafc}
+.pos{color:var(--pos);font-weight:800}
+.neg{color:var(--neg);font-weight:800}
+ol.qlist{list-style:none;counter-reset:q;padding:0;margin-top:8px}
+ol.qlist>li{counter-increment:q;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed #d1d5db}
+ol.qlist>li:last-child{border-bottom:none}
+ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.answer-line{display:inline-block;min-width:120px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.answer-line-lg{display:inline-block;min-width:200px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.reveal-btn{display:inline-block;background:var(--gold);color:var(--navy);border:1px solid var(--gold-deep);padding:8px 14px;border-radius:6px;font-weight:800;font-size:.9rem;cursor:pointer;margin:6px 0}
+.reveal-btn:hover{background:var(--gold-deep);color:#fff}
+.ak{display:none;background:#ecfccb;border-left:5px solid #65a30d;padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.ak.open{display:block}
+.ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
+footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
+@media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check, .save-toolbar { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style></head><body>
+<div class="container">
+<header>
+  <div class="eyebrow">Math 10 · Unit 6 · Lesson 4 of 5</div>
+  <h1>〰️ Lesson 4: Zeros</h1>
+  <p class="tagline">Degree and leading coefficient tell you where the ends go.</p>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then press <strong>Return</strong> to check each one (or click <strong>Check Answers</strong>).</p><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0 4px;"><a href="msos-math-10.html#unit=polynomials" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">1 · Overview</a><a href="msp-hs10-polynomials-lesson2.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">2 · Degree &amp; Operations</a><a href="msp-hs10-polynomials-lesson3.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">3 · Remainder Theorem</a><a href="msp-hs10-polynomials-lesson4.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#253a77;color:#fff;">4 · Zeros</a><a href="msp-hs10-polynomials-lesson5.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">5 · End Behavior</a></div></header>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<main>
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
+<section class="card" id="howcard"><h2>📘 How It Works</h2><div class="intro"><strong>Key idea:</strong> Each factor gives a zero.</div><div style="line-height:1.65;font-size:1rem;"><p>If p(x) = (x − r₁)(x − r₂)…, each factor gives a zero: set it equal to zero. A factor like (2x − 3) gives x = 3/2. Sum or count the zeros as the question asks.</p></div><h3>👀 Watch Two Examples</h3><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 1</div><div>What is the smallest zero of y = (x + 4)(x + 3)(x + 1)?</div><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="57.0" y1="12.0" x2="57.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="57.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="84.0" y1="12.0" x2="84.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="84.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="111.0" y1="12.0" x2="111.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="111.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="165.0" y1="12.0" x2="165.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="165.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="192.0" y1="12.0" x2="192.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="192.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="219.0" y1="12.0" x2="219.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="39.3,206.0 39.7,204.0 40.3,201.4 40.8,198.8 41.3,196.3 41.9,193.8 42.4,191.3 43.0,189.0 43.5,186.6 44.0,184.3 44.6,182.0 45.1,179.8 45.7,177.6 46.2,175.5 46.7,173.4 47.3,171.4 47.8,169.4 48.4,167.4 48.9,165.5 49.4,163.6 50.0,161.8 50.5,160.0 51.1,158.2 51.6,156.5 52.1,154.8 52.7,153.2 53.2,151.6 53.8,150.0 54.3,148.5 54.8,147.0 55.4,145.5 55.9,144.1 56.5,142.7 57.0,141.3 57.5,140.0 58.1,138.7 58.6,137.5 59.2,136.3 59.7,135.1 60.2,133.9 60.8,132.8 61.3,131.7 61.9,130.7 62.4,129.6 62.9,128.6 63.5,127.7 64.0,126.7 64.6,125.8 65.1,124.9 65.6,124.1 66.2,123.3 66.7,122.5 67.3,121.7 67.8,121.0 68.3,120.2 68.9,119.5 69.4,118.9 70.0,118.2 70.5,117.6 71.0,117.0 71.6,116.5 72.1,115.9 72.7,115.4 73.2,114.9 73.7,114.4 74.3,114.0 74.8,113.5 75.4,113.1 75.9,112.7 76.4,112.4 77.0,112.0 77.5,111.7 78.1,111.3 78.6,111.1 79.1,110.8 79.7,110.5 80.2,110.3 80.8,110.0 81.3,109.8 81.8,109.6 82.4,109.5 82.9,109.3 83.5,109.1 84.0,109.0 84.5,108.9 85.1,108.8 85.6,108.7 86.2,108.6 86.7,108.5 87.2,108.5 87.8,108.4 88.3,108.4 88.9,108.3 89.4,108.3 89.9,108.3 90.5,108.3 91.0,108.3 91.6,108.4 92.1,108.4 92.6,108.4 93.2,108.5 93.7,108.5 94.3,108.6 94.8,108.6 95.3,108.7 95.9,108.8 96.4,108.8 97.0,108.9 97.5,109.0 98.0,109.1 98.6,109.2 99.1,109.3 99.7,109.4 100.2,109.5 100.7,109.6 101.3,109.7 101.8,109.8 102.4,109.9 102.9,110.0 103.4,110.1 104.0,110.2 104.5,110.3 105.1,110.4 105.6,110.4 106.1,110.5 106.7,110.6 107.2,110.7 107.8,110.8 108.3,110.9 108.8,110.9 109.4,111.0 109.9,111.1 110.5,111.1 111.0,111.2 111.5,111.2 112.1,111.2 112.6,111.3 113.2,111.3 113.7,111.3 114.2,111.3 114.8,111.3 115.3,111.2 115.9,111.2 116.4,111.2 116.9,111.1 117.5,111.1 118.0,111.0 118.6,110.9 119.1,110.8 119.6,110.7 120.2,110.6 120.7,110.4 121.3,110.3 121.8,110.1 122.3,109.9 122.9,109.7 123.4,109.5 124.0,109.3 124.5,109.0 125.0,108.7 125.6,108.4 126.1,108.1 126.7,107.8 127.2,107.5 127.7,107.1 128.3,106.7 128.8,106.3 129.4,105.9 129.9,105.5 130.4,105.0 131.0,104.5 131.5,104.0 132.1,103.5 132.6,102.9 133.1,102.4 133.7,101.8 134.2,101.1 134.8,100.5 135.3,99.8 135.8,99.1 136.4,98.4 136.9,97.7 137.5,96.9 138.0,96.1 138.5,95.2 139.1,94.4 139.6,93.5 140.2,92.6 140.7,91.6 141.2,90.6 141.8,89.6 142.3,88.6 142.9,87.5 143.4,86.4 143.9,85.3 144.5,84.1 145.0,82.9 145.6,81.7 146.1,80.4 146.6,79.1 147.2,77.8 147.7,76.5 148.3,75.1 148.8,73.6 149.3,72.1 149.9,70.6 150.4,69.1 151.0,67.5 151.5,65.9 152.0,64.2 152.6,62.5 153.1,60.8 153.7,59.0 154.2,57.2 154.7,55.4 155.3,53.5 155.8,51.5 156.4,49.6 156.9,47.5 157.4,45.5 158.0,43.4 158.5,41.2 159.1,39.0 159.6,36.8 160.1,34.5 160.7,32.2 161.2,29.9 161.8,27.4 162.3,25.0 162.8,22.5 163.4,19.9 163.9,17.3 164.5,14.7 165.0,12.0 165.0,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: -4</span></div></div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 2</div><div>What is the smallest zero of y = (x + 2)(x + 1)(x − 5)?</div><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="57.0" y1="12.0" x2="57.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="57.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="84.0" y1="12.0" x2="84.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="84.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="111.0" y1="12.0" x2="111.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="111.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="165.0" y1="12.0" x2="165.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="165.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="192.0" y1="12.0" x2="192.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="192.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="219.0" y1="12.0" x2="219.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="75.9,206.0 75.9,205.8 76.4,202.9 77.0,200.0 77.5,197.2 78.1,194.4 78.6,191.7 79.1,189.0 79.7,186.4 80.2,183.8 80.8,181.3 81.3,178.8 81.8,176.4 82.4,174.0 82.9,171.7 83.5,169.4 84.0,167.2 84.5,165.0 85.1,162.9 85.6,160.8 86.2,158.8 86.7,156.8 87.2,154.9 87.8,153.0 88.3,151.1 88.9,149.3 89.4,147.6 89.9,145.8 90.5,144.2 91.0,142.5 91.6,141.0 92.1,139.4 92.6,137.9 93.2,136.5 93.7,135.0 94.3,133.7 94.8,132.3 95.3,131.0 95.9,129.8 96.4,128.6 97.0,127.4 97.5,126.2 98.0,125.1 98.6,124.1 99.1,123.1 99.7,122.1 100.2,121.1 100.7,120.2 101.3,119.3 101.8,118.5 102.4,117.6 102.9,116.9 103.4,116.1 104.0,115.4 104.5,114.7 105.1,114.1 105.6,113.5 106.1,112.9 106.7,112.3 107.2,111.8 107.8,111.3 108.3,110.9 108.8,110.4 109.4,110.0 109.9,109.7 110.5,109.3 111.0,109.0 111.5,108.7 112.1,108.5 112.6,108.2 113.2,108.0 113.7,107.8 114.2,107.7 114.8,107.5 115.3,107.4 115.9,107.4 116.4,107.3 116.9,107.3 117.5,107.2 118.0,107.3 118.6,107.3 119.1,107.3 119.6,107.4 120.2,107.5 120.7,107.6 121.3,107.8 121.8,107.9 122.3,108.1 122.9,108.3 123.4,108.5 124.0,108.8 124.5,109.0 125.0,109.3 125.6,109.6 126.1,109.9 126.7,110.2 127.2,110.5 127.7,110.8 128.3,111.2 128.8,111.6 129.4,112.0 129.9,112.4 130.4,112.8 131.0,113.2 131.5,113.7 132.1,114.1 132.6,114.6 133.1,115.1 133.7,115.6 134.2,116.0 134.8,116.6 135.3,117.1 135.8,117.6 136.4,118.1 136.9,118.7 137.5,119.2 138.0,119.8 138.5,120.3 139.1,120.9 139.6,121.5 140.2,122.1 140.7,122.7 141.2,123.2 141.8,123.8 142.3,124.4 142.9,125.1 143.4,125.7 143.9,126.3 144.5,126.9 145.0,127.5 145.6,128.1 146.1,128.7 146.6,129.3 147.2,130.0 147.7,130.6 148.3,131.2 148.8,131.8 149.3,132.4 149.9,133.0 150.4,133.7 151.0,134.3 151.5,134.9 152.0,135.5 152.6,136.1 153.1,136.7 153.7,137.2 154.2,137.8 154.7,138.4 155.3,139.0 155.8,139.5 156.4,140.1 156.9,140.7 157.4,141.2 158.0,141.7 158.5,142.3 159.1,142.8 159.6,143.3 160.1,143.8 160.7,144.3 161.2,144.8 161.8,145.2 162.3,145.7 162.8,146.1 163.4,146.6 163.9,147.0 164.5,147.4 165.0,147.8 165.5,148.2 166.1,148.5 166.6,148.9 167.2,149.2 167.7,149.6 168.2,149.9 168.8,150.2 169.3,150.4 169.9,150.7 170.4,150.9 170.9,151.1 171.5,151.3 172.0,151.5 172.6,151.7 173.1,151.8 173.6,152.0 174.2,152.1 174.7,152.1 175.3,152.2 175.8,152.2 176.3,152.3 176.9,152.3 177.4,152.2 178.0,152.2 178.5,152.1 179.0,152.0 179.6,151.9 180.1,151.7 180.7,151.6 181.2,151.4 181.7,151.1 182.3,150.9 182.8,150.6 183.4,150.3 183.9,150.0 184.4,149.6 185.0,149.2 185.5,148.8 186.1,148.3 186.6,147.9 187.1,147.4 187.7,146.8 188.2,146.2 188.8,145.6 189.3,145.0 189.8,144.3 190.4,143.6 190.9,142.9 191.5,142.1 192.0,141.3 192.5,140.5 193.1,139.6 193.6,138.7 194.2,137.8 194.7,136.8 195.2,135.8 195.8,134.7 196.3,133.6 196.9,132.5 197.4,131.3 197.9,130.1 198.5,128.9 199.0,127.6 199.6,126.3 200.1,124.9 200.6,123.5 201.2,122.1 201.7,120.6 202.3,119.1 202.8,117.5 203.3,115.9 203.9,114.2 204.4,112.5 205.0,110.8 205.5,109.0 206.0,107.2 206.6,105.3 207.1,103.4 207.7,101.4 208.2,99.4 208.7,97.3 209.3,95.2 209.8,93.0 210.4,90.8 210.9,88.6 211.4,86.3 212.0,83.9 212.5,81.5 213.1,79.1 213.6,76.6 214.1,74.0 214.7,71.4 215.2,68.7 215.8,66.0 216.3,63.3 216.8,60.5 217.4,57.6 217.9,54.7 218.5,51.7 219.0,48.6 219.5,45.6 220.1,42.4 220.6,39.2 221.2,36.0 221.7,32.6 222.2,29.3 222.8,25.8 223.3,22.4 223.9,18.8 224.4,15.2 224.9,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: -2</span></div></div><p style="font-size:.9rem;color:#475569;">Now try the practice below. Type an answer and press <strong>Return</strong> — you will see ✓ Correct! or ✗ Try again right away.</p></section>
+<section class="card" id="wsec1">
+<h2>1️⃣ Practice: Zeros</h2>
+<div class="intro">Each factor gives a zero.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>What is the largest zero of y = (x + 4)(x + 3)(x − 0)? <input class="ans" data-a="0" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="57.0" y1="12.0" x2="57.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="57.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="84.0" y1="12.0" x2="84.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="84.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="111.0" y1="12.0" x2="111.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="111.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="165.0" y1="12.0" x2="165.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="165.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="192.0" y1="12.0" x2="192.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="192.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="219.0" y1="12.0" x2="219.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="42.2,206.0 42.4,204.9 43.0,202.2 43.5,199.5 44.0,196.9 44.6,194.4 45.1,191.9 45.7,189.4 46.2,187.0 46.7,184.6 47.3,182.3 47.8,180.0 48.4,177.8 48.9,175.6 49.4,173.4 50.0,171.3 50.5,169.3 51.1,167.3 51.6,165.3 52.1,163.4 52.7,161.5 53.2,159.6 53.8,157.8 54.3,156.0 54.8,154.3 55.4,152.6 55.9,151.0 56.5,149.4 57.0,147.8 57.5,146.3 58.1,144.8 58.6,143.3 59.2,141.9 59.7,140.5 60.2,139.2 60.8,137.8 61.3,136.6 61.9,135.3 62.4,134.1 62.9,132.9 63.5,131.8 64.0,130.7 64.6,129.6 65.1,128.6 65.6,127.5 66.2,126.6 66.7,125.6 67.3,124.7 67.8,123.8 68.3,122.9 68.9,122.1 69.4,121.3 70.0,120.5 70.5,119.8 71.0,119.1 71.6,118.4 72.1,117.7 72.7,117.1 73.2,116.4 73.7,115.9 74.3,115.3 74.8,114.8 75.4,114.2 75.9,113.8 76.4,113.3 77.0,112.9 77.5,112.4 78.1,112.0 78.6,111.7 79.1,111.3 79.7,111.0 80.2,110.7 80.8,110.4 81.3,110.1 81.8,109.8 82.4,109.6 82.9,109.4 83.5,109.2 84.0,109.0 84.5,108.8 85.1,108.7 85.6,108.6 86.2,108.4 86.7,108.3 87.2,108.3 87.8,108.2 88.3,108.1 88.9,108.1 89.4,108.1 89.9,108.1 90.5,108.1 91.0,108.1 91.6,108.1 92.1,108.1 92.6,108.2 93.2,108.2 93.7,108.3 94.3,108.4 94.8,108.4 95.3,108.5 95.9,108.6 96.4,108.8 97.0,108.9 97.5,109.0 98.0,109.1 98.6,109.3 99.1,109.4 99.7,109.6 100.2,109.7 100.7,109.9 101.3,110.1 101.8,110.2 102.4,110.4 102.9,110.6 103.4,110.7 104.0,110.9 104.5,111.1 105.1,111.3 105.6,111.5 106.1,111.7 106.7,111.9 107.2,112.0 107.8,112.2 108.3,112.4 108.8,112.6 109.4,112.8 109.9,113.0 110.5,113.1 111.0,113.3 111.5,113.5 112.1,113.6 112.6,113.8 113.2,114.0 113.7,114.1 114.2,114.3 114.8,114.4 115.3,114.5 115.9,114.7 116.4,114.8 116.9,114.9 117.5,115.0 118.0,115.1 118.6,115.2 119.1,115.3 119.6,115.3 120.2,115.4 120.7,115.5 121.3,115.5 121.8,115.5 122.3,115.5 122.9,115.5 123.4,115.5 124.0,115.5 124.5,115.5 125.0,115.4 125.6,115.4 126.1,115.3 126.7,115.2 127.2,115.1 127.7,114.9 128.3,114.8 128.8,114.6 129.4,114.5 129.9,114.3 130.4,114.1 131.0,113.8 131.5,113.6 132.1,113.3 132.6,113.0 133.1,112.7 133.7,112.4 134.2,112.1 134.8,111.7 135.3,111.3 135.8,110.9 136.4,110.4 136.9,110.0 137.5,109.5 138.0,109.0 138.5,108.5 139.1,107.9 139.6,107.3 140.2,106.7 140.7,106.1 141.2,105.4 141.8,104.8 142.3,104.1 142.9,103.3 143.4,102.6 143.9,101.8 144.5,100.9 145.0,100.1 145.6,99.2 146.1,98.3 146.6,97.3 147.2,96.4 147.7,95.4 148.3,94.3 148.8,93.3 149.3,92.2 149.9,91.0 150.4,89.9 151.0,88.7 151.5,87.4 152.0,86.2 152.6,84.9 153.1,83.5 153.7,82.2 154.2,80.8 154.7,79.3 155.3,77.8 155.8,76.3 156.4,74.7 156.9,73.1 157.4,71.5 158.0,69.8 158.5,68.1 159.1,66.4 159.6,64.6 160.1,62.7 160.7,60.9 161.2,59.0 161.8,57.0 162.3,55.0 162.8,52.9 163.4,50.9 163.9,48.7 164.5,46.6 165.0,44.3 165.5,42.1 166.1,39.8 166.6,37.4 167.2,35.0 167.7,32.6 168.2,30.1 168.8,27.5 169.3,24.9 169.9,22.3 170.4,19.6 170.9,16.9 171.5,14.1 171.9,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>What is the smallest zero of y = (x + 4)(x − 1)(x − 5)? <input class="ans" data-a="-4" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="57.0" y1="12.0" x2="57.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="57.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="84.0" y1="12.0" x2="84.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="84.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="111.0" y1="12.0" x2="111.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="111.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="165.0" y1="12.0" x2="165.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="165.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="192.0" y1="12.0" x2="192.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="192.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="219.0" y1="12.0" x2="219.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="65.6,206.0 65.6,205.6 66.2,201.8 66.7,198.1 67.3,194.4 67.8,190.8 68.3,187.2 68.9,183.8 69.4,180.3 70.0,177.0 70.5,173.7 71.0,170.4 71.6,167.2 72.1,164.1 72.7,161.0 73.2,158.0 73.7,155.0 74.3,152.1 74.8,149.3 75.4,146.5 75.9,143.8 76.4,141.1 77.0,138.5 77.5,135.9 78.1,133.4 78.6,130.9 79.1,128.5 79.7,126.1 80.2,123.8 80.8,121.5 81.3,119.3 81.8,117.2 82.4,115.0 82.9,113.0 83.5,111.0 84.0,109.0 84.5,107.1 85.1,105.2 85.6,103.4 86.2,101.6 86.7,99.9 87.2,98.2 87.8,96.6 88.3,95.0 88.9,93.4 89.4,91.9 89.9,90.5 90.5,89.1 91.0,87.7 91.6,86.4 92.1,85.1 92.6,83.9 93.2,82.7 93.7,81.5 94.3,80.4 94.8,79.3 95.3,78.3 95.9,77.3 96.4,76.3 97.0,75.4 97.5,74.5 98.0,73.7 98.6,72.9 99.1,72.1 99.7,71.4 100.2,70.7 100.7,70.0 101.3,69.4 101.8,68.8 102.4,68.2 102.9,67.7 103.4,67.2 104.0,66.8 104.5,66.4 105.1,66.0 105.6,65.6 106.1,65.3 106.7,65.0 107.2,64.7 107.8,64.5 108.3,64.3 108.8,64.1 109.4,64.0 109.9,63.9 110.5,63.8 111.0,63.7 111.5,63.7 112.1,63.7 112.6,63.7 113.2,63.8 113.7,63.9 114.2,64.0 114.8,64.1 115.3,64.2 115.9,64.4 116.4,64.6 116.9,64.8 117.5,65.1 118.0,65.4 118.6,65.6 119.1,66.0 119.6,66.3 120.2,66.6 120.7,67.0 121.3,67.4 121.8,67.8 122.3,68.3 122.9,68.7 123.4,69.2 124.0,69.7 124.5,70.2 125.0,70.7 125.6,71.3 126.1,71.8 126.7,72.4 127.2,73.0 127.7,73.6 128.3,74.2 128.8,74.9 129.4,75.5 129.9,76.2 130.4,76.8 131.0,77.5 131.5,78.2 132.1,78.9 132.6,79.7 133.1,80.4 133.7,81.1 134.2,81.9 134.8,82.7 135.3,83.4 135.8,84.2 136.4,85.0 136.9,85.8 137.5,86.6 138.0,87.4 138.5,88.3 139.1,89.1 139.6,89.9 140.2,90.8 140.7,91.6 141.2,92.5 141.8,93.3 142.3,94.2 142.9,95.0 143.4,95.9 143.9,96.8 144.5,97.7 145.0,98.5 145.6,99.4 146.1,100.3 146.6,101.2 147.2,102.0 147.7,102.9 148.3,103.8 148.8,104.7 149.3,105.5 149.9,106.4 150.4,107.3 151.0,108.1 151.5,109.0 152.0,109.9 152.6,110.7 153.1,111.6 153.7,112.4 154.2,113.3 154.7,114.1 155.3,114.9 155.8,115.8 156.4,116.6 156.9,117.4 157.4,118.2 158.0,119.0 158.5,119.8 159.1,120.5 159.6,121.3 160.1,122.1 160.7,122.8 161.2,123.6 161.8,124.3 162.3,125.0 162.8,125.7 163.4,126.4 163.9,127.1 164.5,127.7 165.0,128.4 165.5,129.0 166.1,129.7 166.6,130.3 167.2,130.9 167.7,131.5 168.2,132.0 168.8,132.6 169.3,133.1 169.9,133.6 170.4,134.1 170.9,134.6 171.5,135.0 172.0,135.5 172.6,135.9 173.1,136.3 173.6,136.7 174.2,137.1 174.7,137.4 175.3,137.7 175.8,138.0 176.3,138.3 176.9,138.6 177.4,138.8 178.0,139.0 178.5,139.2 179.0,139.3 179.6,139.5 180.1,139.6 180.7,139.7 181.2,139.7 181.7,139.8 182.3,139.8 182.8,139.7 183.4,139.7 183.9,139.6 184.4,139.5 185.0,139.4 185.5,139.2 186.1,139.0 186.6,138.8 187.1,138.6 187.7,138.3 188.2,138.0 188.8,137.6 189.3,137.2 189.8,136.8 190.4,136.4 190.9,135.9 191.5,135.4 192.0,134.9 192.5,134.3 193.1,133.7 193.6,133.0 194.2,132.3 194.7,131.6 195.2,130.9 195.8,130.1 196.3,129.2 196.9,128.4 197.4,127.5 197.9,126.5 198.5,125.5 199.0,124.5 199.6,123.5 200.1,122.3 200.6,121.2 201.2,120.0 201.7,118.8 202.3,117.5 202.8,116.2 203.3,114.9 203.9,113.5 204.4,112.0 205.0,110.5 205.5,109.0 206.0,107.4 206.6,105.8 207.1,104.1 207.7,102.4 208.2,100.7 208.7,98.9 209.3,97.0 209.8,95.1 210.4,93.2 210.9,91.2 211.4,89.1 212.0,87.0 212.5,84.9 213.1,82.7 213.6,80.4 214.1,78.1 214.7,75.8 215.2,73.4 215.8,70.9 216.3,68.4 216.8,65.9 217.4,63.3 217.9,60.6 218.5,57.9 219.0,55.1 219.5,52.3 220.1,49.4 220.6,46.5 221.2,43.5 221.7,40.4 222.2,37.3 222.8,34.1 223.3,30.9 223.9,27.6 224.4,24.3 224.9,20.9 225.5,17.4 226.0,13.9 226.3,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>What is the smallest zero of y = (x + 2)(x − 1)(x − 3)? <input class="ans" data-a="-2" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="57.0" y1="12.0" x2="57.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="57.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="84.0" y1="12.0" x2="84.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="84.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="111.0" y1="12.0" x2="111.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="111.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="165.0" y1="12.0" x2="165.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="165.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="192.0" y1="12.0" x2="192.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="192.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="219.0" y1="12.0" x2="219.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="79.7,206.0 80.2,203.5 80.8,200.6 81.3,197.8 81.8,195.0 82.4,192.3 82.9,189.6 83.5,187.0 84.0,184.4 84.5,181.9 85.1,179.5 85.6,177.0 86.2,174.7 86.7,172.3 87.2,170.0 87.8,167.8 88.3,165.6 88.9,163.5 89.4,161.4 89.9,159.3 90.5,157.3 91.0,155.3 91.6,153.4 92.1,151.5 92.6,149.6 93.2,147.8 93.7,146.1 94.3,144.4 94.8,142.7 95.3,141.0 95.9,139.4 96.4,137.9 97.0,136.4 97.5,134.9 98.0,133.4 98.6,132.0 99.1,130.6 99.7,129.3 100.2,128.0 100.7,126.7 101.3,125.5 101.8,124.3 102.4,123.2 102.9,122.0 103.4,120.9 104.0,119.9 104.5,118.9 105.1,117.9 105.6,116.9 106.1,116.0 106.7,115.1 107.2,114.2 107.8,113.4 108.3,112.6 108.8,111.8 109.4,111.1 109.9,110.3 110.5,109.7 111.0,109.0 111.5,108.4 112.1,107.8 112.6,107.2 113.2,106.6 113.7,106.1 114.2,105.6 114.8,105.1 115.3,104.7 115.9,104.2 116.4,103.8 116.9,103.5 117.5,103.1 118.0,102.8 118.6,102.5 119.1,102.2 119.6,101.9 120.2,101.7 120.7,101.4 121.3,101.2 121.8,101.0 122.3,100.9 122.9,100.7 123.4,100.6 124.0,100.5 124.5,100.4 125.0,100.3 125.6,100.2 126.1,100.2 126.7,100.2 127.2,100.2 127.7,100.2 128.3,100.2 128.8,100.2 129.4,100.2 129.9,100.3 130.4,100.4 131.0,100.5 131.5,100.6 132.1,100.7 132.6,100.8 133.1,100.9 133.7,101.1 134.2,101.2 134.8,101.4 135.3,101.6 135.8,101.7 136.4,101.9 136.9,102.1 137.5,102.3 138.0,102.5 138.5,102.8 139.1,103.0 139.6,103.2 140.2,103.4 140.7,103.7 141.2,103.9 141.8,104.2 142.3,104.4 142.9,104.7 143.4,105.0 143.9,105.2 144.5,105.5 145.0,105.8 145.6,106.0 146.1,106.3 146.6,106.6 147.2,106.9 147.7,107.1 148.3,107.4 148.8,107.7 149.3,107.9 149.9,108.2 150.4,108.5 151.0,108.7 151.5,109.0 152.0,109.3 152.6,109.5 153.1,109.8 153.7,110.0 154.2,110.2 154.7,110.5 155.3,110.7 155.8,110.9 156.4,111.1 156.9,111.3 157.4,111.5 158.0,111.7 158.5,111.9 159.1,112.1 159.6,112.3 160.1,112.4 160.7,112.6 161.2,112.7 161.8,112.8 162.3,112.9 162.8,113.0 163.4,113.1 163.9,113.2 164.5,113.3 165.0,113.3 165.5,113.3 166.1,113.4 166.6,113.4 167.2,113.4 167.7,113.3 168.2,113.3 168.8,113.3 169.3,113.2 169.9,113.1 170.4,113.0 170.9,112.9 171.5,112.7 172.0,112.6 172.6,112.4 173.1,112.2 173.6,112.0 174.2,111.7 174.7,111.4 175.3,111.2 175.8,110.9 176.3,110.5 176.9,110.2 177.4,109.8 178.0,109.4 178.5,109.0 179.0,108.6 179.6,108.1 180.1,107.6 180.7,107.1 181.2,106.5 181.7,106.0 182.3,105.4 182.8,104.7 183.4,104.1 183.9,103.4 184.4,102.7 185.0,102.0 185.5,101.2 186.1,100.4 186.6,99.6 187.1,98.7 187.7,97.8 188.2,96.9 188.8,96.0 189.3,95.0 189.8,94.0 190.4,92.9 190.9,91.9 191.5,90.7 192.0,89.6 192.5,88.4 193.1,87.2 193.6,86.0 194.2,84.7 194.7,83.3 195.2,82.0 195.8,80.6 196.3,79.1 196.9,77.7 197.4,76.2 197.9,74.6 198.5,73.0 199.0,71.4 199.6,69.7 200.1,68.0 200.6,66.3 201.2,64.5 201.7,62.7 202.3,60.8 202.8,58.9 203.3,56.9 203.9,54.9 204.4,52.9 205.0,50.8 205.5,48.6 206.0,46.5 206.6,44.2 207.1,42.0 207.7,39.7 208.2,37.3 208.7,34.9 209.3,32.4 209.8,29.9 210.4,27.4 210.9,24.8 211.4,22.1 212.0,19.4 212.5,16.7 213.1,13.9 213.4,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>What is the smallest zero of y = (x + 4)(x + 1)(x − 2)? <input class="ans" data-a="-4" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="57.0" y1="12.0" x2="57.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="57.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="84.0" y1="12.0" x2="84.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="84.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="111.0" y1="12.0" x2="111.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="111.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="165.0" y1="12.0" x2="165.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="165.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="192.0" y1="12.0" x2="192.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="192.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="219.0" y1="12.0" x2="219.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="55.0,206.0 55.4,204.0 55.9,201.0 56.5,198.1 57.0,195.2 57.5,192.4 58.1,189.6 58.6,186.9 59.2,184.3 59.7,181.6 60.2,179.1 60.8,176.5 61.3,174.1 61.9,171.7 62.4,169.3 62.9,167.0 63.5,164.7 64.0,162.5 64.6,160.3 65.1,158.1 65.6,156.0 66.2,154.0 66.7,152.0 67.3,150.0 67.8,148.1 68.3,146.2 68.9,144.4 69.4,142.6 70.0,140.9 70.5,139.2 71.0,137.5 71.6,135.9 72.1,134.3 72.7,132.8 73.2,131.3 73.7,129.8 74.3,128.4 74.8,127.0 75.4,125.7 75.9,124.4 76.4,123.1 77.0,121.9 77.5,120.7 78.1,119.5 78.6,118.4 79.1,117.3 79.7,116.2 80.2,115.2 80.8,114.2 81.3,113.3 81.8,112.4 82.4,111.5 82.9,110.6 83.5,109.8 84.0,109.0 84.5,108.2 85.1,107.5 85.6,106.8 86.2,106.1 86.7,105.5 87.2,104.9 87.8,104.3 88.3,103.7 88.9,103.2 89.4,102.7 89.9,102.3 90.5,101.8 91.0,101.4 91.6,101.0 92.1,100.6 92.6,100.3 93.2,100.0 93.7,99.7 94.3,99.4 94.8,99.1 95.3,98.9 95.9,98.7 96.4,98.5 97.0,98.4 97.5,98.2 98.0,98.1 98.6,98.0 99.1,97.9 99.7,97.9 100.2,97.8 100.7,97.8 101.3,97.8 101.8,97.8 102.4,97.8 102.9,97.9 103.4,98.0 104.0,98.0 104.5,98.1 105.1,98.3 105.6,98.4 106.1,98.5 106.7,98.7 107.2,98.8 107.8,99.0 108.3,99.2 108.8,99.4 109.4,99.7 109.9,99.9 110.5,100.1 111.0,100.4 111.5,100.6 112.1,100.9 112.6,101.2 113.2,101.5 113.7,101.8 114.2,102.1 114.8,102.4 115.3,102.7 115.9,103.1 116.4,103.4 116.9,103.8 117.5,104.1 118.0,104.5 118.6,104.8 119.1,105.2 119.6,105.6 120.2,105.9 120.7,106.3 121.3,106.7 121.8,107.1 122.3,107.5 122.9,107.8 123.4,108.2 124.0,108.6 124.5,109.0 125.0,109.4 125.6,109.8 126.1,110.2 126.7,110.5 127.2,110.9 127.7,111.3 128.3,111.7 128.8,112.1 129.4,112.4 129.9,112.8 130.4,113.2 131.0,113.5 131.5,113.9 132.1,114.2 132.6,114.6 133.1,114.9 133.7,115.3 134.2,115.6 134.8,115.9 135.3,116.2 135.8,116.5 136.4,116.8 136.9,117.1 137.5,117.4 138.0,117.6 138.5,117.9 139.1,118.1 139.6,118.3 140.2,118.6 140.7,118.8 141.2,119.0 141.8,119.2 142.3,119.3 142.9,119.5 143.4,119.6 143.9,119.7 144.5,119.9 145.0,120.0 145.6,120.0 146.1,120.1 146.6,120.2 147.2,120.2 147.7,120.2 148.3,120.2 148.8,120.2 149.3,120.1 149.9,120.1 150.4,120.0 151.0,119.9 151.5,119.8 152.0,119.6 152.6,119.5 153.1,119.3 153.7,119.1 154.2,118.9 154.7,118.6 155.3,118.3 155.8,118.0 156.4,117.7 156.9,117.4 157.4,117.0 158.0,116.6 158.5,116.2 159.1,115.7 159.6,115.3 160.1,114.8 160.7,114.3 161.2,113.7 161.8,113.1 162.3,112.5 162.8,111.9 163.4,111.2 163.9,110.5 164.5,109.8 165.0,109.0 165.5,108.2 166.1,107.4 166.6,106.5 167.2,105.6 167.7,104.7 168.2,103.8 168.8,102.8 169.3,101.8 169.9,100.7 170.4,99.6 170.9,98.5 171.5,97.3 172.0,96.1 172.6,94.9 173.1,93.6 173.6,92.3 174.2,91.0 174.7,89.6 175.3,88.2 175.8,86.7 176.3,85.2 176.9,83.7 177.4,82.1 178.0,80.5 178.5,78.8 179.0,77.1 179.6,75.4 180.1,73.6 180.7,71.8 181.2,69.9 181.7,68.0 182.3,66.0 182.8,64.0 183.4,62.0 183.9,59.9 184.4,57.7 185.0,55.5 185.5,53.3 186.1,51.0 186.6,48.7 187.1,46.3 187.7,43.9 188.2,41.5 188.8,38.9 189.3,36.4 189.8,33.7 190.4,31.1 190.9,28.4 191.5,25.6 192.0,22.8 192.5,19.9 193.1,17.0 193.6,14.0 194.0,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>What is the largest zero of y = (x + 4)(x + 1)(x − 1)? <input class="ans" data-a="1" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="57.0" y1="12.0" x2="57.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="57.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="84.0" y1="12.0" x2="84.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="84.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="111.0" y1="12.0" x2="111.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="111.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="165.0" y1="12.0" x2="165.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="165.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="192.0" y1="12.0" x2="192.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="192.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="219.0" y1="12.0" x2="219.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="52.7,206.0 53.2,203.5 53.8,200.6 54.3,197.8 54.8,195.0 55.4,192.3 55.9,189.6 56.5,187.0 57.0,184.4 57.5,181.9 58.1,179.5 58.6,177.0 59.2,174.7 59.7,172.3 60.2,170.0 60.8,167.8 61.3,165.6 61.9,163.5 62.4,161.4 62.9,159.3 63.5,157.3 64.0,155.3 64.6,153.4 65.1,151.5 65.6,149.6 66.2,147.8 66.7,146.1 67.3,144.4 67.8,142.7 68.3,141.0 68.9,139.4 69.4,137.9 70.0,136.4 70.5,134.9 71.0,133.4 71.6,132.0 72.1,130.6 72.7,129.3 73.2,128.0 73.7,126.7 74.3,125.5 74.8,124.3 75.4,123.2 75.9,122.0 76.4,120.9 77.0,119.9 77.5,118.9 78.1,117.9 78.6,116.9 79.1,116.0 79.7,115.1 80.2,114.2 80.8,113.4 81.3,112.6 81.8,111.8 82.4,111.1 82.9,110.3 83.5,109.7 84.0,109.0 84.5,108.4 85.1,107.8 85.6,107.2 86.2,106.6 86.7,106.1 87.2,105.6 87.8,105.1 88.3,104.7 88.9,104.2 89.4,103.8 89.9,103.5 90.5,103.1 91.0,102.8 91.6,102.5 92.1,102.2 92.6,101.9 93.2,101.7 93.7,101.4 94.3,101.2 94.8,101.0 95.3,100.9 95.9,100.7 96.4,100.6 97.0,100.5 97.5,100.4 98.0,100.3 98.6,100.2 99.1,100.2 99.7,100.2 100.2,100.2 100.7,100.2 101.3,100.2 101.8,100.2 102.4,100.2 102.9,100.3 103.4,100.4 104.0,100.5 104.5,100.6 105.1,100.7 105.6,100.8 106.1,100.9 106.7,101.1 107.2,101.2 107.8,101.4 108.3,101.6 108.8,101.7 109.4,101.9 109.9,102.1 110.5,102.3 111.0,102.5 111.5,102.8 112.1,103.0 112.6,103.2 113.2,103.4 113.7,103.7 114.2,103.9 114.8,104.2 115.3,104.4 115.9,104.7 116.4,105.0 116.9,105.2 117.5,105.5 118.0,105.8 118.6,106.0 119.1,106.3 119.6,106.6 120.2,106.9 120.7,107.1 121.3,107.4 121.8,107.7 122.3,107.9 122.9,108.2 123.4,108.5 124.0,108.7 124.5,109.0 125.0,109.3 125.6,109.5 126.1,109.8 126.7,110.0 127.2,110.2 127.7,110.5 128.3,110.7 128.8,110.9 129.4,111.1 129.9,111.3 130.4,111.5 131.0,111.7 131.5,111.9 132.1,112.1 132.6,112.3 133.1,112.4 133.7,112.6 134.2,112.7 134.8,112.8 135.3,112.9 135.8,113.0 136.4,113.1 136.9,113.2 137.5,113.3 138.0,113.3 138.5,113.3 139.1,113.4 139.6,113.4 140.2,113.4 140.7,113.3 141.2,113.3 141.8,113.3 142.3,113.2 142.9,113.1 143.4,113.0 143.9,112.9 144.5,112.7 145.0,112.6 145.6,112.4 146.1,112.2 146.6,112.0 147.2,111.7 147.7,111.4 148.3,111.2 148.8,110.9 149.3,110.5 149.9,110.2 150.4,109.8 151.0,109.4 151.5,109.0 152.0,108.6 152.6,108.1 153.1,107.6 153.7,107.1 154.2,106.5 154.7,106.0 155.3,105.4 155.8,104.7 156.4,104.1 156.9,103.4 157.4,102.7 158.0,102.0 158.5,101.2 159.1,100.4 159.6,99.6 160.1,98.7 160.7,97.8 161.2,96.9 161.8,96.0 162.3,95.0 162.8,94.0 163.4,92.9 163.9,91.9 164.5,90.7 165.0,89.6 165.5,88.4 166.1,87.2 166.6,86.0 167.2,84.7 167.7,83.3 168.2,82.0 168.8,80.6 169.3,79.1 169.9,77.7 170.4,76.2 170.9,74.6 171.5,73.0 172.0,71.4 172.6,69.7 173.1,68.0 173.6,66.3 174.2,64.5 174.7,62.7 175.3,60.8 175.8,58.9 176.3,56.9 176.9,54.9 177.4,52.9 178.0,50.8 178.5,48.6 179.0,46.5 179.6,44.2 180.1,42.0 180.7,39.7 181.2,37.3 181.7,34.9 182.3,32.4 182.8,29.9 183.4,27.4 183.9,24.8 184.4,22.1 185.0,19.4 185.5,16.7 186.1,13.9 186.4,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>What is the smallest zero of y = (x + 6)(x + 5)(x − 5)? <input class="ans" data-a="-6" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="57.0" y1="12.0" x2="57.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="57.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="84.0" y1="12.0" x2="84.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="84.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="111.0" y1="12.0" x2="111.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="111.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="165.0" y1="12.0" x2="165.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="165.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="192.0" y1="12.0" x2="192.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="192.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="219.0" y1="12.0" x2="219.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="30.0,193.1 30.5,190.0 31.1,187.1 31.6,184.2 32.2,181.3 32.7,178.5 33.2,175.8 33.8,173.1 34.3,170.5 34.9,168.0 35.4,165.5 35.9,163.1 36.5,160.7 37.0,158.4 37.6,156.1 38.1,153.9 38.6,151.8 39.2,149.7 39.7,147.6 40.3,145.6 40.8,143.7 41.3,141.8 41.9,140.0 42.4,138.2 43.0,136.5 43.5,134.9 44.0,133.3 44.6,131.7 45.1,130.2 45.7,128.7 46.2,127.3 46.7,126.0 47.3,124.6 47.8,123.4 48.4,122.2 48.9,121.0 49.4,119.9 50.0,118.8 50.5,117.8 51.1,116.8 51.6,115.9 52.1,115.0 52.7,114.2 53.2,113.4 53.8,112.6 54.3,111.9 54.8,111.2 55.4,110.6 55.9,110.0 56.5,109.5 57.0,109.0 57.5,108.5 58.1,108.1 58.6,107.8 59.2,107.4 59.7,107.1 60.2,106.9 60.8,106.7 61.3,106.5 61.9,106.4 62.4,106.3 62.9,106.2 63.5,106.2 64.0,106.2 64.6,106.2 65.1,106.3 65.6,106.4 66.2,106.6 66.7,106.8 67.3,107.0 67.8,107.2 68.3,107.5 68.9,107.8 69.4,108.2 70.0,108.6 70.5,109.0 71.0,109.4 71.6,109.9 72.1,110.4 72.7,111.0 73.2,111.5 73.7,112.1 74.3,112.8 74.8,113.4 75.4,114.1 75.9,114.8 76.4,115.5 77.0,116.3 77.5,117.1 78.1,117.9 78.6,118.7 79.1,119.6 79.7,120.5 80.2,121.4 80.8,122.3 81.3,123.3 81.8,124.3 82.4,125.3 82.9,126.3 83.5,127.3 84.0,128.4 84.5,129.5 85.1,130.6 85.6,131.7 86.2,132.9 86.7,134.0 87.2,135.2 87.8,136.4 88.3,137.6 88.9,138.9 89.4,140.1 89.9,141.4 90.5,142.7 91.0,144.0 91.6,145.3 92.1,146.7 92.6,148.0 93.2,149.4 93.7,150.8 94.3,152.1 94.8,153.5 95.3,155.0 95.9,156.4 96.4,157.8 97.0,159.3 97.5,160.7 98.0,162.2 98.6,163.7 99.1,165.2 99.7,166.7 100.2,168.2 100.7,169.7 101.3,171.2 101.8,172.8 102.4,174.3 102.9,175.8 103.4,177.4 104.0,178.9 104.5,180.5 105.1,182.1 105.6,183.7 106.1,185.2 106.7,186.8 107.2,188.4 107.8,190.0 108.3,191.6 108.8,193.2 109.4,194.7 109.9,196.3 110.5,197.9 111.0,199.5 111.5,201.1 112.1,202.7 112.6,204.3 113.2,205.9 113.2,206.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><polyline points="192.0,206.0 192.0,206.0 192.5,202.9 193.1,199.8 193.6,196.5 194.2,193.3 194.7,189.9 195.2,186.5 195.8,183.0 196.3,179.5 196.9,175.9 197.4,172.2 197.9,168.5 198.5,164.7 199.0,160.8 199.6,156.9 200.1,152.9 200.6,148.8 201.2,144.7 201.7,140.4 202.3,136.2 202.8,131.8 203.3,127.4 203.9,122.9 204.4,118.3 205.0,113.7 205.5,109.0 206.0,104.2 206.6,99.4 207.1,94.4 207.7,89.4 208.2,84.4 208.7,79.2 209.3,74.0 209.8,68.7 210.4,63.3 210.9,57.9 211.4,52.4 212.0,46.8 212.5,41.1 213.1,35.3 213.6,29.5 214.1,23.6 214.7,17.6 215.2,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) 0 (2) -4 (3) -2 (4) -4 (5) 1 (6) -6</div>
+</section>
+<div style="text-align:center;margin:18px 0;"><a href="msp-hs10-polynomials-lesson5.html" style="text-decoration:none;background:#253a77;color:#fff;padding:9px 16px;border-radius:8px;font-weight:800;">Next: Lesson 5 →</a></div>
+
+</main>
+<footer>Mary, Star of the Sea School · Math 10 · Polynomial Functions · Dr. Park</footer>
+</div>
+<script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
+  }
+});
+
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+
+<script>
+
+// ==== Auto-save + Save/Load Answers ====
+(function(){
+  function storageKey() {
+    return 'msp-ws-' + (location.pathname.split('/').pop() || 'unknown');
+  }
+  function topicFileName() {
+    var base = (location.pathname.split('/').pop() || 'worksheet.html');
+    base = base.replace(/^msp-/, '').replace(/\.html$/, '');
+    return base + '.json';
+  }
+  function allAnswerNodes() {
+    return Array.from(document.querySelectorAll('input.ans, input.free, textarea.free, main input[type="text"]'));
+  }
+  function snapshot() {
+    var out = {};
+    allAnswerNodes().forEach(function(n, i){
+      var key = n.id || ('idx_' + i);
+      out[key] = n.value || '';
+    });
+    return out;
+  }
+  function restore(data) {
+    if (!data) return 0;
+    var nodes = allAnswerNodes();
+    var count = 0;
+    nodes.forEach(function(n){ if (n.id && data[n.id] != null) { n.value = data[n.id]; count++; } });
+    nodes.forEach(function(n, i){ var k = 'idx_' + i; if (!n.id && data[k] != null) { n.value = data[k]; count++; } });
+    return count;
+  }
+  function autoSave() {
+    try {
+      localStorage.setItem(storageKey(), JSON.stringify(snapshot()));
+      showStatus('Auto-saved ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}));
+    } catch(e){}
+  }
+  function showStatus(msg) {
+    var el = document.getElementById('save-status');
+    if (el) el.textContent = msg;
+  }
+  window.saveAnswersToFile = function() {
+    var data = snapshot();
+    data.__savedAt = new Date().toISOString();
+    data.__pageTitle = document.title;
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = topicFileName();
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+    showStatus('Downloaded ' + topicFileName());
+  };
+  window.loadAnswersFromFile = function(evt) {
+    var f = evt.target.files && evt.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        var n = restore(data);
+        autoSave();
+        showStatus('Loaded ' + n + ' answers from ' + f.name);
+      } catch(err) {
+        showStatus('Could not load file: ' + err.message);
+      }
+    };
+    reader.readAsText(f);
+    evt.target.value = '';
+  };
+  window.clearAllAnswers = function() {
+    if (!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+    allAnswerNodes().forEach(function(n){ n.value = ''; n.classList.remove('correct','wrong'); });
+    try { localStorage.removeItem(storageKey()); } catch(e){}
+    document.querySelectorAll('.correction-label').forEach(function(n){ n.remove(); });
+    document.querySelectorAll('.score').forEach(function(s){ s.textContent = '—'; s.classList.remove('good','mid','low'); });
+    showStatus('All answers cleared');
+  };
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      var raw = localStorage.getItem(storageKey());
+      if (raw) {
+        var n = restore(JSON.parse(raw));
+        if (n) showStatus('Restored ' + n + ' saved answers');
+      }
+    } catch(e){}
+    var t;
+    document.addEventListener('input', function(e) {
+      if (e.target && (e.target.classList.contains('ans') || e.target.classList.contains('free') || e.target.tagName === 'TEXTAREA' || e.target.type === 'text')) {
+        clearTimeout(t);
+        t = setTimeout(autoSave, 400);
+      }
+    });
+  });
+})();
+
+</script>
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  function check(inp){
+    var place=inp, u=inp.nextElementSibling;
+    if (u && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; place.insertAdjacentElement('afterend', fb); }
+    if (!inp.value.trim()) { fb.textContent=''; return; }
+    var ok=test(inp.value, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card=inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className='one-check-fb '+(ok?'ok':'no');
+    fb.textContent= ok ? '✓ Correct!' : '✗ Try again';
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key!=='Enter' || graded()) return;
+    var t=e.target;
+    if (!t || t.tagName!=='INPUT') return;
+    if (!(t.classList.contains('ans') || /^ans\d+$/.test(t.id||''))) return;
+    if (!expected(t)) return;
+    e.preventDefault(); check(t);
+  }, true);
+  document.addEventListener('input', function(e){
+    var t=e.target; if (!t || t.tagName!=='INPUT') return;
+    var place=t, u=t.nextElementSibling; if (u && u.classList && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling; if (fb && fb.classList.contains('one-check-fb')) fb.textContent='';
+  }, true);
+  function clean(){ document.querySelectorAll('.one-check-btn').forEach(function(n){n.remove();}); if (graded()) document.querySelectorAll('.one-check-fb').forEach(function(n){n.remove();}); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', clean); else clean();
+})();
+</script>
+<!--/CHECK-ONE-->
+</body></html>
