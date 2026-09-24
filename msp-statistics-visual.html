@@ -23,7 +23,9 @@ h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
 .controls .btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
 .dot-plot { background:#f8fafc; border-radius:10px; padding:14px 8px 28px; margin:12px 0; overflow-x:auto; }
 .stats-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin:14px 0; }
-@media (max-width:640px) { .stats-grid { grid-template-columns:repeat(2, 1fr); } }
+.stats-grid.five { grid-template-columns:repeat(5, 1fr); }
+.stats-grid.two { grid-template-columns:repeat(2, 1fr); }
+@media (max-width:640px) { .stats-grid, .stats-grid.five { grid-template-columns:repeat(2, 1fr); } }
 .stat-box { background:#f0f9ff; border:2px solid var(--blue); border-radius:10px; padding:12px; text-align:center; }
 .stat-box .label { font-size:.8rem; font-weight:800; color:var(--blue); text-transform:uppercase; letter-spacing:.05em; }
 .stat-box .value { font-size:1.4rem; font-weight:900; color:var(--navy); margin-top:4px; }
@@ -48,7 +50,7 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 <header>
   <div class="eyebrow">Math 6 · Statistics & Data · Visual Explorer</div>
   <h1>📊 Mean, Median, Mode, Range — See The Data</h1>
-  <p class="tagline">Type numbers. See the dot plot. Watch all four measures update instantly.</p>
+  <p class="tagline">Type numbers. See the dot plot and box plot. Watch every measure update instantly.</p>
 </header>
 
 <div class="big-idea">
@@ -83,10 +85,32 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
   <div class="tip" id="explainBox"></div>
 </section>
 
+<section class="card" style="border-top-color:var(--blue);">
+  <h2>📦 Box Plot: The Five-Number Summary</h2>
+  <p style="color:#475569;font-size:.95rem;margin-bottom:6px">Uses the same data you typed above. A box plot splits the sorted data into four parts, each holding about <strong>25%</strong> of the values.</p>
+  <div class="dot-plot">
+    <svg id="boxPlot" width="700" height="190" viewBox="0 0 700 190" style="max-width:100%; height:auto;"></svg>
+  </div>
+  <div class="stats-grid five">
+    <div class="stat-box"><div class="label">Min</div><div class="value" id="bMin">—</div></div>
+    <div class="stat-box"><div class="label">Q1</div><div class="value" id="bQ1">—</div></div>
+    <div class="stat-box median"><div class="label">Median</div><div class="value" id="bMed">—</div></div>
+    <div class="stat-box"><div class="label">Q3</div><div class="value" id="bQ3">—</div></div>
+    <div class="stat-box"><div class="label">Max</div><div class="value" id="bMax">—</div></div>
+  </div>
+  <div class="stats-grid two">
+    <div class="stat-box range"><div class="label">Range (Max − Min)</div><div class="value" id="bRange">—</div></div>
+    <div class="stat-box mean"><div class="label">IQR (Q3 − Q1)</div><div class="value" id="bIQR">—</div></div>
+  </div>
+  <div class="tip" id="boxExplain"></div>
+  <div class="tip" style="border-left-color:var(--green);background:#ecfdf5;"><strong>How to read it:</strong> The <strong>whiskers</strong> reach the smallest and largest values. The <strong>box</strong> covers the middle half of the data (Q1 to Q3). The line inside the box is the <strong>median</strong>. A long box or whisker means the data there is spread out.</div>
+</section>
+
 <section class="card" style="border-top-color:var(--green);">
   <h2>🧠 Big Ideas</h2>
   <div class="tip"><strong>Outliers pull the MEAN.</strong> One giant value can drag the mean up (or down) far from where most data sits. The MEDIAN is safer for skewed data.</div>
   <div class="tip"><strong>Mode</strong> tells you what&apos;s most common — great for shoe sizes, favorite colors, most-repeated grade.</div>
+  <div class="tip" style="border-left-color:var(--blue);"><strong>Box plots</strong> show the spread in quarters. The <strong>IQR</strong> (middle 50%) ignores extreme values, so an outlier changes the range a lot but the IQR only a little. Try the &quot;Outlier warning&quot; data!</div>
   <div class="tip" style="border-left-color:var(--red); background:#fef2f2;"><strong>Range</strong> tells you how spread out the data is. Small range = tightly clustered. Big range = data all over the place.</div>
 </section>
 
@@ -95,6 +119,46 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 
 <script>
 function setData(s){document.getElementById('data').value=s; render();}
+
+function medianOf(arr){ const n=arr.length, m=Math.floor(n/2); return n%2 ? arr[m] : (arr[m-1]+arr[m])/2; }
+function fmtN(v){ return Number.isInteger(v) ? String(v) : String(Math.round(v*100)/100); }
+function renderBox(data){
+  const n=data.length, half=Math.floor(n/2);
+  const lower=data.slice(0,half), upper=data.slice(n%2 ? half+1 : half);
+  const mn=data[0], mx=data[n-1], med=medianOf(data);
+  const q1 = lower.length ? medianOf(lower) : mn, q3 = upper.length ? medianOf(upper) : mx;
+  const set=(id,v)=>document.getElementById(id).textContent=fmtN(v);
+  set('bMin',mn); set('bQ1',q1); set('bMed',med); set('bQ3',q3); set('bMax',mx); set('bRange',mx-mn); set('bIQR',q3-q1);
+  const W=700, pad=40, span=(mx-mn)||1, X=v=>pad+((v-mn)/span)*(W-2*pad), yc=78;
+  let g='';
+  // number line (same scale as the dot plot)
+  g+=`<line x1="${pad}" y1="150" x2="${W-pad}" y2="150" stroke="#0f172a" stroke-width="2"/>`;
+  for (let v=Math.floor(mn); v<=mx; v++){ const x=X(v); g+=`<line x1="${x}" y1="145" x2="${x}" y2="155" stroke="#0f172a"/><text x="${x}" y="170" text-anchor="middle" font-size="11" fill="#334155">${v}</text>`; }
+  // whiskers
+  g+=`<line x1="${X(mn)}" y1="${yc}" x2="${X(q1)}" y2="${yc}" stroke="#334155" stroke-width="2.5"/>`;
+  g+=`<line x1="${X(q3)}" y1="${yc}" x2="${X(mx)}" y2="${yc}" stroke="#334155" stroke-width="2.5"/>`;
+  g+=`<line x1="${X(mn)}" y1="${yc-14}" x2="${X(mn)}" y2="${yc+14}" stroke="#334155" stroke-width="2.5"/>`;
+  g+=`<line x1="${X(mx)}" y1="${yc-14}" x2="${X(mx)}" y2="${yc+14}" stroke="#334155" stroke-width="2.5"/>`;
+  // box + median
+  g+=`<rect x="${X(q1)}" y="${yc-26}" width="${Math.max(2,X(q3)-X(q1))}" height="52" fill="#dbeafe" stroke="#0369a1" stroke-width="2.5" rx="3"/>`;
+  g+=`<line x1="${X(med)}" y1="${yc-26}" x2="${X(med)}" y2="${yc+26}" stroke="#7c3aed" stroke-width="4"/>`;
+  // labels above (stagger if crowded)
+  const labs=[[mn,'Min'],[q1,'Q1'],[med,'Median'],[q3,'Q3'],[mx,'Max']];
+  let lastX=-999, row=0;
+  labs.forEach(([v,t])=>{ const x=X(v); row = (x-lastX<46) ? 1-row : 0; lastX=x; const y = row ? 12 : 26;
+    g+=`<text x="${x}" y="${y}" text-anchor="middle" font-size="11" font-weight="800" fill="${t==='Median'?'#7c3aed':'#0369a1'}">${t} ${fmtN(v)}</text>`; });
+  // IQR bracket
+  g+=`<line x1="${X(q1)}" y1="${yc+36}" x2="${X(q3)}" y2="${yc+36}" stroke="#059669" stroke-width="2"/>`;
+  g+=`<text x="${(X(q1)+X(q3))/2}" y="${yc+50}" text-anchor="middle" font-size="11" font-weight="800" fill="#059669">IQR = ${fmtN(q3-q1)}</text>`;
+  document.getElementById('boxPlot').innerHTML=g;
+  document.getElementById('boxExplain').innerHTML = `<strong>How the five numbers were found:</strong>
+  <br>Sorted data: [${data.join(', ')}] &nbsp;→&nbsp; Median = ${fmtN(med)}
+  <br>Lower half: [${lower.join(', ') || '—'}] → Q1 (median of lower half) = ${fmtN(q1)}
+  <br>Upper half: [${upper.join(', ') || '—'}] → Q3 (median of upper half) = ${fmtN(q3)}
+  ${n%2 ? `<br><em>With an odd number of values, the middle value (${fmtN(med)}) is left out of both halves.</em>` : ''}
+  <br>IQR = Q3 − Q1 = ${fmtN(q3)} − ${fmtN(q1)} = ${fmtN(q3-q1)} &nbsp;·&nbsp; Range = ${fmtN(mx)} − ${fmtN(mn)} = ${fmtN(mx-mn)}`;
+}
+
 
 function parseData(s){
   return s.split(/[,\s]+/).map(x=>parseFloat(x)).filter(x=>!isNaN(x)).sort((a,b)=>a-b);
@@ -165,6 +229,7 @@ function render(){
   <br>Median: sorted → [${data.join(', ')}]. ${data.length % 2 === 0 ? `Two middle values (${data[mid-1]} and ${data[mid]}), average = ${median}.` : `Middle value = ${median}.`}
   <br>Mode: ${modeText === 'none' ? 'every value appears once — no mode.' : `${modes.join(', ')} appears ${maxCount} times (most).`}
   <br>Range: ${max} − ${min} = ${range}`;
+  renderBox(data);
 }
 
 document.getElementById('data').addEventListener('input', render);
