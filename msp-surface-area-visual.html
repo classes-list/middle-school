@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surface Area Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--purple); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+
+.shape-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:8px 0 12px; }
+.shape-btn { padding:9px 16px; border:2px solid var(--navy); background:#fff; color:var(--navy); border-radius:8px; font-weight:800; cursor:pointer; font-size:.95rem; }
+.shape-btn.on { background:var(--navy); color:#fff; }
+.layout { display:grid; grid-template-columns: 1fr 300px; gap:18px; align-items:start; }
+@media (max-width:820px){ .layout { grid-template-columns:1fr; } }
+.grid-wrap { background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:8px; }
+.sliders { background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:12px 14px; }
+.sl { margin:8px 0 12px; }
+.sl label { display:flex; justify-content:space-between; font-weight:800; color:var(--navy); font-size:.95rem; }
+.sl input[type=range] { width:100%; accent-color: var(--purple); }
+.formula { background:#f5f3ff; border:2px solid var(--purple); border-radius:10px; padding:12px 14px; margin-top:12px; font-size:1.05rem; line-height:1.7; }
+.formula .big { font-size:1.5rem; font-weight:900; color:var(--navy); }
+.why-toggle { margin-top:10px; display:flex; align-items:center; gap:8px; font-weight:800; color:var(--navy); cursor:pointer; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.95rem; }
+.practice { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.practice input { padding:8px 12px; border:1.5px solid #94a3b8; border-radius:6px; font-size:1rem; width:120px; }
+.btn { padding:9px 16px; background:var(--navy); color:#fff; border:none; border-radius:8px; font-weight:800; cursor:pointer; }
+.btn.alt { background:var(--purple); }
+.fb { font-weight:800; margin-top:8px; }
+.fb.ok { color:var(--green); } .fb.no { color:var(--red); }
+
+.views { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:820px){ .views { grid-template-columns:1fr; } }
+.view { background:#fff; border:1px solid #cbd5e1; border-radius:10px; padding:8px; }
+.view h3 { font-size:1rem; color:var(--navy); margin:2px 4px 6px; }
+.facelist { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.chip { padding:4px 10px; border-radius:999px; font-weight:800; font-size:.88rem; border:2px solid; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html" class="back-link">← Back to Math 6</a>
+<header>
+  <div class="eyebrow">Math 6 · Surface Area · Visual Explorer</div>
+  <h1>📦 Surface Area Visual: Unfold the Shape</h1>
+  <p class="tagline">Surface area = the total area of every face. Unfold the solid into a net and add up the faces.</p>
+</header>
+<div class="big-idea"><strong>Big idea:</strong> Surface area is how much <strong>wrapping paper</strong> covers the outside of a 3D shape. Unfold it into a flat <strong>net</strong>, find the area of each face, and <strong>add them all up</strong>. Matching colors = matching (equal) faces.</div>
+
+<section class="card">
+  <h2>🎯 Explore a Solid</h2>
+  <div class="shape-btns">
+    <button class="shape-btn on" data-s="cube">Cube</button>
+    <button class="shape-btn" data-s="rect">Rectangular Prism</button>
+    <button class="shape-btn" data-s="tri">Triangular Prism</button>
+    <button class="shape-btn" data-s="pyr">Square Pyramid</button>
+  </div>
+  <div class="layout">
+    <div class="views">
+      <div class="view"><h3>3D view</h3><svg id="v3d" viewBox="0 0 320 260" style="width:100%;height:auto;display:block"></svg></div>
+      <div class="view"><h3>Net (unfolded) — each face labeled with its area</h3><svg id="vnet" viewBox="0 0 320 320" style="width:100%;height:auto;display:block"></svg></div>
+    </div>
+    <div>
+      <div class="sliders" id="sliders"></div>
+      <div class="formula" id="formula"></div>
+    </div>
+  </div>
+  <div class="facelist" id="faces"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>✏️ Quick Practice</h2>
+  <p id="pq" style="font-size:1.05rem;font-weight:700;color:var(--navy)"></p>
+  <svg id="psvg" viewBox="0 0 320 260" style="width:320px;max-width:100%;height:auto;display:block;margin:6px 0"></svg>
+  <div class="practice"><span style="font-weight:800">Surface area =</span><input id="pa" inputmode="decimal" placeholder="?"><span>square units</span><button class="btn" id="pcheck">Check</button><button class="btn alt" id="pnew">New problem</button></div>
+  <div class="fb" id="pfb"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--gold);">
+  <h2>🧠 Formula Summary</h2>
+  <div class="tip"><strong>Cube:</strong> 6 equal squares → SA = 6s²</div>
+  <div class="tip"><strong>Rectangular prism:</strong> 3 pairs of matching rectangles → SA = 2(lw + lh + wh)</div>
+  <div class="tip"><strong>Triangular prism:</strong> 2 triangles + 3 rectangles → SA = 2 × (½bh) + (side₁ + side₂ + side₃) × length</div>
+  <div class="tip"><strong>Square pyramid:</strong> 1 square + 4 triangles → SA = s² + 4 × (½ × s × slant height)</div>
+  <div class="tip" style="border-left-color:var(--red);background:#fef2f2;"><strong>Remember:</strong> surface area is measured in <strong>square units</strong> (units²) because it is an area — not cubic units like volume.</div>
+</section>
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Surface Area Visual</footer>
+</div>
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const fmt=n=>(Math.round(n*100)/100).toString();
+  const C={a:['#ddd6fe','#7c3aed'],b:['#bae6fd','#0369a1'],c:['#fde68a','#b45309'],d:['#fecdd3','#be123c'],e:['#bbf7d0','#15803d']};
+  const SL={cube:[['s','side (s)',1,8,3]],rect:[['l','length (l)',1,8,5],['w','width (w)',1,6,3],['h','height (h)',1,6,2]],
+            tri:[['tb','triangle base',2,8,4],['th','triangle height',1,6,3],['L','prism length',1,8,6]],pyr:[['s','base side (s)',2,8,6],['sl','slant height',1,8,5]]};
+  let shape='cube', V={};
+  function buildSliders(){
+    $('sliders').innerHTML=SL[shape].map(([k,lab,mn,mx,def])=>{ const v=V[shape+k]||def; return `<div class="sl"><label><span>${lab}</span><span id="v_${k}">${v}</span></label><input type="range" id="r_${k}" min="${mn}" max="${mx}" value="${v}"></div>`; }).join('');
+    SL[shape].forEach(([k])=>$('r_'+k).addEventListener('input',e=>{ V[shape+k]=+e.target.value; draw(); }));
+  }
+  const g=id=>+$('r_'+id).value;
+  const poly=(p,f,s,extra='')=>`<polygon points="${p.map(q=>q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ')}" fill="${f}" stroke="${s}" stroke-width="2.2" stroke-linejoin="round" ${extra}/>`;
+  const txt=(x,y,t,col='#1e293b',sz=13,anc='middle')=>`<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" font-size="${sz}" font-weight="800" fill="${col}" text-anchor="${anc}">${t}</text>`;
+  const dash=(a,b,col)=>`<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${col}" stroke-width="1.4" stroke-dasharray="5,4"/>`;
+  function box3d(l,w,h,cols,labs){
+    const dk=.55, u=Math.min(200/(l+w*dk*.87),170/(h+w*dk*.5)), dx=w*u*dk*.87, dy=w*u*dk*.5, x0=(320-(l*u+dx))/2, y0=225;
+    const A=[x0,y0],B=[x0+l*u,y0],Cc=[x0+l*u,y0-h*u],D=[x0,y0-h*u],Bk=[x0+dx,y0-dy]; let s='';
+    s+=dash(A,Bk,'#475569')+dash(Bk,[Bk[0]+l*u,Bk[1]],'#475569')+dash(Bk,[Bk[0],Bk[1]-h*u],'#475569');
+    s+=poly([D,Cc,[Cc[0]+dx,Cc[1]-dy],[D[0]+dx,D[1]-dy]],cols[0][0],cols[0][1]);
+    s+=poly([B,[B[0]+dx,B[1]-dy],[Cc[0]+dx,Cc[1]-dy],Cc],cols[2][0],cols[2][1]);
+    s+=poly([A,B,Cc,D],cols[1][0],cols[1][1]);
+    s+=txt((A[0]+B[0])/2,y0+18,labs[0])+txt(A[0]-8,(A[1]+D[1])/2+5,labs[2],'#1e293b',13,'end')+txt(B[0]+dx/2+10,B[1]-dy/2+10,labs[1],'#1e293b',13,'start');
+    return s;
+  }
+  function netRect(l,w,h,cols,cube){
+    const u=Math.min(290/(2*w+l),300/(2*w+2*h)); const x0=(320-(2*w+l)*u)/2, y0=(320-(2*w+2*h)*u)/2; let s='', y=y0;
+    const col=[[w,cols[0],'top'],[h,cols[1],'front'],[w,cols[0],'bottom'],[h,cols[1],'back']]; let fy=0;
+    col.forEach(([hh,cc,nm],i)=>{ s+=`<rect x="${(x0+w*u).toFixed(1)}" y="${y.toFixed(1)}" width="${(l*u).toFixed(1)}" height="${(hh*u).toFixed(1)}" fill="${cc[0]}" stroke="${cc[1]}" stroke-width="2"/>`;
+      s+=txt(x0+w*u+l*u/2,y+hh*u/2+5,fmt(l*hh),cc[1],14); if(i===1) fy=y; y+=hh*u; });
+    [x0,x0+(w+l)*u].forEach(x=>{ s+=`<rect x="${x.toFixed(1)}" y="${fy.toFixed(1)}" width="${(w*u).toFixed(1)}" height="${(h*u).toFixed(1)}" fill="${cols[2][0]}" stroke="${cols[2][1]}" stroke-width="2"/>`+txt(x+w*u/2,fy+h*u/2+5,fmt(w*h),cols[2][1],14); });
+    return s;
+  }
+  function draw(){
+    let s3='', sn='', F='', faces=[];
+    if (shape==='cube'||shape==='rect'){
+      const l= shape==='cube'? g('s'):g('l'), w= shape==='cube'? g('s'):g('w'), h= shape==='cube'? g('s'):g('h');
+      const cols = shape==='cube' ? [C.a,C.a,C.a] : [C.b,C.c,C.e];
+      s3=box3d(l,w,h,cols, shape==='cube'?[l,w,h]:['l = '+l,'w = '+w,'h = '+h]); sn=netRect(l,w,h,cols);
+      const sa=2*(l*w+l*h+w*h);
+      if (shape==='cube'){ faces=[[`6 squares × ${l*l}`,C.a]]; F=`<strong>Cube</strong><br>SA = 6 × s²<br>= 6 × ${l}² = 6 × ${l*l}<br><span class="big">SA = ${sa}</span> units²`; }
+      else { faces=[[`top & bottom: 2 × ${l*w}`,C.b],[`front & back: 2 × ${l*h}`,C.c],[`2 sides: 2 × ${w*h}`,C.e]];
+        F=`<strong>Rectangular prism</strong><br>SA = 2(lw + lh + wh)<br>= 2(${l*w} + ${l*h} + ${w*h}) = 2 × ${l*w+l*h+w*h}<br><span class="big">SA = ${sa}</span> units²`; }
+    } else if (shape==='tri'){
+      const b=g('tb'), h=g('th'), L=g('L'), side=Math.sqrt((b/2)**2+h*h), sides=[side,side,b];
+      // 3D
+      const u=Math.min(150/b,140/h), Lp=Math.min(130,L*18), dx=Lp*.62, dy=Lp*.36, x0=40, y0=225;
+      const A=[x0,y0],B=[x0+b*u,y0],P=[x0+b*u/2,y0-h*u],A2=[A[0]+dx,A[1]-dy],B2=[B[0]+dx,B[1]-dy],P2=[P[0]+dx,P[1]-dy];
+      s3=dash(A,A2,'#475569')+dash(A2,B2,'#475569')+dash(A2,P2,'#475569')+poly([P,P2,B2,B],C.c[0],C.c[1])+poly([A,B,P],C.d[0],C.d[1]);
+      s3+=`<line x1="${P[0]}" y1="${P[1]}" x2="${P[0]}" y2="${y0}" stroke="${C.d[1]}" stroke-width="1.6" stroke-dasharray="5,4"/>`+txt(P[0]+6,(P[1]+y0)/2+5,'h = '+h,C.d[1],12,'start')+txt((A[0]+B[0])/2,y0+18,'b = '+b)+txt((B[0]+B2[0])/2+14,(B[1]+B2[1])/2+12,'length '+L,'#1e293b',12,'start')+txt((A[0]+P[0])/2-6,(A[1]+P[1])/2,fmt(side),C.d[1],12,'end');
+      // net: 3 rectangles in a column (length × side), triangles on the middle one
+      const W=[side,b,side], tot=side*2+b, uu=Math.min(170/L,260/(tot+2*h)); const nx=(320-L*uu)/2; let y=(320-(tot+2*h)*uu)/2+h*uu;
+      const top=y; W.forEach((ww,i)=>{ const cc=i===1?C.c:C.e; sn+=`<rect x="${nx.toFixed(1)}" y="${y.toFixed(1)}" width="${(L*uu).toFixed(1)}" height="${(ww*uu).toFixed(1)}" fill="${cc[0]}" stroke="${cc[1]}" stroke-width="2"/>`+txt(nx+L*uu/2,y+ww*uu/2+5,fmt(L*ww),cc[1],13); y+=ww*uu; });
+      const cxT=nx+L*uu/2;
+      sn+=poly([[cxT-b*uu/2,top],[cxT+b*uu/2,top],[cxT,top-h*uu]].map(p=>p),C.d[0],C.d[1],'transform="rotate(0)"');
+      // put triangles off the middle rectangle's short sides instead: left & right of middle rect
+      sn=''; y=(320-(tot)*uu)/2; const xs=(320-(L*uu+2*h*uu))/2+h*uu; const mids=[];
+      W.forEach((ww,i)=>{ const cc=i===1?C.c:C.e; sn+=`<rect x="${xs.toFixed(1)}" y="${y.toFixed(1)}" width="${(L*uu).toFixed(1)}" height="${(ww*uu).toFixed(1)}" fill="${cc[0]}" stroke="${cc[1]}" stroke-width="2"/>`+txt(xs+L*uu/2,y+ww*uu/2+5,fmt(L*ww),cc[1],13); if(i===1) mids.push(y); y+=ww*uu; });
+      const my=mids[0];
+      sn+=poly([[xs,my],[xs,my+b*uu],[xs-h*uu,my+b*uu/2]],C.d[0],C.d[1])+txt(xs-h*uu/2+3,my+b*uu/2+5,fmt(b*h/2),C.d[1],12);
+      sn+=poly([[xs+L*uu,my],[xs+L*uu,my+b*uu],[xs+L*uu+h*uu,my+b*uu/2]],C.d[0],C.d[1])+txt(xs+L*uu+h*uu/2-3,my+b*uu/2+5,fmt(b*h/2),C.d[1],12);
+      const tri=b*h/2, rects=(2*side+b)*L, sa=2*tri+rects;
+      faces=[[`2 triangles: 2 × ${fmt(tri)}`,C.d],[`bottom rectangle: ${b} × ${L} = ${b*L}`,C.c],[`2 slanted rectangles: 2 × ${fmt(side*L)}`,C.e]];
+      F=`<strong>Triangular prism</strong><br>2 triangles: 2 × (${b} × ${h} ÷ 2) = ${fmt(2*tri)}<br>3 rectangles: (${fmt(side)} + ${fmt(side)} + ${b}) × ${L} = ${fmt(rects)}<br><span class="big">SA ≈ ${fmt(sa)}</span> units²<br><small>(slanted sides ${fmt(side)} found with the triangle's shape)</small>`;
+    } else {
+      const s=g('s'), sl=g('sl');
+      const u=Math.min(170/s,24), sw=s*u, dx=sw*.45, dy=sw*.28, x0=(320-sw-dx)/2, y0=225;
+      const A=[x0,y0],B=[x0+sw,y0],Cc=[B[0]+dx,B[1]-dy],D=[x0+dx,y0-dy],cx=(A[0]+Cc[0])/2,cy=(A[1]+Cc[1])/2,P=[cx,cy-Math.max(60,sl*22)];
+      s3=dash(A,D,'#475569')+dash(D,Cc,'#475569')+dash(D,P,'#475569')+poly([B,Cc,P],C.d[1]+'55',C.d[1])+poly([A,B,P],C.d[0],C.d[1]);
+      const M=[(A[0]+B[0])/2,y0]; s3+=`<line x1="${P[0]}" y1="${P[1]}" x2="${M[0]}" y2="${M[1]}" stroke="${C.d[1]}" stroke-width="1.8" stroke-dasharray="6,4"/>`+txt(M[0]+6,(P[1]+y0)/2+12,'slant '+sl,C.d[1],12,'start')+txt(M[0],y0+18,'s = '+s);
+      const uu=Math.min(300/(s+2*sl),300/(s+2*sl)), q=s*uu, t=sl*uu, ox=(320-q)/2, oy=(320-q)/2;
+      sn=`<rect x="${ox}" y="${oy}" width="${q}" height="${q}" fill="${C.b[0]}" stroke="${C.b[1]}" stroke-width="2"/>`+txt(ox+q/2,oy+q/2+5,s*s,C.b[1],14);
+      [[[ox,oy],[ox+q,oy],[ox+q/2,oy-t]],[[ox,oy+q],[ox+q,oy+q],[ox+q/2,oy+q+t]],[[ox,oy],[ox,oy+q],[ox-t,oy+q/2]],[[ox+q,oy],[ox+q,oy+q],[ox+q+t,oy+q/2]]]
+        .forEach(p=>{ sn+=poly(p,C.d[0],C.d[1]); const cxx=(p[0][0]+p[1][0]+p[2][0])/3, cyy=(p[0][1]+p[1][1]+p[2][1])/3; sn+=txt(cxx,cyy+5,fmt(s*sl/2),C.d[1],12); });
+      const sa=s*s+4*(s*sl/2);
+      faces=[[`square base: ${s} × ${s} = ${s*s}`,C.b],[`4 triangles: 4 × (${s} × ${sl} ÷ 2) = ${fmt(4*s*sl/2)}`,C.d]];
+      F=`<strong>Square pyramid</strong><br>SA = s² + 4 × (s × slant ÷ 2)<br>= ${s*s} + 4 × ${fmt(s*sl/2)}<br><span class="big">SA = ${fmt(sa)}</span> units²`;
+    }
+    $('v3d').innerHTML=s3; $('vnet').innerHTML=sn; $('formula').innerHTML=F;
+    $('faces').innerHTML=faces.map(([t,c])=>`<span class="chip" style="background:${c[0]};border-color:${c[1]};color:#1e293b">${t}</span>`).join('');
+    SL[shape].forEach(([k])=>{ $('v_'+k).textContent=g(k); });
+  }
+  document.querySelectorAll('.shape-btn').forEach(b=>b.addEventListener('click',()=>{ document.querySelectorAll('.shape-btn').forEach(x=>x.classList.remove('on')); b.classList.add('on'); shape=b.dataset.s; buildSliders(); draw(); }));
+  buildSliders(); draw();
+
+  // ---------- Quick practice ----------
+  let P={};
+  const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+  function newProblem(){
+    const k=['cube','rect','rect','pyr'][rnd(0,3)];
+    if (k==='cube'){ const s=rnd(2,9); P={ans:6*s*s, hint:`SA = 6 × s² = 6 × ${s*s}`}; $('pq').textContent=`Find the surface area of a cube with side ${s}.`; $('psvg').innerHTML=box3d(s,s,s,[C.a,C.a,C.a],[s,s,s]); }
+    else if (k==='rect'){ const l=rnd(2,9), w=rnd(2,6), h=rnd(1,6); P={ans:2*(l*w+l*h+w*h), hint:`SA = 2(lw + lh + wh) = 2(${l*w} + ${l*h} + ${w*h})`}; $('pq').textContent=`Find the surface area of a rectangular prism: l = ${l}, w = ${w}, h = ${h}.`; $('psvg').innerHTML=box3d(l,w,h,[C.b,C.c,C.e],[l,w,h]); }
+    else { const s=rnd(2,8)*1, sl=rnd(3,9); P={ans:s*s+2*s*sl, hint:`SA = s² + 4 × (s × slant ÷ 2) = ${s*s} + 4 × ${fmt(s*sl/2)}`}; $('pq').textContent=`Find the surface area of a square pyramid: base side ${s}, slant height ${sl}.`;
+      const u=Math.min(170/s,24), sw=s*u, dx=sw*.45, dy=sw*.28, x0=(320-sw-dx)/2, y0=225; const A=[x0,y0],B=[x0+sw,y0],Cc=[B[0]+dx,B[1]-dy],D=[x0+dx,y0-dy],cx=(A[0]+Cc[0])/2,cy=(A[1]+Cc[1])/2,Pp=[cx,cy-Math.max(60,sl*22)],M=[(A[0]+B[0])/2,y0];
+      $('psvg').innerHTML=dash(A,D,'#475569')+dash(D,Cc,'#475569')+dash(D,Pp,'#475569')+poly([B,Cc,Pp],'#be123c55','#be123c')+poly([A,B,Pp],C.d[0],C.d[1])+`<line x1="${Pp[0]}" y1="${Pp[1]}" x2="${M[0]}" y2="${M[1]}" stroke="#be123c" stroke-width="1.8" stroke-dasharray="6,4"/>`+txt(M[0]+6,(Pp[1]+y0)/2+12,sl,'#be123c',13,'start')+txt(M[0],y0+18,s); }
+    $('pa').value=''; $('pfb').textContent=''; $('pfb').className='fb';
+  }
+  function check(){
+    const v=parseFloat(String($('pa').value).replace(/[^0-9.\-]/g,''));
+    if (isNaN(v)){ $('pfb').textContent='Type a number first.'; $('pfb').className='fb no'; return; }
+    if (Math.abs(v-P.ans)<1e-9){ $('pfb').textContent='✓ Correct! Surface area = '+fmt(P.ans)+' square units.'; $('pfb').className='fb ok'; }
+    else { $('pfb').textContent='✗ Not quite. Hint: '+P.hint+'.'; $('pfb').className='fb no'; }
+  }
+  $('pcheck').addEventListener('click',check); $('pa').addEventListener('keydown',e=>{ if(e.key==='Enter') check(); }); $('pnew').addEventListener('click',newProblem);
+  newProblem();
+})();
+</script>
+</body>
+</html>
