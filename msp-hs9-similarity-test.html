@@ -176,10 +176,7 @@ function applyMode(mode) {
 function setMode(mode) {
   const url = new URL(location.href);
   if (mode === 'graded') url.searchParams.set('mode','graded'); else url.searchParams.delete('mode');
-<<<<<<< HEAD
   if (mode === 'graded' && !isGradedMode()) { location.href = url.toString(); return; }
-=======
->>>>>>> 71e5a7cd9542707c26f22c72573d85d64cae8a70
   history.replaceState(null, '', url.toString());
   applyMode(mode);
 }
@@ -221,7 +218,7 @@ function setMode(mode) {
   }
 })();
 </script>
-<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+<a href="msos-math-9.html#unit=similarity" class="back-to-unit">← Back to Unit</a>
 
 <main>
 <div class="instructions">Answer all the problems. Show all work in your notebook. Click <strong>Show Answer Key</strong> when finished.</div>
@@ -379,11 +376,7 @@ function submitToTeacher(){
     const inp = li.querySelector('input.ans');
     if(!inp) return;
     const clone = li.cloneNode(true);
-<<<<<<< HEAD
     clone.querySelectorAll('input, svg, .one-check-fb, .correction-label, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
-=======
-    clone.querySelectorAll('input, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
->>>>>>> 71e5a7cd9542707c26f22c72573d85d64cae8a70
     const qText = clone.textContent.trim().replace(/\s+/g,' ').slice(0,120);
     const student = (inp.value||'').trim() || '(blank)';
     let mark = '';

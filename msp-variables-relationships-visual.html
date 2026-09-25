@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Variables &amp; Relationships Visual — Math 6</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --purple:#7c3aed; --blue:#0369a1; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.controls { display:flex; gap:20px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); display:flex; flex-direction:column; align-items:center; gap:6px; }
+.controls input[type=range] { width:180px; }
+.controls .val { font-weight:900; color:var(--navy); font-size:1.1rem; background:#fff; padding:2px 10px; border-radius:6px; border:1.5px solid #cbd5e1; }
+.graph-wrap { background:#f8fafc; border-radius:10px; padding:12px; margin:16px 0; text-align:center; }
+.graph-svg { max-width:100%; height:auto; }
+.equation-display { text-align:center; margin:16px 0; font-family:'Courier New', monospace; font-size:1.3rem; font-weight:900; color:var(--navy); background:#fef08a; padding:14px 18px; border-radius:10px; border:2px solid var(--gold); }
+.equation-display .a2 { color:var(--red); }
+.equation-display .b2 { color:var(--blue); }
+.equation-display .c2 { color:var(--green); }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:8px 14px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; }
+.preset-btn:hover { background:#0f172a; }
+.triple-tag { display:inline-block; background:#22c55e; color:#fff; font-weight:800; padding:4px 10px; border-radius:6px; font-size:.85rem; margin-left:8px; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+.four { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0; }
+.box { background:#fff; border:2px solid #cbd5e1; border-radius:10px; padding:12px 14px; }
+.box h3 { font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:#64748b; margin-bottom:6px; }
+.words { font-size:1.05rem; } .words .ind { color:var(--blue); font-weight:800; } .words .dep { color:var(--red); font-weight:800; }
+.eqn { font-family:'Courier New',monospace; font-size:1.5rem; font-weight:900; color:var(--navy); text-align:center; padding:8px 0; }
+table.tt { width:100%; border-collapse:collapse; font-size:.95rem; } table.tt th { background:var(--navy); color:#fff; padding:5px; } table.tt td { border:1px solid #cbd5e1; text-align:center; padding:4px; }
+table.tt tr.hi td { background:#fef08a; font-weight:900; }
+.prop { text-align:center; font-weight:800; padding:10px; border-radius:8px; margin:8px 0; }
+.sort-card { background:#fff; border:2px solid var(--purple); border-radius:10px; padding:14px; text-align:center; margin:10px 0; }
+.sort-card .pair { font-size:1.15rem; font-weight:800; color:var(--navy); margin:8px 0 12px; }
+.sort-card button { margin:4px; }
+@media (max-width:700px){ .four { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-6.html#unit=variables-relationships" class="back-link">← Back to Unit</a>
+<header>
+  <div class="eyebrow">Math 6 · Variables &amp; Relationships · Visual Explorer</div>
+  <h1>📊 One Relationship, Four Ways to See It</h1>
+  <p class="tagline">Change the independent variable — watch the dependent variable respond.</p>
+</header>
+<div class="big-idea">
+  <strong>The visual truth:</strong> The <span style="color:#0369a1;font-weight:800">independent variable (x)</span> is the one you control. The <span style="color:#dc2626;font-weight:800">dependent variable (y)</span> responds to it. Words, an equation, a table, and a graph are four views of the <em>same</em> relationship — change one and all four change together.
+</div>
+
+<section class="card">
+  <h2>🎯 Try It: Pick a Situation, Then Slide x</h2>
+  <div class="preset-btns">
+    <button class="preset-btn" onclick="pick(0)">💵 Summer Job</button>
+    <button class="preset-btn" onclick="pick(1)">🚗 Road Trip</button>
+    <button class="preset-btn" onclick="pick(2)">🛁 Filling a Tub</button>
+    <button class="preset-btn" onclick="pick(3)">📱 Phone Plan</button>
+    <button class="preset-btn" onclick="pick(4)">🌱 Growing Plant</button>
+  </div>
+  <div class="controls">
+    <label>Rate (change in y for each 1 in x) <input type="range" id="m" min="1" max="60" step="1" value="12"><span class="val" id="mVal">12</span></label>
+    <label>Starting amount (y when x = 0) <input type="range" id="b" min="0" max="50" step="1" value="0"><span class="val" id="bVal">0</span></label>
+    <label><span id="xLab">x</span> <input type="range" id="x" min="0" max="10" step="1" value="3"><span class="val" id="xVal">3</span></label>
+  </div>
+  <div class="four">
+    <div class="box"><h3>1 · Words</h3><div class="words" id="words"></div></div>
+    <div class="box"><h3>2 · Equation</h3><div class="eqn" id="eqn"></div><div id="calc" style="text-align:center;color:#475569;"></div></div>
+    <div class="box"><h3>3 · Table</h3><table class="tt" id="tbl"></table></div>
+    <div class="box"><h3>4 · Graph</h3><svg class="graph-svg" id="g" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  </div>
+  <div class="prop" id="prop"></div>
+</section>
+
+<section class="card" style="border-top-color:var(--purple);">
+  <h2>🧩 Quick Check: Which Variable Is Independent?</h2>
+  <p>Click the variable that <strong>causes</strong> the change (the independent variable).</p>
+  <div class="sort-card"><div class="pair" id="pair"></div><div id="opts"></div><div id="fb" style="margin-top:8px;font-weight:800;"></div>
+  <div style="margin-top:8px;color:#64748b;font-size:.9rem;">Score: <span id="score">0 / 0</span></div></div>
+</section>
+
+<section class="card" style="border-top-color:var(--green);">
+  <h2>🧠 Big Ideas</h2>
+  <div class="tip"><strong>Ask “which one depends on the other?”</strong> Money earned depends on hours worked, so hours is independent (x) and money is dependent (y).</div>
+  <div class="tip" style="border-left-color:var(--purple); background:#f5f3ff;"><strong>Graph rule:</strong> The independent variable goes on the horizontal x-axis; the dependent variable goes on the vertical y-axis.</div>
+  <div class="tip" style="border-left-color:var(--green); background:#ecfdf5;"><strong>Proportional?</strong> A relationship is proportional when y ÷ x is the same every time (the constant of proportionality k). Its equation is y = kx and its graph is a straight line through the origin (0, 0). A starting amount breaks proportionality.</div>
+  <div class="tip" style="border-left-color:var(--red); background:#fef2f2;"><strong>Common mistake:</strong> Mixing up the two variables. Time is almost always independent — it keeps moving no matter what.</div>
+</section>
+<footer>Mary, Star of the Sea School · 6th Grade Math · Dr. Park · Variables &amp; Relationships Visual Explorer</footer>
+</div>
+<script>
+const S=[
+ {x:'hours worked',y:'money earned',xu:'hr',pre:'$',yu:'',m:12,b:0,words:(m,b)=>`You earn <b>$${m}</b> for every hour you work${b?`, plus a <b>$${b}</b> signing bonus`:''}.`},
+ {x:'hours driven',y:'miles traveled',xu:'hr',pre:'',yu:' mi',m:50,b:0,words:(m,b)=>`The car goes <b>${m} miles</b> each hour${b?`, and it already went <b>${b} miles</b> before you started timing`:''}.`},
+ {x:'minutes',y:'gallons of water',xu:'min',pre:'',yu:' gal',m:4,b:5,words:(m,b)=>`The faucet adds <b>${m} gallons</b> each minute${b?` to a tub that already holds <b>${b} gallons</b>`:''}.`},
+ {x:'GB of data used',y:'monthly bill',xu:'GB',pre:'$',yu:'',m:5,b:20,words:(m,b)=>`The plan costs <b>$${b}</b> a month plus <b>$${m}</b> for each GB of data.`},
+ {x:'weeks',y:'plant height',xu:'wk',pre:'',yu:' cm',m:3,b:2,words:(m,b)=>`The plant grows <b>${m} cm</b> each week${b?` starting from <b>${b} cm</b> tall`:''}.`}
+];
+let cur=0;
+function pick(i){ cur=i; const s=S[i]; document.getElementById('m').value=s.m; document.getElementById('b').value=s.b; render(); }
+function render(){
+  const s=S[cur], m=+document.getElementById('m').value, b=+document.getElementById('b').value, x=+document.getElementById('x').value, y=m*x+b;
+  document.getElementById('mVal').textContent=m; document.getElementById('bVal').textContent=b; document.getElementById('xVal').textContent=x;
+  document.getElementById('xLab').textContent='x = '+s.x;
+  const fy=v=>s.pre+v+s.yu;
+  document.getElementById('words').innerHTML=s.words(m,b)+`<br><br>The <span class="ind">${s.x}</span> is the <span class="ind">independent variable (x)</span>.<br>The <span class="dep">${s.y}</span> is the <span class="dep">dependent variable (y)</span> — it depends on the ${s.x}.`;
+  document.getElementById('eqn').innerHTML=`y = ${m}x${b?' + '+b:''}`;
+  document.getElementById('calc').innerHTML=`When x = <b>${x}</b>: y = ${m} × ${x}${b?' + '+b:''} = <b style="color:#dc2626">${fy(y)}</b>`;
+  let t=`<tr><th style="background:#0369a1">x (${s.xu})</th><th style="background:#dc2626">y</th><th>y ÷ x</th></tr>`;
+  for(let i=0;i<=6;i++){ const yy=m*i+b; t+=`<tr class="${i===x?'hi':''}"><td>${i}</td><td>${fy(yy)}</td><td>${i?+(yy/i).toFixed(2):'—'}</td></tr>`; }
+  if(x>6) t+=`<tr class="hi"><td>${x}</td><td>${fy(y)}</td><td>${+(y/x).toFixed(2)}</td></tr>`;
+  document.getElementById('tbl').innerHTML=t;
+  // graph
+  const ymax=Math.max(10,m*10+b), step=niceStep(ymax);
+  const top=Math.ceil(ymax/step)*step;
+  const X=v=>45+v*29, Y=v=>245-v*220/top;
+  let g='';
+  for(let i=0;i<=10;i++) g+=`<line x1="${X(i)}" y1="25" x2="${X(i)}" y2="245" stroke="#e2e8f0"/><text x="${X(i)}" y="260" font-size="10" text-anchor="middle" fill="#475569">${i}</text>`;
+  for(let v=0;v<=top;v+=step) g+=`<line x1="45" y1="${Y(v)}" x2="335" y2="${Y(v)}" stroke="#e2e8f0"/><text x="40" y="${Y(v)+3}" font-size="10" text-anchor="end" fill="#475569">${v}</text>`;
+  g+=`<line x1="45" y1="245" x2="340" y2="245" stroke="#0369a1" stroke-width="2.5"/><line x1="45" y1="245" x2="45" y2="20" stroke="#dc2626" stroke-width="2.5"/>`;
+  g+=`<text x="190" y="276" font-size="11" font-weight="800" text-anchor="middle" fill="#0369a1">${s.x} (x)</text>`;
+  g+=`<text x="12" y="135" font-size="11" font-weight="800" text-anchor="middle" fill="#dc2626" transform="rotate(-90 12 135)">${s.y} (y)</text>`;
+  g+=`<line x1="${X(0)}" y1="${Y(b)}" x2="${X(10)}" y2="${Y(m*10+b)}" stroke="#7c3aed" stroke-width="3"/>`;
+  for(let i=0;i<=10;i++) g+=`<circle cx="${X(i)}" cy="${Y(m*i+b)}" r="3" fill="#7c3aed"/>`;
+  g+=`<line x1="${X(x)}" y1="245" x2="${X(x)}" y2="${Y(y)}" stroke="#0369a1" stroke-dasharray="4,3"/><line x1="45" y1="${Y(y)}" x2="${X(x)}" y2="${Y(y)}" stroke="#dc2626" stroke-dasharray="4,3"/>`;
+  g+=`<circle cx="${X(x)}" cy="${Y(y)}" r="7" fill="#fef08a" stroke="#dc2626" stroke-width="3"/><text x="${Math.min(X(x)+10,250)}" y="${Math.max(Y(y)-10,36)}" font-size="12" font-weight="900" fill="#1a2a4a">(${x}, ${y})</text>`;
+  document.getElementById('g').innerHTML=g;
+  const p=document.getElementById('prop');
+  if(b===0){ p.style.background='#dcfce7'; p.style.color='#14532d'; p.innerHTML=`✅ PROPORTIONAL: y ÷ x is always <b>${m}</b> (the constant of proportionality k = ${m}), and the line goes through (0, 0).`; }
+  else { p.style.background='#fee2e2'; p.style.color='#7f1d1d'; p.innerHTML=`❌ NOT proportional: the line starts at <b>(0, ${b})</b>, not (0, 0), so y ÷ x keeps changing. Slide the starting amount to 0 to make it proportional.`; }
+}
+function niceStep(v){ for(const s of [1,2,5,10,20,25,50,100,200]) if(v/s<=10) return s; return 500; }
+const PAIRS=[['hours of sleep','energy level','hours of sleep'],['number of tickets bought','total cost','number of tickets bought'],['plant height','amount of sunlight','amount of sunlight'],['distance run','time spent running','time spent running'],['test score','hours studied','hours studied'],['temperature outside','ice cream sold','temperature outside'],['number of pages printed','ink used','number of pages printed'],['money saved','weeks of saving','weeks of saving']];
+let q=0,right=0,tried=0,answered=false;
+function nextPair(){ const p=PAIRS[q%PAIRS.length]; answered=false;
+  document.getElementById('pair').textContent=`${p[0]}  ↔  ${p[1]}`;
+  document.getElementById('opts').innerHTML=[p[0],p[1]].map(o=>`<button class="preset-btn" onclick="choose(this,'${o}')">${o}</button>`).join('')+`<button class="preset-btn" style="background:#64748b" onclick="q++;nextPair()">Next ▶</button>`;
+  document.getElementById('fb').textContent=''; }
+function choose(btn,o){ if(answered) return; answered=true; tried++; const p=PAIRS[q%PAIRS.length]; const ok=o===p[2]; if(ok) right++;
+  const dep=p[0]===p[2]?p[1]:p[0];
+  const fb=document.getElementById('fb'); fb.style.color=ok?'#15803d':'#b91c1c';
+  fb.textContent=ok?`✓ Correct! The ${p[2]} causes the change, so the ${dep} depends on it.`:`✗ Not quite. The ${dep} depends on the ${p[2]}, so the ${p[2]} is independent.`;
+  document.getElementById('score').textContent=`${right} / ${tried}`; }
+document.addEventListener('input',e=>{ if(e.target.type==='range') render(); });
+pick(0); nextPair();
+</script>
+</body>
+</html>
