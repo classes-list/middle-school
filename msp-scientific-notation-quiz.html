@@ -204,6 +204,7 @@ function applyMode(mode) {
 function setMode(mode) {
   const url = new URL(location.href);
   if (mode === 'graded') url.searchParams.set('mode','graded'); else url.searchParams.delete('mode');
+  if (mode === 'graded' && !isGradedMode()) { location.href = url.toString(); return; }
   history.replaceState(null, '', url.toString());
   applyMode(mode);
 }
@@ -410,7 +411,7 @@ function submitToTeacher(){
     const inp = li.querySelector('input.ans');
     if(!inp) return;
     const clone = li.cloneNode(true);
-    clone.querySelectorAll('input, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
+    clone.querySelectorAll('input, svg, .one-check-fb, .correction-label, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
     const qText = clone.textContent.trim().replace(/\s+/g,' ').slice(0,120);
     const student = (inp.value||'').trim() || '(blank)';
     let mark = '';
