@@ -209,6 +209,7 @@ function applyMode(mode) {
 function setMode(mode) {
   const url = new URL(location.href);
   if (mode === 'graded') url.searchParams.set('mode','graded'); else url.searchParams.delete('mode');
+  if (mode === 'graded' && !isGradedMode()) { location.href = url.toString(); return; }
   history.replaceState(null, '', url.toString());
   applyMode(mode);
 }
@@ -453,7 +454,7 @@ function submitToTeacher(){
     const inp = li.querySelector('input.ans');
     if(!inp) return;
     const clone = li.cloneNode(true);
-    clone.querySelectorAll('input, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
+    clone.querySelectorAll('input, svg, .one-check-fb, .correction-label, .submit-btn, .check-btn, .reset-btn').forEach(n=>n.remove());
     const qText = clone.textContent.trim().replace(/\s+/g,' ').slice(0,120);
     const student = (inp.value||'').trim() || '(blank)';
     let mark = '';
@@ -607,6 +608,55 @@ Submitted from ${location.href}`;
   };
 })();
 </script>
-
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  function check(inp){
+    var place=inp, u=inp.nextElementSibling;
+    if (u && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; place.insertAdjacentElement('afterend', fb); }
+    if (!inp.value.trim()) { fb.textContent=''; return; }
+    var ok=test(inp.value, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card=inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className='one-check-fb '+(ok?'ok':'no');
+    fb.textContent= ok ? '✓ Correct!' : '✗ Try again';
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key!=='Enter' || graded()) return;
+    var t=e.target;
+    if (!t || t.tagName!=='INPUT') return;
+    if (!(t.classList.contains('ans') || /^ans\d+$/.test(t.id||''))) return;
+    if (!expected(t)) return;
+    e.preventDefault(); check(t);
+  }, true);
+  document.addEventListener('input', function(e){
+    var t=e.target; if (!t || t.tagName!=='INPUT') return;
+    var place=t, u=t.nextElementSibling; if (u && u.classList && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling; if (fb && fb.classList.contains('one-check-fb')) fb.textContent='';
+  }, true);
+  function clean(){ document.querySelectorAll('.one-check-btn').forEach(function(n){n.remove();}); if (graded()) document.querySelectorAll('.one-check-fb').forEach(function(n){n.remove();}); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', clean); else clean();
+})();
+</script>
+<!--/CHECK-ONE-->
 </body>
 </html>

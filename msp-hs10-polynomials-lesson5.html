@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polynomial Functions — Lesson 5: End Behavior (Math 10)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--gold:#FFD100;--gold-deep:#b8860b;--ink:#1f2937;--dim:#64748b;--accent:#dc2626;--accent-deep:#991b1b;--accent-soft:#fee2e2;--pos:#059669;--neg:#dc2626}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%);color:var(--ink);min-height:100vh;padding:24px 16px;line-height:1.6}
+.container{max-width:1000px;margin:0 auto}
+header{text-align:center;margin-bottom:20px}
+.eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:6px}
+.tagline{color:var(--dim);font-size:.98rem;font-style:italic}
+.back-to-unit{display:inline-block;background:var(--gold);color:var(--navy);border:1.5px solid var(--gold-deep);padding:9px 18px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;margin-bottom:16px;box-shadow:0 2px 6px rgba(184,134,11,0.25);cursor:pointer}
+.back-to-unit:hover{background:var(--gold-deep);color:#fff;transform:translateX(-2px)}
+main{display:flex;flex-direction:column;gap:20px}
+section.card{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 4px 14px rgba(0,0,0,0.07);border-top:5px solid var(--accent)}
+section.card h2{color:var(--accent-deep);font-size:1.2rem;font-weight:800;margin-bottom:10px}
+section.card h3{color:var(--navy);font-size:1rem;font-weight:800;margin:12px 0 8px}
+.intro{background:var(--accent-soft);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0 12px;font-size:.95rem}
+.rule{background:#fef3c7;border-left:5px solid #b8860b;border-radius:6px;padding:8px 12px;margin:10px 0;font-size:.94rem}
+.rule strong{color:#78350f}
+table.rules{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.98rem}
+table.rules th,table.rules td{border:1.5px solid #94a3b8;padding:8px 12px;text-align:center}
+table.rules th{background:var(--navy);color:#fff;font-weight:800}
+table.rules tr:nth-child(even) td{background:#f8fafc}
+.pos{color:var(--pos);font-weight:800}
+.neg{color:var(--neg);font-weight:800}
+ol.qlist{list-style:none;counter-reset:q;padding:0;margin-top:8px}
+ol.qlist>li{counter-increment:q;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed #d1d5db}
+ol.qlist>li:last-child{border-bottom:none}
+ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.answer-line{display:inline-block;min-width:120px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.answer-line-lg{display:inline-block;min-width:200px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.reveal-btn{display:inline-block;background:var(--gold);color:var(--navy);border:1px solid var(--gold-deep);padding:8px 14px;border-radius:6px;font-weight:800;font-size:.9rem;cursor:pointer;margin:6px 0}
+.reveal-btn:hover{background:var(--gold-deep);color:#fff}
+.ak{display:none;background:#ecfccb;border-left:5px solid #65a30d;padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.ak.open{display:block}
+.ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
+footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
+@media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check, .save-toolbar { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style></head><body>
+<div class="container">
+<header>
+  <div class="eyebrow">Math 10 · Unit 6 · Lesson 5 of 5</div>
+  <h1>〰️ Lesson 5: End Behavior</h1>
+  <p class="tagline">Degree and leading coefficient tell you where the ends go.</p>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then press <strong>Return</strong> to check each one (or click <strong>Check Answers</strong>).</p><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0 4px;"><a href="msos-math-10.html#unit=polynomials" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">1 · Overview</a><a href="msp-hs10-polynomials-lesson2.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">2 · Degree &amp; Operations</a><a href="msp-hs10-polynomials-lesson3.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">3 · Remainder Theorem</a><a href="msp-hs10-polynomials-lesson4.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">4 · Zeros</a><a href="msp-hs10-polynomials-lesson5.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#253a77;color:#fff;">5 · End Behavior</a></div></header>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<main>
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
+<section class="card" id="howcard"><h2>📘 How It Works</h2><div class="intro"><strong>Key idea:</strong> Degree (even/odd) + sign of the leading coefficient.</div><div style="line-height:1.65;font-size:1rem;"><p>End behavior depends only on the leading term. Even degree: both ends go the same way (up if the leading coefficient is positive). Odd degree: the ends go opposite ways (left down, right up if positive).</p></div><h3>👀 Watch Two Examples</h3><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 1</div><div>For y = -3x^7 + 3x − 1, does the graph go up or down on the far right?</div><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−1</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="90.8,12.0 91.0,15.7 91.6,25.2 92.1,33.9 92.6,42.1 93.2,49.7 93.7,56.7 94.3,63.2 94.8,69.2 95.3,74.8 95.9,79.9 96.4,84.7 97.0,89.0 97.5,93.0 98.0,96.7 98.6,100.1 99.1,103.2 99.7,106.0 100.2,108.5 100.7,110.9 101.3,113.0 101.8,114.9 102.4,116.6 102.9,118.1 103.4,119.5 104.0,120.7 104.5,121.8 105.1,122.8 105.6,123.6 106.1,124.4 106.7,125.0 107.2,125.6 107.8,126.0 108.3,126.4 108.8,126.7 109.4,127.0 109.9,127.2 110.5,127.3 111.0,127.4 111.5,127.5 112.1,127.5 112.6,127.5 113.2,127.4 113.7,127.3 114.2,127.2 114.8,127.1 115.3,126.9 115.9,126.8 116.4,126.6 116.9,126.4 117.5,126.1 118.0,125.9 118.6,125.7 119.1,125.4 119.6,125.2 120.2,124.9 120.7,124.7 121.3,124.4 121.8,124.1 122.3,123.8 122.9,123.6 123.4,123.3 124.0,123.0 124.5,122.7 125.0,122.4 125.6,122.1 126.1,121.9 126.7,121.6 127.2,121.3 127.7,121.0 128.3,120.7 128.8,120.4 129.4,120.1 129.9,119.8 130.4,119.5 131.0,119.2 131.5,119.0 132.1,118.7 132.6,118.4 133.1,118.1 133.7,117.8 134.2,117.5 134.8,117.2 135.3,116.9 135.8,116.6 136.4,116.3 136.9,116.0 137.5,115.8 138.0,115.5 138.5,115.2 139.1,114.9 139.6,114.6 140.2,114.3 140.7,114.0 141.2,113.7 141.8,113.4 142.3,113.1 142.9,112.8 143.4,112.6 143.9,112.3 144.5,112.0 145.0,111.7 145.6,111.4 146.1,111.1 146.6,110.8 147.2,110.5 147.7,110.2 148.3,109.9 148.8,109.7 149.3,109.4 149.9,109.1 150.4,108.8 151.0,108.5 151.5,108.2 152.0,107.9 152.6,107.6 153.1,107.4 153.7,107.1 154.2,106.8 154.7,106.5 155.3,106.3 155.8,106.0 156.4,105.7 156.9,105.5 157.4,105.3 158.0,105.0 158.5,104.8 159.1,104.6 159.6,104.4 160.1,104.2 160.7,104.0 161.2,103.9 161.8,103.7 162.3,103.6 162.8,103.5 163.4,103.5 163.9,103.4 164.5,103.5 165.0,103.5 165.5,103.6 166.1,103.7 166.6,103.9 167.2,104.2 167.7,104.5 168.2,104.9 168.8,105.4 169.3,105.9 169.9,106.5 170.4,107.3 170.9,108.1 171.5,109.1 172.0,110.2 172.6,111.4 173.1,112.8 173.6,114.3 174.2,116.1 174.7,118.0 175.3,120.1 175.8,122.4 176.3,125.0 176.9,127.8 177.4,130.8 178.0,134.2 178.5,137.9 179.0,141.9 179.6,146.3 180.1,151.0 180.7,156.1 181.2,161.7 181.7,167.7 182.3,174.2 182.8,181.3 183.4,188.8 183.9,197.0 184.4,205.8 184.5,206.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: down</span></div></div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 2</div><div>For y = −x^5 + 3x − 1, does the graph go up or down on the far left?</div><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−1</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="71.5,12.0 71.6,13.0 72.1,18.2 72.7,23.3 73.2,28.2 73.7,32.9 74.3,37.5 74.8,41.9 75.4,46.1 75.9,50.2 76.4,54.1 77.0,57.9 77.5,61.5 78.1,65.0 78.6,68.4 79.1,71.6 79.7,74.7 80.2,77.7 80.8,80.6 81.3,83.3 81.8,86.0 82.4,88.5 82.9,90.9 83.5,93.2 84.0,95.5 84.5,97.6 85.1,99.6 85.6,101.5 86.2,103.4 86.7,105.1 87.2,106.8 87.8,108.4 88.3,109.9 88.9,111.3 89.4,112.7 89.9,113.9 90.5,115.2 91.0,116.3 91.6,117.4 92.1,118.4 92.6,119.4 93.2,120.3 93.7,121.1 94.3,121.9 94.8,122.7 95.3,123.3 95.9,124.0 96.4,124.6 97.0,125.1 97.5,125.6 98.0,126.1 98.6,126.5 99.1,126.9 99.7,127.3 100.2,127.6 100.7,127.9 101.3,128.1 101.8,128.3 102.4,128.5 102.9,128.7 103.4,128.8 104.0,128.9 104.5,129.0 105.1,129.1 105.6,129.1 106.1,129.1 106.7,129.1 107.2,129.1 107.8,129.1 108.3,129.0 108.8,128.9 109.4,128.8 109.9,128.7 110.5,128.6 111.0,128.5 111.5,128.3 112.1,128.2 112.6,128.0 113.2,127.8 113.7,127.7 114.2,127.5 114.8,127.3 115.3,127.0 115.9,126.8 116.4,126.6 116.9,126.4 117.5,126.1 118.0,125.9 118.6,125.6 119.1,125.4 119.6,125.1 120.2,124.9 120.7,124.6 121.3,124.3 121.8,124.1 122.3,123.8 122.9,123.5 123.4,123.3 124.0,123.0 124.5,122.7 125.0,122.4 125.6,122.1 126.1,121.8 126.7,121.6 127.2,121.3 127.7,121.0 128.3,120.7 128.8,120.4 129.4,120.1 129.9,119.8 130.4,119.5 131.0,119.2 131.5,119.0 132.1,118.7 132.6,118.4 133.1,118.1 133.7,117.8 134.2,117.5 134.8,117.2 135.3,116.9 135.8,116.6 136.4,116.3 136.9,116.0 137.5,115.8 138.0,115.5 138.5,115.2 139.1,114.9 139.6,114.6 140.2,114.3 140.7,114.0 141.2,113.7 141.8,113.4 142.3,113.1 142.9,112.8 143.4,112.6 143.9,112.3 144.5,112.0 145.0,111.7 145.6,111.4 146.1,111.1 146.6,110.8 147.2,110.5 147.7,110.2 148.3,109.9 148.8,109.7 149.3,109.4 149.9,109.1 150.4,108.8 151.0,108.5 151.5,108.2 152.0,108.0 152.6,107.7 153.1,107.4 153.7,107.1 154.2,106.9 154.7,106.6 155.3,106.3 155.8,106.1 156.4,105.8 156.9,105.5 157.4,105.3 158.0,105.0 158.5,104.8 159.1,104.6 159.6,104.3 160.1,104.1 160.7,103.9 161.2,103.7 161.8,103.5 162.3,103.3 162.8,103.1 163.4,102.9 163.9,102.7 164.5,102.6 165.0,102.5 165.5,102.3 166.1,102.2 166.6,102.1 167.2,102.0 167.7,101.9 168.2,101.9 168.8,101.8 169.3,101.8 169.9,101.8 170.4,101.8 170.9,101.9 171.5,101.9 172.0,102.0 172.6,102.1 173.1,102.2 173.6,102.4 174.2,102.6 174.7,102.8 175.3,103.1 175.8,103.3 176.3,103.7 176.9,104.0 177.4,104.4 178.0,104.8 178.5,105.3 179.0,105.8 179.6,106.4 180.1,106.9 180.7,107.6 181.2,108.3 181.7,109.0 182.3,109.8 182.8,110.7 183.4,111.6 183.9,112.5 184.4,113.5 185.0,114.6 185.5,115.8 186.1,117.0 186.6,118.3 187.1,119.6 187.7,121.1 188.2,122.6 188.8,124.2 189.3,125.8 189.8,127.6 190.4,129.4 190.9,131.3 191.5,133.4 192.0,135.5 192.5,137.7 193.1,140.0 193.6,142.4 194.2,144.9 194.7,147.6 195.2,150.3 195.8,153.2 196.3,156.2 196.9,159.3 197.4,162.5 197.9,165.9 198.5,169.4 199.0,173.1 199.6,176.8 200.1,180.8 200.6,184.9 201.2,189.1 201.7,193.5 202.3,198.0 202.8,202.7 203.2,206.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: up</span></div></div><p style="font-size:.9rem;color:#475569;">Now try the practice below. Type an answer and press <strong>Return</strong> — you will see ✓ Correct! or ✗ Try again right away.</p></section>
+<section class="card" id="wsec1">
+<h2>1️⃣ Practice: End Behavior</h2>
+<div class="intro">Degree (even/odd) + sign of the leading coefficient.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>For y = -3x^4 + 3x − 1, does the graph go up or down on the far left? <input class="ans" data-a="down" size="7"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−1</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="89.4,206.0 89.9,203.0 90.5,200.0 91.0,197.0 91.6,194.2 92.1,191.5 92.6,188.8 93.2,186.2 93.7,183.7 94.3,181.3 94.8,179.0 95.3,176.7 95.9,174.5 96.4,172.4 97.0,170.3 97.5,168.4 98.0,166.5 98.6,164.6 99.1,162.8 99.7,161.1 100.2,159.4 100.7,157.8 101.3,156.3 101.8,154.8 102.4,153.3 102.9,151.9 103.4,150.6 104.0,149.3 104.5,148.0 105.1,146.8 105.6,145.7 106.1,144.5 106.7,143.5 107.2,142.4 107.8,141.4 108.3,140.5 108.8,139.5 109.4,138.6 109.9,137.8 110.5,137.0 111.0,136.2 111.5,135.4 112.1,134.6 112.6,133.9 113.2,133.3 113.7,132.6 114.2,132.0 114.8,131.3 115.3,130.7 115.9,130.2 116.4,129.6 116.9,129.1 117.5,128.6 118.0,128.1 118.6,127.6 119.1,127.1 119.6,126.7 120.2,126.2 120.7,125.8 121.3,125.4 121.8,125.0 122.3,124.6 122.9,124.2 123.4,123.8 124.0,123.5 124.5,123.1 125.0,122.8 125.6,122.4 126.1,122.1 126.7,121.8 127.2,121.4 127.7,121.1 128.3,120.8 128.8,120.5 129.4,120.2 129.9,119.9 130.4,119.6 131.0,119.3 131.5,119.0 132.1,118.7 132.6,118.4 133.1,118.1 133.7,117.8 134.2,117.5 134.8,117.2 135.3,116.9 135.8,116.6 136.4,116.3 136.9,116.0 137.5,115.8 138.0,115.5 138.5,115.2 139.1,114.9 139.6,114.6 140.2,114.3 140.7,114.0 141.2,113.7 141.8,113.4 142.3,113.1 142.9,112.9 143.4,112.6 143.9,112.3 144.5,112.0 145.0,111.7 145.6,111.4 146.1,111.2 146.6,110.9 147.2,110.6 147.7,110.3 148.3,110.1 148.8,109.8 149.3,109.5 149.9,109.3 150.4,109.0 151.0,108.8 151.5,108.6 152.0,108.3 152.6,108.1 153.1,107.9 153.7,107.7 154.2,107.5 154.7,107.4 155.3,107.2 155.8,107.0 156.4,106.9 156.9,106.8 157.4,106.6 158.0,106.5 158.5,106.5 159.1,106.4 159.6,106.3 160.1,106.3 160.7,106.3 161.2,106.3 161.8,106.3 162.3,106.4 162.8,106.5 163.4,106.6 163.9,106.7 164.5,106.9 165.0,107.1 165.5,107.3 166.1,107.5 166.6,107.8 167.2,108.1 167.7,108.4 168.2,108.8 168.8,109.2 169.3,109.7 169.9,110.2 170.4,110.7 170.9,111.3 171.5,111.9 172.0,112.6 172.6,113.3 173.1,114.1 173.6,114.9 174.2,115.8 174.7,116.7 175.3,117.6 175.8,118.7 176.3,119.8 176.9,120.9 177.4,122.1 178.0,123.4 178.5,124.7 179.0,126.1 179.6,127.6 180.1,129.1 180.7,130.7 181.2,132.4 181.7,134.2 182.3,136.0 182.8,137.9 183.4,139.9 183.9,142.0 184.4,144.2 185.0,146.4 185.5,148.8 186.1,151.2 186.6,153.7 187.1,156.3 187.7,159.1 188.2,161.9 188.8,164.8 189.3,167.8 189.8,170.9 190.4,174.2 190.9,177.5 191.5,181.0 192.0,184.6 192.5,188.3 193.1,192.1 193.6,196.0 194.2,200.1 194.7,204.3 194.9,206.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>For y = 4x^4 + 3x − 1, does the graph go up or down on the far right? <input class="ans" data-a="up" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−1</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="83.8,12.0 84.0,13.6 84.5,18.5 85.1,23.2 85.6,27.8 86.2,32.2 86.7,36.5 87.2,40.6 87.8,44.6 88.3,48.4 88.9,52.1 89.4,55.7 89.9,59.2 90.5,62.5 91.0,65.8 91.6,68.9 92.1,71.8 92.6,74.7 93.2,77.5 93.7,80.1 94.3,82.7 94.8,85.1 95.3,87.5 95.9,89.7 96.4,91.8 97.0,93.9 97.5,95.9 98.0,97.7 98.6,99.5 99.1,101.2 99.7,102.9 100.2,104.4 100.7,105.9 101.3,107.3 101.8,108.6 102.4,109.8 102.9,111.0 103.4,112.1 104.0,113.2 104.5,114.2 105.1,115.1 105.6,116.0 106.1,116.8 106.7,117.5 107.2,118.2 107.8,118.9 108.3,119.5 108.8,120.0 109.4,120.6 109.9,121.0 110.5,121.4 111.0,121.8 111.5,122.2 112.1,122.5 112.6,122.8 113.2,123.0 113.7,123.2 114.2,123.4 114.8,123.5 115.3,123.6 115.9,123.7 116.4,123.8 116.9,123.8 117.5,123.8 118.0,123.8 118.6,123.7 119.1,123.7 119.6,123.6 120.2,123.5 120.7,123.4 121.3,123.3 121.8,123.1 122.3,123.0 122.9,122.8 123.4,122.6 124.0,122.4 124.5,122.2 125.0,122.0 125.6,121.8 126.1,121.6 126.7,121.3 127.2,121.1 127.7,120.8 128.3,120.6 128.8,120.3 129.4,120.0 129.9,119.8 130.4,119.5 131.0,119.2 131.5,118.9 132.1,118.6 132.6,118.4 133.1,118.1 133.7,117.8 134.2,117.5 134.8,117.2 135.3,116.9 135.8,116.6 136.4,116.3 136.9,116.0 137.5,115.8 138.0,115.5 138.5,115.2 139.1,114.9 139.6,114.6 140.2,114.3 140.7,114.0 141.2,113.7 141.8,113.4 142.3,113.1 142.9,112.8 143.4,112.5 143.9,112.2 144.5,111.9 145.0,111.6 145.6,111.3 146.1,111.0 146.6,110.7 147.2,110.4 147.7,110.1 148.3,109.8 148.8,109.4 149.3,109.1 149.9,108.8 150.4,108.4 151.0,108.0 151.5,107.7 152.0,107.3 152.6,106.9 153.1,106.5 153.7,106.1 154.2,105.7 154.7,105.2 155.3,104.8 155.8,104.3 156.4,103.8 156.9,103.3 157.4,102.8 158.0,102.2 158.5,101.7 159.1,101.1 159.6,100.5 160.1,99.8 160.7,99.2 161.2,98.5 161.8,97.8 162.3,97.0 162.8,96.2 163.4,95.4 163.9,94.5 164.5,93.7 165.0,92.7 165.5,91.8 166.1,90.8 166.6,89.7 167.2,88.6 167.7,87.5 168.2,86.3 168.8,85.1 169.3,83.8 169.9,82.4 170.4,81.0 170.9,79.6 171.5,78.1 172.0,76.5 172.6,74.9 173.1,73.2 173.6,71.4 174.2,69.6 174.7,67.7 175.3,65.7 175.8,63.7 176.3,61.5 176.9,59.3 177.4,57.0 178.0,54.7 178.5,52.2 179.0,49.7 179.6,47.0 180.1,44.3 180.7,41.5 181.2,38.5 181.7,35.5 182.3,32.4 182.8,29.2 183.4,25.8 183.9,22.4 184.4,18.8 185.0,15.1 185.4,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>For y = -2x^3 + 3x − 1, does the graph go up or down on the far left? <input class="ans" data-a="up" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−1</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="57.0,12.0 57.5,14.4 58.1,17.0 58.6,19.6 59.2,22.1 59.7,24.6 60.2,27.0 60.8,29.4 61.3,31.8 61.9,34.1 62.4,36.4 62.9,38.7 63.5,40.9 64.0,43.1 64.6,45.2 65.1,47.4 65.6,49.4 66.2,51.5 66.7,53.5 67.3,55.5 67.8,57.4 68.3,59.3 68.9,61.2 69.4,63.0 70.0,64.8 70.5,66.6 71.0,68.3 71.6,70.0 72.1,71.7 72.7,73.3 73.2,75.0 73.7,76.5 74.3,78.1 74.8,79.6 75.4,81.1 75.9,82.5 76.4,84.0 77.0,85.4 77.5,86.7 78.1,88.1 78.6,89.4 79.1,90.7 79.7,91.9 80.2,93.1 80.8,94.3 81.3,95.5 81.8,96.6 82.4,97.7 82.9,98.8 83.5,99.9 84.0,100.9 84.5,101.9 85.1,102.9 85.6,103.9 86.2,104.8 86.7,105.7 87.2,106.6 87.8,107.4 88.3,108.2 88.9,109.1 89.4,109.8 89.9,110.6 90.5,111.3 91.0,112.0 91.6,112.7 92.1,113.4 92.6,114.0 93.2,114.7 93.7,115.3 94.3,115.8 94.8,116.4 95.3,116.9 95.9,117.5 96.4,117.9 97.0,118.4 97.5,118.9 98.0,119.3 98.6,119.7 99.1,120.1 99.7,120.5 100.2,120.9 100.7,121.2 101.3,121.5 101.8,121.8 102.4,122.1 102.9,122.4 103.4,122.6 104.0,122.9 104.5,123.1 105.1,123.3 105.6,123.5 106.1,123.7 106.7,123.8 107.2,124.0 107.8,124.1 108.3,124.2 108.8,124.3 109.4,124.4 109.9,124.5 110.5,124.5 111.0,124.6 111.5,124.6 112.1,124.6 112.6,124.6 113.2,124.6 113.7,124.6 114.2,124.6 114.8,124.5 115.3,124.5 115.9,124.4 116.4,124.3 116.9,124.2 117.5,124.1 118.0,124.0 118.6,123.9 119.1,123.8 119.6,123.6 120.2,123.5 120.7,123.3 121.3,123.2 121.8,123.0 122.3,122.8 122.9,122.7 123.4,122.5 124.0,122.3 124.5,122.1 125.0,121.8 125.6,121.6 126.1,121.4 126.7,121.2 127.2,120.9 127.7,120.7 128.3,120.5 128.8,120.2 129.4,119.9 129.9,119.7 130.4,119.4 131.0,119.2 131.5,118.9 132.1,118.6 132.6,118.3 133.1,118.1 133.7,117.8 134.2,117.5 134.8,117.2 135.3,116.9 135.8,116.6 136.4,116.3 136.9,116.0 137.5,115.8 138.0,115.5 138.5,115.2 139.1,114.9 139.6,114.6 140.2,114.3 140.7,114.0 141.2,113.7 141.8,113.4 142.3,113.2 142.9,112.9 143.4,112.6 143.9,112.3 144.5,112.1 145.0,111.8 145.6,111.5 146.1,111.2 146.6,111.0 147.2,110.7 147.7,110.5 148.3,110.2 148.8,110.0 149.3,109.8 149.9,109.5 150.4,109.3 151.0,109.1 151.5,108.9 152.0,108.7 152.6,108.5 153.1,108.3 153.7,108.1 154.2,107.9 154.7,107.7 155.3,107.6 155.8,107.4 156.4,107.3 156.9,107.2 157.4,107.0 158.0,106.9 158.5,106.8 159.1,106.7 159.6,106.6 160.1,106.5 160.7,106.5 161.2,106.4 161.8,106.4 162.3,106.3 162.8,106.3 163.4,106.3 163.9,106.3 164.5,106.3 165.0,106.4 165.5,106.4 166.1,106.5 166.6,106.5 167.2,106.6 167.7,106.7 168.2,106.8 168.8,107.0 169.3,107.1 169.9,107.3 170.4,107.4 170.9,107.6 171.5,107.8 172.0,108.0 172.6,108.3 173.1,108.5 173.6,108.8 174.2,109.1 174.7,109.4 175.3,109.7 175.8,110.1 176.3,110.4 176.9,110.8 177.4,111.2 178.0,111.6 178.5,112.1 179.0,112.5 179.6,113.0 180.1,113.5 180.7,114.0 181.2,114.5 181.7,115.1 182.3,115.7 182.8,116.3 183.4,116.9 183.9,117.5 184.4,118.2 185.0,118.9 185.5,119.6 186.1,120.3 186.6,121.1 187.1,121.9 187.7,122.7 188.2,123.5 188.8,124.4 189.3,125.2 189.8,126.1 190.4,127.1 190.9,128.0 191.5,129.0 192.0,130.0 192.5,131.0 193.1,132.1 193.6,133.2 194.2,134.3 194.7,135.4 195.2,136.6 195.8,137.8 196.3,139.0 196.9,140.3 197.4,141.6 197.9,142.9 198.5,144.2 199.0,145.6 199.6,147.0 200.1,148.4 200.6,149.8 201.2,151.3 201.7,152.8 202.3,154.4 202.8,156.0 203.3,157.6 203.9,159.2 204.4,160.9 205.0,162.6 205.5,164.3 206.0,166.1 206.6,167.9 207.1,169.8 207.7,171.6 208.2,173.5 208.7,175.5 209.3,177.4 209.8,179.5 210.4,181.5 210.9,183.6 211.4,185.7 212.0,187.8 212.5,190.0 213.1,192.2 213.6,194.5 214.1,196.8 214.7,199.1 215.2,201.5 215.8,203.9 216.2,206.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>For y = −x^2 + 3x − 1, does the graph go up or down on the far left? <input class="ans" data-a="down" size="7"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−1</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="46.9,206.0 47.3,205.4 47.8,204.6 48.4,203.9 48.9,203.1 49.4,202.3 50.0,201.6 50.5,200.8 51.1,200.0 51.6,199.3 52.1,198.5 52.7,197.8 53.2,197.0 53.8,196.3 54.3,195.5 54.8,194.8 55.4,194.0 55.9,193.3 56.5,192.6 57.0,191.9 57.5,191.1 58.1,190.4 58.6,189.7 59.2,189.0 59.7,188.3 60.2,187.5 60.8,186.8 61.3,186.1 61.9,185.4 62.4,184.7 62.9,184.0 63.5,183.3 64.0,182.6 64.6,182.0 65.1,181.3 65.6,180.6 66.2,179.9 66.7,179.2 67.3,178.6 67.8,177.9 68.3,177.2 68.9,176.6 69.4,175.9 70.0,175.2 70.5,174.6 71.0,173.9 71.6,173.3 72.1,172.6 72.7,172.0 73.2,171.3 73.7,170.7 74.3,170.1 74.8,169.4 75.4,168.8 75.9,168.2 76.4,167.5 77.0,166.9 77.5,166.3 78.1,165.7 78.6,165.1 79.1,164.5 79.7,163.9 80.2,163.3 80.8,162.7 81.3,162.1 81.8,161.5 82.4,160.9 82.9,160.3 83.5,159.7 84.0,159.1 84.5,158.5 85.1,158.0 85.6,157.4 86.2,156.8 86.7,156.2 87.2,155.7 87.8,155.1 88.3,154.6 88.9,154.0 89.4,153.4 89.9,152.9 90.5,152.3 91.0,151.8 91.6,151.3 92.1,150.7 92.6,150.2 93.2,149.6 93.7,149.1 94.3,148.6 94.8,148.1 95.3,147.5 95.9,147.0 96.4,146.5 97.0,146.0 97.5,145.5 98.0,145.0 98.6,144.5 99.1,144.0 99.7,143.5 100.2,143.0 100.7,142.5 101.3,142.0 101.8,141.5 102.4,141.0 102.9,140.5 103.4,140.1 104.0,139.6 104.5,139.1 105.1,138.6 105.6,138.2 106.1,137.7 106.7,137.2 107.2,136.8 107.8,136.3 108.3,135.9 108.8,135.4 109.4,135.0 109.9,134.5 110.5,134.1 111.0,133.7 111.5,133.2 112.1,132.8 112.6,132.4 113.2,131.9 113.7,131.5 114.2,131.1 114.8,130.7 115.3,130.3 115.9,129.8 116.4,129.4 116.9,129.0 117.5,128.6 118.0,128.2 118.6,127.8 119.1,127.4 119.6,127.0 120.2,126.7 120.7,126.3 121.3,125.9 121.8,125.5 122.3,125.1 122.9,124.8 123.4,124.4 124.0,124.0 124.5,123.7 125.0,123.3 125.6,122.9 126.1,122.6 126.7,122.2 127.2,121.9 127.7,121.5 128.3,121.2 128.8,120.8 129.4,120.5 129.9,120.2 130.4,119.8 131.0,119.5 131.5,119.2 132.1,118.8 132.6,118.5 133.1,118.2 133.7,117.9 134.2,117.6 134.8,117.3 135.3,117.0 135.8,116.7 136.4,116.4 136.9,116.1 137.5,115.8 138.0,115.5 138.5,115.2 139.1,114.9 139.6,114.6 140.2,114.3 140.7,114.0 141.2,113.8 141.8,113.5 142.3,113.2 142.9,113.0 143.4,112.7 143.9,112.4 144.5,112.2 145.0,111.9 145.6,111.7 146.1,111.4 146.6,111.2 147.2,110.9 147.7,110.7 148.3,110.5 148.8,110.2 149.3,110.0 149.9,109.8 150.4,109.5 151.0,109.3 151.5,109.1 152.0,108.9 152.6,108.7 153.1,108.5 153.7,108.3 154.2,108.0 154.7,107.8 155.3,107.6 155.8,107.4 156.4,107.3 156.9,107.1 157.4,106.9 158.0,106.7 158.5,106.5 159.1,106.3 159.6,106.2 160.1,106.0 160.7,105.8 161.2,105.6 161.8,105.5 162.3,105.3 162.8,105.2 163.4,105.0 163.9,104.9 164.5,104.7 165.0,104.6 165.5,104.4 166.1,104.3 166.6,104.1 167.2,104.0 167.7,103.9 168.2,103.7 168.8,103.6 169.3,103.5 169.9,103.4 170.4,103.2 170.9,103.1 171.5,103.0 172.0,102.9 172.6,102.8 173.1,102.7 173.6,102.6 174.2,102.5 174.7,102.4 175.3,102.3 175.8,102.2 176.3,102.1 176.9,102.1 177.4,102.0 178.0,101.9 178.5,101.8 179.0,101.8 179.6,101.7 180.1,101.6 180.7,101.6 181.2,101.5 181.7,101.4 182.3,101.4 182.8,101.3 183.4,101.3 183.9,101.2 184.4,101.2 185.0,101.2 185.5,101.1 186.1,101.1 186.6,101.1 187.1,101.0 187.7,101.0 188.2,101.0 188.8,101.0 189.3,101.0 189.8,100.9 190.4,100.9 190.9,100.9 191.5,100.9 192.0,100.9 192.5,100.9 193.1,100.9 193.6,100.9 194.2,100.9 194.7,101.0 195.2,101.0 195.8,101.0 196.3,101.0 196.9,101.0 197.4,101.1 197.9,101.1 198.5,101.1 199.0,101.2 199.6,101.2 200.1,101.2 200.6,101.3 201.2,101.3 201.7,101.4 202.3,101.4 202.8,101.5 203.3,101.6 203.9,101.6 204.4,101.7 205.0,101.8 205.5,101.8 206.0,101.9 206.6,102.0 207.1,102.1 207.7,102.1 208.2,102.2 208.7,102.3 209.3,102.4 209.8,102.5 210.4,102.6 210.9,102.7 211.4,102.8 212.0,102.9 212.5,103.0 213.1,103.1 213.6,103.2 214.1,103.4 214.7,103.5 215.2,103.6 215.8,103.7 216.3,103.9 216.8,104.0 217.4,104.1 217.9,104.3 218.5,104.4 219.0,104.6 219.5,104.7 220.1,104.9 220.6,105.0 221.2,105.2 221.7,105.3 222.2,105.5 222.8,105.6 223.3,105.8 223.9,106.0 224.4,106.2 224.9,106.3 225.5,106.5 226.0,106.7 226.6,106.9 227.1,107.1 227.6,107.3 228.2,107.4 228.7,107.6 229.3,107.8 229.8,108.0 230.3,108.3 230.9,108.5 231.4,108.7 232.0,108.9 232.5,109.1 233.0,109.3 233.6,109.5 234.1,109.8 234.7,110.0 235.2,110.2 235.7,110.5 236.3,110.7 236.8,110.9 237.4,111.2 237.9,111.4 238.4,111.7 239.0,111.9 239.5,112.2 240.1,112.4 240.6,112.7 241.1,113.0 241.7,113.2 242.2,113.5 242.8,113.8 243.3,114.0 243.8,114.3 244.4,114.6 244.9,114.9 245.5,115.2 246.0,115.5" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>For y = x^2 + 3x − 1, does the graph go up or down on the far right? <input class="ans" data-a="up" size="6"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−1</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="30.0,115.5 30.5,115.8 31.1,116.0 31.6,116.3 32.2,116.6 32.7,116.9 33.2,117.2 33.8,117.4 34.3,117.7 34.9,118.0 35.4,118.2 35.9,118.5 36.5,118.7 37.0,119.0 37.6,119.3 38.1,119.5 38.6,119.8 39.2,120.0 39.7,120.2 40.3,120.5 40.8,120.7 41.3,120.9 41.9,121.2 42.4,121.4 43.0,121.6 43.5,121.8 44.0,122.0 44.6,122.3 45.1,122.5 45.7,122.7 46.2,122.9 46.7,123.1 47.3,123.3 47.8,123.5 48.4,123.7 48.9,123.9 49.4,124.1 50.0,124.2 50.5,124.4 51.1,124.6 51.6,124.8 52.1,125.0 52.7,125.1 53.2,125.3 53.8,125.5 54.3,125.6 54.8,125.8 55.4,125.9 55.9,126.1 56.5,126.2 57.0,126.4 57.5,126.5 58.1,126.7 58.6,126.8 59.2,126.9 59.7,127.1 60.2,127.2 60.8,127.3 61.3,127.5 61.9,127.6 62.4,127.7 62.9,127.8 63.5,127.9 64.0,128.0 64.6,128.1 65.1,128.2 65.6,128.3 66.2,128.4 66.7,128.5 67.3,128.6 67.8,128.7 68.3,128.8 68.9,128.9 69.4,129.0 70.0,129.0 70.5,129.1 71.0,129.2 71.6,129.2 72.1,129.3 72.7,129.4 73.2,129.4 73.7,129.5 74.3,129.5 74.8,129.6 75.4,129.6 75.9,129.7 76.4,129.7 77.0,129.8 77.5,129.8 78.1,129.8 78.6,129.9 79.1,129.9 79.7,129.9 80.2,129.9 80.8,130.0 81.3,130.0 81.8,130.0 82.4,130.0 82.9,130.0 83.5,130.0 84.0,130.0 84.5,130.0 85.1,130.0 85.6,130.0 86.2,130.0 86.7,130.0 87.2,130.0 87.8,129.9 88.3,129.9 88.9,129.9 89.4,129.9 89.9,129.8 90.5,129.8 91.0,129.8 91.6,129.7 92.1,129.7 92.6,129.6 93.2,129.6 93.7,129.5 94.3,129.5 94.8,129.4 95.3,129.4 95.9,129.3 96.4,129.2 97.0,129.2 97.5,129.1 98.0,129.0 98.6,129.0 99.1,128.9 99.7,128.8 100.2,128.7 100.7,128.6 101.3,128.5 101.8,128.4 102.4,128.3 102.9,128.2 103.4,128.1 104.0,128.0 104.5,127.9 105.1,127.8 105.6,127.7 106.1,127.6 106.7,127.5 107.2,127.3 107.8,127.2 108.3,127.1 108.8,126.9 109.4,126.8 109.9,126.7 110.5,126.5 111.0,126.4 111.5,126.2 112.1,126.1 112.6,125.9 113.2,125.8 113.7,125.6 114.2,125.5 114.8,125.3 115.3,125.1 115.9,125.0 116.4,124.8 116.9,124.6 117.5,124.4 118.0,124.2 118.6,124.1 119.1,123.9 119.6,123.7 120.2,123.5 120.7,123.3 121.3,123.1 121.8,122.9 122.3,122.7 122.9,122.5 123.4,122.3 124.0,122.0 124.5,121.8 125.0,121.6 125.6,121.4 126.1,121.2 126.7,120.9 127.2,120.7 127.7,120.5 128.3,120.2 128.8,120.0 129.4,119.8 129.9,119.5 130.4,119.3 131.0,119.0 131.5,118.7 132.1,118.5 132.6,118.2 133.1,118.0 133.7,117.7 134.2,117.4 134.8,117.2 135.3,116.9 135.8,116.6 136.4,116.3 136.9,116.0 137.5,115.8 138.0,115.5 138.5,115.2 139.1,114.9 139.6,114.6 140.2,114.3 140.7,114.0 141.2,113.7 141.8,113.4 142.3,113.0 142.9,112.7 143.4,112.4 143.9,112.1 144.5,111.8 145.0,111.4 145.6,111.1 146.1,110.8 146.6,110.4 147.2,110.1 147.7,109.8 148.3,109.4 148.8,109.1 149.3,108.7 149.9,108.4 150.4,108.0 151.0,107.6 151.5,107.3 152.0,106.9 152.6,106.5 153.1,106.2 153.7,105.8 154.2,105.4 154.7,105.0 155.3,104.7 155.8,104.3 156.4,103.9 156.9,103.5 157.4,103.1 158.0,102.7 158.5,102.3 159.1,101.9 159.6,101.5 160.1,101.1 160.7,100.7 161.2,100.3 161.8,99.8 162.3,99.4 162.8,99.0 163.4,98.6 163.9,98.1 164.5,97.7 165.0,97.3 165.5,96.8 166.1,96.4 166.6,96.0 167.2,95.5 167.7,95.1 168.2,94.6 168.8,94.2 169.3,93.7 169.9,93.2 170.4,92.8 170.9,92.3 171.5,91.8 172.0,91.4 172.6,90.9 173.1,90.4 173.6,89.9 174.2,89.4 174.7,89.0 175.3,88.5 175.8,88.0 176.3,87.5 176.9,87.0 177.4,86.5 178.0,86.0 178.5,85.5 179.0,84.9 179.6,84.4 180.1,83.9 180.7,83.4 181.2,82.9 181.7,82.3 182.3,81.8 182.8,81.3 183.4,80.8 183.9,80.2 184.4,79.7 185.0,79.1 185.5,78.6 186.1,78.0 186.6,77.5 187.1,76.9 187.7,76.4 188.2,75.8 188.8,75.3 189.3,74.7 189.8,74.1 190.4,73.5 190.9,73.0 191.5,72.4 192.0,71.8 192.5,71.2 193.1,70.6 193.6,70.1 194.2,69.5 194.7,68.9 195.2,68.3 195.8,67.7 196.3,67.1 196.9,66.5 197.4,65.9 197.9,65.2 198.5,64.6 199.0,64.0 199.6,63.4 200.1,62.8 200.6,62.1 201.2,61.5 201.7,60.9 202.3,60.2 202.8,59.6 203.3,59.0 203.9,58.3 204.4,57.7 205.0,57.0 205.5,56.4 206.0,55.7 206.6,55.0 207.1,54.4 207.7,53.7 208.2,53.0 208.7,52.4 209.3,51.7 209.8,51.0 210.4,50.3 210.9,49.7 211.4,49.0 212.0,48.3 212.5,47.6 213.1,46.9 213.6,46.2 214.1,45.5 214.7,44.8 215.2,44.1 215.8,43.4 216.3,42.7 216.8,42.0 217.4,41.2 217.9,40.5 218.5,39.8 219.0,39.1 219.5,38.4 220.1,37.6 220.6,36.9 221.2,36.1 221.7,35.4 222.2,34.7 222.8,33.9 223.3,33.2 223.9,32.4 224.4,31.7 224.9,30.9 225.5,30.1 226.0,29.4 226.6,28.6 227.1,27.8 227.6,27.1 228.2,26.3 228.7,25.5 229.3,24.7 229.8,23.9 230.3,23.2 230.9,22.4 231.4,21.6 232.0,20.8 232.5,20.0 233.0,19.2 233.6,18.4 234.1,17.6 234.7,16.8 235.2,15.9 235.7,15.1 236.3,14.3 236.8,13.5 237.4,12.7 237.8,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>For y = -2x^4 + 3x − 1, does the graph go up or down on the far right? <input class="ans" data-a="down" size="7"><svg viewBox="0 0 260 230" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="30.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3</text><line x1="66.0" y1="12.0" x2="66.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="66.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="102.0" y1="12.0" x2="102.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="102.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−1</text><line x1="138.0" y1="12.0" x2="138.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><line x1="174.0" y1="12.0" x2="174.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="174.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="210.0" y1="12.0" x2="210.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="210.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="246.0" y1="12.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="246.0" y="122.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="206.0" x2="246.0" y2="206.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="209.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="30.0" y1="173.7" x2="246.0" y2="173.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="176.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="141.3" x2="246.0" y2="141.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="144.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="30.0" y1="109.0" x2="246.0" y2="109.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="76.7" x2="246.0" y2="76.7" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="79.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="44.3" x2="246.0" y2="44.3" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="47.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="134.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="109.0" x2="254.0" y2="109.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,109.0 245.9,112.9 245.9,105.1" fill="#334155"/><line x1="138.0" y1="206.0" x2="138.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="138.0,6.0 141.9,14.1 134.1,14.1" fill="#334155"/><polyline points="84.8,206.0 85.1,204.4 85.6,201.7 86.2,199.0 86.7,196.4 87.2,193.9 87.8,191.5 88.3,189.1 88.9,186.8 89.4,184.6 89.9,182.4 90.5,180.3 91.0,178.3 91.6,176.3 92.1,174.4 92.6,172.5 93.2,170.7 93.7,168.9 94.3,167.2 94.8,165.6 95.3,164.0 95.9,162.4 96.4,160.9 97.0,159.4 97.5,158.0 98.0,156.6 98.6,155.3 99.1,154.0 99.7,152.8 100.2,151.6 100.7,150.4 101.3,149.3 101.8,148.2 102.4,147.1 102.9,146.1 103.4,145.1 104.0,144.1 104.5,143.2 105.1,142.3 105.6,141.4 106.1,140.6 106.7,139.8 107.2,139.0 107.8,138.2 108.3,137.5 108.8,136.7 109.4,136.1 109.9,135.4 110.5,134.7 111.0,134.1 111.5,133.5 112.1,132.9 112.6,132.3 113.2,131.8 113.7,131.2 114.2,130.7 114.8,130.2 115.3,129.7 115.9,129.2 116.4,128.8 116.9,128.3 117.5,127.9 118.0,127.5 118.6,127.0 119.1,126.6 119.6,126.2 120.2,125.8 120.7,125.5 121.3,125.1 121.8,124.7 122.3,124.4 122.9,124.0 123.4,123.7 124.0,123.3 124.5,123.0 125.0,122.7 125.6,122.3 126.1,122.0 126.7,121.7 127.2,121.4 127.7,121.1 128.3,120.8 128.8,120.5 129.4,120.2 129.9,119.9 130.4,119.6 131.0,119.3 131.5,119.0 132.1,118.7 132.6,118.4 133.1,118.1 133.7,117.8 134.2,117.5 134.8,117.2 135.3,116.9 135.8,116.6 136.4,116.3 136.9,116.0 137.5,115.8 138.0,115.5 138.5,115.2 139.1,114.9 139.6,114.6 140.2,114.3 140.7,114.0 141.2,113.7 141.8,113.4 142.3,113.1 142.9,112.9 143.4,112.6 143.9,112.3 144.5,112.0 145.0,111.7 145.6,111.4 146.1,111.1 146.6,110.9 147.2,110.6 147.7,110.3 148.3,110.0 148.8,109.8 149.3,109.5 149.9,109.2 150.4,109.0 151.0,108.7 151.5,108.4 152.0,108.2 152.6,108.0 153.1,107.7 153.7,107.5 154.2,107.3 154.7,107.1 155.3,106.8 155.8,106.6 156.4,106.4 156.9,106.3 157.4,106.1 158.0,105.9 158.5,105.8 159.1,105.6 159.6,105.5 160.1,105.4 160.7,105.3 161.2,105.2 161.8,105.1 162.3,105.1 162.8,105.0 163.4,105.0 163.9,105.0 164.5,105.0 165.0,105.0 165.5,105.1 166.1,105.1 166.6,105.2 167.2,105.3 167.7,105.5 168.2,105.6 168.8,105.8 169.3,106.0 169.9,106.2 170.4,106.5 170.9,106.8 171.5,107.1 172.0,107.4 172.6,107.8 173.1,108.2 173.6,108.7 174.2,109.2 174.7,109.7 175.3,110.2 175.8,110.8 176.3,111.4 176.9,112.1 177.4,112.8 178.0,113.6 178.5,114.4 179.0,115.2 179.6,116.1 180.1,117.0 180.7,118.0 181.2,119.0 181.7,120.1 182.3,121.2 182.8,122.4 183.4,123.6 183.9,124.9 184.4,126.3 185.0,127.7 185.5,129.1 186.1,130.6 186.6,132.2 187.1,133.9 187.7,135.6 188.2,137.4 188.8,139.2 189.3,141.2 189.8,143.1 190.4,145.2 190.9,147.3 191.5,149.6 192.0,151.8 192.5,154.2 193.1,156.7 193.6,159.2 194.2,161.8 194.7,164.5 195.2,167.3 195.8,170.2 196.3,173.1 196.9,176.2 197.4,179.3 197.9,182.6 198.5,185.9 199.0,189.3 199.6,192.9 200.1,196.5 200.6,200.3 201.2,204.1 201.4,206.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) down (2) up (3) up (4) down (5) up (6) down</div>
+</section>
+<div style="text-align:center;margin:18px 0;"><a href="msp-hs10-polynomials-quiz.html?mode=practice" style="text-decoration:none;background:#059669;color:#fff;padding:9px 16px;border-radius:8px;font-weight:800;">Ready? Take the Unit Quiz →</a></div>
+
+</main>
+<footer>Mary, Star of the Sea School · Math 10 · Polynomial Functions · Dr. Park</footer>
+</div>
+<script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
+  }
+});
+
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+
+<script>
+
+// ==== Auto-save + Save/Load Answers ====
+(function(){
+  function storageKey() {
+    return 'msp-ws-' + (location.pathname.split('/').pop() || 'unknown');
+  }
+  function topicFileName() {
+    var base = (location.pathname.split('/').pop() || 'worksheet.html');
+    base = base.replace(/^msp-/, '').replace(/\.html$/, '');
+    return base + '.json';
+  }
+  function allAnswerNodes() {
+    return Array.from(document.querySelectorAll('input.ans, input.free, textarea.free, main input[type="text"]'));
+  }
+  function snapshot() {
+    var out = {};
+    allAnswerNodes().forEach(function(n, i){
+      var key = n.id || ('idx_' + i);
+      out[key] = n.value || '';
+    });
+    return out;
+  }
+  function restore(data) {
+    if (!data) return 0;
+    var nodes = allAnswerNodes();
+    var count = 0;
+    nodes.forEach(function(n){ if (n.id && data[n.id] != null) { n.value = data[n.id]; count++; } });
+    nodes.forEach(function(n, i){ var k = 'idx_' + i; if (!n.id && data[k] != null) { n.value = data[k]; count++; } });
+    return count;
+  }
+  function autoSave() {
+    try {
+      localStorage.setItem(storageKey(), JSON.stringify(snapshot()));
+      showStatus('Auto-saved ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}));
+    } catch(e){}
+  }
+  function showStatus(msg) {
+    var el = document.getElementById('save-status');
+    if (el) el.textContent = msg;
+  }
+  window.saveAnswersToFile = function() {
+    var data = snapshot();
+    data.__savedAt = new Date().toISOString();
+    data.__pageTitle = document.title;
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = topicFileName();
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+    showStatus('Downloaded ' + topicFileName());
+  };
+  window.loadAnswersFromFile = function(evt) {
+    var f = evt.target.files && evt.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        var n = restore(data);
+        autoSave();
+        showStatus('Loaded ' + n + ' answers from ' + f.name);
+      } catch(err) {
+        showStatus('Could not load file: ' + err.message);
+      }
+    };
+    reader.readAsText(f);
+    evt.target.value = '';
+  };
+  window.clearAllAnswers = function() {
+    if (!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+    allAnswerNodes().forEach(function(n){ n.value = ''; n.classList.remove('correct','wrong'); });
+    try { localStorage.removeItem(storageKey()); } catch(e){}
+    document.querySelectorAll('.correction-label').forEach(function(n){ n.remove(); });
+    document.querySelectorAll('.score').forEach(function(s){ s.textContent = '—'; s.classList.remove('good','mid','low'); });
+    showStatus('All answers cleared');
+  };
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      var raw = localStorage.getItem(storageKey());
+      if (raw) {
+        var n = restore(JSON.parse(raw));
+        if (n) showStatus('Restored ' + n + ' saved answers');
+      }
+    } catch(e){}
+    var t;
+    document.addEventListener('input', function(e) {
+      if (e.target && (e.target.classList.contains('ans') || e.target.classList.contains('free') || e.target.tagName === 'TEXTAREA' || e.target.type === 'text')) {
+        clearTimeout(t);
+        t = setTimeout(autoSave, 400);
+      }
+    });
+  });
+})();
+
+</script>
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  function check(inp){
+    var place=inp, u=inp.nextElementSibling;
+    if (u && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; place.insertAdjacentElement('afterend', fb); }
+    if (!inp.value.trim()) { fb.textContent=''; return; }
+    var ok=test(inp.value, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card=inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className='one-check-fb '+(ok?'ok':'no');
+    fb.textContent= ok ? '✓ Correct!' : '✗ Try again';
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key!=='Enter' || graded()) return;
+    var t=e.target;
+    if (!t || t.tagName!=='INPUT') return;
+    if (!(t.classList.contains('ans') || /^ans\d+$/.test(t.id||''))) return;
+    if (!expected(t)) return;
+    e.preventDefault(); check(t);
+  }, true);
+  document.addEventListener('input', function(e){
+    var t=e.target; if (!t || t.tagName!=='INPUT') return;
+    var place=t, u=t.nextElementSibling; if (u && u.classList && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling; if (fb && fb.classList.contains('one-check-fb')) fb.textContent='';
+  }, true);
+  function clean(){ document.querySelectorAll('.one-check-btn').forEach(function(n){n.remove();}); if (graded()) document.querySelectorAll('.one-check-fb').forEach(function(n){n.remove();}); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', clean); else clean();
+})();
+</script>
+<!--/CHECK-ONE-->
+</body></html>
