@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parametric Equations &amp; Motion — Lesson 5: Projectile Motion (Trigonometry)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--gold:#FFD100;--gold-deep:#b8860b;--ink:#1f2937;--dim:#64748b;--accent:#dc2626;--accent-deep:#991b1b;--accent-soft:#fee2e2;--pos:#059669;--neg:#dc2626}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%);color:var(--ink);min-height:100vh;padding:24px 16px;line-height:1.6}
+.container{max-width:1000px;margin:0 auto}
+header{text-align:center;margin-bottom:20px}
+.eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:6px}
+.tagline{color:var(--dim);font-size:.98rem;font-style:italic}
+.back-to-unit{display:inline-block;background:var(--gold);color:var(--navy);border:1.5px solid var(--gold-deep);padding:9px 18px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;margin-bottom:16px;box-shadow:0 2px 6px rgba(184,134,11,0.25);cursor:pointer}
+.back-to-unit:hover{background:var(--gold-deep);color:#fff;transform:translateX(-2px)}
+main{display:flex;flex-direction:column;gap:20px}
+section.card{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 4px 14px rgba(0,0,0,0.07);border-top:5px solid var(--accent)}
+section.card h2{color:var(--accent-deep);font-size:1.2rem;font-weight:800;margin-bottom:10px}
+section.card h3{color:var(--navy);font-size:1rem;font-weight:800;margin:12px 0 8px}
+.intro{background:var(--accent-soft);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0 12px;font-size:.95rem}
+.rule{background:#fef3c7;border-left:5px solid #b8860b;border-radius:6px;padding:8px 12px;margin:10px 0;font-size:.94rem}
+.rule strong{color:#78350f}
+table.rules{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.98rem}
+table.rules th,table.rules td{border:1.5px solid #94a3b8;padding:8px 12px;text-align:center}
+table.rules th{background:var(--navy);color:#fff;font-weight:800}
+table.rules tr:nth-child(even) td{background:#f8fafc}
+.pos{color:var(--pos);font-weight:800}
+.neg{color:var(--neg);font-weight:800}
+ol.qlist{list-style:none;counter-reset:q;padding:0;margin-top:8px}
+ol.qlist>li{counter-increment:q;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed #d1d5db}
+ol.qlist>li:last-child{border-bottom:none}
+ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.answer-line{display:inline-block;min-width:120px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.answer-line-lg{display:inline-block;min-width:200px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.reveal-btn{display:inline-block;background:var(--gold);color:var(--navy);border:1px solid var(--gold-deep);padding:8px 14px;border-radius:6px;font-weight:800;font-size:.9rem;cursor:pointer;margin:6px 0}
+.reveal-btn:hover{background:var(--gold-deep);color:#fff}
+.ak{display:none;background:#ecfccb;border-left:5px solid #65a30d;padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.ak.open{display:block}
+.ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
+footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
+@media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check, .save-toolbar { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style></head><body>
+<div class="container">
+<header>
+  <div class="eyebrow">Trigonometry · Unit 12 · Lesson 5 of 5</div>
+  <h1>🛰️ Lesson 5: Projectile Motion</h1>
+  <p class="tagline">sin and cos steer the motion.</p>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then press <strong>Return</strong> to check each one (or click <strong>Check Answers</strong>).</p><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0 4px;"><a href="msos-math-trig.html#unit=parametric-trig" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">1 · Overview</a><a href="msp-hstrig-parametric-trig-lesson2.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">2 · Points on a Curve</a><a href="msp-hstrig-parametric-trig-lesson3.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">3 · Eliminating the Parameter</a><a href="msp-hstrig-parametric-trig-lesson4.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">4 · Circles &amp; Ellipses</a><a href="msp-hstrig-parametric-trig-lesson5.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#253a77;color:#fff;">5 · Projectile Motion</a></div></header>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<main>
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
+<section class="card" id="howcard"><h2>📘 How It Works</h2><div class="intro"><strong>Key idea:</strong> x = (v cos θ)t, y = h + (v sin θ)t − 16t².</div><div style="line-height:1.65;font-size:1rem;"><p>Split the launch speed into horizontal (v cos θ) and vertical (v sin θ) parts. Gravity only affects the vertical: y = h + (v sin θ)t − 16t². Set y = 0 for the landing time, then plug into x.</p></div><h3>👀 Watch Two Examples</h3><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 1</div><div>A ball is launched at 64 ft/s at 60° from a height of 6 ft. What is its maximum height? (feet, nearest tenth)</div><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: 54.0</span></div></div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 2</div><div>A ball is launched at 32 ft/s at 30° from a height of 0 ft: y = 0 + (32 sin 30°)t − 16t². When does it land? (seconds, nearest hundredth)</div><svg viewBox="0 0 260 200" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="65.4" y1="12.0" x2="65.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="65.4" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="100.9" y1="12.0" x2="100.9" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="100.9" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="136.3" y1="12.0" x2="136.3" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="136.3" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="171.7" y1="12.0" x2="171.7" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="171.7" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="207.1" y1="12.0" x2="207.1" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="207.1" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">25</text><line x1="242.6" y1="12.0" x2="242.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="242.6" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="176.0" x2="246.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="148.7" x2="246.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="30.0" y1="121.3" x2="246.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="30.0" y1="94.0" x2="246.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="97.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="30.0" y1="66.7" x2="246.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="30.0" y1="39.3" x2="246.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="12.0" x2="246.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="30.0" y1="176.0" x2="254.0" y2="176.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,176.0 245.9,179.9 245.9,172.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,176.0 30.5,174.8 31.1,173.6 31.6,172.4 32.2,171.2 32.7,170.1 33.2,168.9 33.8,167.7 34.3,166.6 34.9,165.4 35.4,164.3 35.9,163.2 36.5,162.0 37.0,160.9 37.6,159.8 38.1,158.7 38.6,157.6 39.2,156.5 39.7,155.4 40.3,154.3 40.8,153.3 41.3,152.2 41.9,151.1 42.4,150.1 43.0,149.0 43.5,148.0 44.0,147.0 44.6,145.9 45.1,144.9 45.7,143.9 46.2,142.9 46.7,141.9 47.3,140.9 47.8,139.9 48.4,138.9 48.9,138.0 49.4,137.0 50.0,136.0 50.5,135.1 51.1,134.1 51.6,133.2 52.1,132.3 52.7,131.3 53.2,130.4 53.8,129.5 54.3,128.6 54.8,127.7 55.4,126.8 55.9,125.9 56.5,125.0 57.0,124.1 57.5,123.3 58.1,122.4 58.6,121.5 59.2,120.7 59.7,119.9 60.2,119.0 60.8,118.2 61.3,117.4 61.9,116.6 62.4,115.7 62.9,114.9 63.5,114.1 64.0,113.4 64.6,112.6 65.1,111.8 65.6,111.0 66.2,110.3 66.7,109.5 67.3,108.8 67.8,108.0 68.3,107.3 68.9,106.6 69.4,105.8 70.0,105.1 70.5,104.4 71.0,103.7 71.6,103.0 72.1,102.3 72.7,101.6 73.2,101.0 73.7,100.3 74.3,99.6 74.8,99.0 75.4,98.3 75.9,97.7 76.4,97.0 77.0,96.4 77.5,95.8 78.1,95.2 78.6,94.5 79.1,93.9 79.7,93.3 80.2,92.8 80.8,92.2 81.3,91.6 81.8,91.0 82.4,90.5 82.9,89.9 83.5,89.4 84.0,88.8 84.5,88.3 85.1,87.7 85.6,87.2 86.2,86.7 86.7,86.2 87.2,85.7 87.8,85.2 88.3,84.7 88.9,84.2 89.4,83.7 89.9,83.3 90.5,82.8 91.0,82.3 91.6,81.9 92.1,81.4 92.6,81.0 93.2,80.6 93.7,80.1 94.3,79.7 94.8,79.3 95.3,78.9 95.9,78.5 96.4,78.1 97.0,77.7 97.5,77.3 98.0,77.0 98.6,76.6 99.1,76.2 99.7,75.9 100.2,75.5 100.7,75.2 101.3,74.9 101.8,74.5 102.4,74.2 102.9,73.9 103.4,73.6 104.0,73.3 104.5,73.0 105.1,72.7 105.6,72.5 106.1,72.2 106.7,71.9 107.2,71.7 107.8,71.4 108.3,71.2 108.8,70.9 109.4,70.7 109.9,70.4 110.5,70.2 111.0,70.0 111.5,69.8 112.1,69.6 112.6,69.4 113.2,69.2 113.7,69.0 114.2,68.9 114.8,68.7 115.3,68.5 115.9,68.4 116.4,68.2 116.9,68.1 117.5,68.0 118.0,67.8 118.6,67.7 119.1,67.6 119.6,67.5 120.2,67.4 120.7,67.3 121.3,67.2 121.8,67.1 122.3,67.1 122.9,67.0 123.4,66.9 124.0,66.9 124.5,66.8 125.0,66.8 125.6,66.7 126.1,66.7 126.7,66.7 127.2,66.7 127.7,66.7 128.3,66.7 128.8,66.7 129.4,66.7 129.9,66.7 130.4,66.7 131.0,66.8 131.5,66.8 132.1,66.8 132.6,66.9 133.1,66.9 133.7,67.0 134.2,67.1 134.8,67.2 135.3,67.2 135.8,67.3 136.4,67.4 136.9,67.5 137.5,67.6 138.0,67.8 138.5,67.9 139.1,68.0 139.6,68.2 140.2,68.3 140.7,68.4 141.2,68.6 141.8,68.8 142.3,68.9 142.9,69.1 143.4,69.3 143.9,69.5 144.5,69.7 145.0,69.9 145.6,70.1 146.1,70.3 146.6,70.5 147.2,70.8 147.7,71.0 148.3,71.2 148.8,71.5 149.3,71.7 149.9,72.0 150.4,72.3 151.0,72.6 151.5,72.8 152.0,73.1 152.6,73.4 153.1,73.7 153.7,74.0 154.2,74.3 154.7,74.7 155.3,75.0 155.8,75.3 156.4,75.7 156.9,76.0 157.4,76.4 158.0,76.7 158.5,77.1 159.1,77.5 159.6,77.9 160.1,78.3 160.7,78.6 161.2,79.0 161.8,79.5 162.3,79.9 162.8,80.3 163.4,80.7 163.9,81.2 164.5,81.6 165.0,82.0 165.5,82.5 166.1,83.0 166.6,83.4 167.2,83.9 167.7,84.4 168.2,84.9 168.8,85.4 169.3,85.9 169.9,86.4 170.4,86.9 170.9,87.4 171.5,87.9 172.0,88.5 172.6,89.0 173.1,89.6 173.6,90.1 174.2,90.7 174.7,91.2 175.3,91.8 175.8,92.4 176.3,93.0 176.9,93.6 177.4,94.2 178.0,94.8 178.5,95.4 179.0,96.0 179.6,96.6 180.1,97.3 180.7,97.9 181.2,98.5 181.7,99.2 182.3,99.9 182.8,100.5 183.4,101.2 183.9,101.9 184.4,102.6 185.0,103.3 185.5,104.0 186.1,104.7 186.6,105.4 187.1,106.1 187.7,106.8 188.2,107.5 188.8,108.3 189.3,109.0 189.8,109.8 190.4,110.5 190.9,111.3 191.5,112.1 192.0,112.9 192.5,113.6 193.1,114.4 193.6,115.2 194.2,116.0 194.7,116.9 195.2,117.7 195.8,118.5 196.3,119.3 196.9,120.2 197.4,121.0 197.9,121.9 198.5,122.7 199.0,123.6 199.6,124.5 200.1,125.3 200.6,126.2 201.2,127.1 201.7,128.0 202.3,128.9 202.8,129.8 203.3,130.7 203.9,131.7 204.4,132.6 205.0,133.5 205.5,134.5 206.0,135.4 206.6,136.4 207.1,137.3 207.7,138.3 208.2,139.3 208.7,140.3 209.3,141.3 209.8,142.3 210.4,143.3 210.9,144.3 211.4,145.3 212.0,146.3 212.5,147.3 213.1,148.4 213.6,149.4 214.1,150.5 214.7,151.5 215.2,152.6 215.8,153.7 216.3,154.7 216.8,155.8 217.4,156.9 217.9,158.0 218.5,159.1 219.0,160.2 219.5,161.3 220.1,162.5 220.6,163.6 221.2,164.7 221.7,165.9 222.2,167.0 222.8,168.2 223.3,169.3 223.9,170.5 224.4,171.7 224.9,172.9 225.5,174.0 226.0,175.2 226.4,176.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: 1.00</span></div></div><p style="font-size:.9rem;color:#475569;">Now try the practice below. Type an answer and press <strong>Return</strong> — you will see ✓ Correct! or ✗ Try again right away.</p></section>
+<section class="card" id="wsec1">
+<h2>1️⃣ Practice: Projectile Motion</h2>
+<div class="intro">x = (v cos θ)t, y = h + (v sin θ)t − 16t².</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A ball is launched at 80 ft/s at 30° from a height of 0 ft. What is its maximum height? (feet, nearest tenth) <input class="ans" data-a="25.0" size="7"></li>
+<li>A ball is launched at 48 ft/s at 60° from a height of 0 ft: y = 0 + (48 sin 60°)t − 16t². When does it land? (seconds, nearest hundredth) <input class="ans" data-a="2.60" size="7"><svg viewBox="0 0 260 200" width="260" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="61.5" y1="12.0" x2="61.5" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="61.5" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="93.0" y1="12.0" x2="93.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="93.0" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="124.5" y1="12.0" x2="124.5" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="124.5" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="156.0" y1="12.0" x2="156.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="156.0" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">40</text><line x1="187.5" y1="12.0" x2="187.5" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="187.5" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">50</text><line x1="219.0" y1="12.0" x2="219.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="219.0" y="189.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">60</text><line x1="30.0" y1="176.0" x2="246.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="152.4" x2="246.0" y2="152.4" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="155.4" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="128.8" x2="246.0" y2="128.8" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="131.8" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="105.2" x2="246.0" y2="105.2" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="108.2" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="30.0" y1="81.6" x2="246.0" y2="81.6" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="84.6" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="58.0" x2="246.0" y2="58.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="61.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">25</text><line x1="30.0" y1="34.4" x2="246.0" y2="34.4" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="37.4" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="176.0" x2="254.0" y2="176.0" stroke="#334155" stroke-width="1.5"/><polygon points="254.0,176.0 245.9,179.9 245.9,172.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,176.0 30.5,174.6 31.1,173.2 31.6,171.8 32.2,170.5 32.7,169.1 33.2,167.7 33.8,166.4 34.3,165.0 34.9,163.7 35.4,162.4 35.9,161.0 36.5,159.7 37.0,158.4 37.6,157.1 38.1,155.8 38.6,154.6 39.2,153.3 39.7,152.0 40.3,150.8 40.8,149.5 41.3,148.3 41.9,147.0 42.4,145.8 43.0,144.6 43.5,143.4 44.0,142.2 44.6,141.0 45.1,139.8 45.7,138.6 46.2,137.4 46.7,136.3 47.3,135.1 47.8,133.9 48.4,132.8 48.9,131.7 49.4,130.5 50.0,129.4 50.5,128.3 51.1,127.2 51.6,126.1 52.1,125.0 52.7,123.9 53.2,122.9 53.8,121.8 54.3,120.7 54.8,119.7 55.4,118.6 55.9,117.6 56.5,116.6 57.0,115.6 57.5,114.5 58.1,113.5 58.6,112.5 59.2,111.5 59.7,110.6 60.2,109.6 60.8,108.6 61.3,107.7 61.9,106.7 62.4,105.8 62.9,104.8 63.5,103.9 64.0,103.0 64.6,102.1 65.1,101.2 65.6,100.3 66.2,99.4 66.7,98.5 67.3,97.6 67.8,96.8 68.3,95.9 68.9,95.1 69.4,94.2 70.0,93.4 70.5,92.6 71.0,91.7 71.6,90.9 72.1,90.1 72.7,89.3 73.2,88.5 73.7,87.8 74.3,87.0 74.8,86.2 75.4,85.5 75.9,84.7 76.4,84.0 77.0,83.2 77.5,82.5 78.1,81.8 78.6,81.1 79.1,80.4 79.7,79.7 80.2,79.0 80.8,78.3 81.3,77.6 81.8,77.0 82.4,76.3 82.9,75.7 83.5,75.0 84.0,74.4 84.5,73.8 85.1,73.1 85.6,72.5 86.2,71.9 86.7,71.3 87.2,70.7 87.8,70.2 88.3,69.6 88.9,69.0 89.4,68.5 89.9,67.9 90.5,67.4 91.0,66.8 91.6,66.3 92.1,65.8 92.6,65.3 93.2,64.8 93.7,64.3 94.3,63.8 94.8,63.3 95.3,62.8 95.9,62.4 96.4,61.9 97.0,61.5 97.5,61.0 98.0,60.6 98.6,60.2 99.1,59.7 99.7,59.3 100.2,58.9 100.7,58.5 101.3,58.1 101.8,57.8 102.4,57.4 102.9,57.0 103.4,56.7 104.0,56.3 104.5,56.0 105.1,55.6 105.6,55.3 106.1,55.0 106.7,54.7 107.2,54.4 107.8,54.1 108.3,53.8 108.8,53.5 109.4,53.2 109.9,53.0 110.5,52.7 111.0,52.5 111.5,52.2 112.1,52.0 112.6,51.8 113.2,51.6 113.7,51.3 114.2,51.1 114.8,50.9 115.3,50.8 115.9,50.6 116.4,50.4 116.9,50.2 117.5,50.1 118.0,49.9 118.6,49.8 119.1,49.7 119.6,49.5 120.2,49.4 120.7,49.3 121.3,49.2 121.8,49.1 122.3,49.0 122.9,48.9 123.4,48.9 124.0,48.8 124.5,48.8 125.0,48.7 125.6,48.7 126.1,48.6 126.7,48.6 127.2,48.6 127.7,48.6 128.3,48.6 128.8,48.6 129.4,48.6 129.9,48.6 130.4,48.6 131.0,48.7 131.5,48.7 132.1,48.8 132.6,48.8 133.1,48.9 133.7,49.0 134.2,49.1 134.8,49.1 135.3,49.2 135.8,49.4 136.4,49.5 136.9,49.6 137.5,49.7 138.0,49.8 138.5,50.0 139.1,50.1 139.6,50.3 140.2,50.5 140.7,50.6 141.2,50.8 141.8,51.0 142.3,51.2 142.9,51.4 143.4,51.6 143.9,51.9 144.5,52.1 145.0,52.3 145.6,52.6 146.1,52.8 146.6,53.1 147.2,53.3 147.7,53.6 148.3,53.9 148.8,54.2 149.3,54.5 149.9,54.8 150.4,55.1 151.0,55.4 151.5,55.8 152.0,56.1 152.6,56.4 153.1,56.8 153.7,57.2 154.2,57.5 154.7,57.9 155.3,58.3 155.8,58.7 156.4,59.1 156.9,59.5 157.4,59.9 158.0,60.3 158.5,60.7 159.1,61.2 159.6,61.6 160.1,62.1 160.7,62.5 161.2,63.0 161.8,63.5 162.3,64.0 162.8,64.5 163.4,65.0 163.9,65.5 164.5,66.0 165.0,66.5 165.5,67.0 166.1,67.6 166.6,68.1 167.2,68.7 167.7,69.2 168.2,69.8 168.8,70.4 169.3,70.9 169.9,71.5 170.4,72.1 170.9,72.7 171.5,73.4 172.0,74.0 172.6,74.6 173.1,75.2 173.6,75.9 174.2,76.5 174.7,77.2 175.3,77.9 175.8,78.5 176.3,79.2 176.9,79.9 177.4,80.6 178.0,81.3 178.5,82.0 179.0,82.8 179.6,83.5 180.1,84.2 180.7,85.0 181.2,85.7 181.7,86.5 182.3,87.3 182.8,88.0 183.4,88.8 183.9,89.6 184.4,90.4 185.0,91.2 185.5,92.0 186.1,92.9 186.6,93.7 187.1,94.5 187.7,95.4 188.2,96.2 188.8,97.1 189.3,98.0 189.8,98.8 190.4,99.7 190.9,100.6 191.5,101.5 192.0,102.4 192.5,103.3 193.1,104.2 193.6,105.2 194.2,106.1 194.7,107.1 195.2,108.0 195.8,109.0 196.3,109.9 196.9,110.9 197.4,111.9 197.9,112.9 198.5,113.9 199.0,114.9 199.6,115.9 200.1,116.9 200.6,118.0 201.2,119.0 201.7,120.1 202.3,121.1 202.8,122.2 203.3,123.2 203.9,124.3 204.4,125.4 205.0,126.5 205.5,127.6 206.0,128.7 206.6,129.8 207.1,130.9 207.7,132.1 208.2,133.2 208.7,134.4 209.3,135.5 209.8,136.7 210.4,137.8 210.9,139.0 211.4,140.2 212.0,141.4 212.5,142.6 213.1,143.8 213.6,145.0 214.1,146.2 214.7,147.5 215.2,148.7 215.8,150.0 216.3,151.2 216.8,152.5 217.4,153.7 217.9,155.0 218.5,156.3 219.0,157.6 219.5,158.9 220.1,160.2 220.6,161.5 221.2,162.9 221.7,164.2 222.2,165.5 222.8,166.9 223.3,168.2 223.9,169.6 224.4,171.0 224.9,172.3 225.5,173.7 226.0,175.1 226.4,176.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>A ball is launched at 48 ft/s at 45° from a height of 0 ft. What is its maximum height? (feet, nearest tenth) <input class="ans" data-a="18.0" size="7"></li>
+<li>A ball is launched at 48 ft/s at 60° from a height of 6 ft. What is its maximum height? (feet, nearest tenth) <input class="ans" data-a="33.0" size="7"></li>
+<li>A ball is launched at 32 ft/s at 45° from a height of 0 ft. What is its maximum height? (feet, nearest tenth) <input class="ans" data-a="8.0" size="6"></li>
+<li>A ball is launched at 32 ft/s at 60° from a height of 0 ft. How far does it travel horizontally before landing? x = (32 cos 60°)t (feet, nearest tenth) <input class="ans" data-a="27.7" size="7"></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) 25.0 (2) 2.60 (3) 18.0 (4) 33.0 (5) 8.0 (6) 27.7</div>
+</section>
+<div style="text-align:center;margin:18px 0;"><a href="msp-hstrig-parametric-trig-quiz.html?mode=practice" style="text-decoration:none;background:#059669;color:#fff;padding:9px 16px;border-radius:8px;font-weight:800;">Ready? Take the Unit Quiz →</a></div>
+
+</main>
+<footer>Mary, Star of the Sea School · Trigonometry · Parametric Equations &amp; Motion · Dr. Park</footer>
+</div>
+<script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
+  }
+});
+
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+
+<script>
+
+// ==== Auto-save + Save/Load Answers ====
+(function(){
+  function storageKey() {
+    return 'msp-ws-' + (location.pathname.split('/').pop() || 'unknown');
+  }
+  function topicFileName() {
+    var base = (location.pathname.split('/').pop() || 'worksheet.html');
+    base = base.replace(/^msp-/, '').replace(/\.html$/, '');
+    return base + '.json';
+  }
+  function allAnswerNodes() {
+    return Array.from(document.querySelectorAll('input.ans, input.free, textarea.free, main input[type="text"]'));
+  }
+  function snapshot() {
+    var out = {};
+    allAnswerNodes().forEach(function(n, i){
+      var key = n.id || ('idx_' + i);
+      out[key] = n.value || '';
+    });
+    return out;
+  }
+  function restore(data) {
+    if (!data) return 0;
+    var nodes = allAnswerNodes();
+    var count = 0;
+    nodes.forEach(function(n){ if (n.id && data[n.id] != null) { n.value = data[n.id]; count++; } });
+    nodes.forEach(function(n, i){ var k = 'idx_' + i; if (!n.id && data[k] != null) { n.value = data[k]; count++; } });
+    return count;
+  }
+  function autoSave() {
+    try {
+      localStorage.setItem(storageKey(), JSON.stringify(snapshot()));
+      showStatus('Auto-saved ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}));
+    } catch(e){}
+  }
+  function showStatus(msg) {
+    var el = document.getElementById('save-status');
+    if (el) el.textContent = msg;
+  }
+  window.saveAnswersToFile = function() {
+    var data = snapshot();
+    data.__savedAt = new Date().toISOString();
+    data.__pageTitle = document.title;
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = topicFileName();
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+    showStatus('Downloaded ' + topicFileName());
+  };
+  window.loadAnswersFromFile = function(evt) {
+    var f = evt.target.files && evt.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        var n = restore(data);
+        autoSave();
+        showStatus('Loaded ' + n + ' answers from ' + f.name);
+      } catch(err) {
+        showStatus('Could not load file: ' + err.message);
+      }
+    };
+    reader.readAsText(f);
+    evt.target.value = '';
+  };
+  window.clearAllAnswers = function() {
+    if (!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+    allAnswerNodes().forEach(function(n){ n.value = ''; n.classList.remove('correct','wrong'); });
+    try { localStorage.removeItem(storageKey()); } catch(e){}
+    document.querySelectorAll('.correction-label').forEach(function(n){ n.remove(); });
+    document.querySelectorAll('.score').forEach(function(s){ s.textContent = '—'; s.classList.remove('good','mid','low'); });
+    showStatus('All answers cleared');
+  };
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      var raw = localStorage.getItem(storageKey());
+      if (raw) {
+        var n = restore(JSON.parse(raw));
+        if (n) showStatus('Restored ' + n + ' saved answers');
+      }
+    } catch(e){}
+    var t;
+    document.addEventListener('input', function(e) {
+      if (e.target && (e.target.classList.contains('ans') || e.target.classList.contains('free') || e.target.tagName === 'TEXTAREA' || e.target.type === 'text')) {
+        clearTimeout(t);
+        t = setTimeout(autoSave, 400);
+      }
+    });
+  });
+})();
+
+</script>
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  function check(inp){
+    var place=inp, u=inp.nextElementSibling;
+    if (u && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; place.insertAdjacentElement('afterend', fb); }
+    if (!inp.value.trim()) { fb.textContent=''; return; }
+    var ok=test(inp.value, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card=inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className='one-check-fb '+(ok?'ok':'no');
+    fb.textContent= ok ? '✓ Correct!' : '✗ Try again';
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key!=='Enter' || graded()) return;
+    var t=e.target;
+    if (!t || t.tagName!=='INPUT') return;
+    if (!(t.classList.contains('ans') || /^ans\d+$/.test(t.id||''))) return;
+    if (!expected(t)) return;
+    e.preventDefault(); check(t);
+  }, true);
+  document.addEventListener('input', function(e){
+    var t=e.target; if (!t || t.tagName!=='INPUT') return;
+    var place=t, u=t.nextElementSibling; if (u && u.classList && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling; if (fb && fb.classList.contains('one-check-fb')) fb.textContent='';
+  }, true);
+  function clean(){ document.querySelectorAll('.one-check-btn').forEach(function(n){n.remove();}); if (graded()) document.querySelectorAll('.one-check-fb').forEach(function(n){n.remove();}); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', clean); else clean();
+})();
+</script>
+<!--/CHECK-ONE-->
+</body></html>

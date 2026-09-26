@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion &amp; Linear Approximation — Lesson 2: Velocity &amp; Acceleration (Math 12)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1a2a4a;--gold:#FFD100;--gold-deep:#b8860b;--ink:#1f2937;--dim:#64748b;--accent:#dc2626;--accent-deep:#991b1b;--accent-soft:#fee2e2;--pos:#059669;--neg:#dc2626}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%);color:var(--ink);min-height:100vh;padding:24px 16px;line-height:1.6}
+.container{max-width:1000px;margin:0 auto}
+header{text-align:center;margin-bottom:20px}
+.eyebrow{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:6px}
+.tagline{color:var(--dim);font-size:.98rem;font-style:italic}
+.back-to-unit{display:inline-block;background:var(--gold);color:var(--navy);border:1.5px solid var(--gold-deep);padding:9px 18px;border-radius:8px;font-weight:800;font-size:.92rem;text-decoration:none;margin-bottom:16px;box-shadow:0 2px 6px rgba(184,134,11,0.25);cursor:pointer}
+.back-to-unit:hover{background:var(--gold-deep);color:#fff;transform:translateX(-2px)}
+main{display:flex;flex-direction:column;gap:20px}
+section.card{background:#fff;border-radius:14px;padding:18px 22px;box-shadow:0 4px 14px rgba(0,0,0,0.07);border-top:5px solid var(--accent)}
+section.card h2{color:var(--accent-deep);font-size:1.2rem;font-weight:800;margin-bottom:10px}
+section.card h3{color:var(--navy);font-size:1rem;font-weight:800;margin:12px 0 8px}
+.intro{background:var(--accent-soft);border-left:5px solid var(--accent);border-radius:8px;padding:10px 14px;margin:8px 0 12px;font-size:.95rem}
+.rule{background:#fef3c7;border-left:5px solid #b8860b;border-radius:6px;padding:8px 12px;margin:10px 0;font-size:.94rem}
+.rule strong{color:#78350f}
+table.rules{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.98rem}
+table.rules th,table.rules td{border:1.5px solid #94a3b8;padding:8px 12px;text-align:center}
+table.rules th{background:var(--navy);color:#fff;font-weight:800}
+table.rules tr:nth-child(even) td{background:#f8fafc}
+.pos{color:var(--pos);font-weight:800}
+.neg{color:var(--neg);font-weight:800}
+ol.qlist{list-style:none;counter-reset:q;padding:0;margin-top:8px}
+ol.qlist>li{counter-increment:q;position:relative;padding:9px 0 9px 42px;border-bottom:1px dashed #d1d5db}
+ol.qlist>li:last-child{border-bottom:none}
+ol.qlist>li::before{content:counter(q);position:absolute;left:0;top:9px;width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;font-weight:800;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.answer-line{display:inline-block;min-width:120px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.answer-line-lg{display:inline-block;min-width:200px;border-bottom:1.5px solid #64748b;margin-left:6px}
+.reveal-btn{display:inline-block;background:var(--gold);color:var(--navy);border:1px solid var(--gold-deep);padding:8px 14px;border-radius:6px;font-weight:800;font-size:.9rem;cursor:pointer;margin:6px 0}
+.reveal-btn:hover{background:var(--gold-deep);color:#fff}
+.ak{display:none;background:#ecfccb;border-left:5px solid #65a30d;padding:10px 14px;border-radius:6px;margin:10px 0;font-size:.92rem}
+.ak.open{display:block}
+.ak h4{color:#3f6212;margin-bottom:8px;font-size:.95rem}
+footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;padding-top:16px;border-top:1px dashed #cbd5e1}
+@media print{body{background:#fff;padding:0} section.card{box-shadow:none;border:1px solid #cbd5e1;page-break-inside:avoid} .reveal-btn{display:none} .ak{display:block} .back-to-unit{display:none}}
+
+/* --- Digital fillable additions --- */
+input.ans {
+  display:inline-block; min-width:110px; max-width:280px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:#1f2937;
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:#2563eb; box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:#16a34a; color:#14532d; }
+input.ans.wrong { background:#fee2e2; border-color:#dc2626; color:#7f1d1d; }
+input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+.check-btn {
+  display:inline-block; background:#2563eb; color:#fff;
+  border:1px solid #1e40af; padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:10px 8px 6px 0;
+}
+.check-btn:hover { background:#1e40af; }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:#1a2a4a;
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:10px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:#1a2a4a;
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+.overall-check {
+  background:#fffbeb; border:2px solid #b8860b; border-radius:12px;
+  padding:14px 18px; margin:20px 0 10px; text-align:center;
+}
+.overall-check h3 { color:#78350f; font-size:1.05rem; margin-bottom:8px; font-weight:800; }
+@media print {
+  .check-btn, .reset-btn, .score, .overall-check, .save-toolbar { display:none !important; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent !important; border-radius:0; color:#000 !important; }
+}
+
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style></head><body>
+<div class="container">
+<header>
+  <div class="eyebrow">Math 12 · Unit 6 · Lesson 2 of 5</div>
+  <h1>🚗 Lesson 2: Velocity &amp; Acceleration</h1>
+  <p class="tagline">Speed is the derivative of distance.</p>
+<p class="digitally-fillable-note" style="text-align:center; margin-top:8px; font-size:.9rem; color:#64748b;">💡 Type your answers into the boxes, then press <strong>Return</strong> to check each one (or click <strong>Check Answers</strong>).</p><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:10px 0 4px;"><a href="msos-math-12.html#unit=motion-linearization" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">1 · Overview</a><a href="msp-hs12-motion-linearization-lesson2.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#253a77;color:#fff;">2 · Velocity &amp; Acceleration</a><a href="msp-hs12-motion-linearization-lesson3.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">3 · At Rest</a><a href="msp-hs12-motion-linearization-lesson4.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">4 · Direction of Motion</a><a href="msp-hs12-motion-linearization-lesson5.html" style="text-decoration:none;padding:5px 11px;border-radius:999px;font-size:.8rem;font-weight:800;border:1.5px solid #253a77;background:#fff;color:#253a77;">5 · Linear Approximation</a></div></header>
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<main>
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
+<section class="card" id="howcard"><h2>📘 How It Works</h2><div class="intro"><strong>Key idea:</strong> Differentiate position once, then twice.</div><div style="line-height:1.65;font-size:1rem;"><p>Velocity v(t) = s′(t). Acceleration a(t) = v′(t) = s″(t). Differentiate, then plug in the time.</p></div><h3>👀 Watch Two Examples</h3><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 1</div><div>A particle’s position is s(t) = 4t³ − 3t² + 3t − 3. Find its acceleration at t = 3.</div><svg viewBox="0 0 240 200" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="49.6" y1="12.0" x2="49.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="49.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0.5</text><line x1="69.2" y1="12.0" x2="69.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="69.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="88.8" y1="12.0" x2="88.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="88.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1.5</text><line x1="108.4" y1="12.0" x2="108.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="108.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="128.0" y1="12.0" x2="128.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5</text><line x1="147.6" y1="12.0" x2="147.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="147.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="167.2" y1="12.0" x2="167.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="167.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3.5</text><line x1="186.8" y1="12.0" x2="186.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="186.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="206.4" y1="12.0" x2="206.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="206.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4.5</text><line x1="226.0" y1="12.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="176.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="179.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="148.7" x2="226.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="121.3" x2="226.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="94.0" x2="226.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="66.7" x2="226.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="39.3" x2="226.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="94.0" x2="234.0" y2="94.0" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,94.0 225.9,97.9 225.9,90.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,102.2 30.5,102.1 31.0,102.0 31.5,101.9 32.0,101.8 32.5,101.7 32.9,101.6 33.4,101.5 33.9,101.5 34.4,101.4 34.9,101.3 35.4,101.2 35.9,101.1 36.4,101.0 36.9,101.0 37.4,100.9 37.8,100.8 38.3,100.7 38.8,100.6 39.3,100.6 39.8,100.5 40.3,100.4 40.8,100.3 41.3,100.3 41.8,100.2 42.2,100.1 42.7,100.0 43.2,99.9 43.7,99.9 44.2,99.8 44.7,99.7 45.2,99.6 45.7,99.5 46.2,99.4 46.7,99.4 47.1,99.3 47.6,99.2 48.1,99.1 48.6,99.0 49.1,98.9 49.6,98.8 50.1,98.7 50.6,98.6 51.1,98.5 51.6,98.4 52.0,98.2 52.5,98.1 53.0,98.0 53.5,97.9 54.0,97.7 54.5,97.6 55.0,97.5 55.5,97.3 56.0,97.2 56.5,97.0 57.0,96.9 57.4,96.7 57.9,96.6 58.4,96.4 58.9,96.2 59.4,96.0 59.9,95.9 60.4,95.7 60.9,95.5 61.4,95.3 61.9,95.1 62.3,94.9 62.8,94.7 63.3,94.4 63.8,94.2 64.3,94.0 64.8,93.7 65.3,93.5 65.8,93.2 66.3,93.0 66.8,92.7 67.2,92.4 67.7,92.2 68.2,91.9 68.7,91.6 69.2,91.3 69.7,91.0 70.2,90.6 70.7,90.3 71.2,90.0 71.7,89.6 72.1,89.3 72.6,88.9 73.1,88.5 73.6,88.2 74.1,87.8 74.6,87.4 75.1,87.0 75.6,86.6 76.1,86.1 76.5,85.7 77.0,85.3 77.5,84.8 78.0,84.4 78.5,83.9 79.0,83.4 79.5,82.9 80.0,82.4 80.5,81.9 81.0,81.4 81.5,80.8 81.9,80.3 82.4,79.7 82.9,79.2 83.4,78.6 83.9,78.0 84.4,77.4 84.9,76.8 85.4,76.2 85.9,75.5 86.3,74.9 86.8,74.2 87.3,73.5 87.8,72.9 88.3,72.2 88.8,71.5 89.3,70.7 89.8,70.0 90.3,69.2 90.8,68.5 91.2,67.7 91.7,66.9 92.2,66.1 92.7,65.3 93.2,64.5 93.7,63.6 94.2,62.8 94.7,61.9 95.2,61.0 95.7,60.1 96.2,59.2 96.6,58.2 97.1,57.3 97.6,56.3 98.1,55.4 98.6,54.4 99.1,53.4 99.6,52.3 100.1,51.3 100.6,50.2 101.0,49.2 101.5,48.1 102.0,47.0 102.5,45.9 103.0,44.7 103.5,43.6 104.0,42.4 104.5,41.2 105.0,40.0 105.5,38.8 106.0,37.6 106.4,36.3 106.9,35.1 107.4,33.8 107.9,32.5 108.4,31.1 108.9,29.8 109.4,28.4 109.9,27.1 110.4,25.7 110.8,24.2 111.3,22.8 111.8,21.4 112.3,19.9 112.8,18.4 113.3,16.9 113.8,15.4 114.3,13.8 114.8,12.2 114.8,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: 66</span></div></div><div style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #7c3aed;border-radius:8px;padding:10px 14px;margin:10px 0;"><div style="font-weight:900;color:#5b21b6;margin-bottom:4px;">✏️ Worked Example 2</div><div>A particle’s position is s(t) = 4t³ + 3t² − 3t + 1. Find its acceleration at t = 3.</div><svg viewBox="0 0 240 200" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="49.6" y1="12.0" x2="49.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="49.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0.5</text><line x1="69.2" y1="12.0" x2="69.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="69.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="88.8" y1="12.0" x2="88.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="88.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1.5</text><line x1="108.4" y1="12.0" x2="108.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="108.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="128.0" y1="12.0" x2="128.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5</text><line x1="147.6" y1="12.0" x2="147.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="147.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="167.2" y1="12.0" x2="167.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="167.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3.5</text><line x1="186.8" y1="12.0" x2="186.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="186.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="206.4" y1="12.0" x2="206.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="206.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4.5</text><line x1="226.0" y1="12.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="176.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="179.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="148.7" x2="226.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="121.3" x2="226.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="94.0" x2="226.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="66.7" x2="226.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="39.3" x2="226.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="94.0" x2="234.0" y2="94.0" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,94.0 225.9,97.9 225.9,90.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,91.3 30.5,91.4 31.0,91.5 31.5,91.6 32.0,91.7 32.5,91.7 32.9,91.8 33.4,91.9 33.9,92.0 34.4,92.1 34.9,92.1 35.4,92.2 35.9,92.3 36.4,92.3 36.9,92.4 37.4,92.4 37.8,92.5 38.3,92.5 38.8,92.6 39.3,92.6 39.8,92.6 40.3,92.7 40.8,92.7 41.3,92.7 41.8,92.7 42.2,92.7 42.7,92.7 43.2,92.7 43.7,92.7 44.2,92.6 44.7,92.6 45.2,92.6 45.7,92.5 46.2,92.5 46.7,92.4 47.1,92.4 47.6,92.3 48.1,92.2 48.6,92.1 49.1,92.0 49.6,92.0 50.1,91.8 50.6,91.7 51.1,91.6 51.6,91.5 52.0,91.3 52.5,91.2 53.0,91.0 53.5,90.9 54.0,90.7 54.5,90.5 55.0,90.3 55.5,90.1 56.0,89.9 56.5,89.7 57.0,89.5 57.4,89.2 57.9,89.0 58.4,88.7 58.9,88.5 59.4,88.2 59.9,87.9 60.4,87.6 60.9,87.3 61.4,87.0 61.9,86.7 62.3,86.3 62.8,86.0 63.3,85.6 63.8,85.2 64.3,84.8 64.8,84.4 65.3,84.0 65.8,83.6 66.3,83.2 66.8,82.7 67.2,82.3 67.7,81.8 68.2,81.3 68.7,80.8 69.2,80.3 69.7,79.8 70.2,79.3 70.7,78.7 71.2,78.2 71.7,77.6 72.1,77.0 72.6,76.4 73.1,75.8 73.6,75.2 74.1,74.5 74.6,73.9 75.1,73.2 75.6,72.5 76.1,71.8 76.5,71.1 77.0,70.4 77.5,69.7 78.0,68.9 78.5,68.1 79.0,67.3 79.5,66.5 80.0,65.7 80.5,64.9 81.0,64.0 81.5,63.2 81.9,62.3 82.4,61.4 82.9,60.5 83.4,59.6 83.9,58.6 84.4,57.7 84.9,56.7 85.4,55.7 85.9,54.7 86.3,53.6 86.8,52.6 87.3,51.5 87.8,50.4 88.3,49.3 88.8,48.2 89.3,47.1 89.8,45.9 90.3,44.8 90.8,43.6 91.2,42.4 91.7,41.1 92.2,39.9 92.7,38.6 93.2,37.3 93.7,36.0 94.2,34.7 94.7,33.4 95.2,32.0 95.7,30.6 96.2,29.2 96.6,27.8 97.1,26.4 97.6,24.9 98.1,23.4 98.6,21.9 99.1,20.4 99.6,18.8 100.1,17.3 100.6,15.7 101.0,14.1 101.5,12.5 101.7,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg><div style="margin-top:6px;"><span style="background:#dcfce7;color:#166534;border-radius:6px;padding:3px 10px;font-weight:800;">Answer: 78</span></div></div><p style="font-size:.9rem;color:#475569;">Now try the practice below. Type an answer and press <strong>Return</strong> — you will see ✓ Correct! or ✗ Try again right away.</p></section>
+<section class="card" id="wsec1">
+<h2>1️⃣ Practice: Velocity &amp; Acceleration</h2>
+<div class="intro">Differentiate position once, then twice.</div>
+<h3>Practice:</h3>
+<ol class="qlist">
+<li>A particle’s position is s(t) = 2t³ + 3t² + 3t − 1. Find its acceleration at t = 2. <input class="ans" data-a="30" size="6"><svg viewBox="0 0 240 200" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="49.6" y1="12.0" x2="49.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="49.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0.5</text><line x1="69.2" y1="12.0" x2="69.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="69.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="88.8" y1="12.0" x2="88.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="88.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1.5</text><line x1="108.4" y1="12.0" x2="108.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="108.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="128.0" y1="12.0" x2="128.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5</text><line x1="147.6" y1="12.0" x2="147.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="147.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="167.2" y1="12.0" x2="167.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="167.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3.5</text><line x1="186.8" y1="12.0" x2="186.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="186.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="206.4" y1="12.0" x2="206.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="206.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4.5</text><line x1="226.0" y1="12.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="176.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="179.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="148.7" x2="226.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="121.3" x2="226.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="94.0" x2="226.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="66.7" x2="226.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="39.3" x2="226.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="94.0" x2="234.0" y2="94.0" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,94.0 225.9,97.9 225.9,90.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,96.7 30.5,96.6 31.0,96.5 31.5,96.4 32.0,96.3 32.5,96.2 32.9,96.1 33.4,95.9 33.9,95.8 34.4,95.7 34.9,95.6 35.4,95.4 35.9,95.3 36.4,95.2 36.9,95.0 37.4,94.9 37.8,94.7 38.3,94.6 38.8,94.4 39.3,94.3 39.8,94.1 40.3,93.9 40.8,93.7 41.3,93.6 41.8,93.4 42.2,93.2 42.7,93.0 43.2,92.8 43.7,92.6 44.2,92.4 44.7,92.2 45.2,92.0 45.7,91.8 46.2,91.6 46.7,91.3 47.1,91.1 47.6,90.9 48.1,90.6 48.6,90.4 49.1,90.2 49.6,89.9 50.1,89.6 50.6,89.4 51.1,89.1 51.6,88.8 52.0,88.6 52.5,88.3 53.0,88.0 53.5,87.7 54.0,87.4 54.5,87.1 55.0,86.8 55.5,86.4 56.0,86.1 56.5,85.8 57.0,85.4 57.4,85.1 57.9,84.8 58.4,84.4 58.9,84.0 59.4,83.7 59.9,83.3 60.4,82.9 60.9,82.5 61.4,82.1 61.9,81.7 62.3,81.3 62.8,80.9 63.3,80.5 63.8,80.1 64.3,79.6 64.8,79.2 65.3,78.7 65.8,78.3 66.3,77.8 66.8,77.3 67.2,76.9 67.7,76.4 68.2,75.9 68.7,75.4 69.2,74.9 69.7,74.4 70.2,73.8 70.7,73.3 71.2,72.8 71.7,72.2 72.1,71.7 72.6,71.1 73.1,70.5 73.6,69.9 74.1,69.3 74.6,68.7 75.1,68.1 75.6,67.5 76.1,66.9 76.5,66.3 77.0,65.6 77.5,65.0 78.0,64.3 78.5,63.7 79.0,63.0 79.5,62.3 80.0,61.6 80.5,60.9 81.0,60.2 81.5,59.5 81.9,58.8 82.4,58.0 82.9,57.3 83.4,56.5 83.9,55.7 84.4,55.0 84.9,54.2 85.4,53.4 85.9,52.6 86.3,51.8 86.8,50.9 87.3,50.1 87.8,49.3 88.3,48.4 88.8,47.5 89.3,46.7 89.8,45.8 90.3,44.9 90.8,44.0 91.2,43.0 91.7,42.1 92.2,41.2 92.7,40.2 93.2,39.3 93.7,38.3 94.2,37.3 94.7,36.3 95.2,35.3 95.7,34.3 96.2,33.3 96.6,32.2 97.1,31.2 97.6,30.1 98.1,29.1 98.6,28.0 99.1,26.9 99.6,25.8 100.1,24.7 100.6,23.5 101.0,22.4 101.5,21.2 102.0,20.1 102.5,18.9 103.0,17.7 103.5,16.5 104.0,15.3 104.5,14.1 105.0,12.8 105.3,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>A particle’s position is s(t) = −2t³ − 5t² − 3t + 2. Find its velocity at t = 0. <input class="ans" data-a="-3" size="6"><svg viewBox="0 0 240 200" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="49.6" y1="12.0" x2="49.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="49.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0.5</text><line x1="69.2" y1="12.0" x2="69.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="69.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="88.8" y1="12.0" x2="88.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="88.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1.5</text><line x1="108.4" y1="12.0" x2="108.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="108.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="128.0" y1="12.0" x2="128.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5</text><line x1="147.6" y1="12.0" x2="147.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="147.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="167.2" y1="12.0" x2="167.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="167.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3.5</text><line x1="186.8" y1="12.0" x2="186.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="186.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="206.4" y1="12.0" x2="206.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="206.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4.5</text><line x1="226.0" y1="12.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="176.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="179.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="148.7" x2="226.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="121.3" x2="226.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="94.0" x2="226.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="66.7" x2="226.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="39.3" x2="226.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="94.0" x2="234.0" y2="94.0" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,94.0 225.9,97.9 225.9,90.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,88.5 30.5,88.6 31.0,88.7 31.5,88.9 32.0,89.0 32.5,89.1 32.9,89.2 33.4,89.4 33.9,89.5 34.4,89.6 34.9,89.8 35.4,89.9 35.9,90.1 36.4,90.3 36.9,90.4 37.4,90.6 37.8,90.8 38.3,90.9 38.8,91.1 39.3,91.3 39.8,91.5 40.3,91.7 40.8,91.9 41.3,92.2 41.8,92.4 42.2,92.6 42.7,92.8 43.2,93.1 43.7,93.3 44.2,93.6 44.7,93.8 45.2,94.1 45.7,94.3 46.2,94.6 46.7,94.9 47.1,95.2 47.6,95.5 48.1,95.8 48.6,96.1 49.1,96.4 49.6,96.7 50.1,97.1 50.6,97.4 51.1,97.7 51.6,98.1 52.0,98.4 52.5,98.8 53.0,99.2 53.5,99.6 54.0,99.9 54.5,100.3 55.0,100.7 55.5,101.1 56.0,101.6 56.5,102.0 57.0,102.4 57.4,102.8 57.9,103.3 58.4,103.7 58.9,104.2 59.4,104.7 59.9,105.2 60.4,105.6 60.9,106.1 61.4,106.6 61.9,107.2 62.3,107.7 62.8,108.2 63.3,108.7 63.8,109.3 64.3,109.8 64.8,110.4 65.3,111.0 65.8,111.5 66.3,112.1 66.8,112.7 67.2,113.3 67.7,114.0 68.2,114.6 68.7,115.2 69.2,115.9 69.7,116.5 70.2,117.2 70.7,117.9 71.2,118.5 71.7,119.2 72.1,119.9 72.6,120.6 73.1,121.4 73.6,122.1 74.1,122.8 74.6,123.6 75.1,124.4 75.6,125.1 76.1,125.9 76.5,126.7 77.0,127.5 77.5,128.3 78.0,129.1 78.5,130.0 79.0,130.8 79.5,131.7 80.0,132.5 80.5,133.4 81.0,134.3 81.5,135.2 81.9,136.1 82.4,137.0 82.9,138.0 83.4,138.9 83.9,139.9 84.4,140.8 84.9,141.8 85.4,142.8 85.9,143.8 86.3,144.8 86.8,145.8 87.3,146.9 87.8,147.9 88.3,149.0 88.8,150.0 89.3,151.1 89.8,152.2 90.3,153.3 90.8,154.4 91.2,155.6 91.7,156.7 92.2,157.9 92.7,159.0 93.2,160.2 93.7,161.4 94.2,162.6 94.7,163.8 95.2,165.1 95.7,166.3 96.2,167.6 96.6,168.8 97.1,170.1 97.6,171.4 98.1,172.7 98.6,174.0 99.1,175.4 99.3,176.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>A particle’s position is s(t) = 3t³ + 4t² + 3t − 1. Find its velocity at t = 2. <input class="ans" data-a="55" size="6"><svg viewBox="0 0 240 200" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="49.6" y1="12.0" x2="49.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="49.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0.5</text><line x1="69.2" y1="12.0" x2="69.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="69.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="88.8" y1="12.0" x2="88.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="88.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1.5</text><line x1="108.4" y1="12.0" x2="108.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="108.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="128.0" y1="12.0" x2="128.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5</text><line x1="147.6" y1="12.0" x2="147.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="147.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="167.2" y1="12.0" x2="167.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="167.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3.5</text><line x1="186.8" y1="12.0" x2="186.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="186.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="206.4" y1="12.0" x2="206.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="206.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4.5</text><line x1="226.0" y1="12.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="176.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="179.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="148.7" x2="226.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="121.3" x2="226.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="94.0" x2="226.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="66.7" x2="226.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="39.3" x2="226.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="94.0" x2="234.0" y2="94.0" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,94.0 225.9,97.9 225.9,90.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,96.7 30.5,96.6 31.0,96.5 31.5,96.4 32.0,96.3 32.5,96.2 32.9,96.1 33.4,95.9 33.9,95.8 34.4,95.7 34.9,95.5 35.4,95.4 35.9,95.2 36.4,95.1 36.9,94.9 37.4,94.8 37.8,94.6 38.3,94.4 38.8,94.2 39.3,94.1 39.8,93.9 40.3,93.7 40.8,93.5 41.3,93.3 41.8,93.1 42.2,92.9 42.7,92.6 43.2,92.4 43.7,92.2 44.2,91.9 44.7,91.7 45.2,91.4 45.7,91.2 46.2,90.9 46.7,90.6 47.1,90.4 47.6,90.1 48.1,89.8 48.6,89.5 49.1,89.2 49.6,88.9 50.1,88.6 50.6,88.2 51.1,87.9 51.6,87.6 52.0,87.2 52.5,86.8 53.0,86.5 53.5,86.1 54.0,85.7 54.5,85.3 55.0,84.9 55.5,84.5 56.0,84.1 56.5,83.7 57.0,83.3 57.4,82.8 57.9,82.4 58.4,81.9 58.9,81.4 59.4,81.0 59.9,80.5 60.4,80.0 60.9,79.5 61.4,79.0 61.9,78.5 62.3,77.9 62.8,77.4 63.3,76.8 63.8,76.3 64.3,75.7 64.8,75.1 65.3,74.5 65.8,73.9 66.3,73.3 66.8,72.7 67.2,72.0 67.7,71.4 68.2,70.7 68.7,70.1 69.2,69.4 69.7,68.7 70.2,68.0 70.7,67.3 71.2,66.6 71.7,65.8 72.1,65.1 72.6,64.3 73.1,63.6 73.6,62.8 74.1,62.0 74.6,61.2 75.1,60.4 75.6,59.5 76.1,58.7 76.5,57.8 77.0,57.0 77.5,56.1 78.0,55.2 78.5,54.3 79.0,53.4 79.5,52.5 80.0,51.5 80.5,50.6 81.0,49.6 81.5,48.6 81.9,47.6 82.4,46.6 82.9,45.6 83.4,44.5 83.9,43.5 84.4,42.4 84.9,41.3 85.4,40.2 85.9,39.1 86.3,38.0 86.8,36.9 87.3,35.7 87.8,34.5 88.3,33.4 88.8,32.2 89.3,30.9 89.8,29.7 90.3,28.5 90.8,27.2 91.2,25.9 91.7,24.7 92.2,23.4 92.7,22.0 93.2,20.7 93.7,19.4 94.2,18.0 94.7,16.6 95.2,15.2 95.7,13.8 96.2,12.4 96.3,12.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>A particle’s position is s(t) = −5t³ − 2t + 5. Find its velocity at t = 3. <input class="ans" data-a="-137" size="7"><svg viewBox="0 0 240 200" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="49.6" y1="12.0" x2="49.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="49.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0.5</text><line x1="69.2" y1="12.0" x2="69.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="69.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="88.8" y1="12.0" x2="88.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="88.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1.5</text><line x1="108.4" y1="12.0" x2="108.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="108.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="128.0" y1="12.0" x2="128.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5</text><line x1="147.6" y1="12.0" x2="147.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="147.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="167.2" y1="12.0" x2="167.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="167.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3.5</text><line x1="186.8" y1="12.0" x2="186.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="186.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="206.4" y1="12.0" x2="206.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="206.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4.5</text><line x1="226.0" y1="12.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="176.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="179.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="148.7" x2="226.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="121.3" x2="226.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="94.0" x2="226.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="66.7" x2="226.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="39.3" x2="226.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="94.0" x2="234.0" y2="94.0" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,94.0 225.9,97.9 225.9,90.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,80.3 30.5,80.4 31.0,80.5 31.5,80.5 32.0,80.6 32.5,80.7 32.9,80.7 33.4,80.8 33.9,80.9 34.4,81.0 34.9,81.0 35.4,81.1 35.9,81.2 36.4,81.3 36.9,81.4 37.4,81.4 37.8,81.5 38.3,81.6 38.8,81.7 39.3,81.8 39.8,81.9 40.3,82.0 40.8,82.1 41.3,82.2 41.8,82.3 42.2,82.5 42.7,82.6 43.2,82.7 43.7,82.8 44.2,83.0 44.7,83.1 45.2,83.2 45.7,83.4 46.2,83.5 46.7,83.7 47.1,83.9 47.6,84.0 48.1,84.2 48.6,84.4 49.1,84.6 49.6,84.8 50.1,85.0 50.6,85.2 51.1,85.4 51.6,85.6 52.0,85.8 52.5,86.1 53.0,86.3 53.5,86.6 54.0,86.8 54.5,87.1 55.0,87.4 55.5,87.6 56.0,87.9 56.5,88.2 57.0,88.5 57.4,88.8 57.9,89.2 58.4,89.5 58.9,89.8 59.4,90.2 59.9,90.6 60.4,90.9 60.9,91.3 61.4,91.7 61.9,92.1 62.3,92.5 62.8,92.9 63.3,93.4 63.8,93.8 64.3,94.3 64.8,94.7 65.3,95.2 65.8,95.7 66.3,96.2 66.8,96.7 67.2,97.2 67.7,97.8 68.2,98.3 68.7,98.9 69.2,99.5 69.7,100.1 70.2,100.7 70.7,101.3 71.2,101.9 71.7,102.5 72.1,103.2 72.6,103.9 73.1,104.5 73.6,105.2 74.1,105.9 74.6,106.7 75.1,107.4 75.6,108.2 76.1,108.9 76.5,109.7 77.0,110.5 77.5,111.3 78.0,112.2 78.5,113.0 79.0,113.9 79.5,114.7 80.0,115.6 80.5,116.5 81.0,117.5 81.5,118.4 81.9,119.4 82.4,120.3 82.9,121.3 83.4,122.3 83.9,123.4 84.4,124.4 84.9,125.5 85.4,126.6 85.9,127.7 86.3,128.8 86.8,129.9 87.3,131.1 87.8,132.3 88.3,133.4 88.8,134.7 89.3,135.9 89.8,137.1 90.3,138.4 90.8,139.7 91.2,141.0 91.7,142.3 92.2,143.7 92.7,145.1 93.2,146.4 93.7,147.9 94.2,149.3 94.7,150.7 95.2,152.2 95.7,153.7 96.2,155.2 96.6,156.8 97.1,158.3 97.6,159.9 98.1,161.5 98.6,163.1 99.1,164.8 99.6,166.5 100.1,168.2 100.6,169.9 101.0,171.6 101.5,173.4 102.0,175.2 102.3,176.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>A particle’s position is s(t) = −t³ + t² + 4t + 2. Find its velocity at t = 1. <input class="ans" data-a="3" size="6"><svg viewBox="0 0 240 200" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="49.6" y1="12.0" x2="49.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="49.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0.5</text><line x1="69.2" y1="12.0" x2="69.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="69.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="88.8" y1="12.0" x2="88.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="88.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1.5</text><line x1="108.4" y1="12.0" x2="108.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="108.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="128.0" y1="12.0" x2="128.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5</text><line x1="147.6" y1="12.0" x2="147.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="147.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="167.2" y1="12.0" x2="167.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="167.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3.5</text><line x1="186.8" y1="12.0" x2="186.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="186.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="206.4" y1="12.0" x2="206.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="206.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4.5</text><line x1="226.0" y1="12.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="176.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="179.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="148.7" x2="226.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="121.3" x2="226.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="94.0" x2="226.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="66.7" x2="226.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="39.3" x2="226.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="94.0" x2="234.0" y2="94.0" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,94.0 225.9,97.9 225.9,90.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,88.5 30.5,88.4 31.0,88.3 31.5,88.1 32.0,88.0 32.5,87.8 32.9,87.7 33.4,87.6 33.9,87.4 34.4,87.3 34.9,87.1 35.4,87.0 35.9,86.8 36.4,86.7 36.9,86.6 37.4,86.4 37.8,86.3 38.3,86.1 38.8,86.0 39.3,85.8 39.8,85.7 40.3,85.5 40.8,85.4 41.3,85.2 41.8,85.1 42.2,84.9 42.7,84.8 43.2,84.6 43.7,84.5 44.2,84.3 44.7,84.2 45.2,84.0 45.7,83.9 46.2,83.8 46.7,83.6 47.1,83.5 47.6,83.3 48.1,83.2 48.6,83.0 49.1,82.9 49.6,82.7 50.1,82.6 50.6,82.4 51.1,82.3 51.6,82.1 52.0,82.0 52.5,81.9 53.0,81.7 53.5,81.6 54.0,81.4 54.5,81.3 55.0,81.2 55.5,81.0 56.0,80.9 56.5,80.7 57.0,80.6 57.4,80.5 57.9,80.3 58.4,80.2 58.9,80.1 59.4,79.9 59.9,79.8 60.4,79.7 60.9,79.6 61.4,79.4 61.9,79.3 62.3,79.2 62.8,79.1 63.3,78.9 63.8,78.8 64.3,78.7 64.8,78.6 65.3,78.5 65.8,78.4 66.3,78.2 66.8,78.1 67.2,78.0 67.7,77.9 68.2,77.8 68.7,77.7 69.2,77.6 69.7,77.5 70.2,77.4 70.7,77.3 71.2,77.2 71.7,77.1 72.1,77.0 72.6,76.9 73.1,76.8 73.6,76.8 74.1,76.7 74.6,76.6 75.1,76.5 75.6,76.4 76.1,76.3 76.5,76.3 77.0,76.2 77.5,76.1 78.0,76.1 78.5,76.0 79.0,75.9 79.5,75.9 80.0,75.8 80.5,75.8 81.0,75.7 81.5,75.7 81.9,75.6 82.4,75.6 82.9,75.5 83.4,75.5 83.9,75.4 84.4,75.4 84.9,75.4 85.4,75.3 85.9,75.3 86.3,75.3 86.8,75.3 87.3,75.2 87.8,75.2 88.3,75.2 88.8,75.2 89.3,75.2 89.8,75.2 90.3,75.2 90.8,75.2 91.2,75.2 91.7,75.2 92.2,75.2 92.7,75.2 93.2,75.3 93.7,75.3 94.2,75.3 94.7,75.3 95.2,75.4 95.7,75.4 96.2,75.4 96.6,75.5 97.1,75.5 97.6,75.6 98.1,75.6 98.6,75.7 99.1,75.7 99.6,75.8 100.1,75.9 100.6,75.9 101.0,76.0 101.5,76.1 102.0,76.2 102.5,76.3 103.0,76.3 103.5,76.4 104.0,76.5 104.5,76.6 105.0,76.7 105.5,76.9 106.0,77.0 106.4,77.1 106.9,77.2 107.4,77.3 107.9,77.5 108.4,77.6 108.9,77.7 109.4,77.9 109.9,78.0 110.4,78.2 110.8,78.3 111.3,78.5 111.8,78.7 112.3,78.8 112.8,79.0 113.3,79.2 113.8,79.4 114.3,79.6 114.8,79.7 115.3,79.9 115.8,80.1 116.2,80.4 116.7,80.6 117.2,80.8 117.7,81.0 118.2,81.2 118.7,81.5 119.2,81.7 119.7,81.9 120.2,82.2 120.7,82.4 121.1,82.7 121.6,83.0 122.1,83.2 122.6,83.5 123.1,83.8 123.6,84.0 124.1,84.3 124.6,84.6 125.1,84.9 125.5,85.2 126.0,85.5 126.5,85.9 127.0,86.2 127.5,86.5 128.0,86.8 128.5,87.2 129.0,87.5 129.5,87.8 130.0,88.2 130.4,88.6 130.9,88.9 131.4,89.3 131.9,89.7 132.4,90.1 132.9,90.4 133.4,90.8 133.9,91.2 134.4,91.6 134.9,92.0 135.3,92.5 135.8,92.9 136.3,93.3 136.8,93.8 137.3,94.2 137.8,94.6 138.3,95.1 138.8,95.6 139.3,96.0 139.8,96.5 140.2,97.0 140.7,97.5 141.2,97.9 141.7,98.4 142.2,99.0 142.7,99.5 143.2,100.0 143.7,100.5 144.2,101.0 144.7,101.6 145.2,102.1 145.6,102.7 146.1,103.2 146.6,103.8 147.1,104.4 147.6,104.9 148.1,105.5 148.6,106.1 149.1,106.7 149.6,107.3 150.1,107.9 150.5,108.5 151.0,109.2 151.5,109.8 152.0,110.4 152.5,111.1 153.0,111.7 153.5,112.4 154.0,113.1 154.5,113.7 154.9,114.4 155.4,115.1 155.9,115.8 156.4,116.5 156.9,117.2 157.4,118.0 157.9,118.7 158.4,119.4 158.9,120.2 159.4,120.9 159.8,121.7 160.3,122.4 160.8,123.2 161.3,124.0 161.8,124.8 162.3,125.6 162.8,126.4 163.3,127.2 163.8,128.0 164.3,128.8 164.8,129.7 165.2,130.5 165.7,131.4 166.2,132.2 166.7,133.1 167.2,134.0 167.7,134.9 168.2,135.8 168.7,136.7 169.2,137.6 169.7,138.5 170.1,139.4 170.6,140.3 171.1,141.3 171.6,142.2 172.1,143.2 172.6,144.2 173.1,145.1 173.6,146.1 174.1,147.1 174.6,148.1 175.0,149.1 175.5,150.1 176.0,151.2 176.5,152.2 177.0,153.2 177.5,154.3 178.0,155.4 178.5,156.4 179.0,157.5 179.4,158.6 179.9,159.7 180.4,160.8 180.9,161.9 181.4,163.0 181.9,164.2 182.4,165.3 182.9,166.5 183.4,167.6 183.9,168.8 184.3,170.0 184.8,171.2 185.3,172.4 185.8,173.6 186.3,174.8 186.8,176.0 186.8,176.0" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/></svg></li>
+<li>A particle’s position is s(t) = t³ − 5t² + 5t + 1. Find its acceleration at t = 3. <input class="ans" data-a="8" size="6"><svg viewBox="0 0 240 200" width="240" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="graph"><line x1="30.0" y1="12.0" x2="30.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><line x1="49.6" y1="12.0" x2="49.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="49.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0.5</text><line x1="69.2" y1="12.0" x2="69.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="69.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><line x1="88.8" y1="12.0" x2="88.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="88.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1.5</text><line x1="108.4" y1="12.0" x2="108.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="108.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="128.0" y1="12.0" x2="128.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="128.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5</text><line x1="147.6" y1="12.0" x2="147.6" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="147.6" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><line x1="167.2" y1="12.0" x2="167.2" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="167.2" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3.5</text><line x1="186.8" y1="12.0" x2="186.8" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="186.8" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="206.4" y1="12.0" x2="206.4" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="206.4" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4.5</text><line x1="226.0" y1="12.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="226.0" y="107.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="30.0" y1="176.0" x2="226.0" y2="176.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="179.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−30</text><line x1="30.0" y1="148.7" x2="226.0" y2="148.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="151.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="30.0" y1="121.3" x2="226.0" y2="121.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="124.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="30.0" y1="94.0" x2="226.0" y2="94.0" stroke="#e2e8f0" stroke-width="1"/><line x1="30.0" y1="66.7" x2="226.0" y2="66.7" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="69.7" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="30.0" y1="39.3" x2="226.0" y2="39.3" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="42.3" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="30.0" y1="12.0" x2="226.0" y2="12.0" stroke="#e2e8f0" stroke-width="1"/><text x="26.0" y="15.0" font-size="9" font-weight="500" fill="#64748b" text-anchor="end" font-family="Segoe UI, Arial, sans-serif">30</text><line x1="30.0" y1="94.0" x2="234.0" y2="94.0" stroke="#334155" stroke-width="1.5"/><polygon points="234.0,94.0 225.9,97.9 225.9,90.1" fill="#334155"/><line x1="30.0" y1="176.0" x2="30.0" y2="6.0" stroke="#334155" stroke-width="1.5"/><polygon points="30.0,6.0 33.9,14.1 26.1,14.1" fill="#334155"/><polyline points="30.0,91.3 30.5,91.1 31.0,90.9 31.5,90.8 32.0,90.6 32.5,90.5 32.9,90.3 33.4,90.2 33.9,90.0 34.4,89.9 34.9,89.8 35.4,89.6 35.9,89.5 36.4,89.4 36.9,89.3 37.4,89.2 37.8,89.1 38.3,89.0 38.8,88.9 39.3,88.8 39.8,88.7 40.3,88.6 40.8,88.5 41.3,88.4 41.8,88.3 42.2,88.2 42.7,88.2 43.2,88.1 43.7,88.0 44.2,88.0 44.7,87.9 45.2,87.9 45.7,87.8 46.2,87.8 46.7,87.7 47.1,87.7 47.6,87.6 48.1,87.6 48.6,87.6 49.1,87.5 49.6,87.5 50.1,87.5 50.6,87.5 51.1,87.4 51.6,87.4 52.0,87.4 52.5,87.4 53.0,87.4 53.5,87.4 54.0,87.4 54.5,87.4 55.0,87.4 55.5,87.4 56.0,87.4 56.5,87.4 57.0,87.4 57.4,87.5 57.9,87.5 58.4,87.5 58.9,87.5 59.4,87.6 59.9,87.6 60.4,87.6 60.9,87.6 61.4,87.7 61.9,87.7 62.3,87.8 62.8,87.8 63.3,87.8 63.8,87.9 64.3,87.9 64.8,88.0 65.3,88.0 65.8,88.1 66.3,88.2 66.8,88.2 67.2,88.3 67.7,88.3 68.2,88.4 68.7,88.5 69.2,88.5 69.7,88.6 70.2,88.7 70.7,88.7 71.2,88.8 71.7,88.9 72.1,89.0 72.6,89.1 73.1,89.1 73.6,89.2 74.1,89.3 74.6,89.4 75.1,89.5 75.6,89.6 76.1,89.6 76.5,89.7 77.0,89.8 77.5,89.9 78.0,90.0 78.5,90.1 79.0,90.2 79.5,90.3 80.0,90.4 80.5,90.5 81.0,90.6 81.5,90.7 81.9,90.8 82.4,90.9 82.9,91.0 83.4,91.1 83.9,91.2 84.4,91.3 84.9,91.4 85.4,91.5 85.9,91.6 86.3,91.7 86.8,91.9 87.3,92.0 87.8,92.1 88.3,92.2 88.8,92.3 89.3,92.4 89.8,92.5 90.3,92.6 90.8,92.7 91.2,92.9 91.7,93.0 92.2,93.1 92.7,93.2 93.2,93.3 93.7,93.4 94.2,93.5 94.7,93.6 95.2,93.8 95.7,93.9 96.2,94.0 96.6,94.1 97.1,94.2 97.6,94.3 98.1,94.4 98.6,94.6 99.1,94.7 99.6,94.8 100.1,94.9 100.6,95.0 101.0,95.1 101.5,95.2 102.0,95.3 102.5,95.5 103.0,95.6 103.5,95.7 104.0,95.8 104.5,95.9 105.0,96.0 105.5,96.1 106.0,96.2 106.4,96.3 106.9,96.4 107.4,96.5 107.9,96.6 108.4,96.7 108.9,96.8 109.4,96.9 109.9,97.0 110.4,97.1 110.8,97.2 111.3,97.3 111.8,97.4 112.3,97.5 112.8,97.6 113.3,97.7 113.8,97.8 114.3,97.9 114.8,98.0 115.3,98.1 115.8,98.2 116.2,98.2 116.7,98.3 117.2,98.4 117.7,98.5 118.2,98.6 118.7,98.6 119.2,98.7 119.7,98.8 120.2,98.9 120.7,98.9 121.1,99.0 121.6,99.1 122.1,99.2 122.6,99.2 123.1,99.3 123.6,99.3 124.1,99.4 124.6,99.5 125.1,99.5 125.5,99.6 126.0,99.6 126.5,99.7 127.0,99.7 127.5,99.8 128.0,99.8 128.5,99.8 129.0,99.9 129.5,99.9 130.0,100.0 130.4,100.0 130.9,100.0 131.4,100.1 131.9,100.1 132.4,100.1 132.9,100.1 133.4,100.1 133.9,100.2 134.4,100.2 134.9,100.2 135.3,100.2 135.8,100.2 136.3,100.2 136.8,100.2 137.3,100.2 137.8,100.2 138.3,100.2 138.8,100.2 139.3,100.2 139.8,100.1 140.2,100.1 140.7,100.1 141.2,100.1 141.7,100.0 142.2,100.0 142.7,100.0 143.2,99.9 143.7,99.9 144.2,99.9 144.7,99.8 145.2,99.8 145.6,99.7 146.1,99.7 146.6,99.6 147.1,99.5 147.6,99.5 148.1,99.4 148.6,99.3 149.1,99.2 149.6,99.2 150.1,99.1 150.5,99.0 151.0,98.9 151.5,98.8 152.0,98.7 152.5,98.6 153.0,98.5 153.5,98.4 154.0,98.3 154.5,98.2 154.9,98.0 155.4,97.9 155.9,97.8 156.4,97.7 156.9,97.5 157.4,97.4 157.9,97.2 158.4,97.1 158.9,96.9 159.4,96.8 159.8,96.6 160.3,96.4 160.8,96.3 161.3,96.1 161.8,95.9 162.3,95.7 162.8,95.5 163.3,95.4 163.8,95.2 164.3,95.0 164.8,94.8 165.2,94.5 165.7,94.3 166.2,94.1 166.7,93.9 167.2,93.7 167.7,93.4 168.2,93.2 168.7,92.9 169.2,92.7 169.7,92.4 170.1,92.2 170.6,91.9 171.1,91.7 171.6,91.4 172.1,91.1 172.6,90.8 173.1,90.5 173.6,90.3 174.1,90.0 174.6,89.7 175.0,89.3 175.5,89.0 176.0,88.7 176.5,88.4 177.0,88.1 177.5,87.7 178.0,87.4 178.5,87.0 179.0,86.7 179.4,86.3 179.9,86.0 180.4,85.6 180.9,85.2 181.4,84.9 181.9,84.5 182.4,84.1 182.9,83.7 183.4,83.3 183.9,82.9 184.3,82.5 184.8,82.1 185.3,81.6 185.8,81.2 186.3,80.8 186.8,80.3 187.3,79.9 187.8,79.4 188.3,79.0 188.8,78.5 189.2,78.0 189.7,77.6 190.2,77.1 190.7,76.6 191.2,76.1 191.7,75.6 192.2,75.1 192.7,74.6 193.2,74.0 193.7,73.5 194.2,73.0 194.6,72.4 195.1,71.9 195.6,71.3 196.1,70.8 196.6,70.2 197.1,69.6 197.6,69.1 198.1,68.5 198.6,67.9 199.1,67.3 199.5,66.7 200.0,66.1 200.5,65.4 201.0,64.8 201.5,64.2 202.0,63.5 202.5,62.9 203.0,62.2 203.5,61.6 203.9,60.9 204.4,60.2 204.9,59.5 205.4,58.8 205.9,58.1 206.4,57.4 206.9,56.7 207.4,56.0 207.9,55.3 208.4,54.5 208.8,53.8 209.3,53.1 209.8,52.3 210.3,51.5 210.8,50.8 211.3,50.0 211.8,49.2 212.3,48.4 212.8,47.6 213.3,46.8 213.8,46.0 214.2,45.1 214.7,44.3 215.2,43.5 215.7,42.6 216.2,41.8 216.7,40.9 217.2,40.0 217.7,39.2 218.2,38.3 218.7,37.4 219.1,36.5 219.6,35.5 220.1,34.6 220.6,33.7 221.1,32.8 221.6,31.8 222.1,30.9 222.6,29.9 223.1,28.9 223.6,28.0 224.0,27.0 224.5,26.0 225.0,25.0 225.5,24.0 226.0,22.9" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/><text x="190.7" y="68.6" font-size="11" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">s(t)</text></svg></li>
+</ol>
+<button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+<div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) 30 (2) -3 (3) 55 (4) -137 (5) 3 (6) 8</div>
+</section>
+<div style="text-align:center;margin:18px 0;"><a href="msp-hs12-motion-linearization-lesson3.html" style="text-decoration:none;background:#253a77;color:#fff;padding:9px 16px;border-radius:8px;font-weight:800;">Next: Lesson 3 →</a></div>
+
+</main>
+<footer>Mary, Star of the Sea School · Math 12 · Motion &amp; Linear Approximation · Dr. Park</footer>
+</div>
+<script>function toggle(id){document.getElementById(id).classList.toggle('open')}</script>
+<script>
+
+// --- Digital fillable check logic (auto-injected) ---
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(student, expected) {
+  if (!expected) return null; // uncheckable
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (Math.abs(ne) < 1e-12) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 5e-3;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0, checkable:0};
+  let correct = 0, total = 0, checkable = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const expected = inp.dataset.a || '';
+    if (!expected) { inp.classList.add('nocheck'); return; }
+    checkable++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      return;
+    }
+    const ok = isCorrect(student, expected);
+    inp.classList.toggle('correct', ok === true);
+    inp.classList.toggle('wrong', ok === false);
+    if (ok === true) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const denom = checkable || total;
+    const pct = denom ? Math.round(100 * correct / denom) : 0;
+    scoreEl.textContent = `${correct} / ${denom}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total, checkable};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAllWorksheet() {
+  let correct = 0, total = 0;
+  document.querySelectorAll('section.card[id^="wsec"]').forEach(sec => {
+    const r = checkSection(sec.id);
+    correct += r.correct; total += r.checkable;
+  });
+  const scoreEl = document.getElementById('score-total');
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+    scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
+  }
+});
+
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+
+<script>
+
+// ==== Auto-save + Save/Load Answers ====
+(function(){
+  function storageKey() {
+    return 'msp-ws-' + (location.pathname.split('/').pop() || 'unknown');
+  }
+  function topicFileName() {
+    var base = (location.pathname.split('/').pop() || 'worksheet.html');
+    base = base.replace(/^msp-/, '').replace(/\.html$/, '');
+    return base + '.json';
+  }
+  function allAnswerNodes() {
+    return Array.from(document.querySelectorAll('input.ans, input.free, textarea.free, main input[type="text"]'));
+  }
+  function snapshot() {
+    var out = {};
+    allAnswerNodes().forEach(function(n, i){
+      var key = n.id || ('idx_' + i);
+      out[key] = n.value || '';
+    });
+    return out;
+  }
+  function restore(data) {
+    if (!data) return 0;
+    var nodes = allAnswerNodes();
+    var count = 0;
+    nodes.forEach(function(n){ if (n.id && data[n.id] != null) { n.value = data[n.id]; count++; } });
+    nodes.forEach(function(n, i){ var k = 'idx_' + i; if (!n.id && data[k] != null) { n.value = data[k]; count++; } });
+    return count;
+  }
+  function autoSave() {
+    try {
+      localStorage.setItem(storageKey(), JSON.stringify(snapshot()));
+      showStatus('Auto-saved ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}));
+    } catch(e){}
+  }
+  function showStatus(msg) {
+    var el = document.getElementById('save-status');
+    if (el) el.textContent = msg;
+  }
+  window.saveAnswersToFile = function() {
+    var data = snapshot();
+    data.__savedAt = new Date().toISOString();
+    data.__pageTitle = document.title;
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = topicFileName();
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+    showStatus('Downloaded ' + topicFileName());
+  };
+  window.loadAnswersFromFile = function(evt) {
+    var f = evt.target.files && evt.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        var n = restore(data);
+        autoSave();
+        showStatus('Loaded ' + n + ' answers from ' + f.name);
+      } catch(err) {
+        showStatus('Could not load file: ' + err.message);
+      }
+    };
+    reader.readAsText(f);
+    evt.target.value = '';
+  };
+  window.clearAllAnswers = function() {
+    if (!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+    allAnswerNodes().forEach(function(n){ n.value = ''; n.classList.remove('correct','wrong'); });
+    try { localStorage.removeItem(storageKey()); } catch(e){}
+    document.querySelectorAll('.correction-label').forEach(function(n){ n.remove(); });
+    document.querySelectorAll('.score').forEach(function(s){ s.textContent = '—'; s.classList.remove('good','mid','low'); });
+    showStatus('All answers cleared');
+  };
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      var raw = localStorage.getItem(storageKey());
+      if (raw) {
+        var n = restore(JSON.parse(raw));
+        if (n) showStatus('Restored ' + n + ' saved answers');
+      }
+    } catch(e){}
+    var t;
+    document.addEventListener('input', function(e) {
+      if (e.target && (e.target.classList.contains('ans') || e.target.classList.contains('free') || e.target.tagName === 'TEXTAREA' || e.target.type === 'text')) {
+        clearTimeout(t);
+        t = setTimeout(autoSave, 400);
+      }
+    });
+  });
+})();
+
+</script>
+<!--CHECK-ONE-->
+<style id="check-one-style">
+.one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
+.one-check-fb.ok{color:#15803d}.one-check-fb.no{color:#b91c1c}
+@media print{.one-check-fb{display:none!important}}
+</style>
+<script>
+(function(){
+  function graded(){ return (new URLSearchParams(location.search).get('mode')||'').toLowerCase()==='graded'; }
+  function expected(inp){
+    if (inp.classList.contains('ans')) return inp.dataset.a || '';
+    var m = /^ans(\d+)$/.exec(inp.id||''); if (!m) return '';
+    try { var q = QUESTIONS[+m[1]]; return q ? q.ans : ''; } catch(e){ return ''; }
+  }
+  function test(val, exp){
+    try {
+      if (Array.isArray(exp)) { for (var k=0;k<exp.length;k++){ if (isCorrect(val, exp[k])===true) return true; } return isCorrect(val, exp)===true; }
+      return isCorrect(val, exp)===true;
+    } catch(e){ return false; }
+  }
+  function check(inp){
+    var place=inp, u=inp.nextElementSibling;
+    if (u && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling;
+    if (!fb || !fb.classList.contains('one-check-fb')) { fb=document.createElement('span'); fb.className='one-check-fb'; place.insertAdjacentElement('afterend', fb); }
+    if (!inp.value.trim()) { fb.textContent=''; return; }
+    var ok=test(inp.value, expected(inp));
+    inp.classList.toggle('correct', ok); inp.classList.toggle('wrong', !ok);
+    var card=inp.closest('.q-card'); if (card){ card.classList.toggle('correct', ok); card.classList.toggle('wrong', !ok); }
+    fb.className='one-check-fb '+(ok?'ok':'no');
+    fb.textContent= ok ? '✓ Correct!' : '✗ Try again';
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key!=='Enter' || graded()) return;
+    var t=e.target;
+    if (!t || t.tagName!=='INPUT') return;
+    if (!(t.classList.contains('ans') || /^ans\d+$/.test(t.id||''))) return;
+    if (!expected(t)) return;
+    e.preventDefault(); check(t);
+  }, true);
+  document.addEventListener('input', function(e){
+    var t=e.target; if (!t || t.tagName!=='INPUT') return;
+    var place=t, u=t.nextElementSibling; if (u && u.classList && u.classList.contains('unit')) place=u;
+    var fb=place.nextElementSibling; if (fb && fb.classList.contains('one-check-fb')) fb.textContent='';
+  }, true);
+  function clean(){ document.querySelectorAll('.one-check-btn').forEach(function(n){n.remove();}); if (graded()) document.querySelectorAll('.one-check-fb').forEach(function(n){n.remove();}); }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', clean); else clean();
+})();
+</script>
+<!--/CHECK-ONE-->
+</body></html>

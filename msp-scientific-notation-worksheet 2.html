@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Notation — Foundations Worksheet · Grade 8</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --navy:#1a2a4a; --gold:#FFD100; --gold-deep:#b8860b;
+  --paper:#fef3c7; --ink:#1f2937; --dim:#64748b;
+  --accent:#2563eb; --accent-deep:#1e40af;
+  --accent-soft:#dbeafe;
+  --highlight:#fef08a;
+  --pos:#059669; --neg:#dc2626;
+  --ok:#16a34a; --bad:#dc2626;
+}
+body {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background:linear-gradient(135deg, #dbeafe 0%, #fef3c7 50%, #f5e6ff 100%);
+  color:var(--ink); min-height:100vh; padding:24px 16px; line-height:1.6;
+}
+.container { max-width:1000px; margin:0 auto; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--accent); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:4px 12px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:2rem; font-weight:900; line-height:1.1; color:var(--navy); margin-bottom:6px; }
+.tagline { color:var(--dim); font-size:.98rem; font-style:italic; }
+.namebar {
+  display:flex; gap:16px; align-items:center; margin:14px 0 22px;
+  background:#fff; border:1.5px solid #cbd5e1; border-radius:10px;
+  padding:12px 18px; font-size:.95rem;
+}
+.namebar label { font-weight:700; color:var(--navy); }
+.namebar .line { flex:1; border-bottom:1.5px solid #94a3b8; height:22px; }
+
+main { display:flex; flex-direction:column; gap:20px; }
+section.card {
+  background:#fff; border-radius:14px; padding:18px 22px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.07);
+  border-top:5px solid var(--accent);
+}
+section.card h2 { color:var(--accent-deep); font-size:1.2rem; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+section.card h3 { color:var(--navy); font-size:1rem; font-weight:800; margin:12px 0 8px; }
+section.card p { margin-bottom:8px; }
+.intro { background:var(--accent-soft); border-left:5px solid var(--accent); border-radius:8px; padding:10px 14px; margin:8px 0 12px; font-size:.95rem; }
+.rule { background:#fef3c7; border-left:5px solid #b8860b; border-radius:6px; padding:8px 12px; margin:10px 0; font-size:.94rem; }
+.rule strong { color:#78350f; }
+
+table.rules { width:100%; border-collapse:collapse; margin:8px 0 12px; font-size:.98rem; }
+table.rules th, table.rules td { border:1.5px solid #94a3b8; padding:8px 12px; text-align:center; }
+table.rules th { background:var(--navy); color:#fff; font-weight:800; }
+table.rules tr:nth-child(even) td { background:#f8fafc; }
+.pos { color:var(--pos); font-weight:800; }
+.neg { color:var(--neg); font-weight:800; }
+
+ol.qlist { list-style:none; counter-reset:q; padding:0; margin-top:8px; }
+ol.qlist > li {
+  counter-increment:q; position:relative;
+  padding:9px 0 9px 42px; border-bottom:1px dashed #d1d5db;
+}
+ol.qlist > li:last-child { border-bottom:none; }
+ol.qlist > li::before {
+  content:counter(q); position:absolute; left:0; top:9px;
+  width:30px; height:30px; background:var(--accent); color:#fff;
+  border-radius:50%; font-weight:800; font-size:.9rem;
+  display:flex; align-items:center; justify-content:center;
+}
+.answer-line { display:inline-block; min-width:120px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+.answer-line-lg { display:inline-block; min-width:200px; border-bottom:1.5px solid #64748b; margin-left:6px; }
+
+input.ans {
+  display:inline-block; min-width:140px; max-width:260px;
+  padding:5px 10px; margin-left:6px;
+  border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.98rem; font-weight:700;
+  background:#fff; color:var(--ink);
+  transition:all .15s ease;
+}
+input.ans:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+input.ans.correct { background:#dcfce7; border-color:var(--ok); color:#14532d; }
+input.ans.correct::after { content:" ✓"; }
+input.ans.wrong { background:#fee2e2; border-color:var(--bad); color:#7f1d1d; }
+input.free {
+  display:block; width:100%; margin-top:6px;
+  padding:8px 12px; border:1.5px solid #94a3b8; border-radius:6px;
+  font-family:inherit; font-size:.95rem;
+}
+
+.check-btn {
+  display:inline-block; background:var(--accent); color:#fff;
+  border:1px solid var(--accent-deep); padding:8px 16px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:8px 8px 6px 0;
+}
+.check-btn:hover { background:var(--accent-deep); }
+.reset-btn {
+  display:inline-block; background:#f1f5f9; color:var(--navy);
+  border:1px solid #cbd5e1; padding:8px 14px;
+  border-radius:6px; font-weight:700; font-size:.88rem; cursor:pointer;
+  margin:8px 4px 6px 0;
+}
+.reset-btn:hover { background:#e2e8f0; }
+.score {
+  display:inline-block; padding:6px 12px; margin-left:6px;
+  font-weight:800; font-size:.95rem; border-radius:6px;
+  background:#f1f5f9; color:var(--navy);
+  min-width:120px; text-align:center;
+}
+.score.good { background:#dcfce7; color:#14532d; }
+.score.mid { background:#fef9c3; color:#713f12; }
+.score.low { background:#fee2e2; color:#7f1d1d; }
+
+.q-row { display:grid; grid-template-columns:1fr 1fr; gap:6px 24px; margin:6px 0; font-size:.98rem; }
+.q-row > div { padding:2px 0; }
+
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; margin:6px 0; }
+@media (max-width:640px) { .grid2 { grid-template-columns:1fr; } .q-row { grid-template-columns:1fr; } }
+
+.calc-box {
+  background:#f0f9ff; border:2px dashed var(--accent);
+  border-radius:8px; padding:10px 14px; margin:10px 0; font-size:.94rem;
+}
+.calc-box strong { color:var(--accent-deep); }
+
+.reveal-btn {
+  display:inline-block; background:var(--gold); color:var(--navy);
+  border:1px solid var(--gold-deep); padding:8px 14px;
+  border-radius:6px; font-weight:800; font-size:.9rem; cursor:pointer;
+  margin:6px 0;
+}
+.reveal-btn:hover { background:var(--gold-deep); color:#fff; }
+.ak { display:none; background:#ecfccb; border-left:5px solid #65a30d; padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.ak.open { display:block; }
+.ak h4 { color:#3f6212; margin-bottom:8px; font-size:.95rem; }
+
+footer { text-align:center; margin-top:24px; color:var(--dim); font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+
+@media print {
+  body { background:#fff; padding:0; }
+  section.card { box-shadow:none; border:1px solid #cbd5e1; page-break-inside:avoid; }
+  .reveal-btn, .check-btn, .reset-btn, .score { display:none; }
+  .ak { display:block; }
+  input.ans { border:none; border-bottom:1.5px solid #64748b; background:transparent; border-radius:0; }
+}
+.back-to-unit {
+  display:inline-block; background:var(--gold); color:var(--navy);
+  border:1.5px solid var(--gold-deep); padding:9px 18px;
+  border-radius:8px; font-weight:800; font-size:.92rem;
+  text-decoration:none; margin-bottom:16px;
+  box-shadow:0 2px 6px rgba(184,134,11,0.25);
+  cursor:pointer;
+}
+.back-to-unit:hover { background:var(--gold-deep); color:#fff; transform:translateX(-2px); }
+
+/* Better rendering for Greek math symbols (π, Σ, etc.) — otherwise Segoe UI renders π like a wavy n */
+@font-face {
+  font-family: 'GreekMath';
+  src: local('Cambria Math'), local('STIX Two Math'), local('Latin Modern Math'), local('Palatino Linotype'), local('Palatino'), local('Georgia'), local('Times New Roman'), local('serif');
+  unicode-range: U+03B1-03C9, U+03D1-03D6, U+03F1, U+03F5;
+}
+body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
+
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div class="eyebrow" id="grade-eyebrow">Middle School · Foundations Review</div>
+  <h1>🔬 Scientific Notation Worksheet</h1>
+  <p class="tagline">Build a rock-solid foundation before doing scientific notation arithmetic.</p>
+  <p style="margin-top:8px; font-size:.9rem; color:var(--dim);">💡 Type your answers into the boxes, then click <strong>Check Answers</strong> in each section for instant feedback.</p>
+</header>
+<script>
+  (function(){
+    const g = new URLSearchParams(location.search).get('grade');
+    if (g && ['6','7','8'].includes(g)) {
+      document.getElementById('grade-eyebrow').textContent = `Grade ${g} · Foundations Review`;
+    }
+  })();
+</script>
+
+<a href="#" class="back-to-unit" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+<main>
+<div style="text-align:center; margin:8px 0 4px; font-size:.82rem; color:#0c4a6e; font-style:italic;">📝 Answers auto-save in this browser. <button type="button" onclick="clearAllAnswers()" style="padding:3px 10px; border-radius:5px; border:1px solid #cbd5e1; background:#f1f5f9; color:#64748b; font-weight:700; font-size:.78rem; cursor:pointer; margin-left:6px;">↻ Clear All</button> <span id="save-status"></span></div>
+<!-- SECTION 1 -->
+<section class="card" id="sec1">
+  <h2>1️⃣ Powers of 10</h2>
+  <div class="intro">
+    A "power of 10" means how many times you multiply 10 by itself. 10<sup>n</sup> tells you how many places to move the decimal. Positive n → big number; negative n → small number.
+  </div>
+
+  <h3>Part A — Positive Powers of 10</h3>
+  <p style="margin:4px 0 10px; color:#334155;">Fill in the value:</p>
+  <div class="grid2">
+    <div>10<sup>0</sup> = <input class="ans" data-a="1" size="8"></div>
+    <div>10<sup>1</sup> = <input class="ans" data-a="10" size="8"></div>
+    <div>10<sup>2</sup> = <input class="ans" data-a="100" size="8"></div>
+    <div>10<sup>3</sup> = <input class="ans" data-a="1000" size="8"></div>
+    <div>10<sup>4</sup> = <input class="ans" data-a="10000" size="8"></div>
+    <div>10<sup>6</sup> = <input class="ans" data-a="1000000" size="10"></div>
+  </div>
+
+  <div class="rule" style="margin-top:18px;">
+    <strong>⚠️ Watch out with negative exponents!</strong> A negative power of 10 means the <strong>reciprocal</strong>:
+    <p style="margin:6px 0; font-size:1.02rem;"><strong>10<sup>−n</sup> = 1 ÷ 10<sup>n</sup> = 1/10<sup>n</sup></strong></p>
+    <p style="margin:6px 0;">So 10<sup>−2</sup> = 1/10<sup>2</sup> = 1/100 = <strong>0.01</strong> (not something you get by "moving the decimal left from 10.0").</p>
+    <p style="margin:6px 0;"><em>Trick that works:</em> to find 10<sup>−n</sup>, start from <strong>1.0</strong> (NOT 10.0) and move the decimal <strong>left</strong> n places.</p>
+    <table class="rules" style="margin-top:6px;">
+      <tr><th>Expression</th><th>As a fraction</th><th>Decimal form</th></tr>
+      <tr><td>10<sup>−1</sup></td><td>1 ÷ 10<sup>1</sup> = 1/10</td><td>0.1</td></tr>
+      <tr><td>10<sup>−2</sup></td><td>1 ÷ 10<sup>2</sup> = 1/100</td><td>0.01</td></tr>
+      <tr><td>10<sup>−3</sup></td><td>1 ÷ 10<sup>3</sup> = 1/1,000</td><td>0.001</td></tr>
+      <tr><td>10<sup>−5</sup></td><td>1 ÷ 10<sup>5</sup> = 1/100,000</td><td>0.00001</td></tr>
+    </table>
+  </div>
+
+  <h3>Part B — Negative Powers of 10</h3>
+  <p style="margin:4px 0 10px; color:#334155;">Fill in the value:</p>
+  <div class="grid2">
+    <div>10<sup>-1</sup> = <input class="ans" data-a="0.1" size="10"></div>
+    <div>10<sup>-2</sup> = <input class="ans" data-a="0.01" size="10"></div>
+    <div>10<sup>-3</sup> = <input class="ans" data-a="0.001" size="10"></div>
+    <div>10<sup>-5</sup> = <input class="ans" data-a="0.00001" size="12"></div>
+  </div>
+
+  <div class="rule" style="margin-top:14px;"><strong>Pattern check:</strong> What happens to the number of zeros (or decimal places) as the exponent changes by 1?</div>
+  <p>Answer: <input class="free" type="text" placeholder="Write your observation…"></p>
+
+  <button class="check-btn" onclick="checkSection('sec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button class="reset-btn" onclick="resetSection('sec1')">↺ Clear</button>
+  <span class="score" id="score-sec1">—</span>
+  <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
+  <div id="ak1" class="ak">
+    <h4>Answer Key — Section 1</h4>
+    <strong>Part A (positive):</strong> 10<sup>0</sup> = 1 | 10<sup>1</sup> = 10 | 10<sup>2</sup> = 100 | 10<sup>3</sup> = 1,000 | 10<sup>4</sup> = 10,000 | 10<sup>6</sup> = 1,000,000<br>
+    <strong>Part B (negative):</strong> 10<sup>−1</sup> = 0.1 (or 1/10) | 10<sup>−2</sup> = 0.01 (or 1/100) | 10<sup>−3</sup> = 0.001 (or 1/1,000) | 10<sup>−5</sup> = 0.00001 (or 1/100,000)
+    <p style="margin-top:8px;"><strong>Pattern:</strong> Each time the exponent increases by 1, the number gets 10 times larger (one more zero, or the decimal moves one place right). Each time the exponent decreases by 1, the number gets 10 times smaller (the decimal moves one place left).</p>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="card" id="sec2">
+  <h2>2️⃣ Converting: Standard Form ↔ Scientific Notation</h2>
+  <div class="intro">
+    Scientific notation writes a number as <strong>a × 10<sup>n</sup></strong> where <strong>1 ≤ |a| &lt; 10</strong> and <strong>n is an integer</strong>. Move the decimal so only ONE non-zero digit is to the left. Count the moves — that's n. Move left → n positive. Move right → n negative.
+    <p style="margin-top:6px; font-size:.9rem;">💡 <em>How to type scientific notation:</em> use <code>e</code> as shorthand for "× 10^". For example, type <code>3e2</code> for 3 × 10², or <code>5.2e-4</code> for 5.2 × 10⁻⁴. You can also type <code>3*10^2</code> or <code>3 x 10^2</code>.</p>
+  </div>
+
+  <h3>A. Standard form → scientific notation:</h3>
+  <ol class="qlist">
+    <li>300 = <input class="ans" data-a="3e2" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="204.0" cy="88" r="3.5" fill="#dc2626"/><path d="M204.0,46 Q174.0,12 144.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="144.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">move the decimal point left until one digit is in front of it</text></svg></li>
+    <li>4,500 = <input class="ans" data-a="4.5e3" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="100.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="114.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><rect x="130.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="144.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><rect x="160.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="174.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="190.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="204.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="219.0" cy="88" r="3.5" fill="#dc2626"/><path d="M219.0,46 Q174.0,12 129.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="129.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">move the decimal point left until one digit is in front of it</text></svg></li>
+    <li>62,000 = <input class="ans" data-a="6.2e4" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="85.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="99.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="205.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="219.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="234.0" cy="88" r="3.5" fill="#dc2626"/><path d="M234.0,46 Q174.0,12 114.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="114.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">move the decimal point left until one digit is in front of it</text></svg></li>
+    <li>850,000 = <input class="ans" data-a="8.5e5" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="70.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="84.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><rect x="100.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="114.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><rect x="130.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="144.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="160.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="174.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="190.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="204.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="220.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="234.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="249.0" cy="88" r="3.5" fill="#dc2626"/><path d="M249.0,46 Q174.0,12 99.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="99.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">move the decimal point left until one digit is in front of it</text></svg></li>
+    <li>7,200,000 = <input class="ans" data-a="7.2e6" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="55.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="69.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">7</text><rect x="85.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="99.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="205.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="219.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="235.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="249.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="264.0" cy="88" r="3.5" fill="#dc2626"/><path d="M264.0,46 Q174.0,12 84.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="84.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">move the decimal point left until one digit is in front of it</text></svg></li>
+    <li>0.05 = <input class="ans" data-a="5e-2" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><circle cx="144.0" cy="88" r="3.5" fill="#dc2626"/><path d="M144.0,46 Q174.0,12 204.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="204.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">move the decimal point right until one nonzero digit is in front of it</text></svg></li>
+    <li>0.0034 = <input class="ans" data-a="3.4e-3" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="85.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="99.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><rect x="205.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="219.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><circle cx="114.0" cy="88" r="3.5" fill="#dc2626"/><path d="M114.0,46 Q159.0,12 204.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="204.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="159.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">move the decimal point right until one nonzero digit is in front of it</text></svg></li>
+    <li>0.000012 = <input class="ans" data-a="1.2e-5" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="55.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="69.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="85.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="99.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="205.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="219.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><rect x="235.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="249.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><circle cx="84.0" cy="88" r="3.5" fill="#dc2626"/><path d="M84.0,46 Q159.0,12 234.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="234.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="159.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">move the decimal point right until one nonzero digit is in front of it</text></svg></li>
+  </ol>
+
+  <h3>B. Scientific notation → standard form:</h3>
+  <ol class="qlist">
+    <li>2 × 10<sup>1</sup> = <input class="ans" data-a="20" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="130.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="144.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><rect x="160.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="174.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="159.0" cy="88" r="3.5" fill="#dc2626"/><path d="M159.0,46 Q174.0,12 189.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="189.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">positive exponent → move right; fill empty places with 0</text></svg></li>
+    <li>7.1 × 10<sup>2</sup> = <input class="ans" data-a="710" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">7</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="144.0" cy="88" r="3.5" fill="#dc2626"/><path d="M144.0,46 Q174.0,12 204.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="204.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">positive exponent → move right; fill empty places with 0</text></svg></li>
+    <li>9.03 × 10<sup>4</sup> = <input class="ans" data-a="90300" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="85.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="99.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">9</text><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="205.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="219.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="114.0" cy="88" r="3.5" fill="#dc2626"/><path d="M114.0,46 Q174.0,12 234.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="234.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">positive exponent → move right; fill empty places with 0</text></svg></li>
+    <li>1.75 × 10<sup>6</sup> = <input class="ans" data-a="1750000" size="14"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="55.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="69.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1</text><rect x="85.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="99.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">7</text><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="205.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="219.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="235.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="249.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><circle cx="84.0" cy="88" r="3.5" fill="#dc2626"/><path d="M84.0,46 Q174.0,12 264.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="264.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">positive exponent → move right; fill empty places with 0</text></svg></li>
+    <li>4 × 10<sup>-1</sup> = <input class="ans" data-a="0.4" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="130.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="144.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="160.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="174.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><circle cx="189.0" cy="88" r="3.5" fill="#dc2626"/><path d="M189.0,46 Q174.0,12 159.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="159.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="174.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">negative exponent → move left; fill empty places with 0</text></svg></li>
+    <li>6.8 × 10<sup>-2</sup> = <input class="ans" data-a="0.068" size="12"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="100.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="114.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="130.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="144.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="160.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="174.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><rect x="190.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="204.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><circle cx="189.0" cy="88" r="3.5" fill="#dc2626"/><path d="M189.0,46 Q159.0,12 129.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="129.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="159.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">negative exponent → move left; fill empty places with 0</text></svg></li>
+    <li>2.55 × 10<sup>-4</sup> = <input class="ans" data-a="0.000255" size="14"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="55.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="69.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="85.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="99.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="115.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="129.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="145.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="159.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="175.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="189.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><rect x="205.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="219.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><rect x="235.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="249.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><circle cx="204.0" cy="88" r="3.5" fill="#dc2626"/><path d="M204.0,46 Q144.0,12 84.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="84.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="144.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">negative exponent → move left; fill empty places with 0</text></svg></li>
+    <li>8.9 × 10<sup>-6</sup> = <input class="ans" data-a="0.0000089" size="14"><svg viewBox="0 0 320 120" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="decimal hop"><rect x="40.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="54.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="70.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="84.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="100.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="114.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="130.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="144.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="160.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="174.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="190.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="204.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><rect x="220.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="234.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><rect x="250.0" y="50.0" width="28.0" height="32.0" rx="3" fill="#e0f2fe" stroke="#0369a1" stroke-width="1.2"/><text x="264.0" y="72.0" font-size="15" font-weight="800" fill="#0c4a6e" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">9</text><circle cx="249.0" cy="88" r="3.5" fill="#dc2626"/><path d="M249.0,46 Q159.0,12 69.0,46" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,4"/><circle cx="69.0" cy="88" r="3.5" fill="none" stroke="#dc2626" stroke-width="1.5"/><text x="159.0" y="22.0" font-size="11" font-weight="800" fill="#dc2626" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">? places</text><text x="160.0" y="110.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">negative exponent → move left; fill empty places with 0</text></svg></li>
+  </ol>
+
+  <button class="check-btn" onclick="checkSection('sec2')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button class="reset-btn" onclick="resetSection('sec2')">↺ Clear</button>
+  <span class="score" id="score-sec2">—</span>
+  <button class="reveal-btn" onclick="toggle('ak2')">Show / Hide Answer Key</button>
+  <div id="ak2" class="ak">
+    <h4>Answer Key — Section 2</h4>
+    A: (1) 3 × 10<sup>2</sup> | (2) 4.5 × 10<sup>3</sup> | (3) 6.2 × 10<sup>4</sup> | (4) 8.5 × 10<sup>5</sup> | (5) 7.2 × 10<sup>6</sup> | (6) 5 × 10<sup>-2</sup> | (7) 3.4 × 10<sup>-3</sup> | (8) 1.2 × 10<sup>-5</sup><br>
+    B: (1) 20 | (2) 710 | (3) 90,300 | (4) 1,750,000 | (5) 0.4 | (6) 0.068 | (7) 0.000255 | (8) 0.0000089
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="card" id="sec3">
+  <h2>3️⃣ Sign Rules Review — Multiplication &amp; Division</h2>
+  <div class="intro">
+    For multiplication and division, the sign of the answer depends only on the signs of the two numbers. Memorize this table:
+  </div>
+  <table class="rules">
+    <tr><th>First sign</th><th>Second sign</th><th>Answer sign</th><th>Rule</th></tr>
+    <tr><td class="pos">+</td><td class="pos">+</td><td class="pos">+</td><td>same signs → positive</td></tr>
+    <tr><td class="neg">−</td><td class="neg">−</td><td class="pos">+</td><td>same signs → positive</td></tr>
+    <tr><td class="pos">+</td><td class="neg">−</td><td class="neg">−</td><td>different signs → negative</td></tr>
+    <tr><td class="neg">−</td><td class="pos">+</td><td class="neg">−</td><td>different signs → negative</td></tr>
+  </table>
+  <div class="rule"><strong>Shortcut:</strong> Same signs → answer is <span class="pos">POSITIVE</span>. Different signs → answer is <span class="neg">NEGATIVE</span>.</div>
+
+  <h3>A. Practice — multiplication:</h3>
+  <ol class="qlist">
+    <li>3 × 4 = <input class="ans" data-a="12" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="array"><circle cx="127.0" cy="20.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="149.0" cy="20.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="171.0" cy="20.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="193.0" cy="20.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="127.0" cy="42.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="149.0" cy="42.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="171.0" cy="42.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="193.0" cy="42.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="127.0" cy="64.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="149.0" cy="64.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="171.0" cy="64.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><circle cx="193.0" cy="64.0" r="7.0" fill="#93c5fd" stroke="#1d4ed8" stroke-width="1.2"/><text x="160.0" y="96.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3 rows of 4</text></svg></li>
+    <li>−3 × 4 = <input class="ans" data-a="-12" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3 × 4</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>3 × −4 = <input class="ans" data-a="-12" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3 × −4</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−3 × −4 = <input class="ans" data-a="12" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3 × −4</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−5 × 7 = <input class="ans" data-a="-35" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−5 × 7</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+  </ol>
+  <h3>B. Practice — division:</h3>
+  <ol class="qlist">
+    <li>12 ÷ 4 = <input class="ans" data-a="3" size="8"><svg viewBox="0 0 320 124" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="equal shares"><rect x="30.0" y="30.0" width="260.0" height="36.0" rx="0" fill="#dcfce7" stroke="#15803d" stroke-width="2"/><text x="160.0" y="54.0" font-size="14" font-weight="800" fill="#14532d" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">12</text><rect x="30.0" y="80.0" width="65.0" height="30.0" rx="0" fill="#fff" stroke="#15803d" stroke-width="1.5"/><text x="62.5" y="100.0" font-size="12" font-weight="800" fill="#15803d" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">?</text><rect x="95.0" y="80.0" width="65.0" height="30.0" rx="0" fill="#fff" stroke="#15803d" stroke-width="1.5"/><text x="127.5" y="100.0" font-size="12" font-weight="800" fill="#15803d" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">?</text><rect x="160.0" y="80.0" width="65.0" height="30.0" rx="0" fill="#fff" stroke="#15803d" stroke-width="1.5"/><text x="192.5" y="100.0" font-size="12" font-weight="800" fill="#15803d" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">?</text><rect x="225.0" y="80.0" width="65.0" height="30.0" rx="0" fill="#fff" stroke="#15803d" stroke-width="1.5"/><text x="257.5" y="100.0" font-size="12" font-weight="800" fill="#15803d" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">?</text></svg></li>
+    <li>12 ÷ −4 = <input class="ans" data-a="-3" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">12 ÷ −4</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−12 ÷ 4 = <input class="ans" data-a="-3" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−12 ÷ 4</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−12 ÷ −4 = <input class="ans" data-a="3" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−12 ÷ −4</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−36 ÷ −9 = <input class="ans" data-a="4" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−36 ÷ −9</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+  </ol>
+  <button class="check-btn" onclick="checkSection('sec3')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button class="reset-btn" onclick="resetSection('sec3')">↺ Clear</button>
+  <span class="score" id="score-sec3">—</span>
+  <button class="reveal-btn" onclick="toggle('ak3')">Show / Hide Answer Key</button>
+  <div id="ak3" class="ak">
+    <h4>Answer Key — Section 3</h4>
+    A (multiplication): (1) 12 | (2) −12 | (3) −12 | (4) 12 | (5) −35<br>
+    B (division): (1) 3 | (2) −3 | (3) −3 | (4) 3 | (5) 4
+  </div>
+</section>
+
+<!-- SECTION 4 -->
+<section class="card" id="sec4">
+  <h2>4️⃣ Adding &amp; Subtracting Signed Integers</h2>
+  <div class="calc-box" style="background:#fff7ed; border-left-color:#f59e0b;">
+    <strong>🔑 Why does −(−9) = +9?  A sign in front of a number is really a hidden multiplication.</strong>
+    <p style="margin:8px 0;">Two numbers written next to each other (with parentheses, no operator between) means <strong>multiply</strong>. A minus sign in front means <strong>multiply by −1</strong>.</p>
+    <table class="rules" style="margin-top:6px;">
+      <tr><th>You see…</th><th>Read as multiplication</th><th>Answer</th></tr>
+      <tr><td>2(3)</td><td>2 × 3</td><td class="pos">6</td></tr>
+      <tr><td>2(−3)</td><td>2 × (−3)</td><td class="neg">−6</td></tr>
+      <tr><td>−2(3)</td><td>−2 × 3</td><td class="neg">−6</td></tr>
+      <tr><td>−2(−3)</td><td>−2 × (−3)</td><td class="pos">6</td></tr>
+      <tr><td>−(4)</td><td>−1 × 4</td><td class="neg">−4</td></tr>
+      <tr><td>−(−4)</td><td>−1 × (−4)</td><td class="pos">4</td></tr>
+      <tr><td>−(−9)</td><td>−1 × (−9)</td><td class="pos">9</td></tr>
+    </table>
+    <p style="margin-top:8px;"><em>Same/different sign rule from Section 3 still applies:</em> two negatives multiplied together → <span class="pos">positive</span>. That's why <strong>−(−9) = +9</strong> — you're multiplying two negatives.</p>
+  </div>
+
+  <h3>A. Warm-up — rewrite as multiplication, then solve:</h3>
+  <ol class="qlist">
+    <li>2(−2) = 2 × −2 = <input class="ans" data-a="-4" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2(−2)</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>1(3) = 1 × 3 = <input class="ans" data-a="3" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1(3)</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−(−4) = −1 × −4 = <input class="ans" data-a="4" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−(−4)</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−(6) = −1 × 6 = <input class="ans" data-a="-6" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−(6)</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−(−9) = −1 × −9 = <input class="ans" data-a="9" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−(−9)</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+    <li>−3(−5) = −3 × −5 = <input class="ans" data-a="15" size="8"><svg viewBox="0 0 320 89" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="sign rules"><text x="160.0" y="30.0" font-size="20" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−3(−5)</text><text x="160.0" y="64.0" font-size="11" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">same signs → positive,  different signs → negative</text></svg></li>
+  </ol>
+
+  <h3>B. Practice — add / subtract:</h3>
+  <p style="font-size:.9rem; color:#334155; margin:4px 0 8px;">💡 <em>When a sign sits in front of a parenthesis, unpack it first (see Part A). Then rewrite the problem without parentheses.</em></p>
+  <ol class="qlist">
+    <li>9 + 4 = <input class="ans" data-a="13" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="66.7" y1="44.0" x2="66.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="66.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="113.3" y1="44.0" x2="113.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="113.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="206.7" y1="44.0" x2="206.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="206.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="253.3" y1="44.0" x2="253.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="253.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">15</text><circle cx="244.0" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="244.0" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at 9, then move 4 to the right</text></svg></li>
+    <li>8 + (−6) = <span style="color:#475569; font-style:italic;">The "+(−6)" part means +1 × −6, which equals −6. So 8 + (−6) becomes</span> 8 − 6 = <input class="ans" data-a="2" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="34.0" y1="44.0" x2="34.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="48.0" y1="44.0" x2="48.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="48.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="62.0" y1="44.0" x2="62.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="76.0" y1="44.0" x2="76.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="76.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="90.0" y1="44.0" x2="90.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="104.0" y1="44.0" x2="104.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="104.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="118.0" y1="44.0" x2="118.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="132.0" y1="44.0" x2="132.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="132.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="146.0" y1="44.0" x2="146.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="174.0" y1="44.0" x2="174.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="188.0" y1="44.0" x2="188.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="188.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="202.0" y1="44.0" x2="202.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="216.0" y1="44.0" x2="216.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="216.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="230.0" y1="44.0" x2="230.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="244.0" y1="44.0" x2="244.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="244.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="258.0" y1="44.0" x2="258.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="272.0" y1="44.0" x2="272.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="272.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="286.0" y1="44.0" x2="286.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><circle cx="272.0" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="272.0" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at 8, then move 6 to the left</text></svg></li>
+    <li>−7 + 2 = <input class="ans" data-a="-5" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="34.0" y1="44.0" x2="34.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="48.0" y1="44.0" x2="48.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="48.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="62.0" y1="44.0" x2="62.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="76.0" y1="44.0" x2="76.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="76.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="90.0" y1="44.0" x2="90.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="104.0" y1="44.0" x2="104.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="104.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="118.0" y1="44.0" x2="118.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="132.0" y1="44.0" x2="132.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="132.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="146.0" y1="44.0" x2="146.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="174.0" y1="44.0" x2="174.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="188.0" y1="44.0" x2="188.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="188.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="202.0" y1="44.0" x2="202.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="216.0" y1="44.0" x2="216.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="216.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="230.0" y1="44.0" x2="230.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="244.0" y1="44.0" x2="244.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="244.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="258.0" y1="44.0" x2="258.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="272.0" y1="44.0" x2="272.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="272.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="286.0" y1="44.0" x2="286.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><circle cx="62.0" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="62.0" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at −7, then move 2 to the right</text></svg></li>
+    <li>−4 + (−9) = <span style="color:#475569; font-style:italic;">The "+(−9)" part means +1 × −9, which equals −9. So −4 + (−9) becomes</span> −4 − 9 = <input class="ans" data-a="-13" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="66.7" y1="44.0" x2="66.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="66.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="113.3" y1="44.0" x2="113.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="113.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="206.7" y1="44.0" x2="206.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="206.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="253.3" y1="44.0" x2="253.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="253.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">15</text><circle cx="122.7" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="122.7" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at −4, then move 9 to the left</text></svg></li>
+    <li>11 − 6 = <input class="ans" data-a="5" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="66.7" y1="44.0" x2="66.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="66.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="113.3" y1="44.0" x2="113.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="113.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="206.7" y1="44.0" x2="206.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="206.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="253.3" y1="44.0" x2="253.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="253.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">15</text><circle cx="262.7" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="262.7" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at 11, then move 6 to the left</text></svg></li>
+    <li>3 − (−8) = <span style="color:#475569; font-style:italic;">The "−(−8)" part means −1 × −8, which equals +8. So 3 − (−8) becomes</span> 3 + 8 = <input class="ans" data-a="11" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="66.7" y1="44.0" x2="66.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="66.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="113.3" y1="44.0" x2="113.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="113.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="206.7" y1="44.0" x2="206.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="206.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="253.3" y1="44.0" x2="253.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="253.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">15</text><circle cx="188.0" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="188.0" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at 3, then move 8 to the right</text></svg></li>
+    <li>−6 − 4 = <input class="ans" data-a="-10" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−12</text><line x1="31.7" y1="44.0" x2="31.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="43.3" y1="44.0" x2="43.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="43.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="55.0" y1="44.0" x2="55.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="66.7" y1="44.0" x2="66.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="66.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="78.3" y1="44.0" x2="78.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="90.0" y1="44.0" x2="90.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="90.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="101.7" y1="44.0" x2="101.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="113.3" y1="44.0" x2="113.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="113.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="125.0" y1="44.0" x2="125.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="136.7" y1="44.0" x2="136.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="136.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="148.3" y1="44.0" x2="148.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="171.7" y1="44.0" x2="171.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="183.3" y1="44.0" x2="183.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="183.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="195.0" y1="44.0" x2="195.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="206.7" y1="44.0" x2="206.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="206.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="218.3" y1="44.0" x2="218.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="230.0" y1="44.0" x2="230.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="230.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="241.7" y1="44.0" x2="241.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="253.3" y1="44.0" x2="253.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="253.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="265.0" y1="44.0" x2="265.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="276.7" y1="44.0" x2="276.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="276.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="288.3" y1="44.0" x2="288.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">12</text><circle cx="90.0" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="90.0" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at −6, then move 4 to the left</text></svg></li>
+    <li>−10 − (−7) = <span style="color:#475569; font-style:italic;">The "−(−7)" part means −1 × −7, which equals +7. So −10 − (−7) becomes</span> −10 + 7 = <input class="ans" data-a="-3" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−12</text><line x1="31.7" y1="44.0" x2="31.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="43.3" y1="44.0" x2="43.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="43.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="55.0" y1="44.0" x2="55.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="66.7" y1="44.0" x2="66.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="66.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−8</text><line x1="78.3" y1="44.0" x2="78.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="90.0" y1="44.0" x2="90.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="90.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−6</text><line x1="101.7" y1="44.0" x2="101.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="113.3" y1="44.0" x2="113.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="113.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−4</text><line x1="125.0" y1="44.0" x2="125.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="136.7" y1="44.0" x2="136.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="136.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−2</text><line x1="148.3" y1="44.0" x2="148.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="171.7" y1="44.0" x2="171.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="183.3" y1="44.0" x2="183.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="183.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2</text><line x1="195.0" y1="44.0" x2="195.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="206.7" y1="44.0" x2="206.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="206.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4</text><line x1="218.3" y1="44.0" x2="218.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="230.0" y1="44.0" x2="230.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="230.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6</text><line x1="241.7" y1="44.0" x2="241.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="253.3" y1="44.0" x2="253.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="253.3" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8</text><line x1="265.0" y1="44.0" x2="265.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="276.7" y1="44.0" x2="276.7" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="276.7" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="288.3" y1="44.0" x2="288.3" y2="56.0" stroke="#334155" stroke-width="1.3"/><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">12</text><circle cx="43.3" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="43.3" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at −10, then move 7 to the right</text></svg></li>
+    <li>−15 + 22 = <input class="ans" data-a="7" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="55.0" y1="44.0" x2="55.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="55.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="90.0" y1="44.0" x2="90.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="90.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="125.0" y1="44.0" x2="125.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="125.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="195.0" y1="44.0" x2="195.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="195.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="230.0" y1="44.0" x2="230.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="230.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="265.0" y1="44.0" x2="265.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="265.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">20</text><circle cx="55.0" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="55.0" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at −15, then move 22 to the right</text></svg></li>
+    <li>13 − (−9) = <span style="color:#475569; font-style:italic;">The "−(−9)" part means −1 × −9, which equals +9. So 13 − (−9) becomes</span> 13 + 9 = <input class="ans" data-a="22" size="8"><svg viewBox="0 0 320 100" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="number line"><line x1="14.0" y1="50.0" x2="8.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="8.0,50.0 16.1,46.1 16.1,53.9" fill="#334155"/><line x1="306.0" y1="50.0" x2="312.0" y2="50.0" stroke="#334155" stroke-width="1.5"/><polygon points="312.0,50.0 303.9,53.9 303.9,46.1" fill="#334155"/><line x1="20.0" y1="50.0" x2="300.0" y2="50.0" stroke="#334155" stroke-width="2"/><line x1="20.0" y1="44.0" x2="20.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="20.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−25</text><line x1="48.0" y1="44.0" x2="48.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="48.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−20</text><line x1="76.0" y1="44.0" x2="76.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="76.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−15</text><line x1="104.0" y1="44.0" x2="104.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="104.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−10</text><line x1="132.0" y1="44.0" x2="132.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="132.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−5</text><line x1="160.0" y1="44.0" x2="160.0" y2="56.0" stroke="#334155" stroke-width="2.4"/><text x="160.0" y="72.0" font-size="10" font-weight="800" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">0</text><line x1="188.0" y1="44.0" x2="188.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="188.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5</text><line x1="216.0" y1="44.0" x2="216.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="216.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10</text><line x1="244.0" y1="44.0" x2="244.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="244.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">15</text><line x1="272.0" y1="44.0" x2="272.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="272.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">20</text><line x1="300.0" y1="44.0" x2="300.0" y2="56.0" stroke="#334155" stroke-width="1.3"/><text x="300.0" y="72.0" font-size="10" font-weight="500" fill="#334155" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">25</text><circle cx="232.8" cy="50" r="6" fill="#2563eb" stroke="#fff" stroke-width="1.5"/><text x="232.8" y="38.0" font-size="12" font-weight="800" fill="#2563eb" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start</text><text x="160.0" y="94.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">start at 13, then move 9 to the right</text></svg></li>
+  </ol>
+  <button class="check-btn" onclick="checkSection('sec4')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button class="reset-btn" onclick="resetSection('sec4')">↺ Clear</button>
+  <span class="score" id="score-sec4">—</span>
+  <button class="reveal-btn" onclick="toggle('ak4')">Show / Hide Answer Key</button>
+  <div id="ak4" class="ak">
+    <h4>Answer Key — Section 4</h4>
+    A (rewrite as multiplication): (1) −4 | (2) 3 | (3) 4 | (4) −6 | (5) 9 | (6) 15<br>
+    B (add / subtract): (1) 13 | (2) 2 | (3) −5 | (4) −13 | (5) 5 | (6) 11 | (7) −10 | (8) −3 | (9) 7 | (10) 22
+  </div>
+</section>
+
+
+<!-- SECTION 6 -->
+<section class="card" id="sec6">
+  <h2>5️⃣ Scientific Notation — Multiplication &amp; Division</h2>
+  <div class="intro">
+    Now put the pieces together. The "a" part follows the sign rules from Section 3. The "10<sup>n</sup>" part uses <strong>exponent rules</strong>:
+  </div>
+  <div class="rule">
+    <strong>Multiply:</strong> (a × 10<sup>m</sup>) × (b × 10<sup>n</sup>) = <strong>(a × b) × 10<sup>m + n</sup></strong>&nbsp;&nbsp;<em>(add the exponents)</em><br>
+    <strong>Divide:</strong> (a × 10<sup>m</sup>) ÷ (b × 10<sup>n</sup>) = <strong>(a ÷ b) × 10<sup>m − n</sup></strong>&nbsp;&nbsp;<em>(subtract the exponents)</em>
+  </div>
+
+  <h3>A. Multiplication:</h3>
+  <ol class="qlist">
+    <li>(3 × 10<sup>4</sup>) × (2 × 10<sup>5</sup>) = <input class="ans" data-a="6e9" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3  and  2</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^4  and  10^5</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">×  multiply the numbers, ADD the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    <li>(4 × 10<sup>3</sup>) × (2 × 10<sup>6</sup>) = <input class="ans" data-a="8e9" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4  and  2</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^3  and  10^6</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">×  multiply the numbers, ADD the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    <li>(2.5 × 10<sup>−3</sup>) × (4 × 10<sup>6</sup>) = <input class="ans" data-a="1e4" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">2.5  and  4</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^−3  and  10^6</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">×  multiply the numbers, ADD the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    <li>(−5 × 10<sup>4</sup>) × (2 × 10<sup>3</sup>) = <input class="ans" data-a="-1e8" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5  and  2</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^4  and  10^3</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">×  multiply the numbers, ADD the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    <li>(−3 × 10<sup>2</sup>) × (−4 × 10<sup>5</sup>) = <input class="ans" data-a="1.2e8" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3  and  4</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^2  and  10^5</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">×  multiply the numbers, ADD the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+  </ol>
+  <h3>B. Division:</h3>
+  <ol class="qlist">
+    <li>(6 × 10<sup>8</sup>) ÷ (2 × 10<sup>3</sup>) = <input class="ans" data-a="3e5" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6  and  2</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^8  and  10^3</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">÷  divide the numbers, SUBTRACT the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    <li>(9 × 10<sup>5</sup>) ÷ (3 × 10<sup>2</sup>) = <input class="ans" data-a="3e3" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">9  and  3</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^5  and  10^2</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">÷  divide the numbers, SUBTRACT the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    <li>(8 × 10<sup>5</sup>) ÷ (4 × 10<sup>−2</sup>) = <input class="ans" data-a="2e7" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">8  and  4</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^5  and  10^−2</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">÷  divide the numbers, SUBTRACT the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    <li>(−12 × 10<sup>7</sup>) ÷ (4 × 10<sup>3</sup>) = <input class="ans" data-a="-3e4" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">12  and  4</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^7  and  10^3</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">÷  divide the numbers, SUBTRACT the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    <li>(−15 × 10<sup>−2</sup>) ÷ (−5 × 10<sup>4</sup>) = <input class="ans" data-a="3e-6" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">15  and  5</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^−2  and  10^4</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">÷  divide the numbers, SUBTRACT the exponents</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+  </ol>
+  <button class="check-btn" onclick="checkSection('sec6')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+  <button class="reset-btn" onclick="resetSection('sec6')">↺ Clear</button>
+  <span class="score" id="score-sec6">—</span>
+  <button class="reveal-btn" onclick="toggle('ak5')">Show / Hide Answer Key</button>
+  <div id="ak5" class="ak">
+    <h4>Answer Key — Section 5</h4>
+    A: (1) 6 × 10<sup>9</sup> | (2) 8 × 10<sup>9</sup> | (3) 1 × 10<sup>4</sup> | (4) −1 × 10<sup>8</sup> | (5) 1.2 × 10<sup>8</sup><br>
+    B: (1) 3 × 10<sup>5</sup> | (2) 3 × 10<sup>3</sup> | (3) 2 × 10<sup>7</sup> | (4) −3 × 10<sup>4</sup> | (5) 3 × 10<sup>−6</sup>
+  </div>
+</section>
+
+<!-- SECTION 7 (Discovery + Add/Sub Practice) -->
+<section class="card" id="sec7">
+  <h2>6️⃣ Discovery — Use "My Calculator" to explore <em>why</em> 1 ≤ |a| &lt; 10</h2>
+  <div class="intro">
+    You can use your Google Sheets <strong>"My Calculator"</strong> or the online version below to type each expression below into the calculator and record what happens. Then answer the discovery questions.
+  </div>
+
+  <div class="rule">
+    <strong>How to type scientific notation in the Google Sheets calculator:</strong>
+    <p style="margin:6px 0;">Instead of "×10<sup>n</sup>", use the letter <strong>e</strong> between the coefficient and the exponent. The letter <strong>E (or e) means "times 10 to the power of."</strong> So <code>5e2</code> reads as "5 times 10 to the power of 2." Lowercase <code>e</code> works — you do <em>not</em> need to type capital <code>E</code>.</p>
+    <table class="rules" style="margin-top:6px;">
+      <tr><th>You want to enter…</th><th>Type this</th></tr>
+      <tr><td>5.0 × 10<sup>2</sup></td><td><code>5e2</code> (or <code>5.0e2</code>)</td></tr>
+      <tr><td>5.0 × 10<sup>−2</sup></td><td><code>5.0e-2</code></td></tr>
+      <tr><td>6.02 × 10<sup>23</sup></td><td><code>6.02e23</code></td></tr>
+      <tr><td>1.5 × 10<sup>−9</sup></td><td><code>1.5e-9</code></td></tr>
+    </table>
+    <p style="margin-top:6px;font-size:.9rem;"><em>Sheets stores the actual number and can display it either in standard form or in scientific notation (Format → Number → Scientific).</em></p>
+  </div>
+
+  <!-- Embedded live calculator -->
+  <div class="mini-calc">
+    <h3 style="margin-top:0;">🧮 Live Calculator (works right here on the page)</h3>
+    <p style="font-size:.9rem; color:var(--dim); margin-bottom:12px;">
+      Type each number in scientific notation using the <code>e</code> shorthand (e.g. <code>5e2</code>, <code>6.02e23</code>, <code>1.5e-9</code>) — or as plain numbers (e.g. <code>500</code>). Results are shown in both scientific notation and standard form.
+    </p>
+
+    <div class="calc-row check-row">
+      <label>🔍 Just show me:</label>
+      <input type="text" class="ci solo" id="solo-input" placeholder="12e5">
+      <span class="eq">=</span>
+      <span class="result" id="res-solo">—</span>
+    </div>
+    <div class="calc-row">
+      <label>Addition:</label>
+      <input type="text" class="ci" data-op="add" data-slot="a" placeholder="5e2">
+      <span class="op">+</span>
+      <input type="text" class="ci" data-op="add" data-slot="b" placeholder="2e2">
+      <span class="eq">=</span>
+      <span class="result" id="res-add">—</span>
+    </div>
+    <div class="calc-row">
+      <label>Subtraction:</label>
+      <input type="text" class="ci" data-op="sub" data-slot="a" placeholder="3e8">
+      <span class="op">−</span>
+      <input type="text" class="ci" data-op="sub" data-slot="b" placeholder="2e8">
+      <span class="eq">=</span>
+      <span class="result" id="res-sub">—</span>
+    </div>
+    <div class="calc-row">
+      <label>Multiplication:</label>
+      <input type="text" class="ci" data-op="mul" data-slot="a" placeholder="6.02e23">
+      <span class="op">×</span>
+      <input type="text" class="ci" data-op="mul" data-slot="b" placeholder="12">
+      <span class="eq">=</span>
+      <span class="result" id="res-mul">—</span>
+    </div>
+    <div class="calc-row">
+      <label>Division:</label>
+      <input type="text" class="ci" data-op="div" data-slot="a" placeholder="1e10">
+      <span class="op">÷</span>
+      <input type="text" class="ci" data-op="div" data-slot="b" placeholder="2e6">
+      <span class="eq">=</span>
+      <span class="result" id="res-div">—</span>
+    </div>
+    <p style="font-size:.85rem; color:var(--dim); margin-top:10px;">
+      💡 Try the same problem two ways — e.g. <code>12e5</code> vs <code>1.2e6</code> — and see the calculator produces the same number.
+    </p>
+  </div>
+  <style>
+    .mini-calc { background:#f0f9ff; border:2px solid var(--accent); border-radius:10px; padding:16px 18px; margin:14px 0 18px; }
+    .mini-calc h3 { color:var(--accent-deep); margin-bottom:6px; }
+    .calc-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 0; border-bottom:1px dashed #cbd5e1; }
+    .calc-row:last-of-type { border-bottom:none; }
+    .calc-row label { min-width:120px; font-weight:800; color:var(--navy); }
+    .calc-row .ci {
+      width:120px; padding:6px 10px; font-family:'Courier New', monospace;
+      font-size:.95rem; border:1.5px solid #94a3b8; border-radius:6px;
+    }
+    .calc-row .ci:focus { outline:none; border-color:var(--accent); background:#fff; }
+    .calc-row .op, .calc-row .eq { font-size:1.2rem; font-weight:800; color:var(--navy); }
+    .calc-row .result {
+      flex:1; min-width:180px; padding:6px 12px;
+      background:#fff; border:1.5px solid #cbd5e1; border-radius:6px;
+      font-family:'Courier New', monospace; font-size:.98rem;
+      color:var(--accent-deep); font-weight:700;
+    }
+  </style>
+  <script>
+    function parseSci(s){
+      s = (s||'').trim().replace(/\s+/g,'').replace(/×/g,'*').replace(/\^/g,'**');
+      if(!s) return NaN;
+      s = s.replace(/x10\*\*/gi,'e').replace(/\*10\*\*/g,'e');
+      return Number(s);
+    }
+    function fmt(x){
+      if(!isFinite(x) || isNaN(x)) return '—';
+      const sci = x.toExponential(4).replace(/e([+-])0*(\d)/,'e$1$2').replace(/\.?0+e/,'e');
+      const std = Math.abs(x) >= 1e-3 && Math.abs(x) < 1e15
+        ? x.toLocaleString('en-US', {maximumFractionDigits:6})
+        : sci;
+      return `${sci}  (${std})`;
+    }
+    function calc(){
+      const ops = {add:(a,b)=>a+b, sub:(a,b)=>a-b, mul:(a,b)=>a*b, div:(a,b)=>a/b};
+      ['add','sub','mul','div'].forEach(op=>{
+        const a = parseSci(document.querySelector(`[data-op="${op}"][data-slot="a"]`).value);
+        const b = parseSci(document.querySelector(`[data-op="${op}"][data-slot="b"]`).value);
+        const el = document.getElementById('res-'+op);
+        if(isNaN(a) || isNaN(b)) { el.textContent = '—'; return; }
+        el.textContent = fmt(ops[op](a,b));
+      });
+    }
+    function solo(){
+      const el = document.getElementById('res-solo');
+      const v = parseSci(document.getElementById('solo-input').value);
+      el.textContent = isNaN(v) ? '—' : fmt(v);
+    }
+    document.querySelectorAll('.ci').forEach(el=>el.addEventListener('input', calc));
+    document.getElementById('solo-input').addEventListener('input', solo);
+  </script>
+
+  <div class="calc-box">
+    <strong>Try 1:</strong> Use the <strong>🔍 Just show me</strong> row. Enter <strong>12 × 10<sup>5</sup></strong> (type <code>12e5</code>), then clear and enter <strong>1.2 × 10<sup>6</sup></strong> (type <code>1.2e6</code>).<br>
+    What does the calculator display for each? <input class="free" type="text" placeholder="Both display as…"><br>
+    Are they equal? <input class="free" type="text" placeholder="Yes / No"></p>
+  </div>
+
+  <div class="calc-box">
+    <strong>Try 2:</strong> Use the <strong>🔍 Just show me</strong> row again. Enter <strong>0.3 × 10<sup>4</sup></strong> (type <code>0.3e4</code>), then clear and enter <strong>3 × 10<sup>3</sup></strong> (type <code>3e3</code>).<br>
+    Result 1: <input class="free" type="text" placeholder="…">
+    Result 2: <input class="free" type="text" placeholder="…"><br>
+    Are they equal? <input class="free" type="text" placeholder="Yes / No">
+  </div>
+
+  <div class="calc-box">
+    <strong>Try 3:</strong> Enter one very large product and one small quotient:<br>
+    <strong>6.02 × 10<sup>23</sup></strong> × 12 = <input class="free" type="text" placeholder="…"><br>
+    <strong>1 × 10<sup>10</sup></strong> ÷ <strong>2 × 10<sup>6</sup></strong> = <input class="free" type="text" placeholder="…">
+  </div>
+
+  <div class="calc-box">
+    <strong>Try 4 — "Break the rule":</strong> Use the <strong>🔍 Just show me</strong> row again. Enter the same number three ways: <strong>500,000</strong> (type <code>500000</code>), <strong>5 × 10<sup>5</sup></strong> (type <code>5e5</code>), and <strong>50 × 10<sup>4</sup></strong> (type <code>50e4</code>). Do all three give the same value? <input class="free" type="text" placeholder="Yes / No"><br>
+    Which form is "true" scientific notation? <input class="free" type="text" placeholder="…">
+  </div>
+
+  <!-- Base-10 add/subtract practice (moved from old Section 5) — warm-up before SN add/sub -->
+  <div style="background:#fefce8; border:2px solid #b8860b; border-radius:10px; padding:16px 20px; margin:18px 0;">
+    <h3 style="margin-top:0; color:#78350f;">🔢 Warm-up — Adding &amp; Subtracting Pure Powers of 10</h3>
+    <p style="font-size:.95rem; margin:6px 0 10px;">
+      Before scientific-notation add/sub, warm up with <strong>pure powers of 10</strong>. Same rule: powers must match, or you convert to standard form first.
+      <br><em>💡 Tip:</em> Type answers as plain numbers (like <code>100000</code>) or in scientific notation (like <code>1e5</code>).
+    </p>
+
+    <h4 style="color:#1a2a4a; margin:10px 0 6px;">A. Same power (easy):</h4>
+    <p style="font-size:.9rem; color:#334155; margin:2px 0 6px;">Expand each 10<sup>n</sup> as <strong>1 × 10<sup>n</sup></strong> first, so the coefficients (1's) are visible when you add them.</p>
+    <ol class="qlist">
+      <li>10<sup>2</sup> + 10<sup>2</sup> = (1 × 10<sup>2</sup>) + (1 × 10<sup>2</sup>) = <input class="ans" data-a="200" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1  and  1</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^2  and  10^2</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>10<sup>3</sup> + 10<sup>3</sup> + 10<sup>3</sup> = (1 × 10<sup>3</sup>) + (1 × 10<sup>3</sup>) + (1 × 10<sup>3</sup>) = <input class="ans" data-a="3000" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1  and  1</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^3  and  10^3</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>10<sup>4</sup> − 10<sup>4</sup> = (1 × 10<sup>4</sup>) − (1 × 10<sup>4</sup>) = <input class="ans" data-a="0" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1  and  1</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^4  and  10^4</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−  same power of ten → subtract the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>5 · 10<sup>2</sup> + 3 · 10<sup>2</sup> = (5 × 10<sup>2</sup>) + (3 × 10<sup>2</sup>) = <input class="ans" data-a="800" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5  and  3</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^2  and  10^2</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    </ol>
+
+    <h4 style="color:#1a2a4a; margin:14px 0 6px;">B. Different powers (convert first):</h4>
+    <p style="font-size:.9rem; color:#334155; margin:2px 0 6px;">Expand each 10<sup>n</sup> as <strong>1 × 10<sup>n</sup></strong>, then convert both to standard form so the place values line up before adding.</p>
+    <ol class="qlist">
+      <li>10<sup>2</sup> + 10<sup>3</sup> = (1 × 10<sup>2</sup>) + (1 × 10<sup>3</sup>) = <input class="ans" data-a="1100" size="14"> &nbsp;<em>(hint: 100 + 1000)</em><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1  and  1</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^2  and  10^3</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>10<sup>4</sup> − 10<sup>2</sup> = (1 × 10<sup>4</sup>) − (1 × 10<sup>2</sup>) = <input class="ans" data-a="9900" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1  and  1</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^4  and  10^2</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−  same power of ten → subtract the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>10<sup>3</sup> + 10<sup>1</sup> = (1 × 10<sup>3</sup>) + (1 × 10<sup>1</sup>) = <input class="ans" data-a="1010" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1  and  1</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^3  and  10^1</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>10<sup>5</sup> − 10<sup>4</sup> = (1 × 10<sup>5</sup>) − (1 × 10<sup>4</sup>) = <input class="ans" data-a="9e4" size="14"> &nbsp;<em>(write final answer in scientific notation)</em><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">1  and  1</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^5  and  10^4</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−  same power of ten → subtract the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    </ol>
+
+    <button class="reveal-btn" onclick="toggle('ak5pow')">Show / Hide Warm-up Answer Key</button>
+    <div id="ak5pow" class="ak">
+      <h4>Answer Key — Base-10 Add/Sub Warm-up</h4>
+      <p><strong>A. Same power:</strong> (1) 2 · 10<sup>2</sup> = 200 | (2) 3 · 10<sup>3</sup> = 3,000 | (3) 0 | (4) 8 · 10<sup>2</sup> = 800</p>
+      <p><strong>B. Different powers:</strong> (1) 100 + 1,000 = <strong>1,100</strong> (or 1.1 × 10<sup>3</sup>) | (2) 10,000 − 100 = <strong>9,900</strong> (or 9.9 × 10<sup>3</sup>) | (3) 1,000 + 10 = <strong>1,010</strong> (or 1.01 × 10<sup>3</sup>) | (4) 100,000 − 10,000 = <strong>90,000</strong> = <strong>9 × 10<sup>4</sup></strong></p>
+    </div>
+  </div>
+
+  <!-- Add/Sub Practice: moved here so students practice AFTER the Try 1-4 discovery -->
+  <div style="background:#f8fafc; border:2px solid var(--accent); border-radius:10px; padding:16px 20px; margin:18px 0;">
+    <h3 style="margin-top:0; color:var(--accent-deep);">✏️ Now Practice — Scientific Notation Addition &amp; Subtraction</h3>
+    <p style="font-size:.95rem; margin:6px 0 10px;">
+      Now that you've seen how the calculator handles equivalent forms (Try 1–4), practice adding and subtracting scientific-notation numbers by hand. You'll notice the same rule at work: <strong>the powers of 10 must match before you can add/subtract.</strong>
+    </p>
+    <div class="rule">
+      <strong>Steps:</strong>
+      <ol style="padding-left:24px; margin:6px 0;">
+        <li>Make both exponents the same (use the LARGER exponent).</li>
+        <li>Add or subtract the "a" parts (with sign rules from Section 4).</li>
+        <li>Keep the shared power of 10.</li>
+        <li>Adjust so <strong>1 ≤ |a| &lt; 10</strong> if needed.</li>
+      </ol>
+    </div>
+
+    <h4 style="color:var(--navy); margin:10px 0 6px;">Practice — add / subtract:</h4>
+    <ol class="qlist">
+      <li>(3 × 10<sup>4</sup>) + (2 × 10<sup>4</sup>) = <input class="ans" data-a="5e4" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3  and  2</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^4  and  10^4</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>(7 × 10<sup>6</sup>) − (4 × 10<sup>6</sup>) = <input class="ans" data-a="3e6" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">7  and  4</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^6  and  10^6</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−  same power of ten → subtract the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>(5 × 10<sup>5</sup>) + (2 × 10<sup>4</sup>) = <input class="ans" data-a="5.2e5" size="14">
+        <br><em>Hint: rewrite 2 × 10<sup>4</sup> as 0.2 × 10<sup>5</sup> first.</em><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">5  and  2</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^5  and  10^4</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>(6 × 10<sup>7</sup>) − (3 × 10<sup>6</sup>) = <input class="ans" data-a="5.7e7" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">6  and  3</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^7  and  10^6</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−  same power of ten → subtract the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>(4 × 10<sup>−3</sup>) + (2 × 10<sup>−3</sup>) = <input class="ans" data-a="6e-3" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">4  and  2</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^−3  and  10^−3</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>(9 × 10<sup>4</sup>) + (8 × 10<sup>4</sup>) = <input class="ans" data-a="1.7e5" size="14">
+        <br><em>Hint: your answer will be 17 × 10<sup>4</sup>. Rewrite so 1 ≤ |a| &lt; 10.</em><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">9  and  8</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^4  and  10^4</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">+  same power of ten → add the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+      <li>(3 × 10<sup>3</sup>) − (5 × 10<sup>3</sup>) = <input class="ans" data-a="-2e3" size="14"><svg viewBox="0 0 320 128" width="320" style="max-width:100%;height:auto;display:block;margin:6px 0 10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px" role="img" aria-label="scientific notation operation"><rect x="20.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1.5"/><text x="85.0" y="44.0" font-size="14" font-weight="800" fill="#1e3a8a" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">3  and  5</text><text x="85.0" y="66.0" font-size="10" font-weight="800" fill="#1d4ed8" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">numbers</text><rect x="170.0" y="20.0" width="130.0" height="56.0" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="235.0" y="44.0" font-size="13" font-weight="800" fill="#78350f" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">10^3  and  10^3</text><text x="235.0" y="66.0" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">powers of ten</text><text x="160.0" y="100.0" font-size="11" font-weight="800" fill="#1e293b" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">−  same power of ten → subtract the numbers</text><text x="160.0" y="118.0" font-size="10" font-weight="800" fill="#475569" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif">final answer: 1 ≤ number &lt; 10</text></svg></li>
+    </ol>
+    <button class="check-btn" onclick="checkSection('sec7')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label>
+    <button class="reset-btn" onclick="resetSection('sec7')">↺ Clear</button>
+    <span class="score" id="score-sec7">—</span>
+    <button class="reveal-btn" onclick="toggle('ak6')">Show / Hide Practice Answer Key</button>
+    <div id="ak6" class="ak">
+      <h4>Answer Key — Add/Sub Practice</h4>
+      (1) 5 × 10<sup>4</sup> | (2) 3 × 10<sup>6</sup> | (3) 5.2 × 10<sup>5</sup> | (4) 5.7 × 10<sup>7</sup> | (5) 6 × 10<sup>−3</sup> | (6) 17 × 10<sup>4</sup> = 1.7 × 10<sup>5</sup> | (7) −2 × 10<sup>3</sup>
+    </div>
+  </div>
+
+  <h3>Discovery questions — write a full sentence:</h3>
+  <ol class="qlist">
+    <li>Why must the "a" part of scientific notation satisfy <strong>1 ≤ |a| &lt; 10</strong>?
+      <input class="free" type="text" placeholder="Write a complete sentence…">
+    </li>
+    <li>What would go wrong if we let a = 12 or a = 0.3?
+      <input class="free" type="text" placeholder="Write a complete sentence…">
+    </li>
+    <li>Why must n be an <strong>integer</strong> (whole number, positive or negative)?
+      <input class="free" type="text" placeholder="Write a complete sentence…">
+    </li>
+    <li>How does scientific notation make it EASIER to compare two very large or two very small numbers than standard form?
+      <input class="free" type="text" placeholder="Write a complete sentence…">
+    </li>
+  </ol>
+  <button class="reveal-btn" onclick="toggle('ak7')">Show / Hide Answer Key</button>
+  <div id="ak7" class="ak">
+    <h4>Answer Key — Section 6 (Discovery)</h4>
+    <p><strong>Try 1:</strong> Both display as 1,200,000 (or 1.2E+06). Yes, equal.</p>
+    <p><strong>Try 2:</strong> Both give 3,000 (or 3E+03). Yes, equal.</p>
+    <p><strong>Try 3:</strong> 7.224E+24 · 5,000 (or 5E+03).</p>
+    <p><strong>Try 4:</strong> Yes — all three give 500,000. Only <code>5 × 10<sup>5</sup></code> is true scientific notation.</p>
+    <p><strong>Discovery answers:</strong></p>
+    <p>(1) The rule <strong>1 ≤ |a| &lt; 10</strong> makes scientific notation <strong>unique</strong> — every number has exactly one correct way to write it, so numbers can be compared and ordered cleanly.</p>
+    <p>(2) If a = 12 (or a = 0.3), the same number could be written many ways (12 × 10<sup>4</sup> = 1.2 × 10<sup>5</sup> = 0.12 × 10<sup>6</sup>), which defeats the purpose of a standard form.</p>
+    <p>(3) n must be an integer because it counts the number of decimal-place shifts. You can't move a decimal 2.5 places.</p>
+    <p>(4) Comparing 3.2 × 10<sup>12</sup> to 4.7 × 10<sup>10</sup> is instant — look at exponents first, then coefficients. Comparing 3,200,000,000,000 to 47,000,000,000 requires counting digits.</p>
+  </div>
+</section>
+
+<!-- Overall grade summary -->
+<section class="card" style="border-top-color:var(--gold-deep); background:#fffbeb;">
+  <h2 style="color:#78350f;">📊 Overall Progress</h2>
+  <p>Click below to tally your score across all checkable sections.</p>
+  <button class="check-btn" style="background:var(--gold-deep); border-color:#78350f;" onclick="checkAll()">✓ Check ALL Sections</button>
+  <span class="score" id="score-total" style="font-size:1.1rem; min-width:180px;">—</span>
+</section>
+
+</main>
+
+<footer>
+Mary, Star of the Sea School · Middle School Math · Scientific Notation Foundations · Dr. Park
+</footer>
+</div>
+
+<script>
+function toggle(id){ document.getElementById(id).classList.toggle('open'); }
+
+// ---- Digital fillable check logic ----
+function normalizeAns(s){s=String(s||'').trim().toLowerCase();if(!s)return'';
+  s = s.replace(/√\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/g, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  s = s.replace(/sqrt\s*\(?\s*(\d+(?:\.\d+)?)\s*\)?/gi, function(m, n){ return Number(Math.sqrt(Number(n)).toPrecision(10)).toString(); });
+  var __SUP={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  s = s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g,function(m){var out='^';for(var i=0;i<m.length;i++)out+=(__SUP[m[i]]||m[i]);return out;});
+  s = s.replace(/\s+/g,'').replace(/,/g,'').replace(/\$/g,'').replace(/%/g,'').replace(/−/g,'-').replace(/×/g,'*').replace(/·/g,'*');
+  s = s.replace(/(\d)x(?=\d|-?\d)/g,'$1*');
+  s = s.replace(/\*10\^(-?\d+)/g,'e$1').replace(/(^|[^\d\w])10\^(-?\d+)/g,'$11e$2');
+  return s;}
+function toNumber(s){const c=normalizeAns(s);if(!c)return null;
+  const f=c.match(/^(-?\d+(\.\d+)?)\/(-?\d+(\.\d+)?)$/);if(f)return Number(f[1])/Number(f[3]);
+  const pw=c.match(/^(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(pw)return Math.pow(Number(pw[1]),Number(pw[2]));
+  const ipw=c.match(/^1\/(-?\d+(?:\.\d+)?)\^(-?\d+(?:\.\d+)?)$/);if(ipw){const v=Math.pow(Number(ipw[1]),Number(ipw[2]));return v!==0?1/v:null;}
+  const n=Number(c);return isFinite(n)?n:null;}
+function isCorrect(student, expected) {
+  const ns = toNumber(student);
+  const ne = toNumber(expected);
+  if (ns !== null && ne !== null) {
+    if (ne === 0) return Math.abs(ns) < 1e-9;
+    return Math.abs(ns - ne) / Math.abs(ne) < 1e-4;
+  }
+  return normalizeAns(student) === normalizeAns(expected);
+}
+function checkSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return {correct:0, total:0};
+  let correct = 0, total = 0, blank = 0;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    total++;
+    const student = inp.value;
+    if (!student.trim()) {
+      inp.classList.remove('correct','wrong');
+      blank++;
+      return;
+    }
+    const ok = isCorrect(student, inp.dataset.a);
+    inp.classList.toggle('correct', ok);
+    inp.classList.toggle('wrong', !ok);
+    if (ok) correct++;
+  });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    const pct = total ? Math.round(100 * correct / total) : 0;
+    scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+    scoreEl.classList.remove('good','mid','low');
+    if (pct >= 90) scoreEl.classList.add('good');
+    else if (pct >= 70) scoreEl.classList.add('mid');
+    else scoreEl.classList.add('low');
+  }
+  return {correct, total};
+}
+function resetSection(id) {
+  const sec = document.getElementById(id);
+  if (!sec) return;
+  sec.querySelectorAll('input.ans').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  sec.querySelectorAll('input.free').forEach(inp => { inp.value = ''; });
+  const scoreEl = document.getElementById('score-' + id);
+  if (scoreEl) {
+    scoreEl.textContent = '—';
+    scoreEl.classList.remove('good','mid','low');
+  }
+}
+function checkAll() {
+  let correct = 0, total = 0;
+  ['sec1','sec2','sec3','sec4','sec6','sec7'].forEach(id => {
+    const r = checkSection(id);
+    correct += r.correct; total += r.total;
+  });
+  const scoreEl = document.getElementById('score-total');
+  const pct = total ? Math.round(100 * correct / total) : 0;
+  scoreEl.textContent = `${correct} / ${total}  (${pct}%)`;
+  scoreEl.classList.remove('good','mid','low');
+  if (pct >= 90) scoreEl.classList.add('good');
+  else if (pct >= 70) scoreEl.classList.add('mid');
+  else scoreEl.classList.add('low');
+  scoreEl.scrollIntoView({behavior:'smooth', block:'center'});
+}
+// Enter key inside an .ans input triggers section check
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('ans')) {
+    e.preventDefault();
+    var inputs = Array.from(document.querySelectorAll('input.ans, input.free'));
+    var i = inputs.indexOf(e.target);
+    if (i >= 0 && i < inputs.length - 1) inputs[i+1].focus(); else e.target.blur();
+  }
+});
+</script>
+<script>
+/* MSOS-LENIENT-GRADING v5: accept plain numbers without units, and equivalent number formats (.5 = 0.50 = 1/2, 10×10^4 = 10*10^4 = 1e5). */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosLenient) return;
+  window.__msosLenient = true;
+  var ORIG = window.isCorrect;
+  var SUP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':''};
+  var MULT = {thousand:1e3, million:1e6, billion:1e9, trillion:1e12};
+  var U1 = /^[mglLsWJAVNC]$/;
+  var U2 = /^(cm|mm|km|kg|mg|ml|dl|kl|ft|in|yd|mi|lb|oz|hr|yr|hz|au|nm|kw|wh|pt|qt|ly|ms|mw|kn|kj|cc|mo|wk|mv|ma|ev)$/i;
+  function parse(raw){
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return null;
+    s = s.replace(/[⁰¹²³⁴-⁹⁻⁺]+/g, function(m){ var o='^'; for (var i=0;i<m.length;i++) o += SUP[m[i]]; return o; });
+    s = s.replace(/[≈~]/g,'').replace(/^\s*(approx\.?|about)\s*/i,'').replace(/\s*approx\.?\s*$/i,'').trim();
+    var v, rest, mm = s.match(/^([+\-−]?)\s*\$?\s*(\d+)\s+(\d+)\s*\/\s*(\d+)(.*)$/);
+    if (mm) {
+      v = (Number(mm[2]) + Number(mm[3]) / Number(mm[4])) * (mm[1] && mm[1] !== '+' ? -1 : 1);
+      rest = mm[5];
+    } else {
+      var t = s.replace(/[\s,$%]/g,'').replace(/[−–]/g,'-').replace(/[×·✕]/g,'*');
+      t = t.replace(/(\d)[xX](?=\d)/g,'$1*');
+      t = t.replace(/\*10\^\(?([+-]?\d+)\)?/g,'e$1').replace(/^10\^\(?([+-]?\d+)\)?/,'1e$1');
+      var m = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?)(?:\/(\d+\.?\d*|\.\d+)(?![\d.]))?(.*)$/);
+      if (!m) return null;
+      v = Number(m[1]) / (m[2] ? Number(m[2]) : 1);
+      rest = m[3];
+    }
+    if (!isFinite(v)) return null;
+    rest = String(rest).replace(/\s+/g,'').replace(/[✓°Ωω¢]/g,'').replace(/[).,;:!]+$/,'');
+    var base = v, lw = rest.toLowerCase();
+    for (var k in MULT) { if (lw.indexOf(k) === 0) { v = v * MULT[k]; rest = rest.slice(k.length); break; } }
+    return {v:v, base:base, rest:rest, spaced:/\d\s+[A-Za-z\u00b5\u00b0\u03a9]/.test(s)};
+  }
+  function unitOK(rest, strict, spaced){
+    if (!rest) return true;
+    if (/[0-9]/.test(rest.replace(/\^?-?[23](?=\/|$)/g,''))) return false;
+    var pieces = rest.replace(/\bper\b/ig,'/').split('/');
+    for (var i=0;i<pieces.length;i++){
+      var p = pieces[i].replace(/\^?-?[23]$/,'');
+      if (p === '') continue;
+      if (!/^[A-Za-zµ][A-Za-zµ'\-]*$/.test(p)) return false;
+      if (p.length === 1) { if (!(strict ? (U1.test(p) && (i > 0 || spaced)) : /^[mglswjavnc]$/i.test(p))) return false; }
+      else if (p.length === 2) { if (!U2.test(p)) return false; }
+    }
+    return true;
+  }
+  function isTimes(r){ return /^(\*|times?)$/i.test(r); }
+  function close(a,b){ if (Math.abs(b) < 1e-12) return Math.abs(a) < 1e-9; return Math.abs(a-b)/Math.abs(b) < 5e-3; }
+  function tnorm(x){ return String(x == null ? '' : x).toLowerCase().replace(/[\s,$%]+/g,'').replace(/[\u2212\u2013]/g,'-').replace(/[\u00d7\u00b7]/g,'*').replace(/\.+$/,''); }
+  function ineq(x){
+    var t = String(x == null ? '' : x).toLowerCase().replace(/&gt;/g,'>').replace(/&lt;/g,'<').replace(/\s+/g,'')
+      .replace(/[\u2212\u2013]/g,'-').replace(/>=|=>/g,'\u2265').replace(/<=|=</g,'\u2264');
+    var m = t.match(/^([a-z])(<|>|\u2264|\u2265)([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)$/);
+    var flip = {'<':'>','>':'<','\u2264':'\u2265','\u2265':'\u2264'};
+    if (!m) { var r = t.match(/^([+-]?(?:\d+\.?\d*|\.\d+)(?:\/\d+)?)(<|>|\u2264|\u2265)([a-z])$/); if (!r) return null; m = [null, r[3], flip[r[2]], r[1]]; }
+    var p = m[3].split('/'), v = Number(p[0]) / (p[1] ? Number(p[1]) : 1);
+    return isFinite(v) ? {v:m[1], op:m[2], n:v} : null;
+  }
+  function extra(user, exp){
+    var list0 = Array.isArray(exp) ? exp : [exp], list = [];
+    for (var q=0;q<list0.length;q++){ var s0 = String(list0[q] == null ? '' : list0[q]); list.push(s0); if (s0.indexOf('|') >= 0) list = list.concat(s0.split('|')); }
+    var uN = tnorm(user), uI = ineq(user);
+    if (uI) { for (var q3=0;q3<list.length;q3++){ var eI = ineq(list[q3]); if (eI && eI.v===uI.v && eI.op===uI.op && Math.abs(eI.n-uI.n) < 1e-9) return true; } }
+    for (var q2=0;q2<list.length;q2++){ if (list[q2].indexOf('|') < 0 && uN && uN === tnorm(list[q2])) return true; }
+    var dropLhs = function(t){ return t.replace(/^(?:sa|area|surfacearea|[a-z])=(?!=)/,''); }, uD = dropLhs(uN);
+    var lhs = {}, hasLhs = false; for (var q5=0;q5<list.length;q5++){ var t5 = tnorm(list[q5]); if (/^[a-z]=(?!=)/.test(t5)) { lhs[t5[0]] = 1; hasLhs = true; } }
+    var lhsOk = !(/^[a-z]=(?!=)/.test(uN) && hasLhs && !lhs[uN[0]]);
+    for (var q4=0;q4<list.length;q4++){ if (lhsOk && list[q4].indexOf('|') < 0 && uD && uD === dropLhs(tnorm(list[q4]))) return true; }
+    var uTxt = String(user||'').trim().toLowerCase().replace(/\s+/g,' ');
+    var u = parse(user) || parse(String(user||'').replace(/^\s*(?:SA|sa|Area|area|[A-Za-z])\s*=\s*/,''));
+    for (var i=0;i<list.length;i++){
+      var e = String(list[i] == null ? '' : list[i]);
+      if (!e.trim()) continue;
+      var arrow = e.split('→');
+      if (arrow.length > 1) {
+        var w = (arrow[1].match(/[A-Za-z][A-Za-z'\-]{2,}/) || [])[0];
+        if (w && (uTxt === w.toLowerCase() || uTxt.indexOf(w.toLowerCase() + ' ') === 0)) return true;
+      }
+      if (!u) continue;
+      var segs = [e].concat(e.split(/→|≈|;|\s+or\s+/i));
+      for (var j=0;j<segs.length;j++){
+        var p = parse(segs[j]);
+        if (!p) continue;
+        var pTimes = isTimes(p.rest);
+        if (!pTimes && !unitOK(p.rest, true, p.spaced)) continue;
+        var uOK = unitOK(u.rest, false) || (pTimes && (isTimes(u.rest) || /^x$/i.test(u.rest)));
+        if (!uOK) continue;
+        if (close(u.v, p.v) || (p.base !== p.v && close(u.v, p.base))) return true;
+      }
+    }
+    return false;
+  }
+  window.__msosLenientExtra = extra;
+  function isList(x){ var t = String(x == null ? '' : x); return /\d\s*,\s*[-\u2212(]?\d/.test(t) && !/^\s*\$?-?\d{1,3}(,\d{3})+(\.\d+)?\s*[a-zA-Z%\u00b0\u00d7\u00b2\u00b3\/]*\s*$/.test(t); }
+  function items(x){ return String(x).split(/[,;]/).map(function(p){ return p.replace(/[()\[\]]/g,'').trim(); }); }
+  function itemEq(a,b){ if (tnorm(a) === tnorm(b)) return true; var pa = parse(a), pb = parse(b); return !!(pa && pb && close(pa.v, pb.v) && unitOK(pa.rest,false) && unitOK(pb.rest,false)); }
+  function listEq(user, exp){
+    var alts = [].concat(exp).reduce(function(acc, x){ return acc.concat(String(x == null ? '' : x).split('|')); }, []);
+    var u = items(user);
+    for (var i=0;i<alts.length;i++){ var a = items(alts[i]); if (a.length !== u.length) continue; var ok = true; for (var j=0;j<a.length;j++){ if (!itemEq(u[j], a[j])) { ok = false; break; } } if (ok) return true; }
+    return false;
+  }
+  window.isCorrect = function(s, e){
+    if (!(e == null || e === '' || (Array.isArray(e) && !e.length)) && String(s == null ? '' : s).trim()) {
+      var anyList = isList(s) || [].concat(e).some(function(x){ return String(x).split('|').some(isList); });
+      if (anyList) { try { return listEq(s, e); } catch(_) {} }
+    }
+    var r = ORIG.apply(this, arguments);
+    if (r === true) return r;
+    if (e == null || e === '' || (Array.isArray(e) && !e.length)) return r;
+    try { if (extra(s, e)) return true; } catch(_) {}
+    return r;
+  };
+})();
+</script>
+
+<script>
+
+// ==== Auto-save + Save/Load Answers ====
+(function(){
+  function storageKey() {
+    return 'msp-ws-' + (location.pathname.split('/').pop() || 'unknown');
+  }
+  function topicFileName() {
+    var base = (location.pathname.split('/').pop() || 'worksheet.html');
+    base = base.replace(/^msp-/, '').replace(/\.html$/, '');
+    return base + '.json';
+  }
+  function allAnswerNodes() {
+    return Array.from(document.querySelectorAll('input.ans, input.free, textarea.free, main input[type="text"]'));
+  }
+  function snapshot() {
+    var out = {};
+    allAnswerNodes().forEach(function(n, i){
+      var key = n.id || ('idx_' + i);
+      out[key] = n.value || '';
+    });
+    return out;
+  }
+  function restore(data) {
+    if (!data) return 0;
+    var nodes = allAnswerNodes();
+    var count = 0;
+    nodes.forEach(function(n){ if (n.id && data[n.id] != null) { n.value = data[n.id]; count++; } });
+    nodes.forEach(function(n, i){ var k = 'idx_' + i; if (!n.id && data[k] != null) { n.value = data[k]; count++; } });
+    return count;
+  }
+  function autoSave() {
+    try {
+      localStorage.setItem(storageKey(), JSON.stringify(snapshot()));
+      showStatus('Auto-saved ' + new Date().toLocaleTimeString('en-US', {hour:'numeric', minute:'2-digit'}));
+    } catch(e){}
+  }
+  function showStatus(msg) {
+    var el = document.getElementById('save-status');
+    if (el) el.textContent = msg;
+  }
+  window.saveAnswersToFile = function() {
+    var data = snapshot();
+    data.__savedAt = new Date().toISOString();
+    data.__pageTitle = document.title;
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = topicFileName();
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 0);
+    showStatus('Downloaded ' + topicFileName());
+  };
+  window.loadAnswersFromFile = function(evt) {
+    var f = evt.target.files && evt.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        var n = restore(data);
+        autoSave();
+        showStatus('Loaded ' + n + ' answers from ' + f.name);
+      } catch(err) {
+        showStatus('Could not load file: ' + err.message);
+      }
+    };
+    reader.readAsText(f);
+    evt.target.value = '';
+  };
+  window.clearAllAnswers = function() {
+    if (!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+    allAnswerNodes().forEach(function(n){ n.value = ''; n.classList.remove('correct','wrong'); });
+    try { localStorage.removeItem(storageKey()); } catch(e){}
+    document.querySelectorAll('.correction-label').forEach(function(n){ n.remove(); });
+    document.querySelectorAll('.score').forEach(function(s){ s.textContent = '—'; s.classList.remove('good','mid','low'); });
+    showStatus('All answers cleared');
+  };
+  window.addEventListener('DOMContentLoaded', function() {
+    try {
+      var raw = localStorage.getItem(storageKey());
+      if (raw) {
+        var n = restore(JSON.parse(raw));
+        if (n) showStatus('Restored ' + n + ' saved answers');
+      }
+    } catch(e){}
+    var t;
+    document.addEventListener('input', function(e) {
+      if (e.target && (e.target.classList.contains('ans') || e.target.classList.contains('free') || e.target.tagName === 'TEXTAREA' || e.target.type === 'text')) {
+        clearTimeout(t);
+        t = setTimeout(autoSave, 400);
+      }
+    });
+  });
+})();
+
+</script>
+</body>
+</html>
