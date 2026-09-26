@@ -2453,6 +2453,38 @@ const LESSONS = {
   <text x="285" y="155" font-size="9" fill="#0f766e" text-anchor="middle">200m</text>
   <text x="285" y="180" font-size="9" fill="#0f766e" text-anchor="middle">100m</text>
 </svg><h3>Reading Contour Lines</h3><p>The <strong>contour interval</strong> is the difference in elevation between two adjacent contour lines. If the interval is 20 meters, then each line you cross going up the hill means you've climbed 20 more meters.</p><ul><li><strong>Lines close together:</strong> Steep terrain — elevation changes quickly</li><li><strong>Lines far apart:</strong> Gentle terrain — elevation changes slowly</li><li><strong>Closed loops:</strong> A hilltop or basin (depression)</li></ul><h3>Calculating Slope</h3><p>Slope measures how steep a surface is. It is a ratio:</p><p style="text-align:center;padding:8px;background:#f0f4ff;border-radius:6px;"><strong>Slope = Rise ÷ Run = (vertical change) ÷ (horizontal distance)</strong></p><p>Slope can be written as a fraction, a decimal, or a percentage (called <em>grade</em> by road engineers).</p><ul><li><strong>Example:</strong> A trail rises 120 m over a horizontal distance of 800 m. Slope = 120/800 = 0.15 = <strong>15% grade</strong></li><li>Highway engineers require slopes under 6% (0.06) for safety</li><li>A 45° slope = slope of 1.0 = 100% — extremely steep</li></ul><h3>Map Scale & Distance</h3><p>A map scale is a ratio comparing map distance to real-world distance. A scale of 1:50,000 means 1 cm on the map = 50,000 cm = 500 m in real life.</p><p><strong>Example:</strong> Two mountains are 4.5 cm apart on a 1:50,000 map. Real distance = 4.5 × 50,000 = 225,000 cm = <strong>2.25 km</strong></p><h3>Cross Sections — Graphing Elevation</h3><p>Geographers draw <em>cross sections</em> by picking a line across a map and plotting elevation vs. horizontal distance. This turns contour data into a side-view graph — the x-axis is distance, the y-axis is elevation. The steepness of your graph line equals the slope!</p><table style="border-collapse:collapse;width:100%;font-size:0.93em;margin:8px 0;"><tr style="background:#1F3864;color:#fff;"><th style="padding:6px 10px;">Landform</th><th style="padding:6px 10px;">Typical Slope</th><th style="padding:6px 10px;">Description</th></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Plains / valleys</td><td style="padding:6px 10px;">< 2%</td><td style="padding:6px 10px;">Nearly flat, contour lines very spread out</td></tr><tr><td style="padding:6px 10px;">Rolling hills</td><td style="padding:6px 10px;">2–15%</td><td style="padding:6px 10px;">Moderate slope, easy hiking</td></tr><tr style="background:#f2f2f2;"><td style="padding:6px 10px;">Mountain trails</td><td style="padding:6px 10px;">15–40%</td><td style="padding:6px 10px;">Steep — contour lines close together</td></tr><tr><td style="padding:6px 10px;">Cliff faces</td><td style="padding:6px 10px;">> 100%</td><td style="padding:6px 10px;">Overhanging — slope > 1.0</td></tr></table>
+<h3>🌺 Real World: A Topographic Map of Oʻahu, Hawaiʻi</h3>
+<p>Oʻahu is a great island for reading contour lines because it has tall peaks, steep cliffs, and a volcanic crater. It is made of two old volcanoes: the <strong>Waiʻanae Range</strong> on the west side and the <strong>Koʻolau Range</strong> on the east side.</p>
+<ul>
+<li><strong>Mount Kaʻala</strong> (1,227 m ≈ 4,025 ft), the highest point on Oʻahu, sits in the Waiʻanae Range. Its contour lines make closed loops around the summit.</li>
+<li>At the <strong>Nuʻuanu Pali</strong> in the Koʻolau Range, the contour lines are packed tightly together — a steep cliff.</li>
+<li><strong>Diamond Head (Lēʻahi)</strong>, 232 m (761 ft), is a crater: its contour lines form a ring around a lower bowl.</li>
+</ul>
+<p>Below is a <strong>real topographic map</strong> of Oʻahu. The thin brown lines are contour lines made from satellite elevation data. Zoom in (＋) to see the contour lines and their elevation labels in <strong>meters</strong>, and drag to move around.</p>
+<div style="text-align:center;margin:8px 0;">
+<button class="btn" style="padding:6px 12px;font-size:.85rem;margin:3px;" onclick="oahuGoTo(21.5069,-158.1428,14)">⛰️ Mount Kaʻala</button>
+<button class="btn" style="padding:6px 12px;font-size:.85rem;margin:3px;" onclick="oahuGoTo(21.2614,-157.8056,15)">🌋 Diamond Head (Lēʻahi)</button>
+<button class="btn" style="padding:6px 12px;font-size:.85rem;margin:3px;" onclick="oahuGoTo(21.3669,-157.7931,14)">🧗 Nuʻuanu Pali (Koʻolau cliffs)</button>
+</div>
+<div id="oahuMap" style="height:460px;border:2px solid #78350f;border-radius:10px;margin:10px 0;background:#f7f3ea;"><p style="padding:20px;text-align:center;">Loading the map…</p></div>
+<p style="font-size:.8rem;color:#64748b;">Map: © OpenStreetMap contributors, SRTM elevation data · Map style © OpenTopoMap (CC-BY-SA). Needs an internet connection.</p>
+<h4>📏 Measure a real slope</h4>
+<p>Click the map once for point <b>A</b> and again for point <b>B</b>. The map measures the horizontal distance (the <b>run</b>). Then read the elevation at each point from the contour labels and type them in.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0;">
+<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:.75rem;font-weight:700;color:#64748b;">RUN (A TO B)</div><div id="oahuRun" style="font-weight:900;font-size:1.1rem;">— m</div></div>
+<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:.75rem;font-weight:700;color:#64748b;">ELEVATION AT A (m)</div><input type="number" id="oahuElA" style="width:90px;padding:4px 6px;font-weight:800;" oninput="oahuCalc()"></div>
+<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:.75rem;font-weight:700;color:#64748b;">ELEVATION AT B (m)</div><input type="number" id="oahuElB" style="width:90px;padding:4px 6px;font-weight:800;" oninput="oahuCalc()"></div>
+<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:.75rem;font-weight:700;color:#64748b;">SLOPE = RISE ÷ RUN</div><div id="oahuSlope" style="font-weight:900;font-size:1.1rem;">—</div></div>
+</div>
+<div style="text-align:center;"><button class="btn" style="padding:6px 12px;font-size:.85rem;" onclick="oahuClear()">↺ Clear points</button></div>
+<h4>🔎 Explore and answer</h4>
+<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px 16px;">
+<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">1. Go to Mount Kaʻala. How can you tell it is a peak from the contour lines?</summary><p>The contour lines make closed loops, one inside the other, with the highest loop in the center.</p></details>
+<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">2. Go to the Nuʻuanu Pali. Are the contour lines close together or far apart? What does that tell you?</summary><p>Very close together — the Pali is a steep cliff on the windward (east) side of the Koʻolau Range.</p></details>
+<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">3. Go to Diamond Head. What shape do the contour lines make?</summary><p>A ring (a crater): the elevation rises to a high rim and then drops down again into the bowl in the middle.</p></details>
+<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">4. Estimate: Mount Kaʻala (1,227 m) is about 9 km (9,000 m) from the beach at Mākua on the west coast. What is the average slope?</summary><p>Slope = 1,227 ÷ 9,000 ≈ 0.14, a 14% grade. Parts of the real trail are much steeper than the average!</p></details>
+<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">5. Use the measuring tool: pick two points on a Koʻolau ridge and find the slope. Is it gentle, moderate, or steep?</summary><p>Answers vary. Slopes over 0.3 (30%) are very steep.</p></details>
+</div>
 
 <h3>Three moves that stick</h3>
 <ol>
@@ -3343,6 +3375,44 @@ function dlabPreset(mass, vol){
   dlabDrop();
 }
 
+// ---- Oahu real topographic map (Topographic Maps unit lesson) ----
+var __oahuMap=null, __oahuPts=[], __oahuLayers=[];
+function __loadLeaflet(cb){
+  if (window.L) return cb();
+  if (!document.getElementById('leaflet-css')){ var l=document.createElement('link'); l.id='leaflet-css'; l.rel='stylesheet'; l.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css'; document.head.appendChild(l); }
+  var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js'; s.onload=cb;
+  s.onerror=function(){ var m=document.getElementById('oahuMap'); if(m) m.innerHTML='<p style="padding:20px;text-align:center;">The live map needs an internet connection. Try again when you are online.</p>'; };
+  document.head.appendChild(s);
+}
+function initOahuMap(){
+  var el=document.getElementById('oahuMap'); if(!el) return;
+  __loadLeaflet(function(){
+    if (!document.getElementById('oahuMap')) return;
+    if (__oahuMap){ try{ __oahuMap.remove(); }catch(e){} }
+    el=document.getElementById('oahuMap'); el.innerHTML='';
+    __oahuPts=[]; __oahuLayers=[];
+    __oahuMap=L.map(el,{scrollWheelZoom:false}).setView([21.47,-158.0],10);
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap (CC-BY-SA)'}).addTo(__oahuMap);
+    [[21.5069,-158.1428,'Mount Kaʻala — 1,227 m (4,025 ft), highest point on Oʻahu'],[21.2614,-157.8056,'Diamond Head (Lēʻahi) — 232 m (761 ft)'],[21.3669,-157.7931,'Nuʻuanu Pali — steep Koʻolau cliffs'],[21.3069,-157.8583,'Honolulu']].forEach(function(p){ L.marker([p[0],p[1]]).addTo(__oahuMap).bindPopup(p[2]); });
+    __oahuMap.on('click',function(e){
+      if(__oahuPts.length===2) oahuClear();
+      __oahuPts.push(e.latlng);
+      __oahuLayers.push(L.circleMarker(e.latlng,{radius:7,color:'#dc2626',fillColor:'#fef08a',fillOpacity:1}).addTo(__oahuMap).bindTooltip(__oahuPts.length===1?'A':'B',{permanent:true,direction:'top'}));
+      if(__oahuPts.length===2){ __oahuLayers.push(L.polyline(__oahuPts,{color:'#dc2626',weight:3,dashArray:'6,5'}).addTo(__oahuMap)); document.getElementById('oahuRun').textContent=Math.round(__oahuPts[0].distanceTo(__oahuPts[1])).toLocaleString()+' m'; }
+      oahuCalc();
+    });
+    setTimeout(function(){ __oahuMap.invalidateSize(); },200);
+  });
+}
+function oahuGoTo(a,b,z){ if(__oahuMap) __oahuMap.setView([a,b],z); }
+function oahuClear(){ __oahuLayers.forEach(function(l){ __oahuMap.removeLayer(l); }); __oahuLayers=[]; __oahuPts=[]; var r=document.getElementById('oahuRun'); if(r) r.textContent='— m'; oahuCalc(); }
+function oahuCalc(){
+  var o=document.getElementById('oahuSlope'); if(!o) return;
+  var a=parseFloat(document.getElementById('oahuElA').value), b=parseFloat(document.getElementById('oahuElB').value);
+  if(__oahuPts.length<2||isNaN(a)||isNaN(b)){ o.textContent='—'; return; }
+  var sl=Math.abs(b-a)/__oahuPts[0].distanceTo(__oahuPts[1]); o.textContent=sl.toFixed(3)+' = '+(sl*100).toFixed(1)+'%';
+}
+
 function showLesson(unitId) {
   currentUnit = unitId;
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -3415,6 +3485,7 @@ function showLesson(unitId) {
     const card = document.querySelector('#lesson-content .resource-card');
     if (card) card.style.display = 'none';
   })();
+  if (unitId === 'topographic-maps') initOahuMap();
   renderSidebar();
   setTopbar();
   (function(){ var top=function(){ document.querySelectorAll('.content').forEach(function(el){ el.scrollTop=0; }); window.scrollTo(0,0); }; top(); if (window.requestAnimationFrame) requestAnimationFrame(top); })();
