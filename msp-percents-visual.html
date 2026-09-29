@@ -75,14 +75,16 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
 
   <div class="visuals">
     <div class="viz-panel">
-      <h3>Out of 100 Grid</h3>
+      <h3>The Whole Split Into 100 Equal Squares</h3>
+      <div style="font-size:.88rem; color:#475569; margin-bottom:6px;">All 100 squares together = <b id="gWhole">80</b> (the whole). Each square = 1% = <b id="gEach">0.8</b></div>
       <div class="grid-100" id="grid100"></div>
-      <div style="margin-top:8px; font-weight:800; color:var(--navy);"><span id="gridPctLabel">25</span> squares filled = <span id="gridPctLabel2">25</span>%</div>
+      <div style="margin-top:8px; font-weight:800; color:var(--navy);" id="gridLabel"></div>
     </div>
     <div class="viz-panel">
-      <h3>Pie Chart</h3>
-      <svg id="pieChart" width="200" height="200" viewBox="0 0 200 200" style="max-width:100%;"></svg>
-      <div style="margin-top:8px; font-weight:800; color:var(--navy);"><span id="piePct">25</span>% shaded</div>
+      <h3>Percent Bar (Double Number Line)</h3>
+      <div style="font-size:.88rem; color:#475569; margin-bottom:6px;">Top: percent · Bottom: the actual amount. 100% lines up with the whole.</div>
+      <svg id="pctBar" viewBox="0 0 380 170" style="width:100%; max-width:380px;"></svg>
+      <div style="margin-top:8px; font-weight:800; color:var(--navy);" id="barLabel"></div>
     </div>
   </div>
 
@@ -133,29 +135,25 @@ function render(){
     d.className = 'cell' + (i < P ? ' on' : '');
     grid.appendChild(d);
   }
-  document.getElementById('gridPctLabel').textContent = P;
-  document.getElementById('gridPctLabel2').textContent = P;
 
-  // Pie chart
-  const svg = document.getElementById('pieChart');
-  const cx = 100, cy = 100, r = 85;
-  if (P === 0){
-    svg.innerHTML = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#f1f5f9" stroke="#0f172a" stroke-width="2"/>`;
-  } else if (P >= 100){
-    svg.innerHTML = `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#7c3aed" stroke="#0f172a" stroke-width="2"/>`;
-  } else {
-    const angle = (P / 100) * 2 * Math.PI - Math.PI/2;
-    const x = cx + r * Math.cos(angle);
-    const y = cy + r * Math.sin(angle);
-    const largeArc = P > 50 ? 1 : 0;
-    const path = `M ${cx} ${cy} L ${cx} ${cy - r} A ${r} ${r} 0 ${largeArc} 1 ${x} ${y} Z`;
-    svg.innerHTML = `
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="#f1f5f9" stroke="#0f172a" stroke-width="2"/>
-      <path d="${path}" fill="#7c3aed" opacity="0.8"/>
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#0f172a" stroke-width="2"/>
-    `;
-  }
-  document.getElementById('piePct').textContent = P;
+  // Percent bar (double number line)
+  const fmt = v => (Math.round(v*100)/100).toString();
+  const bx=20, bw=340, by=60, bh=36, px=bx+bw*Math.min(P,100)/100, part=P/100*W;
+  let b='';
+  b+=`<rect x="${bx}" y="${by}" width="${bw}" height="${bh}" fill="#f1f5f9" stroke="#0f172a" stroke-width="2" rx="4"/>`;
+  b+=`<rect x="${bx}" y="${by}" width="${px-bx}" height="${bh}" fill="#7c3aed" opacity="0.85" rx="4"/>`;
+  [0,25,50,75,100].forEach(t=>{ const x=bx+bw*t/100;
+    b+=`<line x1="${x}" y1="${by-6}" x2="${x}" y2="${by+bh+6}" stroke="#94a3b8" stroke-width="1"/>`;
+    b+=`<text x="${x}" y="${by-12}" font-size="12" text-anchor="middle" fill="#475569">${t}%</text>`;
+    b+=`<text x="${x}" y="${by+bh+22}" font-size="12" text-anchor="middle" fill="#475569">${fmt(W*t/100)}</text>`; });
+  b+=`<line x1="${px}" y1="${by-26}" x2="${px}" y2="${by+bh+34}" stroke="#dc2626" stroke-width="3"/>`;
+  b+=`<text x="${Math.min(Math.max(px,40),340)}" y="${by-30}" font-size="14" font-weight="800" text-anchor="middle" fill="#dc2626">${P}%</text>`;
+  b+=`<text x="${Math.min(Math.max(px,40),340)}" y="${by+bh+50}" font-size="14" font-weight="800" text-anchor="middle" fill="#dc2626">${fmt(part)}</text>`;
+  document.getElementById('pctBar').innerHTML=b;
+  document.getElementById('barLabel').textContent = `${P}% of the bar lines up with ${fmt(part)} out of ${W}`;
+  document.getElementById('gWhole').textContent = W;
+  document.getElementById('gEach').textContent = fmt(W/100);
+  document.getElementById('gridLabel').textContent = `${P} squares × ${fmt(W/100)} each = ${fmt(part)}`;
 
   // Equivalents
   const g = gcd(P, 100);
