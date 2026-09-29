@@ -3427,6 +3427,7 @@ function showLesson(unitId) {
     const S = 'padding:6px 12px; font-size:.85rem; text-decoration:none; display:inline-block;';
     const resBtns = [];
     if (unit) {
+      if (typeof SSAT_BANK !== 'undefined' && SSAT_BANK[unit.id]) resBtns.push(`<button class="btn-ssat" onclick="openSSAT('${unit.id}')" style="${S}">🎯 SSAT Prep</button>`);
       if (unit.phetUrl)   resBtns.push(`<a class="btn-phet"  href="${unit.phetUrl}"  target="_blank" rel="noopener" style="${S}">🧪 PhET</a>`);
       if (unit.ixlUrl)    resBtns.push(`<a class="btn-ixl"   href="${unit.ixlUrl}"   target="_blank" rel="noopener" style="${S}">📚 IXL</a>`);
       if (unit.bpUrl)     resBtns.push(`<a class="btn-bp"    href="${unit.bpUrl}"    target="_blank" rel="noopener" style="${S}">🎬 BrainPOP</a>`);
@@ -4162,5 +4163,2967 @@ function showRealWorld() {
 
 </script>
 <!--NO-AUTOFILL--><script>(function(){function f(){document.querySelectorAll('input.ans, input[id^="ans"]').forEach(function(i){if(i.dataset.noaf)return;i.dataset.noaf='1';i.setAttribute('autocomplete','off');i.setAttribute('autocorrect','off');i.setAttribute('autocapitalize','off');i.setAttribute('spellcheck','false');i.setAttribute('name','ans-'+Math.random().toString(36).slice(2,10));});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',f);else f();try{new MutationObserver(f).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}})();</script><!--/NO-AUTOFILL-->
+
+<!-- SSAT Prep (Math 6) -->
+<style>
+    .btn-ssat { display: inline-block; padding: 10px 15px; background: #6d28d9; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 600; }
+    .btn-ssat:hover { background: #5b21b6; }
+    .btn-bp { display: inline-block; padding: 10px 15px; background: #f97316; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; margin: 5px 5px 5px 0; font-size: 13px; font-weight: 600; }
+    .btn-bp:hover { background: #ea580c; }
+    .ssat-modal { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 200; overflow-y: auto; padding: 30px 20px; }
+    .ssat-modal.active { display: block; }
+    .ssat-panel { max-width: 720px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 26px 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); }
+    .ssat-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 2px solid #ede9fe; margin-bottom: 16px; }
+    .ssat-header h2 { color: #5b21b6; font-size: 1.2rem; }
+    .ssat-header .ssat-meta { font-size: 0.85rem; color: #6b7280; }
+    .ssat-close { background: none; border: none; font-size: 24px; color: #6b7280; cursor: pointer; padding: 0 6px; }
+    .ssat-close:hover { color: #5b21b6; }
+    .ssat-question { font-size: 1.02rem; color: #1f2937; margin-bottom: 14px; line-height: 1.6; }
+    .ssat-choice { display: block; width: 100%; padding: 10px 14px; margin: 6px 0; text-align: left; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; cursor: pointer; transition: all 0.15s; }
+    .ssat-choice:hover { background: #ede9fe; border-color: #6d28d9; }
+    .ssat-choice.selected { background: #ede9fe; border-color: #6d28d9; }
+    .ssat-choice.correct { background: #d1fae5; border-color: #10b981; }
+    .ssat-choice.wrong { background: #fee2e2; border-color: #dc2626; }
+    .ssat-choice .letter { display: inline-block; width: 22px; font-weight: 700; color: #6d28d9; margin-right: 6px; }
+    .ssat-feedback { padding: 12px 16px; margin-top: 12px; border-radius: 8px; font-size: 0.94rem; line-height: 1.55; }
+    .ssat-feedback.ok { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+    .ssat-feedback.bad { background: #fef3c7; color: #78350f; border-left: 4px solid #f59e0b; }
+    .ssat-actions { display: flex; justify-content: space-between; margin-top: 18px; }
+    .ssat-btn { background: #6d28d9; color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.95rem; }
+    .ssat-btn:hover { background: #5b21b6; }
+    .ssat-btn.skip { background: #94a3b8; }
+    .ssat-btn.skip:hover { background: #64748b; }
+    .ssat-progress { font-size: 0.85rem; color: #6b7280; font-weight: 600; }
+    .ssat-result { text-align: center; padding: 20px 10px; }
+    .ssat-result .score { font-size: 3rem; font-weight: 800; color: #5b21b6; margin: 10px 0; }
+    .ssat-result .msg { font-size: 1.1rem; color: #374151; margin-bottom: 20px; }
+
+</style>
+<div id="ssat-modal" class="ssat-modal" onclick="if(event.target===this)closeSSAT()">
+  <div class="ssat-panel">
+    <div class="ssat-header">
+      <div>
+        <h2 id="ssat-title">🎯 SSAT Prep</h2>
+        <div class="ssat-meta" id="ssat-meta">Multiple choice · 5 answer options</div>
+      </div>
+      <button class="ssat-close" onclick="closeSSAT()">×</button>
+    </div>
+    <div id="ssat-body"></div>
+  </div>
+</div>
+<script>
+// SSAT Prep question banks for Math 6 (Middle Level style, 5 answer choices)
+const SSAT_BANK = {
+"metrics-sci-process": [
+{
+"q": "How many centimeters are in 3.5 meters?",
+"choices": [
+"0.35",
+"3.5",
+"35",
+"350",
+"3,500"
+],
+"correct": 3,
+"exp": "1 m = 100 cm, so 3.5 × 100 = 350 cm."
+},
+{
+"q": "Which unit would be best for measuring the mass of a paper clip?",
+"choices": [
+"kilogram",
+"gram",
+"liter",
+"kilometer",
+"milliliter"
+],
+"correct": 1,
+"exp": "A paper clip is very light, about 1 gram. Liters and milliliters measure volume, not mass."
+},
+{
+"q": "A bottle holds 2.4 liters of water. How many milliliters is that?",
+"choices": [
+"0.0024",
+"0.24",
+"24",
+"240",
+"2,400"
+],
+"correct": 4,
+"exp": "1 L = 1,000 mL, so 2.4 × 1,000 = 2,400 mL."
+},
+{
+"q": "Maya measured the length of a leaf five times: 8.2, 8.4, 8.3, 8.2, 8.4 cm. What is the mean length?",
+"choices": [
+"8.2 cm",
+"8.25 cm",
+"8.3 cm",
+"8.35 cm",
+"8.4 cm"
+],
+"correct": 2,
+"exp": "Sum = 41.5; 41.5 ÷ 5 = 8.3 cm."
+},
+{
+"q": "Which is the greatest length?",
+"choices": [
+"450 mm",
+"0.4 m",
+"42 cm",
+"4.1 dm",
+"0.0005 km"
+],
+"correct": 4,
+"exp": "Convert to cm: 45, 40, 42, 41, and 0.0005 km = 50 cm. The greatest is 0.0005 km."
+},
+{
+"q": "The actual mass of a rock is 50 g. A student measures 48 g. What is the percent error?",
+"choices": [
+"2%",
+"4%",
+"5%",
+"8%",
+"96%"
+],
+"correct": 1,
+"exp": "Error = |48 − 50| = 2. Percent error = 2 ÷ 50 × 100 = 4%."
+},
+{
+"q": "In an experiment testing how sunlight affects plant growth, what is the independent variable?",
+"choices": [
+"plant height",
+"type of soil",
+"amount of sunlight",
+"amount of water",
+"the pot size"
+],
+"correct": 2,
+"exp": "The independent variable is what the scientist changes on purpose: the amount of sunlight."
+},
+{
+"q": "A graduated cylinder reads 32 mL. After a stone is dropped in, it reads 47 mL. What is the volume of the stone?",
+"choices": [
+"15 mL",
+"32 mL",
+"47 mL",
+"79 mL",
+"1.5 L"
+],
+"correct": 0,
+"exp": "Water displacement: 47 − 32 = 15 mL."
+},
+{
+"q": "How many grams are in 0.75 kilogram?",
+"choices": [
+"7.5",
+"75",
+"750",
+"7,500",
+"75,000"
+],
+"correct": 2,
+"exp": "1 kg = 1,000 g, so 0.75 × 1,000 = 750 g."
+},
+{
+"q": "Water boils at 100°C. Which temperature is 25 degrees below the boiling point of water?",
+"choices": [
+"25°C",
+"50°C",
+"75°C",
+"125°C",
+"212°C"
+],
+"correct": 2,
+"exp": "100 − 25 = 75°C."
+}
+],
+"decimal-ops": [
+{
+"q": "What is 4.7 + 12.35?",
+"choices": [
+"16.05",
+"16.42",
+"17.05",
+"17.42",
+"59.35"
+],
+"correct": 2,
+"exp": "Line up the decimal points: 4.70 + 12.35 = 17.05."
+},
+{
+"q": "What is 20 − 7.36?",
+"choices": [
+"12.64",
+"12.74",
+"13.36",
+"13.64",
+"27.36"
+],
+"correct": 0,
+"exp": "20.00 − 7.36 = 12.64."
+},
+{
+"q": "What is 0.6 × 0.04?",
+"choices": [
+"0.0024",
+"0.024",
+"0.24",
+"2.4",
+"24"
+],
+"correct": 1,
+"exp": "6 × 4 = 24, with 1 + 2 = 3 decimal places: 0.024."
+},
+{
+"q": "What is 7.2 ÷ 0.09?",
+"choices": [
+"0.8",
+"8",
+"80",
+"800",
+"0.08"
+],
+"correct": 2,
+"exp": "Move both decimal points 2 places: 720 ÷ 9 = 80."
+},
+{
+"q": "Kai buys 3 notebooks at $2.45 each. How much does he spend?",
+"choices": [
+"$6.35",
+"$7.25",
+"$7.35",
+"$7.45",
+"$8.35"
+],
+"correct": 2,
+"exp": "3 × 2.45 = 7.35."
+},
+{
+"q": "Which number is between 0.37 and 0.4?",
+"choices": [
+"0.307",
+"0.36",
+"0.389",
+"0.41",
+"0.371 × 10"
+],
+"correct": 2,
+"exp": "0.37 < 0.389 < 0.40."
+},
+{
+"q": "A 6.3-meter rope is cut into pieces 0.7 meter long. How many pieces are there?",
+"choices": [
+"0.9",
+"7",
+"9",
+"44.1",
+"90"
+],
+"correct": 2,
+"exp": "6.3 ÷ 0.7 = 63 ÷ 7 = 9."
+},
+{
+"q": "What is 3.6 × 100?",
+"choices": [
+"0.036",
+"0.36",
+"36",
+"360",
+"3,600"
+],
+"correct": 3,
+"exp": "Multiplying by 100 moves the decimal point 2 places right: 360."
+},
+{
+"q": "Gas costs $4.20 per gallon. How many gallons can you buy with $31.50?",
+"choices": [
+"6.5",
+"7",
+"7.25",
+"7.5",
+"8"
+],
+"correct": 3,
+"exp": "31.50 ÷ 4.20 = 315 ÷ 42 = 7.5 gallons."
+},
+{
+"q": "Round 38.649 to the nearest tenth.",
+"choices": [
+"38.6",
+"38.65",
+"38.7",
+"39",
+"40"
+],
+"correct": 0,
+"exp": "Look at the hundredths digit, 4. Since 4 < 5, keep the tenths: 38.6."
+}
+],
+"scientific-notation": [
+{
+"q": "Which number is written in scientific notation?",
+"choices": [
+"12 × 10⁴",
+"0.8 × 10³",
+"3.5 × 10⁶",
+"35 × 10⁵",
+"10 × 10²"
+],
+"correct": 2,
+"exp": "The first number must be at least 1 and less than 10. Only 3.5 × 10⁶ fits."
+},
+{
+"q": "What is 4.2 × 10⁵ in standard form?",
+"choices": [
+"4,200",
+"42,000",
+"420,000",
+"4,200,000",
+"42,000,000"
+],
+"correct": 2,
+"exp": "Move the decimal 5 places right: 420,000."
+},
+{
+"q": "Write 7,300,000 in scientific notation.",
+"choices": [
+"73 × 10⁵",
+"7.3 × 10⁵",
+"7.3 × 10⁶",
+"0.73 × 10⁷",
+"7.3 × 10⁷"
+],
+"correct": 2,
+"exp": "Move the decimal 6 places left to get 7.3; the exponent is 6."
+},
+{
+"q": "What is 10⁴?",
+"choices": [
+"40",
+"400",
+"1,000",
+"10,000",
+"100,000"
+],
+"correct": 3,
+"exp": "10⁴ = 10 × 10 × 10 × 10 = 10,000."
+},
+{
+"q": "Which is the largest?",
+"choices": [
+"9 × 10³",
+"2 × 10⁴",
+"8.5 × 10³",
+"1.9 × 10⁴",
+"9.9 × 10²"
+],
+"correct": 1,
+"exp": "Compare exponents first: 10⁴ is largest. Between 2 × 10⁴ and 1.9 × 10⁴, 2 is bigger."
+},
+{
+"q": "(2 × 10³) × (4 × 10²) = ?",
+"choices": [
+"8 × 10⁵",
+"8 × 10⁶",
+"6 × 10⁵",
+"8 × 10¹",
+"2 × 10⁵"
+],
+"correct": 0,
+"exp": "Multiply the front numbers (2 × 4 = 8) and add the exponents (3 + 2 = 5)."
+},
+{
+"q": "(3.5 × 10⁴) + (1.5 × 10⁴) = ?",
+"choices": [
+"5 × 10⁸",
+"5 × 10⁴",
+"4.5 × 10⁴",
+"5 × 10³",
+"3.5 × 10⁸"
+],
+"correct": 1,
+"exp": "The powers match, so add the front numbers: 3.5 + 1.5 = 5. Keep 10⁴."
+},
+{
+"q": "The Sun is about 150,000,000 km from Earth. Which shows this in scientific notation?",
+"choices": [
+"1.5 × 10⁷",
+"15 × 10⁷",
+"1.5 × 10⁸",
+"1.5 × 10⁹",
+"150 × 10⁶"
+],
+"correct": 2,
+"exp": "Move the decimal 8 places left: 1.5 × 10⁸."
+},
+{
+"q": "How many zeros follow the 1 in 10⁹?",
+"choices": [
+"7",
+"8",
+"9",
+"10",
+"90"
+],
+"correct": 2,
+"exp": "The exponent tells the number of zeros: 9."
+},
+{
+"q": "(8 × 10⁶) ÷ (2 × 10²) = ?",
+"choices": [
+"4 × 10³",
+"4 × 10⁴",
+"6 × 10⁴",
+"4 × 10⁸",
+"16 × 10⁴"
+],
+"correct": 1,
+"exp": "Divide the front numbers (8 ÷ 2 = 4) and subtract the exponents (6 − 2 = 4)."
+}
+],
+"density": [
+{
+"q": "A block has a mass of 60 g and a volume of 20 cm³. What is its density?",
+"choices": [
+"0.33 g/cm³",
+"3 g/cm³",
+"40 g/cm³",
+"80 g/cm³",
+"1,200 g/cm³"
+],
+"correct": 1,
+"exp": "D = m ÷ V = 60 ÷ 20 = 3 g/cm³."
+},
+{
+"q": "An object has a density of 2 g/cm³ and a volume of 15 cm³. What is its mass?",
+"choices": [
+"7.5 g",
+"13 g",
+"17 g",
+"30 g",
+"45 g"
+],
+"correct": 3,
+"exp": "m = D × V = 2 × 15 = 30 g."
+},
+{
+"q": "Water has a density of 1 g/cm³. Which object will float in water?",
+"choices": [
+"iron, 7.9 g/cm³",
+"rock, 2.7 g/cm³",
+"ice, 0.92 g/cm³",
+"glass, 2.5 g/cm³",
+"sand, 1.6 g/cm³"
+],
+"correct": 2,
+"exp": "Objects less dense than water float. Only ice (0.92) is less than 1."
+},
+{
+"q": "A metal sample has a mass of 54 g and a density of 9 g/cm³. What is its volume?",
+"choices": [
+"5 cm³",
+"6 cm³",
+"45 cm³",
+"63 cm³",
+"486 cm³"
+],
+"correct": 1,
+"exp": "V = m ÷ D = 54 ÷ 9 = 6 cm³."
+},
+{
+"q": "A box measures 2 cm × 3 cm × 4 cm and has a mass of 48 g. What is its density?",
+"choices": [
+"2 g/cm³",
+"4 g/cm³",
+"6 g/cm³",
+"8 g/cm³",
+"24 g/cm³"
+],
+"correct": 0,
+"exp": "Volume = 2 × 3 × 4 = 24 cm³. Density = 48 ÷ 24 = 2 g/cm³."
+},
+{
+"q": "If you cut a piece of wood in half, what happens to its density?",
+"choices": [
+"It doubles.",
+"It is cut in half.",
+"It stays the same.",
+"It becomes zero.",
+"It becomes 1 g/cm³."
+],
+"correct": 2,
+"exp": "Density is a property of the material. Both mass and volume are halved, so the ratio stays the same."
+},
+{
+"q": "Which unit could be used for density?",
+"choices": [
+"cm³",
+"grams",
+"kg/m³",
+"meters",
+"liters"
+],
+"correct": 2,
+"exp": "Density is mass per volume, such as kg/m³ or g/cm³."
+},
+{
+"q": "Two cubes are the same size. Cube A has mass 40 g and cube B has mass 25 g. Which statement is true?",
+"choices": [
+"B is denser.",
+"A is denser.",
+"They have equal density.",
+"A has more volume.",
+"B has more volume."
+],
+"correct": 1,
+"exp": "Same volume, more mass → greater density. A is denser."
+},
+{
+"q": "Oil has a density of 0.9 g/mL. What is the mass of 200 mL of oil?",
+"choices": [
+"18 g",
+"90 g",
+"180 g",
+"200 g",
+"222 g"
+],
+"correct": 2,
+"exp": "m = 0.9 × 200 = 180 g."
+},
+{
+"q": "A 10 mL rock sample has a density of 3.2 g/mL. A second rock has twice the volume and the same density. What is the second rock's mass?",
+"choices": [
+"3.2 g",
+"6.4 g",
+"32 g",
+"64 g",
+"320 g"
+],
+"correct": 3,
+"exp": "Volume = 20 mL. m = 3.2 × 20 = 64 g."
+}
+],
+"factors-multiples": [
+{
+"q": "What is the greatest common factor of 24 and 36?",
+"choices": [
+"4",
+"6",
+"8",
+"12",
+"72"
+],
+"correct": 3,
+"exp": "Factors of 24: 1,2,3,4,6,8,12,24. Of 36: 1,2,3,4,6,9,12,18,36. Greatest shared: 12."
+},
+{
+"q": "What is the least common multiple of 6 and 8?",
+"choices": [
+"2",
+"14",
+"24",
+"48",
+"12"
+],
+"correct": 2,
+"exp": "Multiples of 8: 8, 16, 24… 24 is the first also divisible by 6."
+},
+{
+"q": "Which number is prime?",
+"choices": [
+"21",
+"27",
+"29",
+"33",
+"39"
+],
+"correct": 2,
+"exp": "29 has only the factors 1 and 29. The others are divisible by 3."
+},
+{
+"q": "What is the prime factorization of 60?",
+"choices": [
+"2 × 30",
+"2 × 2 × 15",
+"2 × 3 × 10",
+"2 × 2 × 3 × 5",
+"3 × 4 × 5"
+],
+"correct": 3,
+"exp": "60 = 2 × 2 × 3 × 5, and every factor is prime."
+},
+{
+"q": "Hot dogs come in packs of 10 and buns in packs of 8. What is the least number of hot dogs you can buy to have the same number of buns?",
+"choices": [
+"18",
+"20",
+"40",
+"80",
+"10"
+],
+"correct": 2,
+"exp": "LCM(10, 8) = 40."
+},
+{
+"q": "A teacher has 18 pencils and 30 erasers to put in identical kits with none left over. What is the greatest number of kits?",
+"choices": [
+"3",
+"6",
+"9",
+"12",
+"15"
+],
+"correct": 1,
+"exp": "GCF(18, 30) = 6."
+},
+{
+"q": "Which number is a factor of both 45 and 75?",
+"choices": [
+"9",
+"10",
+"15",
+"25",
+"45"
+],
+"correct": 2,
+"exp": "45 = 3 × 15 and 75 = 5 × 15, so 15 is a common factor."
+},
+{
+"q": "Which number is divisible by both 3 and 4?",
+"choices": [
+"18",
+"26",
+"30",
+"36",
+"42"
+],
+"correct": 3,
+"exp": "36 ÷ 3 = 12 and 36 ÷ 4 = 9."
+},
+{
+"q": "How many factors does 16 have?",
+"choices": [
+"2",
+"3",
+"4",
+"5",
+"6"
+],
+"correct": 3,
+"exp": "1, 2, 4, 8, 16 — five factors."
+},
+{
+"q": "Two lights blink every 4 seconds and every 6 seconds. They blink together now. In how many seconds will they next blink together?",
+"choices": [
+"2",
+"10",
+"12",
+"24",
+"6"
+],
+"correct": 2,
+"exp": "LCM(4, 6) = 12 seconds."
+}
+],
+"fraction-division": [
+{
+"q": "3/4 ÷ 3/8 = ?",
+"choices": [
+"9/32",
+"1/2",
+"2",
+"3",
+"6"
+],
+"correct": 2,
+"exp": "Keep–Change–Flip: 3/4 × 8/3 = 24/12 = 2."
+},
+{
+"q": "How many 1/4-cup servings are in 3 cups?",
+"choices": [
+"3/4",
+"4",
+"7",
+"12",
+"16"
+],
+"correct": 3,
+"exp": "3 ÷ 1/4 = 3 × 4 = 12."
+},
+{
+"q": "2/3 ÷ 4 = ?",
+"choices": [
+"1/6",
+"8/3",
+"6",
+"2/12 × 4",
+"3/8"
+],
+"correct": 0,
+"exp": "2/3 × 1/4 = 2/12 = 1/6."
+},
+{
+"q": "2 1/2 ÷ 1/2 = ?",
+"choices": [
+"1 1/4",
+"2",
+"4",
+"5",
+"1/5"
+],
+"correct": 3,
+"exp": "5/2 × 2/1 = 10/2 = 5."
+},
+{
+"q": "What is the reciprocal of 5/7?",
+"choices": [
+"−5/7",
+"7/5",
+"5/7",
+"1/35",
+"35"
+],
+"correct": 1,
+"exp": "Flip the fraction: 7/5."
+},
+{
+"q": "A 3/4-mile trail has markers every 1/8 mile. How many sections does the trail have?",
+"choices": [
+"3/32",
+"4",
+"6",
+"8",
+"32"
+],
+"correct": 2,
+"exp": "3/4 ÷ 1/8 = 3/4 × 8 = 6."
+},
+{
+"q": "1 1/3 ÷ 2/3 = ?",
+"choices": [
+"8/9",
+"1",
+"2",
+"2 2/3",
+"4/9"
+],
+"correct": 2,
+"exp": "4/3 × 3/2 = 12/6 = 2."
+},
+{
+"q": "Which is equal to 5/6 ÷ 1/3?",
+"choices": [
+"5/18",
+"5/6 × 3",
+"5/6 × 1/3",
+"6/5 × 1/3",
+"5/2 × 3"
+],
+"correct": 1,
+"exp": "Dividing by 1/3 is the same as multiplying by 3."
+},
+{
+"q": "A ribbon 4 1/2 feet long is cut into pieces 3/4 foot long. How many pieces?",
+"choices": [
+"3",
+"4 1/2",
+"5",
+"6",
+"7"
+],
+"correct": 3,
+"exp": "9/2 ÷ 3/4 = 9/2 × 4/3 = 36/6 = 6."
+},
+{
+"q": "If 2/5 of a pizza is shared equally by 2 friends, what fraction of the whole pizza does each get?",
+"choices": [
+"1/10",
+"1/5",
+"2/5",
+"4/5",
+"1/2"
+],
+"correct": 1,
+"exp": "2/5 ÷ 2 = 2/10 = 1/5."
+}
+],
+"ratios-rates": [
+{
+"q": "A class has 12 boys and 18 girls. What is the ratio of boys to girls in simplest form?",
+"choices": [
+"2 : 3",
+"3 : 2",
+"12 : 30",
+"2 : 5",
+"3 : 5"
+],
+"correct": 0,
+"exp": "12 : 18 divides by 6 → 2 : 3."
+},
+{
+"q": "A car travels 180 miles in 3 hours. What is its unit rate?",
+"choices": [
+"30 mph",
+"54 mph",
+"60 mph",
+"90 mph",
+"540 mph"
+],
+"correct": 2,
+"exp": "180 ÷ 3 = 60 miles per hour."
+},
+{
+"q": "Which is the best buy?",
+"choices": [
+"4 pens for $2.00",
+"5 pens for $2.25",
+"6 pens for $3.00",
+"10 pens for $5.50",
+"8 pens for $4.40"
+],
+"correct": 1,
+"exp": "Cost per pen: 0.50, 0.45, 0.50, 0.55, 0.55. The lowest is 5 for $2.25."
+},
+{
+"q": "If 3 apples cost $1.20, how much do 7 apples cost?",
+"choices": [
+"$2.40",
+"$2.60",
+"$2.80",
+"$3.60",
+"$8.40"
+],
+"correct": 2,
+"exp": "Unit price = $0.40. 7 × 0.40 = $2.80."
+},
+{
+"q": "The ratio of red to blue marbles is 3 : 5. There are 40 marbles in all. How many are red?",
+"choices": [
+"8",
+"15",
+"24",
+"25",
+"35"
+],
+"correct": 1,
+"exp": "3 + 5 = 8 parts; 40 ÷ 8 = 5 per part; red = 3 × 5 = 15."
+},
+{
+"q": "A recipe uses 2 cups of flour for every 3 cups of milk. How much flour for 12 cups of milk?",
+"choices": [
+"4",
+"6",
+"8",
+"9",
+"18"
+],
+"correct": 2,
+"exp": "12 ÷ 3 = 4 groups; 4 × 2 = 8 cups of flour."
+},
+{
+"q": "Which ratio is equivalent to 4 : 6?",
+"choices": [
+"6 : 8",
+"8 : 10",
+"10 : 15",
+"12 : 16",
+"2 : 4"
+],
+"correct": 2,
+"exp": "4 : 6 = 2 : 3, and 10 : 15 = 2 : 3."
+},
+{
+"q": "A printer prints 45 pages in 3 minutes. How many pages in 10 minutes?",
+"choices": [
+"135",
+"145",
+"150",
+"155",
+"450"
+],
+"correct": 2,
+"exp": "15 pages per minute × 10 = 150."
+},
+{
+"q": "Tom reads 20 pages in 25 minutes. At this rate, how long to read 60 pages?",
+"choices": [
+"45 min",
+"60 min",
+"70 min",
+"75 min",
+"80 min"
+],
+"correct": 3,
+"exp": "60 is 3 × 20, so 3 × 25 = 75 minutes."
+},
+{
+"q": "On a map, 1 inch represents 50 miles. Two cities are 3.5 inches apart. How far apart are they?",
+"choices": [
+"150 mi",
+"165 mi",
+"175 mi",
+"185 mi",
+"350 mi"
+],
+"correct": 2,
+"exp": "3.5 × 50 = 175 miles."
+}
+],
+"percents": [
+{
+"q": "What is 25% of 80?",
+"choices": [
+"4",
+"8",
+"20",
+"25",
+"40"
+],
+"correct": 2,
+"exp": "25% = 1/4, and 1/4 of 80 = 20."
+},
+{
+"q": "What is 15% of 60?",
+"choices": [
+"4",
+"6",
+"9",
+"15",
+"45"
+],
+"correct": 2,
+"exp": "10% of 60 = 6 and 5% = 3, so 15% = 9."
+},
+{
+"q": "18 is what percent of 72?",
+"choices": [
+"18%",
+"20%",
+"25%",
+"40%",
+"54%"
+],
+"correct": 2,
+"exp": "18 ÷ 72 = 0.25 = 25%."
+},
+{
+"q": "Which is equal to 0.4?",
+"choices": [
+"4%",
+"40%",
+"400%",
+"1/4",
+"4/100"
+],
+"correct": 1,
+"exp": "0.4 = 40/100 = 40%."
+},
+{
+"q": "A $40 shirt is on sale for 30% off. What is the sale price?",
+"choices": [
+"$10",
+"$12",
+"$28",
+"$30",
+"$37"
+],
+"correct": 2,
+"exp": "30% of 40 = 12. 40 − 12 = $28."
+},
+{
+"q": "12 is 40% of what number?",
+"choices": [
+"4.8",
+"16",
+"24",
+"30",
+"48"
+],
+"correct": 3,
+"exp": "0.4 × n = 12, so n = 12 ÷ 0.4 = 30."
+},
+{
+"q": "Which is the greatest?",
+"choices": [
+"3/5",
+"0.58",
+"62%",
+"0.6",
+"5/9"
+],
+"correct": 2,
+"exp": "As decimals: 0.60, 0.58, 0.62, 0.60, 0.555… The greatest is 62%."
+},
+{
+"q": "A dinner bill is $50. The tip is 20%. What is the total with tip?",
+"choices": [
+"$52",
+"$55",
+"$60",
+"$70",
+"$10"
+],
+"correct": 2,
+"exp": "20% of 50 = 10. 50 + 10 = $60."
+},
+{
+"q": "In a class of 25 students, 9 walk to school. What percent walk?",
+"choices": [
+"9%",
+"25%",
+"34%",
+"36%",
+"90%"
+],
+"correct": 3,
+"exp": "9 ÷ 25 = 0.36 = 36%."
+},
+{
+"q": "What is 150% of 40?",
+"choices": [
+"20",
+"40",
+"55",
+"60",
+"150"
+],
+"correct": 3,
+"exp": "150% = 1.5, and 1.5 × 40 = 60."
+}
+],
+"integers": [
+{
+"q": "Which is the greatest?",
+"choices": [
+"−8",
+"−3",
+"−5",
+"−12",
+"−10"
+],
+"correct": 1,
+"exp": "On a number line, −3 is farthest to the right."
+},
+{
+"q": "What is |−14|?",
+"choices": [
+"−14",
+"0",
+"1/14",
+"7",
+"14"
+],
+"correct": 4,
+"exp": "Absolute value is distance from 0, so |−14| = 14."
+},
+{
+"q": "The temperature is −6°F and rises 10 degrees. What is the new temperature?",
+"choices": [
+"−16°F",
+"−4°F",
+"4°F",
+"10°F",
+"16°F"
+],
+"correct": 2,
+"exp": "−6 + 10 = 4."
+},
+{
+"q": "Which list is in order from least to greatest?",
+"choices": [
+"−2, −5, 0, 3",
+"−5, −2, 0, 3",
+"0, −2, −5, 3",
+"3, 0, −2, −5",
+"−5, 0, −2, 3"
+],
+"correct": 1,
+"exp": "Least to greatest: −5, −2, 0, 3."
+},
+{
+"q": "What is the opposite of −9?",
+"choices": [
+"−9",
+"−1/9",
+"0",
+"1/9",
+"9"
+],
+"correct": 4,
+"exp": "The opposite of −9 is 9 (same distance from 0, other side)."
+},
+{
+"q": "A diver is at −30 feet. Another diver is at −45 feet. How far apart are they vertically?",
+"choices": [
+"15 ft",
+"30 ft",
+"45 ft",
+"75 ft",
+"−15 ft"
+],
+"correct": 0,
+"exp": "|−45 − (−30)| = |−15| = 15 feet."
+},
+{
+"q": "Which situation is represented by −20?",
+"choices": [
+"a gain of 20 yards",
+"20 feet above sea level",
+"a deposit of $20",
+"a withdrawal of $20",
+"20 degrees above zero"
+],
+"correct": 3,
+"exp": "A withdrawal removes money, so it is negative."
+},
+{
+"q": "Which is true?",
+"choices": [
+"−7 > −2",
+"|−7| < |−2|",
+"−7 < −2",
+"|−2| > |−7|",
+"−2 < −7"
+],
+"correct": 2,
+"exp": "−7 is to the left of −2 on the number line."
+},
+{
+"q": "How many integers are between −3 and 3 (not including −3 and 3)?",
+"choices": [
+"3",
+"4",
+"5",
+"6",
+"7"
+],
+"correct": 2,
+"exp": "−2, −1, 0, 1, 2 — five integers."
+},
+{
+"q": "Which number has the greatest absolute value?",
+"choices": [
+"−11",
+"8",
+"−9",
+"10",
+"0"
+],
+"correct": 0,
+"exp": "|−11| = 11, which is the largest distance from 0."
+}
+],
+"coordinate-plane": [
+{
+"q": "In which quadrant is the point (−3, 5)?",
+"choices": [
+"I",
+"II",
+"III",
+"IV",
+"on an axis"
+],
+"correct": 1,
+"exp": "x negative, y positive → Quadrant II."
+},
+{
+"q": "What is the distance between (2, 4) and (2, −3)?",
+"choices": [
+"1",
+"3",
+"5",
+"7",
+"9"
+],
+"correct": 3,
+"exp": "Same x, so subtract the y's: |4 − (−3)| = 7."
+},
+{
+"q": "The point (4, −1) is reflected over the x-axis. What is the new point?",
+"choices": [
+"(−4, −1)",
+"(4, 1)",
+"(−4, 1)",
+"(−1, 4)",
+"(1, −4)"
+],
+"correct": 1,
+"exp": "Reflecting over the x-axis changes the sign of y: (4, 1)."
+},
+{
+"q": "Which point lies on the y-axis?",
+"choices": [
+"(3, 0)",
+"(0, −5)",
+"(2, 2)",
+"(−1, 1)",
+"(4, −4)"
+],
+"correct": 1,
+"exp": "Points on the y-axis have x = 0."
+},
+{
+"q": "A rectangle has corners at (1, 1), (6, 1), (6, 4), and (1, 4). What is its area?",
+"choices": [
+"8",
+"12",
+"15",
+"16",
+"20"
+],
+"correct": 2,
+"exp": "Width = 6 − 1 = 5, height = 4 − 1 = 3. Area = 15."
+},
+{
+"q": "What is the perimeter of the rectangle with corners (−2, 3), (4, 3), (4, −1), (−2, −1)?",
+"choices": [
+"10",
+"16",
+"20",
+"24",
+"12"
+],
+"correct": 2,
+"exp": "Width = 6, height = 4. Perimeter = 2(6 + 4) = 20."
+},
+{
+"q": "Start at (−2, 3). Move 5 units right and 4 units down. Where are you?",
+"choices": [
+"(3, −1)",
+"(3, 7)",
+"(−7, −1)",
+"(−2, −1)",
+"(7, −1)"
+],
+"correct": 0,
+"exp": "x: −2 + 5 = 3; y: 3 − 4 = −1."
+},
+{
+"q": "Which point is in Quadrant III?",
+"choices": [
+"(2, 5)",
+"(−2, 5)",
+"(−2, −5)",
+"(2, −5)",
+"(0, −5)"
+],
+"correct": 2,
+"exp": "Both coordinates negative → Quadrant III."
+},
+{
+"q": "What is the distance from (−5, 2) to (3, 2)?",
+"choices": [
+"2",
+"5",
+"7",
+"8",
+"10"
+],
+"correct": 3,
+"exp": "Same y, so |3 − (−5)| = 8."
+},
+{
+"q": "The point (a, b) is in Quadrant IV. Which must be true?",
+"choices": [
+"a < 0, b < 0",
+"a > 0, b > 0",
+"a < 0, b > 0",
+"a > 0, b < 0",
+"a = 0"
+],
+"correct": 3,
+"exp": "Quadrant IV: x positive, y negative."
+}
+],
+"topographic-maps": [
+{
+"q": "A trail rises 60 meters over a horizontal distance of 300 meters. What is its slope?",
+"choices": [
+"0.02",
+"0.2",
+"2",
+"5",
+"0.5"
+],
+"correct": 1,
+"exp": "Slope = rise ÷ run = 60 ÷ 300 = 0.2."
+},
+{
+"q": "On a topographic map, contour lines that are very close together show",
+"choices": [
+"flat land",
+"a gentle slope",
+"a steep slope",
+"a lake",
+"a road"
+],
+"correct": 2,
+"exp": "Close contour lines mean elevation changes quickly — steep terrain."
+},
+{
+"q": "The contour interval is 20 m. You cross 6 lines going uphill from the 100 m line. What is your elevation?",
+"choices": [
+"106 m",
+"120 m",
+"200 m",
+"220 m",
+"126 m"
+],
+"correct": 3,
+"exp": "6 × 20 = 120; 100 + 120 = 220 m."
+},
+{
+"q": "A road rises 5 feet for every 100 feet. What is its grade?",
+"choices": [
+"0.5%",
+"5%",
+"20%",
+"50%",
+"500%"
+],
+"correct": 1,
+"exp": "5 ÷ 100 = 0.05 = 5%."
+},
+{
+"q": "Which slope is the steepest?",
+"choices": [
+"1/4",
+"0.3",
+"2/5",
+"0.25",
+"3/10"
+],
+"correct": 2,
+"exp": "As decimals: 0.25, 0.3, 0.4, 0.25, 0.3. The steepest is 2/5."
+},
+{
+"q": "Peak A is 1,240 m high and Peak B is 865 m high. How much higher is Peak A?",
+"choices": [
+"275 m",
+"365 m",
+"375 m",
+"385 m",
+"2,105 m"
+],
+"correct": 2,
+"exp": "1,240 − 865 = 375 m."
+},
+{
+"q": "A ramp rises 3 ft over a run of 12 ft. What is the slope?",
+"choices": [
+"1/3",
+"1/4",
+"3",
+"4",
+"1/12"
+],
+"correct": 1,
+"exp": "3/12 = 1/4."
+},
+{
+"q": "A map scale is 1 cm = 500 m. Two points are 4.5 cm apart. What is the real distance?",
+"choices": [
+"225 m",
+"450 m",
+"2,000 m",
+"2,250 m",
+"4,500 m"
+],
+"correct": 3,
+"exp": "4.5 × 500 = 2,250 m."
+},
+{
+"q": "A hill has a slope of 0.15 and a run of 400 m. What is the rise?",
+"choices": [
+"15 m",
+"40 m",
+"60 m",
+"150 m",
+"2,667 m"
+],
+"correct": 2,
+"exp": "rise = slope × run = 0.15 × 400 = 60 m."
+},
+{
+"q": "Closed contour lines forming smaller and smaller rings usually show",
+"choices": [
+"a river",
+"a hilltop",
+"a road",
+"a valley floor",
+"a coastline"
+],
+"correct": 1,
+"exp": "Nested closed loops rising toward the center mark a hill or peak."
+}
+],
+"plate-tectonics": [
+{
+"q": "A plate moves 4 cm per year. How far does it move in 50 years?",
+"choices": [
+"54 cm",
+"100 cm",
+"150 cm",
+"200 cm",
+"12.5 cm"
+],
+"correct": 3,
+"exp": "4 × 50 = 200 cm."
+},
+{
+"q": "A plate moves 5 cm per year. How many years to move 1 meter (100 cm)?",
+"choices": [
+"5",
+"20",
+"50",
+"95",
+"500"
+],
+"correct": 1,
+"exp": "100 ÷ 5 = 20 years."
+},
+{
+"q": "Plate A moves 3 cm/yr and Plate B moves 7 cm/yr. How much farther does Plate B move in 10 years?",
+"choices": [
+"4 cm",
+"10 cm",
+"40 cm",
+"70 cm",
+"100 cm"
+],
+"correct": 2,
+"exp": "Difference 4 cm/yr × 10 years = 40 cm."
+},
+{
+"q": "A plate moves 2.5 cm per year. How far in 1,000,000 years, in kilometers? (1 km = 100,000 cm)",
+"choices": [
+"2.5 km",
+"25 km",
+"250 km",
+"2,500 km",
+"0.25 km"
+],
+"correct": 1,
+"exp": "2.5 × 1,000,000 = 2,500,000 cm ÷ 100,000 = 25 km."
+},
+{
+"q": "Two plates move apart, each at 2 cm per year. How fast does the gap between them grow?",
+"choices": [
+"1 cm/yr",
+"2 cm/yr",
+"4 cm/yr",
+"8 cm/yr",
+"0 cm/yr"
+],
+"correct": 2,
+"exp": "Both move away from each other: 2 + 2 = 4 cm per year."
+},
+{
+"q": "Which rate is the fastest?",
+"choices": [
+"30 mm/yr",
+"2 cm/yr",
+"0.5 m per 20 yr",
+"25 mm/yr",
+"1 m per 100 yr"
+],
+"correct": 0,
+"exp": "In cm/yr: 3, 2, 2.5, 2.5, 1. The fastest is 30 mm/yr."
+},
+{
+"q": "A plate moved 360 km in 12 million years. What is its rate in km per million years?",
+"choices": [
+"3",
+"12",
+"30",
+"36",
+"4,320"
+],
+"correct": 2,
+"exp": "360 ÷ 12 = 30 km per million years."
+},
+{
+"q": "Your fingernails grow about 4 cm per year, similar to some plates. How many cm in 6 months?",
+"choices": [
+"1 cm",
+"2 cm",
+"3 cm",
+"4 cm",
+"24 cm"
+],
+"correct": 1,
+"exp": "6 months is half a year: 4 ÷ 2 = 2 cm."
+},
+{
+"q": "A plate moves 6 cm per year. Which expression gives the distance d after t years?",
+"choices": [
+"d = t + 6",
+"d = 6t",
+"d = t ÷ 6",
+"d = 6 − t",
+"d = t − 6"
+],
+"correct": 1,
+"exp": "Distance = rate × time: d = 6t."
+},
+{
+"q": "At 5 cm per year, how long does it take a plate to move 1 kilometer? (1 km = 100,000 cm)",
+"choices": [
+"2,000 years",
+"5,000 years",
+"20,000 years",
+"50,000 years",
+"500,000 years"
+],
+"correct": 2,
+"exp": "100,000 ÷ 5 = 20,000 years."
+}
+],
+"richter-scale": [
+{
+"q": "How many times greater is the ground motion of a magnitude 6 earthquake than a magnitude 5?",
+"choices": [
+"1",
+"2",
+"5",
+"10",
+"100"
+],
+"correct": 3,
+"exp": "Each step on the Richter scale is 10 times more ground motion."
+},
+{
+"q": "How many times greater is the ground motion of a magnitude 7 than a magnitude 4?",
+"choices": [
+"3",
+"30",
+"100",
+"1,000",
+"10,000"
+],
+"correct": 3,
+"exp": "7 − 4 = 3 steps: 10³ = 1,000 times."
+},
+{
+"q": "What is 10³?",
+"choices": [
+"30",
+"100",
+"300",
+"1,000",
+"10,000"
+],
+"correct": 3,
+"exp": "10 × 10 × 10 = 1,000."
+},
+{
+"q": "Which is equal to 100,000?",
+"choices": [
+"10³",
+"10⁴",
+"10⁵",
+"10⁶",
+"5 × 10"
+],
+"correct": 2,
+"exp": "100,000 has 5 zeros, so it is 10⁵."
+},
+{
+"q": "A magnitude 8 earthquake has 100 times the ground motion of which magnitude?",
+"choices": [
+"4",
+"5",
+"6",
+"7",
+"8.5"
+],
+"correct": 2,
+"exp": "100 = 10², so it is 2 steps lower: 8 − 2 = 6."
+},
+{
+"q": "10⁴ × 10² = ?",
+"choices": [
+"10⁶",
+"10⁸",
+"20⁶",
+"100⁶",
+"10²"
+],
+"correct": 0,
+"exp": "Same base: add the exponents, 4 + 2 = 6."
+},
+{
+"q": "A magnitude 3.0 quake and a magnitude 5.0 quake: how many times more ground motion does the 5.0 have?",
+"choices": [
+"2",
+"20",
+"50",
+"100",
+"1,000"
+],
+"correct": 3,
+"exp": "5 − 3 = 2 steps: 10² = 100 times."
+},
+{
+"q": "Which is the best description of the Richter scale?",
+"choices": [
+"Each whole number is 2 times stronger",
+"Each whole number is 10 times more ground motion",
+"It measures temperature",
+"It is a linear scale",
+"Each number adds 100"
+],
+"correct": 1,
+"exp": "The Richter scale is based on powers of 10."
+},
+{
+"q": "10⁶ ÷ 10² = ?",
+"choices": [
+"10³",
+"10⁴",
+"10⁸",
+"10¹²",
+"1⁴"
+],
+"correct": 1,
+"exp": "Same base: subtract exponents, 6 − 2 = 4."
+},
+{
+"q": "How many zeros are in 10⁷ written out?",
+"choices": [
+"6",
+"7",
+"8",
+"10",
+"70"
+],
+"correct": 1,
+"exp": "10⁷ = 10,000,000 — seven zeros."
+}
+],
+"radioactive-decay": [
+{
+"q": "A sample has 80 g of a radioactive element. After one half-life, how much remains?",
+"choices": [
+"20 g",
+"40 g",
+"60 g",
+"80 g",
+"160 g"
+],
+"correct": 1,
+"exp": "Half remains after one half-life: 80 ÷ 2 = 40 g."
+},
+{
+"q": "A 64 g sample decays for 3 half-lives. How much remains?",
+"choices": [
+"4 g",
+"8 g",
+"16 g",
+"21 g",
+"32 g"
+],
+"correct": 1,
+"exp": "64 → 32 → 16 → 8 g."
+},
+{
+"q": "What fraction of a sample remains after 2 half-lives?",
+"choices": [
+"1/2",
+"1/3",
+"1/4",
+"1/8",
+"2/3"
+],
+"correct": 2,
+"exp": "1/2 × 1/2 = 1/4."
+},
+{
+"q": "An element has a half-life of 5 years. How much of 200 g remains after 10 years?",
+"choices": [
+"25 g",
+"50 g",
+"100 g",
+"150 g",
+"190 g"
+],
+"correct": 1,
+"exp": "10 years = 2 half-lives: 200 → 100 → 50 g."
+},
+{
+"q": "A sample drops from 120 g to 15 g. How many half-lives passed?",
+"choices": [
+"2",
+"3",
+"4",
+"8",
+"105"
+],
+"correct": 1,
+"exp": "120 → 60 → 30 → 15: three half-lives."
+},
+{
+"q": "What fraction remains after 4 half-lives?",
+"choices": [
+"1/4",
+"1/8",
+"1/12",
+"1/16",
+"1/32"
+],
+"correct": 3,
+"exp": "(1/2)⁴ = 1/16."
+},
+{
+"q": "An isotope has a half-life of 8 days. How long until 1/8 of it remains?",
+"choices": [
+"8 days",
+"16 days",
+"24 days",
+"32 days",
+"64 days"
+],
+"correct": 2,
+"exp": "1/8 = (1/2)³, so 3 half-lives = 24 days."
+},
+{
+"q": "After 1 half-life, what percent of the original sample remains?",
+"choices": [
+"10%",
+"25%",
+"50%",
+"75%",
+"100%"
+],
+"correct": 2,
+"exp": "Half = 50%."
+},
+{
+"q": "A 50 g sample has a half-life of 2 hours. How much remains after 6 hours?",
+"choices": [
+"3.125 g",
+"6.25 g",
+"12.5 g",
+"25 g",
+"8.3 g"
+],
+"correct": 1,
+"exp": "6 ÷ 2 = 3 half-lives: 50 → 25 → 12.5 → 6.25 g."
+},
+{
+"q": "A sample has 5 g left after 2 half-lives. How much was there at the start?",
+"choices": [
+"2.5 g",
+"10 g",
+"15 g",
+"20 g",
+"25 g"
+],
+"correct": 3,
+"exp": "Work backward: 5 × 2 × 2 = 20 g."
+}
+],
+"alg-expressions": [
+{
+"q": "What is the value of 3x + 5 when x = 4?",
+"choices": [
+"12",
+"15",
+"17",
+"20",
+"35"
+],
+"correct": 2,
+"exp": "3(4) + 5 = 12 + 5 = 17."
+},
+{
+"q": "Which expression means \"7 less than a number n\"?",
+"choices": [
+"7 − n",
+"n − 7",
+"7n",
+"n + 7",
+"n ÷ 7"
+],
+"correct": 1,
+"exp": "\"7 less than n\" means start with n and subtract 7: n − 7."
+},
+{
+"q": "Simplify: 4a + 3b − a + 2b",
+"choices": [
+"3a + 5b",
+"5a + 5b",
+"3a + b",
+"8ab",
+"4a + 5b"
+],
+"correct": 0,
+"exp": "Combine like terms: (4a − a) + (3b + 2b) = 3a + 5b."
+},
+{
+"q": "Which is equivalent to 5(x + 3)?",
+"choices": [
+"5x + 3",
+"x + 15",
+"5x + 8",
+"5x + 15",
+"15x"
+],
+"correct": 3,
+"exp": "Distribute: 5 · x + 5 · 3 = 5x + 15."
+},
+{
+"q": "Evaluate 2m² − m when m = 3.",
+"choices": [
+"9",
+"12",
+"15",
+"33",
+"36"
+],
+"correct": 2,
+"exp": "2(9) − 3 = 18 − 3 = 15."
+},
+{
+"q": "A movie ticket costs $9 and popcorn costs $4. Which expression gives the cost for t tickets and one popcorn?",
+"choices": [
+"13t",
+"9t + 4",
+"9 + 4t",
+"4t − 9",
+"t + 13"
+],
+"correct": 1,
+"exp": "Each ticket is $9 (9t), plus one popcorn ($4)."
+},
+{
+"q": "Which expression is equivalent to 12x + 18?",
+"choices": [
+"6(2x + 3)",
+"6(2x + 18)",
+"3(4x + 3)",
+"2(6x + 18)",
+"12(x + 18)"
+],
+"correct": 0,
+"exp": "Factor out the GCF 6: 6(2x + 3)."
+},
+{
+"q": "How many terms are in the expression 6x + 2y − 9?",
+"choices": [
+"1",
+"2",
+"3",
+"4",
+"6"
+],
+"correct": 2,
+"exp": "The terms are 6x, 2y, and −9."
+},
+{
+"q": "If p = 2 and q = 5, what is (p + q)²?",
+"choices": [
+"14",
+"29",
+"49",
+"100",
+"7"
+],
+"correct": 2,
+"exp": "(2 + 5)² = 7² = 49."
+},
+{
+"q": "Which expression has a coefficient of 8?",
+"choices": [
+"x + 8",
+"8 + y",
+"8x − 3",
+"x⁸",
+"x ÷ 8"
+],
+"correct": 2,
+"exp": "A coefficient is the number multiplied by the variable: 8 in 8x."
+}
+],
+"equations": [
+{
+"q": "Solve: x + 14 = 32",
+"choices": [
+"16",
+"18",
+"22",
+"46",
+"−18"
+],
+"correct": 1,
+"exp": "Subtract 14 from both sides: x = 18."
+},
+{
+"q": "Solve: 6y = 54",
+"choices": [
+"8",
+"9",
+"48",
+"60",
+"324"
+],
+"correct": 1,
+"exp": "Divide both sides by 6: y = 9."
+},
+{
+"q": "Solve: n ÷ 4 = 12",
+"choices": [
+"3",
+"8",
+"16",
+"48",
+"3/4"
+],
+"correct": 3,
+"exp": "Multiply both sides by 4: n = 48."
+},
+{
+"q": "Solve: k − 7.5 = 10",
+"choices": [
+"2.5",
+"3.5",
+"17",
+"17.5",
+"75"
+],
+"correct": 3,
+"exp": "Add 7.5 to both sides: k = 17.5."
+},
+{
+"q": "Which value of x makes 3x = 2.4 true?",
+"choices": [
+"0.08",
+"0.8",
+"7.2",
+"8",
+"0.6"
+],
+"correct": 1,
+"exp": "2.4 ÷ 3 = 0.8."
+},
+{
+"q": "Maria has some stickers. She gets 15 more and now has 42. Which equation fits?",
+"choices": [
+"s − 15 = 42",
+"s + 15 = 42",
+"15s = 42",
+"s ÷ 15 = 42",
+"42 + s = 15"
+],
+"correct": 1,
+"exp": "Start with s, add 15, total 42: s + 15 = 42."
+},
+{
+"q": "Five friends share a bill equally and each pays $11. Which equation finds the bill b?",
+"choices": [
+"b + 5 = 11",
+"5b = 11",
+"b ÷ 5 = 11",
+"b − 5 = 11",
+"11b = 5"
+],
+"correct": 2,
+"exp": "Bill divided by 5 people = $11 each."
+},
+{
+"q": "Solve: (2/3)x = 8",
+"choices": [
+"5 1/3",
+"6",
+"10",
+"12",
+"16"
+],
+"correct": 3,
+"exp": "Multiply by 3/2: x = 8 × 3/2 = 12."
+},
+{
+"q": "Which is a solution to 9 = w − 3?",
+"choices": [
+"3",
+"6",
+"12",
+"27",
+"−6"
+],
+"correct": 2,
+"exp": "Add 3 to both sides: w = 12."
+},
+{
+"q": "A rectangle's area is 48 cm² and its length is 8 cm. What is its width?",
+"choices": [
+"4 cm",
+"6 cm",
+"16 cm",
+"40 cm",
+"384 cm"
+],
+"correct": 1,
+"exp": "8 × w = 48, so w = 6 cm."
+}
+],
+"inequalities": [
+{
+"q": "Which number is a solution to x > 7?",
+"choices": [
+"−8",
+"0",
+"6",
+"7",
+"9"
+],
+"correct": 4,
+"exp": "Only 9 is greater than 7."
+},
+{
+"q": "Which inequality means \"you must be at least 12 years old\"?",
+"choices": [
+"a > 12",
+"a < 12",
+"a ≥ 12",
+"a ≤ 12",
+"a = 12"
+],
+"correct": 2,
+"exp": "\"At least 12\" includes 12: a ≥ 12."
+},
+{
+"q": "Solve: x + 5 < 12",
+"choices": [
+"x < 7",
+"x > 7",
+"x < 17",
+"x > 17",
+"x < 60"
+],
+"correct": 0,
+"exp": "Subtract 5 from both sides: x < 7."
+},
+{
+"q": "Solve: 4n ≥ 28",
+"choices": [
+"n ≥ 7",
+"n ≤ 7",
+"n ≥ 24",
+"n ≥ 32",
+"n ≥ 112"
+],
+"correct": 0,
+"exp": "Divide both sides by 4: n ≥ 7."
+},
+{
+"q": "A number line shows an open circle at 3 with an arrow pointing left. Which inequality is shown?",
+"choices": [
+"x > 3",
+"x ≥ 3",
+"x < 3",
+"x ≤ 3",
+"x = 3"
+],
+"correct": 2,
+"exp": "Open circle means 3 is not included; arrow left means less than."
+},
+{
+"q": "A bag can hold no more than 20 pounds. Which inequality fits the weight w?",
+"choices": [
+"w < 20",
+"w > 20",
+"w ≤ 20",
+"w ≥ 20",
+"w = 20"
+],
+"correct": 2,
+"exp": "\"No more than\" means less than or equal to."
+},
+{
+"q": "How many whole numbers satisfy 2 < x ≤ 6?",
+"choices": [
+"3",
+"4",
+"5",
+"6",
+"7"
+],
+"correct": 1,
+"exp": "3, 4, 5, 6 — four whole numbers."
+},
+{
+"q": "Which value is NOT a solution to y ≤ −2?",
+"choices": [
+"−5",
+"−2",
+"−3",
+"−10",
+"0"
+],
+"correct": 4,
+"exp": "0 is greater than −2."
+},
+{
+"q": "Tickets cost $6. You have $40. Which inequality shows how many tickets t you can buy?",
+"choices": [
+"6t ≥ 40",
+"6t ≤ 40",
+"t + 6 ≤ 40",
+"t ≤ 6",
+"40t ≤ 6"
+],
+"correct": 1,
+"exp": "Total cost 6t must be at most $40."
+},
+{
+"q": "What is the greatest whole number that makes 3x < 20 true?",
+"choices": [
+"5",
+"6",
+"7",
+"8",
+"17"
+],
+"correct": 1,
+"exp": "x < 6.67, so the greatest whole number is 6."
+}
+],
+"variables-relationships": [
+{
+"q": "In \"the number of hours worked and the money earned,\" which is the independent variable?",
+"choices": [
+"money earned",
+"hours worked",
+"the boss",
+"the pay rate",
+"the total"
+],
+"correct": 1,
+"exp": "Hours worked causes the change in money earned, so it is independent."
+},
+{
+"q": "A table shows x = 1, 2, 3 and y = 5, 10, 15. Which equation fits?",
+"choices": [
+"y = x + 4",
+"y = 5x",
+"y = x + 5",
+"y = 3x + 2",
+"y = 15x"
+],
+"correct": 1,
+"exp": "Each y is 5 times x."
+},
+{
+"q": "If y = 3x + 2, what is y when x = 6?",
+"choices": [
+"11",
+"18",
+"20",
+"23",
+"36"
+],
+"correct": 2,
+"exp": "3(6) + 2 = 20."
+},
+{
+"q": "A plant grows 2 cm each week. It starts at 5 cm. Which equation gives height h after w weeks?",
+"choices": [
+"h = 5w + 2",
+"h = 2w + 5",
+"h = 7w",
+"h = 2 + w",
+"h = 5 − 2w"
+],
+"correct": 1,
+"exp": "Start at 5, add 2 each week: h = 2w + 5."
+},
+{
+"q": "On a graph, which variable usually goes on the horizontal x-axis?",
+"choices": [
+"dependent",
+"independent",
+"the total",
+"the answer",
+"neither"
+],
+"correct": 1,
+"exp": "The independent variable is graphed on the x-axis."
+},
+{
+"q": "x: 0, 1, 2, 3 and y: 4, 7, 10, 13. What is y when x = 5?",
+"choices": [
+"16",
+"17",
+"19",
+"20",
+"22"
+],
+"correct": 2,
+"exp": "y increases by 3 each time: y = 3x + 4 = 19."
+},
+{
+"q": "Which relationship is proportional?",
+"choices": [
+"y = x + 3",
+"y = 4x",
+"y = 2x − 1",
+"y = 10 − x",
+"y = x + 0.5"
+],
+"correct": 1,
+"exp": "A proportional relationship has the form y = kx and passes through (0, 0)."
+},
+{
+"q": "A taxi charges $3 plus $2 per mile. What is the cost for 8 miles?",
+"choices": [
+"$13",
+"$16",
+"$19",
+"$24",
+"$40"
+],
+"correct": 2,
+"exp": "3 + 2(8) = $19."
+},
+{
+"q": "The cost of apples depends on the number of pounds bought. The dependent variable is",
+"choices": [
+"the number of pounds",
+"the cost",
+"the store",
+"the kind of apple",
+"the day"
+],
+"correct": 1,
+"exp": "Cost depends on pounds, so cost is dependent."
+},
+{
+"q": "If y = 12 when x = 4 in a proportional relationship, what is y when x = 10?",
+"choices": [
+"18",
+"22",
+"24",
+"30",
+"40"
+],
+"correct": 3,
+"exp": "k = 12 ÷ 4 = 3. y = 3 × 10 = 30."
+}
+],
+"statistics-data": [
+{
+"q": "What is the mean of 4, 8, 10, 6, 7?",
+"choices": [
+"6",
+"7",
+"8",
+"10",
+"35"
+],
+"correct": 1,
+"exp": "Sum 35 ÷ 5 = 7."
+},
+{
+"q": "What is the median of 3, 9, 4, 12, 7?",
+"choices": [
+"4",
+"7",
+"7.5",
+"9",
+"12"
+],
+"correct": 1,
+"exp": "Order: 3, 4, 7, 9, 12. The middle is 7."
+},
+{
+"q": "What is the range of 15, 22, 9, 30, 18?",
+"choices": [
+"9",
+"15",
+"18",
+"21",
+"30"
+],
+"correct": 3,
+"exp": "30 − 9 = 21."
+},
+{
+"q": "What is the mode of 2, 5, 5, 7, 8, 8, 8, 10?",
+"choices": [
+"5",
+"7",
+"7.5",
+"8",
+"10"
+],
+"correct": 3,
+"exp": "8 appears most often (3 times)."
+},
+{
+"q": "What is the median of 6, 10, 2, 8?",
+"choices": [
+"6",
+"7",
+"8",
+"10",
+"6.5"
+],
+"correct": 1,
+"exp": "Order: 2, 6, 8, 10. Median = (6 + 8) ÷ 2 = 7."
+},
+{
+"q": "Scores: 80, 85, 90, 95. What score on a 5th test makes the mean 88?",
+"choices": [
+"85",
+"88",
+"90",
+"92",
+"100"
+],
+"correct": 2,
+"exp": "Total needed = 5 × 88 = 440. Current total 350. 440 − 350 = 90."
+},
+{
+"q": "Which question is a statistical question?",
+"choices": [
+"How old is Kai?",
+"How many students are in Room 7?",
+"How many hours do 6th graders sleep?",
+"What is 5 × 6?",
+"What color is my bike?"
+],
+"correct": 2,
+"exp": "It expects variability in the answers."
+},
+{
+"q": "Data: 1, 2, 2, 3, 40. Which measure is most affected by the 40?",
+"choices": [
+"mode",
+"median",
+"mean",
+"the minimum",
+"none"
+],
+"correct": 2,
+"exp": "The outlier pulls the mean up; the median and mode barely change."
+},
+{
+"q": "Find the interquartile range of 2, 4, 6, 8, 10, 12, 14, 16.",
+"choices": [
+"4",
+"6",
+"8",
+"10",
+"14"
+],
+"correct": 2,
+"exp": "Q1 = median of 2, 4, 6, 8 = 5. Q3 = median of 10, 12, 14, 16 = 13. IQR = 13 − 5 = 8."
+},
+{
+"q": "The mean of 3 numbers is 12. Two of them are 10 and 14. What is the third?",
+"choices": [
+"10",
+"11",
+"12",
+"13",
+"36"
+],
+"correct": 2,
+"exp": "Total = 36. 36 − 10 − 14 = 12."
+}
+],
+"area-polygons": [
+{
+"q": "What is the area of a triangle with base 10 cm and height 6 cm?",
+"choices": [
+"16 cm²",
+"30 cm²",
+"32 cm²",
+"60 cm²",
+"120 cm²"
+],
+"correct": 1,
+"exp": "A = ½ × 10 × 6 = 30 cm²."
+},
+{
+"q": "A parallelogram has base 9 in and height 4 in. What is its area?",
+"choices": [
+"13 in²",
+"18 in²",
+"26 in²",
+"36 in²",
+"72 in²"
+],
+"correct": 3,
+"exp": "A = b × h = 9 × 4 = 36 in²."
+},
+{
+"q": "A trapezoid has bases 6 m and 10 m and height 5 m. What is its area?",
+"choices": [
+"30 m²",
+"40 m²",
+"50 m²",
+"80 m²",
+"300 m²"
+],
+"correct": 1,
+"exp": "A = ½(6 + 10)(5) = ½(16)(5) = 40 m²."
+},
+{
+"q": "A square has perimeter 24 ft. What is its area?",
+"choices": [
+"6 ft²",
+"24 ft²",
+"36 ft²",
+"48 ft²",
+"576 ft²"
+],
+"correct": 2,
+"exp": "Side = 24 ÷ 4 = 6. Area = 6² = 36 ft²."
+},
+{
+"q": "A rectangle 12 by 8 has a 3 by 3 square cut out. What is the remaining area?",
+"choices": [
+"87",
+"89",
+"93",
+"96",
+"105"
+],
+"correct": 0,
+"exp": "96 − 9 = 87."
+},
+{
+"q": "A triangle has area 24 in² and base 8 in. What is its height?",
+"choices": [
+"3 in",
+"4 in",
+"6 in",
+"12 in",
+"16 in"
+],
+"correct": 2,
+"exp": "24 = ½ × 8 × h = 4h, so h = 6."
+},
+{
+"q": "A rectangle is 5.5 m long and 4 m wide. What is its area?",
+"choices": [
+"9.5 m²",
+"19 m²",
+"20 m²",
+"22 m²",
+"24 m²"
+],
+"correct": 3,
+"exp": "5.5 × 4 = 22 m²."
+},
+{
+"q": "Two identical right triangles with legs 4 and 6 are joined to make a rectangle. What is the rectangle's area?",
+"choices": [
+"10",
+"12",
+"20",
+"24",
+"48"
+],
+"correct": 3,
+"exp": "Rectangle 4 × 6 = 24 (each triangle is 12)."
+},
+{
+"q": "If both the length and width of a rectangle are doubled, the area is multiplied by",
+"choices": [
+"2",
+"3",
+"4",
+"6",
+"8"
+],
+"correct": 2,
+"exp": "2 × 2 = 4."
+},
+{
+"q": "A garden is shaped like a right triangle with legs 7 m and 12 m. What is its area?",
+"choices": [
+"19 m²",
+"38 m²",
+"42 m²",
+"84 m²",
+"168 m²"
+],
+"correct": 2,
+"exp": "½ × 7 × 12 = 42 m²."
+}
+],
+"surface-area": [
+{
+"q": "What is the surface area of a cube with edges of 3 cm?",
+"choices": [
+"9 cm²",
+"18 cm²",
+"27 cm²",
+"36 cm²",
+"54 cm²"
+],
+"correct": 4,
+"exp": "6 faces × 3² = 6 × 9 = 54 cm²."
+},
+{
+"q": "A rectangular prism is 4 × 3 × 2. What is its surface area?",
+"choices": [
+"24",
+"26",
+"48",
+"52",
+"60"
+],
+"correct": 3,
+"exp": "2(4·3 + 4·2 + 3·2) = 2(12 + 8 + 6) = 52."
+},
+{
+"q": "How many faces does a rectangular prism have?",
+"choices": [
+"4",
+"5",
+"6",
+"8",
+"12"
+],
+"correct": 2,
+"exp": "A rectangular prism has 6 faces."
+},
+{
+"q": "A square pyramid has a base of 6 × 6 and each triangular face has height 5. What is its surface area?",
+"choices": [
+"60",
+"66",
+"96",
+"120",
+"156"
+],
+"correct": 2,
+"exp": "Base 36 + 4 × (½ × 6 × 5) = 36 + 60 = 96."
+},
+{
+"q": "A net is made of 2 squares (side 4) and 4 rectangles (4 × 10). What is the surface area?",
+"choices": [
+"72",
+"160",
+"192",
+"200",
+"320"
+],
+"correct": 2,
+"exp": "2(16) + 4(40) = 32 + 160 = 192."
+},
+{
+"q": "How much wrapping paper covers a box 10 × 5 × 2 inches exactly?",
+"choices": [
+"100 in²",
+"130 in²",
+"160 in²",
+"180 in²",
+"200 in²"
+],
+"correct": 2,
+"exp": "2(50 + 20 + 10) = 2(80) = 160 in²."
+},
+{
+"q": "A cube has surface area 96 cm². What is the length of one edge?",
+"choices": [
+"4 cm",
+"6 cm",
+"8 cm",
+"16 cm",
+"24 cm"
+],
+"correct": 0,
+"exp": "96 ÷ 6 = 16 per face, and √16 = 4 cm."
+},
+{
+"q": "Surface area is measured in",
+"choices": [
+"cm",
+"cm²",
+"cm³",
+"grams",
+"liters"
+],
+"correct": 1,
+"exp": "Surface area is an area, so it uses square units."
+},
+{
+"q": "A triangular prism has two triangle faces with area 6 each and three rectangles with areas 15, 20, and 25. What is its surface area?",
+"choices": [
+"60",
+"66",
+"72",
+"78",
+"80"
+],
+"correct": 2,
+"exp": "12 + 60 = 72."
+},
+{
+"q": "If each edge of a cube is doubled, its surface area is multiplied by",
+"choices": [
+"2",
+"4",
+"6",
+"8",
+"12"
+],
+"correct": 1,
+"exp": "Areas scale by 2 × 2 = 4."
+}
+],
+"volume": [
+{
+"q": "What is the volume of a box 5 cm × 4 cm × 3 cm?",
+"choices": [
+"12 cm³",
+"47 cm³",
+"60 cm³",
+"94 cm³",
+"120 cm³"
+],
+"correct": 2,
+"exp": "V = l × w × h = 5 × 4 × 3 = 60 cm³."
+},
+{
+"q": "What is the volume of a cube with edge 4 in?",
+"choices": [
+"12 in³",
+"16 in³",
+"48 in³",
+"64 in³",
+"96 in³"
+],
+"correct": 3,
+"exp": "4 × 4 × 4 = 64 in³."
+},
+{
+"q": "A prism has a base area of 15 m² and a height of 6 m. What is its volume?",
+"choices": [
+"21 m³",
+"45 m³",
+"60 m³",
+"90 m³",
+"180 m³"
+],
+"correct": 3,
+"exp": "V = B × h = 15 × 6 = 90 m³."
+},
+{
+"q": "A box is 2 1/2 ft by 2 ft by 4 ft. What is its volume?",
+"choices": [
+"8 1/2 ft³",
+"16 ft³",
+"18 ft³",
+"20 ft³",
+"24 ft³"
+],
+"correct": 3,
+"exp": "2.5 × 2 × 4 = 20 ft³."
+},
+{
+"q": "How many 1-cm cubes fill a box 6 cm × 3 cm × 2 cm?",
+"choices": [
+"11",
+"18",
+"30",
+"36",
+"72"
+],
+"correct": 3,
+"exp": "6 × 3 × 2 = 36 cubes."
+},
+{
+"q": "A tank 10 × 8 × 5 is half full of water. What volume of water is in it?",
+"choices": [
+"100",
+"200",
+"230",
+"400",
+"800"
+],
+"correct": 1,
+"exp": "Full volume 400; half = 200."
+},
+{
+"q": "A box has volume 72 in³, length 6 in, and width 4 in. What is its height?",
+"choices": [
+"2 in",
+"3 in",
+"4 in",
+"12 in",
+"18 in"
+],
+"correct": 1,
+"exp": "72 ÷ (6 × 4) = 72 ÷ 24 = 3 in."
+},
+{
+"q": "Volume is measured in",
+"choices": [
+"m",
+"m²",
+"m³",
+"kg",
+"°C"
+],
+"correct": 2,
+"exp": "Volume uses cubic units."
+},
+{
+"q": "How many cubes with edge 1/2 inch fit in a 1-inch cube?",
+"choices": [
+"2",
+"4",
+"6",
+"8",
+"16"
+],
+"correct": 3,
+"exp": "Two along each edge: 2 × 2 × 2 = 8."
+},
+{
+"q": "If every edge of a box is doubled, its volume is multiplied by",
+"choices": [
+"2",
+"4",
+"6",
+"8",
+"16"
+],
+"correct": 3,
+"exp": "2 × 2 × 2 = 8."
+}
+],
+"word-problems": [
+{
+"q": "Lani buys 4 shave ices at $3.75 each and pays with $20. How much change does she get?",
+"choices": [
+"$4.00",
+"$5.00",
+"$6.25",
+"$15.00",
+"$16.25"
+],
+"correct": 1,
+"exp": "4 × 3.75 = 15. 20 − 15 = $5."
+},
+{
+"q": "A school has 480 students. 3/8 of them ride the bus. How many ride the bus?",
+"choices": [
+"60",
+"120",
+"160",
+"180",
+"300"
+],
+"correct": 3,
+"exp": "480 ÷ 8 = 60; 60 × 3 = 180."
+},
+{
+"q": "A car uses 3 gallons of gas to go 84 miles. How many gallons for 252 miles?",
+"choices": [
+"6",
+"8",
+"9",
+"12",
+"28"
+],
+"correct": 2,
+"exp": "84 mi per 3 gal = 28 mpg. 252 ÷ 28 = 9 gallons."
+},
+{
+"q": "Kai scored 18, 22, and 26 points in three games. How many points in the 4th game to average 24?",
+"choices": [
+"24",
+"26",
+"28",
+"30",
+"32"
+],
+"correct": 3,
+"exp": "Total needed 96. 96 − 66 = 30."
+},
+{
+"q": "A $60 jacket is 25% off, then 8% tax is added to the sale price. What is the final cost?",
+"choices": [
+"$45.00",
+"$48.60",
+"$49.80",
+"$50.40",
+"$64.80"
+],
+"correct": 1,
+"exp": "Sale price 45. Tax 45 × 0.08 = 3.60. Total $48.60."
+},
+{
+"q": "A recipe for 4 people uses 1 1/2 cups of rice. How much rice for 10 people?",
+"choices": [
+"3 cups",
+"3 1/2 cups",
+"3 3/4 cups",
+"4 cups",
+"6 cups"
+],
+"correct": 2,
+"exp": "1.5 ÷ 4 = 0.375 per person × 10 = 3.75 cups."
+},
+{
+"q": "A rectangular pool is 20 m by 8 m. A path 1 m wide goes around it. What is the area of the path?",
+"choices": [
+"28 m²",
+"56 m²",
+"60 m²",
+"160 m²",
+"220 m²"
+],
+"correct": 2,
+"exp": "Outer 22 × 10 = 220; pool 160; path 220 − 160 = 60 m²."
+},
+{
+"q": "The temperature at 6 a.m. was −4°F and rose 3° each hour. What was it at 11 a.m.?",
+"choices": [
+"7°F",
+"11°F",
+"15°F",
+"−1°F",
+"−19°F"
+],
+"correct": 1,
+"exp": "5 hours × 3 = 15. −4 + 15 = 11°F."
+},
+{
+"q": "Ana reads 24 pages a day. How many days will it take her to finish a 300-page book?",
+"choices": [
+"10",
+"12",
+"13",
+"14",
+"15"
+],
+"correct": 2,
+"exp": "300 ÷ 24 = 12.5. After 12 days she still has pages left, so she needs 13 days."
+},
+{
+"q": "The ratio of cats to dogs at a shelter is 4 : 5. There are 36 animals. How many are dogs?",
+"choices": [
+"9",
+"16",
+"20",
+"25",
+"32"
+],
+"correct": 2,
+"exp": "9 parts → 4 per part. Dogs = 5 × 4 = 20."
+}
+]
+};
+
+// ==================== SSAT Prep Runner ====================
+// Shuffles the answer order (and question order) each time a set is opened.
+function ssatShuffle(bank){
+  const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+  return sh(bank).map(q=>{const order=sh([0,1,2,3,4]);return {q:q.q,exp:q.exp,choices:order.map(i=>q.choices[i]),correct:order.indexOf(q.correct)};});
+}
+let SSAT_STATE = { unitId: null, qIdx: 0, score: 0, answered: false, selected: -1 };
+
+function openSSAT(unitId) {
+  const bank = SSAT_BANK[unitId];
+  if (!bank || !bank.length) return;
+  SSAT_STATE = { unitId, qIdx: 0, score: 0, answered: false, selected: -1, bank: ssatShuffle(bank) };
+  const unit = UNITS.find(u => u.id === unitId);
+  document.getElementById('ssat-title').textContent = '🎯 SSAT Prep · ' + (unit ? unit.title : unitId);
+  document.getElementById('ssat-meta').textContent = 'Multiple choice · 5 answer options · SSAT Middle Level style';
+  document.getElementById('ssat-modal').classList.add('active');
+  renderSSATQuestion();
+}
+
+function closeSSAT() {
+  document.getElementById('ssat-modal').classList.remove('active');
+}
+
+function renderSSATQuestion() {
+  const bank = SSAT_STATE.bank;
+  const idx = SSAT_STATE.qIdx;
+  if (idx >= bank.length) { renderSSATResult(); return; }
+  const q = bank[idx];
+  SSAT_STATE.answered = false; SSAT_STATE.selected = -1;
+  const letters = ['A','B','C','D','E'];
+  let choicesHTML = '';
+  q.choices.forEach((c, i) => {
+    choicesHTML += `<button class="ssat-choice" data-idx="${i}" onclick="ssatSelect(${i})"><span class="letter">${letters[i]}</span>${c}</button>`;
+  });
+  document.getElementById('ssat-body').innerHTML = `
+    <div class="ssat-progress">Question ${idx+1} of ${bank.length}</div>
+    <div class="ssat-question">${q.q}</div>
+    <div id="ssat-choices">${choicesHTML}</div>
+    <div id="ssat-feedback"></div>
+    <div class="ssat-actions">
+      <button class="ssat-btn skip" onclick="ssatSkip()">Skip →</button>
+      <button class="ssat-btn" id="ssat-submit" onclick="ssatSubmit()" disabled>Submit</button>
+    </div>`;
+}
+
+function ssatSelect(i) {
+  if (SSAT_STATE.answered) return;
+  SSAT_STATE.selected = i;
+  document.querySelectorAll('#ssat-choices .ssat-choice').forEach((c, j) => {
+    c.classList.toggle('selected', j === i);
+  });
+  document.getElementById('ssat-submit').disabled = false;
+}
+
+function ssatSubmit() {
+  if (SSAT_STATE.answered) { ssatNext(); return; }
+  const bank = SSAT_STATE.bank;
+  const q = bank[SSAT_STATE.qIdx];
+  const chosen = SSAT_STATE.selected;
+  const correct = q.correct;
+  SSAT_STATE.answered = true;
+  if (chosen === correct) SSAT_STATE.score++;
+  document.querySelectorAll('#ssat-choices .ssat-choice').forEach((c, j) => {
+    c.disabled = true;
+    if (j === correct) c.classList.add('correct');
+    else if (j === chosen) c.classList.add('wrong');
+  });
+  const isRight = chosen === correct;
+  document.getElementById('ssat-feedback').innerHTML = `
+    <div class="ssat-feedback ${isRight ? 'ok' : 'bad'}">
+      <strong>${isRight ? '✓ Correct!' : '✗ Not quite.'}</strong> ${q.exp || ''}
+    </div>`;
+  const btn = document.getElementById('ssat-submit');
+  btn.textContent = (SSAT_STATE.qIdx + 1 < bank.length) ? 'Next Question →' : 'See Results →';
+  btn.disabled = false;
+  btn.onclick = ssatNext;
+}
+
+function ssatSkip() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
+function ssatNext() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
+
+function renderSSATResult() {
+  const bank = SSAT_STATE.bank;
+  const pct = Math.round((SSAT_STATE.score / bank.length) * 100);
+  let msg = 'Keep practicing!';
+  if (pct === 100) msg = '🌟 Perfect! Ready for the SSAT.';
+  else if (pct >= 80) msg = '💪 Strong work — review your misses.';
+  else if (pct >= 60) msg = '👍 Solid start — practice this topic more.';
+  else msg = '📚 Review the lesson and try again.';
+  document.getElementById('ssat-body').innerHTML = `
+    <div class="ssat-result">
+      <div>Your SSAT Prep score:</div>
+      <div class="score">${SSAT_STATE.score} / ${bank.length}</div>
+      <div class="msg"><strong>${pct}%</strong> — ${msg}</div>
+      <div class="ssat-actions" style="justify-content:center;gap:10px">
+        <button class="ssat-btn skip" onclick="closeSSAT()">Close</button>
+        <button class="ssat-btn" onclick="openSSAT(SSAT_STATE.unitId)">Try Again ↻</button>
+      </div>
+    </div>`;
+}
+
+</script>
+<!-- /SSAT Prep (Math 6) -->
 </body>
 </html>
