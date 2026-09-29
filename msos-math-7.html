@@ -4079,6 +4079,7 @@ function openSSAT(unitId) {
   const bank = SSAT_BANK[unitId];
   if (!bank || !bank.length) return;
   SSAT_STATE = { unitId, qIdx: 0, score: 0, answered: false, selected: -1 };
+  SSAT_STATE.log = []; SSAT_STATE.startAt = Date.now();
   const unit = UNITS.find(u => u.id === unitId);
   document.getElementById('ssat-title').textContent = '🎯 SSAT Prep · ' + (unit ? unit.title : unitId);
   document.getElementById('ssat-meta').textContent = 'Multiple choice · 5 answer options · SSAT Upper Level style';
@@ -4129,6 +4130,7 @@ function ssatSubmit() {
   const correct = q.correct;
   SSAT_STATE.answered = true;
   if (chosen === correct) SSAT_STATE.score++;
+  (SSAT_STATE.log = SSAT_STATE.log || []).push({ n: SSAT_STATE.qIdx + 1, q: q.q, your: chosen >= 0 ? q.choices[chosen] : '(no answer)', right: q.choices[correct], ok: chosen === correct });
   document.querySelectorAll('#ssat-choices .ssat-choice').forEach((c, j) => {
     c.disabled = true;
     if (j === correct) c.classList.add('correct');
@@ -4145,7 +4147,11 @@ function ssatSubmit() {
   btn.onclick = ssatNext;
 }
 
-function ssatSkip() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
+function ssatSkip() {
+  const b = SSAT_STATE.bank || SSAT_BANK[SSAT_STATE.unitId]; const q = b[SSAT_STATE.qIdx];
+  if (q && !SSAT_STATE.answered) (SSAT_STATE.log = SSAT_STATE.log || []).push({ n: SSAT_STATE.qIdx + 1, q: q.q, your: '(skipped)', right: q.choices[q.correct], ok: false });
+  SSAT_STATE.qIdx++; renderSSATQuestion();
+}
 function ssatNext() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
 
 function renderSSATResult() {
@@ -4161,11 +4167,34 @@ function renderSSATResult() {
       <div>Your SSAT Prep score:</div>
       <div class="score">${SSAT_STATE.score} / ${bank.length}</div>
       <div class="msg"><strong>${pct}%</strong> — ${msg}</div>
+      <div style="background:#f5f3ff;border:1.5px solid #c4b5fd;border-radius:10px;padding:12px 14px;margin:6px auto 14px;max-width:460px;text-align:left;">
+        <div style="font-weight:800;color:#5b21b6;margin-bottom:8px;">📧 Send your results to Dr. Park</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input id="ssat-name" type="text" placeholder="First and last name" style="flex:2;min-width:160px;padding:8px 10px;border:1.5px solid #cbd5e1;border-radius:6px;font-size:.95rem;">
+          <input id="ssat-class" type="text" placeholder="Class (e.g. 7A)" style="flex:1;min-width:110px;padding:8px 10px;border:1.5px solid #cbd5e1;border-radius:6px;font-size:.95rem;">
+        </div>
+        <button class="ssat-btn" onclick="ssatEmail()" style="margin-top:10px;width:100%;background:#059669;">📧 Submit Answers to Dr. Park</button>
+        <div style="font-size:.8rem;color:#6b7280;margin-top:6px;">Opens Gmail with your name, score, and answers ready to send to ppark@starofthesea.org.</div>
+      </div>
       <div class="ssat-actions" style="justify-content:center;gap:10px">
         <button class="ssat-btn skip" onclick="closeSSAT()">Close</button>
         <button class="ssat-btn" onclick="openSSAT(SSAT_STATE.unitId)">Try Again ↻</button>
       </div>
     </div>`;
+}
+
+// ---- Submit SSAT Prep results to Dr. Park (opens Gmail) ----
+function ssatEmail(){
+  const nm=(document.getElementById('ssat-name')||{}).value||''; const cl=(document.getElementById('ssat-class')||{}).value||'';
+  if(!nm.trim()){ alert('Please type your name first.'); return; }
+  if(!cl.trim()){ alert('Please type your class (e.g. 7A) first.'); return; }
+  const unit=UNITS.find(u=>u.id===SSAT_STATE.unitId); const title=unit?unit.title:SSAT_STATE.unitId;
+  const bank=SSAT_STATE.bank||SSAT_BANK[SSAT_STATE.unitId]; const n=bank.length; const pct=Math.round(SSAT_STATE.score/n*100);
+  const secs=Math.round((Date.now()-(SSAT_STATE.startAt||Date.now()))/1000); const dur=secs>=60?Math.floor(secs/60)+' min '+(secs%60)+' sec':secs+' sec';
+  let body='Student: '+nm.trim()+'\nClass: '+cl.trim()+'\nCourse: Math 7\nSSAT Prep unit: '+title+'\nScore: '+SSAT_STATE.score+' / '+n+'  ('+pct+'%)\nTime: '+dur+'\nSubmitted: '+new Date().toLocaleString('en-US')+'\n\n';
+  (SSAT_STATE.log||[]).forEach(r=>{ body+=r.n+'. '+r.q+'\n    Answer: '+r.your+(r.ok?' \u2713':' \u2717 (correct: '+r.right+')')+'\n\n'; });
+  const subject='SSAT Prep \u2014 '+title+' \u2014 '+nm.trim();
+  window.open('https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body),'_blank');
 }
 
 </script>
