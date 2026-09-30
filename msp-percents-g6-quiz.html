@@ -1,5 +1,16 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en"><head>
+<!--VERIFY-CODE--><script>(function(){
+if(window.__pparkSign)return;
+var SALT='msos-ppark-verify-2026';
+function h(str,seed){var h1=0xdeadbeef^(seed||0),h2=0x41c6ce57^(seed||0);for(var i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677);}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0);}
+function norm(t){return String(t).normalize('NFKC').toLowerCase().replace(/[−–—]/g,'-').replace(/[^a-z0-9✓✗.\-\/%^]/g,'');}
+function code(t){var s=h(SALT+norm(t)).toString(36).toUpperCase();while(s.length<10)s='0'+s;s=s.slice(-10);return s.slice(0,5)+'-'+s.slice(5);}
+window.__pparkCode=code;
+window.__pparkSign=function(url){try{var u=String(url);if(u.indexOf('mail.google.com')<0||u.indexOf('ppark')<0)return url;var m=u.match(/([?&]body=)([^&]*)/);if(!m)return url;var body=decodeURIComponent(m[2]).replace(/\s+$/,'');if(/Verification code:/.test(body))return url;var nb=body+'\n\nVerification code: '+code(body)+'\n(Dr. Park uses this code to confirm the results were not changed.)';return u.replace(m[0],m[1]+encodeURIComponent(nb));}catch(e){return url;}};
+var o=window.open;window.open=function(u){var a=Array.prototype.slice.call(arguments);a[0]=window.__pparkSign(u);return o.apply(window,a);};
+})();</script><!--/VERIFY-CODE-->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Percents — Grade 6 Quiz</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -180,7 +191,7 @@ function setMode(mode) {
   history.replaceState(null, '', url.toString());
   applyMode(mode);
 }
-(function(){
+(function(){var __msInit=function(){
   const params = new URLSearchParams(location.search);
   const g = params.get('grade');
   if (g && ['6','7','8'].includes(g)) {
@@ -216,7 +227,7 @@ function setMode(mode) {
       });
     }
   }
-})();
+};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',__msInit);else __msInit();})();
 </script>
 <a href="msos-math-6.html#unit=percents" class="back-to-unit">← Back to Unit</a>
 
