@@ -3013,7 +3013,7 @@ function renderSidebar() {
 }
 
 function setTopbar() {
-  document.getElementById('topbar-title').textContent = currentUnit ? UNITS.find(u => u.id === currentUnit).title : 'Engineering the World with Math';
+  document.getElementById('topbar-title').textContent = currentUnit ? ('Unit ' + (UNITS.findIndex(u => u.id === currentUnit) + 1) + ' ' + UNITS.find(u => u.id === currentUnit).title) : 'Engineering the World with Math';
 }
 
 function showHome() {
@@ -3044,6 +3044,18 @@ function showLesson(unitId) {
   if (sb) sb.classList.remove('active');
   const unit = UNITS.find(u => u.id === unitId);
   document.getElementById('lesson-content').innerHTML = LESSONS[unitId] + resourceCardHTML(unit);
+  // Show the unit number before the unit title
+  (function(){
+    const h2 = document.querySelector('#lesson-content h2');
+    const n = UNITS.findIndex(u => u.id === unitId) + 1;
+    if (!h2 || !n) return;
+    const w = document.createTreeWalker(h2, NodeFilter.SHOW_TEXT);
+    let t; while ((t = w.nextNode()) && !t.data.trim()) {}
+    if (!t) return;
+    const m = t.data.match(/^(\s*(?:\p{Extended_Pictographic}\uFE0F?\s*)*)([\s\S]*)$/u);
+    if (m[2]) t.data = m[1] + 'Unit ' + n + ' ' + m[2];
+    else { const n2 = w.nextNode(); if (n2) n2.data = n2.data.replace(/^(\s*)/, '$1Unit ' + n + ' '); else t.data = m[1] + 'Unit ' + n; }
+  })();
   // Inject Resources + Worksheet / Quiz / Unit Test buttons on the right of the unit title
   (function(){
     const hideExtras = (unitId === 'metrics-sci-process');
