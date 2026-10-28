@@ -538,6 +538,25 @@ Submitted from ${location.href}`;
   };
 })();
 </script>
+<!--MULTI-FORM--><script>/* Accept the same value written in more than one form, e.g. "1/4, 0.25" or "1/4 = 0.25" */
+(function(){
+  if (typeof window.isCorrect !== 'function' || window.__msosMultiForm) return;
+  window.__msosMultiForm = true;
+  var BASE = window.isCorrect;
+  function parts(x){ return String(x == null ? '' : x).split(/\s*(?:,|;|=|\band\b|\bor\b)\s*/i).map(function(p){ return p.trim(); }).filter(Boolean); }
+  window.isCorrect = function(s, e){
+    var r = BASE(s, e);
+    if (r === true || !e) return r;
+    var us = parts(s), es = parts(String(e).split('|')[0]);
+    if (us.length < 2 && es.length < 2) return r;
+    var exp = es.length ? es : [String(e)];
+    // every part the student wrote must match one of the expected forms
+    var allOk = us.every(function(u){ return exp.some(function(x){ return BASE(u, x) === true; }); });
+    // when the key lists several forms, the student must give all of them
+    var covered = exp.length < 2 || exp.every(function(x){ return us.some(function(u){ return BASE(u, x) === true; }); });
+    return (allOk && covered) ? true : r;
+  };
+})();</script><!--/MULTI-FORM-->
 <!--CHECK-ONE-->
 <style id="check-one-style">
 .one-check-fb{display:inline-block;margin-left:6px;font-weight:800;font-size:.85rem;vertical-align:middle}
