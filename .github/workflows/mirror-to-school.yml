@@ -12,6 +12,8 @@ concurrency:
 
 jobs:
   mirror:
+    # Only run in classes-list; the copy in the school repo stays idle.
+    if: github.repository == 'classes-list/middle-school'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
