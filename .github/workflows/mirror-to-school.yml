@@ -23,4 +23,9 @@ jobs:
           TOKEN: ${{ secrets.SCHOOL_REPO_TOKEN }}
         run: |
           if [ -z "$TOKEN" ]; then echo "SCHOOL_REPO_TOKEN secret is missing"; exit 1; fi
-          git push "https://x-access-token:${TOKEN}@github.com/Mary-Star-of-the-Sea-School/middle-school.git" HEAD:refs/heads/main
+          if ! out=$(git push "https://x-access-token:${TOKEN}@github.com/Mary-Star-of-the-Sea-School/middle-school.git" HEAD:refs/heads/main 2>&1); then
+            echo "$out"
+            echo "::error title=Mirror push failed::$(echo "$out" | grep -v '^[[:space:]]*$' | tail -3 | tr '\n' ' ')"
+            exit 1
+          fi
+          echo "$out"
