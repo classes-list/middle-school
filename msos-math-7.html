@@ -4137,10 +4137,12 @@ function renderSSATQuestion() {
   });
   document.getElementById('ssat-body').innerHTML = `
     <div class="ssat-progress">Question ${idx+1} of ${bank.length}</div>
+    ${idx===0 ? '<div style="background:#f5f3ff;border:1px solid #c4b5fd;border-radius:8px;padding:8px 12px;margin:0 0 10px;font-size:.88rem;color:#5b21b6;">📧 Answer every question. The <strong>Submit to Dr. Park</strong> button appears on the results screen. To stop early, click <strong>Finish &amp; Submit</strong>.</div>' : ''}
     <div class="ssat-question">${q.q}</div>
     <div id="ssat-choices">${choicesHTML}</div>
     <div id="ssat-feedback"></div>
     <div class="ssat-actions">
+      <button class="ssat-btn skip" onclick="ssatFinish()" title="End now and send your results">Finish &amp; Submit</button>
       <button class="ssat-btn skip" onclick="ssatSkip()">Skip →</button>
       <button class="ssat-btn" id="ssat-submit" onclick="ssatSubmit()" disabled>Submit</button>
     </div>`;
@@ -4184,6 +4186,16 @@ function ssatSkip() {
   const b = SSAT_STATE.bank || SSAT_BANK[SSAT_STATE.unitId]; const q = b[SSAT_STATE.qIdx];
   if (q && !SSAT_STATE.answered) (SSAT_STATE.log = SSAT_STATE.log || []).push({ n: SSAT_STATE.qIdx + 1, q: q.q, your: '(skipped)', right: q.choices[q.correct], ok: false });
   SSAT_STATE.qIdx++; renderSSATQuestion();
+}
+function ssatFinish() {
+  const b = SSAT_STATE.bank || SSAT_BANK[SSAT_STATE.unitId];
+  const left = b.length - SSAT_STATE.qIdx - (SSAT_STATE.answered ? 1 : 0);
+  if (left > 0 && !confirm('Finish now? ' + left + ' unanswered question' + (left === 1 ? '' : 's') + ' will count as wrong.')) return;
+  const log = (SSAT_STATE.log = SSAT_STATE.log || []);
+  for (let i = SSAT_STATE.qIdx + (SSAT_STATE.answered ? 1 : 0); i < b.length; i++) {
+    log.push({ n: i + 1, q: b[i].q, your: '(not answered)', right: b[i].choices[b[i].correct], ok: false });
+  }
+  SSAT_STATE.qIdx = b.length; renderSSATQuestion();
 }
 function ssatNext() { SSAT_STATE.qIdx++; renderSSATQuestion(); }
 
