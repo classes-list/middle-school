@@ -1,0 +1,26 @@
+name: Mirror to Mary Star of the Sea
+
+# Every change on main is copied to Mary-Star-of-the-Sea-School/middle-school.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: mirror-to-school
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Push main to the school repo
+        env:
+          TOKEN: ${{ secrets.SCHOOL_REPO_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then echo "SCHOOL_REPO_TOKEN secret is missing"; exit 1; fi
+          git push "https://x-access-token:${TOKEN}@github.com/Mary-Star-of-the-Sea-School/middle-school.git" HEAD:refs/heads/main
