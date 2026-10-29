@@ -2501,24 +2501,6 @@ const LESSONS = {
 </div>
 <div id="oahuMap" style="height:460px;border:2px solid #78350f;border-radius:10px;margin:10px 0;background:#f7f3ea;"><p style="padding:20px;text-align:center;">Loading the map…</p></div>
 <p style="font-size:.8rem;color:#64748b;">Map: © OpenStreetMap contributors, SRTM elevation data · Map style © OpenTopoMap (CC-BY-SA). Needs an internet connection.</p>
-<h4>📏 Measure a real slope</h4>
-<p>Click the map once for point <b>A</b> and again for point <b>B</b>. The map measures the horizontal distance (the <b>run</b>). Then read the elevation at each point from the contour labels and type them in.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0;">
-<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:.75rem;font-weight:700;color:#64748b;">RUN (A TO B)</div><div id="oahuRun" style="font-weight:900;font-size:1.1rem;">— m</div></div>
-<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:.75rem;font-weight:700;color:#64748b;">ELEVATION AT A (m)</div><input type="number" id="oahuElA" style="width:90px;padding:4px 6px;font-weight:800;" oninput="oahuCalc()"></div>
-<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:.75rem;font-weight:700;color:#64748b;">ELEVATION AT B (m)</div><input type="number" id="oahuElB" style="width:90px;padding:4px 6px;font-weight:800;" oninput="oahuCalc()"></div>
-<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px;text-align:center;"><div style="font-size:.75rem;font-weight:700;color:#64748b;">SLOPE = RISE ÷ RUN</div><div id="oahuSlope" style="font-weight:900;font-size:1.1rem;">—</div></div>
-</div>
-<div style="text-align:center;"><button class="btn" style="padding:6px 12px;font-size:.85rem;" onclick="oahuClear()">↺ Clear points</button></div>
-<h4>🔎 Explore and answer</h4>
-<div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px 16px;">
-<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">1. Go to Mount Kaʻala. How can you tell it is a peak from the contour lines?</summary><p>The contour lines make closed loops, one inside the other, with the highest loop in the center.</p></details>
-<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">2. Go to the Nuʻuanu Pali. Are the contour lines close together or far apart? What does that tell you?</summary><p>Very close together — the Pali is a steep cliff on the windward (east) side of the Koʻolau Range.</p></details>
-<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">3. Go to Diamond Head. What shape do the contour lines make?</summary><p>A ring (a crater): the elevation rises to a high rim and then drops down again into the bowl in the middle.</p></details>
-<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">4. Estimate: Mount Kaʻala (1,227 m) is about 9 km (9,000 m) from the beach at Mākua on the west coast. What is the average slope?</summary><p>Slope = 1,227 ÷ 9,000 ≈ 0.14, a 14% grade. Parts of the real trail are much steeper than the average!</p></details>
-<details style="margin:6px 0;"><summary style="cursor:pointer;font-weight:700;">5. Use the measuring tool: pick two points on a Koʻolau ridge and find the slope. Is it gentle, moderate, or steep?</summary><p>Answers vary. Slopes over 0.3 (30%) are very steep.</p></details>
-</div>
-
 <h3>Three moves that stick</h3>
 <ol>
   <li><strong>Contour lines = elevation.</strong> Every line is a "same-height ring" around a hill.</li>
@@ -3389,7 +3371,7 @@ function dlabPreset(mass, vol){
 }
 
 // ---- Oahu real topographic map (Topographic Maps unit lesson) ----
-var __oahuMap=null, __oahuPts=[], __oahuLayers=[];
+var __oahuMap=null;
 function __loadLeaflet(cb){
   if (window.L) return cb();
   if (!document.getElementById('leaflet-css')){ var l=document.createElement('link'); l.id='leaflet-css'; l.rel='stylesheet'; l.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css'; document.head.appendChild(l); }
@@ -3403,28 +3385,13 @@ function initOahuMap(){
     if (!document.getElementById('oahuMap')) return;
     if (__oahuMap){ try{ __oahuMap.remove(); }catch(e){} }
     el=document.getElementById('oahuMap'); el.innerHTML='';
-    __oahuPts=[]; __oahuLayers=[];
-    __oahuMap=L.map(el,{scrollWheelZoom:false}).setView([21.47,-158.0],10);
+        __oahuMap=L.map(el,{scrollWheelZoom:false}).setView([21.47,-158.0],10);
     L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17,attribution:'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap (CC-BY-SA)'}).addTo(__oahuMap);
     [[21.5069,-158.1428,'Mount Kaʻala — 1,227 m (4,025 ft), highest point on Oʻahu'],[21.2614,-157.8056,'Diamond Head (Lēʻahi) — 232 m (761 ft)'],[21.3669,-157.7931,'Nuʻuanu Pali — steep Koʻolau cliffs'],[21.3069,-157.8583,'Honolulu']].forEach(function(p){ L.marker([p[0],p[1]]).addTo(__oahuMap).bindPopup(p[2]); });
-    __oahuMap.on('click',function(e){
-      if(__oahuPts.length===2) oahuClear();
-      __oahuPts.push(e.latlng);
-      __oahuLayers.push(L.circleMarker(e.latlng,{radius:7,color:'#dc2626',fillColor:'#fef08a',fillOpacity:1}).addTo(__oahuMap).bindTooltip(__oahuPts.length===1?'A':'B',{permanent:true,direction:'top'}));
-      if(__oahuPts.length===2){ __oahuLayers.push(L.polyline(__oahuPts,{color:'#dc2626',weight:3,dashArray:'6,5'}).addTo(__oahuMap)); document.getElementById('oahuRun').textContent=Math.round(__oahuPts[0].distanceTo(__oahuPts[1])).toLocaleString()+' m'; }
-      oahuCalc();
-    });
     setTimeout(function(){ __oahuMap.invalidateSize(); },200);
   });
 }
 function oahuGoTo(a,b,z){ if(__oahuMap) __oahuMap.setView([a,b],z); }
-function oahuClear(){ __oahuLayers.forEach(function(l){ __oahuMap.removeLayer(l); }); __oahuLayers=[]; __oahuPts=[]; var r=document.getElementById('oahuRun'); if(r) r.textContent='— m'; oahuCalc(); }
-function oahuCalc(){
-  var o=document.getElementById('oahuSlope'); if(!o) return;
-  var a=parseFloat(document.getElementById('oahuElA').value), b=parseFloat(document.getElementById('oahuElB').value);
-  if(__oahuPts.length<2||isNaN(a)||isNaN(b)){ o.textContent='—'; return; }
-  var sl=Math.abs(b-a)/__oahuPts[0].distanceTo(__oahuPts[1]); o.textContent=sl.toFixed(3)+' = '+(sl*100).toFixed(1)+'%';
-}
 
 function showLesson(unitId) {
   currentUnit = unitId;
