@@ -3400,6 +3400,7 @@ In this project you will build a dual calculator that uses both tools on real en
     },
     'linear-equations': {
       title: `Phone Plan Comparator`,
+      explorer: true,
       banner: `🎨 Real-World Math — Smart Spending & Linear Models`,
       mission: `Two cell phone plans look similar but cost very differently over time. Build linear equations to find the BREAK-EVEN month and decide which is cheaper for your usage.`,
       steps: [
@@ -3565,6 +3566,82 @@ function showHandout() {
     </div>`;
 }
 
+const PHONE_EXPLORER_HTML = `
+<style>
+.pp-box{background:#fff;border:2px solid #c4b5fd;border-radius:12px;padding:14px 16px;margin:16px 0}
+.pp-box h4{margin:0 0 8px;color:#5b21b6;font-size:1.1rem}
+.pp-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pp-row input{flex:1;min-width:180px;accent-color:#7c3aed}
+.pp-mo{font-weight:800;font-size:1.15rem;min-width:100px}
+.pp-ro{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.pp-ro div{border-radius:10px;padding:8px 12px}
+.pp-ro span{display:block;font-size:.85rem;color:#555;font-weight:600}
+.pp-ro strong{font-size:1.5rem}
+.pp-a{background:#e3eefc}.pp-a strong{color:#1e6fd9}.pp-b{background:#fde8dd}.pp-b strong{color:#d9480f}
+.pp-v{margin-top:8px;padding:8px 12px;border-radius:10px;background:#efe7fd;font-weight:800}
+.pp-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.pp-cards div{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:.95rem}
+.pp-box details summary{cursor:pointer;font-weight:800;color:#5b21b6}
+.pp-steps{padding-left:24px}.pp-steps li{margin:6px 0}.pp-steps code{font-size:1.05rem;font-weight:700;background:#f5f3ff;padding:1px 6px;border-radius:4px}
+.pp-t{width:100%;border-collapse:collapse;margin-top:10px;font-size:.95rem}
+.pp-t th,.pp-t td{border:1px solid #e2e8f0;padding:6px 8px;text-align:center}.pp-t th{background:#f1f5f9}
+.pp-t tr.pp-e td{background:#efe7fd;font-weight:700}
+@media(max-width:520px){.pp-ro{grid-template-columns:1fr}}
+</style>
+<div class="pp-box">
+  <h4>🔎 Explore it: slide through the months</h4>
+  <div class="pp-row"><label for="ppM" class="pp-mo" id="ppLab">Month 0</label><input type="range" id="ppM" min="0" max="24" step="0.5" value="0" aria-label="Number of months"></div>
+  <div class="pp-ro"><div class="pp-a"><span>Plan A: y = 40m + 200</span><strong id="ppA">$200</strong></div><div class="pp-b"><span>Plan B: y = 60m + 50</span><strong id="ppB">$50</strong></div></div>
+  <div class="pp-v" id="ppV"></div>
+  <svg id="ppG" viewBox="0 0 640 360" style="width:100%;height:auto;display:block;margin-top:10px" role="img" aria-label="Graph of Plan A and Plan B total cost"></svg>
+  <div class="pp-cards">
+    <div><strong>📍 Where it starts</strong><br>The y-intercept (b) is the cost at month 0. Plan B starts lower.</div>
+    <div><strong>📈 How steep it is</strong><br>The slope (m) is the monthly price. Plan B is steeper, so it catches up.</div>
+    <div><strong>✖️ Where they cross</strong><br>The intersection is the break-even point: the month both plans cost the same.</div>
+  </div>
+  <p style="margin:12px 0 0;font-size:.95rem">Solve steps 3–4 on paper first. Then open the box below to check your work.</p>
+  <details style="margin-top:8px"><summary>✅ Check your work</summary>
+    <ol class="pp-steps">
+      <li>Set the plans equal: <code>40m + 200 = 60m + 50</code></li>
+      <li>Subtract 40m from both sides: <code>200 = 20m + 50</code></li>
+      <li>Subtract 50 from both sides: <code>150 = 20m</code></li>
+      <li>Divide both sides by 20: <code>m = 7.5 months</code></li>
+      <li>Check: <code>40(7.5) + 200 = $500</code> and <code>60(7.5) + 50 = $500</code> ✓ The lines cross at (7.5, 500).</li>
+    </ol>
+    <table class="pp-t"><thead><tr><th>Months</th><th>Plan A</th><th>Plan B</th><th>Cheaper</th></tr></thead><tbody id="ppT"></tbody></table>
+  </details>
+</div>`;
+
+function initPhoneExplorer() {
+  const A = m => 40*m + 200, B = m => 60*m + 50, $ = id => document.getElementById(id);
+  if (!$('ppM')) return;
+  const money = v => '$' + Math.round(v).toLocaleString();
+  const W=640,H=360,L=62,R=20,T=16,Bt=44,Y1=1600;
+  const sx = m => L + m/24*(W-L-R), sy = y => H-Bt - y/Y1*(H-T-Bt);
+  function draw(m){
+    const g=[];
+    for(let y=0;y<=Y1;y+=400) g.push('<line x1="'+L+'" x2="'+(W-R)+'" y1="'+sy(y)+'" y2="'+sy(y)+'" stroke="#e5e7eb"/><text x="'+(L-8)+'" y="'+(sy(y)+4)+'" text-anchor="end" font-size="12" fill="#64748b">$'+y.toLocaleString()+'</text>');
+    for(let x=0;x<=24;x+=6) g.push('<line y1="'+T+'" y2="'+(H-Bt)+'" x1="'+sx(x)+'" x2="'+sx(x)+'" stroke="#e5e7eb"/><text x="'+sx(x)+'" y="'+(H-Bt+18)+'" text-anchor="middle" font-size="12" fill="#64748b">'+x+'</text>');
+    g.push('<text x="'+((L+W-R)/2)+'" y="'+(H-6)+'" text-anchor="middle" font-size="13" font-weight="700" fill="#334155">Months (m)</text>');
+    const ln=(f,c)=>'<line x1="'+sx(0)+'" y1="'+sy(f(0))+'" x2="'+sx(24)+'" y2="'+sy(f(24))+'" stroke="'+c+'" stroke-width="4" stroke-linecap="round"/>';
+    g.push(ln(A,'#1e6fd9'), ln(B,'#d9480f'));
+    g.push('<text x="'+(sx(24)-4)+'" y="'+(sy(A(24))+22)+'" text-anchor="end" font-size="14" font-weight="800" fill="#1e6fd9">Plan A</text>');
+    g.push('<text x="'+(sx(24)-4)+'" y="'+(sy(B(24))-10)+'" text-anchor="end" font-size="14" font-weight="800" fill="#d9480f">Plan B</text>');
+    g.push('<circle cx="'+sx(7.5)+'" cy="'+sy(500)+'" r="8" fill="#7c3aed" stroke="#fff" stroke-width="3"/><text x="'+(sx(7.5)-12)+'" y="'+(sy(500)-14)+'" text-anchor="end" font-size="14" font-weight="800" fill="#7c3aed">Break-even</text>');
+    g.push('<line x1="'+sx(m)+'" x2="'+sx(m)+'" y1="'+T+'" y2="'+(H-Bt)+'" stroke="#334155" stroke-dasharray="5 5" opacity=".5"/><circle cx="'+sx(m)+'" cy="'+sy(A(m))+'" r="6" fill="#1e6fd9"/><circle cx="'+sx(m)+'" cy="'+sy(B(m))+'" r="6" fill="#d9480f"/>');
+    $('ppG').innerHTML=g.join('');
+  }
+  function update(){
+    const m=parseFloat($('ppM').value), a=A(m), b=B(m);
+    $('ppLab').textContent='Month '+m; $('ppA').textContent=money(a); $('ppB').textContent=money(b);
+    $('ppV').textContent = a===b ? '🤝 Same cost! This is the break-even point.' : (a<b ? '✅ Plan A is cheaper by '+money(b-a) : '✅ Plan B is cheaper by '+money(a-b));
+    draw(m);
+  }
+  $('ppT').innerHTML=[6,7.5,12,18,24].map(m=>{const a=A(m),b=B(m);const w=a===b?'Same':(a<b?'A, by '+money(b-a):'B, by '+money(a-b));
+    return '<tr class="'+(a===b?'pp-e':'')+'"><td>'+m+'</td><td>'+money(a)+'</td><td>'+money(b)+'</td><td>'+w+'</td></tr>'}).join('');
+  $('ppM').addEventListener('input',update); update();
+}
+
 function showRealWorld() {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('realworld-screen').classList.add('active');
@@ -3581,6 +3658,7 @@ function showRealWorld() {
       <div class="handout-mission">${h.mission}</div>
       <p><strong>📋 Step-by-Step Instructions</strong></p>
       <ol class="handout-steps">${stepsHtml}</ol>
+      ${h.explorer ? PHONE_EXPLORER_HTML : ''}
       <div class="handout-deliverable">
         <strong>🎯 What to Submit:</strong>
         ${h.deliverable}
@@ -3590,6 +3668,7 @@ function showRealWorld() {
         <ol>${reflectHtml}</ol>
       </div>
     </div>`;
+  if (h.explorer) initPhoneExplorer();
 }
 
 // Open the syllabus screen if URL hash is #syllabus
