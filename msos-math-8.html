@@ -3401,19 +3401,30 @@ In this project you will build a dual calculator that uses both tools on real en
     'linear-equations': {
       title: `Phone Plan Comparator`,
       explorer: true,
+      stepsTitle: `📘 Lesson: Worked Example — Two Phone Plans`,
       banner: `🎨 Real-World Math — Smart Spending & Linear Models`,
-      mission: `Two cell phone plans look similar but cost very differently over time. Build linear equations to find the BREAK-EVEN month and decide which is cheaper for your usage.`,
+      mission: `Two cell phone plans look similar but cost very differently over time. Study this worked example to learn how to find the BREAK-EVEN point. Then solve a new problem on your own in <strong>What to Submit</strong>.`,
       steps: [
-      `Plan A: $40 per month, $200 phone (paid up front). Total cost after m months: y = 40m + 200.`,
-      `Plan B: $60 per month, free phone, $50 activation fee. Total cost: y = 60m + 50.`,
-      `Set the equations equal: 40m + 200 = 60m + 50. Solve for m. This is the break-even month.`,
-      `Compute total cost for both plans at m = 6, 12, 18, 24 months. Make a table.`,
-      `On graph paper, plot both lines on the same axes. Mark the intersection point.`,
-      `Bonus: find a 3rd plan online (T-Mobile, Mint, US Cellular) and compute its break-even with both A and B.`
+      `<strong>Plan A:</strong> $40 per month, $200 phone paid up front. Total cost after m months: <strong>y = 40m + 200</strong>. (Slope 40 = monthly price, y-intercept 200 = starting cost.)`,
+      `<strong>Plan B:</strong> $60 per month, free phone, $50 activation fee: <strong>y = 60m + 50</strong>.`,
+      `<strong>Set the equations equal</strong> and solve: 40m + 200 = 60m + 50 → 200 = 20m + 50 → 150 = 20m → <strong>m = 7.5 months</strong>. Check: both plans cost $500.`,
+      `<strong>Cost table:</strong> at 6 months A = $440, B = $410 (B cheaper). At 12 months A = $680, B = $770 (A cheaper). At 24 months A = $1,160, B = $1,490.`,
+      `<strong>Graph:</strong> plot both lines on the same axes. They cross at <strong>(7.5, 500)</strong>. Before 7.5 months Plan B is cheaper; after that Plan A is cheaper.`,
+      `<strong>Decide:</strong> for a short time, the plan with the lower start (B) wins. For a long time, the plan with the lower monthly price (A) wins.`
       ],
-      deliverable: `Submit the equations, the break-even calculation, the cost table, and the graph. Write 2 sentences: which plan would YOU choose, and why?`,
+      deliverable: `<strong>Your problem: Waikīkī E-Bike Rental 🚲</strong><br>
+<b>Shop A:</b> $20 to rent the bike + $8 per hour. &nbsp; <b>Shop B:</b> $5 to rent the bike + $11 per hour.
+<ol style="margin:8px 0 6px 20px;padding:0">
+<li>Write an equation for each shop. Use <em>h</em> = hours and <em>y</em> = total cost.</li>
+<li>Set the equations equal and solve for <em>h</em>, the break-even point. Show every step, then check your answer in both equations.</li>
+<li>Make a cost table for both shops at h = 2, 4, 6 and 8 hours.</li>
+<li>On graph paper, plot both lines on the same axes. Mark and label the intersection point.</li>
+<li>Your family wants a 3-hour ride. Which shop is cheaper, and by how much?</li>
+<li>Your friend wants to ride all day (8 hours). Which shop is cheaper, and by how much?</li>
+</ol>
+Write 2 sentences: which shop would YOU choose for your trip, and why?`,
       reflect: [
-      `Plan B has a higher monthly cost but a cheaper start. Which plan is better for a 6-month visit? For a 4-year contract?`,
+      `In both problems, the plan with the cheaper start lost in the long run. Why? Use the words <em>slope</em> and <em>y-intercept</em>.`,
       `On the graph, the break-even is the INTERSECTION of two lines. Why does that point answer "when do they cost the same?"`
       ]
     },
@@ -3599,8 +3610,7 @@ const PHONE_EXPLORER_HTML = `
     <div><strong>📈 How steep it is</strong><br>The slope (m) is the monthly price. Plan B is steeper, so it catches up.</div>
     <div><strong>✖️ Where they cross</strong><br>The intersection is the break-even point: the month both plans cost the same.</div>
   </div>
-  <p style="margin:12px 0 0;font-size:.95rem">Solve steps 3–4 on paper first. Then open the box below to check your work.</p>
-  <details style="margin-top:8px"><summary>✅ Check your work</summary>
+  <details open style="margin-top:12px"><summary>✅ Full solution</summary>
     <ol class="pp-steps">
       <li>Set the plans equal: <code>40m + 200 = 60m + 50</code></li>
       <li>Subtract 40m from both sides: <code>200 = 20m + 50</code></li>
@@ -3656,7 +3666,7 @@ function showRealWorld() {
       <h3>${h.title}</h3>
       <div class="handout-science">${h.banner}</div>
       <div class="handout-mission">${h.mission}</div>
-      <p><strong>📋 Step-by-Step Instructions</strong></p>
+      <p><strong>${h.stepsTitle || '📋 Step-by-Step Instructions'}</strong></p>
       <ol class="handout-steps">${stepsHtml}</ol>
       ${h.explorer ? PHONE_EXPLORER_HTML : ''}
       <div class="handout-deliverable">
