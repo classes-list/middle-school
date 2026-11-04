@@ -63,6 +63,24 @@ body.hide-feedback .q-card.correct, body.hide-feedback .q-card.wrong { border-le
 .score-banner.excellent { background:#d1fae5; border-color:var(--green); color:#065f46; }
 .score-banner.needs-work { background:#fef3c7; border-color:var(--gold); color:#78350f; }
 footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+.mcalc{display:inline-block;background:#f1f5f9;border:1.5px solid #94a3b8;border-radius:10px;padding:8px;margin:10px 0 4px;width:220px;vertical-align:top}
+.mcalc-title{font-size:.8rem;font-weight:800;color:#1a2a4a;margin:0 0 6px 2px}
+.mcalc-disp{background:#fff;border:1.5px solid #cbd5e1;border-radius:6px;padding:6px 8px;text-align:right;font:700 1.05rem/1.2 'Segoe UI',Arial,sans-serif;min-height:2.4em;overflow-wrap:anywhere;margin-bottom:6px}
+.mcalc-expr{display:block;font-size:.75rem;color:#64748b;font-weight:600;min-height:1em}
+.mcalc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.mcalc-grid button{padding:8px 0;border:1px solid #cbd5e1;border-radius:6px;background:#fff;font-weight:800;font-size:.95rem;cursor:pointer;color:#1f2937}
+.mcalc-grid button:hover{background:#e0f2fe}
+.mcalc-grid button.op{background:#fed7aa;color:#9a3412;border-color:#fdba74}
+.mcalc-grid button.eq{background:#2563eb;color:#fff;border-color:#1e40af}
+.mcalc-grid button.clr{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.mcalc-val').textContent=e===''?'0':e.replace(/[*\/\-+]/g,function(m){return ' '+SYM[m]+' ';}
+.mcalc-expr');
+    if(c.dataset.done==='1'){ if(/[0-9.(]/.test(k)){e='';}
+.mcalc-val').textContent+' ='; e=fmt(v); c.dataset.done='1';}catch(err){ex.textContent=(err==='div0'?'Cannot divide by 0':'Check your entry'); return;}
+.mcalc button'); if(!b)return; press(b.closest('.mcalc'),b.dataset.k);});
+  document.addEventListener('keydown',function(ev){var c=document.activeElement&&document.activeElement.closest&&document.activeElement.closest('.mcalc'); if(!c)return; var k=ev.key; var map={'Enter':'=','Backspace':'BS','Escape':'C','x':'*','X':'*'}
+@media print{.mcalc{display:none!important}}
+@media (max-width:700px){.mcalc-wrap .mcalc{position:static!important;width:100%!important;flex:1 1 100%!important}}
 </style>
 </head>
 <body>
@@ -85,7 +103,9 @@ footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; pa
   <label>Last Name: <input type="text" id="lName"></label>
   <label>Class: <input type="text" id="cls" placeholder="e.g., Math 6"></label>
 </div>
-<div id="questions"></div>
+<div class="mcalc-wrap" style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;"><div style="flex:1 1 380px;min-width:0;"><div id="questions"></div></div>
+<div class="mcalc" id="mcalc-page" style="position:sticky;top:12px;margin-top:4px;flex:0 0 220px" data-expr=""><div class="mcalc-title">🧮 Calculator</div><div class="mcalc-disp"><span class="mcalc-expr"></span><span class="mcalc-val">0</span></div><div class="mcalc-grid"><button type="button" class="clr" data-k="C">C</button><button type="button" class="clr" data-k="BS">⌫</button><button type="button" data-k="(">(</button><button type="button" data-k=")">)</button><button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button><button type="button" class="op" data-k="/">÷</button><button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button><button type="button" class="op" data-k="*">×</button><button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button><button type="button" class="op" data-k="-">−</button><button type="button" data-k="0">0</button><button type="button" data-k=".">.</button><button type="button" class="eq" data-k="=">=</button><button type="button" class="op" data-k="+">+</button></div></div>
+</div>
 <div class="action-row" id="actionRow">
   <button class="btn btn-check" onclick="checkAll()">✓ Check Answers</button>
   <button class="btn btn-reset" id="toggleFbBtn" onclick="toggleFeedback()" style="background:#7c3aed;">🙈 Hide Answers</button>
@@ -284,5 +304,34 @@ renderQuestions();/*QPICS*/(function(){var QP={"If 5 pens cost $2.50, unit price
 </script>
 <!--/CHECK-ONE-->
 <!--NO-AUTOFILL--><script>(function(){function f(){document.querySelectorAll('input.ans, input[id^="ans"]').forEach(function(i){if(i.dataset.noaf)return;i.dataset.noaf='1';i.setAttribute('autocomplete','off');i.setAttribute('autocorrect','off');i.setAttribute('autocapitalize','off');i.setAttribute('spellcheck','false');i.setAttribute('name','ans-'+Math.random().toString(36).slice(2,10));});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',f);else f();try{new MutationObserver(f).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}})();</script><!--/NO-AUTOFILL-->
+<script id="mini-calc-js">
+(function(){
+  var SYM={'*':'×','/':'÷','-':'−','+':'+'};
+  function show(c){var e=c.dataset.expr||''; c.querySelector('.mcalc-val').textContent=e===''?'0':e.replace(/[*\/\-+]/g,function(m){return ' '+SYM[m]+' ';});}
+  function evaluate(str){ // safe parser: + - * / ( ) and decimals
+    var t=str.match(/\d*\.?\d+|[()+\-*\/]/g)||[], i=0;
+    function peek(){return t[i];} function next(){return t[i++];}
+    function factor(){var k=next(); if(k==='-')return -factor(); if(k==='+')return factor(); if(k==='('){var v=expr(); if(next()!==')')throw 0; return v;} var n=parseFloat(k); if(isNaN(n))throw 0; return n;}
+    function term(){var v=factor(); while(peek()==='*'||peek()==='/'){var o=next(),r=factor(); if(o==='/'&&r===0)throw 'div0'; v=o==='*'?v*r:v/r;} return v;}
+    function expr(){var v=term(); while(peek()==='+'||peek()==='-'){var o=next(),r=term(); v=o==='+'?v+r:v-r;} return v;}
+    var v=expr(); if(i<t.length)throw 0; return v;
+  }
+  function fmt(v){var r=Math.round(v*1e10)/1e10; return String(r);}
+  function press(c,k){
+    var e=c.dataset.expr||'', ex=c.querySelector('.mcalc-expr');
+    if(c.dataset.done==='1'){ if(/[0-9.(]/.test(k)){e='';} ex.textContent=''; c.dataset.done=''; }
+    if(k==='C'){e='';ex.textContent='';}
+    else if(k==='BS'){e=e.slice(0,-1);}
+    else if(k==='='){ if(!e)return; try{var v=evaluate(e); ex.textContent=c.querySelector('.mcalc-val').textContent+' ='; e=fmt(v); c.dataset.done='1';}catch(err){ex.textContent=(err==='div0'?'Cannot divide by 0':'Check your entry'); return;} }
+    else if(/[*\/+]/.test(k)){ if(e===''&&k!=='-')return; if(/[*\/+\-]$/.test(e))e=e.slice(0,-1); e+=k; }
+    else if(k==='-'){ if(/[*\/+\-]$/.test(e)&&!/[*\/]$/.test(e))e=e.slice(0,-1); e+=k; }
+    else if(k==='.'){ var last=(e.match(/[\d.]*$/)||[''])[0]; if(last.indexOf('.')>=0)return; e+=(last===''?'0.':'.'); }
+    else { e+=k; }
+    c.dataset.expr=e; show(c);
+  }
+  document.addEventListener('click',function(ev){var b=ev.target.closest('.mcalc button'); if(!b)return; press(b.closest('.mcalc'),b.dataset.k);});
+  document.addEventListener('keydown',function(ev){var c=document.activeElement&&document.activeElement.closest&&document.activeElement.closest('.mcalc'); if(!c)return; var k=ev.key; var map={'Enter':'=','Backspace':'BS','Escape':'C','x':'*','X':'*'}; k=map[k]||k; if(/^[0-9.()+\-*\/=]$/.test(k)||k==='BS'||k==='C'){ev.preventDefault(); press(c,k);}});
+})();
+</script>
 </body>
 </html>
