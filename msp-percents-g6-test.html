@@ -613,7 +613,7 @@ Submitted from ${location.href}`;
   <div class="hist" id="msos-calc-hist"></div>
   <div class="disp" id="msos-calc-disp">0</div>
   <div class="keys">
-    <button class="clr" data-k="C">C</button><button data-k="back">⌫</button><button class="op" data-k="%">%</button><button class="op" data-k="/">÷</button>
+    <button class="clr" data-k="C" style="grid-column:span 2">C</button><button data-k="back">⌫</button><button class="op" data-k="/">÷</button>
     <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button><button class="op" data-k="*">×</button>
     <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button><button class="op" data-k="-">−</button>
     <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button><button class="op" data-k="+">+</button>
@@ -634,7 +634,6 @@ Submitted from ${location.href}`;
     else if(k==='.'){ if(fresh){cur='0.';fresh=false;} else if(cur.indexOf('.')<0) cur+='.'; }
     else if(k==='C'){ cur='0';acc=null;op=null;fresh=true; }
     else if(k==='back'){ if(!fresh){ cur=cur.length>1?cur.slice(0,-1):'0'; if(cur==='-')cur='0'; } }
-    else if(k==='%'){ var v=parseFloat(cur); cur=fmt((acc!==null&&op&&(op==='+'||op==='-'))?acc*v/100:v/100); fresh=true; }
     else if(sym[k]){ var v2=parseFloat(cur); if(acc!==null&&op&&!fresh){ acc=calc(acc,v2,op); cur=fmt(acc);} else if(acc===null||!op){ acc=v2; } op=k; fresh=true; }
     else if(k==='='){ if(acc!==null&&op){ var r=calc(acc,parseFloat(cur),op); cur=fmt(r); acc=null; op=null; fresh=true; } }
     show();
