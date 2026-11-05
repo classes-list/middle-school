@@ -3163,7 +3163,7 @@ function showLesson(unitId) {
       if (unit.calcUrl)   resBtns.push(`<a class="btn-lab"   href="${unit.calcUrl}"  target="_blank" rel="noopener" style="${S}">${unit.calcTitle || '🧮 Calculator'}</a>`);
       if (unit.graphLabUrl && unit.id !== 'metrics-sci-process') resBtns.push(`<a class="btn-graph" href="${unit.graphLabUrl}" target="_blank" rel="noopener" style="${S}">📊 Data Analysis</a>`);
     }
-    const scBtn = (!hideExtras) ? `<button class="btn" onclick="showHandout()" style="${S}">🔬 Science Connection</button>` : '';
+    const scBtn = (!hideExtras && unitId !== 'alg-expressions') ? `<button class="btn" onclick="showHandout()" style="${S}">🔬 Science Connection</button>` : '';
     const rwLabel = (typeof REALWORLD_7 !== 'undefined' && REALWORLD_7 && REALWORLD_7[unitId]) ? ((unitId === 'proportional' ? '🍪 ' : '🎨 ') + (REALWORLD_7[unitId].title || '').split(' — ')[0]) : '';
     const rwBtn2 = (typeof REALWORLD_7 !== 'undefined' && REALWORLD_7 && REALWORLD_7[unitId]) ? `<button class="btn" onclick="showRealWorld()" style="${S}">${rwLabel}</button>` : '';
     const wsBtn = (!hideExtras && unit && unit.worksheetUrl) ? `<button class="btn" onclick="showWorksheet()" style="${S}">📋 Worksheet</button>` : '';
@@ -3192,7 +3192,7 @@ function showLesson(unitId) {
   const hbtn = document.getElementById('handout-btn');
   const wbtn = document.getElementById('worksheet-btn');
   const hideExtras = (unitId === 'metrics-sci-process');
-  if (hbtn) hbtn.style.display = hideExtras ? 'none' : '';
+  if (hbtn) hbtn.style.display = (hideExtras || unitId === 'alg-expressions') ? 'none' : '';
   if (wbtn) wbtn.style.display = hideExtras ? 'none' : '';
   const qbe = document.getElementById('quiz-btn-ext');
   const utb = document.getElementById('unittest-btn');
@@ -3778,6 +3778,25 @@ In this project you will build a Microscopic World Data Table that stores real l
       reflect: [
       `A $5 thrifted item resells for $25. What is the markup percent? What is the profit margin percent? Why are these different?`,
       `Why does subtracting platform fees and shipping change the margin so much? Could a high-markup item still be unprofitable?`
+      ]
+    },
+    'alg-expressions': {
+      title: `Real-World Project — Plate Lunch Order`,
+      banner: `🍱 Real-World Math — Ordering Lunch with Algebraic Expressions`,
+      mission: `You are in charge of the lunch order for your friends at a local plate lunch place. Use letters for the food, combine like terms to get one group order, then build a Google Sheets calculator to find the total with Hawaii tax.`,
+      steps: [
+      `<strong>Let the letters stand for the food:</strong> <strong>p</strong> = 1 plate lunch ($14) and <strong>m</strong> = 1 Spam musubi ($3).`,
+      `<strong>Write each order as an expression.</strong> Kai: 2p + m. Leilani: p + 3m. Noah: 2m. Ava: p + m. You: write your own order (at least 1 plate lunch).`,
+      `<strong>Add all the orders and combine like terms.</strong> Example without your order: (2p + m) + (p + 3m) + 2m + (p + m) = 4p + 7m. Put the p's together and the m's together. Then add your order.`,
+      `<strong>Build the calculator in Google Sheets:</strong> A1 Plate lunch price, B1 14 &nbsp;|&nbsp; A2 Musubi price, B2 3 &nbsp;|&nbsp; A4 Plates (p), B4 your number of p &nbsp;|&nbsp; A5 Musubi (m), B5 your number of m.`,
+      `<strong>Add the formulas:</strong> A7 Subtotal, B7 =B4*B1+B5*B2 &nbsp;|&nbsp; A8 Tax (4.712%), B8 =ROUND(B7*0.04712,2) &nbsp;|&nbsp; A9 Total, B9 =B7+B8.`,
+      `<strong>Check your work:</strong> Use the prices to find each friend's cost by hand, add them up, and make sure you get the same subtotal as the Sheet.`,
+      `<strong>Whole-class order:</strong> All 24 students order the same combo, p + 2m. Write 24(p + 2m) and distribute the 24 to both terms. Then type your number of plates in B4 and musubi in B5 to find the class total.`
+      ],
+      deliverable: `Submit your Google Sheet (shared with Dr. Park) with working formulas. Also write: (1) the group order before and after combining like terms, (2) 24(p + 2m) = ____ after distributing, and (3) the group total and class total with tax.`,
+      reflect: [
+      `Why can't 4p + 7m be combined into 11pm? What would that even mean?`,
+      `24(p + 2m) and 24p + 48m give the same total. Explain why using the idea of 24 copies of the combo.`
       ]
     }
 };
