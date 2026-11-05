@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algebra Tiles Visual — Math 7</title>
+<style>
+:root { --navy:#1a2a4a; --gold:#b8860b; --green:#059669; --red:#dc2626; --blue:#1d4ed8; --orange:#d97706; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Tahoma, sans-serif; background:linear-gradient(135deg,#dbeafe 0%,#fef3c7 50%,#f5e6ff 100%); color:#1f2937; min-height:100vh; padding:20px 14px; line-height:1.55; }
+.container { max-width:1000px; margin:0 auto; }
+.back-link { display:inline-block; background:var(--gold); color:var(--navy); padding:9px 18px; border-radius:8px; text-decoration:none; font-weight:800; font-size:.9rem; margin-bottom:14px; }
+.back-link:hover { background:#a16b0a; color:#fff; }
+header { text-align:center; margin-bottom:20px; }
+.eyebrow { display:inline-block; background:var(--navy); color:#fff; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.14em; padding:5px 14px; border-radius:999px; margin-bottom:10px; }
+h1 { font-size:1.9rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.tagline { color:#64748b; font-size:1rem; font-style:italic; }
+.big-idea { background:linear-gradient(120deg,#fef3c7,#fef08a); border:2px solid var(--gold); border-radius:10px; padding:14px 18px; margin:16px 0; color:#78350f; }
+.card { background:#fff; border-radius:14px; padding:22px 26px; box-shadow:0 4px 14px rgba(0,0,0,0.08); margin:22px 0; border-top:5px solid var(--green); }
+.card.dist { border-top-color:var(--blue); }
+.card h2 { font-size:1.4rem; font-weight:900; color:var(--navy); margin-bottom:8px; }
+.legend { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; margin:8px 0 4px; font-weight:700; font-size:.92rem; color:#334155; }
+.legend span { display:inline-flex; align-items:center; gap:6px; }
+.controls { display:flex; gap:12px; flex-wrap:wrap; align-items:center; background:#f8fafc; padding:14px 16px; border:1px solid #cbd5e1; border-radius:8px; margin:12px 0; justify-content:center; }
+.controls label { font-weight:700; color:var(--navy); }
+.controls input[type=text] { padding:8px 10px; border:1.5px solid #94a3b8; border-radius:6px; font-family:'Courier New',monospace; font-size:1.05rem; font-weight:700; width:min(340px,100%); }
+.controls input[type=number] { padding:6px 8px; border:1.5px solid #94a3b8; border-radius:6px; font-family:inherit; font-size:1rem; width:64px; font-weight:700; }
+.btn { padding:8px 14px; background:var(--green); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.9rem; }
+.preset-btns { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:10px 0; }
+.preset-btn { padding:7px 12px; background:var(--navy); color:#fff; border:none; border-radius:6px; font-weight:800; cursor:pointer; font-size:.85rem; font-family:'Courier New',monospace; }
+.preset-btn:hover { background:#0f172a; }
+.stage { background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin:10px 0; }
+.stage h3 { font-size:.95rem; color:#475569; margin-bottom:6px; }
+.row { display:flex; flex-wrap:wrap; gap:6px; align-items:flex-end; min-height:52px; }
+.group { display:flex; flex-wrap:wrap; gap:5px; align-items:flex-end; padding:8px; border-radius:8px; border:2px dashed #cbd5e1; margin:4px 8px 4px 0; }
+.group .glabel { width:100%; font-size:.8rem; font-weight:800; margin-bottom:2px; }
+.tile { display:inline-flex; align-items:center; justify-content:center; font-weight:900; color:#fff; border-radius:4px; font-size:.85rem; transition:opacity .3s; }
+.tile.x { width:22px; height:58px; background:var(--green); }
+.tile.y { width:22px; height:44px; background:var(--blue); }
+.tile.n { width:22px; height:22px; background:var(--orange); }
+.tile.neg { background:#fff; border:2.5px solid var(--red); color:var(--red); }
+.tile.cancel { opacity:.25; }
+.sign { font-weight:900; font-size:1.2rem; color:#334155; padding:0 2px; align-self:center; }
+.result-banner { padding:14px 18px; border-radius:10px; margin:12px 0; font-weight:800; text-align:center; font-size:1.05rem; background:#d1fae5; border:2px solid var(--green); color:#065f46; }
+.result-banner .expr { font-family:'Courier New', monospace; font-size:1.35rem; color:var(--navy); display:block; margin:4px 0; }
+.err { background:#fee2e2; border-color:var(--red); color:#7f1d1d; }
+.tip { background:#eff6ff; border-left:4px solid var(--blue); padding:10px 14px; border-radius:6px; margin:10px 0; font-size:.92rem; }
+.cx { color:var(--green); } .cy { color:var(--blue); } .cn { color:var(--orange); }
+.steps { margin:6px 0 0 22px; font-size:.95rem; }
+.area { overflow-x:auto; text-align:center; }
+footer { text-align:center; margin-top:24px; color:#64748b; font-size:.82rem; padding-top:16px; border-top:1px dashed #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+<a href="msos-math-7.html#unit=alg-expressions" class="back-link" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+
+<header>
+  <div class="eyebrow">Math 7 · Algebraic Expressions · Visual Explorer</div>
+  <h1>🧩 Algebra Tiles</h1>
+  <p class="tagline">Only matching tiles combine. A positive and a negative of the same tile cancel to zero.</p>
+</header>
+
+<div class="big-idea">
+  <strong>How the tiles work:</strong> a tall <span class="cx">green bar</span> is one <strong>x</strong>, a shorter <span class="cy">blue bar</span> is one <strong>y</strong>, and a small <span class="cn">orange square</span> is <strong>1</strong>.
+  A tile with a <span style="color:#dc2626">red outline</span> is negative. One positive tile and one negative tile of the same kind make a <strong>zero pair</strong> and cancel.
+</div>
+
+<section class="card">
+  <h2>1️⃣ Combine Like Terms</h2>
+  <div class="legend">
+    <span><span class="tile x"></span> x</span>
+    <span><span class="tile y"></span> y</span>
+    <span><span class="tile n"></span> 1</span>
+    <span><span class="tile n neg">−</span> −1 (negative)</span>
+  </div>
+  <div class="controls">
+    <label for="exprIn">Expression:</label>
+    <input type="text" id="exprIn" value="4x + 2y - x + 5y" aria-label="expression">
+    <button class="btn" type="button" id="goBtn">Show Tiles</button>
+  </div>
+  <div class="preset-btns">
+    <button class="preset-btn" data-e="3x + 7x">3x + 7x</button>
+    <button class="preset-btn" data-e="4y - y">4y − y</button>
+    <button class="preset-btn" data-e="5x + 2y">5x + 2y</button>
+    <button class="preset-btn" data-e="4x + 2y - x + 5y">4x + 2y − x + 5y</button>
+    <button class="preset-btn" data-e="2x + 3 + 3x - 5">2x + 3 + 3x − 5</button>
+    <button class="preset-btn" data-e="-2x + 4 + 5x - 1">−2x + 4 + 5x − 1</button>
+  </div>
+
+  <div class="stage">
+    <h3>Step 1 — Build each term with tiles (in the order written)</h3>
+    <div class="row" id="rawRow"></div>
+  </div>
+  <div class="stage">
+    <h3>Step 2 — Sort matching tiles into groups (faded tiles are zero pairs that cancel)</h3>
+    <div class="row" id="groupRow"></div>
+  </div>
+  <div id="ctResult" class="result-banner"></div>
+  <div class="tip">Type your own expression using <strong>x</strong>, <strong>y</strong>, and numbers, like <code>3x - 2 + x + 6</code>. Keep each coefficient 12 or less so the tiles fit.</div>
+</section>
+
+<section class="card dist">
+  <h2>2️⃣ Distributive Property — The Area Model</h2>
+  <p>To find <strong>a(bx + c)</strong>, picture a rectangle that is <strong>a</strong> tall and <strong>bx + c</strong> wide. Its area is made of two smaller rectangles: <strong>a·bx</strong> and <strong>a·c</strong>.</p>
+  <div class="controls">
+    <label>a = <input type="number" id="dA" value="3" min="-6" max="6"></label>
+    <span style="font-weight:900; font-size:1.2rem;">(</span>
+    <label><input type="number" id="dB" value="2" min="-6" max="6"> x</label>
+    <span style="font-weight:900;">+</span>
+    <label><input type="number" id="dC" value="4" min="-9" max="9"></label>
+    <span style="font-weight:900; font-size:1.2rem;">)</span>
+  </div>
+  <div class="preset-btns">
+    <button class="preset-btn" data-d="3,2,4">3(2x + 4)</button>
+    <button class="preset-btn" data-d="2,1,5">2(x + 5)</button>
+    <button class="preset-btn" data-d="4,2,-3">4(2x − 3)</button>
+    <button class="preset-btn" data-d="-3,1,-4">−3(x − 4)</button>
+  </div>
+  <div class="stage area"><svg id="areaSvg" width="640" height="260" viewBox="0 0 640 260" role="img" aria-label="area model"></svg></div>
+  <div id="dResult" class="result-banner"></div>
+  <ol class="steps" id="dSteps"></ol>
+</section>
+
+<footer>Mary, Star of the Sea School · 7th Grade Math · Dr. Park · Algebra Tiles Visual</footer>
+</div>
+
+<script>
+(function(){
+  var MAXC = 12;
+  function parse(str){
+    var s = String(str).replace(/[−–]/g,'-').replace(/\s+/g,'').toLowerCase();
+    if(!s) throw 'Type an expression.';
+    if(!/^[0-9xy+\-]+$/.test(s)) throw 'Use only numbers, x, y, + and −.';
+    var re = /([+\-]?)(\d*)([xy]?)/g, m, terms=[], pos=0;
+    while(pos < s.length){
+      re.lastIndex = pos; m = re.exec(s);
+      if(!m || m.index!==pos || m[0]==='' || (m[2]==='' && m[3]==='')) throw 'Check the expression near "'+s.slice(pos)+'".';
+      var sign = m[1]==='-' ? -1 : 1;
+      var coef = m[2]==='' ? 1 : parseInt(m[2],10);
+      if(pos>0 && m[1]==='') throw 'Put + or − between terms.';
+      if(coef > MAXC) throw 'Keep each coefficient ' + MAXC + ' or less.';
+      if(coef===0){ pos = re.lastIndex; continue; }
+      terms.push({kind: m[3] || 'n', val: sign*coef, text: m[0]});
+      pos = re.lastIndex;
+    }
+    if(!terms.length) throw 'Type an expression.';
+    return terms;
+  }
+  function tile(kind, neg, cancel){
+    var d=document.createElement('span');
+    d.className='tile '+kind+(neg?' neg':'')+(cancel?' cancel':'');
+    d.textContent = neg ? '−' : (kind==='n' ? '' : '');
+    return d;
+  }
+  var NAME={x:'x', y:'y', n:''};
+  function fmtTerm(v,kind,first){
+    if(v===0) return '';
+    var a=Math.abs(v), body = kind==='n' ? String(a) : ((a===1?'':a)+kind);
+    if(first) return (v<0?'−':'')+body;
+    return (v<0?' − ':' + ')+body;
+  }
+  function fmtExpr(parts){
+    var out='', first=true;
+    parts.forEach(function(p){ if(p.v!==0){ out+=fmtTerm(p.v,p.k,first); first=false; } });
+    return out || '0';
+  }
+  var COLOR={x:'#047857', y:'#1d4ed8', n:'#b45309'};
+  var LABEL={x:'x-terms', y:'y-terms', n:'numbers'};
+  function renderCombine(){
+    var raw=document.getElementById('rawRow'), grp=document.getElementById('groupRow'), res=document.getElementById('ctResult');
+    raw.innerHTML=''; grp.innerHTML=''; res.className='result-banner';
+    var terms;
+    try { terms=parse(document.getElementById('exprIn').value); }
+    catch(e){ res.className='result-banner err'; res.innerHTML=e; return; }
+    terms.forEach(function(t,i){
+      if(i>0 || t.val<0){ var sg=document.createElement('span'); sg.className='sign'; sg.textContent = t.val<0 ? '−' : '+'; raw.appendChild(sg); }
+      var box=document.createElement('span'); box.style.display='inline-flex'; box.style.gap='3px'; box.style.alignItems='flex-end';
+      for(var k=0;k<Math.abs(t.val);k++) box.appendChild(tile(t.kind, t.val<0, false));
+      raw.appendChild(box);
+    });
+    var order=['x','y','n'], parts=[], groupsTxt=[];
+    order.forEach(function(kind){
+      var list=terms.filter(function(t){return t.kind===kind;});
+      if(!list.length) return;
+      var pos=0, neg=0; list.forEach(function(t){ if(t.val>0) pos+=t.val; else neg+=-t.val; });
+      var pairs=Math.min(pos,neg), total=pos-neg;
+      var g=document.createElement('div'); g.className='group'; g.style.borderColor=COLOR[kind];
+      var lab=document.createElement('div'); lab.className='glabel'; lab.style.color=COLOR[kind];
+      var sumTxt=list.map(function(t,i){ return (i===0 ? (t.val<0?'−':'') : (t.val<0?' − ':' + ')) + Math.abs(t.val); }).join('');
+      lab.textContent = LABEL[kind]+': '+sumTxt+' = '+total + (pairs? '  ('+pairs+' zero pair'+(pairs>1?'s':'')+' cancel)':'');
+      g.appendChild(lab);
+      for(var a=0;a<pos;a++) g.appendChild(tile(kind,false,a<pairs));
+      for(var b=0;b<neg;b++) g.appendChild(tile(kind,true,b<pairs));
+      grp.appendChild(g);
+      parts.push({k:kind, v:total});
+      groupsTxt.push('(' + list.map(function(t,i){ return fmtTerm(t.val,t.kind,i===0).trim(); }).join(' ') + ')');
+    });
+    var input = terms.map(function(t,i){ return fmtTerm(t.val,t.kind,i===0); }).join('');
+    res.innerHTML='🎯 <span class="expr">'+input+' = '+fmtExpr(parts)+'</span>'+
+      (parts.length>1 ? '<span style="font-weight:700;font-size:.95rem">Different tiles stay separate — they can’t combine.</span>' : '');
+  }
+  document.getElementById('goBtn').addEventListener('click', renderCombine);
+  document.getElementById('exprIn').addEventListener('keydown', function(e){ if(e.key==='Enter') renderCombine(); });
+  document.querySelectorAll('[data-e]').forEach(function(b){ b.addEventListener('click', function(){ document.getElementById('exprIn').value=b.dataset.e; renderCombine(); }); });
+
+  function num(id,lo,hi){ var v=parseInt(document.getElementById(id).value,10); if(isNaN(v)) v=0; return Math.max(lo,Math.min(hi,v)); }
+  function signed(v){ return v<0 ? '('+v+')' : String(v); }
+  function renderDist(){
+    var a=num('dA',-6,6), b=num('dB',-6,6), c=num('dC',-9,9);
+    var svg=document.getElementById('areaSvg');
+    var unit=24, xw=60; // width of one x
+    var w1=Math.abs(b)*xw, w2=Math.abs(c)*unit, h=Math.abs(a)*unit;
+    var left=70, top=50, g='';
+    var neg1=(a*b)<0, neg2=(a*c)<0;
+    if(h>0 && w1>0){
+      g+='<rect x="'+left+'" y="'+top+'" width="'+w1+'" height="'+h+'" fill="'+(neg1?'#fee2e2':'#d1fae5')+'" stroke="#047857" stroke-width="2"/>';
+      for(var i=1;i<Math.abs(b);i++) g+='<line x1="'+(left+i*xw)+'" y1="'+top+'" x2="'+(left+i*xw)+'" y2="'+(top+h)+'" stroke="#047857" stroke-dasharray="4 3"/>';
+      for(var j=1;j<Math.abs(a);j++) g+='<line x1="'+left+'" y1="'+(top+j*unit)+'" x2="'+(left+w1)+'" y2="'+(top+j*unit)+'" stroke="#047857" stroke-dasharray="4 3"/>';
+      g+='<text x="'+(left+w1/2)+'" y="'+(top+h/2+6)+'" text-anchor="middle" font-size="18" font-weight="900" fill="'+(neg1?'#b91c1c':'#065f46')+'">'+(a*b===1?'':a*b===-1?'−':(a*b<0?'−'+Math.abs(a*b):a*b))+'x</text>';
+    }
+    if(h>0 && w2>0){
+      var x2=left+w1+8;
+      g+='<rect x="'+x2+'" y="'+top+'" width="'+w2+'" height="'+h+'" fill="'+(neg2?'#fee2e2':'#fef3c7')+'" stroke="#b45309" stroke-width="2"/>';
+      for(var k=1;k<Math.abs(c);k++) g+='<line x1="'+(x2+k*unit)+'" y1="'+top+'" x2="'+(x2+k*unit)+'" y2="'+(top+h)+'" stroke="#b45309" stroke-dasharray="3 3"/>';
+      for(var m=1;m<Math.abs(a);m++) g+='<line x1="'+x2+'" y1="'+(top+m*unit)+'" x2="'+(x2+w2)+'" y2="'+(top+m*unit)+'" stroke="#b45309" stroke-dasharray="3 3"/>';
+      g+='<text x="'+(x2+w2/2)+'" y="'+(top+h/2+6)+'" text-anchor="middle" font-size="18" font-weight="900" fill="'+(neg2?'#b91c1c':'#92400e')+'">'+(a*c<0?'−'+Math.abs(a*c):a*c)+'</text>';
+      g+='<text x="'+(x2+w2/2)+'" y="'+(top-12)+'" text-anchor="middle" font-size="15" font-weight="800" fill="#b45309">'+c+'</text>';
+    }
+    if(w1>0) g+='<text x="'+(left+w1/2)+'" y="'+(top-12)+'" text-anchor="middle" font-size="15" font-weight="800" fill="#047857">'+(b===1?'':b===-1?'−':b)+'x</text>';
+    if(h>0) g+='<text x="'+(left-12)+'" y="'+(top+h/2+5)+'" text-anchor="end" font-size="16" font-weight="900" fill="#0369a1">'+a+'</text>';
+    var W=Math.max(640,left+w1+w2+40), H=Math.max(140,top+h+40);
+    svg.setAttribute('width',W); svg.setAttribute('height',H); svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    if(h===0||(w1===0&&w2===0)) g+='<text x="320" y="90" text-anchor="middle" font-size="16" font-weight="700" fill="#64748b">A side of 0 makes an area of 0.</text>';
+    if(neg1||neg2) g+='<text x="'+left+'" y="'+(top+h+28)+'" font-size="13" font-weight="700" fill="#b91c1c">Pink = negative part (one negative factor makes the product negative).</text>';
+    svg.innerHTML=g;
+    var t1=a*b, t2=a*c;
+    var inner=(b===1?'':b===-1?'−':b)+'x'+(c<0?' − '+Math.abs(c):' + '+c);
+    var ans=fmtExpr([{k:'x',v:t1},{k:'n',v:t2}]);
+    document.getElementById('dResult').innerHTML='🎯 <span class="expr">'+String(a).replace('-','−')+'('+inner+') = '+ans+'</span>';
+    document.getElementById('dSteps').innerHTML=
+      '<li>Multiply '+a+' by the first term: '+signed(a)+' · '+(b===1?'':signed(b))+'x = <strong>'+fmtExpr([{k:'x',v:t1}])+'</strong></li>'+
+      '<li>Multiply '+a+' by the second term: '+signed(a)+' · '+signed(c)+' = <strong>'+t2+'</strong></li>'+
+      '<li>Add the two parts: <strong>'+ans+'</strong></li>';
+  }
+  ['dA','dB','dC'].forEach(function(id){ document.getElementById(id).addEventListener('input', renderDist); });
+  document.querySelectorAll('[data-d]').forEach(function(b){ b.addEventListener('click', function(){ var v=b.dataset.d.split(','); document.getElementById('dA').value=v[0]; document.getElementById('dB').value=v[1]; document.getElementById('dC').value=v[2]; renderDist(); }); });
+
+  renderCombine(); renderDist();
+})();
+</script>
+</body>
+</html>
