@@ -94,6 +94,20 @@ input.ans.nocheck { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
 }
 body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important; }
 
+
+.nl-wrap{position:relative;max-width:560px;margin:10px 0 4px;padding:0 18px}
+.nl-line{position:absolute;left:4px;right:4px;top:14px;height:2px;background:#1e293b}
+.nl-line:before,.nl-line:after{content:"";position:absolute;top:-6px;border:7px solid transparent}
+.nl-line:before{left:-8px;border-right:10px solid #1e293b;border-left:0}
+.nl-line:after{right:-8px;border-left:10px solid #1e293b;border-right:0}
+.nl-row{display:flex;justify-content:space-between;position:relative}
+.nl-cell{display:flex;flex-direction:column;align-items:center;width:40px}
+.nl-tick{display:block;width:2px;height:20px;background:#1e293b;margin-top:5px}
+.nl-box{width:38px;margin-top:6px;padding:4px 0;text-align:center;font-weight:700;font-size:.95rem;border:1.5px solid #94a3b8;border-radius:6px}
+.nl-box[readonly]{background:#f1f5f9;color:#334155}
+.nl-box.correct{border-color:#16a34a;background:#dcfce7}
+.nl-box.wrong{border-color:#dc2626;background:#fee2e2}
+@media (max-width:520px){.nl-cell{width:28px}.nl-box{width:28px;font-size:.8rem}}
 </style></head><body>
 <div class="container">
 <header>
@@ -110,14 +124,14 @@ body, input, button, textarea, select { font-family: 'GreekMath', 'Segoe UI', Ta
 <div class="intro">Integers = whole numbers plus their opposites. …-3, -2, -1, 0, 1, 2, 3…</div>
 <h3>Practice:</h3>
 <ol class="qlist">
-<li>Draw a number line showing -5 to 5. <input class="ans" data-a="" size="11"></li>
+<li>Fill in the number line from -5 to 5. <input class="ans nl-store" data-a="" style="display:none"><div class="nl-wrap" id="nl1"><div class="nl-line"></div><div class="nl-row"><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="-5" inputmode="numeric" autocomplete="off" aria-label="number at tick 1"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="-4" inputmode="numeric" autocomplete="off" aria-label="number at tick 2"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="-3" inputmode="numeric" autocomplete="off" aria-label="number at tick 3"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="-2" inputmode="numeric" autocomplete="off" aria-label="number at tick 4"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="-1" inputmode="numeric" autocomplete="off" aria-label="number at tick 5"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="0" value="0" readonly aria-label="0" tabindex="-1"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="1" inputmode="numeric" autocomplete="off" aria-label="number at tick 7"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="2" inputmode="numeric" autocomplete="off" aria-label="number at tick 8"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="3" inputmode="numeric" autocomplete="off" aria-label="number at tick 9"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="4" inputmode="numeric" autocomplete="off" aria-label="number at tick 10"></div><div class="nl-cell"><span class="nl-tick"></span><input class="nl-box" data-a="5" inputmode="numeric" autocomplete="off" aria-label="number at tick 11"></div></div></div></li>
 <li>Which is greater: -3 or -8? <input class="ans" data-a="-3 &gt; -8" size="10"></li>
 <li>Order: -2, 5, 0, -7, 3 (least to greatest) <input class="ans" data-a="-7, -2, 0, 3, 5" size="18"></li>
 <li>The opposite of 6 is  <input class="ans" data-a="-6" size="6"></li>
 <li>The opposite of -4 is  <input class="ans" data-a="4" size="6"></li>
 </ol>
 <button class="check-btn" onclick="checkSection('wsec1')">✓ Check Answers</button><button type="button" onclick="saveAnswersToFile()" class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #047857; background:#059669; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0;">💾 Save</button><label class="save-btn" style="padding:7px 12px; border-radius:6px; border:1px solid #0369a1; background:#0284c7; color:#fff; font-weight:800; font-size:.85rem; cursor:pointer; margin:8px 4px 6px 0; display:inline-block;">📁 Load<input type="file" accept=".json" style="display:none;" onchange="loadAnswersFromFile(event)"></label><button class="reset-btn" onclick="resetSection('wsec1')">↺ Clear</button><span class="score" id="score-wsec1">—</span> <button class="reveal-btn" onclick="toggle('ak1')">Show / Hide Answer Key</button>
-<div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) [Number line drawn] (2) -3 > -8 (closer to 0) (3) -7, -2, 0, 3, 5 (4) -6 (5) 4</div>
+<div id="ak1" class="ak"><h4>Answer Key — Section 1</h4>(1) -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5 (2) -3 > -8 (closer to 0) (3) -7, -2, 0, 3, 5 (4) -6 (5) 4</div>
 </section>
 <section class="card" id="wsec2">
 <h2>2️⃣ Absolute Value</h2>
@@ -529,4 +543,23 @@ document.addEventListener('keydown', function(e){
 })();
 </script>
 <!--/CHECK-ONE-->
+<script id="numline-js">
+(function(){
+  var wrap=document.getElementById('nl1'); if(!wrap) return;
+  var store=wrap.parentNode.querySelector('.nl-store');
+  var boxes=[].slice.call(wrap.querySelectorAll('.nl-box'));
+  function norm(v){return String(v).replace(/[\u2212\u2013]/g,'-').replace(/\s+/g,'');}
+  function sync(){ store.value=boxes.map(function(b){return b.value;}).join('|'); store.dispatchEvent(new Event('input',{bubbles:true})); }
+  boxes.forEach(function(b){ if(!b.readOnly){ b.addEventListener('input',function(){ b.classList.remove('correct','wrong'); sync(); }); } });
+  function load(){ var v=(store.value||'').split('|'); if(v.length===boxes.length) boxes.forEach(function(b,i){ if(!b.readOnly) b.value=v[i]; }); }
+  function check(){ boxes.forEach(function(b){ if(b.readOnly) return; var s=norm(b.value); b.classList.remove('correct','wrong'); if(!s) return; b.classList.add(s===norm(b.dataset.a)?'correct':'wrong'); }); }
+  function clear(){ boxes.forEach(function(b){ if(!b.readOnly){ b.value=''; } b.classList.remove('correct','wrong'); }); }
+  var sec=wrap.closest('section');
+  if(sec){ sec.addEventListener('click',function(e){ var btn=e.target.closest('button'); if(!btn) return;
+    if(btn.classList.contains('check-btn')) check();
+    else if(btn.classList.contains('reset-btn')) setTimeout(function(){ clear(); sync(); },0); }); }
+  document.addEventListener('click',function(e){ var btn=e.target.closest('button'); if(btn && /clearAllAnswers/.test(btn.getAttribute('onclick')||'')) setTimeout(function(){ if(!store.value) clear(); },0); });
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){ setTimeout(load,0); }); else setTimeout(load,0);
+})();
+</script>
 </body></html>
