@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Real-World Scenario Worksheet — Shop A vs. Shop B</title>
+<style>
+  :root { --navy:#1F3864; --a:#1d4ed8; --b:#dc2626; --ok:#16a34a; --line:#cbd5e1; --bg:#f8fafc; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#eef2f7; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:#1e293b; }
+  .page { max-width:860px; margin:20px auto; background:#fff; border-radius:12px; padding:24px 28px; box-shadow:0 2px 10px rgba(0,0,0,.08); }
+  h1 { color:var(--navy); font-size:1.5em; margin:0 0 4px; }
+  .sub { color:#64748b; margin:0 0 16px; }
+  .name { display:flex; gap:8px; align-items:center; margin-bottom:16px; font-weight:600; }
+  .name input { flex:0 1 320px; padding:6px 8px; border:1px solid var(--line); border-radius:6px; font-size:1em; }
+  .scenario { background:#fff8e1; border-left:5px solid #f59e0b; padding:12px 16px; border-radius:8px; line-height:1.55; }
+  .part { margin-top:22px; padding-top:14px; border-top:1px solid #e2e8f0; }
+  .part h2 { font-size:1.1em; color:var(--navy); margin:0 0 8px; }
+  .pts { color:#64748b; font-weight:400; font-size:.9em; }
+  .eq { display:flex; align-items:center; gap:6px; margin:8px 0; font-size:1.15em; font-family:Georgia,serif; flex-wrap:wrap; }
+  .eq .lab { font-family:system-ui,sans-serif; font-weight:700; width:72px; font-size:.85em; }
+  .eq input, td input, .bp input { width:76px; padding:5px 6px; font-size:1em; text-align:center; border:1px solid var(--line); border-radius:6px; }
+  .A { color:var(--a); } .B { color:var(--b); }
+  table { border-collapse:collapse; margin:6px 0; }
+  th, td { border:1px solid var(--line); padding:5px 10px; text-align:center; }
+  th { background:var(--navy); color:#fff; font-weight:600; }
+  td:first-child { font-weight:700; background:#f1f5f9; }
+  .tools { display:flex; gap:8px; flex-wrap:wrap; margin:8px 0; align-items:center; }
+  .btn { border:2px solid var(--navy); background:#fff; color:var(--navy); border-radius:8px; padding:6px 12px; font-weight:700; cursor:pointer; font-size:.9em; }
+  .btn.on.A { background:var(--a); border-color:var(--a); color:#fff; }
+  .btn.on.B { background:var(--b); border-color:var(--b); color:#fff; }
+  .btn.A { border-color:var(--a); color:var(--a); } .btn.B { border-color:var(--b); color:var(--b); }
+  .hint { color:#64748b; font-size:.88em; }
+  .graph-wrap { background:var(--bg); border-radius:10px; padding:8px; text-align:center; }
+  #g { width:100%; max-width:520px; height:auto; display:block; margin:0 auto; cursor:crosshair; touch-action:manipulation; }
+  #coord { font-family:monospace; color:#475569; min-height:1.2em; }
+  .bp { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:6px 0; font-size:1.05em; }
+  select, textarea { font-size:1em; padding:5px 6px; border:1px solid var(--line); border-radius:6px; font-family:inherit; }
+  textarea { width:100%; min-height:70px; }
+  .ok { border-color:var(--ok) !important; background:#ecfdf5 !important; }
+  .bad { border-color:var(--b) !important; background:#fef2f2 !important; }
+  .submit { background:#059669; color:#fff; border:none; border-radius:8px; padding:10px 18px; font-weight:800; font-size:1em; cursor:pointer; }
+  .submit:disabled { background:#94a3b8; cursor:default; }
+  #result { display:none; margin-top:18px; padding:12px 16px; border-radius:10px; background:#eff6ff; border:2px solid var(--a); font-size:1.05em; }
+  .back { display:inline-block; background:#f5c518; color:#1F3864; border:1.5px solid #b8860b; padding:8px 16px; border-radius:8px; font-weight:800; text-decoration:none; margin-bottom:14px; }
+  @media print { .back { display:none; } }
+  .key { display:none; margin-top:24px; background:#ecfdf5; border:2px solid var(--ok); border-radius:10px; padding:12px 16px; }
+  .footer { display:flex; justify-content:flex-end; margin-top:20px; }
+  @media print { body { background:#fff; } .page { box-shadow:none; margin:0; } .tools, .footer, #coord { display:none; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="msos-math-8.html#unit=linear-equations" class="back" onclick="if(window.opener||window.history.length<=1){window.close();return false;}history.back();return false;">← Back to Unit</a>
+  <h1>Linear Equations — Shop A vs. Shop B</h1>
+  <p class="sub">Math 8 · Unit 8</p>
+  <div class="name">Name: <input id="stuName" autocomplete="off"> Class: <input id="stuClass" autocomplete="off" placeholder="8A" style="flex:0 1 80px;"></div>
+
+  <div class="scenario">
+    A car detail costs <b>$100</b> at both shops.
+    <ul style="margin:6px 0 0;">
+      <li><b class="A">Shop A</b> charges a <b>$200</b> yearly membership. Members get <b>50% off</b> every detail.</li>
+      <li><b class="B">Shop B</b> has <b>no membership</b>. Every detail costs the full <b>$100</b>.</li>
+    </ul>
+    Let <b>x</b> = the number of monthly details in one year and <b>y</b> = the total cost for the year (membership + details).
+  </div>
+
+  <div class="part">
+    <h2>Part 1 — Write an equation for each shop <span class="pts">(4 pts)</span></h2>
+    <div class="eq"><span class="lab A">Shop A</span> y = <input id="mA" inputmode="decimal"> x + <input id="bA" inputmode="decimal"></div>
+    <div class="eq"><span class="lab B">Shop B</span> y = <input id="mB" inputmode="decimal"> x + <input id="bB" inputmode="decimal"></div>
+  </div>
+
+  <div class="part">
+    <h2>Part 2 — Complete the table <span class="pts">(14 pts)</span></h2>
+    <table id="tbl">
+      <tr><th>Details (x)</th><th class="">Shop A cost (y)</th><th>Shop B cost (y)</th></tr>
+    </table>
+  </div>
+
+  <div class="part">
+    <h2>Part 3 — Check your graph</h2>
+    <p class="hint" style="margin:4px 0 8px;">The graph plots your table values automatically. <b class="A">Blue</b> = Shop A, <b class="B">red</b> = Shop B.</p>
+    <div class="graph-wrap">
+      <svg id="g" viewBox="0 0 560 560" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div id="coord"></div>
+    </div>
+  </div>
+
+  <div class="part">
+    <h2>Part 4 — Find the breaking point <span class="pts">(2 pts)</span></h2>
+    <p style="margin:4px 0;">Where do the two lines cross?</p>
+    <div class="bp">( x = <input id="bpx" inputmode="decimal"> , y = $<input id="bpy" inputmode="decimal"> )</div>
+  </div>
+
+  <div class="part">
+    <h2>Part 5 — Decide <span class="pts">(2 pts)</span></h2>
+    <div class="bp"><span>1. If you get <b>fewer than 4</b> details a year, which shop is cheaper?</span>
+      <select id="pick1"><option value="">— choose —</option><option>Shop A</option><option>Shop B</option><option>Same cost</option></select>
+    </div>
+    <div class="bp"><span>2. If you get <b>more than 4</b> details a year, is it worth paying Shop A's membership fee?</span>
+      <select id="pick2"><option value="">— choose —</option><option>Yes</option><option>No</option></select>
+    </div>
+  </div>
+
+  <div class="key" id="key">
+    <b>Answer key</b>
+    <ul style="margin:6px 0 0;">
+      <li>Shop A: y = 50x + 200 · Shop B: y = 100x (or 100x + 0)</li>
+      <li>Table: Shop A 200, 300, 400, 500, 600, 700, 800 · Shop B 0, 200, 400, 600, 800, 1000, 1200</li>
+      <li>Breaking point: (4, 400)</li>
+      <li>Fewer than 4 details: Shop B is cheaper · More than 4 details: Yes, the membership is worth it (Shop A is cheaper)</li>
+    </ul>
+  </div>
+
+  <div id="result"></div>
+  <div class="footer" style="justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+    <span class="hint">Submit opens Gmail with your name, score and answers ready to send to Dr. Park. You can submit only once.</span>
+    <button class="submit" id="submitBtn" type="button">📧 Submit to Dr. Park</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Table rows
+  var xs=[0,2,4,6,8,10,12], tbl=document.getElementById('tbl');
+  xs.forEach(function(x){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+x+'</td><td><input class="A" inputmode="decimal" data-x="'+x+'" data-s="A"></td><td><input class="B" inputmode="decimal" data-x="'+x+'" data-s="B"></td>';
+    tbl.appendChild(tr);
+  });
+
+  // Graph: x 0..12, y 0..1200
+  var svg=document.getElementById('g'), NS='http://www.w3.org/2000/svg';
+  var L=70,T=20,W=460,H=480, XMAX=12, YMAX=1200;
+  function px(x){return L+x/XMAX*W;} function py(y){return T+H-y/YMAX*H;}
+  function el(n,a,t){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);if(t!=null)e.textContent=t;svg.appendChild(e);return e;}
+  for(var i=0;i<=XMAX;i++){ el('line',{x1:px(i),y1:T,x2:px(i),y2:T+H,stroke:'#e2e8f0'}); el('text',{x:px(i),y:T+H+18,'text-anchor':'middle','font-size':12,fill:'#475569'},i); }
+  for(var j=0;j<=YMAX;j+=50){ el('line',{x1:L,y1:py(j),x2:L+W,y2:py(j),stroke:'#e2e8f0'}); el('text',{x:L-8,y:py(j)+4,'text-anchor':'end','font-size':12,fill:'#475569'},'$'+j); }
+  el('line',{x1:L,y1:T+H,x2:L+W,y2:T+H,stroke:'#334155','stroke-width':2});
+  el('line',{x1:L,y1:T,x2:L,y2:T+H,stroke:'#334155','stroke-width':2});
+  el('text',{x:L+W/2,y:T+H+38,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#1e293b'},'Details per year (x)');
+  el('text',{x:16,y:T+H/2,'text-anchor':'middle','font-size':13,'font-weight':700,fill:'#1e293b',transform:'rotate(-90 16 '+(T+H/2)+')'},'Total yearly cost (y)');
+  var layer=document.createElementNS(NS,'g'); svg.appendChild(layer);
+
+  var colors={A:'#1d4ed8',B:'#dc2626'};
+  function toData(evt){
+    var p=svg.createSVGPoint(); p.x=evt.clientX; p.y=evt.clientY;
+    var q=p.matrixTransform(svg.getScreenCTM().inverse());
+    if(q.x<L-10||q.x>L+W+10||q.y<T-10||q.y>T+H+10) return null;
+    return {x:Math.max(0,Math.min(XMAX,Math.round((q.x-L)/W*XMAX))), y:Math.max(0,Math.min(YMAX,Math.round((T+H-q.y)/H*YMAX/10)*10))};
+  }
+  function tablePoints(s){
+    var out=[];
+    document.querySelectorAll('#tbl input[data-s="'+s+'"]').forEach(function(inp){
+      var v=inp.value.replace(/[$,\s]/g,''); if(v==='') return;
+      var y=Number(v), x=Number(inp.dataset.x);
+      if(isFinite(y) && y>=0 && y<=YMAX) out.push({x:x,y:y});
+    });
+    return out;
+  }
+  function draw(){
+    while(layer.firstChild) layer.removeChild(layer.firstChild);
+    ['A','B'].forEach(function(s){
+      var p=tablePoints(s);
+      if(p.length>1){
+        var e=document.createElementNS(NS,'polyline');
+        e.setAttribute('points',p.map(function(o){return px(o.x)+','+py(o.y);}).join(' '));
+        e.setAttribute('fill','none'); e.setAttribute('stroke',colors[s]); e.setAttribute('stroke-width',3);
+        layer.appendChild(e);
+      }
+      p.forEach(function(o){
+        var c=document.createElementNS(NS,'circle');
+        c.setAttribute('cx',px(o.x)); c.setAttribute('cy',py(o.y)); c.setAttribute('r',5);
+        c.setAttribute('fill',colors[s]); c.setAttribute('stroke','#fff'); c.setAttribute('stroke-width',1.5);
+        layer.appendChild(c);
+      });
+    });
+  }
+  svg.style.cursor='default';
+  svg.addEventListener('mousemove',function(e){var d=toData(e); document.getElementById('coord').textContent=d?('('+d.x+', $'+d.y+')'):'';});
+  svg.addEventListener('mouseleave',function(){document.getElementById('coord').textContent='';});
+  document.getElementById('tbl').addEventListener('input',draw);
+
+  // Autosave in this browser
+  var KEY='shopAB-test-v7';
+  function fields(){return document.querySelectorAll('input,select,textarea');}
+  function save(){try{var v=[];fields().forEach(function(f){v.push(f.value);});localStorage.setItem(KEY,JSON.stringify({v:v}));}catch(e){}}
+  try{var s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s){fields().forEach(function(f,i){if(s.v[i]!=null)f.value=s.v[i];});}}catch(e){}
+  document.addEventListener('input',save); document.addEventListener('change',save);
+  draw();
+
+  // Grading: 22 inputs, 1 point each
+  var ANS=[['mA',50,'Shop A slope'],['bA',200,'Shop A y-intercept'],['mB',100,'Shop B slope'],['bB',0,'Shop B y-intercept']];
+  xs.forEach(function(x){ ANS.push(['tA'+x,50*x+200,'Table x='+x+' Shop A']); ANS.push(['tB'+x,100*x,'Table x='+x+' Shop B']); });
+  ANS.push(['bpx',4,'Breaking point x'],['bpy',400,'Breaking point y'],['pick1','Shop B','Fewer than 4: cheaper shop'],['pick2','Yes','More than 4: membership worth it?']);
+  document.querySelectorAll('#tbl input').forEach(function(i){ i.id='t'+i.dataset.s+i.dataset.x; });
+  function num(v){ v=String(v).replace(/[$,\s]/g,''); return v===''?NaN:Number(v); }
+  function grade(){
+    var score=0, lines=[];
+    ANS.forEach(function(a){
+      var el=document.getElementById(a[0]), v=el.value.trim();
+      var ok = typeof a[1]==='number' ? num(v)===a[1] : v===a[1];
+      if(ok) score++;
+      el.classList.remove('ok','bad'); el.classList.add(ok?'ok':'bad');
+      lines.push(a[2]+': '+(v||'(blank)')+(ok?' ✓':' ✗ (correct: '+a[1]+')'));
+    });
+    return {score:score, lines:lines};
+  }
+  function lock(){ fields().forEach(function(f){ if(f.id!=='stuName'&&f.id!=='stuClass') f.disabled=true; }); var b=document.getElementById('submitBtn'); b.disabled=true; b.textContent='✓ Submitted'; }
+  function showResult(r,when){ var d=document.getElementById('result'); d.style.display='block'; d.innerHTML='<b>Score: '+r.score+' / 22</b> · submitted '+when+'. Green = correct, red = incorrect.'; }
+  var SUBKEY='shopAB-test-submitted-v1';
+  document.getElementById('submitBtn').onclick=function(){
+    var name=document.getElementById('stuName').value.trim(), cls=document.getElementById('stuClass').value.trim();
+    if(!name){ alert('Please enter your name first.'); document.getElementById('stuName').focus(); return; }
+    if(!cls){ alert('Please enter your class (e.g. 8A) first.'); document.getElementById('stuClass').focus(); return; }
+    if(!confirm('Submit your answers? You will not be able to change them.')) return;
+    var r=grade(), now=new Date();
+    save(); try{ localStorage.setItem(SUBKEY, JSON.stringify({at:now.getTime()})); }catch(e){}
+    lock(); showResult(r, now.toLocaleString('en-US'));
+    var subject='Unit 8 Real-World Scenario Worksheet — '+name;
+    var body='Student: '+name+'\nClass: '+cls+'\nScore: '+r.score+' / 22\nSubmitted: '+now.toLocaleString('en-US')+'\n\n'+r.lines.join('\n')+'\n\n—\nSubmitted from '+location.href;
+    window.open('https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body),'_blank');
+  };
+  try{ var sub=JSON.parse(localStorage.getItem(SUBKEY)||'null'); if(sub){ var r0=grade(); lock(); showResult(r0, new Date(sub.at).toLocaleString('en-US')); } }catch(e){}
+
+  // Teacher answer key: add ?key=1 to the URL
+  if(/[?&]key=1/.test(location.search)) document.getElementById('key').style.display='block';
+})();
+</script>
+</body>
+</html>
