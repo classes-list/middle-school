@@ -20,6 +20,12 @@
   .eq { display:flex; align-items:center; gap:6px; margin:8px 0; font-size:1.15em; font-family:Georgia,serif; flex-wrap:wrap; }
   .eq .lab { font-family:system-ui,sans-serif; font-weight:700; width:72px; font-size:.85em; }
   .eq input, td input, .bp input { width:76px; padding:5px 6px; font-size:1em; text-align:center; border:1px solid var(--line); border-radius:6px; }
+  .formula { background:#f0f7ff; border:2px solid #bfdbfe; border-radius:10px; padding:12px 16px; margin:4px 0 14px; line-height:1.45; }
+  .formula .big { font-family:Georgia,serif; font-size:1.6em; font-weight:700; text-align:center; color:var(--navy); }
+  .formula .m { color:#7c3aed; font-weight:800; } .formula .b { color:#0d9488; font-weight:800; }
+  .formula .ftab { border-collapse:collapse; margin:0; width:100%; }
+  .formula .ftab td { border:none; border-bottom:1px solid #dbeafe; text-align:left; padding:4px 8px; background:transparent !important; font-weight:400; }
+  .formula .ftab td:first-child { white-space:nowrap; font-weight:700; width:1%; }
   .A { color:var(--a); } .B { color:var(--b); }
   table { border-collapse:collapse; margin:6px 0; }
   th, td { border:1px solid var(--line); padding:5px 10px; text-align:center; }
@@ -67,6 +73,18 @@
 
   <div class="part">
     <h2>Part 1 — Write an equation for each shop <span class="pts">(4 pts)</span></h2>
+    <div class="formula">
+      <div class="big">y = <span class="m">m</span>x + <span class="b">b</span></div>
+      <p style="margin:6px 0 8px;">Slope-intercept form models any real-world situation with a <b>rate</b> and a <b>starting amount</b>:</p>
+      <table class="ftab">
+        <tr><td><span class="m">m</span> = slope</td><td>the <b>rate</b>: the amount added <b>each time</b> (per detail, per month, per hour)</td></tr>
+        <tr><td><span class="b">b</span> = y-intercept</td><td>the <b>starting amount</b>: a one-time fee you pay even when x = 0</td></tr>
+        <tr><td>x</td><td>how many times (number of details)</td></tr>
+        <tr><td>y</td><td>the total cost</td></tr>
+      </table>
+      <p style="margin:8px 0 0;"><b>Example:</b> a gym charges a $25 sign-up fee plus $30 per month. The $30 repeats every month, so m = 30. The $25 is paid once, so b = 25. <b>y = 30x + 25</b>.</p>
+      <p class="hint" style="margin:6px 0 0;">Tip: if there is no one-time fee, b = 0.</p>
+    </div>
     <div class="eq"><span class="lab A">Shop A</span> y = <input id="mA" inputmode="decimal"> x + <input id="bA" inputmode="decimal"></div>
     <div class="eq"><span class="lab B">Shop B</span> y = <input id="mB" inputmode="decimal"> x + <input id="bB" inputmode="decimal"></div>
   </div>
