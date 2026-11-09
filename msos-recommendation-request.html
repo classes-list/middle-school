@@ -292,26 +292,54 @@ function saveCopy(){
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
-async function submitProfile(){
+function splitBody(body, base, subject, maxLen){
+  const lines = body.split('\n'); const parts = []; let cur = '';
+  const fits = t => (base + '&body=' + encodeURIComponent(t)).length <= maxLen;
+  for (const line of lines){
+    const next = cur ? cur + '\n' + line : line;
+    if (fits(next + '\n\n(Part 99 of 99)')) { cur = next; continue; }
+    if (cur) parts.push(cur);
+    cur = line;
+    while (!fits(cur + '\n\n(Part 99 of 99)')) { // one very long answer: cut it
+      let n = Math.floor(cur.length / 2);
+      while (n > 50 && !fits(cur.slice(0, n) + '\n\n(Part 99 of 99)')) n = Math.floor(n * 0.8);
+      parts.push(cur.slice(0, n)); cur = cur.slice(n);
+    }
+  }
+  if (cur) parts.push(cur);
+  return parts;
+}
+
+function submitProfile(){
   const d = collect();
   if(needName(d)) return;
   const name = d['student-name'].trim();
   const body = buildBody(d);
   const subject = 'Recommendation Request — ' + name;
-  const base = 'https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su=' + encodeURIComponent(subject);
-  let url = base + '&body=' + encodeURIComponent(body);
-  if(url.length > 7000){
-    let copied = false;
-    try{ await navigator.clipboard.writeText(body); copied = true; }catch(e){}
-    if(copied){
-      alert('Your answers are long, so they have been copied. When Gmail opens, click in the message box and paste (Ctrl+V or Cmd+V), then Send.');
-      url = base + '&body=' + encodeURIComponent('(Paste my profile here)');
-    }else{
-      alert('Your answers are too long to fill into Gmail automatically. Please use Print → Save as PDF and email the PDF to ppark@starofthesea.org.');
-      return;
-    }
+  const gmail = su => 'https://mail.google.com/mail/?view=cm&fs=1&to=ppark@starofthesea.org&su=' + encodeURIComponent(su);
+  const MAX = 7000;
+  if ((gmail(subject) + '&body=' + encodeURIComponent(body)).length <= MAX){
+    window.open(gmail(subject) + '&body=' + encodeURIComponent(body), '_blank');
+    return;
   }
-  window.open(url, '_blank');
+  const parts = splitBody(body, gmail(subject + ' (Part 99 of 99)'), subject, MAX);
+  const n = parts.length;
+  let box = document.getElementById('partsBox');
+  if (!box){ box = document.createElement('div'); box.id = 'partsBox'; document.body.appendChild(box); }
+  box.setAttribute('style','position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px');
+  box.innerHTML = '<div style="background:#fff;border-radius:14px;max-width:460px;width:100%;padding:20px 22px;box-shadow:0 10px 30px rgba(0,0,0,.25);font-family:inherit">'
+    + '<h3 style="margin:0 0 8px;color:#1F3864">Your answers will be sent in ' + n + ' emails</h3>'
+    + '<p style="margin:0 0 12px;line-height:1.45">Your answers are too long for one email. Click each button below. Gmail opens with that part already filled in. <b>Click Send in Gmail each time</b>, then come back for the next part.</p>'
+    + parts.map((_, i) => '<button type="button" class="btn" data-part="' + i + '" style="display:block;width:100%;margin:6px 0">📧 Send Part ' + (i+1) + ' of ' + n + '</button>').join('')
+    + '<button type="button" class="btn alt" id="partsClose" style="display:block;width:100%;margin-top:12px">Close</button></div>';
+  box.querySelectorAll('[data-part]').forEach(btn => btn.onclick = () => {
+    const i = +btn.dataset.part;
+    const su = subject + ' (Part ' + (i+1) + ' of ' + n + ')';
+    window.open(gmail(su) + '&body=' + encodeURIComponent(parts[i] + '\n\n(Part ' + (i+1) + ' of ' + n + ')'), '_blank');
+    btn.textContent = '✓ Part ' + (i+1) + ' of ' + n + ' opened — click Send in Gmail';
+    btn.style.background = '#16a34a'; btn.style.borderColor = '#16a34a'; btn.style.color = '#fff';
+  });
+  document.getElementById('partsClose').onclick = () => box.remove();
 }
 </script>
 </body></html>
