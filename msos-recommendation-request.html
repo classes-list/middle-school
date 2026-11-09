@@ -140,7 +140,7 @@ footer{text-align:center;margin-top:24px;color:var(--dim);font-size:.82rem;paddi
       <button class="btn alt" onclick="window.print()">🖨️ Print</button>
       <button class="btn alt" onclick="clearForm()">Clear</button>
       <span class="saved" id="saved"></span>
-      <span class="note">Submit opens Gmail with your answers addressed to <b>ppark@starofthesea.org</b>. Sign in with your school account, then click Send. Save a Copy downloads your answers as a text file.</span>
+      <span class="note" id="submitNote">Submit opens Gmail with your answers addressed to <b>ppark@starofthesea.org</b>. Sign in with your school account, then click Send. Save a Copy downloads your answers as a text file.</span>
     </div>
   </main>
   <footer>Mary, Star of the Sea School · Math 8 · Dr. Park</footer>
@@ -191,6 +191,9 @@ document.querySelectorAll('.rate[data-grid]').forEach(box => {
   });
   box.innerHTML = h;
 });
+// Google Apps Script web app that emails the whole profile to Dr. Park in one message.
+// Leave empty to use the Gmail fallback. Source: tools/recommendation-request-mailer.gs
+const MAILER_URL = '';
 const KEY = 'msos-rec-request-v1';
 const textIds = ['student-name','student-class','due-date','other-school',
   'q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','q15','q16','q17','w1','e1','w2','e2','w3','e3','q19'];
@@ -310,7 +313,7 @@ function splitBody(body, base, subject, maxLen){
   return parts;
 }
 
-function submitProfile(){
+function submitViaGmail(){
   const d = collect();
   if(needName(d)) return;
   const name = d['student-name'].trim();
@@ -340,6 +343,45 @@ function submitProfile(){
     btn.style.background = '#16a34a'; btn.style.borderColor = '#16a34a'; btn.style.color = '#fff';
   });
   document.getElementById('partsClose').onclick = () => box.remove();
+}
+
+async function submitProfile(){
+  const d = collect();
+  if(needName(d)) return;
+  if(!MAILER_URL) return submitViaGmail();
+  const btn = document.querySelector('button[onclick="submitProfile()"]');
+  const label = btn.textContent;
+  btn.disabled = true; btn.textContent = '⏳ Sending…';
+  try{
+    const res = await fetch(MAILER_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({ name: d['student-name'].trim(), body: buildBody(d), website: '' })
+    });
+    const out = await res.json();
+    if(!out.ok) throw new Error(out.error || 'not sent');
+    btn.textContent = '✅ Sent to Dr. Park';
+    showSent(true, d['student-name'].trim());
+  }catch(err){
+    btn.disabled = false; btn.textContent = label;
+    showSent(false, '', String(err.message || err));
+  }
+}
+
+if(MAILER_URL){ const n=document.getElementById('submitNote'); if(n) n.innerHTML='Submit emails all your answers to <b>Dr. Park</b> in one message. Save a Copy downloads your answers as a text file.'; }
+
+function showSent(ok, name, err){
+  let box = document.getElementById('sentBox');
+  if(!box){ box = document.createElement('div'); box.id = 'sentBox'; document.body.appendChild(box); }
+  box.setAttribute('style','position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;z-index:9999;padding:16px');
+  box.innerHTML = '<div style="background:#fff;border-radius:14px;max-width:440px;width:100%;padding:20px 22px;box-shadow:0 10px 30px rgba(0,0,0,.25)">'
+    + (ok
+      ? '<h3 style="margin:0 0 8px;color:#15803d">✅ Sent!</h3><p style="margin:0 0 14px;line-height:1.45">Thank you, ' + name.replace(/[<>&]/g,'') + '. Your recommendation request was emailed to Dr. Park. Your answers are still saved on this computer.</p>'
+      : '<h3 style="margin:0 0 8px;color:#b91c1c">It didn\'t send</h3><p style="margin:0 0 14px;line-height:1.45">Something went wrong (' + (err||'').replace(/[<>&]/g,'') + '). Check your internet connection and try again, or send it through Gmail instead.</p>'
+        + '<button type="button" class="btn" id="sentGmail" style="display:block;width:100%;margin-bottom:8px">📧 Send through Gmail instead</button>')
+    + '<button type="button" class="btn alt" id="sentClose" style="display:block;width:100%">Close</button></div>';
+  document.getElementById('sentClose').onclick = () => box.remove();
+  const g = document.getElementById('sentGmail'); if(g) g.onclick = () => { box.remove(); submitViaGmail(); };
 }
 </script>
 </body></html>
